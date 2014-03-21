@@ -1,0 +1,1 @@
+ProductFrontEndName	"Wolfram Mathematica"

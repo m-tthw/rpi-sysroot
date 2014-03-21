@@ -1,0 +1,85 @@
+===================
+objspace.usemodules
+===================
+
+.. toctree::
+    :maxdepth: 4
+
+    objspace.usemodules.__builtin__
+    objspace.usemodules.__pypy__
+    objspace.usemodules._ast
+    objspace.usemodules._cffi_backend
+    objspace.usemodules._codecs
+    objspace.usemodules._collections
+    objspace.usemodules._continuation
+    objspace.usemodules._csv
+    objspace.usemodules._demo
+    objspace.usemodules._ffi
+    objspace.usemodules._file
+    objspace.usemodules._hashlib
+    objspace.usemodules._io
+    objspace.usemodules._locale
+    objspace.usemodules._lsprof
+    objspace.usemodules._md5
+    objspace.usemodules._minimal_curses
+    objspace.usemodules._multibytecodec
+    objspace.usemodules._multiprocessing
+    objspace.usemodules._pickle_support
+    objspace.usemodules._pypyjson
+    objspace.usemodules._random
+    objspace.usemodules._rawffi
+    objspace.usemodules._sha
+    objspace.usemodules._socket
+    objspace.usemodules._sre
+    objspace.usemodules._ssl
+    objspace.usemodules._testing
+    objspace.usemodules._warnings
+    objspace.usemodules._weakref
+    objspace.usemodules._winreg
+    objspace.usemodules.array
+    objspace.usemodules.binascii
+    objspace.usemodules.bz2
+    objspace.usemodules.cmath
+    objspace.usemodules.cppyy
+    objspace.usemodules.cpyext
+    objspace.usemodules.crypt
+    objspace.usemodules.cStringIO
+    objspace.usemodules.errno
+    objspace.usemodules.exceptions
+    objspace.usemodules.fcntl
+    objspace.usemodules.gc
+    objspace.usemodules.imp
+    objspace.usemodules.itertools
+    objspace.usemodules.marshal
+    objspace.usemodules.math
+    objspace.usemodules.micronumpy
+    objspace.usemodules.mmap
+    objspace.usemodules.operator
+    objspace.usemodules.oracle
+    objspace.usemodules.parser
+    objspace.usemodules.posix
+    objspace.usemodules.pwd
+    objspace.usemodules.pyexpat
+    objspace.usemodules.pypyjit
+    objspace.usemodules.rctime
+    objspace.usemodules.select
+    objspace.usemodules.signal
+    objspace.usemodules.struct
+    objspace.usemodules.symbol
+    objspace.usemodules.sys
+    objspace.usemodules.termios
+    objspace.usemodules.thread
+    objspace.usemodules.time
+    objspace.usemodules.token
+    objspace.usemodules.unicodedata
+    objspace.usemodules.zipimport
+    objspace.usemodules.zlib
+
+* **name:** usemodules
+
+* **description:** Which Modules should be used
+
+
+
+
+..  intentionally empty

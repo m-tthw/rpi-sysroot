@@ -1,0 +1,7 @@
+lxsession-edit
+--------------
+
+Currently adding and removing application from this startup list is not yet
+available, but it will be support in the next release.
+
+ -- Andrew Lee (李健秋) <ajqlee@debian.org>  Sat, 06 Dec 2008 15:53:57 +0800

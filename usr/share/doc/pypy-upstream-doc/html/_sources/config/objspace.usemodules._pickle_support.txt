@@ -1,0 +1,25 @@
+=====================================
+objspace.usemodules.\_pickle\_support
+=====================================
+
+* **name:** \_pickle\_support
+
+* **description:** use module \_pickle\_support
+
+* **command-line:** --withmod-\_pickle\_support
+
+* **command-line for negation:** --withoutmod-\_pickle\_support
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+Use the '_pickle_support' module. 
+Internal helpers for pickling runtime builtin types (frames, cells, etc)
+for `stackless`_ tasklet pickling support.
+.. _`stackless`: ../stackless.html
+
+.. internal

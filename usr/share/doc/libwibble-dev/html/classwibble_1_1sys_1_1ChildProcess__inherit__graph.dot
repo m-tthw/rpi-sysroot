@@ -1,0 +1,10 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="wibble::sys::ChildProcess",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="wibble::sys::Exec",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classwibble_1_1sys_1_1Exec.html",tooltip="Execute external commands, either forked as a ChildProcess or directly using exec()."];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="wibble::sys::ShellCommand",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classwibble_1_1sys_1_1ShellCommand.html",tooltip="Execute a shell command using /bin/sh -c."];
+}

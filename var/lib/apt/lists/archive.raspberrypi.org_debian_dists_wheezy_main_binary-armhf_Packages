@@ -1,0 +1,1283 @@
+Package: dphys-swapfile
+Version: 20061020-4raspi.1
+Architecture: all
+Maintainer: Axel Beckert <abe@debian.org>
+Installed-Size: 68
+Homepage: http://neil.franklin.ch/Projects/dphys-swapfile/
+Priority: optional
+Section: admin
+Filename: pool/main/d/dphys-swapfile/dphys-swapfile_20061020-4raspi.1_all.deb
+Size: 10900
+SHA256: 64363d8293c092e0992e462e1e4da69bb070ecc7d42deb64c4b8018df0511411
+SHA1: 21ee6a1622671d0b2ed0d2deb78647c9dfdab0c0
+MD5sum: 9855ee54bec8afde24104e1ba841a9ea
+Description: Autogenerate and use a swap file
+ This init.d script exists so one does not need to have a fixed size
+ swap partition. Instead install without swap partition and then run this,
+ with file size (re-)computed automatically to fit the current RAM size.
+
+Package: dvb-tools
+Source: v4l-utils
+Version: 1.0.0-1
+Architecture: armhf
+Maintainer: Gregor Jasny <gjasny@googlemail.com>
+Installed-Size: 302
+Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0)
+Homepage: http://linuxtv.org/downloads/v4l-utils/
+Priority: optional
+Section: utils
+Filename: pool/main/v/v4l-utils/dvb-tools_1.0.0-1_armhf.deb
+Size: 150328
+SHA256: 2cb22801a706fe6ab4f19f5fe7b304e5084fa6805a2f329894f93859df60e868
+SHA1: 11518cda553ce30f96c70128a05361b34470829c
+MD5sum: e0a18292018d4e92f5f366370c7b2d93
+Description: Collection of command line DVB utilities
+ This is a series of tools written to help testing and working with DVB,
+ using its latest V5 API. The tools can also work with the DVBv3 API.
+ .
+ The current tools are:
+ .
+ dvb-fe-tool: a simple test application, that reads from the frontend.
+ it also allows one to change the default delivery system.
+ In the future, it may be used to change any property via command line.
+ .
+ dvb-format-convert: converts from zap and scan initial-tuning-data-file
+ into the new format defined to work with DVBv5.
+ .
+ dvbv5-scan: a DVBv5 scan tool.
+ .
+ dvbv5-zap: a DVBv5 zap tool. It allow to tune into a DVB channel, and
+ to watch to a DVB service (e. g. receiving the video and audio
+ streams, via another application using the dvr device).
+
+Package: icelib
+Source: icelib
+Version: 1.0.15636
+Maintainer: IndieCity <enquiries@indiecity.com>
+Homepage: www.indiecity.com
+Architecture: armhf
+Depends: libcurl3, libssl1.0.0
+Priority: standard
+Section: non-free
+Filename: pool/main/i/icelib/icelib_1.0.15636_armhf.deb
+Size: 382956
+SHA256: 0a4c5c35d999b7d21eb0f0bad3c5bd9b34d579bdfbfd4e99b9970bfa9ee10851
+SHA1: 55f0d919885c16b7e83dc3b5080a683c68e9ffc4
+MD5sum: bb8d2a61df12820b3caf1b175f559033
+Description: ICELib offers enhanced capabilities for apps and games.
+ The IndieCity Extras Library (ICELib) is a set of libraries offering online services to games and apps.
+ .
+ It is built and maintained by IndieCity.
+
+Package: icelib-dev
+Source: icelib-dev
+Version: 1.0.15267
+Maintainer: IndieCity <enquiries@indiecity.com>
+Homepage: www.indiecity.com
+Architecture: armhf
+Depends: icelib
+Priority: standard
+Section: non-free
+Filename: pool/main/i/icelib-dev/icelib-dev_1.0.15267_armhf.deb
+Size: 332894
+SHA256: fa4e3d75600255d045b23d63c1f08cff3e1009193ddb6125262b5a3137bf915a
+SHA1: 8c40b1dd0ab1ca92729b97b10421275f0daaceb2
+MD5sum: 57d489f2c6e4bf5d870045fdefbda39e
+Description: ICELib-dev offers gives the developers.
+ The IndieCity Extras Library (ICELib) is a set of libraries offering online services to games and apps.
+ .
+ It is built and maintained by IndieCity.
+
+Package: ir-keytable
+Source: v4l-utils
+Version: 1.0.0-1
+Architecture: armhf
+Maintainer: Gregor Jasny <gjasny@googlemail.com>
+Installed-Size: 220
+Depends: libc6 (>= 2.13-28)
+Recommends: udev
+Homepage: http://linuxtv.org/downloads/v4l-utils/
+Priority: optional
+Section: utils
+Filename: pool/main/v/v4l-utils/ir-keytable_1.0.0-1_armhf.deb
+Size: 72646
+SHA256: 2856ca94187085d4b3759279cfe2474ea4b9b81ad764e970e57c2d2697f5baf4
+SHA1: 21309208ba26308480ac14f965b16200079e6d5d
+MD5sum: e3c9d867546b6790c05065097ea50d95
+Description: Alter keymaps of Remote Controller devices
+ This package allows one to change the keymap of controller receivers.
+ Those receivers are found as infrared receivers on DVB sticks or on
+ framegrabber cards. Via ir-keytable the mapping from a scancode to
+ the generated event can be customized and made persistent.
+
+Package: jackd2
+Version: 1.9.8~dfsg.4+20120529git007cdc37-5+rpi
+Architecture: armhf
+Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Installed-Size: 1966
+Pre-Depends: multiarch-support
+Depends: libasound2 (>= 1.0.18), libc6 (>= 2.13-28), libdbus-1-3 (>= 1.0.2), libexpat1 (>= 2.0.1), libgcc1 (>= 1:4.4.0), libjack-jackd2-0 (= 1.9.8~dfsg.4+20120529git007cdc37-5+rpi), libsamplerate0 (>= 0.1.7), libsndfile1 (>= 1.0.20), libstdc++6 (>= 4.6), debconf (>= 0.5) | debconf-2.0, python, coreutils (>= 4.0), python-dbus
+Recommends: qjackctl, libpam-modules
+Suggests: jack-tools, meterbridge
+Conflicts: jack-daemon, jackd (<< 3)
+Replaces: jack-daemon, jackd (<< 3), libjack0 (<= 1.9.5~dfsg-13)
+Provides: jack-daemon
+Homepage: http://jackaudio.org/
+Priority: optional
+Section: sound
+Filename: pool/main/j/jackd2/jackd2_1.9.8~dfsg.4+20120529git007cdc37-5+rpi_armhf.deb
+Size: 640908
+SHA256: af9359bb9a14dd27cd290a9351d87e183f38652ffa4c719fc2c6c6bc1379fb74
+SHA1: 67bf9416af574752a71cb051a2fa84b6a49e6be1
+MD5sum: 49db489142f7395c1e0dd54eb07ea7e3
+Description: JACK Audio Connection Kit (server and example clients)
+ JACK is a low-latency sound server, allowing multiple applications to
+ connect to one audio device, and to share audio between themselves.
+ .
+ This package contains the daemon jackd as well as some example clients.
+
+Package: libjack-jackd2-0
+Source: jackd2
+Version: 1.9.8~dfsg.4+20120529git007cdc37-5+rpi
+Architecture: armhf
+Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Installed-Size: 561
+Pre-Depends: multiarch-support
+Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libsamplerate0 (>= 0.1.7), libstdc++6 (>= 4.6)
+Suggests: jackd2 (= 1.9.8~dfsg.4+20120529git007cdc37-5+rpi)
+Conflicts: jackd2 (>> 1.9.8~dfsg.4+20120529git007cdc37-5+rpi), jackd2 (<< 1.9.8~dfsg.4+20120529git007cdc37-5+rpi), libjack-0.116, libjack0
+Replaces: libjack-0.116
+Provides: libjack-0.116
+Multi-Arch: same
+Homepage: http://jackaudio.org/
+Priority: optional
+Section: libs
+Filename: pool/main/j/jackd2/libjack-jackd2-0_1.9.8~dfsg.4+20120529git007cdc37-5+rpi_armhf.deb
+Size: 184146
+SHA256: 197a78ab0ce1770a1acbae6939a1bb3a622e1a6b901e3e847c87f2e1b9b167c7
+SHA1: 2cce6e5b034c94cb446268982f6363e01e42597d
+MD5sum: 2777a583518343aa9cae0ae338c1065f
+Description: JACK Audio Connection Kit (libraries)
+ JACK is a low-latency sound server, allowing multiple applications to
+ connect to one audio device, and to share audio between themselves.
+ .
+ This package contains the shared libraries.
+
+Package: libjack-jackd2-dev
+Source: jackd2
+Version: 1.9.8~dfsg.4+20120529git007cdc37-5+rpi
+Architecture: armhf
+Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Installed-Size: 277
+Depends: libjack-jackd2-0 (= 1.9.8~dfsg.4+20120529git007cdc37-5+rpi), pkg-config, libdbus-1-dev
+Conflicts: libjack-dev, libjack0.100.0-dev (<< 0.102.20-2)
+Replaces: libjack0.71.2-0 (<< 0.75.0-1)
+Provides: libjack-dev, libjack-dev-session, libjack0.100.0-dev
+Multi-Arch: same
+Homepage: http://jackaudio.org/
+Priority: optional
+Section: libdevel
+Filename: pool/main/j/jackd2/libjack-jackd2-dev_1.9.8~dfsg.4+20120529git007cdc37-5+rpi_armhf.deb
+Size: 92678
+SHA256: 5cff31918709ba93c879210d818840964a464d60468ea05f5890708ee5259095
+SHA1: 704bdcb280b43bdaf645159cd1bacac631275a46
+MD5sum: fe01912830d18be6fb2006a8cdfaadbd
+Description: JACK Audio Connection Kit (development files)
+ JACK is a low-latency sound server, allowing multiple applications to
+ connect to one audio device, and to share audio between themselves.
+ .
+ This package contains files needed for the development of JACK applications
+ and an API reference.
+
+Package: libluajit-5.1-2
+Source: luajit
+Version: 2.0.0~beta11+git20121024-1
+Architecture: armhf
+Maintainer: Enrico Tassi <gareuselesinge@debian.org>
+Installed-Size: 399
+Pre-Depends: multiarch-support
+Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libluajit-5.1-common (= 2.0.0~beta11+git20121024-1)
+Multi-Arch: same
+Homepage: http://luajit.org
+Priority: optional
+Section: interpreters
+Filename: pool/main/l/luajit/libluajit-5.1-2_2.0.0~beta11+git20121024-1_armhf.deb
+Size: 211418
+SHA256: 1bac7431717ce7061b2b13c6e33012ba8a80d80b90b32a9f0a8882f21ef4fba7
+SHA1: b2eb76bf5d52b3ea13795b40c30e105c23693d76
+MD5sum: e03fd09dc660419f8934d2f1af154588
+Description: Just in time compiler for Lua - library version
+ LuaJIT implements the full set of language features defined by Lua 5.1. The
+ virtual machine (VM) is API- and ABI-compatible to the standard Lua interpreter
+ and can be deployed as a drop-in replacement.
+ .
+ This package contains an embeddable version of LuaJIT that can be used as a
+ replacement of the standard liblua-5.1 shared library.
+
+Package: libluajit-5.1-common
+Source: luajit
+Version: 2.0.0~beta11+git20121024-1
+Architecture: all
+Maintainer: Enrico Tassi <gareuselesinge@debian.org>
+Installed-Size: 169
+Homepage: http://luajit.org
+Priority: optional
+Section: interpreters
+Filename: pool/main/l/luajit/libluajit-5.1-common_2.0.0~beta11+git20121024-1_all.deb
+Size: 42932
+SHA256: abb35c25e7d7041db3c3215d95cb84e23c8d1dd04ad81cc6b53a95c1d6c1dc2b
+SHA1: f340c48ce051601bc0a9365aa868eafd54af5789
+MD5sum: 0c75eebc50ca2855d5ac846f5b76ce6f
+Description: Just in time compiler for Lua - common files
+ This package contains files needed by the LuaJIT interpreter/jitter as well
+ by its embeddable (i.e. library) version.
+
+Package: libluajit-5.1-dev
+Source: luajit
+Version: 2.0.0~beta11+git20121024-1
+Architecture: armhf
+Maintainer: Enrico Tassi <gareuselesinge@debian.org>
+Installed-Size: 512
+Pre-Depends: multiarch-support
+Depends: libluajit-5.1-2 (= 2.0.0~beta11+git20121024-1)
+Multi-Arch: same
+Homepage: http://luajit.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/l/luajit/libluajit-5.1-dev_2.0.0~beta11+git20121024-1_armhf.deb
+Size: 235796
+SHA256: ccc95577f226dd9070d335f020ca70fc8923028c6eecabc8f7c14b8363a498fb
+SHA1: da03b0e7c3212b386013a421aff64f6e92f7d487
+MD5sum: fc354fd2c9dbdb55de577785e2b390e9
+Description: Just in time compiler for Lua - development files
+ This package contains header files and a statically linkable library for
+ LuaJIT.
+
+Package: libpixman-1-0
+Source: pixman
+Version: 0.26.0-4+raspi
+Architecture: armhf
+Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+Installed-Size: 766
+Pre-Depends: multiarch-support
+Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0)
+Multi-Arch: same
+Priority: optional
+Section: libs
+Filename: pool/main/p/pixman/libpixman-1-0_0.26.0-4+raspi_armhf.deb
+Size: 1199668
+SHA256: 217983a4ed9187a2e339295fc7c6de102b5f325d72ff0eb769661450bac99604
+SHA1: 27df54f8edad427f910755f8fa6b5b945c52d60b
+MD5sum: a61e7fc6348acd0dadf2a9c11f721e64
+Description: pixel-manipulation library for X and cairo
+ A library for manipulating pixel regions -- a set of Y-X banded
+ rectangles, image compositing using the Porter/Duff model
+ and implicit mask generation for geometric primitives including
+ trapezoids, triangles, and rectangles.
+
+Package: libpixman-1-dev
+Source: pixman
+Version: 0.26.0-4+raspi
+Architecture: armhf
+Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+Installed-Size: 909
+Depends: libpixman-1-0 (= 0.26.0-4+raspi)
+Priority: optional
+Section: libdevel
+Filename: pool/main/p/pixman/libpixman-1-dev_0.26.0-4+raspi_armhf.deb
+Size: 440382
+SHA256: 076b64d28d7ea70b4f081696b8b40eaf0d9cbdd2af1ab1d9088ba4019606c6dc
+SHA1: eca518db615fdfb3980eb9ba682ec5b71012096a
+MD5sum: 0bc7b6bdbd37a47b52fc544bfc5e2dbf
+Description: pixel-manipulation library for X and cairo (development files)
+ Development libraries, header files and documentation needed by
+ programs that want to compile with the Cairo/X pixman library.
+
+Package: libraspberrypi-bin
+Source: raspberrypi-firmware
+Version: 1.20140107-1
+Architecture: armhf
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Installed-Size: 527
+Depends: libraspberrypi0 (= 1.20140107-1)
+Homepage: https://github.com/raspberrypi/firmware
+Priority: extra
+Section: misc
+Filename: pool/main/r/raspberrypi-firmware/libraspberrypi-bin_1.20140107-1_armhf.deb
+Size: 219510
+SHA256: ad3553eadcc66d00ea16d5187443978580d3bf54d909b9d19cc0583db56b5666
+SHA1: 5e86c4ffe4810c2f9de351671749b69cebafc6b4
+MD5sum: e2f71d2b51ef6cc9c3270919ef8b1a01
+Description: Miscellaneous Raspberry Pi utilities
+ This package contains various utilities for interacting with the Raspberry
+ Pi's VideoCore IV.
+
+Package: libraspberrypi-dev
+Source: raspberrypi-firmware
+Version: 1.20140107-1
+Architecture: armhf
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Installed-Size: 2834
+Depends: libraspberrypi0 (= 1.20140107-1)
+Homepage: https://github.com/raspberrypi/firmware
+Priority: extra
+Section: libdevel
+Filename: pool/main/r/raspberrypi-firmware/libraspberrypi-dev_1.20140107-1_armhf.deb
+Size: 678444
+SHA256: d8cf98ef108666417be00e999e497f5f0d3570b76032c6e14485e9198527d5f8
+SHA1: 6b2b22979f42691d6f3be8d19d91f11a43d09dd8
+MD5sum: ea0adc2f86d4be57758ab15b27373bc8
+Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV (headers)
+ This package contains headers and other development files for implementations
+ of EGL, OpenGL ES, OpenVG, OpenWF Composition, and others for the Raspberry
+ Pi's VideoCore IV multimedia processor.
+
+Package: libraspberrypi-doc
+Source: raspberrypi-firmware
+Version: 1.20140107-1
+Architecture: armhf
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Installed-Size: 32159
+Depends: libraspberrypi0 (= 1.20140107-1)
+Homepage: https://github.com/raspberrypi/firmware
+Priority: extra
+Section: libdevel
+Filename: pool/main/r/raspberrypi-firmware/libraspberrypi-doc_1.20140107-1_armhf.deb
+Size: 31478140
+SHA256: 687adc710d13e1e63b4df26362deed0e9de4405f29b4251b3c0e4f42c55777d0
+SHA1: 319ce9452ff89240a0cd71a1124f20e3b1bef259
+MD5sum: 2ea86d23f235bd74ec2622898736f688
+Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV (headers)
+ This package contains headers, example code, and other development files for
+ implementations of EGL, OpenGL ES, OpenVG, OpenWF Composition, and others for
+ the Raspberry Pi's VideoCore IV multimedia processor.
+
+Package: libraspberrypi0
+Source: raspberrypi-firmware
+Version: 1.20140107-1
+Architecture: armhf
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Installed-Size: 1156
+Depends: raspberrypi-bootloader (= 1.20140107-1)
+Homepage: https://github.com/raspberrypi/firmware
+Priority: extra
+Section: libs
+Filename: pool/main/r/raspberrypi-firmware/libraspberrypi0_1.20140107-1_armhf.deb
+Size: 445040
+SHA256: ff2eeb33671742838f0d261e4b888f301ccc56f87de7a013f10f2e6b2cf086ea
+SHA1: 46f31bce0dde4e580693d58ede59b0f406bce7b9
+MD5sum: dfdd1683cbdcb0b43ff4e5ca8b44c697
+Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV
+ This package contains implementations of EGL, OpenGL ES, OpenVG, OpenWF
+ Composition, and others for the Raspberry Pi's VideoCore IV multimedia
+ processor.
+
+Package: libv4l-0
+Source: v4l-utils
+Version: 1.0.0-1
+Architecture: armhf
+Maintainer: Gregor Jasny <gjasny@googlemail.com>
+Installed-Size: 170
+Pre-Depends: multiarch-support
+Depends: libv4lconvert0 (= 1.0.0-1), libc6 (>= 2.13-28)
+Multi-Arch: same
+Homepage: http://linuxtv.org/downloads/v4l-utils/
+Priority: optional
+Section: libs
+Filename: pool/main/v/v4l-utils/libv4l-0_1.0.0-1_armhf.deb
+Size: 61860
+SHA256: a7c0d23aba0dacf3b81047797a3a9e41d2ff842cad750a52e9e3fcfa4bd6948e
+SHA1: a3158fba9c01a01004b31e2b5471cab43736423a
+MD5sum: 2578146ad998602de8645fce2a57fe51
+Description: Collection of video4linux support libraries
+ libv4l is a collection of libraries which adds a thin abstraction layer on
+ top of video4linux2 devices. The purpose of this (thin) layer is to make it
+ easy for application writers to support a wide variety of devices without
+ having to write separate code for different devices in the same class. libv4l
+ consists of 3 different libraries: libv4lconvert, libv4l1 and libv4l2.
+ .
+ libv4l1 offers the (deprecated) v4l1 API on top of v4l2 devices, independent
+ of the drivers for those devices supporting v4l1 compatibility (which many
+ v4l2 drivers do not).
+ .
+ libv4l2 offers the v4l2 API on top of v4l2 devices, while adding for the
+ application transparent libv4lconvert conversion where necessary.
+ .
+ This package contains the shared libraries.
+
+Package: libv4l-dev
+Source: v4l-utils
+Version: 1.0.0-1
+Architecture: armhf
+Maintainer: Gregor Jasny <gjasny@googlemail.com>
+Installed-Size: 322
+Depends: libv4l-0 (= 1.0.0-1), libv4lconvert0 (= 1.0.0-1), libv4l2rds0 (= 1.0.0-1)
+Suggests: pkg-config (>= 0.18)
+Multi-Arch: same
+Homepage: http://linuxtv.org/downloads/v4l-utils/
+Priority: optional
+Section: libdevel
+Filename: pool/main/v/v4l-utils/libv4l-dev_1.0.0-1_armhf.deb
+Size: 109940
+SHA256: 828b504f7c023949b4899afe6aa709a40d7b0d6c7deee33ed92bf3044ac7ece1
+SHA1: ab2f65267c71cfddabe9c7f0ea93802b42788aff
+MD5sum: 879904d6d62a019edf0851d4adcb1eb1
+Description: Collection of video4linux support libraries (development files)
+ libv4l is a collection of libraries which adds a thin abstraction layer on
+ top of video4linux2 devices. The purpose of this (thin) layer is to make it
+ easy for application writers to support a wide variety of devices without
+ having to write separate code for different devices in the same class. libv4l
+ consists of 3 different libraries: libv4lconvert, libv4l1 and libv4l2.
+ .
+ libv4lconvert offers functions to convert from any (known) pixelformat
+ to BGR24, RGB24, YUV420 and YVU420.
+ .
+ libv4l1 offers the (deprecated) v4l1 API on top of v4l2 devices, independent
+ of the drivers for those devices supporting v4l1 compatibility (which many
+ v4l2 drivers do not).
+ .
+ libv4l2 offers the v4l2 API on top of v4l2 devices, while adding for the
+ application transparent libv4lconvert conversion where necessary.
+ .
+ This package contains the development files.
+
+Package: libv4l2rds0
+Source: v4l-utils
+Version: 1.0.0-1
+Architecture: armhf
+Maintainer: Gregor Jasny <gjasny@googlemail.com>
+Installed-Size: 83
+Pre-Depends: multiarch-support
+Depends: libc6 (>= 2.13-28)
+Multi-Arch: same
+Homepage: http://linuxtv.org/downloads/v4l-utils/
+Priority: optional
+Section: libs
+Filename: pool/main/v/v4l-utils/libv4l2rds0_1.0.0-1_armhf.deb
+Size: 34884
+SHA256: c79fb8ccd9dafaf283eb2d140a5991c9b1783816a97e06b17a6ded02e1d2d554
+SHA1: a1bcd4beb096d6c173dcae937c4be55d5a25b687
+MD5sum: 2da1cd744b061ca2693028e67c302e4e
+Description: Video4Linux Radio Data System (RDS) decoding library
+ This library decodes a RDS straem obtained from a Video4Linux (V4L)
+ version 2 device. It supports both: the US based RBDS and European RDS
+ protocol.
+ .
+ This package contains the shared library.
+
+Package: libv4lconvert0
+Source: v4l-utils
+Version: 1.0.0-1
+Architecture: armhf
+Maintainer: Gregor Jasny <gjasny@googlemail.com>
+Installed-Size: 223
+Pre-Depends: multiarch-support
+Depends: libc6 (>= 2.13-28), libjpeg8 (>= 8c)
+Breaks: libv4l-0 (<< 0.8.5-4)
+Replaces: libv4l-0 (<< 0.8.5-4)
+Multi-Arch: same
+Homepage: http://linuxtv.org/downloads/v4l-utils/
+Priority: optional
+Section: libs
+Filename: pool/main/v/v4l-utils/libv4lconvert0_1.0.0-1_armhf.deb
+Size: 97312
+SHA256: c28e2ee59b81660e978888902b7f73bcc91bc8c786ae23e8dc766ec663198b15
+SHA1: 03f4a405f12cbb46c0705b98aebd734dfd0e23a3
+MD5sum: faccf356741c87d592fef3cc24db3df2
+Description: Video4linux frame format conversion library
+ libv4lconvert offers functions to convert from any (known) pixelformat
+ to BGR24, RGB24, YUV420 and YVU420.
+ .
+ This package contains the shared library.
+
+Package: luajit
+Version: 2.0.0~beta11+git20121024-1
+Architecture: armhf
+Maintainer: Enrico Tassi <gareuselesinge@debian.org>
+Installed-Size: 399
+Pre-Depends: multiarch-support
+Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libluajit-5.1-common (= 2.0.0~beta11+git20121024-1)
+Multi-Arch: foreign
+Homepage: http://luajit.org
+Priority: optional
+Section: interpreters
+Filename: pool/main/l/luajit/luajit_2.0.0~beta11+git20121024-1_armhf.deb
+Size: 211324
+SHA256: 331630096df6df928d14dabef7b74dbe5fb02017eb048c10a50d4372c3dcfc74
+SHA1: fba067afba7feeac55b3f9fa72879c135e8bfdef
+MD5sum: 92c462e5b4085bb3291d5ca425abc4f1
+Description: Just in time compiler for Lua programming language version 5.1
+ LuaJIT implements the full set of language features defined by Lua 5.1. The
+ virtual machine (VM) is API- and ABI-compatible to the standard Lua interpreter
+ and can be deployed as a drop-in replacement.
+ .
+ This package contains the standalone interpreter/jitter that can be used
+ as a replacement for the standard lua5.1 interpreter.
+
+Package: omxplayer
+Version: 0.3.3~git20131216~b34143c
+Architecture: armhf
+Essential: no
+Depends: libpcre3, libfreetype6, fonts-freefont-ttf, dbus
+Suggests: fbset, x11-xserver-utils
+Installed-Size: 9216
+Maintainer: Sergio Conde <sergio@sconde.net>
+Provides: omxplayer
+Priority: optional
+Section: video
+Filename: pool/main/o/omxplayer/omxplayer_0.3.3~git20131216~b34143c_armhf.deb
+Size: 3208244
+SHA256: be2e3f8fed64d9f83e05e01339c637277c34785dfaa9372d21ff6ac288ff2dcc
+SHA1: 96a5a599807219f309f848a926608f03e485e65e
+MD5sum: 1dcaa96eada4fca3fa0e932b61f3e159
+Description: Command line media player for Raspberry Pi
+ .
+ It plays all media files supported by the Raspberry Pi
+ hardware. Supports subtitles.
+ .
+ OMXPlayer source for this build: https://github.com/popcornmix/omxplayer
+ OMXPlayer original source: https://github.com/huceke/omxplayer
+ OMXPlayer builds: http://omxplayer.sconde.net/
+
+Package: oracle-java7-jdk
+Version: 1.7.0+update40
+Architecture: armhf
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Installed-Size: 155282
+Depends: libasound2 (>= 1.0.16), libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libx11-6, libxext6, libxi6, libxrender1, libxtst6
+Recommends: netbase
+Provides: java-compiler, java-runtime, java-runtime-headless, java-sdk, java-virtual-machine, java2-compiler, java2-runtime, java2-runtime-headless, java2-sdk, java5-runtime, java5-runtime-headless, java5-sdk, java6-runtime, java6-runtime-headless, java6-sdk, java7-runtime, java7-runtime-headless, java7-sdk
+Priority: optional
+Section: non-free/devel
+Filename: pool/main/o/oracle-java7-jdk/oracle-java7-jdk_1.7.0+update40_armhf.deb
+Size: 70691274
+SHA256: e79eeaa37140e21e4b06c33309c7c66208af562bfa5d7340b5b3bc2dce61f62d
+SHA1: d6a47d6aaf94369f081fa30157bbd191f5cf0582
+MD5sum: 19907e1f83491fcde766034bf254fd77
+Description: Java™ Platform, Standard Edition 7 Development Kit
+ The Java(TM) SE JDK is a development environment for building
+ applications, applets, and components that can be deployed on the
+ Java(TM) platform.
+ .
+ The Java(TM) SE JDK software includes tools useful for developing and
+ testing programs written in the Java programming language and running
+ on the Java platform. These tools are designed to be used from the
+ command line. Except for appletviewer, these tools do not provide a
+ graphical user interface.
+ .
+ This package has been automatically created with java-package (0.53).
+
+Package: penguinspuzzle
+Version: 20120902-1
+Architecture: armhf
+Essential: no
+Depends: libc6, libraspberrypi0
+Installed-Size: 4000
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Priority: optional
+Section: unknown
+Filename: pool/main/p/penguinspuzzle/penguinspuzzle_20120902-1_armhf.deb
+Size: 528634
+SHA256: 462dd6ad0d290700ddc4fe14d9c9b83a5dc3f59a4059e41a5db17dd6735bc74e
+SHA1: de2f5cacf201e58a8a55e060c32db345c7f6fcf2
+MD5sum: afbd186c2765da51db46a6892263350d
+Description: 3d puzzle game for Raspberry Pi (web version at penguinspuzzle.appspot.com)
+Homepage: https://github.com/peterderivaz/penguinspuzzle
+
+Package: pistore
+Source: pistore
+Version: 1.1.16693
+Maintainer: IndieCity <enquiries@indiecity.com>
+Homepage: www.indiecity.com
+Architecture: armhf
+Depends: libqtcore4, libqtgui4, libqtwebkit4, libcurl3, libssl1.0.0, lxterminal
+Priority: optional
+Section: non-free
+Filename: pool/main/p/pistore/pistore_1.1.16693_armhf.deb
+Size: 2019964
+SHA256: 4d05469dfc5777de5f8949b491329f76111945e47d2387b0382bce84e5986f67
+SHA1: a9c7bbea1f1b16406f5628b49f6f6344acbd9cac
+MD5sum: fe8681a6ee0b23a5c02bb2799e6ffa57
+Description: Pi Store is the official store for Rasp. Pi apps and games.
+ The Pi Store is the official store for downloading Raspberry Pi games and apps, and the centre for developers to release their own.
+ .
+ It is built and maintained by IndieCity.
+
+Package: pypy-setuptools
+Version: 1.1.6-1
+Architecture: armhf
+Maintainer: David Schneider <david.schneider@bivab.de>
+Installed-Size: 1524
+Pre-Depends: pypy-upstream (>= 2.1), pypy-upstream-dev (>= 2.1)
+Homepage: https://pypi.python.org/pypi/setuptools
+Priority: optional
+Section: python
+Filename: pool/main/p/pypy-setuptools/pypy-setuptools_1.1.6-1_armhf.deb
+Size: 308560
+SHA256: 29e3c51ce6ca595c0460f3ed39df888713fe17c833d1c2589d11ab0c5e2988c1
+SHA1: 1a2df816f05885de4599f344e08b86f5671835dd
+MD5sum: 909950166957987d298adc5a54fc6db0
+Description: Easily download, build, install, upgrade, and uninstall Python packages
+
+Package: pypy-smbus-cffi
+Source: smbus-cffi
+Version: 0.2-2
+Architecture: armhf
+Maintainer: David Schneider <david.schneider@bivab.de>
+Installed-Size: 100
+Pre-Depends: pypy-upstream (>= 2.2), pypy-upstream (<< 2.3), pypy-upstream-dev (>= 2.2), pypy-upstream-dev (<< 2.3)
+Depends: libc6 (>= 2.13-28)
+Homepage: https://github.com/bivab/smbus-cffi
+Priority: optional
+Section: python
+Filename: pool/main/s/smbus-cffi/pypy-smbus-cffi_0.2-2_armhf.deb
+Size: 17476
+SHA256: 07da671b6ee06415c9bfa3184bdd4086fd897f093d8888ee51d536fcb65f6983
+SHA1: a386937132a452c48d9fd17e1b5792715173b851
+MD5sum: a7734cecffb5e305d81350d989d7f2b6
+Description: This Python module allows SMBus access through the I2C /dev
+ smbus-cffi
+ ==========
+ .
+ This Python module allows SMBus access through the I2C /dev interface on Linux
+ hosts. The host kernel must have I2C support, I2C device interface support, and
+ a bus adapter driver.
+ .
+ This module is a cffi-based python reimplementation of the python-smbus C-extension
+ (http://www.lm-sensors.org/browser/i2c-tools/trunk/py-smbus/) and works on PyPy
+ and CPython 2.7.
+ .
+ .
+ Notes
+ -----
+ .
+ Currently cffi, the module used for the bindings to the smbus library, is
+ rather slow loading a module. It might take a moment to load smbus, in
+ particular on slow devices like a Raspeberry Pi. This behaviour will change in
+ future releases of cffi.
+
+Package: pypy-upstream
+Version: 2.2.1-5
+Architecture: armhf
+Maintainer: David Schneider <david.schneider@bivab.de>
+Installed-Size: 55920
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: libbz2-1.0, libc6 (>= 2.13-28), libexpat1 (>= 2.0.1), libffi5 (>= 3.0.9), libgcc1 (>= 1:4.4.0), libncurses5 (>= 5.5-5~), libsqlite3-0 (>= 3.5.9), libssl1.0.0 (>= 1.0.0), libtinfo5, tcl8.5 (>= 8.5.0), tk8.5 (>= 8.5.0), zlib1g (>= 1:1.1.4)
+Recommends: pypy-upstream-dev, pypy-upstream-doc, pypy-setuptools
+Breaks: pypy-smbus-cffi (<= 0.2-1), pypy-upstream
+Replaces: pypy, pypy-upstream
+Provides: pypy
+Homepage: http://pypy.org/
+Priority: extra
+Section: python
+Filename: pool/main/p/pypy-upstream/pypy-upstream_2.2.1-5_armhf.deb
+Size: 9841424
+SHA256: b841df699bbd12f0dde4a1f2e5428267be1ae3a4067019cfd55e2e3b1b570ee9
+SHA1: f16048b093b8539afd612a051b542699843b3f1a
+MD5sum: b545e771cc924d8a69c447b864fe8a58
+Description: PyPy interpreter - Upstream binary build
+ PyPy is a fast, compliant alternative implementation of the Python language
+ (2.7.3). It has several advantages and distinct features:
+  * Speed: thanks to its Just-in-Time compiler, Python programs often run faster on PyPy.
+  * Memory usage: large, memory-hungry Python programs might end up taking less
+    space than they do in CPython.
+  * Compatibility: PyPy is highly compatible with existing python code.
+    It supports ctypes and can run popular python libraries like twisted and django.
+  * Sandboxing: PyPy provides the ability to run untrusted code in a fully secure way.
+  * Stackless: PyPy comes by default with support for stackless mode, providing
+    micro-threads for massive concurrency.  As well as other features.
+
+Package: pypy-upstream-dev
+Source: pypy-upstream
+Version: 2.2.1-5
+Architecture: armhf
+Maintainer: David Schneider <david.schneider@bivab.de>
+Installed-Size: 158
+Pre-Depends: pypy-upstream (= 2.2.1-5), dpkg (>= 1.15.6~)
+Breaks: pypy-dev, pypy-upstream-dev
+Replaces: pypy-dev, pypy-upstream-dev
+Homepage: http://pypy.org/
+Priority: extra
+Section: python
+Filename: pool/main/p/pypy-upstream/pypy-upstream-dev_2.2.1-5_armhf.deb
+Size: 30314
+SHA256: 80089e4771b9737186a9a8923bb69100c669cd82d45beab688552e89b72bb6dc
+SHA1: 665f8b5d7104b79527a678335614b85f0bea7e7e
+MD5sum: 055a32aed60450b541b445d95e2b2f40
+Description: PyPy interpreter - Upstream development headers
+ PyPy is a fast, compliant alternative implementation of the Python language
+ (2.7.3). It has several advantages and distinct features:
+  * Speed: thanks to its Just-in-Time compiler, Python programs often run faster on PyPy.
+  * Memory usage: large, memory-hungry Python programs might end up taking less
+    space than they do in CPython.
+  * Compatibility: PyPy is highly compatible with existing python code.
+    It supports ctypes and can run popular python libraries like twisted and django.
+  * Sandboxing: PyPy provides the ability to run untrusted code in a fully secure way.
+  * Stackless: PyPy comes by default with support for stackless mode, providing
+    micro-threads for massive concurrency.  As well as other features.
+
+Package: pypy-upstream-doc
+Source: pypy-upstream
+Version: 2.2.1-5
+Architecture: all
+Maintainer: David Schneider <david.schneider@bivab.de>
+Installed-Size: 4393
+Pre-Depends: dpkg (>= 1.15.6~)
+Suggests: python-doc
+Homepage: http://pypy.org/
+Priority: extra
+Section: doc
+Filename: pool/main/p/pypy-upstream/pypy-upstream-doc_2.2.1-5_all.deb
+Size: 1396692
+SHA256: 766a937e57a6faceae67b400c12f176f56fb6563bbd1a780280f1900bb0b312c
+SHA1: 61dd681f197f18a52f2cc9644461ab7e3220a7dc
+MD5sum: 9599a3014e301f151ac4c10622a1e19b
+Description: developer Documentation for PyPy (an alternative Python interpreter)
+ The Developer documentation for PyPy. This mostly covers the internals of
+ PyPy, and development of PyPy itself.
+ .
+ PyPy is a fast, compliant alternative implementation of the Python language
+ (2.7).
+
+Package: python-lirc
+Version: 1.2.1-1
+Architecture: armhf
+Maintainer: Thomas Preston <thomasmarkpreston@gmail.com>
+Installed-Size: 148
+Depends: python (>= 2.6), python (<< 2.8), lirc
+Homepage: https://github.com/tompreston/python-lirc
+Priority: optional
+Section: python
+Filename: pool/main/p/python-lirc/python-lirc_1.2.1-1_armhf.deb
+Size: 38724
+SHA256: 9e571eb19615342c5b7e297e52b6a0872ba4b0267017a56cdffb8c28e70cc954
+SHA1: 3f72ef1379b264f39a2f5bb43e4c8d74573a15d5
+MD5sum: 92e8a821552bb4caa81653b1bf519838
+Description: Python module for creating LIRC clients.
+ This Python module allows you to retrieve commands from the LIRC
+ server.
+
+Package: python-pifacecad
+Source: pifacecad
+Version: 2.0.5-1
+Architecture: all
+Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
+Installed-Size: 693
+Depends: python (>= 2.6.6-7~), python (<< 2.8), python-pifacecommon (>= 4.0.0), python-pifacecommon (<< 5.0.0), python-lirc (>= 1.0.0), python-lirc (<< 2.0.0)
+Homepage: http://piface.github.io/pifacecad/
+Priority: optional
+Section: python
+Filename: pool/main/p/pifacecad/python-pifacecad_2.0.5-1_all.deb
+Size: 190422
+SHA256: 7cfd9c42028e99ddbe0f07519433cb967b29c9c4dc709e7323b5ee6c99a249f7
+SHA1: 5f3fa89709ff14049925a653eb04168d1a1584f4
+MD5sum: 2066a19486a4e38314020ec123b472e0
+Description: The PiFace Control and Display Python module.
+ Python module for interacting with PiFace Control and Display.
+
+Package: python-pifacecad-emulator
+Source: pifacecad-emulator
+Version: 0.2.2-1
+Architecture: all
+Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
+Installed-Size: 26
+Depends: python-pifacecad (>= 2.0.0), python-pifacecad (<< 3.0.0), python-pifacecommon (>= 4.0.0), python-pifacecommon (<< 5.0.0), python-pyside
+Priority: optional
+Section: python
+Filename: pool/main/p/pifacecad-emulator/python-pifacecad-emulator_0.2.2-1_all.deb
+Size: 2068
+SHA256: 9829dbda58074d6c0b435a929683601645c960d0cbe3fe870af01738a679c34c
+SHA1: a2dd27ccb3fc5fe93d865af13ca3a901227413f2
+MD5sum: afb75d6633ba528a1ef7ba2ee7e8d06c
+Description: The PiFace Control and Display emulator.
+ Python module for interacting with the PiFace CAD Emulator.
+
+Package: python-pifacecommon
+Source: pifacecommon
+Version: 4.0.0-1
+Architecture: all
+Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
+Installed-Size: 579
+Depends: python (>= 2.6.6-7~), python (<< 2.8)
+Priority: optional
+Section: python
+Filename: pool/main/p/pifacecommon/python-pifacecommon_4.0.0-1_all.deb
+Size: 150502
+SHA256: 2fdc2a7d6c5b1e32f201c85cb308e915dab6764890801b40ba02c207aff03915
+SHA1: ba7aec7b054492eb70655cc173285833552b4bc2
+MD5sum: ec39bf721dac76c34b9100d890ab158f
+Description: The PiFace common functions module.
+ Python module for interacting with PiFace products.
+ Documentation: http://piface.github.io/pifacecommon/
+
+Package: python-pifacedigitalio
+Source: pifacedigitalio
+Version: 3.0.4-1
+Architecture: all
+Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
+Installed-Size: 544
+Depends: python (>= 2.6.6-7~), python (<< 2.8), python-pifacecommon (>= 4.0.0), python-pifacecommon (<< 5.0.0)
+Priority: optional
+Section: python
+Filename: pool/main/p/pifacedigitalio/python-pifacedigitalio_3.0.4-1_all.deb
+Size: 141902
+SHA256: f67860153de522cb377e5d25415f503201913e49bbf8d8c43710b8940a73f9ce
+SHA1: 3fa91d69cc146b4b0de56d67849aff1b2af07e0f
+MD5sum: d4bc16377fe87c731fb5488c915871ea
+Description: The PiFace Digital I/O module.
+ Python module for interacting with PiFace Digital.
+ Documentation: http://piface.github.io/pifacedigitalio/
+
+Package: python-rpi.gpio
+Source: rpi.gpio
+Version: 0.5.4-1
+Architecture: armhf
+Maintainer: Ben Croston <ben@croston.org>
+Installed-Size: 159
+Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), python (>= 2.6.6-7~), python (<< 2.8)
+Homepage: http://sourceforge.net/projects/raspberry-gpio-python/
+Priority: optional
+Section: python
+Filename: pool/main/r/rpi.gpio/python-rpi.gpio_0.5.4-1_armhf.deb
+Size: 38296
+SHA256: 104b02caac7175dfd2e1b9995d43db6eeb21ede8d2c2746252365d8764d4b1c8
+SHA1: 5593e9f1259fce584dd3abe48ef18ccbe77bba97
+MD5sum: eeeb6ac8a96ab12129c2a81bcc67143c
+Description: Python GPIO module for Raspberry Pi
+ This is the RPi.GPIO Python module, for supporting GPIO on a
+ Raspberry Pi
+
+Package: python3-lirc
+Source: python-lirc
+Version: 1.2.1-1
+Architecture: armhf
+Maintainer: Thomas Preston <thomasmarkpreston@gmail.com>
+Installed-Size: 83
+Depends: python3 (>= 3.2), python3 (<< 3.3), lirc
+Homepage: https://github.com/tompreston/python-lirc
+Priority: optional
+Section: python
+Filename: pool/main/p/python-lirc/python3-lirc_1.2.1-1_armhf.deb
+Size: 21092
+SHA256: f780251d69b44cf439e4a4d9e4df33b99202412780382e5090c36c97a2fba078
+SHA1: 42cd706c068c5cd7da9b75cbe3f34bb3aaaa95e3
+MD5sum: 67a07077f5ecc571b09476a641e1b26f
+Description: Python 3 module for creating LIRC clients.
+ This Python 3 module allows you to retrieve commands from the LIRC
+ server.
+
+Package: python3-pifacecad
+Source: pifacecad
+Version: 2.0.5-1
+Architecture: all
+Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
+Installed-Size: 673
+Depends: python3 (>= 3.2.3-3~), python3-pifacecommon (>= 4.0.0), python3-pifacecommon (<< 5.0.0), python3-lirc (>= 1.0.0), python3-lirc (<< 2.0.0)
+Homepage: http://piface.github.io/pifacecad/
+Priority: optional
+Section: python
+Filename: pool/main/p/pifacecad/python3-pifacecad_2.0.5-1_all.deb
+Size: 190278
+SHA256: 660a6f8e6126a5ebaa4ad0c3dafedbf7ff89c9b9f12815df15bab51e6d1dcab5
+SHA1: e07e561cf7d400cf3274ffb854f22aa2359fdd09
+MD5sum: 0c5689abe17b21983014c82e018409d9
+Description: The PiFace Control and Display Python 3 module.
+ Python 3 module for interacting with PiFace Control and Display.
+
+Package: python3-pifacecommon
+Source: pifacecommon
+Version: 4.0.0-1
+Architecture: all
+Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
+Installed-Size: 558
+Depends: python3 (>= 3.2.3-3~)
+Priority: optional
+Section: python
+Filename: pool/main/p/pifacecommon/python3-pifacecommon_4.0.0-1_all.deb
+Size: 149606
+SHA256: eb32745ebf94bc6cd8f0e6d76f5731314b80477bbb42cc61df464e2816fc5280
+SHA1: cb0716245c3cd83d18d9bc3326f02be3246a40ce
+MD5sum: 9f65df54dd8a214d10008b25c7f281af
+Description: The PiFace common functions module.
+ Python 3 module for interacting with PiFace products.
+ Documentation: http://piface.github.io/pifacecommon/
+
+Package: python3-pifacedigital-emulator
+Source: pifacedigital-emulator
+Version: 2.0.1-1
+Architecture: all
+Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
+Installed-Size: 322
+Depends: python3 (>= 3.2.3-3~), python3-pifacedigitalio (>= 3.0.0), python3-pifacedigitalio (<< 4.0.0), python3-pifacecommon (>= 4.0.0), python3-pifacecommon (<< 5.0.0), python3-pyside
+Priority: optional
+Section: python
+Filename: pool/main/p/pifacedigital-emulator/python3-pifacedigital-emulator_2.0.1-1_all.deb
+Size: 75864
+SHA256: 2bc0aaf62eabb88b31d19d7484953c2688bbf7a6746a1894681a59aafc72649f
+SHA1: 6b590012a8d79e1f50789b88ca42a1df9f6f75f8
+MD5sum: 59a75d01bbce4ede95e5650583ab64b9
+Description: The PiFace Digital I/O emulator.
+ Python 3 module for interacting with the PiFace Digital Emulator.
+
+Package: python3-pifacedigital-scratch-handler
+Source: pifacedigital-scratch-handler
+Version: 2.0.4-1
+Architecture: all
+Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
+Installed-Size: 37
+Depends: python3 (>= 3.2), python3-pifacedigitalio (>= 3.0.0), python3-pifacedigitalio (<< 4.0.0)
+Priority: optional
+Section: python
+Filename: pool/main/p/pifacedigital-scratch-handler/python3-pifacedigital-scratch-handler_2.0.4-1_all.deb
+Size: 4706
+SHA256: 4d62998ecb31be0f2d93d8c35c2bb78a31da6f855595a868e7aa2c60a565d37c
+SHA1: f993213d6f7f562c16aa553483d603f2c199d04b
+MD5sum: f04a9bc62bd02044a790d4eabf4cd4ff
+Description: The PiFace Digital Scratch Handler.
+ Python 3 program which handles communication between PiFace Digital and
+ Scratch.
+
+Package: python3-pifacedigitalio
+Source: pifacedigitalio
+Version: 3.0.4-1
+Architecture: all
+Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
+Installed-Size: 524
+Depends: python3 (>= 3.2.3-3~), python3-pifacecommon (>= 4.0.0), python3-pifacecommon (<< 5.0.0)
+Priority: optional
+Section: python
+Filename: pool/main/p/pifacedigitalio/python3-pifacedigitalio_3.0.4-1_all.deb
+Size: 140960
+SHA256: 01dbe89befc8cd0d668a655fba24318f43745c9bef35f66560b8856650b7f1a2
+SHA1: 9e913aa3eda7cc84814bead3fc085f6081f303e4
+MD5sum: 0c07f3710a9606543c4aec8e544749b1
+Description: The PiFace Digital I/O module.
+ Python 3 module for interacting with PiFace Digital.
+ Documentation: http://piface.github.io/pifacedigitalio/
+
+Package: python3-rpi.gpio
+Source: rpi.gpio
+Version: 0.5.4-1
+Architecture: armhf
+Maintainer: Ben Croston <ben@croston.org>
+Installed-Size: 84
+Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), python3 (>= 3.2.3-3~), python3 (<< 3.3)
+Homepage: http://sourceforge.net/projects/raspberry-gpio-python/
+Priority: optional
+Section: python
+Filename: pool/main/r/rpi.gpio/python3-rpi.gpio_0.5.4-1_armhf.deb
+Size: 22716
+SHA256: 3c0bae559ea475174e93d7da0575aa8c3c87320f30b539c22f8565f8860075ca
+SHA1: 8d840a5d41ad3bc691c2ee53b4f11fca1c5db50e
+MD5sum: c010b538fb72a2c9328a1f58abfd05a3
+Description: Python 3 GPIO module for Raspberry Pi
+ This is the RPi.GPIO Python 3 module, for supporting GPIO on a
+ Raspberry Pi
+
+Package: python3-snap-camera
+Source: snap-camera
+Version: 0.12.0-1
+Architecture: all
+Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
+Installed-Size: 103
+Depends: python3 (>= 3.2.3-3~), python3-pifacecad (>= 2.0.0), python3-pifacecad (<< 3.0.0), imagemagick, fbi, gpac
+Homepage: http://www.piface.org.uk/
+Priority: optional
+Section: python
+Filename: pool/main/s/snap-camera/python3-snap-camera_0.12.0-1_all.deb
+Size: 15276
+SHA256: 9dca0d5e1b49d706c41d91e1057a159cd438545e9811ec148d10da15ed22eaba
+SHA1: 27ed8db74e0883c54624536ba76802419b3e63e5
+MD5sum: f120ccfb686445984be005640b9cb6d1
+Description: A camera that uses PiFace Control and Display and Raspicam.
+ A camera that uses PiFace Control and Display and Raspicam.
+ Features:
+ - Delay timer.
+ - Image effects.
+ - Image overlay.
+ - Timelapse mode.
+ - Infrared trigger.
+ - Network trigger (support for multiple cameras).
+ - Network image retrieval (support for multiple cameras).
+
+Package: qv4l2
+Source: v4l-utils
+Version: 1.0.0-1
+Architecture: armhf
+Maintainer: Gregor Jasny <gjasny@googlemail.com>
+Installed-Size: 279
+Depends: libv4l-0 (= 1.0.0-1), libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libqtcore4 (>= 4:4.7.0~beta1), libqtgui4 (>= 4:4.5.3), libstdc++6 (>= 4.4.0), libv4lconvert0 (>= 0.5.0)
+Homepage: http://linuxtv.org/downloads/v4l-utils/
+Priority: optional
+Section: utils
+Filename: pool/main/v/v4l-utils/qv4l2_1.0.0-1_armhf.deb
+Size: 100524
+SHA256: 45eabc990dfa3f8f64c7c43250077343b680fcbaa17de5d5a0b8b9613522e9d6
+SHA1: 3e0c6c15dc73f216a762ba5928d41b09cc3d9a8b
+MD5sum: 46f879495a089ad3a1a2770125054360
+Description: Graphical Qt v4l2 control panel
+ Qt v4l2 control panel application. You can change all through the v4l2
+ interface exposed device controls.
+
+Package: raspberrypi-artwork
+Version: 20120715
+Architecture: all
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Installed-Size: 92
+Homepage: https://github.com/asb/raspberrypi-artwork
+Priority: extra
+Section: x11
+Filename: pool/main/r/raspberrypi-artwork/raspberrypi-artwork_20120715_all.deb
+Size: 53810
+SHA256: 92193ac86299907151bc766ee1769039c2ddd235d8bebfdb95f88daed41b0a07
+SHA1: e0dae21a2d3ec14105bf7533416ac26857885d71
+MD5sum: 4d56504253abe029dd322d44a78a4a0b
+Description: Copy of the Raspberry Pi logo
+
+Package: raspberrypi-bootloader
+Source: raspberrypi-firmware
+Version: 1.20140107-1
+Architecture: armhf
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Installed-Size: 52667
+Homepage: https://github.com/raspberrypi/firmware
+Priority: extra
+Section: admin
+Filename: pool/main/r/raspberrypi-firmware/raspberrypi-bootloader_1.20140107-1_armhf.deb
+Size: 28714090
+SHA256: 89fad8ffc779b8e36fab0c22b389ae8b4b122a73b2d46aba34fea105bde1d748
+SHA1: 769e14a76316a3298b98180d2794f6f3f3a82a4a
+MD5sum: 05f96ab2e6d1c86e047fca74eb8d9e02
+Description: Raspberry Pi bootloader
+ This package contains the Raspberry Pi bootloader (plus, temporarily, a
+ kernel).
+
+Package: raspi-config
+Version: 20131216-1
+Architecture: all
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Installed-Size: 56
+Depends: whiptail, parted, lua5.1, triggerhappy
+Homepage: https://github.com/asb/raspi-config
+Priority: extra
+Section: unknown
+Filename: pool/main/r/raspi-config/raspi-config_20131216-1_all.deb
+Size: 11208
+SHA256: 150393eb8094ce32f939100b546e93a2562e7e8686fb1622e4229b060d77ef3d
+SHA1: 382bdddeb04f4b7cdcb640560d8dfb4b5d5b7aeb
+MD5sum: 5f4d4833941d90e2839382ef2e1f3463
+Description: Simple configuration for Raspberry Pi
+
+Package: raspi-copies-and-fills
+Version: 0.4-1
+Architecture: armhf
+Essential: no
+Depends: libc6
+Installed-Size: 10
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Priority: optional
+Section: unknown
+Filename: pool/main/r/raspi-copies-and-fills/raspi-copies-and-fills_0.4-1_armhf.deb
+Size: 4926
+SHA256: 43edafbe86dc21f3ceabfd0653ddc60002908e1a7338410ca47570e10a6b1cda
+SHA1: 78bf365ad8213d8fc1c7b91fad2e0078b928726f
+MD5sum: d8d25c010d3eed4b70d42d9c7a73e7ca
+Description: Optimised memcpy/memset implementation for ARM11 used in Raspberry Pi
+Homepage: https://github.com/simonjhall/copies-and-fills
+
+Package: rpi-update
+Version: 20130510
+Architecture: all
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Installed-Size: 36
+Depends: binutils, git-core
+Homepage: https://github.com/asb/rpi-update
+Priority: extra
+Section: unknown
+Filename: pool/main/r/rpi-update/rpi-update_20130510_all.deb
+Size: 4096
+SHA256: a92f295f1d7308bde8a0b51413fb87d8193271506cf179fa611ac9d3e158549e
+SHA1: ef3b37b3d80e43e55fab79d286234771a32b611a
+MD5sum: 069e6355a29e924dadfde7457d628580
+Description: Raspberry Pi firmware updating tool
+
+Package: scratch
+Version: 1.4.20131203-2
+Architecture: all
+Maintainer: Miriam Ruiz <little_miry@yahoo.es>
+Installed-Size: 45632
+Depends: squeak-vm, squeak-plugins-scratch, libgtk2.0-bin, shared-mime-info
+Suggests: pulseaudio (>= 1.0.9)
+Homepage: http://scratch.mit.edu
+Priority: optional
+Section: education
+Filename: pool/main/s/scratch/scratch_1.4.20131203-2_all.deb
+Size: 30811824
+SHA256: b00a7206fed1f5ad905f827119b5df2333b5ddc5cce72d670f32403eae25c393
+SHA1: dd09c1c2e108ddb8ca1678089624bb0f289974e3
+MD5sum: 5749cbd51895ce719f84c517ac1adece
+Description: easy to use programming environment for ages 8 and up - data
+ Scratch is an easy, interactive, collaborative programming
+ environment designed for creation of interactive stories, animations,
+ games, music, and art -- and sharing these on the web.
+ Scratch is designed to help young people (ages 8 and up) develop 21st
+ century learning skills. As they create Scratch projects, young people
+ learn important mathematical and computational ideas, while also
+ gaining a deeper understanding of the process of design.
+
+Package: simbamond
+Version: 2.0
+Architecture: all
+Maintainer: Hamish Cunningham (http://gate.ac.uk/hamish/) <hamish@gate.ac.uk>
+Installed-Size: 72
+Depends: bc
+Recommends: gpio
+Homepage: http://pi.gate.ac.uk/pages/mopi.html#simbamon
+Priority: optional
+Section: admin
+Filename: pool/main/s/simbamond/simbamond_2.0_all.deb
+Size: 11114
+SHA256: 5a34670320c0496ba1af96ed7a9277f0fbf754897e78909ae738dae204374413
+SHA1: 9b9ef1a292f6a2af61a67bba35b385e58230e70f
+MD5sum: 9b8b7ca64767340ee2084587b933f443
+Description: SimBaMon, a Simple Battery Monitor
+ SimBaMon is an open source Linux daemon for monitoring battery levels;
+ sending warning messages to the user if the battery is low; shutting down
+ cleanly at critical battery levels; managing a power supply on/off switch;
+ writing relevant data to the system logs. See
+ http://pi.gate.ac.uk/pages/mopi.html#simbamon
+
+Package: smartsim
+Version: 1.2.1-4
+Architecture: armhf
+Depends: libc6, libgtk2.0-0, librsvg2-2, libglib2.0-0, libcairo2, libxml2
+Maintainer: Ashley Newson <ashleynewson@smartsim.org.uk>
+Homepage: http://smartsim.org.uk/
+Installed-Size: 744
+Priority: optional
+Section: electronics
+Filename: pool/main/s/smartsim/smartsim_1.2.1-4_armhf.deb
+Size: 177024
+SHA256: f14da4101674ba66afe239038a54dd7d34a803748849b38b6f69ac1d4e1c83ff
+SHA1: 43fdce105befe670dd4db19fc33cc7e8475c3e0d
+MD5sum: 7ed847bc595b831a3995ea9bb880a420
+Description: Digital logic circuit design and simulation package.
+ SmartSim allows you to create and simulate your own digital logic
+ circuits, using a powerful hierarchy feature, which allows you to
+ create your own sub-components and include them in other circuits.
+ .
+ SmartSim's features include the ability to create timing diagrams,
+ and the ability to export your work to PDF, PNG, and SVG. You can
+ also make use of RAM/ROM chips which can load and save to files.
+
+Package: sonic-pi
+Version: 1.0
+Architecture: armhf
+Essential: no
+Depends: libc6, supercollider, ruby1.9.1, libqscintilla2-8, jackd2
+Installed-Size: 500
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Priority: optional
+Section: unknown
+Filename: pool/main/s/sonic-pi/sonic-pi_1.0_armhf.deb
+Size: 139666
+SHA256: 86fcf77226cfd334904b33c994d387b3355e323c28a8d16d9c176958c0fec54e
+SHA1: be0def9633df400ac10f6ce03198cb53b849cdfa
+MD5sum: 6c23001c4d2bee70ac7d61ff252912e3
+Description: Sonic Pi is a music programming environment aimed at new programmers.
+Homepage: https://github.com/samaaron/sonic-pi
+
+Package: squeak-vm
+Version: 1:4.10.2.2793-2
+Architecture: armhf
+Maintainer: Debian Squeak Team <pkg-squeak-devel@lists.alioth.debian.org>
+Installed-Size: 2220
+Depends: libc6 (>= 2.13-28), libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.4.0), libpcre3 (>= 8.10), whiptail, xterm | x-terminal-emulator, gettext-base
+Recommends: zenity | kdebase-bin
+Suggests: etoys
+Homepage: http://www.squeakvm.org/unix/
+Priority: optional
+Section: interpreters
+Filename: pool/main/s/squeak-vm/squeak-vm_4.10.2.2793-2_armhf.deb
+Size: 775304
+SHA256: d8bbce7dccbcd6f88a4fc1d098e1463852c9441ea2a24d88a7de570ceacd1cc1
+SHA1: 20eee2845a80def2ae7c695e360fc75fd3068db6
+MD5sum: d735a9253f4def6d7219706f67a4b3b3
+Description: The Squeak Smalltalk System (virtual machine)
+ Squeak is a full-featured implementation of the Smalltalk programming
+ language and environment based on (and largely compatible with) the
+ original Smalltalk-80 system.
+ .
+ This package contains just the Squeak virtual machine.  If you are new
+ to Squeak then you will have to install a Squeak image too before you
+ can run Squeak. Squeak images can be downloaded from
+ <http://www.squeak.org/>, <http://www.squeakland.org/> or
+ <http://squeak.educarex.es/>.
+
+Package: v4l-utils
+Version: 1.0.0-1
+Architecture: armhf
+Maintainer: Gregor Jasny <gjasny@googlemail.com>
+Installed-Size: 371
+Depends: libv4l-0 (= 1.0.0-1), libv4l2rds0 (= 1.0.0-1), libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libstdc++6 (>= 4.6), libv4lconvert0 (>= 0.5.0)
+Breaks: ivtv-utils (<< 1.4.1-2)
+Replaces: ivtv-utils (<< 1.4.1-2)
+Homepage: http://linuxtv.org/downloads/v4l-utils/
+Priority: optional
+Section: utils
+Filename: pool/main/v/v4l-utils/v4l-utils_1.0.0-1_armhf.deb
+Size: 155446
+SHA256: e9df6101a765304f70c5e5a1ef1bb8af88dac7518a27b9b14ed00dbe04f9ac42
+SHA1: 79a0bdedf964c53166a940d4e359d84c32a35472
+MD5sum: 7ec6ced240ad8be39db6f076a13c5291
+Description: Collection of command line video4linux utilities
+ v4l-utils contains the following video4linux command line utilities:
+ .
+  decode_tm6000: decodes tm6000 proprietary format streams
+  rds-ctl: tool to receive and decode Radio Data System (RDS) streams
+  v4l2-compliance: tool to test v4l2 API compliance of drivers
+  v4l2-ctl, cx18-ctl, ivtv-ctl: tools to control v4l2 controls from the cmdline
+  v4l2-dbg: tool to directly get and set registers of v4l2 devices
+  v4l2-sysfs-path: sysfs helper tool
+
+Package: wolfram-engine
+Version: 10.0.0+2013112003
+Architecture: armhf
+Installed-Size: 419002
+Maintainer: Wolfram Research, Inc. <raspberrypi@wolfram.com>
+Homepage: http://wolfram.com/raspi
+Pre-Depends: debconf (>=0.5) | debconf-2.0
+Depends: java7-runtime
+Recommends: oracle-java7-jdk
+Priority: optional
+Section: non-free/devel
+Filename: pool/main/w/wolfram-engine/wolfram-engine_10.0.0+2013112003_armhf.deb
+Size: 207470536
+SHA256: 39f5a25c26f3513e2b09d427d6ff63d0193b1676bdba5641a19f137c1eb121ca
+SHA1: 74700757a1e988ad6fca5a60832cfe8c47d9bf58
+MD5sum: 4cf44cad4e059519903cb078135d9af3
+Description: Mathematica® and the Wolfram Language
+ Mathematica is the world's ultimate application for computations and the only development platform fully integrating computation into complete workflows, moving you seamlessly from initial ideas all the way to deployed individual or enterprise solutions.
+ .
+ Wolfram Language is the result of more than 25 years of leading-edge language development. Unique in its philosophy of building in a vast array of algorithms, knowledge, and interfaces, its goal is to be the world's smartest and most productive programming language--and the shortest path from ideas to deployed code.
+ .
+ NOTE: You must accept the Wolfram Mathematica® License Agreement prior to successfully installing this package.
+
+Package: xserver-xorg-video-fbturbo
+Version: 1.20131208-1
+Architecture: armhf
+Maintainer: Alex Bradbury <asb@asbradbury.org.org>
+Installed-Size: 108
+Depends: libc6 (>= 2.13-28), xorg-video-abi-12, xserver-xorg-core (>= 2:1.12.3.901)
+Provides: xorg-driver-video
+Priority: optional
+Section: x11
+Filename: pool/main/x/xserver-xorg-video-fbturbo/xserver-xorg-video-fbturbo_1.20131208-1_armhf.deb
+Size: 28448
+SHA256: 4d87ba8ea8098654311c51fac0dd7e6e1abab5808e3855ef4f35256410e2331e
+SHA1: e95d76feb70798d5e959a1de221120380ebede61
+MD5sum: 2d798ae8c9395cda10686e778216fe26
+Description: X.Org X server -- fbturbo display driver
+ This package provides the fbturbo driver which provides accelerated functions
+ on the Raspberry Pi and similar. More at <https://github.com/ssvb/xf86-video-fbturbo>
+

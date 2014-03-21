@@ -1,0 +1,7 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="wibble::mixin::OutputIterator\< Self \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structwibble_1_1mixin_1_1OutputIterator.html",tooltip="Mixin with output iterator paperwork."];
+}

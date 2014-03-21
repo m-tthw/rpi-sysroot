@@ -1,0 +1,21 @@
+=========================
+objspace.usemodules.fcntl
+=========================
+
+* **name:** fcntl
+
+* **description:** use module fcntl
+
+* **command-line:** --withmod-fcntl
+
+* **command-line for negation:** --withoutmod-fcntl
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the 'fcntl' module. 
+This module is expected to be fully working.

@@ -1,0 +1,70 @@
+@@resource DefaultLocalKernelName
+Local
+@|
+@|
+@@resource DefaultConnectionRecordName
+New Kernel
+@|
+@|
+@@resource DefaultLocalKernelExecutableName Macintosh
+MathKernel
+@|
+@@resource DefaultLocalKernelExecutableName X
+math
+@|
+@@resource DefaultLocalKernelExecutableName Windows
+MathKernel
+@|
+@|
+@@resource DefaultRemoteKernelExecutableName
+math
+@|
+@|
+@@resource DefaultRemoteAccessString Macintosh
+hostname
+@|
+@@resource DefaultRemoteAccessString X
+hostname
+@|
+@@resource DefaultRemoteAccessString Windows
+
+@|
+@|
+@@resource DefaultRemoteLoginString
+username
+@|
+@|
+@@resource LocalKernelMLOpenArgumentsTemplate Macintosh
+-LinkMode Launch -LinkProtocol SharedMemory -LinkName "'`executable`' -mathlink" -LinkOptions 3
+@|
+@|
+@@resource LocalKernelMLOpenArgumentsTemplate X
+-LinkMode Launch -LinkProtocol SharedMemory -LinkName "'`executable`' -mathlink"
+@|
+@|
+@@resource LocalKernelMLOpenArgumentsTemplate Windows
+-LinkMode Launch -LinkName "`executable` -mathlink -noicon"
+@|
+@@resource RemoteKernelMLOpenArgumentsTemplate
+-LinkMode Listen -LinkProtocol TCPIP -LinkOptions MLDontInteract
+@|
+@@resource LocalKernelLoginCommandTemplate
+
+@|
+@|
+@@resource DefaultDumpFile
+None
+@|
+@|
+@@resource RemoteKernelLoginWithPasswordCommandTemplate
+winrsh -e -m -q -h `host` -l `username` '`executable` -mathlink -LinkMode Connect -LinkProtocol TCPIP -LinkName "`linkname`"'
+@|
+@@resource RemoteSSHKernelLoginCommandTemplate Windows
+"`java`" -jar "`mathssh`" `username`@`host` `executable` -mathlink -LinkMode Connect -LinkProtocol TCPIP -LinkName "`linkname`" -LinkHost `ipaddress`
+@|
+@@resource RemoteSSHKernelLoginCommandTemplate Macintosh
+`java` -jar "`mathssh`" `username`@`host` `executable` -mathlink -LinkMode Connect -LinkProtocol TCPIP -LinkName "`linkname`" -LinkHost `ipaddress`
+@|
+@@resource RemoteSSHKernelLoginCommandTemplate X
+`java` -jar `mathssh` `username`@`host` `executable` -mathlink -LinkMode Connect -LinkProtocol TCPIP -LinkName "`linkname`" -LinkHost `ipaddress`
+@|

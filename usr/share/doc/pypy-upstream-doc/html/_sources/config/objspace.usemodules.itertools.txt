@@ -1,0 +1,21 @@
+=============================
+objspace.usemodules.itertools
+=============================
+
+* **name:** itertools
+
+* **description:** use module itertools
+
+* **command-line:** --withmod-itertools
+
+* **command-line for negation:** --withoutmod-itertools
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the interp-level 'itertools' module.
+If not included, a slower app-level version of itertools is used.

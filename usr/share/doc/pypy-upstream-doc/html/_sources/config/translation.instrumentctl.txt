@@ -1,0 +1,16 @@
+=========================
+translation.instrumentctl
+=========================
+
+* **name:** instrumentctl
+
+* **description:** internal
+
+* **option type:** arbitrary option (mostly internal)
+
+
+
+
+Internal option.
+
+.. internal

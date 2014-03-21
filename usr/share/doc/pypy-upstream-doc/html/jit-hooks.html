@@ -1,0 +1,128 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>JIT hooks in PyPy &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="jit-hooks-in-pypy">
+<h1>JIT hooks in PyPy<a class="headerlink" href="#jit-hooks-in-pypy" title="Permalink to this headline">¶</a></h1>
+<p>There are several hooks in the <tt class="docutils literal"><span class="pre">pypyjit</span></tt> module that may help you with
+understanding what&#8217;s pypy&#8217;s JIT doing while running your program. There
+are three functions related to that coming from the <tt class="docutils literal"><span class="pre">pypyjit</span></tt> module:</p>
+<dl class="function">
+<dt id="set_optimize_hook">
+<tt class="descname">set_optimize_hook</tt><big>(</big><em>callable</em><big>)</big><a class="headerlink" href="#set_optimize_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a compiling hook that will be called each time a loop is optimized,
+but before assembler compilation. This allows adding additional
+optimizations on Python level.</p>
+<p>The callable will be called with the <tt class="docutils literal"><span class="pre">pypyjit.JitLoopInfo</span></tt> object.
+Refer to it&#8217;s documentation for details.</p>
+<p>Result value will be the resulting list of operations, or None</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="set_compile_hook">
+<tt class="descname">set_compile_hook</tt><big>(</big><em>callable</em><big>)</big><a class="headerlink" href="#set_compile_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a compiling hook that will be called each time a loop is compiled.</p>
+<p>The callable will be called with the <tt class="docutils literal"><span class="pre">pypyjit.JitLoopInfo</span></tt> object.
+Refer to it&#8217;s documentation for details.</p>
+<p>Note that jit hook is not reentrant. It means that if the code
+inside the jit hook is itself jitted, it will get compiled, but the
+jit hook won&#8217;t be called for that.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="set_abort_hook">
+<tt class="descname">set_abort_hook</tt><big>(</big><em>hook</em><big>)</big><a class="headerlink" href="#set_abort_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a hook (callable) that will be called each time there is tracing
+aborted due to some reason.</p>
+<p>The hook will be invoked with the siagnture:
+<tt class="docutils literal"><span class="pre">hook(jitdriver_name,</span> <span class="pre">greenkey,</span> <span class="pre">reason)</span></tt></p>
+<p>Reason is a string, the meaning of other arguments is the same
+as attributes on JitLoopInfo object</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/jit-hooks.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

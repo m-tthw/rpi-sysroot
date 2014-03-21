@@ -1,0 +1,16 @@
+To configure libwibble:
+
+ mkdir build
+ cd build
+ cmake ..
+
+ You can use "ccmake .." instead of "cmake .." to get an interactive interface
+ for selecting configuration parameters.
+
+To build libwibble:
+
+ make
+
+To install libwibble:
+
+ make install

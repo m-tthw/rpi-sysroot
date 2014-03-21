@@ -1,0 +1,20 @@
+==========================
+objspace.usemodules.thread
+==========================
+
+* **name:** thread
+
+* **description:** use module thread
+
+* **command-line:** --withmod-thread
+
+* **command-line for negation:** --withoutmod-thread
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the 'thread' module. 

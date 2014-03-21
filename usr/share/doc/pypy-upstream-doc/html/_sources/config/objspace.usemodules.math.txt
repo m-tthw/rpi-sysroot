@@ -1,0 +1,21 @@
+========================
+objspace.usemodules.math
+========================
+
+* **name:** math
+
+* **description:** use module math
+
+* **command-line:** --withmod-math
+
+* **command-line for negation:** --withoutmod-math
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+Use the 'math' module. 
+This module is expected to be working and is included by default.

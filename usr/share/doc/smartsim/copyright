@@ -1,0 +1,17 @@
+SmartSim: A digital logic circuit design and simulation package.
+
+This Debian package was created by Ashley Newson.
+
+Source code for this program is available at:
+	https://github.com/ashleynewson/SmartSim
+
+Copyright: Copyright (C) 2012 Ashley Newson
+
+Developer:
+	Ashley Newson
+
+License:
+	SmartSim is released under the GNU General Public License Version 3.
+	On Debian systems, this license can be found in:
+	/usr/share/common-licenses/GPL-3
+

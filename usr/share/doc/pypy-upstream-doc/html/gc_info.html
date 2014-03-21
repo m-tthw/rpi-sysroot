@@ -1,0 +1,143 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Garbage collector configuration &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="garbage-collector-configuration">
+<h1>Garbage collector configuration<a class="headerlink" href="#garbage-collector-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="minimark">
+<span id="minimark-environment-variables"></span><h2>Minimark<a class="headerlink" href="#minimark" title="Permalink to this headline">¶</a></h2>
+<p>PyPy&#8217;s default <tt class="docutils literal"><span class="pre">minimark</span></tt> garbage collector is configurable through
+several environment variables:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">PYPY_GC_NURSERY</span></tt></dt>
+<dd>The nursery size.
+Defaults to 1/2 of your cache or <tt class="docutils literal"><span class="pre">4M</span></tt>.
+Small values (like 1 or 1KB) are useful for debugging.</dd>
+<dt><tt class="docutils literal"><span class="pre">PYPY_GC_MAJOR_COLLECT</span></tt></dt>
+<dd>Major collection memory factor.
+Default is <tt class="docutils literal"><span class="pre">1.82</span></tt>, which means trigger a major collection when the
+memory consumed equals 1.82 times the memory really used at the end
+of the previous major collection.</dd>
+<dt><tt class="docutils literal"><span class="pre">PYPY_GC_GROWTH</span></tt></dt>
+<dd>Major collection threshold&#8217;s max growth rate.
+Default is <tt class="docutils literal"><span class="pre">1.4</span></tt>.
+Useful to collect more often than normally on sudden memory growth,
+e.g. when there is a temporary peak in memory usage.</dd>
+<dt><tt class="docutils literal"><span class="pre">PYPY_GC_MAX</span></tt></dt>
+<dd>The max heap size.
+If coming near this limit, it will first collect more often, then
+raise an RPython MemoryError, and if that is not enough, crash the
+program with a fatal error.
+Try values like <tt class="docutils literal"><span class="pre">1.6GB</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">PYPY_GC_MAX_DELTA</span></tt></dt>
+<dd>The major collection threshold will never be set to more than
+<tt class="docutils literal"><span class="pre">PYPY_GC_MAX_DELTA</span></tt> the amount really used after a collection.
+Defaults to 1/8th of the total RAM size (which is constrained to be
+at most 2/3/4GB on 32-bit systems).
+Try values like <tt class="docutils literal"><span class="pre">200MB</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">PYPY_GC_MIN</span></tt></dt>
+<dd>Don&#8217;t collect while the memory size is below this limit.
+Useful to avoid spending all the time in the GC in very small
+programs.
+Defaults to 8 times the nursery.</dd>
+<dt><tt class="docutils literal"><span class="pre">PYPY_GC_DEBUG</span></tt></dt>
+<dd>Enable extra checks around collections that are too slow for normal
+use.
+Values are <tt class="docutils literal"><span class="pre">0</span></tt> (off), <tt class="docutils literal"><span class="pre">1</span></tt> (on major collections) or <tt class="docutils literal"><span class="pre">2</span></tt> (also
+on minor collections).</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Garbage collector configuration</a><ul>
+<li><a class="reference internal" href="#minimark">Minimark</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/gc_info.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

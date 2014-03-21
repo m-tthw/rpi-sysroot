@@ -1,0 +1,23 @@
+==========================
+translation.taggedpointers
+==========================
+
+* **name:** taggedpointers
+
+* **description:** When true, enable the use of tagged pointers. If false, use
+  normal boxing
+
+* **command-line:** --translation-taggedpointers
+
+* **command-line for negation:** --no-translation-taggedpointers
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Enable tagged pointers. This option is mostly useful for the Smalltalk and
+Prolog interpreters. For the Python interpreter the option
+:config:`objspace.std.withsmalllong` should be used.

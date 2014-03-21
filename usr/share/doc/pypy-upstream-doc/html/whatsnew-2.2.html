@@ -1,0 +1,147 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>What’s new in PyPy 2.2 &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="what-s-new-in-pypy-2-2">
+<h1>What&#8217;s new in PyPy 2.2<a class="headerlink" href="#what-s-new-in-pypy-2-2" title="Permalink to this headline">¶</a></h1>
+<p>Make PyPy&#8217;s bytecode dispatcher easy to read, and less reliant on RPython
+magic. There is no functional change, though the removal of dead code leads
+to many fewer tests to execute.</p>
+<p>Fast json decoder written in RPython, about 3-4x faster than the pure Python
+decoder which comes with the stdlib</p>
+<p>Improve the performance of I/O writing up to 15% by using memcpy instead of
+copying char-by-char in str2charp and get_nonmovingbuffer</p>
+<p>Simplify rpython/flowspace/ code by using more metaprogramming.  Create
+SpaceOperator class to gather static information about flow graph operations.</p>
+<p>Adapt package.py script to compile CFFI tk extension. Add a &#8211;without-tk switch
+to optionally skip it.</p>
+<p>Copy CPython&#8217;s implementation of customize_compiler, dont call split on
+environment variables, honour CFLAGS, CPPFLAGS, LDSHARED and LDFLAGS on Unices.</p>
+<p>When an RPython class is instantiated via an indirect call (that is, which
+class is being instantiated isn&#8217;t known precisely) allow the optimizer to have
+more precise information about which functions can be called. Needed for Topaz.</p>
+<p>Make PyPy respect PYTHONINSPECT variable set via os.putenv in the same process
+to start interactive prompt when the script execution finishes. This adds
+new __pypy__.os.real_getenv call that bypasses Python cache and looksup env
+in the underlying OS. Translatorshell now works on PyPy.</p>
+<p>Added os.statvfs and os.fstatvfs</p>
+<p>Added some addition tests for statvfs.</p>
+<p>Allow subclassing ndarray, i.e. matrix</p>
+<p>Implement ndarray in-place sorting (for numeric types, no non-native byte order)</p>
+<p>Implement much of numpy&#8217;s c api in cpyext, allows (slow) access to ndarray
+from c</p>
+<p>Added an abstraction for functions with a fast and slow path in the JIT. This
+speeds up list.append() and list.pop().</p>
+<p>Constant-fold reading out of constant tuples in PyPy.</p>
+<p>No longer delegate numpy <a href="#id1"><span class="problematic" id="id2">string_</span></a> methods to space.StringObject, in numpy
+this works by kind of by accident. Support for merging the refactor-str-types
+branch</p>
+<p>Remove the &#8220;type system&#8221; abstraction, now that there is only ever one kind of
+type system used.</p>
+<p>Kills gen_store_back_in_virtualizable - should improve non-inlined calls by
+a bit</p>
+<p>Work on improving UnionError messages and stack trace displays.</p>
+<p>More improvements and refactorings of error messages.</p>
+<p>Unbreak tests in rlib.</p>
+<p>Use subclasses of SpaceOperation instead of SpaceOperator objects.
+Random cleanups in flowspace.</p>
+<p>make open() and friends rpython</p>
+<p>Added the new incminimark GC which performs GC in incremental steps</p>
+<p>fastpath for cffi.new(&#8220;long[]&#8221;)</p>
+<p>remove a pointless abstraction</p>
+<p>Allow the jit to continue running when sys.settrace() is active, necessary to
+make coverage.py fast</p>
+<p>Remove lib_pypy/numpypy in favor of external numpy fork</p>
+<p>Tweak the jit counters: decay them at minor collection (actually
+only every 32 minor collection is enough). Should avoid the &#8220;memory
+leaks&#8221; observed in long-running processes, actually created by the
+jit compiling more and more rarely executed paths.</p>
+<p>Fixed the usage of sys.settrace() with the JIT. Also made it so using
+sys.settrace() doesn&#8217;t cause the GIL to be released on every single iteration.</p>
+<p>Implement OrderedDict in RPython</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/whatsnew-2.2.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

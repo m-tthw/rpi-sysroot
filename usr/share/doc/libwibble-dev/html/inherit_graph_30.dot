@@ -1,0 +1,7 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="tut::no_such_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structtut_1_1no__such__group.html",tooltip="Group not found exception."];
+}

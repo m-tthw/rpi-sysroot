@@ -1,0 +1,21 @@
+===============================
+objspace.std.withliststrategies
+===============================
+
+* **name:** withliststrategies
+
+* **description:** enable optimized ways to store lists of primitives
+
+* **command-line:** --objspace-std-withliststrategies
+
+* **command-line for negation:** --no-objspace-std-withliststrategies
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+Enable list strategies: Use specialized representations for lists of primitive
+objects, such as ints.

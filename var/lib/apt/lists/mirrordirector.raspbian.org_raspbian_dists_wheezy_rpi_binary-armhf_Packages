@@ -1,0 +1,20 @@
+Package: ssh-regen-startup
+Version: 0.1
+Architecture: all
+Maintainer: root <root@raspbian.org>
+Installed-Size: 38
+Depends: lsb-base (>= 3.0-6), openssh-server
+Homepage: <insert the upstream URL, if relevant>
+Priority: extra
+Section: rpi/unknown
+Filename: pool/rpi/s/ssh-regen-startup/ssh-regen-startup_0.1_all.deb
+Size: 3580
+SHA256: 1aa7b132dff69f5765af383188ba534fe2ad109cd5b7727f44cccdad1ee61b88
+SHA1: 383731fc6d32550dc9968330ca347134754edb3a
+MD5sum: 230b83a5c55c960b4b6a8445a35a9f4d
+Description: Regenerate ssh host keys on startup if they don't exist
+ This package adds an init script that regenerates ssh host keys on startup if they dont exist.
+ .
+ Note since the init script is a conffile removing this package will not disable it's action,
+ to do that you must purge it.
+

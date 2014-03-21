@@ -1,0 +1,23 @@
+=======================
+objspace.std.withstrbuf
+=======================
+
+* **name:** withstrbuf
+
+* **description:** use strings optimized for addition (ver 2)
+
+* **command-line:** --objspace-std-withstrbuf
+
+* **command-line for negation:** --no-objspace-std-withstrbuf
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Enable "string buffer" objects.
+
+Similar to "string join" objects, but using a StringBuilder to represent
+a string built by repeated application of ``+=``.

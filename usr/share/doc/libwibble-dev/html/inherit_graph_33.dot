@@ -1,0 +1,7 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="tut::seh",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtut_1_1seh.html",tooltip="Exception to be throwed when test issued SEH (Win32)"];
+}

@@ -1,0 +1,163 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PyPy 1.2: Just-in-Time Compilation &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pypy-1-2-just-in-time-compilation">
+<h1>PyPy 1.2: Just-in-Time Compilation<a class="headerlink" href="#pypy-1-2-just-in-time-compilation" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to the PyPy 1.2 release.  The highlight of this release is
+to be the first that ships with a Just-in-Time compiler that is
+known to be faster than CPython (and unladen swallow) on some
+real-world applications (or the best benchmarks we could get for
+them).  The main theme for the 1.2 release is speed.</p>
+<p>Main site:</p>
+<blockquote>
+<div><a class="reference external" href="http://pypy.org/">http://pypy.org/</a></div></blockquote>
+<p>The JIT is stable and we don&#8217;t observe crashes. Nevertheless we
+would recommend you to treat it as beta software and as a way to try
+out the JIT to see how it works for you.</p>
+<div class="section" id="highlights-of-this-release">
+<h2>Highlights of This Release<a class="headerlink" href="#highlights-of-this-release" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The JIT compiler.</li>
+<li>Various interpreter optimizations that improve performance
+as well as help save memory.</li>
+<li>Introducing a new PyPy website at <a class="reference external" href="http://pypy.org/">http://pypy.org/</a> , made by
+tav and improved by the PyPy team.</li>
+<li>Introducing <a class="reference external" href="http://speed.pypy.org/">http://speed.pypy.org/</a> , a new service that
+monitors our performance nightly, made by Miquel Torres.</li>
+<li>There will be ubuntu packages on &#8220;PyPy&#8217;s PPA&#8221; made by
+Bartosz Skowron; however various troubles prevented us from
+having them as of now.</li>
+</ul>
+<p>Known JIT problems (or why you should consider this beta software):</p>
+<ul class="simple">
+<li>The only supported platform is 32bit x86 for now, we&#8217;re
+looking for help with other platforms.</li>
+<li>It is still memory-hungry.  There is no limit on the amount
+of RAM that the assembler can consume; it is thus possible
+(although unlikely) that the assembler ends up using
+unreasonable amounts of memory.</li>
+</ul>
+<p>If you want to try PyPy, go to the &#8220;download page&#8221; on our excellent
+new site at <a class="reference external" href="http://pypy.org/download.html">http://pypy.org/download.html</a> and find the binary for
+your platform. If the binary does not work (e.g. on Linux, because
+of different versions of external .so dependencies), or if your
+platform is not supported, you can try building from the source.</p>
+</div>
+<div class="section" id="what-is-pypy">
+<h2>What is PyPy?<a class="headerlink" href="#what-is-pypy" title="Permalink to this headline">¶</a></h2>
+<p>Technically, PyPy is both a Python interpreter implementation and an
+advanced compiler, or more precisely a framework for implementing
+dynamic languages and generating virtual machines for them.  The
+focus of this release is the introduction of a new transformation,
+the JIT Compiler Generator, and its application to the Python
+interpreter.</p>
+<p>Socially, PyPy is a collaborative effort of many individuals working
+together in a distributed and sprint-driven way since 2003.  PyPy
+would not have gotten as far as it has without the coding, feedback
+and general support from numerous people.</p>
+<dl class="docutils">
+<dt>The PyPy release team,</dt>
+<dd>Armin Rigo, Maciej Fijalkowski and Amaury Forgeot d&#8217;Arc</dd>
+<dt>Together with</dt>
+<dd>Antonio Cuni, Carl Friedrich Bolz, Holger Krekel and
+Samuele Pedroni</dd>
+<dt>and many others:</dt>
+<dd><a class="reference external" href="http://codespeak.net/pypy/dist/pypy/doc/contributor.html">http://codespeak.net/pypy/dist/pypy/doc/contributor.html</a></dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">PyPy 1.2: Just-in-Time Compilation</a><ul>
+<li><a class="reference internal" href="#highlights-of-this-release">Highlights of This Release</a></li>
+<li><a class="reference internal" href="#what-is-pypy">What is PyPy?</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/release-1.2.0.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

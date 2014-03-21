@@ -1,0 +1,23 @@
+========================
+translation.type\_system
+========================
+
+* **name:** type\_system
+
+* **description:** Type system to use when RTyping
+
+* **option type:** choice option
+
+* **possible values:**
+
+  + lltype
+
+* **default:** lltype
+
+
+
+
+Which type system to use when rtyping_. This option should not be set
+explicitly.
+
+.. _rtyping: ../rtyper.html

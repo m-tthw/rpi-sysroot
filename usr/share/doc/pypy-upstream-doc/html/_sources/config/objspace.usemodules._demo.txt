@@ -1,0 +1,22 @@
+==========================
+objspace.usemodules.\_demo
+==========================
+
+* **name:** \_demo
+
+* **description:** use module \_demo
+
+* **command-line:** --withmod-\_demo
+
+* **command-line for negation:** --withoutmod-\_demo
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the '_demo' module. 
+
+This is the demo module for mixed modules. Not enabled by default.

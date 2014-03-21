@@ -1,0 +1,21 @@
+==========================
+objspace.usemodules.symbol
+==========================
+
+* **name:** symbol
+
+* **description:** use module symbol
+
+* **command-line:** --withmod-symbol
+
+* **command-line for negation:** --withoutmod-symbol
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+Use the 'symbol' module. 
+This module is expected to be working and is included by default.

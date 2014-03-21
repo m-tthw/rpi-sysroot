@@ -1,0 +1,21 @@
+=================================
+objspace.usemodules.\_collections
+=================================
+
+* **name:** \_collections
+
+* **description:** use module \_collections
+
+* **command-line:** --withmod-\_collections
+
+* **command-line for negation:** --withoutmod-\_collections
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the '_collections' module.
+Used by the 'collections' standard lib module. This module is expected to be working and is included by default.

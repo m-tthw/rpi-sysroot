@@ -1,0 +1,29 @@
+============================
+objspace.usemodules.\_rawffi
+============================
+
+* **name:** \_rawffi
+
+* **description:** use module \_rawffi
+
+* **command-line:** --withmod-\_rawffi
+
+* **command-line for negation:** --withoutmod-\_rawffi
+
+* **option type:** boolean option
+
+* **default:** False
+
+* **suggestions:**
+
+  + `objspace.usemodules.struct`_ should be set to 'True'
+
+.. _`objspace.usemodules.struct`: objspace.usemodules.struct.html
+
+
+
+
+
+An experimental module providing very low-level interface to
+C-level libraries, for use when implementing ctypes, not
+intended for a direct use at all.

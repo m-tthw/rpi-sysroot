@@ -1,0 +1,21 @@
+=======================
+objspace.usemodules.pwd
+=======================
+
+* **name:** pwd
+
+* **description:** use module pwd
+
+* **command-line:** --withmod-pwd
+
+* **command-line for negation:** --withoutmod-pwd
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the 'pwd' module. 
+This module is expected to be fully working.

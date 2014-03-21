@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Bytecode Interpreter &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="bytecode-interpreter">
+<h1><a class="toc-backref" href="#id11">Bytecode Interpreter</a><a class="headerlink" href="#bytecode-interpreter" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#bytecode-interpreter" id="id11">Bytecode Interpreter</a><ul>
+<li><a class="reference internal" href="#introduction-and-overview" id="id12">Introduction and Overview</a></li>
+<li><a class="reference internal" href="#bytecode-interpreter-implementation-classes" id="id13">Bytecode Interpreter Implementation Classes</a><ul>
+<li><a class="reference internal" href="#frame-classes" id="id14">Frame classes</a></li>
+<li><a class="reference internal" href="#code-class" id="id15">Code Class</a></li>
+<li><a class="reference internal" href="#function-and-method-classes" id="id16">Function and Method classes</a></li>
+<li><a class="reference internal" href="#arguments-class" id="id17">Arguments Class</a></li>
+<li><a class="reference internal" href="#module-class" id="id18">Module Class</a></li>
+<li><a class="reference internal" href="#gateway-classes" id="id19">Gateway classes</a><ul>
+<li><a class="reference internal" href="#making-interpreter-level-functions-available-at-application-level" id="id20">Making interpreter-level functions available at application-level</a></li>
+<li><a class="reference internal" href="#calling-into-application-level-code-from-interpreter-level" id="id21">Calling into application level code from interpreter-level</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#introspection-and-descriptors" id="id22">Introspection and Descriptors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction-and-overview">
+<h2><a class="toc-backref" href="#id12">Introduction and Overview</a><a class="headerlink" href="#introduction-and-overview" title="Permalink to this headline">¶</a></h2>
+<p>This document describes the implementation of PyPy&#8217;s
+Bytecode Interpreter and related Virtual Machine functionalities.</p>
+<p>PyPy&#8217;s bytecode interpreter has a structure reminiscent of CPython&#8217;s
+Virtual Machine: It processes code objects parsed and compiled from
+Python source code.  It is implemented in the <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/">pypy/interpreter/</a> directory.
+People familiar with the CPython implementation will easily recognize
+similar concepts there.  The major differences are the overall usage of
+the <a class="reference external" href="objspace.html">object space</a> indirection to perform operations on objects, and
+the organization of the built-in modules (described <a class="reference external" href="coding-guide.html#modules">here</a>).</p>
+<p>Code objects are a nicely preprocessed, structured representation of
+source code, and their main content is <em>bytecode</em>.  We use the same
+compact bytecode format as CPython 2.7, with minor differences in the bytecode
+set.  Our bytecode compiler is
+implemented as a chain of flexible passes (tokenizer, lexer, parser,
+abstract syntax tree builder and bytecode generator).  The latter passes
+are based on the <tt class="docutils literal"><span class="pre">compiler</span></tt> package from the standard library of
+CPython, with various improvements and bug fixes. The bytecode compiler
+(living under <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/astcompiler/">pypy/interpreter/astcompiler/</a>) is now integrated and is
+translated with the rest of PyPy.</p>
+<p>Code objects contain
+condensed information about their respective functions, class and
+module body source codes.  Interpreting such code objects means
+instantiating and initializing a <a class="reference internal" href="#frame-class">Frame class</a> and then
+calling its <tt class="docutils literal"><span class="pre">frame.eval()</span></tt> method.  This main entry point
+initialize appropriate namespaces and then interprets each
+bytecode instruction.  Python&#8217;s standard library contains
+the <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/lib-python/2.7/dis.py">lib-python/2.7/dis.py</a> module which allows to inspection
+of the virtual machine&#8217;s bytecode instructions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="go">2         0 LOAD_FAST                0 (x)</span>
+<span class="go">          3 LOAD_CONST               1 (1)</span>
+<span class="go">          6 BINARY_ADD</span>
+<span class="go">          7 RETURN_VALUE</span>
+</pre></div>
+</div>
+<p>CPython and PyPy are stack-based virtual machines, i.e.
+they don&#8217;t have registers but instead push object to and pull objects
+from a stack.  The bytecode interpreter is only responsible
+for implementing control flow and pushing and pulling black
+box objects to and from this value stack.  The bytecode interpreter
+does not know how to perform operations on those black box
+(<a class="reference external" href="coding-guide.html#wrapping-rules">wrapped</a>) objects for which it delegates to the <a class="reference external" href="objspace.html">object
+space</a>.  In order to implement a conditional branch in a program&#8217;s
+execution, however, it needs to gain minimal knowledge about a
+wrapped object.  Thus, each object space has to offer a
+<tt class="docutils literal"><span class="pre">is_true(w_obj)</span></tt> operation which returns an
+interpreter-level boolean value.</p>
+<p>For the understanding of the interpreter&#8217;s inner workings it
+is crucial to recognize the concepts of <a class="reference external" href="coding-guide.html#interpreter-level">interpreter-level and
+application-level</a> code.  In short, interpreter-level is executed
+directly on the machine and invoking application-level functions
+leads to an bytecode interpretation indirection. However,
+special care must be taken regarding exceptions because
+application level exceptions are wrapped into <tt class="docutils literal"><span class="pre">OperationErrors</span></tt>
+which are thus distinguished from plain interpreter-level exceptions.
+See <a class="reference external" href="coding-guide.html#applevel-exceptions">application level exceptions</a> for some more information
+on <tt class="docutils literal"><span class="pre">OperationErrors</span></tt>.</p>
+<p>The interpreter implementation offers mechanisms to allow a
+caller to be unaware of whether a particular function invocation
+leads to bytecode interpretation or is executed directly at
+interpreter-level.  The two basic kinds of <a class="reference internal" href="#gateway-classes">Gateway classes</a>
+expose either an interpreter-level function to
+application-level execution (<tt class="docutils literal"><span class="pre">interp2app</span></tt>) or allow
+transparent invocation of application-level helpers
+(<tt class="docutils literal"><span class="pre">app2interp</span></tt>) at interpreter-level.</p>
+<p>Another task of the bytecode interpreter is to care for exposing its
+basic code, frame, module and function objects to application-level
+code.  Such runtime introspection and modification abilities are
+implemented via <a class="reference internal" href="#interpreter-descriptors">interpreter descriptors</a> (also see Raymond Hettingers
+<a class="reference external" href="http://users.rcn.com/python/download/Descriptor.htm">how-to guide for descriptors</a> in Python, PyPy uses this model extensively).</p>
+<p>A significant complexity lies in <a class="reference internal" href="#function-argument-parsing">function argument parsing</a>.  Python as a
+language offers flexible ways of providing and receiving arguments
+for a particular function invocation.  Not only does it take special care
+to get this right, it also presents difficulties for the <a class="reference external" href="translation.html#the-annotation-pass">annotation
+pass</a> which performs a whole-program analysis on the
+bytecode interpreter, argument parsing and gatewaying code
+in order to infer the types of all values flowing across function
+calls.</p>
+<p>It is for this reason that PyPy resorts to generate
+specialized frame classes and functions at <a class="reference external" href="translation.html#initialization-time">initialization
+time</a> in order to let the annotator only see rather static
+program flows with homogeneous name-value assignments on
+function invocations.</p>
+</div>
+<div class="section" id="bytecode-interpreter-implementation-classes">
+<h2><a class="toc-backref" href="#id13">Bytecode Interpreter Implementation Classes</a><a class="headerlink" href="#bytecode-interpreter-implementation-classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="frame-classes">
+<span id="frame"></span><span id="frame-class"></span><h3><a class="toc-backref" href="#id14">Frame classes</a><a class="headerlink" href="#frame-classes" title="Permalink to this headline">¶</a></h3>
+<p>The concept of Frames is pervasive in executing programs and
+on virtual machines in particular. They are sometimes called
+<em>execution frame</em> because they hold crucial information
+regarding the execution of a <a class="reference internal" href="#code">Code</a> object, which in turn is
+often directly related to a Python <a class="reference internal" href="#function">Function</a>.  Frame
+instances hold the following state:</p>
+<ul class="simple">
+<li>the local scope holding name-value bindings, usually implemented
+via a &#8220;fast scope&#8221; which is an array of wrapped objects</li>
+<li>a blockstack containing (nested) information regarding the
+control flow of a function (such as <tt class="docutils literal"><span class="pre">while</span></tt> and <tt class="docutils literal"><span class="pre">try</span></tt> constructs)</li>
+<li>a value stack where bytecode interpretation pulls object
+from and puts results on.  (<tt class="docutils literal"><span class="pre">locals_stack_w</span></tt> is actually a single
+list containing both the local scope and the value stack.)</li>
+<li>a reference to the <em>globals</em> dictionary, containing
+module-level name-value bindings</li>
+<li>debugging information from which a current line-number and
+file location can be constructed for tracebacks</li>
+</ul>
+<p>Moreover the Frame class itself has a number of methods which implement
+the actual bytecodes found in a code object.  The methods of the <tt class="docutils literal"><span class="pre">PyFrame</span></tt>
+class are added in various files:</p>
+<ul class="simple">
+<li>the class <tt class="docutils literal"><span class="pre">PyFrame</span></tt> is defined in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/pyframe.py">pypy/interpreter/pyframe.py</a>.</li>
+<li>the file <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/pyopcode.py">pypy/interpreter/pyopcode.py</a> add support for all Python opcodes.</li>
+</ul>
+</div>
+<div class="section" id="code-class">
+<span id="code"></span><h3><a class="toc-backref" href="#id15">Code Class</a><a class="headerlink" href="#code-class" title="Permalink to this headline">¶</a></h3>
+<p>PyPy&#8217;s code objects contain the same information found in CPython&#8217;s code objects.
+They differ from <a class="reference internal" href="#function">Function</a> objects in that they are only immutable representations
+of source code and don&#8217;t contain execution state or references to the execution
+environment found in <cite>Frames</cite>.  Frames and Functions have references
+to a code object. Here is a list of Code attributes:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">co_flags</span></tt> flags if this code object has nested scopes/generators</li>
+<li><tt class="docutils literal"><span class="pre">co_stacksize</span></tt> the maximum depth the stack can reach while executing the code</li>
+<li><tt class="docutils literal"><span class="pre">co_code</span></tt> the actual bytecode string</li>
+<li><tt class="docutils literal"><span class="pre">co_argcount</span></tt> number of arguments this code object expects</li>
+<li><tt class="docutils literal"><span class="pre">co_varnames</span></tt> a tuple of all argument names pass to this code object</li>
+<li><tt class="docutils literal"><span class="pre">co_nlocals</span></tt> number of local variables</li>
+<li><tt class="docutils literal"><span class="pre">co_names</span></tt> a tuple of all names used in the code object</li>
+<li><tt class="docutils literal"><span class="pre">co_consts</span></tt> a tuple of prebuilt constant objects (&#8220;literals&#8221;) used in the code object</li>
+<li><tt class="docutils literal"><span class="pre">co_cellvars</span></tt> a tuple of Cells containing values for access from nested scopes</li>
+<li><tt class="docutils literal"><span class="pre">co_freevars</span></tt> a tuple of Cell names from &#8220;above&#8221; scopes</li>
+<li><tt class="docutils literal"><span class="pre">co_filename</span></tt> source file this code object was compiled from</li>
+<li><tt class="docutils literal"><span class="pre">co_firstlineno</span></tt> the first linenumber of the code object in its source file</li>
+<li><tt class="docutils literal"><span class="pre">co_name</span></tt> name of the code object (often the function name)</li>
+<li><tt class="docutils literal"><span class="pre">co_lnotab</span></tt> a helper table to compute the line-numbers corresponding to bytecodes</li>
+</ul>
+</div>
+<div class="section" id="function-and-method-classes">
+<span id="function"></span><h3><a class="toc-backref" href="#id16">Function and Method classes</a><a class="headerlink" href="#function-and-method-classes" title="Permalink to this headline">¶</a></h3>
+<p>The PyPy <tt class="docutils literal"><span class="pre">Function</span></tt> class (in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/function.py">pypy/interpreter/function.py</a>)
+represents a Python function.  A <tt class="docutils literal"><span class="pre">Function</span></tt> carries the following
+main attributes:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">func_doc</span></tt> the docstring (or None)</li>
+<li><tt class="docutils literal"><span class="pre">func_name</span></tt> the name of the function</li>
+<li><tt class="docutils literal"><span class="pre">func_code</span></tt> the <a class="reference internal" href="#code">Code</a> object representing the function source code</li>
+<li><tt class="docutils literal"><span class="pre">func_defaults</span></tt> default values for the function (built at function definition time)</li>
+<li><tt class="docutils literal"><span class="pre">func_dict</span></tt> dictionary for additional (user-defined) function attributes</li>
+<li><tt class="docutils literal"><span class="pre">func_globals</span></tt> reference to the globals dictionary</li>
+<li><tt class="docutils literal"><span class="pre">func_closure</span></tt> a tuple of Cell references</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">Functions</span></tt> classes also provide a <tt class="docutils literal"><span class="pre">__get__</span></tt> descriptor which creates a Method
+object holding a binding to an instance or a class.  Finally, <tt class="docutils literal"><span class="pre">Functions</span></tt>
+and <tt class="docutils literal"><span class="pre">Methods</span></tt> both offer a <tt class="docutils literal"><span class="pre">call_args()</span></tt> method which executes
+the function given an <a class="reference internal" href="#arguments">Arguments</a> class instance.</p>
+</div>
+<div class="section" id="arguments-class">
+<span id="function-argument-parsing"></span><span id="arguments"></span><h3><a class="toc-backref" href="#id17">Arguments Class</a><a class="headerlink" href="#arguments-class" title="Permalink to this headline">¶</a></h3>
+<p>The Argument class (in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/argument.py">pypy/interpreter/argument.py</a>) is
+responsible for parsing arguments passed to functions.
+Python has rather complex argument-passing concepts:</p>
+<ul class="simple">
+<li>positional arguments</li>
+<li>keyword arguments specified by name</li>
+<li>default values for positional arguments, defined at function
+definition time</li>
+<li>&#8220;star args&#8221; allowing a function to accept remaining
+positional arguments</li>
+<li>&#8220;star keyword args&#8221; allow a function to accept additional
+arbitrary name-value bindings</li>
+</ul>
+<p>Moreover, a <a class="reference internal" href="#function">Function</a> object can get bound to a class or instance
+in which case the first argument to the underlying function becomes
+the bound object.  The <tt class="docutils literal"><span class="pre">Arguments</span></tt> provides means to allow all
+this argument parsing and also cares for error reporting.</p>
+</div>
+<div class="section" id="module-class">
+<span id="module"></span><h3><a class="toc-backref" href="#id18">Module Class</a><a class="headerlink" href="#module-class" title="Permalink to this headline">¶</a></h3>
+<p>A <tt class="docutils literal"><span class="pre">Module</span></tt> instance represents execution state usually constructed
+from executing the module&#8217;s source file.  In addition to such a module&#8217;s
+global <tt class="docutils literal"><span class="pre">__dict__</span></tt> dictionary it has the following application level
+attributes:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">__doc__</span></tt> the docstring of the module</li>
+<li><tt class="docutils literal"><span class="pre">__file__</span></tt> the source filename from which this module was instantiated</li>
+<li><tt class="docutils literal"><span class="pre">__path__</span></tt> state used for relative imports</li>
+</ul>
+<p>Apart from the basic Module used for importing
+application-level files there is a more refined
+<tt class="docutils literal"><span class="pre">MixedModule</span></tt> class (see <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/mixedmodule.py">pypy/interpreter/mixedmodule.py</a>)
+which allows to define name-value bindings both at application
+level and at interpreter level.  See the <tt class="docutils literal"><span class="pre">__builtin__</span></tt>
+module&#8217;s <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/module/__builtin__/__init__.py">pypy/module/__builtin__/__init__.py</a> file for an
+example and the higher level <a class="reference external" href="coding-guide.html#modules">chapter on Modules in the coding
+guide</a>.</p>
+</div>
+<div class="section" id="gateway-classes">
+<span id="id1"></span><h3><a class="toc-backref" href="#id19">Gateway classes</a><a class="headerlink" href="#gateway-classes" title="Permalink to this headline">¶</a></h3>
+<p>A unique PyPy property is the ability to easily cross the barrier
+between interpreted and machine-level code (often referred to as
+the difference between <a class="reference external" href="coding-guide.html#interpreter-level">interpreter-level and application-level</a>).
+Be aware that the according code (in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/gateway.py">pypy/interpreter/gateway.py</a>)
+for crossing the barrier in both directions is somewhat
+involved, mostly due to the fact that the type-inferring
+annotator needs to keep track of the types of objects flowing
+across those barriers.</p>
+<div class="section" id="making-interpreter-level-functions-available-at-application-level">
+<span id="typedefs"></span><h4><a class="toc-backref" href="#id20">Making interpreter-level functions available at application-level</a><a class="headerlink" href="#making-interpreter-level-functions-available-at-application-level" title="Permalink to this headline">¶</a></h4>
+<p>In order to make an interpreter-level function available at
+application level, one invokes <tt class="docutils literal"><span class="pre">pypy.interpreter.gateway.interp2app(func)</span></tt>.
+Such a function usually takes a <tt class="docutils literal"><span class="pre">space</span></tt> argument and any number
+of positional arguments. Additionally, such functions can define
+an <tt class="docutils literal"><span class="pre">unwrap_spec</span></tt> telling the <tt class="docutils literal"><span class="pre">interp2app</span></tt> logic how
+application-level provided arguments should be unwrapped
+before the actual interpreter-level function is invoked.
+For example, <a class="reference internal" href="#interpreter-descriptors">interpreter descriptors</a> such as the <tt class="docutils literal"><span class="pre">Module.__new__</span></tt>
+method for allocating and constructing a Module instance are
+defined with such code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Module</span><span class="o">.</span><span class="n">typedef</span> <span class="o">=</span> <span class="n">TypeDef</span><span class="p">(</span><span class="s">&quot;module&quot;</span><span class="p">,</span>
+    <span class="n">__new__</span> <span class="o">=</span> <span class="n">interp2app</span><span class="p">(</span><span class="n">Module</span><span class="o">.</span><span class="n">descr_module__new__</span><span class="o">.</span><span class="n">im_func</span><span class="p">,</span>
+                         <span class="n">unwrap_spec</span><span class="o">=</span><span class="p">[</span><span class="n">ObjSpace</span><span class="p">,</span> <span class="n">W_Root</span><span class="p">,</span> <span class="n">Arguments</span><span class="p">]),</span>
+    <span class="n">__init__</span> <span class="o">=</span> <span class="n">interp2app</span><span class="p">(</span><span class="n">Module</span><span class="o">.</span><span class="n">descr_module__init__</span><span class="p">),</span>
+                    <span class="c"># module dictionaries are readonly attributes</span>
+    <span class="n">__dict__</span> <span class="o">=</span> <span class="n">GetSetProperty</span><span class="p">(</span><span class="n">descr_get_dict</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="n">Module</span><span class="p">),</span>
+    <span class="n">__doc__</span> <span class="o">=</span> <span class="s">&#39;module(name[, doc])</span><span class="se">\n\n</span><span class="s">Create a module object...&#39;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>The actual <tt class="docutils literal"><span class="pre">Module.descr_module__new__</span></tt> interpreter-level method
+referenced from the <tt class="docutils literal"><span class="pre">__new__</span></tt> keyword argument above is defined
+like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">descr_module__new__</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">w_subtype</span><span class="p">,</span> <span class="n">__args__</span><span class="p">):</span>
+    <span class="n">module</span> <span class="o">=</span> <span class="n">space</span><span class="o">.</span><span class="n">allocate_instance</span><span class="p">(</span><span class="n">Module</span><span class="p">,</span> <span class="n">w_subtype</span><span class="p">)</span>
+    <span class="n">Module</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">space</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Summarizing, the <tt class="docutils literal"><span class="pre">interp2app</span></tt> mechanism takes care to route
+an application level access or call to an internal interpreter-level
+object appropriately to the descriptor, providing enough precision
+and hints to keep the type-inferring annotator happy.</p>
+</div>
+<div class="section" id="calling-into-application-level-code-from-interpreter-level">
+<h4><a class="toc-backref" href="#id21">Calling into application level code from interpreter-level</a><a class="headerlink" href="#calling-into-application-level-code-from-interpreter-level" title="Permalink to this headline">¶</a></h4>
+<p>Application level code is <a class="reference external" href="coding-guide.html#app-preferable">often preferable</a>. Therefore,
+we often like to invoke application level code from interpreter-level.
+This is done via the Gateway&#8217;s <tt class="docutils literal"><span class="pre">app2interp</span></tt> mechanism
+which we usually invoke at definition time in a module.
+It generates a hook which looks like an interpreter-level
+function accepting a space and an arbitrary number of arguments.
+When calling a function at interpreter-level the caller side
+does usually not need to be aware if its invoked function
+is run through the PyPy interpreter or if it will directly
+execute on the machine (after translation).</p>
+<p>Here is an example showing how we implement the Metaclass
+finding algorithm of the Python language in PyPy:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">app</span> <span class="o">=</span> <span class="n">gateway</span><span class="o">.</span><span class="n">applevel</span><span class="p">(</span><span class="s">r&#39;&#39;&#39;</span>
+<span class="s">    def find_metaclass(bases, namespace, globals, builtin):</span>
+<span class="s">        if &#39;__metaclass__&#39; in namespace:</span>
+<span class="s">            return namespace[&#39;__metaclass__&#39;]</span>
+<span class="s">        elif len(bases) &gt; 0:</span>
+<span class="s">            base = bases[0]</span>
+<span class="s">            if hasattr(base, &#39;__class__&#39;):</span>
+<span class="s">                    return base.__class__</span>
+<span class="s">            else:</span>
+<span class="s">                    return type(base)</span>
+<span class="s">        elif &#39;__metaclass__&#39; in globals:</span>
+<span class="s">            return globals[&#39;__metaclass__&#39;]</span>
+<span class="s">        else:</span>
+<span class="s">            try:</span>
+<span class="s">                return builtin.__metaclass__</span>
+<span class="s">            except AttributeError:</span>
+<span class="s">                return type</span>
+<span class="s">&#39;&#39;&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">__file__</span><span class="p">)</span>
+
+<span class="n">find_metaclass</span>  <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">interphook</span><span class="p">(</span><span class="s">&#39;find_metaclass&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">find_metaclass</span></tt> interpreter-level hook is invoked
+with five arguments from the <tt class="docutils literal"><span class="pre">BUILD_CLASS</span></tt> opcode implementation
+in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/pyopcode.py">pypy/interpreter/pyopcode.py</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">BUILD_CLASS</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="n">w_methodsdict</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">valuestack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="n">w_bases</span>       <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">valuestack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="n">w_name</span>        <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">valuestack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="n">w_metaclass</span> <span class="o">=</span> <span class="n">find_metaclass</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">space</span><span class="p">,</span> <span class="n">w_bases</span><span class="p">,</span>
+                                 <span class="n">w_methodsdict</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">w_globals</span><span class="p">,</span>
+                                 <span class="n">f</span><span class="o">.</span><span class="n">space</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">builtin</span><span class="p">))</span>
+    <span class="n">w_newclass</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">space</span><span class="o">.</span><span class="n">call_function</span><span class="p">(</span><span class="n">w_metaclass</span><span class="p">,</span> <span class="n">w_name</span><span class="p">,</span>
+                                       <span class="n">w_bases</span><span class="p">,</span> <span class="n">w_methodsdict</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">valuestack</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">w_newclass</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that at a later point we can rewrite the <tt class="docutils literal"><span class="pre">find_metaclass</span></tt>
+implementation at interpreter-level and we would not have
+to modify the calling side at all.</p>
+</div>
+</div>
+<div class="section" id="introspection-and-descriptors">
+<span id="interpreter-descriptors"></span><h3><a class="toc-backref" href="#id22">Introspection and Descriptors</a><a class="headerlink" href="#introspection-and-descriptors" title="Permalink to this headline">¶</a></h3>
+<p>Python traditionally has a very far-reaching introspection model
+for bytecode interpreter related objects. In PyPy and in CPython read
+and write accesses to such objects are routed to descriptors.
+Of course, in CPython those are implemented in <tt class="docutils literal"><span class="pre">C</span></tt> while in
+PyPy they are implemented in interpreter-level Python code.</p>
+<p>All instances of a <a class="reference internal" href="#function">Function</a>, <a class="reference internal" href="#code">Code</a>, <a class="reference internal" href="#frame">Frame</a> or <a class="reference internal" href="#module">Module</a> classes
+are also <tt class="docutils literal"><span class="pre">W_Root</span></tt> instances which means they can be represented
+at application level.  These days, a PyPy object space needs to
+work with a basic descriptor lookup when it encounters
+accesses to an interpreter-level object:  an object space asks
+a wrapped object for its type via a <tt class="docutils literal"><span class="pre">getclass</span></tt> method and then
+calls the type&#8217;s <tt class="docutils literal"><span class="pre">lookup(name)</span></tt> function in order to receive a descriptor
+function.  Most of PyPy&#8217;s internal object descriptors are defined at the
+end of <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/typedef.py">pypy/interpreter/typedef.py</a>.  You can use these definitions
+as a reference for the exact attributes of interpreter classes visible
+at application level.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Bytecode Interpreter</a><ul>
+<li><a class="reference internal" href="#introduction-and-overview">Introduction and Overview</a></li>
+<li><a class="reference internal" href="#bytecode-interpreter-implementation-classes">Bytecode Interpreter Implementation Classes</a><ul>
+<li><a class="reference internal" href="#frame-classes">Frame classes</a></li>
+<li><a class="reference internal" href="#code-class">Code Class</a></li>
+<li><a class="reference internal" href="#function-and-method-classes">Function and Method classes</a></li>
+<li><a class="reference internal" href="#arguments-class">Arguments Class</a></li>
+<li><a class="reference internal" href="#module-class">Module Class</a></li>
+<li><a class="reference internal" href="#gateway-classes">Gateway classes</a><ul>
+<li><a class="reference internal" href="#making-interpreter-level-functions-available-at-application-level">Making interpreter-level functions available at application-level</a></li>
+<li><a class="reference internal" href="#calling-into-application-level-code-from-interpreter-level">Calling into application level code from interpreter-level</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#introspection-and-descriptors">Introspection and Descriptors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/interpreter.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+==================
+translation.thread
+==================
+
+* **name:** thread
+
+* **description:** enable use of threading primitives
+
+* **command-line:** --thread
+
+* **command-line for negation:** --no-thread
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Enable threading. The only target where this has visible effect is PyPy (this
+also enables the ``thread`` module then).

@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PyPy 1.9 - Yard Wolf &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pypy-1-9-yard-wolf">
+<h1>PyPy 1.9 - Yard Wolf<a class="headerlink" href="#pypy-1-9-yard-wolf" title="Permalink to this headline">¶</a></h1>
+<p>We&#8217;re pleased to announce the 1.9 release of PyPy. This release brings mostly
+bugfixes, performance improvements, other small improvements and overall
+progress on the <a class="reference external" href="http://pypy.org/numpydonate.html">numpypy</a> effort.
+It also brings an improved situation on Windows and OS X.</p>
+<p>You can download the PyPy 1.9 release here:</p>
+<blockquote>
+<div><a class="reference external" href="http://pypy.org/download.html">http://pypy.org/download.html</a></div></blockquote>
+<div class="section" id="what-is-pypy">
+<h2>What is PyPy?<a class="headerlink" href="#what-is-pypy" title="Permalink to this headline">¶</a></h2>
+<p>PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7. It&#8217;s fast (<a class="reference external" href="http://speed.pypy.org">pypy 1.9 and cpython 2.7.2</a> performance comparison)
+due to its integrated tracing JIT compiler.</p>
+<p>This release supports x86 machines running Linux 32/64, Mac OS X 64 or
+Windows 32.  Windows 64 work is still stalling, we would welcome a volunteer
+to handle that.</p>
+</div>
+<div class="section" id="thanks-to-our-donors">
+<h2>Thanks to our donors<a class="headerlink" href="#thanks-to-our-donors" title="Permalink to this headline">¶</a></h2>
+<p>But first of all, we would like to say thank you to all people who
+donated some money to one of our four calls:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://pypy.org/numpydonate.html">NumPy in PyPy</a> (got so far $44502 out of $60000, 74%)</li>
+<li><a class="reference external" href="http://pypy.org/py3donate.html">Py3k (Python 3)</a> (got so far $43563 out of $105000, 41%)</li>
+<li><a class="reference external" href="http://pypy.org/tmdonate.html">Software Transactional Memory</a> (got so far $21791 of $50400, 43%)</li>
+<li>as well as our general PyPy pot.</li>
+</ul>
+</div></blockquote>
+<p>Thank you all for proving that it is indeed possible for a small team of
+programmers to get funded like that, at least for some
+time.  We want to include this thank you in the present release
+announcement even though most of the work is not finished yet.  More
+precisely, neither Py3k nor STM are ready to make it in an official release
+yet: people interested in them need to grab and (attempt to) translate
+PyPy from the corresponding branches (respectively <tt class="docutils literal"><span class="pre">py3k</span></tt> and
+<tt class="docutils literal"><span class="pre">stm-thread</span></tt>).</p>
+</div>
+<div class="section" id="highlights">
+<h2>Highlights<a class="headerlink" href="#highlights" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>This release still implements Python 2.7.2.</li>
+<li>Many bugs were corrected for Windows 32 bit.  This includes new
+functionality to test the validity of file descriptors; and
+correct handling of the calling convensions for ctypes.  (Still not
+much progress on Win64.) A lot of work on this has been done by Matti Picus
+and Amaury Forgeot d&#8217;Arc.</li>
+<li>Improvements in <tt class="docutils literal"><span class="pre">cpyext</span></tt>, our emulator for CPython C extension modules.
+For example PyOpenSSL should now work.  We thank various people for help.</li>
+<li>Sets now have strategies just like dictionaries. This means for example
+that a set containing only ints will be more compact (and faster).</li>
+<li>A lot of progress on various aspects of <tt class="docutils literal"><span class="pre">numpypy</span></tt>. See the <a class="reference external" href="http://buildbot.pypy.org/numpy-status/latest.html">numpy-status</a>
+page for the automatic report.</li>
+<li>It is now possible to create and manipulate C-like structures using the
+PyPy-only <tt class="docutils literal"><span class="pre">_ffi</span></tt> module.  The advantage over using e.g. <tt class="docutils literal"><span class="pre">ctypes</span></tt> is that
+<tt class="docutils literal"><span class="pre">_ffi</span></tt> is very JIT-friendly, and getting/setting of fields is translated
+to few assembler instructions by the JIT. However, this is mostly intended
+as a low-level backend to be used by more user-friendly FFI packages, and
+the API might change in the future. Use it at your own risk.</li>
+<li>The non-x86 backends for the JIT are progressing but are still not
+merged (ARMv7 and PPC64).</li>
+<li>JIT hooks for inspecting the created assembler code have been improved.
+See <a class="reference external" href="http://doc.pypy.org/en/latest/jit-hooks.html">JIT hooks documentation</a> for details.</li>
+<li><tt class="docutils literal"><span class="pre">select.kqueue</span></tt> has been added (BSD).</li>
+<li>Handling of keyword arguments has been drastically improved in the best-case
+scenario: proxy functions which simply forwards <tt class="docutils literal"><span class="pre">*args</span></tt> and <tt class="docutils literal"><span class="pre">**kwargs</span></tt>
+to another function now performs much better with the JIT.</li>
+<li>List comprehension has been improved.</li>
+</ul>
+</div>
+<div class="section" id="jitviewer">
+<h2>JitViewer<a class="headerlink" href="#jitviewer" title="Permalink to this headline">¶</a></h2>
+<p>There will be a corresponding 1.9 release of JitViewer which is guaranteed
+to work with PyPy 1.9. See the <a class="reference external" href="http://bitbucket.org/pypy/jitviewer">JitViewer docs</a> for details.</p>
+<p>Cheers,
+The PyPy Team</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">PyPy 1.9 - Yard Wolf</a><ul>
+<li><a class="reference internal" href="#what-is-pypy">What is PyPy?</a></li>
+<li><a class="reference internal" href="#thanks-to-our-donors">Thanks to our donors</a></li>
+<li><a class="reference internal" href="#highlights">Highlights</a></li>
+<li><a class="reference internal" href="#jitviewer">JitViewer</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/release-1.9.0.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

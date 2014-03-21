@@ -1,0 +1,21 @@
+=====================================
+objspace.usemodules.\_minimal\_curses
+=====================================
+
+* **name:** \_minimal\_curses
+
+* **description:** use module \_minimal\_curses
+
+* **command-line:** --withmod-\_minimal\_curses
+
+* **command-line for negation:** --withoutmod-\_minimal\_curses
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the '_curses' module.
+This module is just a stub.  It only implements a few functions.

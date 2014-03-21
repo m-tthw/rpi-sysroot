@@ -1,0 +1,22 @@
+=================================
+objspace.std.withspecialisedtuple
+=================================
+
+* **name:** withspecialisedtuple
+
+* **description:** use specialised tuples
+
+* **command-line:** --objspace-std-withspecialisedtuple
+
+* **command-line for negation:** --no-objspace-std-withspecialisedtuple
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use "specialized tuples", a custom implementation for some common kinds
+of tuples.  Currently limited to tuples of length 2, in three variants:
+(int, int), (float, float), and a generic (object, object).

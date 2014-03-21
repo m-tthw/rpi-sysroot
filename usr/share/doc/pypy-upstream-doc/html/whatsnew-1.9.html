@@ -1,0 +1,176 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>What’s new in PyPy 1.9 &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="what-s-new-in-pypy-1-9">
+<h1>What&#8217;s new in PyPy 1.9<a class="headerlink" href="#what-s-new-in-pypy-1-9" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Working hash function for numpy types.</li>
+</ul>
+<p>Improved jit hooks
+.. branch: faster-heapcache
+.. branch: faster-str-decode-escape
+.. branch: float-bytes
+Added some primitives for dealing with floats as raw bytes.
+.. branch: float-bytes-2
+Added more float byte primitives.
+.. branch: jit-frame-counter
+Put more debug info into resops.
+.. branch: kill-geninterp
+Kill &#8220;geninterp&#8221;, an old attempt to statically turn some fixed
+app-level code to interp-level.
+.. branch: kqueue
+Finished select.kqueue.
+.. branch: kwargsdict-strategy
+Special dictionary strategy for dealing with **kwds. Now having a simple
+proxy <tt class="docutils literal"><span class="pre">def</span> <span class="pre">f(*args,</span> <span class="pre">**kwds):</span> <span class="pre">return</span> <span class="pre">x(*args,</span> <span class="pre">**kwds</span></tt> should not make
+any allocations at all.
+.. branch: matrixmath-dot
+numpypy can now handle matrix multiplication.
+.. branch: merge-2.7.2
+The stdlib was updated to version 2.7.2
+.. branch: ndmin
+.. branch: newindex
+.. branch: non-null-threadstate
+cpyext: Better support for PyEval_SaveThread and other PyTreadState_*
+functions.
+.. branch: numppy-flatitter
+flatitier for numpy
+.. branch: numpy-back-to-applevel
+reuse more of original numpy
+.. branch: numpy-concatenate
+concatenation support for numpy
+.. branch: numpy-indexing-by-arrays-bool
+indexing by bool arrays
+.. branch: numpy-record-dtypes
+record dtypes on numpy has been started
+.. branch: numpy-single-jitdriver
+.. branch: numpy-ufuncs2
+.. branch: numpy-ufuncs3
+various refactorings regarding numpy
+.. branch: numpypy-issue1137
+.. branch: numpypy-out
+The &#8220;out&#8221; argument was added to most of the numypypy functions.
+.. branch: numpypy-shape-bug
+.. branch: numpypy-ufuncs
+.. branch: pytest
+.. branch: safe-getargs-freelist
+CPyext improvements. For example PyOpenSSL should now work
+.. branch: set-strategies
+Sets now have strategies just like dictionaries. This means a set
+containing only ints will be more compact (and faster)
+.. branch: speedup-list-comprehension
+The simplest case of list comprehension is preallocating the correct size
+of the list. This speeds up select benchmarks quite significantly.
+.. branch: stdlib-unification
+The directory &#8220;lib-python/modified-2.7&#8221; has been removed, and its
+content merged into &#8220;lib-python/2.7&#8221;.
+.. branch: step-one-xrange
+The common case of a xrange iterator with no step argument specifed
+was somewhat optimized. The tightest loop involving it,
+sum(xrange(n)), is now 18% faster on average.
+.. branch: string-NUL
+PyPy refuses filenames with chr(0) characters. This is implemented in
+RPython which can enforce no-NUL correctness and propagation, similar
+to const-correctness in C++.
+.. branch: win32-cleanup
+.. branch: win32-cleanup2
+.. branch: win32-cleanup_2
+Many bugs were corrected for windows 32 bit. New functionality was added to
+test validity of file descriptors, leading to the removal of the  global
+_invalid_parameter_handler
+.. branch: win32-kill
+Add os.kill to windows even if translating python does not have os.kill
+.. branch: win_ffi
+Handle calling conventions for the _ffi and ctypes modules
+.. branch: win64-stage1
+.. branch: zlib-mem-pressure
+Memory &#8220;leaks&#8221; associated with zlib are fixed.</p>
+<p>The <tt class="docutils literal"><span class="pre">ffistruct</span></tt> branch adds a very low level way to express C structures
+with _ffi in a very JIT-friendly way</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/whatsnew-1.9.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

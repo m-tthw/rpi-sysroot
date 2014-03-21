@@ -1,0 +1,18 @@
+======================
+translation.make\_jobs
+======================
+
+* **name:** make\_jobs
+
+* **description:** Specify -j argument to make for compilation (C backend only)
+
+* **command-line:** --make-jobs
+
+* **option type:** integer option
+
+* **default:** 8
+
+
+
+
+Specify number of make jobs for make command.

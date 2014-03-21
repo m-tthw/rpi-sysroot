@@ -1,0 +1,50 @@
+Architectures: armhf all
+Codename: wheezy
+Components: rpi
+Date: Thu, 26 Dec 2013 17:52:20 UTC
+Label: Collabora Raspberry Pi graphics enablement
+Origin: Collabora
+Suite: stable
+Version: 7.0.0
+MD5Sum:
+ d41d8cd98f00b204e9800998ecf8427e                0 Release
+ 3fbc6ccb607f5b4b4d7d7f2835bc7dcc             8784 rpi/binary-armhf/Packages
+ ee7cd86c0223fdd8c027e6c85d951936             2863 rpi/binary-armhf/Packages.bz2
+ d8fc9010c7bf286dcf3f303018dac291             2529 rpi/binary-armhf/Packages.gz
+ 137da42c45f1b5885e2abb2355178231             5172 rpi/source/Sources
+ e1cadf5a7f5fdab169df69c74853f71e             1780 rpi/source/Sources.bz2
+ ba255155ac3b0de97023d3549ddc3f38             1614 rpi/source/Sources.gz
+ 23cec381a201d7351a464683d176861d           330462 web/binary-armhf/Packages
+ 66ef1bd6a6adc9061ca4c0e2a76a1792            54393 web/binary-armhf/Packages.bz2
+ d702d4251d8b8945b722b9fd7b06da42            79016 web/binary-armhf/Packages.gz
+ 90d00808e77da607ef54715e41931440            84172 web/source/Sources
+ 1761282cd2a715c57a5adfaa9e39ced4            19856 web/source/Sources.bz2
+ 5a898c9306d4838db985fd759b993b5a            22724 web/source/Sources.gz
+SHA1:
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 Release
+ 69395ab43be390bf0d6b9231736b20da583dcc28             8784 rpi/binary-armhf/Packages
+ bbfbb486a843392638fadb9269f92ddd60aa1200             2863 rpi/binary-armhf/Packages.bz2
+ 4ce75cc6bbc160cab3522f8ff200440bc9b1c271             2529 rpi/binary-armhf/Packages.gz
+ 21b3a8bea5d746695bad84a6fedddf2b3529384d             5172 rpi/source/Sources
+ fd49bfacd6d4f744875a9143b4f49845eb356b1d             1780 rpi/source/Sources.bz2
+ e2e8542e495707aeb502e80bdcdf2193b0ee83d1             1614 rpi/source/Sources.gz
+ 4426b7283285d59cee967271f3c6f9a368808be5           330462 web/binary-armhf/Packages
+ 16ab504b3eeb343d3dbe2d5b4bb452009c678022            54393 web/binary-armhf/Packages.bz2
+ 1776255b94ca6462f512202452738b38555fa6a8            79016 web/binary-armhf/Packages.gz
+ 872aea3e25b8214b3e24c40c52384c0b6f1e99a0            84172 web/source/Sources
+ 6aa3b9f168f238ce213ece50ea39b84c2a06806b            19856 web/source/Sources.bz2
+ ea7737664943c12ab9e66cd6716079ff8f7da292            22724 web/source/Sources.gz
+SHA256:
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 Release
+ d11f72c80ee35f3a2f6885d79aa3bf0d766b0c29601d31d8e63ab17051a0c15e             8784 rpi/binary-armhf/Packages
+ aacc43fbfd8072bdb7cef51e4de35ee1cd99c6835c03d0c45300f78ec8791d86             2863 rpi/binary-armhf/Packages.bz2
+ 5e59641646caa74d19eb974f73a201a2e80b45a8fd7788b603e321f57309c29f             2529 rpi/binary-armhf/Packages.gz
+ c55c60c0052b33f30c295903970e75975b587d3200f4c475c79bf9dced2d08d4             5172 rpi/source/Sources
+ 4be99b4e3ebdbceb840ef6eeec33f7e4b17ba50de7d678a1b6884a9c9b025b7d             1780 rpi/source/Sources.bz2
+ dbbdcf65e5af14b021d3d0c7e68484085377405a4ef86656f2bff452a6d5f650             1614 rpi/source/Sources.gz
+ d40e50a3a6b67257ac4ac8a8373c458370e8441c3abb362ffe6310c12a2f2815           330462 web/binary-armhf/Packages
+ b7b373c93330bdc56876c739e9b16c24c89e7cd4263b85f9322f55c5d0ac7f55            54393 web/binary-armhf/Packages.bz2
+ a9809f1f36c527100e943afd225fab2981dddae6186ccdec98c3b35b6935aeea            79016 web/binary-armhf/Packages.gz
+ d821ae681a3866b06f83ce4bb4424955ff87b4e5e418e652fb8dab67f3702244            84172 web/source/Sources
+ 42663f417ecb2d4e7e88b4fd05315b1caf027a9261a6bf4dffdd50d807631d8e            19856 web/source/Sources.bz2
+ 7a6b6ba934e9b3ccd29f603f9e6799c11b8c76e6840aa2c0dfd7de401e54061f            22724 web/source/Sources.gz

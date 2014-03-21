@@ -1,0 +1,131 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>What’s new in PyPy 2.0 &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="what-s-new-in-pypy-2-0">
+<h1>What&#8217;s new in PyPy 2.0<a class="headerlink" href="#what-s-new-in-pypy-2-0" title="Permalink to this headline">¶</a></h1>
+<p>Split rpython and pypy into seperate directories</p>
+<p>Callbacks from C are now better JITted</p>
+<p>Implement __lenght_hint__ according to PEP 424</p>
+<p>Long double support for numpypy</p>
+<p>Since r_longdouble support is missing, disable all longdouble and derivative
+dtypes using ENABLED_LONG_DOUBLE = False</p>
+<p>Convert real, imag from ufuncs to views. This involves the beginning of
+view() functionality</p>
+<p>Adds indexing by scalar, adds int conversion from scalar and single element array,
+fixes compress, indexing by an array with a smaller shape and the indexed object.</p>
+<p>Allow concatenation of str and numeric arrays</p>
+<p>Improved RPython typing</p>
+<p>Rudimentary support for bytearray in RPython</p>
+<p>Fix a bug which caused cffi to return the wrong result when calling a C
+function which calls a Python callback which forces the frames</p>
+<p>JIT optimizations which make cffi calls even faster, by removing the need to
+allocate a temporary buffer where to store the arguments.</p>
+<p>Improve documents and straighten out links</p>
+<p>Inline the fast path of newarray in the assembler.
+Disabled on ARM until we fix issues.</p>
+<p>Allow dynamic loading of a (Reflex) backend that implements the C-API needed
+to provide reflection information</p>
+<p>Fixed the interaction between two internal tools for controlling the JIT.</p>
+<p>Better optimized certain types of frame accesses in the JIT, particularly
+around exceptions that escape the function they were raised in.</p>
+<p>Some missing attributes from ndarrays</p>
+<p>Consolidated the lib_pypy/pypy_test and pypy/module/test_lib_pypy tests into
+one directory for reduced confusion and so they all run nightly.</p>
+<p>Add &#8220;__pypy__.thread.signals_enabled&#8221;, a context manager. Can be used in a
+non-main thread to enable the processing of signal handlers in that thread.</p>
+<p>Support enumerate() over rstr types.</p>
+<p>Cleanup _numpypy and numpypy namespaces to more closely resemble numpy.</p>
+<p>Random cleanups to hide FlowObjSpace from public view.</p>
+<p>Moves optimized JIT frames from stack to heap. As a side effect it enables
+stackless to work well with the JIT on PyPy. Also removes a bunch of code from
+the GC which fixes cannot find gc roots.</p>
+<p>Documentation fixes after going through the docs at PyCon 2013 sprint.</p>
+<p>cffi implementation of _curses</p>
+<p>cffi implementation of sqlite3</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/whatsnew-2.0.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

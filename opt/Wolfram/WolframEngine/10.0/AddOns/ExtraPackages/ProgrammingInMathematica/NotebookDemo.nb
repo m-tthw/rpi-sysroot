@@ -1,0 +1,459 @@
+(**************** Content-type: application/mathematica ****************
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used on any computer system with Mathematica 4.0,
+MathReader 4.0, or any compatible application. The data for the notebook 
+starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do one of 
+the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing the 
+word CacheID, otherwise Mathematica-compatible applications may try to 
+use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+***********************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[      7538,        302]*)
+(*NotebookOutlinePosition[      8440,        333]*)
+(*  CellTagsIndexPosition[      8396,        329]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Notebook Programming Demonstration", "Title",
+  TextAlignment->Center],
+
+Cell["by Roman E. Maeder", "Subsubtitle",
+  TextAlignment->Center],
+
+Cell[CellGroupData[{
+
+Cell["Reference", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["Title", "Subsubsection"],
+
+Cell["A demo of notebook programming", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Author", "Subsubsection"],
+
+Cell["Roman E. Maeder", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Summary", "Subsubsection"],
+
+Cell["Shows a few functions developed in Chapter 11 of the book.", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Copyright", "Subsubsection"],
+
+Cell["\<\
+\[Copyright] Copyright 2000, Roman E. Maeder
+
+Permission is granted to distribute this file for any purpose except for \
+inclusion in commercial software or program collections. This copyright \
+notice must remain intact..\
+\>", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Notebook Version", "Subsubsection"],
+
+Cell["1.0", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " Version"
+}], "Subsubsection"],
+
+Cell["3.0", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["History", "Subsubsection"],
+
+Cell[TextData[{
+  "Version 1.0 for ",
+  StyleBox["Programming in ",
+    FontSlant->"Italic"],
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  ", 3rd edition."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Keywords", "Subsubsection"],
+
+Cell["programming, notebooks, packages, template", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Source", "Subsubsection"],
+
+Cell[TextData[{
+  "Maeder, R. ",
+  StyleBox["Programming in ",
+    FontSlant->"Italic"],
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  ", 3rd ed. Addison-Wesley, 1996."
+}], "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Requirements", "Subsubsection"],
+
+Cell[TextData[StyleBox["ProgrammingInMathematica`NotebookStuff`", "Input"]], \
+"Text"],
+
+Cell[TextData[StyleBox["Graphics`Animation`", "Input"]], "Text"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Setup", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["Read in the Package", "Subsubsection"],
+
+Cell[TextData[{
+  "The code is contained in the package ",
+  StyleBox["NotebookStuff", "Input"],
+  StyleBox[".m", "Input",
+    FontFamily->"Courier",
+    FontWeight->"Bold"],
+  ", which is simply read in here."
+}], "Text"],
+
+Cell["Needs[\"ProgrammingInMathematica`NotebookStuff`\"]", "Input",
+  InitializationCell->True],
+
+Cell["Standard packages needed for the examples:", "Text"],
+
+Cell["Needs[\"Graphics`Animation`\"]", "Input",
+  InitializationCell->True]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Implementation", "Section"],
+
+Cell["Code for the buttons, etc.", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Directory List Button", "Subsection",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(`directory\  = \ "\<.\>";\)\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \(\(`cols\  = \ 2;\)\)], "Input",
+  InitializationCell->True],
+
+Cell["\<\
+directoryList :=
+\tModule[{filenames, dir, buttons, matrix, box},
+\t\tSetDirectory[directory];
+\t\tdir = Directory[]; (* absolute path *)
+\t\tfilenames = FileNames[{\"*.m\", \"*.nb\"}];
+\t\tResetDirectory[];
+\t\tbuttons = makeHyperlink[#, Directory->dir]& /@ filenames;
+\t\tbuttons = Join[buttons, Table[ButtonBox[\"\"], 
+\t\t             {Mod[-Length[buttons], cols]}]];
+\t\tmatrix = Transpose[ Partition[buttons, Length[buttons]/cols] ];
+\t\tbox = GridBox[matrix, GridFrame->True];
+\t\tNotebookWrite[EvaluationNotebook[], BoxForm[box]];
+\t]\
+\>", "Input",
+  InitializationCell->True]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Examples", "Section"],
+
+Cell["See Section 11.3 of the book.", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Directory List Button", "Subsection"],
+
+Cell[TextData[{
+  "The directory to list must either be an absolute pathname  or a pathname \
+relative to the notebook's directory. Hint: use the ",
+  StyleBox["Get File Path...", "Input"],
+  " menu item."
+}], "Text"],
+
+Cell[BoxData[
+    \(\(\(directory\  = \ "\<.\>";\)\(\ \)\( (*\ 
+      the\ directory\ to\ list\ *) \)\)\)], "Input"],
+
+Cell["\<\
+If the directory is relative, make sure the kernel's current \
+directory is equal to this notebook's directory.\
+\>", "Text"],
+
+Cell[BoxData[
+    RowBox[{"SetDirectory", "[", "\"\<\!\(\*
+StyleBox[\\\"notebook\\\",\\nFontSlant->\\\"Italic\\\"]\)\!\(\*
+StyleBox[\\\" \\\",\\nFontSlant->\\\"Italic\\\"]\)\!\(\*
+StyleBox[\\\"directory\\\",\\nFontSlant->\\\"Italic\\\"]\)\>\"", 
+      "]"}]], "Input"],
+
+Cell["\<\
+Put the insertion point after the next cell and then click on the \
+button. A cell containing a matrix of hyperlinks will appear. Clicking in a \
+hyperlink should open the corresponding file.\
+\>", "Text"],
+
+Cell[BoxData[
+    ButtonBox[
+      StyleBox["\<\"Paste Directory Listing\"\>",
+        ShowStringCharacters->False],
+      ButtonFunction:>(directoryList&),
+      ButtonEvaluator->Automatic,
+      Active->True]], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Automatic Animation", "Subsection"],
+
+Cell["Set up the proper animation functions.", "Text"],
+
+Cell[BoxData[
+    \(<< \ ProgrammingInMathematica`AutoAnimation`\)], "Input"],
+
+Cell[BoxData[
+    StyleBox[\($AnimationTime = 10;\),
+      "Input"]], "Input"],
+
+Cell[TextData[{
+  "This animation will start automatically after completion. It will stop \
+after ",
+  StyleBox["$AnimationTime", "Input"],
+  " seconds or after you click with the mouse."
+}], "Text"],
+
+Cell[BoxData[
+    \(\(Animate[\n\t
+        ParametricPlot[{Sin[2  u], Cos[3  u + t]}, {u, 0, 
+            2  \[Pi]}, \n\t\tPlotRange -> {{\(-1\), 1}, {\(-1\), 1}}, \ 
+          AspectRatio -> 1, \n\t\tAxes -> None], \n\t{t, 0, 2  \[Pi]}, \ 
+        Frames -> 18];\)\)], "Input"]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+},
+FrontEndVersion->"4.1 for X",
+ScreenRectangle->{{0, 1152}, {0, 864}},
+AutoGeneratedPackage->None,
+InitializationCellEvaluation->True,
+CellGrouping->Automatic,
+WindowSize->{520, 600},
+WindowMargins->{{177, Automatic}, {-30, Automatic}},
+PrivateNotebookOptions->{"ColorPalette"->{RGBColor, 128}},
+ShowCellLabel->True,
+ShowCellTags->False,
+RenderingOptions->{"ObjectDithering"->True,
+"RasterDithering"->False}
+]
+
+
+(***********************************************************************
+Cached data follows.  If you edit this Notebook file directly, not using
+Mathematica, you must remove the line containing CacheID at the top of 
+the file.  The cache data will then be recreated when you save this file 
+from within Mathematica.
+***********************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1739, 51, 76, 1, 174, "Title"],
+Cell[1818, 54, 66, 1, 53, "Subsubtitle"],
+
+Cell[CellGroupData[{
+Cell[1909, 59, 28, 0, 60, "Section"],
+
+Cell[CellGroupData[{
+Cell[1962, 63, 30, 0, 42, "Subsubsection"],
+Cell[1995, 65, 46, 0, 32, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2078, 70, 31, 0, 42, "Subsubsection"],
+Cell[2112, 72, 31, 0, 32, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2180, 77, 32, 0, 42, "Subsubsection"],
+Cell[2215, 79, 74, 0, 32, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2326, 84, 34, 0, 42, "Subsubsection"],
+Cell[2363, 86, 246, 6, 86, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2646, 97, 41, 0, 42, "Subsubsection"],
+Cell[2690, 99, 19, 0, 32, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2746, 104, 101, 4, 42, "Subsubsection"],
+Cell[2850, 110, 19, 0, 32, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[2906, 115, 32, 0, 42, "Subsubsection"],
+Cell[2941, 117, 176, 7, 32, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3154, 129, 33, 0, 42, "Subsubsection"],
+Cell[3190, 131, 58, 0, 32, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3285, 136, 31, 0, 42, "Subsubsection"],
+Cell[3319, 138, 188, 7, 32, "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3544, 150, 37, 0, 42, "Subsubsection"],
+Cell[3584, 152, 86, 1, 31, "Text"],
+Cell[3673, 155, 64, 0, 31, "Text"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[3786, 161, 24, 0, 40, "Section"],
+
+Cell[CellGroupData[{
+Cell[3835, 165, 44, 0, 70, "Subsubsection"],
+Cell[3882, 167, 222, 7, 70, "Text"],
+Cell[4107, 176, 95, 1, 70, "Input",
+  InitializationCell->True],
+Cell[4205, 179, 58, 0, 70, "Text"],
+Cell[4266, 181, 75, 1, 70, "Input",
+  InitializationCell->True]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[4390, 188, 33, 0, 40, "Section"],
+Cell[4426, 190, 42, 0, 70, "Text"],
+
+Cell[CellGroupData[{
+Cell[4493, 194, 71, 1, 70, "Subsection",
+  InitializationCell->True],
+Cell[4567, 197, 90, 2, 70, "Input",
+  InitializationCell->True],
+Cell[4660, 201, 79, 2, 70, "Input",
+  InitializationCell->True],
+Cell[4742, 205, 595, 15, 70, "Input",
+  InitializationCell->True]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[5386, 226, 27, 0, 40, "Section"],
+Cell[5416, 228, 45, 0, 32, "Text"],
+
+Cell[CellGroupData[{
+Cell[5486, 232, 43, 0, 45, "Subsection"],
+Cell[5532, 234, 217, 5, 70, "Text"],
+Cell[5752, 241, 116, 2, 70, "Input"],
+Cell[5871, 245, 135, 3, 70, "Text"],
+Cell[6009, 250, 268, 5, 70, "Input"],
+Cell[6280, 257, 215, 4, 70, "Text"],
+Cell[6498, 263, 221, 6, 70, "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[6756, 274, 41, 0, 29, "Subsection"],
+Cell[6800, 276, 54, 0, 70, "Text"],
+Cell[6857, 278, 77, 1, 70, "Input"],
+Cell[6937, 281, 78, 2, 70, "Input"],
+Cell[7018, 285, 199, 5, 70, "Text"],
+Cell[7220, 292, 278, 5, 70, "Input"]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+
+
+
+(***********************************************************************
+End of Mathematica Notebook file.
+***********************************************************************)
+

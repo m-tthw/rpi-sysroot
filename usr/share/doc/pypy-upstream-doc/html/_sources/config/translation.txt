@@ -1,0 +1,52 @@
+===========
+translation
+===========
+
+.. toctree::
+    :maxdepth: 4
+
+    translation.continuation
+    translation.type_system
+    translation.backend
+    translation.shared
+    translation.log
+    translation.gc
+    translation.gctransformer
+    translation.gcremovetypeptr
+    translation.gcrootfinder
+    translation.thread
+    translation.sandbox
+    translation.rweakref
+    translation.jit
+    translation.jit_backend
+    translation.jit_profiler
+    translation.check_str_without_nul
+    translation.verbose
+    translation.cc
+    translation.profopt
+    translation.noprofopt
+    translation.instrument
+    translation.countmallocs
+    translation.fork_before
+    translation.dont_write_c_files
+    translation.instrumentctl
+    translation.output
+    translation.secondaryentrypoints
+    translation.dump_static_data_info
+    translation.no__thread
+    translation.make_jobs
+    translation.list_comprehension_operations
+    translation.withsmallfuncsets
+    translation.taggedpointers
+    translation.lldebug
+    translation.backendopt
+    translation.platform
+
+* **name:** translation
+
+* **description:** Translation Options
+
+
+
+
+..  intentionally empty

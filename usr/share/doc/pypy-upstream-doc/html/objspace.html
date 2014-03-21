@@ -1,0 +1,645 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Object Spaces &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="object-spaces">
+<h1><a class="toc-backref" href="#id13">Object Spaces</a><a class="headerlink" href="#object-spaces" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#object-spaces" id="id13">Object Spaces</a><ul>
+<li><a class="reference internal" href="#introduction" id="id14">Introduction</a></li>
+<li><a class="reference internal" href="#object-space-interface" id="id15">Object Space Interface</a><ul>
+<li><a class="reference internal" href="#administrative-functions" id="id16">Administrative Functions</a></li>
+<li><a class="reference internal" href="#operations-on-objects-in-the-object-space" id="id17">Operations on Objects in the Object Space</a></li>
+<li><a class="reference internal" href="#convenience-functions" id="id18">Convenience Functions</a></li>
+<li><a class="reference internal" href="#creation-of-application-level-objects" id="id19">Creation of Application Level objects</a></li>
+<li><a class="reference internal" href="#conversions-from-application-level-to-interpreter-level" id="id20">Conversions from Application Level to Interpreter Level</a></li>
+<li><a class="reference internal" href="#data-members" id="id21">Data Members</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-standard-object-space" id="id22">The Standard Object Space</a><ul>
+<li><a class="reference internal" href="#id1" id="id23">Introduction</a></li>
+<li><a class="reference internal" href="#object-types" id="id24">Object types</a></li>
+<li><a class="reference internal" href="#multimethods" id="id25">Multimethods</a></li>
+<li><a class="reference internal" href="#multimethod-slicing" id="id26">Multimethod slicing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-flow-object-space" id="id27">The Flow Object Space</a><ul>
+<li><a class="reference internal" href="#id3" id="id28">Introduction</a></li>
+<li><a class="reference internal" href="#the-flow-model" id="id29">The Flow model</a></li>
+<li><a class="reference internal" href="#how-the-flowobjspace-works" id="id30">How the FlowObjSpace works</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#object-space-proxies" id="id31">Object Space proxies</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<span id="object-space"></span><span id="objectspace"></span><h2><a class="toc-backref" href="#id14">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The object space creates all objects and knows how to perform operations
+on the objects. You may think of an object space as being a library
+offering a fixed API, a set of <em>operations</em>, with implementations that
+correspond to the known semantics of Python objects.  An example of an
+operation is <em>add</em>: add&#8217;s implementations are, for example, responsible
+for performing numeric addition when add works on numbers, concatenation
+when add works on built-in sequences.</p>
+<p>All object-space operations take and return <a class="reference external" href="coding-guide.html#application-level">application-level</a> objects.
+There are only a few, very simple, object-space operations which allow the
+bytecode interpreter to gain some knowledge about the value of an
+application-level object.
+The most important one is <tt class="docutils literal"><span class="pre">is_true()</span></tt>, which returns a boolean
+interpreter-level value.  This is necessary to implement, for example,
+if-statements (or rather, to be pedantic, to implement the
+conditional-branching bytecodes into which if-statements get compiled).</p>
+<p>We have many working object spaces which can be plugged into
+the bytecode interpreter:</p>
+<ul class="simple">
+<li>The <em>Standard Object Space</em> is a complete implementation
+of the various built-in types and objects of Python.  The Standard Object
+Space, together with the bytecode interpreter, is the foundation of our Python
+implementation.  Internally, it is a set of <a class="reference external" href="coding-guide.html#interpreter-level">interpreter-level</a> classes
+implementing the various <a class="reference external" href="coding-guide.html#application-level">application-level</a> objects &#8211; integers, strings,
+lists, types, etc.  To draw a comparison with CPython, the Standard Object
+Space provides the equivalent of the C structures <tt class="docutils literal"><span class="pre">PyIntObject</span></tt>,
+<tt class="docutils literal"><span class="pre">PyListObject</span></tt>, etc.</li>
+<li>various <a class="reference internal" href="#object-space-proxies">Object Space proxies</a> wrap another object space (e.g. the standard
+one) and adds new capabilities, like lazily computed objects (computed only
+when an operation is performed on them), security-checking objects,
+distributed objects living on several machines, etc.</li>
+<li>the <em>Flow Object Space</em> transforms a Python program into a
+flow-graph representation, by recording all operations that the bytecode
+interpreter would like to perform when it is shown the given Python
+program.  This technique is explained <a class="reference external" href="translation.html">in another document</a>.</li>
+</ul>
+<p>The present document gives a description of the above object spaces.
+The sources of PyPy contain the various object spaces in the directory
+<a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/">pypy/objspace/</a>.</p>
+</div>
+<div class="section" id="object-space-interface">
+<span id="interface"></span><h2><a class="toc-backref" href="#id15">Object Space Interface</a><a class="headerlink" href="#object-space-interface" title="Permalink to this headline">¶</a></h2>
+<p>This is the public API that all Object Spaces implement.</p>
+<div class="section" id="administrative-functions">
+<h3><a class="toc-backref" href="#id16">Administrative Functions</a><a class="headerlink" href="#administrative-functions" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">getexecutioncontext():</span></tt></dt>
+<dd>Return current active execution context
+(<a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/executioncontext.py">pypy/interpreter/executioncontext.py</a>).</dd>
+<dt><tt class="docutils literal"><span class="pre">getbuiltinmodule(name):</span></tt></dt>
+<dd>Return a Module object for the built-in module given by name
+(<a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/module.py">pypy/interpreter/module.py</a>).</dd>
+</dl>
+</div>
+<div class="section" id="operations-on-objects-in-the-object-space">
+<h3><a class="toc-backref" href="#id17">Operations on Objects in the Object Space</a><a class="headerlink" href="#operations-on-objects-in-the-object-space" title="Permalink to this headline">¶</a></h3>
+<p>These functions both take and return &#8220;wrapped&#8221; objects.</p>
+<p>The following functions implement operations with a straightforward
+semantic - they directly correspond to language-level constructs:</p>
+<blockquote>
+<div><p><tt class="docutils literal"><span class="pre">id,</span> <span class="pre">type,</span> <span class="pre">issubtype,</span> <span class="pre">iter,</span> <span class="pre">next,</span> <span class="pre">repr,</span> <span class="pre">str,</span> <span class="pre">len,</span> <span class="pre">hash,</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">getattr,</span> <span class="pre">setattr,</span> <span class="pre">delattr,</span> <span class="pre">getitem,</span> <span class="pre">setitem,</span> <span class="pre">delitem,</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">pos,</span> <span class="pre">neg,</span> <span class="pre">abs,</span> <span class="pre">invert,</span> <span class="pre">add,</span> <span class="pre">sub,</span> <span class="pre">mul,</span> <span class="pre">truediv,</span> <span class="pre">floordiv,</span> <span class="pre">div,</span> <span class="pre">mod,</span> <span class="pre">divmod,</span> <span class="pre">pow,</span> <span class="pre">lshift,</span> <span class="pre">rshift,</span> <span class="pre">and_,</span> <span class="pre">or_,</span> <span class="pre">xor,</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">nonzero,</span> <span class="pre">hex,</span> <span class="pre">oct,</span> <span class="pre">int,</span> <span class="pre">float,</span> <span class="pre">long,</span> <span class="pre">ord,</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">lt,</span> <span class="pre">le,</span> <span class="pre">eq,</span> <span class="pre">ne,</span> <span class="pre">gt,</span> <span class="pre">ge,</span> <span class="pre">cmp,</span> <span class="pre">coerce,</span> <span class="pre">contains,</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">inplace_add,</span> <span class="pre">inplace_sub,</span> <span class="pre">inplace_mul,</span> <span class="pre">inplace_truediv,</span> <span class="pre">inplace_floordiv,</span>
+<span class="pre">inplace_div,</span> <span class="pre">inplace_mod,</span> <span class="pre">inplace_pow,</span> <span class="pre">inplace_lshift,</span> <span class="pre">inplace_rshift,</span>
+<span class="pre">inplace_and,</span> <span class="pre">inplace_or,</span> <span class="pre">inplace_xor,</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">get,</span> <span class="pre">set,</span> <span class="pre">delete,</span> <span class="pre">userdel</span></tt></p>
+</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">call(w_callable,</span> <span class="pre">w_args,</span> <span class="pre">w_kwds):</span></tt></dt>
+<dd>Call a function with the given args and keywords.</dd>
+<dt><tt class="docutils literal"><span class="pre">index(w_obj):</span></tt></dt>
+<dd>Implements the index lookup (new in CPython 2.5) on &#8216;w_obj&#8217;. Will return a
+wrapped integer or long, or raise a TypeError if the object doesn&#8217;t have an
+<tt class="docutils literal"><span class="pre">__index__</span></tt> special method.</dd>
+<dt><tt class="docutils literal"><span class="pre">is_(w_x,</span> <span class="pre">w_y):</span></tt></dt>
+<dd>Implements &#8216;w_x is w_y&#8217;. (Returns a wrapped result too!)</dd>
+<dt><tt class="docutils literal"><span class="pre">isinstance(w_obj,</span> <span class="pre">w_type):</span></tt></dt>
+<dd>Implements &#8216;issubtype(type(w_obj), w_type)&#8217;. (Returns a wrapped result too!)</dd>
+<dt><tt class="docutils literal"><span class="pre">exception_match(w_exc_type,</span> <span class="pre">w_check_class):</span></tt></dt>
+<dd>Checks if the given exception type matches &#8216;w_check_class&#8217;. Used in matching the actual exception raised with the list of those to catch in an except clause. (Returns a wrapped result too!)</dd>
+</dl>
+</div>
+<div class="section" id="convenience-functions">
+<h3><a class="toc-backref" href="#id18">Convenience Functions</a><a class="headerlink" href="#convenience-functions" title="Permalink to this headline">¶</a></h3>
+<p>The following functions are part of the object space interface but would not be
+strictly necessary because they can be expressed using several other object
+space methods. However, they are used so often that it seemed worthwhile to
+introduce them as shortcuts.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">eq_w(w_obj1,</span> <span class="pre">w_obj2):</span></tt></dt>
+<dd>Returns true when w_obj1 and w_obj2 are equal. Shortcut for
+space.is_true(space.eq(w_obj1, w_obj2))</dd>
+<dt><tt class="docutils literal"><span class="pre">is_w(w_obj1,</span> <span class="pre">w_obj2):</span></tt></dt>
+<dd>Shortcut for space.is_true(space.is_(w_obj1, w_obj2))</dd>
+<dt><tt class="docutils literal"><span class="pre">hash_w(w_obj):</span></tt></dt>
+<dd>Shortcut for space.int_w(space.hash(w_obj))</dd>
+<dt><tt class="docutils literal"><span class="pre">len_w(w_obj):</span></tt></dt>
+<dd>Shortcut for space.int_w(space.len(w_obj))</dd>
+<dt><tt class="docutils literal"><span class="pre">not_(w_obj):</span></tt></dt>
+<dd>Shortcut for space.newbool(not space.is_true(w_obj))</dd>
+<dt><tt class="docutils literal"><span class="pre">finditem(w_obj,</span> <span class="pre">w_key):</span></tt></dt>
+<dd>Equivalent to <tt class="docutils literal"><span class="pre">getitem(w_obj,</span> <span class="pre">w_key)</span></tt> but returns an interp-level None
+instead of raising a KeyError if the key is not found.</dd>
+<dt><tt class="docutils literal"><span class="pre">call_function(w_callable,</span> <span class="pre">*args_w,</span> <span class="pre">**kw_w):</span></tt></dt>
+<dd>Convenience function that collects the arguments in a wrapped tuple and dict
+and invokes &#8216;space.call(w_callable, ...)&#8217;.</dd>
+<dt><tt class="docutils literal"><span class="pre">call_method(w_object,</span> <span class="pre">'method',</span> <span class="pre">...):</span></tt></dt>
+<dd>uses <tt class="docutils literal"><span class="pre">space.getattr()</span></tt> to get the method object, and then
+<tt class="docutils literal"><span class="pre">space.call_function()</span></tt> to invoke it.</dd>
+<dt><tt class="docutils literal"><span class="pre">unpackiterable(w_iterable,</span> <span class="pre">expected_length=-1):</span></tt></dt>
+<dd>this helper iterates <tt class="docutils literal"><span class="pre">w_x</span></tt>
+(using <tt class="docutils literal"><span class="pre">space.iter()</span></tt> and <tt class="docutils literal"><span class="pre">space.next()</span></tt>) and collects
+the resulting wrapped objects in a list. If <tt class="docutils literal"><span class="pre">expected_length</span></tt> is given and
+the length does not match, an exception is raised.  Of course, in cases where
+iterating directly is better than collecting the elements in a list first,
+you should use <tt class="docutils literal"><span class="pre">space.iter()</span></tt> and <tt class="docutils literal"><span class="pre">space.next()</span></tt> directly.</dd>
+<dt><tt class="docutils literal"><span class="pre">unpacktuple(w_tuple,</span> <span class="pre">expected_length=None):</span></tt></dt>
+<dd>Same as unpackiterable(), but only for tuples.</dd>
+<dt><tt class="docutils literal"><span class="pre">callable(w_obj):</span></tt></dt>
+<dd>implements the built-in <tt class="docutils literal"><span class="pre">callable()</span></tt>.  Returns a wrapped True or False.</dd>
+</dl>
+</div>
+<div class="section" id="creation-of-application-level-objects">
+<h3><a class="toc-backref" href="#id19">Creation of Application Level objects</a><a class="headerlink" href="#creation-of-application-level-objects" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">wrap(x):</span></tt></dt>
+<dd>Returns a wrapped object that is a reference to the interpreter-level object
+x. This can be used either on simple immutable objects (integers,
+strings...) to create a new wrapped object, or on instances of <tt class="docutils literal"><span class="pre">W_Root</span></tt>
+to obtain an application-level-visible reference to them.  For example,
+most classes of the bytecode interpreter subclass <tt class="docutils literal"><span class="pre">W_Root</span></tt> and can
+be directly exposed to app-level in this way - functions, frames, code
+objects, etc.</dd>
+<dt><tt class="docutils literal"><span class="pre">newbool(b):</span></tt></dt>
+<dd>Creates a wrapped bool object from an interpreter level object.</dd>
+<dt><tt class="docutils literal"><span class="pre">newtuple([w_x,</span> <span class="pre">w_y,</span> <span class="pre">w_z,</span> <span class="pre">...]):</span></tt></dt>
+<dd>Makes a new wrapped tuple out of an interpreter level list of wrapped objects.</dd>
+<dt><tt class="docutils literal"><span class="pre">newlist([..]):</span></tt></dt>
+<dd>Takes an interpreter level list of wrapped objects.</dd>
+<dt><tt class="docutils literal"><span class="pre">newdict():</span></tt></dt>
+<dd>Returns a new empty dictionary.</dd>
+<dt><tt class="docutils literal"><span class="pre">newslice(w_start,</span> <span class="pre">w_end,</span> <span class="pre">w_step):</span></tt></dt>
+<dd>Makes a new slice object.</dd>
+<dt><tt class="docutils literal"><span class="pre">newstring(asciilist):</span></tt></dt>
+<dd>Creates a string from a list of wrapped integers.  Note that this
+is not a very useful method; usually you can just say
+space.wrap(&#8220;mystring&#8221;).</dd>
+<dt><tt class="docutils literal"><span class="pre">newunicode(codelist):</span></tt></dt>
+<dd>Creates a unicode string from a list of integers.</dd>
+</dl>
+</div>
+<div class="section" id="conversions-from-application-level-to-interpreter-level">
+<h3><a class="toc-backref" href="#id20">Conversions from Application Level to Interpreter Level</a><a class="headerlink" href="#conversions-from-application-level-to-interpreter-level" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">unwrap(w_x):</span></tt></dt>
+<dd>Return the Interpreter Level equivalent of w_x.  DO NOT USE!
+Only for testing.  Use the functions described below instead.</dd>
+<dt><tt class="docutils literal"><span class="pre">is_true(w_x):</span></tt></dt>
+<dd>Return a interpreter level bool (True or False) that gives the truth
+value of the wrapped object w_x.</dd>
+<dt><tt class="docutils literal"><span class="pre">int_w(w_x):</span></tt></dt>
+<dd>If w_x is an application-level integer or long which can be converted without
+overflow to an integer, return an interpreter-level integer.
+Otherwise raise TypeError or OverflowError.</dd>
+<dt><tt class="docutils literal"><span class="pre">bigint_w(w_x):</span></tt></dt>
+<dd>If w_x is an application-level integer or long, return an interpreter-level rbigint.
+Otherwise raise TypeError.</dd>
+<dt><tt class="docutils literal"><span class="pre">str_w(w_x):</span></tt></dt>
+<dd>If w_x is an application-level string, return an interpreter-level string.
+Otherwise raise TypeError.</dd>
+<dt><tt class="docutils literal"><span class="pre">float_w(w_x):</span></tt></dt>
+<dd>If w_x is an application-level float, integer or long, return interpreter-level float.
+Otherwise raise TypeError or OverflowError in case of very large longs.</dd>
+<dt><tt class="docutils literal"><span class="pre">getindex_w(w_obj,</span> <span class="pre">w_exception=None):</span></tt></dt>
+<dd>Call <cite>index(w_obj)</cite>. If the resulting integer or long object can be converted
+to an interpreter-level int, return that. If not, return a clamped result if
+<cite>w_exception</cite> is None, otherwise raise that exception on application-level.
+(If w_obj can&#8217;t be converted to an index, <cite>index()</cite> will raise an
+application-level TypeError.)</dd>
+<dt><tt class="docutils literal"><span class="pre">interp_w(RequiredClass,</span> <span class="pre">w_x,</span> <span class="pre">can_be_None=False):</span></tt></dt>
+<dd>If w_x is a wrapped instance of the given bytecode interpreter class,
+unwrap it and return it.  If can_be_None is True, a wrapped None is also
+accepted and returns an interp-level None.  Otherwise, raises an
+OperationError encapsulating a TypeError with a nice error message.</dd>
+<dt><tt class="docutils literal"><span class="pre">interpclass_w(w_x):</span></tt></dt>
+<dd>If w_x is a wrapped instance of an bytecode interpreter class &#8211; for example
+Function, Frame, Cell, etc. &#8211; return it unwrapped.  Otherwise return None.</dd>
+</dl>
+</div>
+<div class="section" id="data-members">
+<h3><a class="toc-backref" href="#id21">Data Members</a><a class="headerlink" href="#data-members" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">space.builtin: The Module containing the builtins</p>
+</li>
+<li><p class="first">space.sys: The &#8216;sys&#8217; Module</p>
+</li>
+<li><p class="first">space.w_None: The ObjSpace&#8217;s None</p>
+</li>
+<li><p class="first">space.w_True: The ObjSpace&#8217;s True</p>
+</li>
+<li><p class="first">space.w_False: The ObjSpace&#8217;s False</p>
+</li>
+<li><p class="first">space.w_Ellipsis: The ObjSpace&#8217;s Ellipsis</p>
+</li>
+<li><p class="first">space.w_NotImplemented: The ObjSpace&#8217;s NotImplemented</p>
+</li>
+<li><p class="first">space.w_int, w_float, w_long, w_tuple, w_str, w_unicode, w_type,
+w_instance, w_slice: Python&#8217;s most common type objects</p>
+</li>
+<li><p class="first">space.w_XxxError`` for each exception class <tt class="docutils literal"><span class="pre">XxxError</span></tt>
+(e.g. <tt class="docutils literal"><span class="pre">space.w_KeyError</span></tt>, <tt class="docutils literal"><span class="pre">space.w_IndexError</span></tt>, etc.).</p>
+</li>
+<li><dl class="first docutils">
+<dt>ObjSpace.MethodTable:</dt>
+<dd><p class="first last">List of tuples (method name, symbol, number of arguments, list of special names) for the regular part of the interface. (Tuples are interpreter level.)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>ObjSpace.BuiltinModuleTable:</dt>
+<dd><p class="first last">List of names of built-in modules.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>ObjSpace.ConstantTable:</dt>
+<dd><p class="first last">List of names of the constants that the object space should define</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>ObjSpace.ExceptionTable:</dt>
+<dd><p class="first last">List of names of exception classes.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>ObjSpace.IrregularOpTable:</dt>
+<dd><p class="first last">List of names of methods that have an irregular API (take and/or return
+non-wrapped objects).</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-standard-object-space">
+<span id="standard-object-space"></span><h2><a class="toc-backref" href="#id22">The Standard Object Space</a><a class="headerlink" href="#the-standard-object-space" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3><a class="toc-backref" href="#id23">Introduction</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The Standard Object Space (<a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/">pypy/objspace/std/</a>) is the direct equivalent of CPython&#8217;s
+object library (the &#8220;Objects/&#8221; subdirectory in the distribution). It is an
+implementation of the common Python types in a lower-level language.</p>
+<p>The Standard Object Space defines an abstract parent class, W_Object, and a
+bunch of subclasses like W_IntObject, W_ListObject, and so on. A wrapped
+object (a &#8220;black box&#8221; for the bytecode interpreter main loop) is thus an
+instance of one of these classes. When the main loop invokes an operation, say
+the addition, between two wrapped objects w1 and w2, the Standard Object Space
+does some internal dispatching (similar to &#8220;Object/abstract.c&#8221; in CPython) and
+invokes a method of the proper W_XyzObject class that can do the
+operation. The operation itself is done with the primitives allowed by
+RPython. The result is constructed as a wrapped object again. For
+example, compare the following implementation of integer addition with the
+function &#8220;int_add()&#8221; in &#8220;Object/intobject.c&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">add__Int_Int</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">w_int1</span><span class="p">,</span> <span class="n">w_int2</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">w_int1</span><span class="o">.</span><span class="n">intval</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">w_int2</span><span class="o">.</span><span class="n">intval</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">ovfcheck</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OverflowError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">FailedToImplementArgs</span><span class="p">(</span><span class="n">space</span><span class="o">.</span><span class="n">w_OverflowError</span><span class="p">,</span>
+                                <span class="n">space</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="s">&quot;integer addition&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">W_IntObject</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Why such a burden just for integer objects? Why did we have to wrap them into
+W_IntObject instances? For them it seems it would have been sufficient just to
+use plain Python integers. But this argumentation fails just like it fails for
+more complex kind of objects. Wrapping them just like everything else is the
+cleanest solution. You could introduce case testing wherever you use a wrapped
+object, to know if it is a plain integer or an instance of (a subclass of)
+W_Object. But that makes the whole program more complicated. The equivalent in
+CPython would be to use PyObject* pointers all around except when the object is
+an integer (after all, integers are directly available in C too). You could
+represent small integers as odd-valuated pointers. But it puts extra burden on
+the whole C code, so the CPython team avoided it.  (In our case it is an
+optimization that we eventually made, but not hard-coded at this level -
+see <a class="reference external" href="interpreter-optimizations.html">Standard Interpreter Optimizations</a>.)</p>
+<p>So in summary: wrapping integers as instances is the simple path, while
+using plain integers instead is the complex path, not the other way
+around.</p>
+</div>
+<div class="section" id="object-types">
+<h3><a class="toc-backref" href="#id24">Object types</a><a class="headerlink" href="#object-types" title="Permalink to this headline">¶</a></h3>
+<p>The larger part of the <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/">pypy/objspace/std/</a> package defines and implements the
+library of Python&#8217;s standard built-in object types.  Each type (int, float,
+list, tuple, str, type, etc.) is typically implemented by two modules:</p>
+<ul class="simple">
+<li>the <em>type specification</em> module, which for a type <tt class="docutils literal"><span class="pre">xxx</span></tt> is called <tt class="docutils literal"><span class="pre">xxxtype.py</span></tt>;</li>
+<li>the <em>implementation</em> module, called <tt class="docutils literal"><span class="pre">xxxobject.py</span></tt>.</li>
+</ul>
+<p>The <tt class="docutils literal"><span class="pre">xxxtype.py</span></tt> module basically defines the type object itself.  For
+example, <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/listtype.py">pypy/objspace/std/listtype.py</a> contains the specification of the object you get when
+you type <tt class="docutils literal"><span class="pre">list</span></tt> in a PyPy prompt.  <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/listtype.py">pypy/objspace/std/listtype.py</a> enumerates the methods
+specific to lists, like <tt class="docutils literal"><span class="pre">append()</span></tt>.</p>
+<p>A particular method implemented by all types is the <tt class="docutils literal"><span class="pre">__new__()</span></tt> special
+method, which in Python&#8217;s new-style-classes world is responsible for creating
+an instance of the type.  In PyPy, <tt class="docutils literal"><span class="pre">__new__()</span></tt> locates and imports the module
+implementing <em>instances</em> of the type, and creates such an instance based on the
+arguments the user supplied to the constructor.  For example, <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/tupletype.py">pypy/objspace/std/tupletype.py</a>
+defines <tt class="docutils literal"><span class="pre">__new__()</span></tt> to import the class <tt class="docutils literal"><span class="pre">W_TupleObject</span></tt> from
+<a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/tupleobject.py">pypy/objspace/std/tupleobject.py</a> and instantiate it.  The <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/tupleobject.py">pypy/objspace/std/tupleobject.py</a> then contains a
+&#8220;real&#8221; implementation of tuples: the way the data is stored in the
+<tt class="docutils literal"><span class="pre">W_TupleObject</span></tt> class, how the operations work, etc.</p>
+<p>The goal of the above module layout is to cleanly separate the Python
+type object, visible to the user, and the actual implementation of its
+instances.  It is possible to provide <em>several</em> implementations of the
+instances of the same Python type, by writing several <tt class="docutils literal"><span class="pre">W_XxxObject</span></tt>
+classes.  Every place that instantiates a new object of that Python type
+can decide which <tt class="docutils literal"><span class="pre">W_XxxObject</span></tt> class to instantiate.</p>
+<p>From the user&#8217;s point of view, the multiple internal <tt class="docutils literal"><span class="pre">W_XxxObject</span></tt>
+classes are not visible: they are still all instances of exactly the
+same Python type.  PyPy knows that (e.g.) the application-level type of
+its interpreter-level <tt class="docutils literal"><span class="pre">W_StringObject</span></tt> instances is str because
+there is a <tt class="docutils literal"><span class="pre">typedef</span></tt> class attribute in <tt class="docutils literal"><span class="pre">W_StringObject</span></tt> which
+points back to the string type specification from <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/stringtype.py">pypy/objspace/std/stringtype.py</a>; all
+other implementations of strings use the same <tt class="docutils literal"><span class="pre">typedef</span></tt> from
+<a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/stringtype.py">pypy/objspace/std/stringtype.py</a>.</p>
+<p>For other examples of multiple implementations of the same Python type,
+see <a class="reference external" href="interpreter-optimizations.html">Standard Interpreter Optimizations</a>.</p>
+</div>
+<div class="section" id="multimethods">
+<h3><a class="toc-backref" href="#id25">Multimethods</a><a class="headerlink" href="#multimethods" title="Permalink to this headline">¶</a></h3>
+<p>The Standard Object Space allows multiple object implementations per
+Python type - this is based on <a class="reference external" href="http://en.wikipedia.org/wiki/Multimethods">multimethods</a>.  For a description of the
+multimethod variant that we implemented and which features it supports,
+see the comment at the start of <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/multimethod.py">pypy/objspace/std/multimethod.py</a>.  However, multimethods
+alone are not enough for the Standard Object Space: the complete picture
+spans several levels in order to emulate the exact Python semantics.</p>
+<p>Consider the example of the <tt class="docutils literal"><span class="pre">space.getitem(w_a,</span> <span class="pre">w_b)</span></tt> operation,
+corresponding to the application-level syntax <tt class="docutils literal"><span class="pre">a[b]</span></tt>.  The Standard
+Object Space contains a corresponding <tt class="docutils literal"><span class="pre">getitem</span></tt> multimethod and a
+family of functions that implement the multimethod for various
+combination of argument classes - more precisely, for various
+combinations of the <em>interpreter-level</em> classes of the arguments.  Here
+are some examples of functions implementing the <tt class="docutils literal"><span class="pre">getitem</span></tt>
+multimethod:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">getitem__Tuple_ANY</span></tt>: called when the first argument is a
+W_TupleObject, this function converts its second argument to an
+integer and performs tuple indexing.</li>
+<li><tt class="docutils literal"><span class="pre">getitem__Tuple_Slice</span></tt>: called when the first argument is a
+W_TupleObject and the second argument is a W_SliceObject.  This
+version takes precedence over the previous one if the indexing is
+done with a slice object, and performs tuple slicing instead.</li>
+<li><tt class="docutils literal"><span class="pre">getitem__String_Slice</span></tt>: called when the first argument is a
+W_StringObject and the second argument is a slice object.</li>
+</ul>
+<p>Note how the multimethod dispatch logic helps writing new object
+implementations without having to insert hooks into existing code.  Note
+first how we could have defined a regular method-based API that new
+object implementations must provide, and call these methods from the
+space operations.  The problem with this approach is that some Python
+operators are naturally binary or N-ary.  Consider for example the
+addition operation: for the basic string implementation it is a simple
+concatenation-by-copy, but it can have a rather more subtle
+implementation for strings done as ropes.  It is also likely that
+concatenating a basic string with a rope string could have its own
+dedicated implementation - and yet another implementation for a rope
+string with a basic string.  With multimethods, we can have an
+orthogonally-defined implementation for each combination.</p>
+<p>The multimethods mechanism also supports delegate functions, which are
+converters between two object implementations.  The dispatch logic knows
+how to insert calls to delegates if it encounters combinations of
+interp-level classes which is not directly implemented.  For example, we
+have no specific implementation for the concatenation of a basic string
+and a StringSlice object; when the user adds two such strings, then the
+StringSlice object is converted to a basic string (that is, a
+temporarily copy is built), and the concatenation is performed on the
+resulting pair of basic strings.  This is similar to the C++ method
+overloading resolution mechanism (but occurs at runtime).</p>
+</div>
+<div class="section" id="multimethod-slicing">
+<h3><a class="toc-backref" href="#id26">Multimethod slicing</a><a class="headerlink" href="#multimethod-slicing" title="Permalink to this headline">¶</a></h3>
+<p>The complete picture is more complicated because the Python object model
+is based on <em>descriptors</em>: the types <tt class="docutils literal"><span class="pre">int</span></tt>, <tt class="docutils literal"><span class="pre">str</span></tt>, etc. must have
+methods <tt class="docutils literal"><span class="pre">__add__</span></tt>, <tt class="docutils literal"><span class="pre">__mul__</span></tt>, etc. that take two arguments including
+the <tt class="docutils literal"><span class="pre">self</span></tt>.  These methods must perform the operation or return
+<tt class="docutils literal"><span class="pre">NotImplemented</span></tt> if the second argument is not of a type that it
+doesn&#8217;t know how to handle.</p>
+<p>The Standard Object Space creates these methods by <em>slicing</em> the
+multimethod tables.  Each method is automatically generated from a
+subset of the registered implementations of the corresponding
+multimethod.  This slicing is performed on the first argument, in order
+to keep only the implementations whose first argument&#8217;s
+interpreter-level class matches the declared Python-level type.</p>
+<p>For example, in a baseline PyPy, <tt class="docutils literal"><span class="pre">int.__add__</span></tt> is just calling the
+function <tt class="docutils literal"><span class="pre">add__Int_Int</span></tt>, which is the only registered implementation
+for <tt class="docutils literal"><span class="pre">add</span></tt> whose first argument is an implementation of the <tt class="docutils literal"><span class="pre">int</span></tt>
+Python type.  On the other hand, if we enable integers implemented as
+tagged pointers, then there is another matching implementation:
+<tt class="docutils literal"><span class="pre">add__SmallInt_SmallInt</span></tt>.  In this case, the Python-level method
+<tt class="docutils literal"><span class="pre">int.__add__</span></tt> is implemented by trying to dispatch between these two
+functions based on the interp-level type of the two arguments.</p>
+<p>Similarly, the reverse methods (<tt class="docutils literal"><span class="pre">__radd__</span></tt> and others) are obtained by
+slicing the multimethod tables to keep only the functions whose <em>second</em>
+argument has the correct Python-level type.</p>
+<p>Slicing is actually a good way to reproduce the details of the object
+model as seen in CPython: slicing is attempted for every Python types
+for every multimethod, but the <tt class="docutils literal"><span class="pre">__xyz__</span></tt> Python methods are only put
+into the Python type when the resulting slices are not empty.  This is
+how our <tt class="docutils literal"><span class="pre">int</span></tt> type has no <tt class="docutils literal"><span class="pre">__getitem__</span></tt> method, for example.
+Additionally, slicing ensures that <tt class="docutils literal"><span class="pre">5</span> <span class="pre">.__add__(6L)</span></tt> correctly returns
+<tt class="docutils literal"><span class="pre">NotImplemented</span></tt> (because this particular slice does not include
+<tt class="docutils literal"><span class="pre">add__Long_Long</span></tt> and there is no <tt class="docutils literal"><span class="pre">add__Int_Long</span></tt>), which leads to
+<tt class="docutils literal"><span class="pre">6L.__radd__(5)</span></tt> being called, as in CPython.</p>
+</div>
+</div>
+<div class="section" id="the-flow-object-space">
+<span id="flow-object-space"></span><h2><a class="toc-backref" href="#id27">The Flow Object Space</a><a class="headerlink" href="#the-flow-object-space" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id28">Introduction</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>The task of the FlowObjSpace (the source is at <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/flow/">pypy/objspace/flow/</a>) is to generate a control-flow graph from a
+function.  This graph will also contain a trace of the individual operations, so
+that it is actually just an alternate representation for the function.</p>
+<p>The FlowObjSpace is an object space, which means that it exports the standard
+object space interface and it is driven by the bytecode interpreter.</p>
+<p>The basic idea is that if the bytecode interpreter is given a function, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+  <span class="k">return</span> <span class="mi">3</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>it will do whatever bytecode dispatching and stack-shuffling needed, during
+which it issues a sequence of calls to the object space.  The FlowObjSpace
+merely records these calls (corresponding to &#8220;operations&#8221;) in a structure called
+a basic block.  To track which value goes where, the FlowObjSpace invents
+placeholder &#8220;wrapped objects&#8221; and give them to the interpreter, so that they
+appear in some next operation.  This technique is an example of <a class="reference external" href="http://en.wikipedia.org/wiki/Abstract_interpretation">Abstract
+Interpretation</a>.</p>
+<p>For example, if the placeholder <tt class="docutils literal"><span class="pre">v1</span></tt> is given as the argument to the above
+function, the bytecode interpreter will call <tt class="docutils literal"><span class="pre">v2</span> <span class="pre">=</span> <span class="pre">space.mul(space.wrap(3),</span>
+<span class="pre">v1)</span></tt> and then <tt class="docutils literal"><span class="pre">v3</span> <span class="pre">=</span> <span class="pre">space.add(v2,</span> <span class="pre">space.wrap(2))</span></tt> and return <tt class="docutils literal"><span class="pre">v3</span></tt> as the
+result.  During these calls the FlowObjSpace will record a basic block:</p>
+<div class="highlight-python"><pre>Block(v1):     # input argument
+  v2 = mul(Constant(3), v1)
+  v3 = add(v2, Constant(2))</pre>
+</div>
+</div>
+<div class="section" id="the-flow-model">
+<h3><a class="toc-backref" href="#id29">The Flow model</a><a class="headerlink" href="#the-flow-model" title="Permalink to this headline">¶</a></h3>
+<p>The data structures built up by the flow object space are described in the
+<a class="reference external" href="translation.html#flow-model">translation document</a>.</p>
+</div>
+<div class="section" id="how-the-flowobjspace-works">
+<h3><a class="toc-backref" href="#id30">How the FlowObjSpace works</a><a class="headerlink" href="#how-the-flowobjspace-works" title="Permalink to this headline">¶</a></h3>
+<p>The FlowObjSpace works by recording all operations issued by the bytecode
+interpreter into basic blocks.  A basic block ends in one of two cases: when
+the bytecode interpreters calls <tt class="docutils literal"><span class="pre">is_true()</span></tt>, or when a joinpoint is reached.</p>
+<ul class="simple">
+<li>A joinpoint occurs when the next operation is about to be recorded into the
+current block, but there is already another block that records an operation
+for the same bytecode position.  This means that the bytecode interpreter
+has closed a loop and is interpreting already-seen code again.  In this
+situation, we interrupt the bytecode interpreter and we make a link from the
+end of the current block back to the previous block, thus closing the loop
+in the flow graph as well.  (Note that this occurs only when an operation is
+about to be recorded, which allows some amount of constant-folding.)</li>
+<li>If the bytecode interpreter calls <tt class="docutils literal"><span class="pre">is_true()</span></tt>, the FlowObjSpace doesn&#8217;t
+generally know if the answer should be True or False, so it puts a
+conditional jump and generates two successor blocks for the current basic
+block.  There is some trickery involved so that the bytecode interpreter is
+fooled into thinking that <tt class="docutils literal"><span class="pre">is_true()</span></tt> first returns False (and the
+subsequent operations are recorded in the first successor block), and later
+the <em>same</em> call to <tt class="docutils literal"><span class="pre">is_true()</span></tt> also returns True (and the subsequent
+operations go this time to the other successor block).</li>
+</ul>
+<p>(This section to be extended...)</p>
+</div>
+</div>
+<div class="section" id="object-space-proxies">
+<h2><a class="toc-backref" href="#id31">Object Space proxies</a><a class="headerlink" href="#object-space-proxies" title="Permalink to this headline">¶</a></h2>
+<p>We have implemented several <em>proxy object spaces</em> which wrap another
+space (typically the standard one) and add some capability to all
+objects.  These object spaces are documented in a separate page: <a class="reference external" href="objspace-proxies.html">What
+PyPy can do for your objects</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Object Spaces</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#object-space-interface">Object Space Interface</a><ul>
+<li><a class="reference internal" href="#administrative-functions">Administrative Functions</a></li>
+<li><a class="reference internal" href="#operations-on-objects-in-the-object-space">Operations on Objects in the Object Space</a></li>
+<li><a class="reference internal" href="#convenience-functions">Convenience Functions</a></li>
+<li><a class="reference internal" href="#creation-of-application-level-objects">Creation of Application Level objects</a></li>
+<li><a class="reference internal" href="#conversions-from-application-level-to-interpreter-level">Conversions from Application Level to Interpreter Level</a></li>
+<li><a class="reference internal" href="#data-members">Data Members</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-standard-object-space">The Standard Object Space</a><ul>
+<li><a class="reference internal" href="#id1">Introduction</a></li>
+<li><a class="reference internal" href="#object-types">Object types</a></li>
+<li><a class="reference internal" href="#multimethods">Multimethods</a></li>
+<li><a class="reference internal" href="#multimethod-slicing">Multimethod slicing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-flow-object-space">The Flow Object Space</a><ul>
+<li><a class="reference internal" href="#id3">Introduction</a></li>
+<li><a class="reference internal" href="#the-flow-model">The Flow model</a></li>
+<li><a class="reference internal" href="#how-the-flowobjspace-works">How the FlowObjSpace works</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#object-space-proxies">Object Space proxies</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/objspace.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

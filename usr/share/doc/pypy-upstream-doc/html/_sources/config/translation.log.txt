@@ -1,0 +1,24 @@
+===============
+translation.log
+===============
+
+* **name:** log
+
+* **description:** Include debug prints in the translation (PYPYLOG=...)
+
+* **command-line:** --log
+
+* **command-line for negation:** --no-log
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+Include debug prints in the translation.
+
+These must be enabled by setting the PYPYLOG environment variable.
+The exact set of features supported by PYPYLOG is described in
+pypy/translation/c/src/debug_print.h.

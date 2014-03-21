@@ -1,0 +1,29 @@
+========================
+translation.jit\_backend
+========================
+
+* **name:** jit\_backend
+
+* **description:** choose the backend for the JIT
+
+* **command-line:** --jit-backend
+
+* **option type:** choice option
+
+* **possible values:**
+
+  + auto
+
+  + x86
+
+  + x86-without-sse2
+
+  + arm
+
+* **default:** auto
+
+
+
+
+Choose the backend to use for the JIT.
+By default, this is the best backend for the current platform.

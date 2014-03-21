@@ -1,0 +1,699 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Generally Useful RPython Modules &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="generally-useful-rpython-modules">
+<h1><a class="toc-backref" href="#id10">Generally Useful RPython Modules</a><a class="headerlink" href="#generally-useful-rpython-modules" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#generally-useful-rpython-modules" id="id10">Generally Useful RPython Modules</a><ul>
+<li><a class="reference internal" href="#listsort" id="id11"><tt class="docutils literal"><span class="pre">listsort</span></tt></a></li>
+<li><a class="reference internal" href="#nonconst" id="id12"><tt class="docutils literal"><span class="pre">nonconst</span></tt></a></li>
+<li><a class="reference internal" href="#objectmodel" id="id13"><tt class="docutils literal"><span class="pre">objectmodel</span></tt></a></li>
+<li><a class="reference internal" href="#rarithmetic" id="id14"><tt class="docutils literal"><span class="pre">rarithmetic</span></tt></a></li>
+<li><a class="reference internal" href="#rbigint" id="id15"><tt class="docutils literal"><span class="pre">rbigint</span></tt></a></li>
+<li><a class="reference internal" href="#rrandom" id="id16"><tt class="docutils literal"><span class="pre">rrandom</span></tt></a></li>
+<li><a class="reference internal" href="#rsocket" id="id17"><tt class="docutils literal"><span class="pre">rsocket</span></tt></a></li>
+<li><a class="reference internal" href="#streamio" id="id18"><tt class="docutils literal"><span class="pre">streamio</span></tt></a></li>
+<li><a class="reference internal" href="#unroll" id="id19"><tt class="docutils literal"><span class="pre">unroll</span></tt></a></li>
+<li><a class="reference internal" href="#parsing" id="id20"><tt class="docutils literal"><span class="pre">parsing</span></tt></a><ul>
+<li><a class="reference internal" href="#regular-expressions" id="id21">Regular Expressions</a></li>
+<li><a class="reference internal" href="#ebnf" id="id22">EBNF</a></li>
+<li><a class="reference internal" href="#parse-trees" id="id23">Parse Trees</a><ul>
+<li><a class="reference internal" href="#visitors" id="id24">Visitors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tree-transformations" id="id25">Tree Transformations</a><ul>
+<li><a class="reference internal" href="#symbol-1-symbol-2-symbol-n" id="id26">[symbol_1 symbol_2 ... symbol_n]</a></li>
+<li><a class="reference internal" href="#symbol" id="id27">&lt;symbol&gt;</a></li>
+<li><a class="reference internal" href="#nonterminal-1-nonterminal-2-nonterminal-n" id="id28">&gt;nonterminal_1 nonterminal_2 ... nonterminal_n&lt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#extensions-to-the-ebnf-grammar-format" id="id29">Extensions to the EBNF grammar format</a></li>
+<li><a class="reference internal" href="#full-example" id="id30">Full Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>This page lists some of the modules in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/">rpython/rlib</a> together with some hints
+for what they can be used for. The modules here will make up some general
+library useful for RPython programs (since most of the standard library modules
+are not RPython). Most of these modules are somewhat rough still and are likely
+to change at some point.  Usually it is useful to look at the tests in
+<a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/test/">rpython/rlib/test</a> to get an impression of how to use a module.</p>
+<div class="section" id="listsort">
+<h2><a class="toc-backref" href="#id11"><tt class="docutils literal"><span class="pre">listsort</span></tt></a><a class="headerlink" href="#listsort" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/listsort.py">rpython/rlib/listsort.py</a> module contains an implementation of the timsort sorting algorithm
+(the sort method of lists is not RPython). To use it, subclass from the
+<tt class="docutils literal"><span class="pre">listsort.TimSort</span></tt> class and override the <tt class="docutils literal"><span class="pre">lt</span></tt> method to change the
+comparison behaviour. The constructor of <tt class="docutils literal"><span class="pre">TimSort</span></tt> takes a list as an
+argument, which will be sorted in place when the <tt class="docutils literal"><span class="pre">sort</span></tt> method of the
+<tt class="docutils literal"><span class="pre">TimSort</span></tt> instance is called. <strong>Warning:</strong> currently only one type of list can
+be sorted using the <tt class="docutils literal"><span class="pre">listsort</span></tt> module in one program, otherwise the annotator
+will be confused.</p>
+</div>
+<div class="section" id="nonconst">
+<h2><a class="toc-backref" href="#id12"><tt class="docutils literal"><span class="pre">nonconst</span></tt></a><a class="headerlink" href="#nonconst" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/nonconst.py">rpython/rlib/nonconst.py</a> module is useful mostly for tests. The <a class="reference external" href="objspace.html#the-flow-object-space">flow object space</a> and
+the <a class="reference external" href="translation.html#the-annotation-pass">annotator</a> do quite some constant folding, which is sometimes not desired
+in a test. To prevent constant folding on a certain value, use the <tt class="docutils literal"><span class="pre">NonConst</span></tt>
+class. The constructor of <tt class="docutils literal"><span class="pre">NonConst</span></tt> takes an arbitrary value. The instance of
+<tt class="docutils literal"><span class="pre">NonConst</span></tt> will behave during annotation like that value, but no constant
+folding will happen.</p>
+</div>
+<div class="section" id="objectmodel">
+<h2><a class="toc-backref" href="#id13"><tt class="docutils literal"><span class="pre">objectmodel</span></tt></a><a class="headerlink" href="#objectmodel" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/objectmodel.py">rpython/rlib/objectmodel.py</a> module is a mixed bag of various functionality. Some of the
+more useful ones are:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">ComputedIntSymbolic</span></tt>:</dt>
+<dd>Instances of <tt class="docutils literal"><span class="pre">ComputedIntSymbolic</span></tt> are treated like integers of unknown
+value by the annotator. The value is determined by a no-argument function
+(which needs to be passed into the constructor of the class). When the
+backend emits code, the function is called to determine the value.</dd>
+<dt><tt class="docutils literal"><span class="pre">CDefinedIntSymbolic</span></tt>:</dt>
+<dd>Instances of <tt class="docutils literal"><span class="pre">ComputedIntSymbolic</span></tt> are also treated like integers of
+unknown value by the annotator. When C code is emitted they will be
+represented by the attribute <tt class="docutils literal"><span class="pre">expr</span></tt> of the symbolic (which is also the
+first argument of the constructor).</dd>
+<dt><tt class="docutils literal"><span class="pre">r_dict</span></tt>:</dt>
+<dd>An RPython dict-like object. The constructor of r_dict takes two functions:
+<tt class="docutils literal"><span class="pre">key_eq</span></tt> and <tt class="docutils literal"><span class="pre">key_hash</span></tt> which are used for comparing and hashing the
+entries in the dictionary.</dd>
+<dt><tt class="docutils literal"><span class="pre">instantiate(cls)</span></tt>:</dt>
+<dd>Instantiate class <tt class="docutils literal"><span class="pre">cls</span></tt> without calling <tt class="docutils literal"><span class="pre">__init__</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">we_are_translated()</span></tt>:</dt>
+<dd>This function returns <tt class="docutils literal"><span class="pre">False</span></tt> when run on top of CPython, but the
+annotator thinks its return value is <tt class="docutils literal"><span class="pre">True</span></tt>. Therefore it can be used to
+do different things on top of CPython than after translation. This should be
+used extremely sparingly (mostly for optimizations or debug code).</dd>
+<dt><tt class="docutils literal"><span class="pre">cast_object_to_weakaddress(obj)</span></tt>:</dt>
+<dd>Returns a sort of &#8220;weak reference&#8221; to obj, just without any convenience. The
+weak address that it returns is not invalidated if the object dies, so you
+need to take care yourself to know when the object dies. Use with extreme
+care.</dd>
+<dt><tt class="docutils literal"><span class="pre">cast_weakadress_to_object(obj)</span></tt>:</dt>
+<dd>Inverse of the previous function. If the object died then a segfault will
+ensue.</dd>
+<dt><tt class="docutils literal"><span class="pre">UnboxedValue</span></tt>:</dt>
+<dd>This is a class which should be used as a base class for a class which
+carries exactly one integer field. The class should have <tt class="docutils literal"><span class="pre">__slots__</span></tt>
+with exactly one entry defined. After translation, instances of this class
+won&#8217;t be allocated but represented by <em>tagged pointers*</em>, that is pointers
+that have the lowest bit set.</dd>
+</dl>
+</div>
+<div class="section" id="rarithmetic">
+<h2><a class="toc-backref" href="#id14"><tt class="docutils literal"><span class="pre">rarithmetic</span></tt></a><a class="headerlink" href="#rarithmetic" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/rarithmetic.py">rpython/rlib/rarithmetic.py</a> module contains functionality to handle the small differences
+in the behaviour of arithmetic code in regular Python and RPython code. Most of
+them are already described in the <a class="reference external" href="coding-guide.html">coding guide</a></p>
+</div>
+<div class="section" id="rbigint">
+<h2><a class="toc-backref" href="#id15"><tt class="docutils literal"><span class="pre">rbigint</span></tt></a><a class="headerlink" href="#rbigint" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/rbigint.py">rpython/rlib/rbigint.py</a> module contains a full RPython implementation of the Python <tt class="docutils literal"><span class="pre">long</span></tt>
+type (which itself is not supported in RPython). The <tt class="docutils literal"><span class="pre">rbigint</span></tt> class contains
+that implementation. To construct <tt class="docutils literal"><span class="pre">rbigint</span></tt> instances use the static methods
+<tt class="docutils literal"><span class="pre">fromint</span></tt>, <tt class="docutils literal"><span class="pre">frombool</span></tt>, <tt class="docutils literal"><span class="pre">fromfloat</span></tt> and <tt class="docutils literal"><span class="pre">fromdecimalstr</span></tt>. To convert back
+to other types use the methods <tt class="docutils literal"><span class="pre">toint</span></tt>, <tt class="docutils literal"><span class="pre">tobool</span></tt>, <tt class="docutils literal"><span class="pre">touint</span></tt> and
+<tt class="docutils literal"><span class="pre">tofloat</span></tt>. Since RPython does not support operator overloading, all the
+special methods of <tt class="docutils literal"><span class="pre">rbigint</span></tt> that would normally start and end with &#8220;__&#8221; have
+these underscores left out for better readability (so <tt class="docutils literal"><span class="pre">a.add(b)</span></tt> can be used
+to add two rbigint instances).</p>
+</div>
+<div class="section" id="rrandom">
+<h2><a class="toc-backref" href="#id16"><tt class="docutils literal"><span class="pre">rrandom</span></tt></a><a class="headerlink" href="#rrandom" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/rrandom.py">rpython/rlib/rrandom.py</a> module contains an implementation of the mersenne twister random
+number generator. It contains one class <tt class="docutils literal"><span class="pre">Random</span></tt> which most importantly has a
+<tt class="docutils literal"><span class="pre">random</span></tt> method which returns a pseudo-random floating point number between
+0.0 and 1.0.</p>
+</div>
+<div class="section" id="rsocket">
+<h2><a class="toc-backref" href="#id17"><tt class="docutils literal"><span class="pre">rsocket</span></tt></a><a class="headerlink" href="#rsocket" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/rsocket.py">rpython/rlib/rsocket.py</a> module contains an RPython implementation of the functionality of
+the socket standard library with a slightly different interface.  The
+difficulty with the Python socket API is that addresses are not &#8220;well-typed&#8221;
+objects: depending on the address family they are tuples, or strings, and
+so on, which is not suitable for RPython.  Instead, <tt class="docutils literal"><span class="pre">rsocket</span></tt> contains
+a hierarchy of Address classes, in a typical static-OO-programming style.</p>
+</div>
+<div class="section" id="streamio">
+<h2><a class="toc-backref" href="#id18"><tt class="docutils literal"><span class="pre">streamio</span></tt></a><a class="headerlink" href="#streamio" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/streamio.py">rpython/rlib/streamio.py</a> contains an RPython stream I/O implementation (which was started
+by Guido van Rossum as <a class="reference external" href="http://svn.python.org/view/sandbox/trunk/sio/sio.py">sio.py</a> in the CPython sandbox as a prototype for the
+upcoming new file implementation in Python 3000).</p>
+</div>
+<div class="section" id="unroll">
+<h2><a class="toc-backref" href="#id19"><tt class="docutils literal"><span class="pre">unroll</span></tt></a><a class="headerlink" href="#unroll" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/unroll.py">rpython/rlib/unroll.py</a> module most importantly contains the function <tt class="docutils literal"><span class="pre">unrolling_iterable</span></tt>
+which wraps an iterator. Looping over the iterator in RPython code will not
+produce a loop in the resulting flow graph but will unroll the loop instead.</p>
+</div>
+<div class="section" id="parsing">
+<h2><a class="toc-backref" href="#id20"><tt class="docutils literal"><span class="pre">parsing</span></tt></a><a class="headerlink" href="#parsing" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/parsing/">rpython/rlib/parsing/</a> module is a still in-development module to generate tokenizers and
+parsers in RPython. It is still highly experimental and only really used by the
+<a class="reference external" href="https://bitbucket.org/cfbolz/pyrolog/">Prolog interpreter</a> (although in slightly non-standard ways). The easiest way
+to specify a tokenizer/grammar is to write it down using regular expressions and
+simple EBNF format.</p>
+<p>The regular expressions are implemented using finite automatons. The parsing
+engine uses <a class="reference external" href="http://pdos.csail.mit.edu/~baford/packrat/">packrat parsing</a>, which has O(n) parsing time but is more
+powerful than LL(n) and LR(n) grammars.</p>
+<div class="section" id="regular-expressions">
+<h3><a class="toc-backref" href="#id21">Regular Expressions</a><a class="headerlink" href="#regular-expressions" title="Permalink to this headline">¶</a></h3>
+<p>The regular expression syntax is mostly a subset of the syntax of the <a class="reference external" href="http://docs.python.org/library/re.html">re</a>
+module. By default, non-special characters match themselves. If you concatenate
+regular expressions the result will match the concatenation of strings matched
+by the single regular expressions.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">|</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">R|S</span></tt> matches any string that <em>either</em> matches R or matches S.</dd>
+<dt><tt class="docutils literal"><span class="pre">*</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">R*</span></tt> matches 0 or more repetitions of R.</dd>
+<dt><tt class="docutils literal"><span class="pre">+</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">R+</span></tt> matches 1 or more repetitions of R.</dd>
+<dt><tt class="docutils literal"><span class="pre">?</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">R?</span></tt> matches 0 or 1 repetition of R.</dd>
+<dt><tt class="docutils literal"><span class="pre">(...)</span></tt></dt>
+<dd>Parenthesis can be used to group regular expressions (note that in contrast
+to Python&#8217;s re module you cannot later match the content of this group).</dd>
+<dt><tt class="docutils literal"><span class="pre">{m}</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">R{m}</span></tt> matches exactly m repetitions of R.</dd>
+<dt><tt class="docutils literal"><span class="pre">{m,</span> <span class="pre">n}</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">R{m,</span> <span class="pre">n}</span></tt> matches between m and n repetitions of R (including m and n).</dd>
+<dt><tt class="docutils literal"><span class="pre">[]</span></tt></dt>
+<dd>Matches a set of characters. The characters to be matched can be listed
+sequentially. A range of characters can be specified using <tt class="docutils literal"><span class="pre">-</span></tt>. For
+examples <tt class="docutils literal"><span class="pre">[ac-eg]</span></tt> matches the characters a, c, d, e and g.
+The whole set can be inverted by starting it with <tt class="docutils literal"><span class="pre">^</span></tt>. So [^a] matches
+anything except a.</dd>
+</dl>
+<p>To parse a regular expression and to get a matcher for it, you can use the
+function <tt class="docutils literal"><span class="pre">make_runner(s)</span></tt> in the <tt class="docutils literal"><span class="pre">rpython.rlib.parsing.regexparse</span></tt> module.  It
+returns a object with a <tt class="docutils literal"><span class="pre">recognize(input)</span></tt> method that returns True or False
+depending on whether <tt class="docutils literal"><span class="pre">input</span></tt> matches the string or not.</p>
+</div>
+<div class="section" id="ebnf">
+<h3><a class="toc-backref" href="#id22">EBNF</a><a class="headerlink" href="#ebnf" title="Permalink to this headline">¶</a></h3>
+<p>To describe a tokenizer and a grammar the <tt class="docutils literal"><span class="pre">rpython.rlib.parsing.ebnfparse</span></tt>
+defines a syntax for doing that.</p>
+<p>The syntax file contains a sequence or rules. Every rule either describes a
+regular expression or a grammar rule.</p>
+<p>Regular expressions rules have the form:</p>
+<div class="highlight-python"><pre>NAME: "regex";</pre>
+</div>
+<p>NAME is the name of the token that the regular expression
+produces (it has to consist of upper-case letters), <tt class="docutils literal"><span class="pre">regex</span></tt> is a regular
+expression with the syntax described above. One token name is special-cased: a
+token called <tt class="docutils literal"><span class="pre">IGNORE</span></tt> will be filtered out of the token stream before being
+passed on to the parser and can thus be used to match comments or
+non-significant whitespace.</p>
+<p>Grammar rules have the form:</p>
+<div class="highlight-python"><pre>name: expansion_1 | expansion_2 | ... | expansion_n;</pre>
+</div>
+<p>Where <tt class="docutils literal"><span class="pre">expansion_i</span></tt> is a sequence of nonterminal or token names:</p>
+<div class="highlight-python"><pre>symbol_1 symbol_2 symbol_3 ... symbol_n</pre>
+</div>
+<p>This means that the nonterminal symbol <tt class="docutils literal"><span class="pre">name</span></tt> (which has to consist of
+lower-case letters) can be expanded into any of the expansions. The expansions
+can consist of a sequence of token names, nonterminal names or literals, which
+are strings in quotes that are matched literally.</p>
+<p>An example to make this clearer:</p>
+<div class="highlight-python"><pre>IGNORE: " ";
+DECIMAL: "0|[1-9][0-9]*";
+additive: multitive "+" additive |
+          multitive;
+multitive: primary "*" multitive |
+           primary;
+primary: "(" additive ")" | DECIMAL;</pre>
+</div>
+<p>This grammar describes the syntax of arithmetic impressions involving addition
+and multiplication. The tokenizer
+produces a stream of either DECIMAL tokens or tokens that have matched one of
+the literals &#8220;+&#8221;, &#8220;*&#8221;, &#8220;(&#8221; or &#8221;)&#8221;. Any space will be ignored. The grammar
+produces a syntax tree that follows the precedence of the operators. For example
+the expression <tt class="docutils literal"><span class="pre">12</span> <span class="pre">+</span> <span class="pre">4</span> <span class="pre">*</span> <span class="pre">5</span></tt> is parsed into the following tree:</p>
+<p class="graphviz">
+<img src="_images/graphviz-ee745d10023a7aa10ca4305215aca27d1cf84bbc.png" alt="digraph G{
+&quot;-1213931828&quot; [label=&quot;additive&quot;];
+&quot;-1213931828&quot; -&gt; &quot;-1213951956&quot;;
+&quot;-1213951956&quot; [label=&quot;multitive&quot;];
+&quot;-1213951956&quot; -&gt; &quot;-1213949172&quot;;
+&quot;-1213949172&quot; [label=&quot;primary&quot;];
+&quot;-1213949172&quot; -&gt; &quot;-1213949812&quot;;
+&quot;-1213949812&quot; [shape=box,label=&quot;DECIMAL\l'12'&quot;];
+&quot;-1213931828&quot; -&gt; &quot;-1213935220&quot;;
+&quot;-1213935220&quot; [shape=box,label=&quot;__0_+\l'+'&quot;];
+&quot;-1213931828&quot; -&gt; &quot;-1213951316&quot;;
+&quot;-1213951316&quot; [label=&quot;additive&quot;];
+&quot;-1213951316&quot; -&gt; &quot;-1213948180&quot;;
+&quot;-1213948180&quot; [label=&quot;multitive&quot;];
+&quot;-1213948180&quot; -&gt; &quot;-1213951380&quot;;
+&quot;-1213951380&quot; [label=&quot;primary&quot;];
+&quot;-1213951380&quot; -&gt; &quot;-1213951508&quot;;
+&quot;-1213951508&quot; [shape=box,label=&quot;DECIMAL\l'4'&quot;];
+&quot;-1213948180&quot; -&gt; &quot;-1213948788&quot;;
+&quot;-1213948788&quot; [shape=box,label=&quot;__1_*\l'*'&quot;];
+&quot;-1213948180&quot; -&gt; &quot;-1213951060&quot;;
+&quot;-1213951060&quot; [label=&quot;multitive&quot;];
+&quot;-1213951060&quot; -&gt; &quot;-1213948980&quot;;
+&quot;-1213948980&quot; [label=&quot;primary&quot;];
+&quot;-1213948980&quot; -&gt; &quot;-1213950420&quot;;
+&quot;-1213950420&quot; [shape=box,label=&quot;DECIMAL\l'5'&quot;];
+}" />
+</p>
+</div>
+<div class="section" id="parse-trees">
+<h3><a class="toc-backref" href="#id23">Parse Trees</a><a class="headerlink" href="#parse-trees" title="Permalink to this headline">¶</a></h3>
+<p>The parsing process builds up a tree consisting of instances of <tt class="docutils literal"><span class="pre">Symbol</span></tt> and
+<tt class="docutils literal"><span class="pre">Nonterminal</span></tt>, the former corresponding to tokens, the latter to nonterminal
+symbols. Both classes live in the <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/parsing/tree.py">rpython/rlib/parsing/tree.py</a> module. You can use
+the <tt class="docutils literal"><span class="pre">view()</span></tt> method <tt class="docutils literal"><span class="pre">Nonterminal</span></tt> instances to get a pygame view of the
+parse tree.</p>
+<p><tt class="docutils literal"><span class="pre">Symbol</span></tt> instances have the following attributes: <tt class="docutils literal"><span class="pre">symbol</span></tt>, which is the
+name of the token and <tt class="docutils literal"><span class="pre">additional_info</span></tt> which is the matched source.</p>
+<p><tt class="docutils literal"><span class="pre">Nonterminal</span></tt> instances have the following attributes: <tt class="docutils literal"><span class="pre">symbol</span></tt> is the name
+of the nonterminal and <tt class="docutils literal"><span class="pre">children</span></tt> which is a list of the children attributes.</p>
+<div class="section" id="visitors">
+<h4><a class="toc-backref" href="#id24">Visitors</a><a class="headerlink" href="#visitors" title="Permalink to this headline">¶</a></h4>
+<p>To write tree visitors for the parse trees that are RPython, there is a special
+baseclass <tt class="docutils literal"><span class="pre">RPythonVisitor</span></tt> in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/rlib/parsing/tree.py">rpython/rlib/parsing/tree.py</a> to use. If your
+class uses this, it will grow a <tt class="docutils literal"><span class="pre">dispatch(node)</span></tt> method, that calls an
+appropriate <tt class="docutils literal"><span class="pre">visit_&lt;symbol&gt;</span></tt> method, depending on the <tt class="docutils literal"><span class="pre">node</span></tt> argument. Here
+the &lt;symbol&gt; is replaced by the <tt class="docutils literal"><span class="pre">symbol</span></tt> attribute of the visited node.</p>
+<p>For the visitor to be RPython, the return values of all the visit methods need
+to be of the same type.</p>
+</div>
+</div>
+<div class="section" id="tree-transformations">
+<h3><a class="toc-backref" href="#id25">Tree Transformations</a><a class="headerlink" href="#tree-transformations" title="Permalink to this headline">¶</a></h3>
+<p>As the tree of arithmetic example above shows, by default the parse tree
+contains a lot of nodes that are not really conveying useful information.
+To get rid of some of them, there is some support in the grammar format to
+automatically create a visitor that transforms the tree to remove the additional
+nodes. The simplest such transformation just removes nodes, but there are
+more complex ones.</p>
+<p>The syntax for these transformations is to enclose symbols in expansions of a
+nonterminal by [...], &lt;...&gt; or &gt;...&lt;.</p>
+<div class="section" id="symbol-1-symbol-2-symbol-n">
+<h4><a class="toc-backref" href="#id26">[symbol_1 symbol_2 ... symbol_n]</a><a class="headerlink" href="#symbol-1-symbol-2-symbol-n" title="Permalink to this headline">¶</a></h4>
+<p>This will produce a transformer that completely removes the enclosed symbols
+from the tree.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>IGNORE: " ";
+n: "A" [","] n | "A";</pre>
+</div>
+<p>Parsing the string &#8220;A, A, A&#8221; gives the tree:</p>
+<p class="graphviz">
+<img src="_images/graphviz-a463afdd16be9f36ce0f8f113414d6f097d809f0.png" alt="digraph G{
+&quot;-1213678004&quot; [label=&quot;n&quot;];
+&quot;-1213678004&quot; -&gt; &quot;-1213681108&quot;;
+&quot;-1213681108&quot; [shape=box,label=&quot;__0_A\n'A'&quot;];
+&quot;-1213678004&quot; -&gt; &quot;-1213681332&quot;;
+&quot;-1213681332&quot; [shape=box,label=&quot;__1_,\n','&quot;];
+&quot;-1213678004&quot; -&gt; &quot;-1213837780&quot;;
+&quot;-1213837780&quot; [label=&quot;n&quot;];
+&quot;-1213837780&quot; -&gt; &quot;-1213837716&quot;;
+&quot;-1213837716&quot; [shape=box,label=&quot;__0_A\n'A'&quot;];
+&quot;-1213837780&quot; -&gt; &quot;-1213839476&quot;;
+&quot;-1213839476&quot; [shape=box,label=&quot;__1_,\n','&quot;];
+&quot;-1213837780&quot; -&gt; &quot;-1213839956&quot;;
+&quot;-1213839956&quot; [label=&quot;n&quot;];
+&quot;-1213839956&quot; -&gt; &quot;-1213840948&quot;;
+&quot;-1213840948&quot; [shape=box,label=&quot;__0_A\n'A'&quot;];
+}" />
+</p>
+<p>After transformation the tree has the &#8221;,&#8221; nodes removed:</p>
+<p class="graphviz">
+<img src="_images/graphviz-054469a629d5849ecb01eaf7334cf9f12a6e02f9.png" alt="digraph G{
+&quot;-1219325716&quot; [label=&quot;n&quot;];
+&quot;-1219325716&quot; -&gt; &quot;-1219325844&quot;;
+&quot;-1219325844&quot; [shape=box,label=&quot;__0_A\n'A'&quot;];
+&quot;-1219325716&quot; -&gt; &quot;-1219324372&quot;;
+&quot;-1219324372&quot; [label=&quot;n&quot;];
+&quot;-1219324372&quot; -&gt; &quot;-1219325524&quot;;
+&quot;-1219325524&quot; [shape=box,label=&quot;__0_A\n'A'&quot;];
+&quot;-1219324372&quot; -&gt; &quot;-1219324308&quot;;
+&quot;-1219324308&quot; [label=&quot;n&quot;];
+&quot;-1219324308&quot; -&gt; &quot;-1219325492&quot;;
+&quot;-1219325492&quot; [shape=box,label=&quot;__0_A\n'A'&quot;];
+}" />
+</p>
+</div>
+<div class="section" id="symbol">
+<h4><a class="toc-backref" href="#id27">&lt;symbol&gt;</a><a class="headerlink" href="#symbol" title="Permalink to this headline">¶</a></h4>
+<p>This will replace the parent with symbol. Every expansion can contain at most
+one symbol that is enclosed by &lt;...&gt;, because the parent can only be replaced
+once, obviously.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>IGNORE: " ";
+n: "a" "b" "c" m;
+m: "(" &lt;n&gt; ")" | "d";</pre>
+</div>
+<p>Parsing the string &#8220;a b c (a b c d)&#8221; gives the tree:</p>
+<p class="graphviz">
+<img src="_images/graphviz-d095b626dde0be0b6a793afed07e277fc42800f9.png" alt="digraph G{
+&quot;-1214029460&quot; [label=&quot;n&quot;];
+&quot;-1214029460&quot; -&gt; &quot;-1214026452&quot;;
+&quot;-1214026452&quot; [shape=box,label=&quot;__0_a\n'a'&quot;];
+&quot;-1214029460&quot; -&gt; &quot;-1214028276&quot;;
+&quot;-1214028276&quot; [shape=box,label=&quot;__1_b\n'b'&quot;];
+&quot;-1214029460&quot; -&gt; &quot;-1214027316&quot;;
+&quot;-1214027316&quot; [shape=box,label=&quot;__2_c\n'c'&quot;];
+&quot;-1214029460&quot; -&gt; &quot;-1214026868&quot;;
+&quot;-1214026868&quot; [label=&quot;m&quot;];
+&quot;-1214026868&quot; -&gt; &quot;-1214140436&quot;;
+&quot;-1214140436&quot; [shape=box,label=&quot;__3_(\n'('&quot;];
+&quot;-1214026868&quot; -&gt; &quot;-1214143508&quot;;
+&quot;-1214143508&quot; [label=&quot;n&quot;];
+&quot;-1214143508&quot; -&gt; &quot;-1214141364&quot;;
+&quot;-1214141364&quot; [shape=box,label=&quot;__0_a\n'a'&quot;];
+&quot;-1214143508&quot; -&gt; &quot;-1214141748&quot;;
+&quot;-1214141748&quot; [shape=box,label=&quot;__1_b\n'b'&quot;];
+&quot;-1214143508&quot; -&gt; &quot;-1214140756&quot;;
+&quot;-1214140756&quot; [shape=box,label=&quot;__2_c\n'c'&quot;];
+&quot;-1214143508&quot; -&gt; &quot;-1214144468&quot;;
+&quot;-1214144468&quot; [label=&quot;m&quot;];
+&quot;-1214144468&quot; -&gt; &quot;-1214414868&quot;;
+&quot;-1214414868&quot; [shape=box,label=&quot;__5_d\n'd'&quot;];
+&quot;-1214026868&quot; -&gt; &quot;-1214141492&quot;;
+&quot;-1214141492&quot; [shape=box,label=&quot;__4_)\n')'&quot;];
+}" />
+</p>
+<p>After transformation the tree looks like this:</p>
+<p class="graphviz">
+<img src="_images/graphviz-98fd64cd3808bc4e8fc34b3af13cf45707223068.png" alt="digraph G{
+&quot;-1219949908&quot; [label=&quot;n&quot;];
+&quot;-1219949908&quot; -&gt; &quot;-1214026452&quot;;
+&quot;-1214026452&quot; [shape=box,label=&quot;__0_a\n'a'&quot;];
+&quot;-1219949908&quot; -&gt; &quot;-1214028276&quot;;
+&quot;-1214028276&quot; [shape=box,label=&quot;__1_b\n'b'&quot;];
+&quot;-1219949908&quot; -&gt; &quot;-1214027316&quot;;
+&quot;-1214027316&quot; [shape=box,label=&quot;__2_c\n'c'&quot;];
+&quot;-1219949908&quot; -&gt; &quot;-1219949876&quot;;
+&quot;-1219949876&quot; [label=&quot;n&quot;];
+&quot;-1219949876&quot; -&gt; &quot;-1214141364&quot;;
+&quot;-1214141364&quot; [shape=box,label=&quot;__0_a\n'a'&quot;];
+&quot;-1219949876&quot; -&gt; &quot;-1214141748&quot;;
+&quot;-1214141748&quot; [shape=box,label=&quot;__1_b\n'b'&quot;];
+&quot;-1219949876&quot; -&gt; &quot;-1214140756&quot;;
+&quot;-1214140756&quot; [shape=box,label=&quot;__2_c\n'c'&quot;];
+&quot;-1219949876&quot; -&gt; &quot;-1219949748&quot;;
+&quot;-1219949748&quot; [label=&quot;m&quot;];
+&quot;-1219949748&quot; -&gt; &quot;-1214414868&quot;;
+&quot;-1214414868&quot; [shape=box,label=&quot;__5_d\n'd'&quot;];
+}" />
+</p>
+</div>
+<div class="section" id="nonterminal-1-nonterminal-2-nonterminal-n">
+<h4><a class="toc-backref" href="#id28">&gt;nonterminal_1 nonterminal_2 ... nonterminal_n&lt;</a><a class="headerlink" href="#nonterminal-1-nonterminal-2-nonterminal-n" title="Permalink to this headline">¶</a></h4>
+<p>This replaces the nodes nonterminal_1 to nonterminal_n by their children.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>IGNORE: " ";
+DECIMAL: "0|[1-9][0-9]*";
+list: DECIMAL &gt;list&lt; | DECIMAL;</pre>
+</div>
+<p>Parsing the string &#8220;1 2&#8221; gives the tree:</p>
+<p class="graphviz">
+<img src="_images/graphviz-f98d3695447aa62ee861b73410fefaa793bb4c4f.png" alt="digraph G{
+&quot;-1213518708&quot; [label=&quot;list&quot;];
+&quot;-1213518708&quot; -&gt; &quot;-1213518196&quot;;
+&quot;-1213518196&quot; [shape=box,label=&quot;DECIMAL\n'1'&quot;];
+&quot;-1213518708&quot; -&gt; &quot;-1213518260&quot;;
+&quot;-1213518260&quot; [label=&quot;list&quot;];
+&quot;-1213518260&quot; -&gt; &quot;-1213520308&quot;;
+&quot;-1213520308&quot; [shape=box,label=&quot;DECIMAL\n'2'&quot;];
+}" />
+</p>
+<p>after the transformation the tree looks like:</p>
+<p class="graphviz">
+<img src="_images/graphviz-9e1af46613218a78921822b4a68fc016d887d3db.png" alt="digraph G{
+&quot;-1219505652&quot; [label=&quot;list&quot;];
+&quot;-1219505652&quot; -&gt; &quot;-1213518196&quot;;
+&quot;-1213518196&quot; [shape=box,label=&quot;DECIMAL\n'1'&quot;];
+&quot;-1219505652&quot; -&gt; &quot;-1213520308&quot;;
+&quot;-1213520308&quot; [shape=box,label=&quot;DECIMAL\n'2'&quot;];
+}" />
+</p>
+<p>Note that the transformation works recursively. That means that the following
+also works: if the string &#8220;1 2 3 4 5&#8221; is parsed the tree at first looks like
+this:</p>
+<p class="graphviz">
+<img src="_images/graphviz-ddca13bfd8c0a99125b7aad0f8bda3cbcc1ee21f.png" alt="digraph G{
+&quot;-1213611892&quot; [label=&quot;list&quot;];
+&quot;-1213611892&quot; -&gt; &quot;-1213608980&quot;;
+&quot;-1213608980&quot; [shape=box,label=&quot;DECIMAL\n'1'&quot;];
+&quot;-1213611892&quot; -&gt; &quot;-1213623476&quot;;
+&quot;-1213623476&quot; [label=&quot;list&quot;];
+&quot;-1213623476&quot; -&gt; &quot;-1213623380&quot;;
+&quot;-1213623380&quot; [shape=box,label=&quot;DECIMAL\n'2'&quot;];
+&quot;-1213623476&quot; -&gt; &quot;-1213442868&quot;;
+&quot;-1213442868&quot; [label=&quot;list&quot;];
+&quot;-1213442868&quot; -&gt; &quot;-1213441652&quot;;
+&quot;-1213441652&quot; [shape=box,label=&quot;DECIMAL\n'3'&quot;];
+&quot;-1213442868&quot; -&gt; &quot;-1213441332&quot;;
+&quot;-1213441332&quot; [label=&quot;list&quot;];
+&quot;-1213441332&quot; -&gt; &quot;-1213441620&quot;;
+&quot;-1213441620&quot; [shape=box,label=&quot;DECIMAL\n'4'&quot;];
+&quot;-1213441332&quot; -&gt; &quot;-1213443060&quot;;
+&quot;-1213443060&quot; [label=&quot;list&quot;];
+&quot;-1213443060&quot; -&gt; &quot;-1213442100&quot;;
+&quot;-1213442100&quot; [shape=box,label=&quot;DECIMAL\n'5'&quot;];
+}" />
+</p>
+<p>But after transformation the whole thing collapses to one node with a lot of
+children:</p>
+<p class="graphviz">
+<img src="_images/graphviz-6c49b86525268668c887d405d30c7d247485aa8c.png" alt="digraph G{
+&quot;-1219430228&quot; [label=&quot;list&quot;];
+&quot;-1219430228&quot; -&gt; &quot;-1213608980&quot;;
+&quot;-1213608980&quot; [shape=box,label=&quot;DECIMAL\n'1'&quot;];
+&quot;-1219430228&quot; -&gt; &quot;-1213623380&quot;;
+&quot;-1213623380&quot; [shape=box,label=&quot;DECIMAL\n'2'&quot;];
+&quot;-1219430228&quot; -&gt; &quot;-1213441652&quot;;
+&quot;-1213441652&quot; [shape=box,label=&quot;DECIMAL\n'3'&quot;];
+&quot;-1219430228&quot; -&gt; &quot;-1213441620&quot;;
+&quot;-1213441620&quot; [shape=box,label=&quot;DECIMAL\n'4'&quot;];
+&quot;-1219430228&quot; -&gt; &quot;-1213442100&quot;;
+&quot;-1213442100&quot; [shape=box,label=&quot;DECIMAL\n'5'&quot;];
+}" />
+</p>
+</div>
+</div>
+<div class="section" id="extensions-to-the-ebnf-grammar-format">
+<h3><a class="toc-backref" href="#id29">Extensions to the EBNF grammar format</a><a class="headerlink" href="#extensions-to-the-ebnf-grammar-format" title="Permalink to this headline">¶</a></h3>
+<p>There are some extensions to the EBNF grammar format that are really only
+syntactic sugar but make writing grammars less tedious. These are:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">symbol?</span></tt>:</dt>
+<dd>matches 0 or 1 repetitions of symbol</dd>
+<dt><tt class="docutils literal"><span class="pre">symbol*</span></tt>:</dt>
+<dd>matches 0 or more repetitions of symbol. After the tree transformation all
+these repetitions are children of the current symbol.</dd>
+<dt><tt class="docutils literal"><span class="pre">symbol+</span></tt>:</dt>
+<dd>matches 1 or more repetitions of symbol. After the tree transformation all
+these repetitions are children of the current symbol.</dd>
+</dl>
+<p>These are implemented by adding some more rules to the grammar in the correct
+way. Examples: the grammar:</p>
+<div class="highlight-python"><pre>s: a b? c;</pre>
+</div>
+<p>is transformed to look like this:</p>
+<div class="highlight-python"><pre>s: a &gt;_maybe_symbol_0_&lt; c | a c;
+_maybe_symbol_0_: b;</pre>
+</div>
+<p>The grammar:</p>
+<div class="highlight-python"><pre>s: a b* c;</pre>
+</div>
+<p>is transformed to look like this:</p>
+<div class="highlight-python"><pre>s: a &gt;_star_symbol_0&lt; c | a c;
+_star_symbol_0: b &gt;_symbol_star_0&lt; | b;</pre>
+</div>
+<p>The grammar:</p>
+<div class="highlight-python"><pre>s: a b+ c;</pre>
+</div>
+<p>is transformed to look like this:</p>
+<div class="highlight-python"><pre>s: a &gt;_plus_symbol_0&lt; c;
+_plus_symbol_0: b &gt;_plus_symbol_0&lt; | b;</pre>
+</div>
+</div>
+<div class="section" id="full-example">
+<h3><a class="toc-backref" href="#id30">Full Example</a><a class="headerlink" href="#full-example" title="Permalink to this headline">¶</a></h3>
+<p>A semi-complete parser for the <a class="reference external" href="http://www.json.org">json format</a>:</p>
+<div class="highlight-python"><pre>STRING: "\\"[^\\\\"]*\\"";
+NUMBER: "\-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?";
+IGNORE: " |\n";
+value: &lt;STRING&gt; | &lt;NUMBER&gt; | &lt;object&gt; | &lt;array&gt; | &lt;"null"&gt; |
+       &lt;"true"&gt; | &lt;"false"&gt;;
+object: ["{"] (entry [","])* entry ["}"];
+array: ["["] (value [","])* value ["]"];
+entry: STRING [":"] value;</pre>
+</div>
+<p>The resulting tree for parsing the string:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;a&quot;</span><span class="p">:</span> <span class="s">&quot;5&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;f&quot;</span><span class="p">:</span> <span class="s">&quot;g&quot;</span><span class="p">,</span> <span class="s">&quot;h&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">}]}</span>
+</pre></div>
+</div>
+<p>looks like this:</p>
+<p class="graphviz">
+<img src="_images/graphviz-a8875dd8990d410413ce17c684a6cecf2dc3a6ce.png" alt="digraph G{
+&quot;-1220061652&quot; [label=&quot;object&quot;];
+&quot;-1220061652&quot; -&gt; &quot;-1220127636&quot;;
+&quot;-1220127636&quot; [label=&quot;entry&quot;];
+&quot;-1220127636&quot; -&gt; &quot;-1213915636&quot;;
+&quot;-1213915636&quot; [shape=box,label=&quot;STRING\n'a'&quot;];
+&quot;-1220127636&quot; -&gt; &quot;-1214251156&quot;;
+&quot;-1214251156&quot; [shape=box,label=&quot;STRING\n'5'&quot;];
+&quot;-1220061652&quot; -&gt; &quot;-1220063188&quot;;
+&quot;-1220063188&quot; [label=&quot;entry&quot;];
+&quot;-1220063188&quot; -&gt; &quot;-1214253076&quot;;
+&quot;-1214253076&quot; [shape=box,label=&quot;STRING\n'b'&quot;];
+&quot;-1220063188&quot; -&gt; &quot;-1220059444&quot;;
+&quot;-1220059444&quot; [label=&quot;array&quot;];
+&quot;-1220059444&quot; -&gt; &quot;-1214253364&quot;;
+&quot;-1214253364&quot; [shape=box,label=&quot;NUMBER\n'1'&quot;];
+&quot;-1220059444&quot; -&gt; &quot;-1214254292&quot;;
+&quot;-1214254292&quot; [shape=box,label=&quot;__0_null\n'null'&quot;];
+&quot;-1220059444&quot; -&gt; &quot;-1214253268&quot;;
+&quot;-1214253268&quot; [shape=box,label=&quot;NUMBER\n'3'&quot;];
+&quot;-1220059444&quot; -&gt; &quot;-1214252596&quot;;
+&quot;-1214252596&quot; [shape=box,label=&quot;__1_true\n'true'&quot;];
+&quot;-1220059444&quot; -&gt; &quot;-1220062260&quot;;
+&quot;-1220062260&quot; [label=&quot;object&quot;];
+&quot;-1220062260&quot; -&gt; &quot;-1220060116&quot;;
+&quot;-1220060116&quot; [label=&quot;entry&quot;];
+&quot;-1220060116&quot; -&gt; &quot;-1214211860&quot;;
+&quot;-1214211860&quot; [shape=box,label=&quot;STRING\n'f'&quot;];
+&quot;-1220060116&quot; -&gt; &quot;-1214210132&quot;;
+&quot;-1214210132&quot; [shape=box,label=&quot;STRING\n'g'&quot;];
+&quot;-1220062260&quot; -&gt; &quot;-1220062868&quot;;
+&quot;-1220062868&quot; [label=&quot;entry&quot;];
+&quot;-1220062868&quot; -&gt; &quot;-1214211956&quot;;
+&quot;-1214211956&quot; [shape=box,label=&quot;STRING\n'h'&quot;];
+&quot;-1220062868&quot; -&gt; &quot;-1214212308&quot;;
+&quot;-1214212308&quot; [shape=box,label=&quot;NUMBER\n'6'&quot;];
+}" />
+</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Generally Useful RPython Modules</a><ul>
+<li><a class="reference internal" href="#listsort"><tt class="docutils literal"><span class="pre">listsort</span></tt></a></li>
+<li><a class="reference internal" href="#nonconst"><tt class="docutils literal"><span class="pre">nonconst</span></tt></a></li>
+<li><a class="reference internal" href="#objectmodel"><tt class="docutils literal"><span class="pre">objectmodel</span></tt></a></li>
+<li><a class="reference internal" href="#rarithmetic"><tt class="docutils literal"><span class="pre">rarithmetic</span></tt></a></li>
+<li><a class="reference internal" href="#rbigint"><tt class="docutils literal"><span class="pre">rbigint</span></tt></a></li>
+<li><a class="reference internal" href="#rrandom"><tt class="docutils literal"><span class="pre">rrandom</span></tt></a></li>
+<li><a class="reference internal" href="#rsocket"><tt class="docutils literal"><span class="pre">rsocket</span></tt></a></li>
+<li><a class="reference internal" href="#streamio"><tt class="docutils literal"><span class="pre">streamio</span></tt></a></li>
+<li><a class="reference internal" href="#unroll"><tt class="docutils literal"><span class="pre">unroll</span></tt></a></li>
+<li><a class="reference internal" href="#parsing"><tt class="docutils literal"><span class="pre">parsing</span></tt></a><ul>
+<li><a class="reference internal" href="#regular-expressions">Regular Expressions</a></li>
+<li><a class="reference internal" href="#ebnf">EBNF</a></li>
+<li><a class="reference internal" href="#parse-trees">Parse Trees</a><ul>
+<li><a class="reference internal" href="#visitors">Visitors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tree-transformations">Tree Transformations</a><ul>
+<li><a class="reference internal" href="#symbol-1-symbol-2-symbol-n">[symbol_1 symbol_2 ... symbol_n]</a></li>
+<li><a class="reference internal" href="#symbol">&lt;symbol&gt;</a></li>
+<li><a class="reference internal" href="#nonterminal-1-nonterminal-2-nonterminal-n">&gt;nonterminal_1 nonterminal_2 ... nonterminal_n&lt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#extensions-to-the-ebnf-grammar-format">Extensions to the EBNF grammar format</a></li>
+<li><a class="reference internal" href="#full-example">Full Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/rlib.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+==================
+translation.output
+==================
+
+* **name:** output
+
+* **description:** Output file name
+
+* **command-line:** --output
+
+* **option type:** string option
+
+
+
+
+Specify file name that the produced executable gets.

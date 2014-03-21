@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PyPy Parser &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pypy-parser">
+<h1>PyPy Parser<a class="headerlink" href="#pypy-parser" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The PyPy parser includes a tokenizer and a recursive descent parser.</p>
+<div class="section" id="tokenizer">
+<h3>Tokenizer<a class="headerlink" href="#tokenizer" title="Permalink to this headline">¶</a></h3>
+<p>At the moment, the tokenizer is implemented as a single function
+(<tt class="docutils literal"><span class="pre">generate_tokens</span></tt> in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/pyparser/pytokenizer.py">pypy/interpreter/pyparser/pytokenizer.py</a>) that builds
+a list of tokens.  The tokens are then fed to the parser.</p>
+</div>
+<div class="section" id="parser">
+<h3>Parser<a class="headerlink" href="#parser" title="Permalink to this headline">¶</a></h3>
+<p>The parser is a simple LL(1) parser that is similar to CPython&#8217;s.</p>
+<div class="section" id="building-the-python-grammar">
+<h4>Building the Python grammar<a class="headerlink" href="#building-the-python-grammar" title="Permalink to this headline">¶</a></h4>
+<p>The python grammar is built at startup from the pristine CPython grammar file
+(see <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/pyparser/metaparser.py">pypy/interpreter/pyparser/metaparser.py</a>).  The grammar builder first
+represents the grammar as rules corresponding to a set of Nondeterministic
+Finite Automatons (NFAs).  It then converts them to a set of Deterministic
+Finite Automatons (DFAs).  The difference between a NFA and a DFA is that a NFA
+may have several possible next states for any given input while a DFA may only
+have one.  DFAs are therefore more limiting, but far more efficient to use in
+parsing.  Finally, the assigns the grammar builder assigns each DFA state a
+number and packs them into a list for the parser to use.  The final product is
+an instance of the <tt class="docutils literal"><span class="pre">Grammar</span></tt> class in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/pyparser/parser.py">pypy/interpreter/pyparser/parser.py</a>.</p>
+</div>
+<div class="section" id="parser-implementation">
+<h4>Parser implementation<a class="headerlink" href="#parser-implementation" title="Permalink to this headline">¶</a></h4>
+<p>The workhorse of the parser is the <tt class="docutils literal"><span class="pre">add_token</span></tt> method of the <tt class="docutils literal"><span class="pre">Parser</span></tt> class.
+It tries to find a transition from the current state to another state based on
+the token it receives as a argument.  If it can&#8217;t find a transition, it checks
+if the current state is accepting.  If it&#8217;s not, a <tt class="docutils literal"><span class="pre">ParseError</span></tt> is
+raised. When parsing is done without error, the parser has built a tree of
+<tt class="docutils literal"><span class="pre">Node</span></tt>.</p>
+</div>
+<div class="section" id="parsing-python">
+<h4>Parsing Python<a class="headerlink" href="#parsing-python" title="Permalink to this headline">¶</a></h4>
+<p>The glue code between the tokenizer and the parser as well as extra Python
+specific code is in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/pyparser/pyparse.py">pypy/interpreter/pyparser/pyparse.py</a>.  The
+<tt class="docutils literal"><span class="pre">parse_source</span></tt> method takes a string of Python code and returns the parse
+tree.  It also detects the coding cookie if there is one and decodes the source.
+Note that __future__ imports are handled before the parser is invoked by
+manually parsing the source in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/pyparser/future.py">pypy/interpreter/pyparser/future.py</a>.</p>
+</div>
+</div>
+<div class="section" id="compiler">
+<h3>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline">¶</a></h3>
+<p>The next step in generating Python bytecode is converting the parse tree into an
+Abstract Syntax Tree (AST).</p>
+<div class="section" id="building-ast">
+<h4>Building AST<a class="headerlink" href="#building-ast" title="Permalink to this headline">¶</a></h4>
+<p>Python&#8217;s AST is described in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/astcompiler/tools/Python.asdl">pypy/interpreter/astcompiler/tools/Python.asdl</a>.
+From this definition, <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/astcompiler/tools/asdl_py.py">pypy/interpreter/astcompiler/tools/asdl_py.py</a> generates
+<a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/astcompiler/ast.py">pypy/interpreter/astcompiler/ast.py</a>, which RPython classes for the compiler
+as well as bindings to application level code for the AST.  Some custom
+extensions to the AST classes are in
+<a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/astcompiler/asthelpers.py">pypy/interpreter/astcompiler/asthelpers.py</a>.</p>
+<p><a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/astcompiler/astbuilder.py">pypy/interpreter/astcompiler/astbuilder.py</a> is responsible for converting
+parse trees into AST.  It walks down the parse tree building nodes as it goes.
+The result is a toplevel <tt class="docutils literal"><span class="pre">mod</span></tt> node.</p>
+</div>
+<div class="section" id="ast-optimization">
+<h4>AST Optimization<a class="headerlink" href="#ast-optimization" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/astcompiler/optimize.py">pypy/interpreter/astcompiler/optimize.py</a> contains the AST optimizer.  It does
+constant folding of expressions, and other simple transformations like making a
+load of the name &#8220;None&#8221; into a constant.</p>
+</div>
+<div class="section" id="symbol-analysis">
+<h4>Symbol analysis<a class="headerlink" href="#symbol-analysis" title="Permalink to this headline">¶</a></h4>
+<p>Before writing bytecode, a symbol table is built in
+<a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/astcompiler/symtable.py">pypy/interpreter/astcompiler/symtable.py</a>.  It determines if every name in the
+source is local, implicitly global (no global declaration), explicitly global
+(there&#8217;s a global declaration of the name in the scope), a cell (the name in
+used in nested scopes), or free (it&#8217;s used in a nested function).</p>
+</div>
+<div class="section" id="bytecode-generation">
+<h4>Bytecode generation<a class="headerlink" href="#bytecode-generation" title="Permalink to this headline">¶</a></h4>
+<p>Bytecode is emitted in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/astcompiler/codegen.py">pypy/interpreter/astcompiler/codegen.py</a>.  Each
+bytecode is represented temporarily by the <tt class="docutils literal"><span class="pre">Instruction</span></tt> class in
+<a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/interpreter/astcompiler/assemble.py">pypy/interpreter/astcompiler/assemble.py</a>.  After all bytecodes have been
+emitted, it&#8217;s time to build the code object.  Jump offsets and bytecode
+information like the line number table and stack depth are computed.  Finally,
+everything is passed to a brand new <tt class="docutils literal"><span class="pre">PyCode</span></tt> object.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">PyPy Parser</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a><ul>
+<li><a class="reference internal" href="#tokenizer">Tokenizer</a></li>
+<li><a class="reference internal" href="#parser">Parser</a><ul>
+<li><a class="reference internal" href="#building-the-python-grammar">Building the Python grammar</a></li>
+<li><a class="reference internal" href="#parser-implementation">Parser implementation</a></li>
+<li><a class="reference internal" href="#parsing-python">Parsing Python</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#compiler">Compiler</a><ul>
+<li><a class="reference internal" href="#building-ast">Building AST</a></li>
+<li><a class="reference internal" href="#ast-optimization">AST Optimization</a></li>
+<li><a class="reference internal" href="#symbol-analysis">Symbol analysis</a></li>
+<li><a class="reference internal" href="#bytecode-generation">Bytecode generation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/parser.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

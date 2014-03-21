@@ -1,0 +1,23 @@
+=============================================
+translation.backendopt.raisingop2direct\_call
+=============================================
+
+* **name:** raisingop2direct\_call
+
+* **description:** Transform operations that can implicitly raise an exception
+  into calls to functions that explicitly raise exceptions
+
+* **command-line:** --raisingop2direct\_call
+
+* **command-line for negation:** --no-raisingop2direct\_call
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Internal option. Transformation required by the LLVM backend.
+
+.. internal

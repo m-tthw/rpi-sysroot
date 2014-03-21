@@ -1,0 +1,50 @@
+=========================
+translation.gctransformer
+=========================
+
+* **name:** gctransformer
+
+* **description:** GC transformer that is used - internal
+
+* **option type:** choice option
+
+* **possible values:**
+
+  + boehm
+
+  + ref
+
+  + framework
+
+  + none
+
+* **default:** ref
+
+* **requirements:**
+
+  + value 'boehm' requires\:
+
+    - `translation.gcrootfinder`_ to be set to 'n/a'
+
+    - `translation.gcremovetypeptr`_ to be set to 'False'
+
+  + value 'ref' requires\:
+
+    - `translation.gcrootfinder`_ to be set to 'n/a'
+
+    - `translation.gcremovetypeptr`_ to be set to 'False'
+
+  + value 'none' requires\:
+
+    - `translation.gcrootfinder`_ to be set to 'n/a'
+
+    - `translation.gcremovetypeptr`_ to be set to 'False'
+
+.. _`translation.gcrootfinder`: translation.gcrootfinder.html
+.. _`translation.gcremovetypeptr`: translation.gcremovetypeptr.html
+
+
+
+
+
+internal option

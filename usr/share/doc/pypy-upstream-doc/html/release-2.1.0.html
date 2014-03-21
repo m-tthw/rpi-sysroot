@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PyPy 2.1 - Considered ARMful &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pypy-2-1-considered-armful">
+<h1>PyPy 2.1 - Considered ARMful<a class="headerlink" href="#pypy-2-1-considered-armful" title="Permalink to this headline">¶</a></h1>
+<p>We&#8217;re pleased to announce PyPy 2.1, which targets version 2.7.3 of the Python
+language. This is the first release with official support for ARM processors in the JIT.
+This release also contains several bugfixes and performance improvements.</p>
+<p>You can download the PyPy 2.1 release here:</p>
+<blockquote>
+<div><a class="reference external" href="http://pypy.org/download.html">http://pypy.org/download.html</a></div></blockquote>
+<p>We would like to thank the <a class="reference external" href="http://www.raspberrypi.org">Raspberry Pi Foundation</a> for supporting the work
+to finish PyPy&#8217;s ARM support.</p>
+<p>The first beta of PyPy3 2.1, targeting version 3 of the Python language, was
+just released, more details can be found <a class="reference external" href="http://morepypy.blogspot.com/2013/07/pypy3-21-beta-1.html">here</a>.</p>
+<div class="section" id="what-is-pypy">
+<h2>What is PyPy?<a class="headerlink" href="#what-is-pypy" title="Permalink to this headline">¶</a></h2>
+<p>PyPy is a very compliant Python interpreter, almost a drop-in replacement for
+CPython 2.7. It&#8217;s fast (<a class="reference external" href="http://speed.pypy.org">pypy 2.1 and cpython 2.7.2</a> performance comparison)
+due to its integrated tracing JIT compiler.</p>
+<p>This release supports x86 machines running Linux 32/64, Mac OS X 64 or Windows
+32. This release also supports ARM machines running Linux 32bit - anything with
+<tt class="docutils literal"><span class="pre">ARMv6</span></tt> (like the Raspberry Pi) or <tt class="docutils literal"><span class="pre">ARMv7</span></tt> (like the Beagleboard,
+Chromebook, Cubieboard, etc.) that supports <tt class="docutils literal"><span class="pre">VFPv3</span></tt> should work. Both
+hard-float <tt class="docutils literal"><span class="pre">armhf/gnueabihf</span></tt> and soft-float <tt class="docutils literal"><span class="pre">armel/gnueabi</span></tt> builds are
+provided. <tt class="docutils literal"><span class="pre">armhf</span></tt> builds for Raspbian are created using the Raspberry Pi
+<a class="reference external" href="https://github.com/raspberrypi">custom cross-compilation toolchain</a>
+based on <tt class="docutils literal"><span class="pre">gcc-arm-linux-gnueabihf</span></tt> and should work on <tt class="docutils literal"><span class="pre">ARMv6</span></tt> and
+<tt class="docutils literal"><span class="pre">ARMv7</span></tt> devices running Debian or Raspbian. <tt class="docutils literal"><span class="pre">armel</span></tt> builds are built
+using the <tt class="docutils literal"><span class="pre">gcc-arm-linux-gnuebi</span></tt> toolchain provided by Ubuntu and
+currently target <tt class="docutils literal"><span class="pre">ARMv7</span></tt>.</p>
+<p>Windows 64 work is still stalling, we would welcome a volunteer
+to handle that.</p>
+</div>
+<div class="section" id="highlights">
+<h2>Highlights<a class="headerlink" href="#highlights" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>JIT support for ARM, architecture versions 6 and 7, hard- and soft-float ABI</li>
+<li>Stacklet support for ARM</li>
+<li>Support for os.statvfs and os.fstatvfs on unix systems</li>
+<li>Improved logging performance</li>
+<li>Faster sets for objects</li>
+<li>Interpreter improvements</li>
+<li>During packaging, compile the CFFI based TK extension</li>
+<li>Pickling of numpy arrays and dtypes</li>
+<li>Subarrays for numpy</li>
+<li>Bugfixes to numpy</li>
+<li>Bugfixes to cffi and ctypes</li>
+<li>Bugfixes to the x86 stacklet support</li>
+<li>Fixed issue <a class="reference external" href="https://bugs.pypy.org/issue1533">1533</a>: fix an RPython-level OverflowError for space.float_w(w_big_long_number).</li>
+<li>Fixed issue <a class="reference external" href="https://bugs.pypy.org/issue1552">1552</a>: GreenletExit should inherit from BaseException.</li>
+<li>Fixed issue <a class="reference external" href="https://bugs.pypy.org/issue1537">1537</a>: numpypy __array_interface__</li>
+<li>Fixed issue <a class="reference external" href="https://bugs.pypy.org/issue1238">1238</a>: Writing to an SSL socket in PyPy sometimes failed with a &#8220;bad write retry&#8221; message.</li>
+</ul>
+<p>Cheers,</p>
+<p>David Schneider for the PyPy team.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">PyPy 2.1 - Considered ARMful</a><ul>
+<li><a class="reference internal" href="#what-is-pypy">What is PyPy?</a></li>
+<li><a class="reference internal" href="#highlights">Highlights</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/release-2.1.0.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

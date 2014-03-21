@@ -1,0 +1,24 @@
+qjackctl for Debian
+-------------------
+
+qjackctl is called "JACK control (qjackctl)" in the menu entry, in order to
+make it easier to guess what it does.
+
+As Debian does not come with capabilities functionality in the kernel, 
+the default way to start jack is with jackd. You might want to change
+this in the Setup tab of qjackctl.
+
+Another problem that might arise when using jack is, that when it was
+started by one user, it can't be used by another user because
+jack doesn't delete the files in /dev/shm.
+
+In order to prevent this, you can add a shutdown script to qjackctl
+in Setup->Options, which says "rm /dev/shm/jack*".
+
+-
+
+The Debian qjackctl package comes with these default settings, so 
+deleting the file ".qt/qjackctlrc" should have the same effect and
+is faster.
+
+ -- Guenter Geiger (Debian/GNU) <geiger@debian.org>, Tue, 12 Aug 2003 11:44:54 +0200

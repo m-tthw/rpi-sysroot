@@ -1,0 +1,33 @@
+===================
+translation.backend
+===================
+
+* **name:** backend
+
+* **description:** Backend to use for code generation
+
+* **command-line:** -b --backend
+
+* **option type:** choice option
+
+* **possible values:**
+
+  + c
+
+* **default:** c
+
+* **requirements:**
+
+  + value 'c' requires\:
+
+    - `translation.type_system`_ to be set to 'lltype'
+
+.. _`translation.type\_system`: translation.type_system.html
+
+
+
+
+
+Which backend to use when translating, see `translation documentation`_.
+
+.. _`translation documentation`: ../translation.html

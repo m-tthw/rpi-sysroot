@@ -1,0 +1,21 @@
+=======================
+objspace.usemodules.bz2
+=======================
+
+* **name:** bz2
+
+* **description:** use module bz2
+
+* **command-line:** --withmod-bz2
+
+* **command-line for negation:** --withoutmod-bz2
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the 'bz2' module. 
+This module is expected to be working and is included by default.

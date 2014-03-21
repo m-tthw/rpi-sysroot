@@ -1,0 +1,24 @@
+=================================
+translation.dont\_write\_c\_files
+=================================
+
+* **name:** dont\_write\_c\_files
+
+* **description:** Make the C backend write everyting to /dev/null. Useful for
+  benchmarking, so you don't actually involve the disk
+
+* **command-line:** --dont-write-c-files
+
+* **command-line for negation:** --no-dont-write-c-files
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+write the generated C files to ``/dev/null`` instead of to the disk. Useful if
+you want to use translate.py as a benchmark and don't want to access the disk.
+
+.. _`translation documentation`: ../translation.html

@@ -1,0 +1,525 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Frequently Asked Questions &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="frequently-asked-questions">
+<h1><a class="toc-backref" href="#id15">Frequently Asked Questions</a><a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#frequently-asked-questions" id="id15">Frequently Asked Questions</a><ul>
+<li><a class="reference internal" href="#general" id="id16">General</a><ul>
+<li><a class="reference internal" href="#what-is-pypy" id="id17">What is PyPy?</a></li>
+<li><a class="reference internal" href="#is-pypy-a-drop-in-replacement-for-cpython" id="id18">Is PyPy a drop in replacement for CPython?</a></li>
+<li><a class="reference internal" href="#module-xyz-does-not-work-with-pypy-importerror" id="id19">Module xyz does not work with PyPy: ImportError</a></li>
+<li><a class="reference internal" href="#do-cpython-extension-modules-work-with-pypy" id="id20">Do CPython Extension modules work with PyPy?</a></li>
+<li><a class="reference internal" href="#on-which-platforms-does-pypy-run" id="id21">On which platforms does PyPy run?</a></li>
+<li><a class="reference internal" href="#which-python-version-2-x-does-pypy-implement" id="id22">Which Python version (2.x?) does PyPy implement?</a></li>
+<li><a class="reference internal" href="#does-pypy-have-a-gil-why" id="id23">Does PyPy have a GIL?  Why?</a></li>
+<li><a class="reference internal" href="#how-do-i-write-extension-modules-for-pypy" id="id24">How do I write extension modules for PyPy?</a></li>
+<li><a class="reference internal" href="#how-fast-is-pypy" id="id25">How fast is PyPy?</a></li>
+<li><a class="reference internal" href="#couldn-t-the-jit-dump-and-reload-already-compiled-machine-code" id="id26">Couldn&#8217;t the JIT dump and reload already-compiled machine code?</a></li>
+<li><a class="reference internal" href="#can-i-use-pypy-s-translation-toolchain-for-other-languages-besides-python" id="id27">Can I use PyPy&#8217;s translation toolchain for other languages besides Python?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#development" id="id28">Development</a><ul>
+<li><a class="reference internal" href="#how-do-i-get-into-pypy-development-can-i-come-to-sprints" id="id29">How do I get into PyPy development?  Can I come to sprints?</a></li>
+<li><a class="reference internal" href="#oserror-cannot-restore-segment-prot-after-reloc-help" id="id30">OSError: ... cannot restore segment prot after reloc... Help?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-rpython-translation-tool-chain" id="id31">The RPython translation tool chain</a><ul>
+<li><a class="reference internal" href="#can-rpython-compile-normal-python-programs-to-c" id="id32">Can RPython compile normal Python programs to C?</a></li>
+<li><a class="reference internal" href="#what-is-this-rpython-language" id="id33">What is this RPython language?</a></li>
+<li><a class="reference internal" href="#does-rpython-have-anything-to-do-with-zope-s-restricted-python" id="id34">Does RPython have anything to do with Zope&#8217;s Restricted Python?</a></li>
+<li><a class="reference internal" href="#what-s-the-not-rpython-i-see-in-some-docstrings" id="id35">What&#8217;s the <tt class="docutils literal"><span class="pre">&quot;NOT_RPYTHON&quot;</span></tt> I see in some docstrings?</a></li>
+<li><a class="reference internal" href="#couldn-t-we-simply-take-a-python-syntax-tree-and-turn-it-into-lisp" id="id36">Couldn&#8217;t we simply take a Python syntax tree and turn it into Lisp?</a></li>
+<li><a class="reference internal" href="#do-i-have-to-rewrite-my-programs-in-rpython" id="id37">Do I have to rewrite my programs in RPython?</a></li>
+<li><a class="reference internal" href="#which-backends-are-there-for-the-rpython-toolchain" id="id38">Which backends are there for the RPython toolchain?</a></li>
+<li><a class="reference internal" href="#could-we-use-llvm" id="id39">Could we use LLVM?</a></li>
+<li><a class="reference internal" href="#how-do-i-compile-pypy" id="id40">How do I compile PyPy?</a></li>
+<li><a class="reference internal" href="#how-do-i-compile-my-own-interpreters" id="id41">How do I compile my own interpreters?</a></li>
+<li><a class="reference internal" href="#can-rpython-modules-for-pypy-be-translated-independently" id="id42">Can RPython modules for PyPy be translated independently?</a></li>
+<li><a class="reference internal" href="#why-does-pypy-draw-a-mandelbrot-fractal-while-translating" id="id43">Why does PyPy draw a Mandelbrot fractal while translating?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="general">
+<h2><a class="toc-backref" href="#id16">General</a><a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="what-is-pypy">
+<h3><a class="toc-backref" href="#id17">What is PyPy?</a><a class="headerlink" href="#what-is-pypy" title="Permalink to this headline">¶</a></h3>
+<p>PyPy is both:</p>
+<blockquote>
+<div><ul class="simple">
+<li>a reimplementation of Python in Python, and</li>
+<li>a framework for implementing interpreters and virtual machines for
+programming languages, especially dynamic languages.</li>
+</ul>
+</div></blockquote>
+<p>PyPy tries to find new answers about ease of creation, flexibility,
+maintainability and speed trade-offs for language implementations.
+For further details see our <a class="reference external" href="architecture.html">goal and architecture document</a> .</p>
+</div>
+<div class="section" id="is-pypy-a-drop-in-replacement-for-cpython">
+<span id="drop-in-replacement"></span><h3><a class="toc-backref" href="#id18">Is PyPy a drop in replacement for CPython?</a><a class="headerlink" href="#is-pypy-a-drop-in-replacement-for-cpython" title="Permalink to this headline">¶</a></h3>
+<p>Almost!</p>
+<p>The mostly likely stumbling block for any given project is support for
+<a class="reference external" href="cpython_differences.html#extension-modules">extension modules</a>.  PyPy supports a continually growing
+number of extension modules, but so far mostly only those found in the
+standard library.</p>
+<p>The language features (including builtin types and functions) are very
+complete and well tested, so if your project does not use many
+extension modules there is a good chance that it will work with PyPy.</p>
+<p>We list the differences we know about in <a class="reference external" href="cpython_differences.html">cpython differences</a>.</p>
+</div>
+<div class="section" id="module-xyz-does-not-work-with-pypy-importerror">
+<h3><a class="toc-backref" href="#id19">Module xyz does not work with PyPy: ImportError</a><a class="headerlink" href="#module-xyz-does-not-work-with-pypy-importerror" title="Permalink to this headline">¶</a></h3>
+<p>A module installed for CPython is not automatically available for PyPy
+&#8212; just like a module installed for CPython 2.6 is not automatically
+available for CPython 2.7 if you installed both.  In other words, you
+need to install the module xyz specifically for PyPy.</p>
+<p>On Linux, this means that you cannot use <tt class="docutils literal"><span class="pre">apt-get</span></tt> or some similar
+package manager: these tools are only meant <em>for the version of CPython
+provided by the same package manager.</em>  So forget about them for now
+and read on.</p>
+<p>It is quite common nowadays that xyz is available on <a class="reference external" href="https://pypi.python.org/pypi">PyPI</a> and
+installable with <tt class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">xyz</span></tt>.  The simplest solution is to <a class="reference external" href="getting-started.html#installing-using-virtualenv">use
+virtualenv (as documented here)</a>.  Then enter (activate) the virtualenv
+and type: <tt class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">xyz</span></tt>.</p>
+<p>If you get errors from the C compiler, the module is a CPython C
+Extension module using unsupported features.  <a class="reference internal" href="#see-below">See below.</a></p>
+<p>Alternatively, if either the module xyz is not available on PyPI or you
+don&#8217;t want to use virtualenv, then download the source code of xyz,
+decompress the zip/tarball, and run the standard command: <tt class="docutils literal"><span class="pre">pypy</span>
+<span class="pre">setup.py</span> <span class="pre">install</span></tt>.  (Note: <cite>pypy</cite> here instead of <cite>python</cite>.)  As usual
+you may need to run the command with <cite>sudo</cite> for a global installation.
+The other commands of <tt class="docutils literal"><span class="pre">setup.py</span></tt> are available too, like <tt class="docutils literal"><span class="pre">build</span></tt>.</p>
+</div>
+<div class="section" id="do-cpython-extension-modules-work-with-pypy">
+<span id="see-below"></span><h3><a class="toc-backref" href="#id20">Do CPython Extension modules work with PyPy?</a><a class="headerlink" href="#do-cpython-extension-modules-work-with-pypy" title="Permalink to this headline">¶</a></h3>
+<p>We have experimental support for CPython extension modules, so
+they run with minor changes.  This has been a part of PyPy since
+the 1.4 release, but support is still in beta phase.  CPython
+extension modules in PyPy are often much slower than in CPython due to
+the need to emulate refcounting.  It is often faster to take out your
+CPython extension and replace it with a pure python version that the
+JIT can see.  If trying to install module xyz, and the module has both
+a C and a Python version of the same code, try first to disable the C
+version; this is usually easily done by changing some line in <tt class="docutils literal"><span class="pre">setup.py</span></tt>.</p>
+<p>We fully support ctypes-based extensions. But for best performance, we
+recommend that you use the <a class="reference external" href="http://cffi.readthedocs.org/">cffi</a> module to interface with C code.</p>
+<p>For information on which third party extensions work (or do not work)
+with PyPy see the <a class="reference internal" href="#compatibility-wiki">compatibility wiki</a>.</p>
+<span class="target" id="compatibility-wiki"></span></div>
+<div class="section" id="on-which-platforms-does-pypy-run">
+<h3><a class="toc-backref" href="#id21">On which platforms does PyPy run?</a><a class="headerlink" href="#on-which-platforms-does-pypy-run" title="Permalink to this headline">¶</a></h3>
+<p>PyPy is regularly and extensively tested on Linux machines. It mostly
+works on Mac and Windows: it is tested there, but most of us are running
+Linux so fixes may depend on 3rd-party contributions.  PyPy&#8217;s JIT
+works on x86 (32-bit or 64-bit) and on ARM (ARMv6 or ARMv7).
+Support for POWER (64-bit) is stalled at the moment.</p>
+<p>To bootstrap from sources, PyPy can use either CPython (2.6 or 2.7) or
+another (e.g. older) PyPy.  Cross-translation is not really supported:
+e.g. to build a 32-bit PyPy, you need to have a 32-bit environment.
+Cross-translation is only explicitly supported between a 32-bit Intel
+Linux and ARM Linux (see <a class="reference external" href="arm.html">here</a>).</p>
+</div>
+<div class="section" id="which-python-version-2-x-does-pypy-implement">
+<h3><a class="toc-backref" href="#id22">Which Python version (2.x?) does PyPy implement?</a><a class="headerlink" href="#which-python-version-2-x-does-pypy-implement" title="Permalink to this headline">¶</a></h3>
+<p>PyPy currently aims to be fully compatible with Python 2.7. That means that
+it contains the standard library of Python 2.7 and that it supports 2.7
+features (such as set comprehensions).</p>
+</div>
+<div class="section" id="does-pypy-have-a-gil-why">
+<span id="threading"></span><h3><a class="toc-backref" href="#id23">Does PyPy have a GIL?  Why?</a><a class="headerlink" href="#does-pypy-have-a-gil-why" title="Permalink to this headline">¶</a></h3>
+<p>Yes, PyPy has a GIL.  Removing the GIL is very hard.  The problems are
+essentially the same as with CPython (including the fact that our
+garbage collectors are not thread-safe so far).  Fixing it is possible,
+as shown by Jython and IronPython, but difficult.  It would require
+adapting the whole source code of PyPy, including subtle decisions about
+whether some effects are ok or not for the user (i.e. the Python
+programmer).</p>
+<p>Instead, since 2012, there is work going on on a still very experimental
+Software Transactional Memory (STM) version of PyPy.  This should give
+an alternative PyPy which internally has no GIL, while at the same time
+continuing to give the Python programmer the complete illusion of having
+one.  It would in fact push forward <em>more</em> GIL-ish behavior, like
+declaring that some sections of the code should run without releasing
+the GIL in the middle (these are called <em>atomic sections</em> in STM).</p>
+</div>
+<div class="section" id="how-do-i-write-extension-modules-for-pypy">
+<h3><a class="toc-backref" href="#id24">How do I write extension modules for PyPy?</a><a class="headerlink" href="#how-do-i-write-extension-modules-for-pypy" title="Permalink to this headline">¶</a></h3>
+<p>See <a class="reference external" href="extending.html">Writing extension modules for PyPy</a>.</p>
+</div>
+<div class="section" id="how-fast-is-pypy">
+<h3><a class="toc-backref" href="#id25">How fast is PyPy?</a><a class="headerlink" href="#how-fast-is-pypy" title="Permalink to this headline">¶</a></h3>
+<p>This really depends on your code.
+For pure Python algorithmic code, it is very fast.  For more typical
+Python programs we generally are 3 times the speed of CPython 2.7.
+You might be interested in our <a class="reference external" href="http://speed.pypy.org">benchmarking site</a> and our
+<a class="reference external" href="jit/index.html">jit documentation</a>.</p>
+<p>Note that the JIT has a very high warm-up cost, meaning that the
+programs are slow at the beginning.  If you want to compare the timings
+with CPython, even relatively simple programs need to run <em>at least</em> one
+second, preferrably at least a few seconds.  Large, complicated programs
+need even more time to warm-up the JIT.</p>
+</div>
+<div class="section" id="couldn-t-the-jit-dump-and-reload-already-compiled-machine-code">
+<h3><a class="toc-backref" href="#id26">Couldn&#8217;t the JIT dump and reload already-compiled machine code?</a><a class="headerlink" href="#couldn-t-the-jit-dump-and-reload-already-compiled-machine-code" title="Permalink to this headline">¶</a></h3>
+<p>No, we found no way of doing that.  The JIT generates machine code
+containing a large number of constant addresses &#8212; constant at the time
+the machine code is written.  The vast majority is probably not at all
+constants that you find in the executable, with a nice link name.  E.g.
+the addresses of Python classes are used all the time, but Python
+classes don&#8217;t come statically from the executable; they are created anew
+every time you restart your program.  This makes saving and reloading
+machine code completely impossible without some very advanced way of
+mapping addresses in the old (now-dead) process to addresses in the new
+process, including checking that all the previous assumptions about the
+(now-dead) object are still true about the new object.</p>
+</div>
+<div class="section" id="can-i-use-pypy-s-translation-toolchain-for-other-languages-besides-python">
+<span id="prolog-and-javascript"></span><h3><a class="toc-backref" href="#id27">Can I use PyPy&#8217;s translation toolchain for other languages besides Python?</a><a class="headerlink" href="#can-i-use-pypy-s-translation-toolchain-for-other-languages-besides-python" title="Permalink to this headline">¶</a></h3>
+<p>Yes. The toolsuite that translates the PyPy interpreter is quite
+general and can be used to create optimized versions of interpreters
+for any language, not just Python.  Of course, these interpreters
+can make use of the same features that PyPy brings to Python:
+translation to various languages, stackless features,
+garbage collection, implementation of various things like arbitrarily long
+integers, etc.</p>
+<p>Currently, we have preliminary versions of a JavaScript interpreter
+(Leonardo Santagada as his Summer of PyPy project), a <a class="reference external" href="https://bitbucket.org/cfbolz/pyrolog/">Prolog interpreter</a>
+(Carl Friedrich Bolz as his Bachelor thesis), and a <a class="reference external" href="http://dx.doi.org/10.1007/978-3-540-89275-5_7">SmallTalk interpreter</a>
+(produced during a sprint).  On the <a class="reference external" href="https://bitbucket.org/pypy/">PyPy bitbucket page</a> there is also a
+Scheme and an Io implementation; both of these are unfinished at the moment.</p>
+</div>
+</div>
+<div class="section" id="development">
+<h2><a class="toc-backref" href="#id28">Development</a><a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-do-i-get-into-pypy-development-can-i-come-to-sprints">
+<h3><a class="toc-backref" href="#id29">How do I get into PyPy development?  Can I come to sprints?</a><a class="headerlink" href="#how-do-i-get-into-pypy-development-can-i-come-to-sprints" title="Permalink to this headline">¶</a></h3>
+<p>Certainly you can come to sprints! We always welcome newcomers and try
+to help them as much as possible to get started with the project.  We
+provide tutorials and pair them with experienced PyPy
+developers. Newcomers should have some Python experience and read some
+of the PyPy documentation before coming to a sprint.</p>
+<p>Coming to a sprint is usually the best way to get into PyPy development.
+If you get stuck or need advice, <a class="reference external" href="index.html">contact us</a>. IRC is
+the most immediate way to get feedback (at least during some parts of the day;
+most PyPy developers are in Europe) and the <a class="reference external" href="http://python.org/mailman/listinfo/pypy-dev">mailing list</a> is better for long
+discussions.</p>
+</div>
+<div class="section" id="oserror-cannot-restore-segment-prot-after-reloc-help">
+<h3><a class="toc-backref" href="#id30">OSError: ... cannot restore segment prot after reloc... Help?</a><a class="headerlink" href="#oserror-cannot-restore-segment-prot-after-reloc-help" title="Permalink to this headline">¶</a></h3>
+<p>On Linux, if SELinux is enabled, you may get errors along the lines of
+&#8220;OSError: externmod.so: cannot restore segment prot after reloc: Permission
+denied.&#8221; This is caused by a slight abuse of the C compiler during
+configuration, and can be disabled by running the following command with root
+privileges:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">#</span> setenforce 0
+</pre></div>
+</div>
+<p>This will disable SELinux&#8217;s protection and allow PyPy to configure correctly.
+Be sure to enable it again if you need it!</p>
+</div>
+</div>
+<div class="section" id="the-rpython-translation-tool-chain">
+<h2><a class="toc-backref" href="#id31">The RPython translation tool chain</a><a class="headerlink" href="#the-rpython-translation-tool-chain" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="can-rpython-compile-normal-python-programs-to-c">
+<h3><a class="toc-backref" href="#id32">Can RPython compile normal Python programs to C?</a><a class="headerlink" href="#can-rpython-compile-normal-python-programs-to-c" title="Permalink to this headline">¶</a></h3>
+<p>No, RPython is not a Python compiler.</p>
+<p>In Python, it is mostly impossible to <em>prove</em> anything about the types
+that a program will manipulate by doing a static analysis.  It should be
+clear if you are familiar with Python, but if in doubt see <a class="reference internal" href="#brett">[BRETT]</a>.</p>
+<p>If you want a fast Python program, please use the PyPy <a class="reference external" href="jit/index.html">JIT</a> instead.</p>
+<table class="docutils citation" frame="void" id="brett" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[BRETT]</a></td><td>Brett Cannon,
+Localized Type Inference of Atomic Types in Python,
+<a class="reference external" href="http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.90.3231">http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.90.3231</a></td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="what-is-this-rpython-language">
+<span id="pypy-s-rpython"></span><h3><a class="toc-backref" href="#id33">What is this RPython language?</a><a class="headerlink" href="#what-is-this-rpython-language" title="Permalink to this headline">¶</a></h3>
+<p>RPython is a restricted subset of the Python language.   It is used for
+implementing dynamic language interpreters within the PyPy toolchain.  The
+restrictions ensure that type inference (and so, ultimately, translation
+to other languages) of RPython programs is possible.</p>
+<p>The property of &#8220;being RPython&#8221; always applies to a full program, not to single
+functions or modules (the translation toolchain does a full program analysis).
+The translation toolchain follows all calls
+recursively and discovers what belongs to the program and what does not.</p>
+<p>RPython program restrictions mostly limit the ability
+to mix types in arbitrary ways. RPython does not allow the binding of two
+different types in the same variable. In this respect (and in some others) it
+feels a bit like Java. Other features not allowed in RPython are the use of
+special methods (<tt class="docutils literal"><span class="pre">__xxx__</span></tt>) except <tt class="docutils literal"><span class="pre">__init__</span></tt> and <tt class="docutils literal"><span class="pre">__del__</span></tt>, and the
+use of reflection capabilities (e.g. <tt class="docutils literal"><span class="pre">__dict__</span></tt>).</p>
+<p>You cannot use most existing standard library modules from RPython.  The
+exceptions are
+some functions in <tt class="docutils literal"><span class="pre">os</span></tt>, <tt class="docutils literal"><span class="pre">math</span></tt> and <tt class="docutils literal"><span class="pre">time</span></tt> that have native support.
+We have our own &#8220;RPython standard library&#8221; in <tt class="docutils literal"><span class="pre">rpython.rlib.*</span></tt>.</p>
+<p>To read more about the RPython limitations read the <a class="reference external" href="coding-guide.html#restricted-python">RPython description</a>.</p>
+</div>
+<div class="section" id="does-rpython-have-anything-to-do-with-zope-s-restricted-python">
+<h3><a class="toc-backref" href="#id34">Does RPython have anything to do with Zope&#8217;s Restricted Python?</a><a class="headerlink" href="#does-rpython-have-anything-to-do-with-zope-s-restricted-python" title="Permalink to this headline">¶</a></h3>
+<p>No.  <a class="reference external" href="http://pypi.python.org/pypi/RestrictedPython">Zope&#8217;s RestrictedPython</a> aims to provide a sandboxed
+execution environment for CPython.   <a class="reference internal" href="#pypy-s-rpython">PyPy&#8217;s RPython</a> is the implementation
+language for dynamic language interpreters.  However, PyPy also provides
+a robust <a class="reference external" href="sandbox.html">sandboxed Python Interpreter</a>.</p>
+</div>
+<div class="section" id="what-s-the-not-rpython-i-see-in-some-docstrings">
+<h3><a class="toc-backref" href="#id35">What&#8217;s the <tt class="docutils literal"><span class="pre">&quot;NOT_RPYTHON&quot;</span></tt> I see in some docstrings?</a><a class="headerlink" href="#what-s-the-not-rpython-i-see-in-some-docstrings" title="Permalink to this headline">¶</a></h3>
+<p>If you put &#8220;NOT_RPYTHON&#8221; into the docstring of a function and that function is
+found while trying to translate an RPython program, the translation process
+stops and reports this as an error. You can therefore mark functions as
+&#8220;NOT_RPYTHON&#8221; to make sure that they are never analyzed.</p>
+</div>
+<div class="section" id="couldn-t-we-simply-take-a-python-syntax-tree-and-turn-it-into-lisp">
+<h3><a class="toc-backref" href="#id36">Couldn&#8217;t we simply take a Python syntax tree and turn it into Lisp?</a><a class="headerlink" href="#couldn-t-we-simply-take-a-python-syntax-tree-and-turn-it-into-lisp" title="Permalink to this headline">¶</a></h3>
+<p>It&#8217;s not necessarily nonsense, but it&#8217;s not really The PyPy Way.  It&#8217;s
+pretty hard, without some kind of type inference, to translate this
+Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>into anything significantly more efficient than this Common Lisp:</p>
+<div class="highlight-python"><pre>(py:add a b)</pre>
+</div>
+<p>And making type inference possible is what RPython is all about.</p>
+<p>You could make <tt class="docutils literal"><span class="pre">#'py:add</span></tt> a generic function and see if a given CLOS
+implementation is fast enough to give a useful speed (but I think the
+coercion rules would probably drive you insane first).  &#8211; mwh</p>
+</div>
+<div class="section" id="do-i-have-to-rewrite-my-programs-in-rpython">
+<h3><a class="toc-backref" href="#id37">Do I have to rewrite my programs in RPython?</a><a class="headerlink" href="#do-i-have-to-rewrite-my-programs-in-rpython" title="Permalink to this headline">¶</a></h3>
+<p>No, and you shouldn&#8217;t try.  First and foremost, RPython is a language
+designed for writing interpreters. It is a restricted subset of
+Python.  If your program is not an interpreter but tries to do &#8220;real
+things&#8221;, like use <em>any</em> part of the standard Python library or <em>any</em>
+3rd-party library, then it is not RPython to start with.  You should
+only look at RPython if you try to <a class="reference internal" href="#how-do-i-compile-my-own-interpreters">write your own interpreter</a>.</p>
+<p>If your goal is to speed up Python code, then look at the regular PyPy,
+which is a full and compliant Python 2.7 interpreter (which happens to
+be written in RPython).  Not only is it not necessary for you to rewrite
+your code in RPython, it might not give you any speed improvements even
+if you manage to.</p>
+<p>Yes, it is possible with enough effort to compile small self-contained
+pieces of RPython code doing a few performance-sensitive things.  But
+this case is not interesting for us.  If you needed to rewrite the code
+in RPython, you could as well have rewritten it in C or C++ or Java for
+example.  These are much more supported, much more documented languages
+<cite>:-)</cite></p>
+<blockquote>
+<div><p><em>The above paragraphs are not the whole truth.  It</em> is <em>true that there
+are cases where writing a program as RPython gives you substantially
+better speed than running it on top of PyPy.  However, the attitude of
+the core group of people behind PyPy is to answer: &#8220;then report it as a
+performance bug against PyPy!&#8221;.</em></p>
+<p><em>Here is a more diluted way to put it.  The &#8220;No, don&#8217;t!&#8221; above is a
+general warning we give to new people.  They are likely to need a lot
+of help from</em> some <em>source, because RPython is not so simple nor
+extensively documented; but at the same time, we, the pypy core group
+of people, are not willing to invest time in supporting 3rd-party
+projects that do very different things than interpreters for dynamic
+languages &#8212; just because we have other interests and there are only
+so many hours a day.  So as a summary I believe it is only fair to
+attempt to point newcomers at existing alternatives, which are more
+mainstream and where they will get help from many people.</em></p>
+<p><em>If anybody seriously wants to promote RPython anyway, they are welcome
+to: we won&#8217;t actively resist such a plan.  There are a lot of things
+that could be done to make RPython a better Java-ish language for
+example, starting with supporting non-GIL-based multithreading, but we
+don&#8217;t implement them because they have little relevance to us.  This
+is open source, which means that anybody is free to promote and
+develop anything; but it also means that you must let us choose</em> not
+<em>to go into that direction ourselves.</em></p>
+</div></blockquote>
+</div>
+<div class="section" id="which-backends-are-there-for-the-rpython-toolchain">
+<h3><a class="toc-backref" href="#id38">Which backends are there for the RPython toolchain?</a><a class="headerlink" href="#which-backends-are-there-for-the-rpython-toolchain" title="Permalink to this headline">¶</a></h3>
+<p>Currently, there only backends is <a class="reference external" href="translation.html#the-c-back-end">C</a>.
+It can translate the entire PyPy interpreter.
+To learn more about backends take a look at the <a class="reference external" href="translation.html">translation document</a>.</p>
+</div>
+<div class="section" id="could-we-use-llvm">
+<h3><a class="toc-backref" href="#id39">Could we use LLVM?</a><a class="headerlink" href="#could-we-use-llvm" title="Permalink to this headline">¶</a></h3>
+<p>In theory yes.  But we tried to use it 5 or 6 times already, as a
+translation backend or as a JIT backend &#8212; and failed each time.</p>
+<p>In more details: using LLVM as a (static) translation backend is
+pointless nowadays because you can generate C code and compile it with
+clang.  (Note that compiling PyPy with clang gives a result that is not
+faster than compiling it with gcc.)  We might in theory get extra
+benefits from LLVM&#8217;s GC integration, but this requires more work on the
+LLVM side before it would be remotely useful.  Anyway, it could be
+interfaced via a custom primitive in the C code.</p>
+<p>On the other hand, using LLVM as our JIT backend looks interesting as
+well &#8212; but again we made an attempt, and it failed: LLVM has no way to
+patch the generated machine code.</p>
+<p>So the position of the core PyPy developers is that if anyone wants to
+make an N+1&#8217;th attempt with LLVM, they are welcome, and will be happy to
+provide help in the IRC channel, but they are left with the burden of proof
+that it works.</p>
+</div>
+<div class="section" id="how-do-i-compile-pypy">
+<h3><a class="toc-backref" href="#id40">How do I compile PyPy?</a><a class="headerlink" href="#how-do-i-compile-pypy" title="Permalink to this headline">¶</a></h3>
+<p>See the <a class="reference external" href="getting-started-python.html">getting-started</a> guide.</p>
+</div>
+<div class="section" id="how-do-i-compile-my-own-interpreters">
+<span id="id5"></span><h3><a class="toc-backref" href="#id41">How do I compile my own interpreters?</a><a class="headerlink" href="#how-do-i-compile-my-own-interpreters" title="Permalink to this headline">¶</a></h3>
+<p>Begin by reading <a class="reference external" href="http://morepypy.blogspot.com/2011/04/tutorial-writing-interpreter-with-pypy.html">Andrew Brown&#8217;s tutorial</a> .</p>
+</div>
+<div class="section" id="can-rpython-modules-for-pypy-be-translated-independently">
+<h3><a class="toc-backref" href="#id42">Can RPython modules for PyPy be translated independently?</a><a class="headerlink" href="#can-rpython-modules-for-pypy-be-translated-independently" title="Permalink to this headline">¶</a></h3>
+<p>No, you have to rebuild the entire interpreter.  This means two things:</p>
+<ul class="simple">
+<li>It is imperative to use test-driven development.  You have to exhaustively
+test your module in pure Python, before even attempting to
+translate it.  Once you translate it, you should have only a few typing
+issues left to fix, but otherwise the result should work out of the box.</li>
+<li>Second, and perhaps most important: do you have a really good reason
+for writing the module in RPython in the first place?  Nowadays you
+should really look at alternatives, like writing it in pure Python,
+using <a class="reference external" href="http://cffi.readthedocs.org/">cffi</a> if it needs to call C code.</li>
+</ul>
+<p>In this context it is not that important to be able to translate
+RPython modules independently of translating the complete interpreter.
+(It could be done given enough efforts, but it&#8217;s a really serious
+undertaking.  Consider it as quite unlikely for now.)</p>
+</div>
+<div class="section" id="why-does-pypy-draw-a-mandelbrot-fractal-while-translating">
+<h3><a class="toc-backref" href="#id43">Why does PyPy draw a Mandelbrot fractal while translating?</a><a class="headerlink" href="#why-does-pypy-draw-a-mandelbrot-fractal-while-translating" title="Permalink to this headline">¶</a></h3>
+<p>Because it&#8217;s fun.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Frequently Asked Questions</a><ul>
+<li><a class="reference internal" href="#general">General</a><ul>
+<li><a class="reference internal" href="#what-is-pypy">What is PyPy?</a></li>
+<li><a class="reference internal" href="#is-pypy-a-drop-in-replacement-for-cpython">Is PyPy a drop in replacement for CPython?</a></li>
+<li><a class="reference internal" href="#module-xyz-does-not-work-with-pypy-importerror">Module xyz does not work with PyPy: ImportError</a></li>
+<li><a class="reference internal" href="#do-cpython-extension-modules-work-with-pypy">Do CPython Extension modules work with PyPy?</a></li>
+<li><a class="reference internal" href="#on-which-platforms-does-pypy-run">On which platforms does PyPy run?</a></li>
+<li><a class="reference internal" href="#which-python-version-2-x-does-pypy-implement">Which Python version (2.x?) does PyPy implement?</a></li>
+<li><a class="reference internal" href="#does-pypy-have-a-gil-why">Does PyPy have a GIL?  Why?</a></li>
+<li><a class="reference internal" href="#how-do-i-write-extension-modules-for-pypy">How do I write extension modules for PyPy?</a></li>
+<li><a class="reference internal" href="#how-fast-is-pypy">How fast is PyPy?</a></li>
+<li><a class="reference internal" href="#couldn-t-the-jit-dump-and-reload-already-compiled-machine-code">Couldn&#8217;t the JIT dump and reload already-compiled machine code?</a></li>
+<li><a class="reference internal" href="#can-i-use-pypy-s-translation-toolchain-for-other-languages-besides-python">Can I use PyPy&#8217;s translation toolchain for other languages besides Python?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#development">Development</a><ul>
+<li><a class="reference internal" href="#how-do-i-get-into-pypy-development-can-i-come-to-sprints">How do I get into PyPy development?  Can I come to sprints?</a></li>
+<li><a class="reference internal" href="#oserror-cannot-restore-segment-prot-after-reloc-help">OSError: ... cannot restore segment prot after reloc... Help?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-rpython-translation-tool-chain">The RPython translation tool chain</a><ul>
+<li><a class="reference internal" href="#can-rpython-compile-normal-python-programs-to-c">Can RPython compile normal Python programs to C?</a></li>
+<li><a class="reference internal" href="#what-is-this-rpython-language">What is this RPython language?</a></li>
+<li><a class="reference internal" href="#does-rpython-have-anything-to-do-with-zope-s-restricted-python">Does RPython have anything to do with Zope&#8217;s Restricted Python?</a></li>
+<li><a class="reference internal" href="#what-s-the-not-rpython-i-see-in-some-docstrings">What&#8217;s the <tt class="docutils literal"><span class="pre">&quot;NOT_RPYTHON&quot;</span></tt> I see in some docstrings?</a></li>
+<li><a class="reference internal" href="#couldn-t-we-simply-take-a-python-syntax-tree-and-turn-it-into-lisp">Couldn&#8217;t we simply take a Python syntax tree and turn it into Lisp?</a></li>
+<li><a class="reference internal" href="#do-i-have-to-rewrite-my-programs-in-rpython">Do I have to rewrite my programs in RPython?</a></li>
+<li><a class="reference internal" href="#which-backends-are-there-for-the-rpython-toolchain">Which backends are there for the RPython toolchain?</a></li>
+<li><a class="reference internal" href="#could-we-use-llvm">Could we use LLVM?</a></li>
+<li><a class="reference internal" href="#how-do-i-compile-pypy">How do I compile PyPy?</a></li>
+<li><a class="reference internal" href="#how-do-i-compile-my-own-interpreters">How do I compile my own interpreters?</a></li>
+<li><a class="reference internal" href="#can-rpython-modules-for-pypy-be-translated-independently">Can RPython modules for PyPy be translated independently?</a></li>
+<li><a class="reference internal" href="#why-does-pypy-draw-a-mandelbrot-fractal-while-translating">Why does PyPy draw a Mandelbrot fractal while translating?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/faq.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

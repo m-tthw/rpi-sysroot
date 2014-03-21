@@ -1,0 +1,39 @@
+======================
+translation.backendopt
+======================
+
+.. toctree::
+    :maxdepth: 4
+
+    translation.backendopt.inline
+    translation.backendopt.inline_threshold
+    translation.backendopt.inline_heuristic
+    translation.backendopt.print_statistics
+    translation.backendopt.merge_if_blocks
+    translation.backendopt.raisingop2direct_call
+    translation.backendopt.mallocs
+    translation.backendopt.constfold
+    translation.backendopt.profile_based_inline
+    translation.backendopt.profile_based_inline_threshold
+    translation.backendopt.profile_based_inline_heuristic
+    translation.backendopt.clever_malloc_removal
+    translation.backendopt.clever_malloc_removal_threshold
+    translation.backendopt.clever_malloc_removal_heuristic
+    translation.backendopt.remove_asserts
+    translation.backendopt.really_remove_asserts
+    translation.backendopt.stack_optimization
+    translation.backendopt.storesink
+    translation.backendopt.none
+
+* **name:** backendopt
+
+* **description:** Backend Optimization Options
+
+
+
+
+This group contains options about various backend optimization passes. Most of
+them are described in the `EU report about optimization`_
+
+.. _`EU report about optimization`: http://codespeak.net/pypy/extradoc/eu-report/D07.1_Massive_Parallelism_and_Translation_Aspects-2007-02-28.pdf
+

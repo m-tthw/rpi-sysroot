@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PyPy’s Configuration Handling &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pypy-s-configuration-handling">
+<h1>PyPy&#8217;s Configuration Handling<a class="headerlink" href="#pypy-s-configuration-handling" title="Permalink to this headline">¶</a></h1>
+<p>Due to more and more available configuration options it became quite annoying to
+hand the necessary options to where they are actually used and even more
+annoying to add new options. To circumvent these problems configuration
+management was introduced. There all the necessary options are stored in a
+configuration object, which is available nearly everywhere in the <a class="reference internal" href="#rpython-toolchain">RPython
+toolchain</a> and in the standard interpreter so that adding new options becomes
+trivial. Options are organized into a tree. Configuration objects can be
+created in different ways, there is support for creating an optparse command
+line parser automatically.</p>
+<p><span class="target" id="rpython-toolchain">RPython toolchain</span>: translation.html</p>
+<div class="section" id="main-assumption">
+<h2>Main Assumption<a class="headerlink" href="#main-assumption" title="Permalink to this headline">¶</a></h2>
+<p>Configuration objects are produced at the entry points  and handed down to
+where they are actually used. This keeps configuration local but available
+everywhere and consistent. The configuration values are created using the
+command line.</p>
+</div>
+<div class="section" id="api-details">
+<h2>API Details<a class="headerlink" href="#api-details" title="Permalink to this headline">¶</a></h2>
+<p>The handling of options is split into two parts: the description of which
+options are available, what their possible values and defaults are and how they
+are organized into a tree. A specific choice of options is bundled into a
+configuration object which has a reference to its option description (and
+therefore makes sure that the configuration values adhere to the option
+description).
+This splitting is remotely similar to the distinction between types and
+instances in the type systems of the rtyper: the types describe what sort of
+fields the instances have.</p>
+<p>The Options are organized in a tree. Every option has a name, as does every
+option group. The parts of the full name of the option are separated by dots:
+e.g. <tt class="docutils literal"><span class="pre">config.translation.thread</span></tt>.</p>
+<div class="section" id="description-of-options">
+<h3>Description of Options<a class="headerlink" href="#description-of-options" title="Permalink to this headline">¶</a></h3>
+<p>All the constructors take a <tt class="docutils literal"><span class="pre">name</span></tt> and a <tt class="docutils literal"><span class="pre">doc</span></tt> argument as first arguments
+to give the option or option group a name and to document it. Most constructors
+take a <tt class="docutils literal"><span class="pre">default</span></tt> argument that specifies the default value of the option. If
+this argument is not supplied the default value is assumed to be <tt class="docutils literal"><span class="pre">None</span></tt>.
+Most constructors
+also take a <tt class="docutils literal"><span class="pre">cmdline</span></tt> argument where you can specify what the command line
+option should look like (for example cmdline=&#8221;-v &#8211;version&#8221;). If <tt class="docutils literal"><span class="pre">cmdline</span></tt> is
+not specified a default cmdline option is created that uses the name of the
+option together with its full path. If <tt class="docutils literal"><span class="pre">None</span></tt> is passed in as <tt class="docutils literal"><span class="pre">cmdline</span></tt> then
+no command line option is created at all.</p>
+<p>Some options types can specify requirements to specify that a particular choice
+for one option works only if a certain choice for another option is used. A
+requirement is specified using a list of pairs. The first element of the pair
+gives the path of the option that is required to be set and the second element
+gives the required value.</p>
+<div class="section" id="optiondescription">
+<h4><tt class="docutils literal"><span class="pre">OptionDescription</span></tt><a class="headerlink" href="#optiondescription" title="Permalink to this headline">¶</a></h4>
+<p>This class is used to group suboptions.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">__init__(self,</span> <span class="pre">name,</span> <span class="pre">doc,</span> <span class="pre">children)</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">children</span></tt> is a list of option descriptions (including
+<tt class="docutils literal"><span class="pre">OptionDescription</span></tt> instances for nested namespaces).</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="choiceoption">
+<h4><tt class="docutils literal"><span class="pre">ChoiceOption</span></tt><a class="headerlink" href="#choiceoption" title="Permalink to this headline">¶</a></h4>
+<p>Represents a choice out of several objects. The option can also have the value
+<tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">__init__(self,</span> <span class="pre">name,</span> <span class="pre">doc,</span> <span class="pre">values,</span> <span class="pre">default=None,</span> <span class="pre">requires=None,</span> <span class="pre">cmdline=DEFAULT)</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">values</span></tt> is a list of values the option can possibly take,
+<tt class="docutils literal"><span class="pre">requires</span></tt> is a dictionary mapping values to lists of of two-element
+tuples.</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="booloption">
+<h4><tt class="docutils literal"><span class="pre">BoolOption</span></tt><a class="headerlink" href="#booloption" title="Permalink to this headline">¶</a></h4>
+<p>Represents a choice between <tt class="docutils literal"><span class="pre">True</span></tt> and <tt class="docutils literal"><span class="pre">False</span></tt>.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">__init__(self,</span> <span class="pre">name,</span> <span class="pre">doc,</span> <span class="pre">default=None,</span> <span class="pre">requires=None,</span> <span class="pre">suggests=None,</span> <span class="pre">cmdline=DEFAULT,</span> <span class="pre">negation=True)</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">default</span></tt> specifies the default value of the option. <tt class="docutils literal"><span class="pre">requires</span></tt> is
+a list of two-element tuples describing the requirements when the
+option is set to true, <tt class="docutils literal"><span class="pre">suggests</span></tt> is a list of the same structure but
+the options in there are only suggested, not absolutely necessary. The
+difference is small: if the current option is set to True, both the
+required and the suggested options are set. The required options cannot
+be changed later, though. <tt class="docutils literal"><span class="pre">negation</span></tt> specifies whether the negative
+commandline option should be generated.</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="intoption">
+<h4><tt class="docutils literal"><span class="pre">IntOption</span></tt><a class="headerlink" href="#intoption" title="Permalink to this headline">¶</a></h4>
+<p>Represents a choice of an integer.</p>
+<blockquote>
+<div><tt class="docutils literal"><span class="pre">__init__(self,</span> <span class="pre">name,</span> <span class="pre">doc,</span> <span class="pre">default=None,</span> <span class="pre">cmdline=DEFAULT)</span></tt></div></blockquote>
+</div>
+<div class="section" id="floatoption">
+<h4><tt class="docutils literal"><span class="pre">FloatOption</span></tt><a class="headerlink" href="#floatoption" title="Permalink to this headline">¶</a></h4>
+<p>Represents a choice of a floating point number.</p>
+<blockquote>
+<div><tt class="docutils literal"><span class="pre">__init__(self,</span> <span class="pre">name,</span> <span class="pre">doc,</span> <span class="pre">default=None,</span> <span class="pre">cmdline=DEFAULT)</span></tt></div></blockquote>
+</div>
+<div class="section" id="stroption">
+<h4><tt class="docutils literal"><span class="pre">StrOption</span></tt><a class="headerlink" href="#stroption" title="Permalink to this headline">¶</a></h4>
+<p>Represents the choice of a string.</p>
+<blockquote>
+<div><tt class="docutils literal"><span class="pre">__init__(self,</span> <span class="pre">name,</span> <span class="pre">doc,</span> <span class="pre">default=None,</span> <span class="pre">cmdline=DEFAULT)</span></tt></div></blockquote>
+</div>
+</div>
+<div class="section" id="configuration-objects">
+<h3>Configuration Objects<a class="headerlink" href="#configuration-objects" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">Config</span></tt> objects hold the chosen values for the options (of the default,
+if no choice was made). A <tt class="docutils literal"><span class="pre">Config</span></tt> object is described by an
+<tt class="docutils literal"><span class="pre">OptionDescription</span></tt> instance. The attributes of the <tt class="docutils literal"><span class="pre">Config</span></tt> objects are the
+names of the children of the <tt class="docutils literal"><span class="pre">OptionDescription</span></tt>. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpython.config.config</span> <span class="kn">import</span> <span class="n">OptionDescription</span><span class="p">,</span> <span class="n">Config</span><span class="p">,</span> <span class="n">BoolOption</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">descr</span> <span class="o">=</span> <span class="n">OptionDescription</span><span class="p">(</span><span class="s">&quot;options&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="n">BoolOption</span><span class="p">(</span><span class="s">&quot;bool&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)])</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">descr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">bool</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">bool</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">bool</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Description of the (useful) methods on <tt class="docutils literal"><span class="pre">Config</span></tt>:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">__init__(self,</span> <span class="pre">descr,</span> <span class="pre">**overrides)</span></tt>:</dt>
+<dd><tt class="docutils literal"><span class="pre">descr</span></tt> is an instance of <tt class="docutils literal"><span class="pre">OptionDescription</span></tt> that describes the
+configuration object. <tt class="docutils literal"><span class="pre">overrides</span></tt> can be used to set different default
+values (see method <tt class="docutils literal"><span class="pre">override</span></tt>).</dd>
+<dt><tt class="docutils literal"><span class="pre">override(self,</span> <span class="pre">overrides)</span></tt>:</dt>
+<dd>override default values. This marks the overridden values as defaults,
+which makes it possible to change them (you can usually change values
+only once). <tt class="docutils literal"><span class="pre">overrides</span></tt> is a dictionary of path strings to values.</dd>
+<dt><tt class="docutils literal"><span class="pre">set(self,</span> <span class="pre">**kwargs)</span></tt>:</dt>
+<dd>&#8220;do what I mean&#8221;-interface to option setting. Searches all paths
+starting from that config for matches of the optional arguments and sets
+the found option if the match is not ambiguous.</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="production-of-optparse-parsers">
+<h3>Production of optparse Parsers<a class="headerlink" href="#production-of-optparse-parsers" title="Permalink to this headline">¶</a></h3>
+<p>To produce an optparse parser use the function <tt class="docutils literal"><span class="pre">to_optparse</span></tt>. It will create
+an option parser using callbacks in such a way that the config object used for
+creating the parser is updated automatically.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">to_optparse(config,</span> <span class="pre">useoptions=None,</span> <span class="pre">parser=None)</span></tt>:</dt>
+<dd>Returns an optparse parser.  <tt class="docutils literal"><span class="pre">config</span></tt> is the configuration object for
+which to create the parser.  <tt class="docutils literal"><span class="pre">useoptions</span></tt> is a list of options for
+which to create command line options. It can contain full paths to
+options or also paths to an option description plus an additional &#8221;.*&#8221;
+to produce command line options for all sub-options of that description.
+If <tt class="docutils literal"><span class="pre">useoptions</span></tt> is <tt class="docutils literal"><span class="pre">None</span></tt>, then all sub-options are turned into
+cmdline options. <tt class="docutils literal"><span class="pre">parser</span></tt> can be an existing parser object, if
+<tt class="docutils literal"><span class="pre">None</span></tt> is passed in, then a new one is created.</dd>
+</dl>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="the-usage-of-config-objects-in-pypy">
+<h2>The usage of config objects in PyPy<a class="headerlink" href="#the-usage-of-config-objects-in-pypy" title="Permalink to this headline">¶</a></h2>
+<p>The two large parts of PyPy, the Python interpreter and the <a class="reference internal" href="#rpython-toolchain">RPython
+toolchain</a>
+toolchain, have two separate sets of options. The translation toolchain options
+can be found on the <tt class="docutils literal"><span class="pre">config</span></tt> attribute of all <tt class="docutils literal"><span class="pre">TranslationContext</span></tt>
+instances and are described in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/rpython/config/translationoption.py">rpython/config/translationoption.py</a>. The interpreter options
+are attached to the object space, also under the name <tt class="docutils literal"><span class="pre">config</span></tt> and are
+described in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/config/pypyoption.py">pypy/config/pypyoption.py</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">PyPy&#8217;s Configuration Handling</a><ul>
+<li><a class="reference internal" href="#main-assumption">Main Assumption</a></li>
+<li><a class="reference internal" href="#api-details">API Details</a><ul>
+<li><a class="reference internal" href="#description-of-options">Description of Options</a><ul>
+<li><a class="reference internal" href="#optiondescription"><tt class="docutils literal"><span class="pre">OptionDescription</span></tt></a></li>
+<li><a class="reference internal" href="#choiceoption"><tt class="docutils literal"><span class="pre">ChoiceOption</span></tt></a></li>
+<li><a class="reference internal" href="#booloption"><tt class="docutils literal"><span class="pre">BoolOption</span></tt></a></li>
+<li><a class="reference internal" href="#intoption"><tt class="docutils literal"><span class="pre">IntOption</span></tt></a></li>
+<li><a class="reference internal" href="#floatoption"><tt class="docutils literal"><span class="pre">FloatOption</span></tt></a></li>
+<li><a class="reference internal" href="#stroption"><tt class="docutils literal"><span class="pre">StrOption</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration-objects">Configuration Objects</a></li>
+<li><a class="reference internal" href="#production-of-optparse-parsers">Production of optparse Parsers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-usage-of-config-objects-in-pypy">The usage of config objects in PyPy</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/configuration.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

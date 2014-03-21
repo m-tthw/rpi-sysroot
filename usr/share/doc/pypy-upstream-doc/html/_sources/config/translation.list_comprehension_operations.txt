@@ -1,0 +1,23 @@
+===========================================
+translation.list\_comprehension\_operations
+===========================================
+
+* **name:** list\_comprehension\_operations
+
+* **description:** When true, look for and special-case the sequence of
+  operations that results from a list comprehension and attempt to pre-allocate
+  the list
+
+* **command-line:** --listcompr
+
+* **command-line for negation:** --no-listcompr
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Experimental optimization for list comprehensions in RPython.
+

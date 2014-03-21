@@ -1,0 +1,147 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: NetSurf
+Upstream-Contact: NetSurf Developers <netsurf-dev@netsurf-browser.org>
+Source: http://www.netsurf-browser.org/downloads/releases/netsurf-2.9-full-src.tar.gz
+
+Files: netsurf-*/*
+Copyright: 2003-2012 John-Mark Bell <jmb@netsurf-browser.org>
+           2003-2011 James Bursa <bursa@users.sourceforge.net>
+           2003 Philip Pemberton <philpem@users.sourceforge.net>
+           2003 Phil Mellor <monkeyson@users.sourceforge.net>
+           2003 Rob Jackson <jacko@xms.ms>
+           2004-2009 Richard Wilson <info@tinct.net>
+           2004-2009 John Tytgat <joty@netsurf-browser.org>
+           2004 Andrew Timmins <atimmins@blueyonder.co.uk>
+           2004 Kevin Bagust <kevin.bagust@ntlworld.com>
+           2005-2009 Adrian Lees <adrianl@users.sourceforge.net>
+           2005,2008-2012 Chris Young <chris@unsatisfactorysoftware.co.uk>
+           2006-2012 Daniel Silverstone <dsilvers@netsurf-browser.org>
+           2006-2012 Rob Kendrick <rjek@netsurf-browser.org>
+           2007-2012 Vincent Sanders <vince@netsurf-browser.org>
+           2008 Adam Blokus <adamblokus@gmail.com>
+           2008 Andrew Sidwell <takkaria@netsurf-browser.org> 
+           2008-2012 François Revol <mmu_man@users.sourceforge.net>
+	   2008 James Shaw <js102@zepler.net>
+	   2008-2012 Michael Drake <tlsa@netsurf-browser.org>
+           2008-2009 Michael Lester <element3260@gmail.com>
+           2008 Sean Fox <dyntryx@gmail.com>
+           2009 Mark Benjamin <MarkBenjamin@dfgh.net>
+           2009 Paul Blokus <paul_pl@users.sourceforge.net>
+           2009 Rene W. Olsen <ac@rebels.com>
+           2009 Stephen Fellner <sf.amiga@gmail.com>
+	   2009 Chris Tarnowski
+           2010-2011 Stephen Fryatt <stevef@netsurf-browser.org>
+           2010 Ole Loots <ole@monochrom.net>
+           2011 Sven Weidauer <sven.weidauer@gmail.com>
+           1997-2009 Sam Lantinga
+           1998-2004 Daniel Stenberg <daniel@haxx.se>
+           2004-2006 Christian Hammond.
+           2004-2005 Andrew Tridgell 
+           2006 Stefan Metzmacher 
+           2005 Tim Tyler
+License: GPL-2 with OpenSSL exception
+
+Files: netsurf-*/!NetSurf/*
+Copyright: 2008-2011 Michael Drake <tlsa@netsurf-browser.org>
+License: MIT
+
+Files: libparserutils-*/*
+Copyright: 2007-2012 John-Mark Bell <jmb@netsurf-browser.org>
+License: MIT
+
+Files: libwapcaplet-*/*
+Copyright: 2009-2012 Daniel Silverstone <dsilvers@netsurf-browser.org>
+License: MIT
+
+Files: libnsbmp-*/*
+Copyright: 2003,2008 James Bursa <bursa@users.sourceforge.net>
+	   2004 John Tytgat <joty@netsurf-browser.org>
+	   2006 Richard Wilson <richard.wilson@netsurf-browser.org>
+	   2008 James Bursa <james@netsurf-browser.org>
+	   2008 Sean Fox <dyntryx@gmail.com>
+License: MIT
+
+Files: libnsgif-*/*
+Copyright: 2003,2008 James Bursa <bursa@users.sourceforge.net>
+	   2004 John Tytgat <joty@netsurf-browser.org>
+	   2006 Richard Wilson <richard.wilson@netsurf-browser.org>
+	   2008 James Bursa <james@netsurf-browser.org>
+	   2008 Sean Fox <dyntryx@gmail.com>
+License: MIT
+
+Files: hubbub-*/*
+Copyright: 2007-2008 John-Mark Bell <jmb@netsurf-browser.org>
+	   2008 Andrew Sidwell <takkaria@netsurf-browser.org> 
+License: MIT
+
+Files: libcss-*/*
+Copyright: 2007-2012 John-Mark Bell <jmb@netsurf-browser.org>
+	   2010-2011 Vincent Sanders <vince@netsurf-browser.org>
+	   2010-2012 Daniel Silverstone <dsilvers@netsurf-browser.org>
+License: MIT
+
+Files: debian/*
+Copyright: 2009,2011-2012 Vincent Sanders <vince@debian.org> 
+           2009 Daniel Silverstone <dsilvers@debian.org>
+License: GPL-2+
+
+License: GPL-2+
+ This program is free software; you can redistribute it
+ and/or modify it under the terms of the GNU General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later
+ version.
+ .
+ This program is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied
+ warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ PURPOSE.  See the GNU General Public License for more
+ details.
+ .
+ You should have received a copy of the GNU General Public
+ License along with this package; if not, write to the Free
+ Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ Boston, MA  02110-1301 USA
+ .
+ On Debian systems, the full text of the GNU General Public
+ License version 2 can be found in the file
+ `/usr/share/common-licenses/GPL-2'.         
+
+License: GPL-2 with OpenSSL exception
+ NetSurf is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; version 2 of the License.
+ .
+ In addition, as a special exception, permission is granted to link the
+ code of this release of NetSurf with the OpenSSL project's "OpenSSL"
+ library (or with modified versions of it that use the same licence as 
+ the "OpenSSL" library), and distribute the linked executables. You must
+ obey the GNU General Public License version 2 in all respects for all of 
+ the code used other than "OpenSSL". If you modify the code, you may 
+ extend this exception to your version of the code, but you are not
+ obligated to do so. If you do not wish to do so, delete this exception
+ statement from your version.
+ .
+ On Debian systems, the complete text of the GNU General Public
+ License, version 2, can be found in /usr/share/common-licenses/GPL-2.
+
+License: MIT
+ Permission is hereby granted, free of charge, to any person obtaining a copy 
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights 
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ copies of the Software, and to permit persons to whom the Software is 
+ furnished to do so, subject to the following conditions: 
+ .
+ The above copyright notice and this permission notice shall be included in 
+ all copies or substantial portions of the Software. 
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ THE SOFTWARE. 
+
+

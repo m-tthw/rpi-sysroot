@@ -1,0 +1,21 @@
+============================
+objspace.usemodules.\_winreg
+============================
+
+* **name:** \_winreg
+
+* **description:** use module \_winreg
+
+* **command-line:** --withmod-\_winreg
+
+* **command-line for negation:** --withoutmod-\_winreg
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the built-in '_winreg' module, provides access to the Windows registry.
+This module is expected to be working and is included by default on Windows.

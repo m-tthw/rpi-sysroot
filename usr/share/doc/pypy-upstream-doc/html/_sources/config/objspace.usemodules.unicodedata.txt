@@ -1,0 +1,21 @@
+===============================
+objspace.usemodules.unicodedata
+===============================
+
+* **name:** unicodedata
+
+* **description:** use module unicodedata
+
+* **command-line:** --withmod-unicodedata
+
+* **command-line for negation:** --withoutmod-unicodedata
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the 'unicodedata' module. 
+This module is expected to be fully working.

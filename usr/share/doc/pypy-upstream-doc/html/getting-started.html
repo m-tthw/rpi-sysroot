@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting Started &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="getting-started">
+<h1><a class="toc-backref" href="#id10">Getting Started</a><a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#getting-started" id="id10">Getting Started</a><ul>
+<li><a class="reference internal" href="#what-is-pypy" id="id11">What is PyPy ?</a></li>
+<li><a class="reference internal" href="#just-the-facts" id="id12">Just the facts</a><ul>
+<li><a class="reference internal" href="#download-a-pre-built-pypy" id="id13">Download a pre-built PyPy</a></li>
+<li><a class="reference internal" href="#installing-pypy" id="id14">Installing PyPy</a></li>
+<li><a class="reference internal" href="#installing-using-virtualenv" id="id15">Installing using virtualenv</a></li>
+<li><a class="reference internal" href="#clone-the-repository" id="id16">Clone the repository</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#where-to-go-from-here" id="id17">Where to go from here</a><ul>
+<li><a class="reference internal" href="#understanding-pypy-s-architecture" id="id18">Understanding PyPy&#8217;s architecture</a></li>
+<li><a class="reference internal" href="#filing-bugs-or-feature-requests" id="id19">Filing bugs or feature requests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="what-is-pypy">
+<span id="howtopypy"></span><h2><a class="toc-backref" href="#id11">What is PyPy ?</a><a class="headerlink" href="#what-is-pypy" title="Permalink to this headline">¶</a></h2>
+<p>In common parlance, PyPy has been used to mean two things.  The first is the
+<a class="reference external" href="translation.html">RPython translation toolchain</a>, which is a framework for generating
+dynamic programming language implementations.  And the second is one
+particular implementation that is so generated &#8211;
+an implementation of the <a class="reference external" href="http://docs.python.org/reference/">Python</a> programming language written in
+Python itself.  It is designed to be flexible and easy to experiment with.</p>
+<p>This double usage has proven to be confusing, and we are trying to move
+away from using the word PyPy to mean both things.  From now on we will
+try to use PyPy to only mean the Python implementation, and say the
+<a class="reference external" href="translation.html">RPython translation toolchain</a> when we mean the framework.  Some older
+documents, presentations, papers and videos will still have the old
+usage.  You are hereby warned.</p>
+<p>We target a large variety of platforms, small and large, by providing a
+compiler toolsuite that can produce custom Python versions.  Platform, memory
+and threading models, as well as the JIT compiler itself, are aspects of the
+translation process - as opposed to encoding low level details into the
+language implementation itself. <a class="reference external" href="architecture.html">more...</a></p>
+</div>
+<div class="section" id="just-the-facts">
+<h2><a class="toc-backref" href="#id12">Just the facts</a><a class="headerlink" href="#just-the-facts" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="download-a-pre-built-pypy">
+<h3><a class="toc-backref" href="#id13">Download a pre-built PyPy</a><a class="headerlink" href="#download-a-pre-built-pypy" title="Permalink to this headline">¶</a></h3>
+<p>The quickest way to start using PyPy is to download a prebuilt binary for your
+OS and architecture.  You can either use the <a class="reference external" href="http://pypy.org/download.html">most recent release</a> or one of
+our <a class="reference external" href="http://buildbot.pypy.org/nightly/trunk/">development nightly build</a>.  Please note that the nightly builds are not
+guaranteed to be as stable as official releases, use them at your own risk.</p>
+</div>
+<div class="section" id="installing-pypy">
+<h3><a class="toc-backref" href="#id14">Installing PyPy</a><a class="headerlink" href="#installing-pypy" title="Permalink to this headline">¶</a></h3>
+<p>PyPy is ready to be executed as soon as you unpack the tarball or the zip
+file, with no need to install it in any specific location:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> tar xf pypy-2.1.tar.bz2
+<span class="gp">$</span> ./pypy-2.1/bin/pypy
+<span class="go">Python 2.7.3 (480845e6b1dd, Jul 31 2013, 11:05:31)</span>
+<span class="go">[PyPy 2.1.0 with GCC 4.4.3] on linux2</span>
+<span class="go">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span>
+<span class="go">And now for something completely different: ``PyPy is an exciting technology</span>
+<span class="go">that lets you to write fast, portable, multi-platform interpreters with less</span>
+<span class="go">effort&#39;&#39;</span>
+<span class="gp">&gt;</span>&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>If you want to make PyPy available system-wide, you can put a symlink to the
+<tt class="docutils literal"><span class="pre">pypy</span></tt> executable in <tt class="docutils literal"><span class="pre">/usr/local/bin</span></tt>.  It is important to put a symlink
+and not move the binary there, else PyPy would not be able to find its
+library.</p>
+<p>If you want to install 3rd party libraries, the most convenient way is to
+install <a class="reference external" href="http://www.python-distribute.org/">distribute</a> and <a class="reference external" href="http://pypi.python.org/pypi/pip">pip</a>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> curl -O http://python-distribute.org/distribute_setup.py
+<span class="gp">$</span> curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+<span class="gp">$</span> ./pypy-2.1/bin/pypy distribute_setup.py
+<span class="gp">$</span> ./pypy-2.1/bin/pypy get-pip.py
+<span class="gp">$</span> ./pypy-2.1/bin/pip install pygments  <span class="c"># for example</span>
+</pre></div>
+</div>
+<p>3rd party libraries will be installed in <tt class="docutils literal"><span class="pre">pypy-2.1/site-packages</span></tt>, and
+the scripts in <tt class="docutils literal"><span class="pre">pypy-2.1/bin</span></tt>.</p>
+</div>
+<div class="section" id="installing-using-virtualenv">
+<h3><a class="toc-backref" href="#id15">Installing using virtualenv</a><a class="headerlink" href="#installing-using-virtualenv" title="Permalink to this headline">¶</a></h3>
+<p>It is often convenient to run pypy inside a virtualenv.  To do this
+you need a recent version of virtualenv &#8211; 1.6.1 or greater.  You can
+then install PyPy both from a precompiled tarball or from a mercurial
+checkout:</p>
+<div class="highlight-python"><pre># from a tarball
+$ virtualenv -p /opt/pypy-c-jit-41718-3fb486695f20-linux/bin/pypy my-pypy-env
+
+# from the mercurial checkout
+$ virtualenv -p /path/to/pypy/pypy/translator/goal/pypy-c my-pypy-env</pre>
+</div>
+<p>Note that bin/python is now a symlink to bin/pypy.</p>
+</div>
+<div class="section" id="clone-the-repository">
+<h3><a class="toc-backref" href="#id16">Clone the repository</a><a class="headerlink" href="#clone-the-repository" title="Permalink to this headline">¶</a></h3>
+<p>If you prefer to <a class="reference external" href="getting-started-python.html">compile PyPy by yourself</a>, or if you want to modify it, you
+will need to obtain a copy of the sources.  This can be done either by
+<a class="reference external" href="http://pypy.org/download.html">downloading them from the download page</a> or by checking them out from the
+repository using mercurial.  We suggest using mercurial if one wants to access
+the current development.</p>
+<p>You must issue the following command on your
+command line, DOS box, or terminal:</p>
+<div class="highlight-python"><pre>hg clone http://bitbucket.org/pypy/pypy pypy</pre>
+</div>
+<p>This will clone the repository and place it into a directory
+named <tt class="docutils literal"><span class="pre">pypy</span></tt>, and will get you the PyPy source in
+<tt class="docutils literal"><span class="pre">pypy/pypy</span></tt> and documentation files in <tt class="docutils literal"><span class="pre">pypy/pypy/doc</span></tt>.
+We try to ensure that the tip is always stable, but it might
+occasionally be broken.  You may want to check out <a class="reference external" href="http://buildbot.pypy.org/summary?branch=&lt;trunk&gt;">our nightly tests:</a>
+find a revision (12-chars alphanumeric string, e.g. &#8220;963e808156b3&#8221;)
+that passed at least the
+<tt class="docutils literal"><span class="pre">{linux32}</span></tt> tests (corresponding to a <tt class="docutils literal"><span class="pre">+</span></tt> sign on the
+line <tt class="docutils literal"><span class="pre">success</span></tt>) and then, in your cloned repository, switch to this revision
+using:</p>
+<div class="highlight-python"><pre>hg up -r XXXXX</pre>
+</div>
+<p>where XXXXX is the revision id.</p>
+</div>
+</div>
+<div class="section" id="where-to-go-from-here">
+<h2><a class="toc-backref" href="#id17">Where to go from here</a><a class="headerlink" href="#where-to-go-from-here" title="Permalink to this headline">¶</a></h2>
+<p>After you successfully manage to get PyPy&#8217;s source you can read more about:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="getting-started-python.html">Building and using PyPy&#8217;s Python interpreter</a></li>
+<li><a class="reference external" href="getting-started-dev.html">Learning more about the RPython toolchain and how to develop (with) PyPy</a></li>
+<li><a class="reference external" href="http://morepypy.blogspot.com/2011/04/tutorial-writing-interpreter-with-pypy.html">Tutorial for how to write an interpreter with the RPython toolchain and make it fast</a></li>
+<li><a class="reference external" href="http://speed.pypy.org">Look at our benchmark results</a></li>
+</ul>
+</div></blockquote>
+<div class="section" id="understanding-pypy-s-architecture">
+<h3><a class="toc-backref" href="#id18">Understanding PyPy&#8217;s architecture</a><a class="headerlink" href="#understanding-pypy-s-architecture" title="Permalink to this headline">¶</a></h3>
+<p>For in-depth information about architecture and coding documentation
+head over to the <a class="reference external" href="index.html#project-documentation">documentation section</a> where you&#8217;ll find lots of
+interesting information.  Additionally, in true hacker spirit, you
+may just <a class="reference external" href="getting-started-dev.html#start-reading-sources">start reading sources</a> .</p>
+</div>
+<div class="section" id="filing-bugs-or-feature-requests">
+<h3><a class="toc-backref" href="#id19">Filing bugs or feature requests</a><a class="headerlink" href="#filing-bugs-or-feature-requests" title="Permalink to this headline">¶</a></h3>
+<p>You may file <a class="reference external" href="https://bugs.pypy.org/">bug reports</a> on our issue tracker which is
+also accessible through the &#8216;issues&#8217; top menu of
+the PyPy website.  <a class="reference external" href="coding-guide.html#using-development-tracker">Using the development tracker</a> has
+more detailed information on specific features of the tracker.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started</a><ul>
+<li><a class="reference internal" href="#what-is-pypy">What is PyPy ?</a></li>
+<li><a class="reference internal" href="#just-the-facts">Just the facts</a><ul>
+<li><a class="reference internal" href="#download-a-pre-built-pypy">Download a pre-built PyPy</a></li>
+<li><a class="reference internal" href="#installing-pypy">Installing PyPy</a></li>
+<li><a class="reference internal" href="#installing-using-virtualenv">Installing using virtualenv</a></li>
+<li><a class="reference internal" href="#clone-the-repository">Clone the repository</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#where-to-go-from-here">Where to go from here</a><ul>
+<li><a class="reference internal" href="#understanding-pypy-s-architecture">Understanding PyPy&#8217;s architecture</a></li>
+<li><a class="reference internal" href="#filing-bugs-or-feature-requests">Filing bugs or feature requests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/getting-started.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

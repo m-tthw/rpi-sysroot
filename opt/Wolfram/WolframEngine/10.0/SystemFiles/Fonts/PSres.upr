@@ -1,0 +1,45 @@
+PS-Resources-1.0
+FontFamily
+FontOutline
+mkpsresPrivate
+.
+FontFamily
+Courier=Regular,Courier
+Math1=- Bold,Math1-Bold,Medium,Math1
+Math1 Mono=- Bold,Math1Mono-Bold,Medium,Math1Mono
+Math2=- Bold,Math2-Bold,Medium,Math2
+Math2 Mono=- Bold,Math2Mono-Bold,Medium,Math2Mono
+Math3=- Bold,Math3-Bold,Medium,Math3
+Math3 Mono=- Bold,Math3Mono-Bold,Medium,Math3Mono
+Math4=- Bold,Math4-Bold,Medium,Math4
+Math4 Mono=- Bold,Math4Mono-Bold,Medium,Math4Mono
+Math5=- Bold,Math5-Bold,Medium,Math5
+Math5 Mono=- Bold,Math5Mono-Bold,Medium,Math5Mono
+.
+FontOutline
+Courier=cour.pfa
+Math1=Math1.pfa
+Math1-Bold=Math1-Bold.pfa
+Math1Mono=Math1Mono.pfa
+Math1Mono-Bold=Math1Mono-Bold.pfa
+Math2=Math2.pfa
+Math2-Bold=Math2-Bold.pfa
+Math2Mono=Math2Mono.pfa
+Math2Mono-Bold=Math2Mono-Bold.pfa
+Math3=Math3.pfa
+Math3-Bold=Math3-Bold.pfa
+Math3Mono=Math3Mono.pfa
+Math3Mono-Bold=Math3Mono-Bold.pfa
+Math4=Math4.pfa
+Math4-Bold=Math4-Bold.pfa
+Math4Mono=Math4Mono.pfa
+Math4Mono-Bold=Math4Mono-Bold.pfa
+Math5=Math5.pfa
+Math5-Bold=Math5-Bold.pfa
+Math5Mono=Math5Mono.pfa
+Math5Mono-Bold=Math5Mono-Bold.pfa
+.
+mkpsresPrivate
+NONRESOURCE=fonts.dir
+NONRESOURCE=fonts.scale
+.

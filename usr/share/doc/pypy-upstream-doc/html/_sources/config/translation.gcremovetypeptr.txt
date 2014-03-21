@@ -1,0 +1,20 @@
+===========================
+translation.gcremovetypeptr
+===========================
+
+* **name:** gcremovetypeptr
+
+* **description:** Remove the typeptr from every object
+
+* **command-line:** --gcremovetypeptr
+
+* **command-line for negation:** --no-gcremovetypeptr
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+If set, save one word in every object.  Framework GC only.

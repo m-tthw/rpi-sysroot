@@ -1,0 +1,168 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>A JIT-aware profiler &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="a-jit-aware-profiler">
+<h1>A JIT-aware profiler<a class="headerlink" href="#a-jit-aware-profiler" title="Permalink to this headline">¶</a></h1>
+<p>Goal: have a profiler which is aware of the PyPy JIT and which shows which
+percentage of the time have been spent in which loops.</p>
+<p>Long term goal: integrate the data collected by the profiler with the
+jitviewer.</p>
+<p>The idea is record an event in the PYPYLOG everytime we enter and exit a loop
+or a bridge.</p>
+<div class="section" id="expected-output">
+<h2>Expected output<a class="headerlink" href="#expected-output" title="Permalink to this headline">¶</a></h2>
+<p>[100] {jit-profile-enter
+loop1      # e.g. an entry bridge
+[101] jit-profile-enter}
+...
+[200] {jit-profile-enter
+loop0      # JUMP from loop1 to loop0
+[201] jit-profile-enter}
+...
+[500] {jit-profile-exit
+loop0      # e.g. because of a failing guard
+[501] jit-profile-exit}</p>
+<p>In this example, the exiting from loop1 is implicit because we are entering
+loop0.  So, we spent 200-100=100 ticks in the entry bridge, and 500-200=300
+ticks in the actual loop.</p>
+</div>
+<div class="section" id="what-to-do-about-inner-bridges">
+<h2>What to do about &#8220;inner&#8221; bridges?<a class="headerlink" href="#what-to-do-about-inner-bridges" title="Permalink to this headline">¶</a></h2>
+<p>&#8220;Inner bridges&#8221; are those bridges which jump back to the loop where they
+originate from.  There are two possible ways of dealing with them:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>we ignore them: we record when we enter the loop, but not when we jump to
+a compiled inner bridge.  The exit event will be recorded only in case of
+a non-compiled guard failure or a JUMP to another loop</li>
+<li>we record the enter/exit of each inner bridge</li>
+</ol>
+</div></blockquote>
+<p>The disadvantage of solution (2) is that there are certain loops which takes
+bridges at everty single iteration.  So, in this case we would record a huge
+number of events, possibly adding a lot of overhead and thus making the
+profiled data useless.</p>
+</div>
+<div class="section" id="detecting-the-enter-to-exit-from-a-loop">
+<h2>Detecting the enter to/exit from a loop<a class="headerlink" href="#detecting-the-enter-to-exit-from-a-loop" title="Permalink to this headline">¶</a></h2>
+<p>Ways to enter:</p>
+<blockquote>
+<div><ul class="simple">
+<li>just after the tracing/compilation</li>
+<li>from the interpreter, if the loop has already been compiled</li>
+<li>from another loop, via a JUMP operation</li>
+<li>from a hot guard failure (which we ignore, in case we choose solution
+(1) above)</li>
+<li>XXX: am I missing anything?</li>
+</ul>
+</div></blockquote>
+<p>Ways to exit:</p>
+<blockquote>
+<div><ul class="simple">
+<li>guard failure (entering blackhole)</li>
+<li>guard failure (jumping to a bridge) (ignored in case of solution (1))</li>
+<li>jump to another loop</li>
+<li>XXX: am I missing anything?</li>
+</ul>
+</div></blockquote>
+<p>About call_assembler: I think that at the beginning, we should just ignore
+call_assembler: the time spent inside the call will be accounted to the loop
+calling it.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">A JIT-aware profiler</a><ul>
+<li><a class="reference internal" href="#expected-output">Expected output</a></li>
+<li><a class="reference internal" href="#what-to-do-about-inner-bridges">What to do about &#8220;inner&#8221; bridges?</a></li>
+<li><a class="reference internal" href="#detecting-the-enter-to-exit-from-a-loop">Detecting the enter to/exit from a loop</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/discussion/jit-profiler.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

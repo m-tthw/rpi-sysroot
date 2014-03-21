@@ -1,0 +1,20 @@
+=========================
+objspace.usemodules.\_ssl
+=========================
+
+* **name:** \_ssl
+
+* **description:** use module \_ssl
+
+* **command-line:** --withmod-\_ssl
+
+* **command-line for negation:** --withoutmod-\_ssl
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the '_ssl' module, which implements SSL socket operations.

@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reference &mdash; PiFace Digital I/O 3.0.4 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '3.0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PiFace Digital I/O 3.0.4 documentation" href="index.html" />
+    <link rel="prev" title="Simple Web Control" href="simplewebcontrol.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="simplewebcontrol.html" title="Simple Web Control"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PiFace Digital I/O 3.0.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Functions and classes in pifacedigitalio.core have been imported
+into the main namespace. <tt class="xref py py-func docutils literal"><span class="pre">pifacedigitalio.digital_write()</span></tt> is
+the same as <a class="reference internal" href="#pifacedigitalio.core.digital_write" title="pifacedigitalio.core.digital_write"><tt class="xref py py-func docutils literal"><span class="pre">pifacedigitalio.core.digital_write()</span></tt></a>.</p>
+</div>
+<span class="target" id="module-pifacedigitalio.core"></span><dl class="class">
+<dt id="pifacedigitalio.core.InputEventListener">
+<em class="property">class </em><tt class="descclassname">pifacedigitalio.core.</tt><tt class="descname">InputEventListener</tt><big>(</big><em>chip=None</em><big>)</big><a class="headerlink" href="#pifacedigitalio.core.InputEventListener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Listens for events on the input port and calls the mapped callback
+functions.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">print_flag</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">interrupt_flag</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">listener</span> <span class="o">=</span> <span class="n">pifacedigitalio</span><span class="o">.</span><span class="n">InputEventListener</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">listener</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pifacedigitalio</span><span class="o">.</span><span class="n">IODIR_ON</span><span class="p">,</span> <span class="n">print_flag</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">listener</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="pifacedigitalio.core.PiFaceDigital">
+<em class="property">class </em><tt class="descclassname">pifacedigitalio.core.</tt><tt class="descname">PiFaceDigital</tt><big>(</big><em>hardware_addr=0</em>, <em>bus=0</em>, <em>chip_select=0</em>, <em>init_board=True</em><big>)</big><a class="headerlink" href="#pifacedigitalio.core.PiFaceDigital" title="Permalink to this definition">¶</a></dt>
+<dd><p>A PiFace Digital board.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attribute :</th><td class="field-body">input_pins &#8211; list containing
+<tt class="xref py py-class docutils literal"><span class="pre">pifacecommon.mcp23s17.MCP23S17RegisterBitNeg</span></tt>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Attribute :</th><td class="field-body">input_port &#8211; See
+<tt class="xref py py-class docutils literal"><span class="pre">pifacecommon.mcp23s17.MCP23S17RegisterNeg</span></tt>.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Attribute :</th><td class="field-body">output_pins &#8211; list containing
+<tt class="xref py py-class docutils literal"><span class="pre">pifacecommon.mcp23s17.MCP23S17RegisterBit</span></tt>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Attribute :</th><td class="field-body">output_port &#8211; See
+<tt class="xref py py-class docutils literal"><span class="pre">pifacecommon.mcp23s17.MCP23S17Register</span></tt>.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Attribute :</th><td class="field-body">leds &#8211;
+list containing <tt class="xref py py-class docutils literal"><span class="pre">pifacecommon.mcp23s17.MCP23S17RegisterBit</span></tt>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Attribute :</th><td class="field-body">relays &#8211;
+list containing <tt class="xref py py-class docutils literal"><span class="pre">pifacecommon.mcp23s17.MCP23S17RegisterBit</span></tt>.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Attribute :</th><td class="field-body">switches &#8211;
+list containing <tt class="xref py py-class docutils literal"><span class="pre">pifacecommon.mcp23s17.MCP23S17RegisterBit</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pfd</span> <span class="o">=</span> <span class="n">pifacedigitalio</span><span class="o">.</span><span class="n">PiFaceDigital</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pfd</span><span class="o">.</span><span class="n">input_port</span><span class="o">.</span><span class="n">value</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pfd</span><span class="o">.</span><span class="n">output_port</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mh">0xAA</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pfd</span><span class="o">.</span><span class="n">leds</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">turn_on</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pifacedigitalio.core.deinit">
+<tt class="descclassname">pifacedigitalio.core.</tt><tt class="descname">deinit</tt><big>(</big><em>bus=0</em>, <em>chip_select=0</em><big>)</big><a class="headerlink" href="#pifacedigitalio.core.deinit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops interrupts on all boards. Only required when using
+<a class="reference internal" href="#pifacedigitalio.core.digital_read" title="pifacedigitalio.core.digital_read"><tt class="xref py py-func docutils literal"><span class="pre">digital_read()</span></tt></a> and <a class="reference internal" href="#pifacedigitalio.core.digital_write" title="pifacedigitalio.core.digital_write"><tt class="xref py py-func docutils literal"><span class="pre">digital_write()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>bus</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; SPI bus /dev/spidev&lt;bus&gt;.&lt;chipselect&gt; (default: {bus})</li>
+<li><strong>chip_select</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; SPI chip select /dev/spidev&lt;bus&gt;.&lt;chipselect&gt;
+(default: {chip})</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pifacedigitalio.core.digital_read">
+<tt class="descclassname">pifacedigitalio.core.</tt><tt class="descname">digital_read</tt><big>(</big><em>pin_num</em>, <em>hardware_addr=0</em><big>)</big><a class="headerlink" href="#pifacedigitalio.core.digital_read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the input pin specified.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This function is for familiarality with users of other types of
+IO board. Consider accessing the <tt class="docutils literal"><span class="pre">input_pins</span></tt> attribute of a
+PiFaceDigital object:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pfd</span> <span class="o">=</span> <span class="n">PiFaceDigital</span><span class="p">(</span><span class="n">hardware_addr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pfd</span><span class="o">.</span><span class="n">input_pins</span><span class="p">[</span><span class="n">pin_num</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pin_num</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The pin number to read.</li>
+<li><strong>hardware_addr</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The board to read from (default: 0)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">int &#8211; value of the pin</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pifacedigitalio.core.digital_read_pullup">
+<tt class="descclassname">pifacedigitalio.core.</tt><tt class="descname">digital_read_pullup</tt><big>(</big><em>pin_num</em>, <em>hardware_addr=0</em><big>)</big><a class="headerlink" href="#pifacedigitalio.core.digital_read_pullup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the input pullup specified.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This function is for familiarality with users of other types of
+IO board. Consider accessing the <tt class="docutils literal"><span class="pre">gppub</span></tt> attribute of a
+PiFaceDigital object:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pfd</span> <span class="o">=</span> <span class="n">PiFaceDigital</span><span class="p">(</span><span class="n">hardware_addr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="n">pfd</span><span class="o">.</span><span class="n">gppub</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="go">0xff</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pfd</span><span class="o">.</span><span class="n">gppub</span><span class="o">.</span><span class="n">bits</span><span class="p">[</span><span class="n">pin_num</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pin_num</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The pin number to read.</li>
+<li><strong>hardware_addr</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The board to read from (default: 0)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">int &#8211; value of the pin</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pifacedigitalio.core.digital_write">
+<tt class="descclassname">pifacedigitalio.core.</tt><tt class="descname">digital_write</tt><big>(</big><em>pin_num</em>, <em>value</em>, <em>hardware_addr=0</em><big>)</big><a class="headerlink" href="#pifacedigitalio.core.digital_write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the value to the input pin specified.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This function is for familiarality with users of other types of
+IO board. Consider accessing the <tt class="docutils literal"><span class="pre">output_pins</span></tt> attribute of a
+PiFaceDigital object:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pfd</span> <span class="o">=</span> <span class="n">PiFaceDigital</span><span class="p">(</span><span class="n">hardware_addr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pfd</span><span class="o">.</span><span class="n">output_pins</span><span class="p">[</span><span class="n">pin_num</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pin_num</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The pin number to write to.</li>
+<li><strong>value</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The value to write.</li>
+<li><strong>hardware_addr</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The board to read from (default: 0)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pifacedigitalio.core.digital_write_pullup">
+<tt class="descclassname">pifacedigitalio.core.</tt><tt class="descname">digital_write_pullup</tt><big>(</big><em>pin_num</em>, <em>value</em>, <em>hardware_addr=0</em><big>)</big><a class="headerlink" href="#pifacedigitalio.core.digital_write_pullup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the value to the input pullup specified.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This function is for familiarality with users of other types of
+IO board. Consider accessing the <tt class="docutils literal"><span class="pre">gppub</span></tt> attribute of a
+PiFaceDigital object:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pfd</span> <span class="o">=</span> <span class="n">PiFaceDigital</span><span class="p">(</span><span class="n">hardware_addr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">hex</span><span class="p">(</span><span class="n">pfd</span><span class="o">.</span><span class="n">gppub</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="go">0xff</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pfd</span><span class="o">.</span><span class="n">gppub</span><span class="o">.</span><span class="n">bits</span><span class="p">[</span><span class="n">pin_num</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pin_num</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The pin number to write to.</li>
+<li><strong>value</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The value to write.</li>
+<li><strong>hardware_addr</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The board to read from (default: 0)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="simplewebcontrol.html"
+                        title="previous chapter">Simple Web Control</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/reference.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="simplewebcontrol.html" title="Simple Web Control"
+             >previous</a> |</li>
+        <li><a href="index.html">PiFace Digital I/O 3.0.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Thomas Preston.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

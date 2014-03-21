@@ -1,0 +1,19 @@
+=========================================================
+translation.backendopt.clever\_malloc\_removal\_threshold
+=========================================================
+
+* **name:** clever\_malloc\_removal\_threshold
+
+* **description:** Threshold when to inline functions in clever malloc removal
+
+* **command-line:** --clever-malloc-removal-threshold
+
+* **option type:** float option
+
+* **default:** 32.4
+
+
+
+
+Weight threshold used to decide whether to inline flowgraphs.  
+This is for clever malloc removal (:config:`translation.backendopt.clever_malloc_removal`).

@@ -1,0 +1,18 @@
+============================
+objspace.std.prebuiltintfrom
+============================
+
+* **name:** prebuiltintfrom
+
+* **description:** lowest integer which is prebuilt
+
+* **command-line:** --prebuiltintfrom
+
+* **option type:** integer option
+
+* **default:** -5
+
+
+
+
+see :config:`objspace.std.withprebuiltint`.

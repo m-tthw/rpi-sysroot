@@ -1,0 +1,479 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     22251,        470]
+NotebookOptionsPosition[     20807,        427]
+NotebookOutlinePosition[     22197,        467]
+CellTagsIndexPosition[     22154,        464]
+WindowTitle->Wolfram Product Registration
+WindowFrame->ModalDialog*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ DynamicBox[FEPrivate`FrontEndResource["FEBitmaps", "ActivationDialogHeader"],
+  ImageSizeCache->{650., {38., 42.}}]],
+ CellMargins->0,
+ CellBracketOptions->{"Color"->RGBColor[0.269993, 0.308507, 0.6]},
+ CellHorizontalScrolling->True,
+ PageBreakAbove->True,
+ PageBreakWithin->False,
+ ShowAutoStyles->True,
+ LineSpacing->{1.25, 0},
+ AutoItalicWords->{},
+ ScriptMinSize->9,
+ ShowStringCharacters->False,
+ FontFamily:>CurrentValue["PanelFontFamily"],
+ FontSize:>CurrentValue["PanelFontSize"]],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     PaneBox[
+      TagBox[GridBox[{
+         {
+          StyleBox[
+           DynamicBox[ToBoxes[
+             FEPrivate`FrontEndResource[
+             "ActivationDialog", "RegistrationTitle"], StandardForm],
+            ImageSizeCache->{425., {3., 12.}}], "Heading",
+           StripOnInput->False]},
+         {
+          DynamicBox[ToBoxes[
+            FEPrivate`FrontEndResource[
+            "ActivationDialog", "RegistrationSubtitle"], StandardForm],
+           ImageSizeCache->{344., {3., 9.}}]},
+         {
+          TagBox[GridBox[{
+             {
+              GraphicsBox[
+               TagBox[RasterBox[CompressedData["
+1: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
+                 "], {{0, 38}, {45, 0}}, {0, 255},
+                 ColorFunction->RGBColor],
+                BoxForm`ImageTag[
+                "Byte", ColorSpace -> "RGB", Interleaving -> True],
+                Selectable->False],
+               BaseStyle->"ImageGraphics",
+               ImageSize->Magnification[1],
+               ImageSizeRaw->{45, 38},
+               PlotRange->{{0, 45}, {0, 38}}], 
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource[
+                "ActivationDialog", "RegistrationDownload"], StandardForm],
+               ImageSizeCache->{106., {22., 12.}}], 
+              GraphicsBox[
+               TagBox[RasterBox[CompressedData["
+1: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
+RHcW+h/Gks/BVNLe/yfi0WX6D3G9m88=
+                 "], {{0, 31}, {37, 0}}, {0, 255},
+                 ColorFunction->RGBColor],
+                BoxForm`ImageTag[
+                "Byte", ColorSpace -> "RGB", Interleaving -> True],
+                Selectable->False],
+               BaseStyle->"ImageGraphics",
+               ImageSizeRaw->{37, 31},
+               PlotRange->{{0, 37}, {0, 31}}], 
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource[
+                "ActivationDialog", "RegistrationNotification"], StandardForm],
+               ImageSizeCache->{121., {41., 12.}}]},
+             {
+              GraphicsBox[
+               TagBox[RasterBox[CompressedData["
+1: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
+                 "], {{0, 38}, {45, 0}}, {0, 255},
+                 ColorFunction->RGBColor],
+                BoxForm`ImageTag[
+                "Byte", ColorSpace -> "RGB", Interleaving -> True],
+                Selectable->False],
+               BaseStyle->"ImageGraphics",
+               ImageSize->Magnification[1],
+               ImageSizeRaw->{45, 38},
+               PlotRange->{{0, 45}, {0, 38}}], 
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource[
+                "ActivationDialog", "RegistrationView"], StandardForm],
+               ImageSizeCache->{82., {22., 12.}}], 
+              GraphicsBox[
+               TagBox[RasterBox[CompressedData["
+1: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
+4w==
+                 "], {{0, 32}, {49, 0}}, {0, 255},
+                 ColorFunction->RGBColor],
+                BoxForm`ImageTag[
+                "Byte", ColorSpace -> "RGB", Interleaving -> True],
+                Selectable->False],
+               BaseStyle->"ImageGraphics",
+               ImageSizeRaw->{49, 32},
+               PlotRange->{{0, 49}, {0, 32}}], 
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource[
+                "ActivationDialog", "RegistrationManage"], StandardForm],
+               ImageSizeCache->{154., {22., 12.}}]},
+             {"", "", "", 
+              DynamicBox[ToBoxes[
+                FEPrivate`FrontEndResource[
+                "ActivationDialog", "RegistrationMore"], StandardForm],
+               ImageSizeCache->{62., {1., 9.}}]}
+            },
+            AutoDelete->False,
+            BaselinePosition->{{1, 1}, Baseline},
+            GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+            GridBoxItemSize->{"Columns" -> {{Automatic, Fit}}},
+            GridBoxSpacings->{"Columns" -> {{1}}, "Rows" -> {{2}}}],
+           "Grid"]}
+        },
+        BaseStyle->"ControlStyle",
+        DefaultBaseStyle->"Column",
+        GridBoxAlignment->{"Columns" -> {{Left}}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {{0}}, "Rows" -> {0, 1, 3}}],
+       "Column"],
+      FrameMargins->{{40, 0}, {0, 20}},
+      ImageSize->{650, 340}]},
+    {
+     PaneBox[
+      TagBox[GridBox[{
+         {
+          ButtonBox[
+           DynamicBox[ToBoxes[
+             FEPrivate`FrontEndResource[
+             "ActivationDialog", "RegistrationNever"], StandardForm],
+            ImageSizeCache->{81., {3., 9.}}],
+           Appearance->Automatic,
+           
+           ButtonFunction:>(
+            CurrentValue[$FrontEnd, {
+               PrivateFrontEndOptions, "LastRegistrationReminderDate"}] = 
+             None; FrontEndExecute[{
+               FrontEndToken[
+                FrontEnd`EvaluationNotebook[], "Close"]}]),
+           Evaluator->Automatic,
+           Method->"Preemptive"], 
+          ButtonBox[
+           DynamicBox[ToBoxes[
+             FEPrivate`FrontEndResource[
+             "ActivationDialog", "RegistrationLater"], StandardForm],
+            ImageSizeCache->{68., {3., 9.}}],
+           Appearance->Automatic,
+           ButtonFunction:>FrontEndExecute[{
+              FrontEndToken[
+               FrontEnd`EvaluationNotebook[], "Close"]}],
+           Evaluator->Automatic,
+           Method->"Preemptive"], "", 
+          ButtonBox[
+           
+           DynamicBox[FEPrivate`FrontEndResource[
+            "LocalizedBitmaps", "RegisterButton"],
+            ImageSizeCache->{118., {10., 14.}},
+            
+            Initialization:>(
+             CurrentValue[$FrontEnd, {
+               PrivateFrontEndOptions, "LastRegistrationReminderDate"}] = 
+             FE`Evaluate[
+               FEPrivate`DateList[]])],
+           Appearance->None,
+           
+           ButtonFunction:>(
+            FE`hyperlinkCoded[
+             "https://user.wolfram.com/portal/ProductRegistration", 
+              "source=registration"]; FE`Evaluate[
+              FEPrivate`SetUserRegistered[]]; FrontEndExecute[{
+               FrontEndToken[
+                FrontEnd`EvaluationNotebook[], "Close"]}]),
+           Evaluator->Automatic,
+           Method->"Preemptive"]}
+        },
+        AutoDelete->False,
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {3 -> Fit}}],
+       "Grid"],
+      Alignment->Center,
+      FrameMargins->{{10, 10}, {0, 0}},
+      ImageSize->{650, 40}]}
+   },
+   DefaultBaseStyle->"Column",
+   FrameStyle->GrayLevel[0.8],
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxBackground->{"Columns" -> {{Automatic}}, "Rows" -> {{
+        GrayLevel[1], None}}},
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+   GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {{0}}}],
+  "Column"]],
+ CellMargins->0,
+ CellBracketOptions->{"Color"->RGBColor[0.269993, 0.308507, 0.6]},
+ CellHorizontalScrolling->True,
+ PageBreakAbove->True,
+ PageBreakWithin->False,
+ ShowAutoStyles->True,
+ LineSpacing->{1.25, 0},
+ AutoItalicWords->{},
+ ScriptMinSize->9,
+ ShowStringCharacters->False,
+ FontFamily:>CurrentValue["PanelFontFamily"],
+ FontSize:>CurrentValue["PanelFontSize"]]
+},
+NotebookEventActions->{"WindowClose" :> MathLink`CallFrontEnd[
+    FrontEnd`StartupAction[]]},
+WindowSize->{650, 
+  FEPrivate`If[False, 475, 460]},
+WindowMargins->Automatic,
+WindowFrame->"ModalDialog",
+WindowTitle->Dynamic[
+  FEPrivate`FrontEndResource["ActivationDialog", "RegistrationWindowTitle"]],
+PrivateNotebookOptions->{"ExcludeFromShutdown"->False,
+"FileOutlineCache"->True},
+CellContext->"Global`",
+ButtonBoxOptions->{ImageSize->FrontEnd`CurrentValue["DefaultButtonSize"]},
+FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (October 12, 2013)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[StyleDefinitions -> "SystemDialog.nb"]], 
+   Cell[
+    StyleData[All], AutoItalicWords -> {"Mathematica", "Premier Service"}], 
+   Cell[
+    StyleData["Heading", StyleDefinitions -> StyleData["DialogStyle"]], 
+    FontSize -> FEPrivate`If[False, 15, 16], FontColor -> 
+    RGBColor[0.88, 0.02, 0]], 
+   Cell[
+    StyleData["DialogStyle"], FontFamily -> "Helvetica", FontSize -> 
+    FEPrivate`If[False, 11, 12], FontWeight -> Bold, FontColor -> 
+    GrayLevel[0]]}, Visible -> False, FrontEndVersion -> 
+  "10.0 for Microsoft Windows (64-bit) (October 12, 2013)", StyleDefinitions -> 
+  "Default.nb"],
+Modal -> True
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[605, 21, 503, 14, 80, InheritFromParent,
+ PageBreakAbove->True,
+ PageBreakWithin->False],
+Cell[1111, 37, 19692, 388, 382, InheritFromParent,
+ PageBreakAbove->True,
+ PageBreakWithin->False]
+}
+]
+*)
+
+(* End of internal cache information *)

@@ -1,0 +1,81 @@
+Notebook[{
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     DynamicBox[FEPrivate`FrontEndResource["FEBitmaps", "MathematicaIcon"],
+      ImageSizeCache->{32., {14., 18.}}], 
+     StyleBox[
+      DynamicBox[FEPrivate`FrontEndResource[
+       "LicenseFailureDialog", "GeneralLicenseDialogText"],
+       ImageSizeCache->{380.5, {43., 13.}}], "ControlStyle",
+      StripOnInput->False,
+      AutoItalicWords->{"Mathematica"},
+      LineIndent->0,
+      LinebreakAdjustments->{1, 100, 0, 0, 100}]},
+    {"", 
+     ItemBox[
+      ButtonBox[
+       DynamicBox[FEPrivate`FrontEndResourceString["okButtonText"],
+        ImageSizeCache->{19., {1., 10.}}],
+       Appearance->"DefaultButton",
+       ButtonFunction:>FrontEndExecute[
+         FrontEndToken[
+          FrontEnd`ButtonNotebook[], "Close"]],
+       Evaluator->None,
+       ImageMargins->{{2, 2}, {10, 10}},
+       ImageSize->FrontEnd`CurrentValue["DefaultButtonSize"],
+       Method->"Preemptive"],
+      Alignment->Right,
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Top}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]],
+ CellMargins->{{8, 8}, {8, 8}},
+ CellBracketOptions->{"Color"->RGBColor[0.269993, 0.308507, 0.6]},
+ CellHorizontalScrolling->True,
+ PageBreakAbove->True,
+ PageBreakWithin->False,
+ ShowAutoStyles->True,
+ LineSpacing->{1.25, 0},
+ AutoItalicWords->{},
+ ScriptMinSize->9,
+ ShowStringCharacters->False,
+ FontFamily:>CurrentValue["PanelFontFamily"],
+ FontSize:>CurrentValue["PanelFontSize"]]
+},
+Evaluator->None,
+NotebookEventActions->{"ReturnKeyDown" :> (FE`Evaluate[
+     FEPrivate`FindAndClickDefaultButton[]]; DialogReturn[$Failed]), {
+   "MenuCommand", "EvaluateCells"} :> (FE`Evaluate[
+     FEPrivate`FindAndClickDefaultButton[]]; DialogReturn[$Failed]), {
+   "MenuCommand", "HandleShiftReturn"} :> (FE`Evaluate[
+     FEPrivate`FindAndClickDefaultButton[]]; DialogReturn[$Failed]), {
+   "MenuCommand", "EvaluateNextCell"} :> (FE`Evaluate[
+     FEPrivate`FindAndClickDefaultButton[]]; DialogReturn[$Failed]), 
+  "EscapeKeyDown" :> (FE`Evaluate[
+     FEPrivate`FindAndClickCancelButton[]]; DialogReturn[$Failed]), 
+  "WindowClose" :> (FE`Evaluate[
+     FEPrivate`FindAndClickCancelButton[]]; DialogReturn[$Failed])},
+WindowSize->{450, All},
+WindowMargins->Automatic,
+WindowFrame->"ModalDialog",
+WindowTitle->FEPrivate`FrontEndResource[
+ "LicenseFailureDialog", "GeneralLicenseTitleText"],
+ButtonBoxOptions->{Appearance->None,
+ButtonFunction:>(FrontEndExecute[
+  FrontEnd`NotebookLocate[{
+    URL[
+     FEPrivate`StringJoin[#, "?actkey=", FEPrivate`$ActivationKey, 
+      "&version=", FEPrivate`$ProductVersion, "&os=", FEPrivate`$SystemID, 
+      "&buildid=", 
+      FEPrivate`ToString[FEPrivate`$CreationID], "&source=licensefailure"]], 
+    None}]]& ),
+Evaluator->None},
+FrontEndVersion->"8.1 for Mac OS X x86 (32-bit, 64-bit Kernel) (December 14, \
+2010)",
+StyleDefinitions->"SystemDialog.nb",
+Modal -> True
+]
+

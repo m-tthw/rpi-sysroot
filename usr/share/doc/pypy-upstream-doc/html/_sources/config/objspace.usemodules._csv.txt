@@ -1,0 +1,21 @@
+=========================
+objspace.usemodules.\_csv
+=========================
+
+* **name:** \_csv
+
+* **description:** use module \_csv
+
+* **command-line:** --withmod-\_csv
+
+* **command-line for negation:** --withoutmod-\_csv
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Implementation in RPython for the core of the 'csv' module
+

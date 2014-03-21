@@ -1,0 +1,20 @@
+===========================
+objspace.usemodules.pypyjit
+===========================
+
+* **name:** pypyjit
+
+* **description:** use module pypyjit
+
+* **command-line:** --withmod-pypyjit
+
+* **command-line for negation:** --withoutmod-pypyjit
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the 'pypyjit' module. 

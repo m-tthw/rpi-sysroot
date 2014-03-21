@@ -1,0 +1,21 @@
+=========================
+objspace.usemodules.\_ast
+=========================
+
+* **name:** \_ast
+
+* **description:** use module \_ast
+
+* **command-line:** --withmod-\_ast
+
+* **command-line for negation:** --withoutmod-\_ast
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+Use the '_ast' module. 
+This module is expected to be working and is included by default.

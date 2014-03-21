@@ -1,0 +1,20 @@
+================================
+translation.backendopt.storesink
+================================
+
+* **name:** storesink
+
+* **description:** Perform store sinking
+
+* **command-line:** --translation-backendopt-storesink
+
+* **command-line for negation:** --no-translation-backendopt-storesink
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+Store sinking optimization. On by default.

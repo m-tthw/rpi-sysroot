@@ -1,0 +1,18 @@
+================================
+translation.secondaryentrypoints
+================================
+
+* **name:** secondaryentrypoints
+
+* **description:** Comma separated list of keys choosing secondary entrypoints
+
+* **command-line:** --entrypoints
+
+* **option type:** string option
+
+* **default:** main
+
+
+
+
+Enable secondary entrypoints support list. Needed for cpyext module.

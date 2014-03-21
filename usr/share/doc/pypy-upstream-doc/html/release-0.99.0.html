@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pypy-0.99.0: new object spaces, optimizations, configuration ... &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pypy-0-99-0-new-object-spaces-optimizations-configuration">
+<h1>pypy-0.99.0: new object spaces, optimizations, configuration ...<a class="headerlink" href="#pypy-0-99-0-new-object-spaces-optimizations-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to the PyPy 0.99.0 release - a major snapshot
+and milestone of the last 8 months of work and contributions
+since PyPy-0.9.0 came out in June 2006!</p>
+<p>Main entry point for getting-started/download and documentation:</p>
+<blockquote>
+<div><a class="reference external" href="http://codespeak.net/pypy/dist/pypy/doc/index.html">http://codespeak.net/pypy/dist/pypy/doc/index.html</a></div></blockquote>
+<p>Further below you&#8217;ll find some notes about PyPy,
+the 0.99.0 highlights and our aims for PyPy 1.0.</p>
+<p>have fun,</p>
+<blockquote>
+<div><p>the PyPy team,
+Samuele Pedroni, Carl Friedrich Bolz, Armin Rigo, Michael Hudson,
+Maciej Fijalkowski, Anders Chrigstroem, Holger Krekel,
+Guido Wesdorp</p>
+<p>and many others:
+<a class="reference external" href="http://codespeak.net/pypy/dist/pypy/doc/contributor.html">http://codespeak.net/pypy/dist/pypy/doc/contributor.html</a></p>
+</div></blockquote>
+<div class="section" id="what-is-pypy">
+<h2>What is PyPy?<a class="headerlink" href="#what-is-pypy" title="Permalink to this headline">¶</a></h2>
+<p>Technically, PyPy is both a Python Interpreter implementation
+and an advanced Compiler, actually a framework for implementing
+dynamic languages and generating virtual machines for them.
+The Framework allows for alternative frontends and
+for alternative backends, currently C, LLVM and .NET.
+For our main target &#8220;C&#8221;, we can can &#8220;mix in&#8221; different Garbage
+Collectors and threading models, including micro-threads aka
+&#8220;Stackless&#8221;.  The inherent complexity that arises from this
+ambitious approach is mostly kept away from the Python
+interpreter implementation, our main frontend.</p>
+<p>Socially, PyPy is a collaborative effort of many individuals
+working together in a distributed and sprint-driven way since
+2003.  PyPy would not have gotten as far without the coding,
+feedback and general support from numerous people.</p>
+<p>Formally, many of the current developers are involved in
+executing an EU contract with the goal of exploring and
+researching new approaches to Language/Compiler development and
+software engineering.  This contract&#8217;s duration is about to
+end March 2007 and we are working and preparing the according
+final review which is scheduled for May 2007.</p>
+</div>
+<div class="section" id="key-0-99-0-features">
+<h2>Key 0.99.0 Features<a class="headerlink" href="#key-0-99-0-features" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">new object spaces:</p>
+<ul class="simple">
+<li>Tainting: a 270-line proxy object space tracking
+and boxing sensitive information within an application.
+A tainted object is completely barred from crossing
+an I/O barrier, such as writing to files, databases
+or sockets.  This allows to significantly reduce the
+effort of e.g. security reviews to the few places where
+objects are &#8220;declassified&#8221; in order to send information
+across I/O barriers.</li>
+<li>Transparent proxies: allow to customize both application and
+builtin objects from application level code.  Works as an addition
+to the Standard Object Space (and is translatable). For details see
+<a class="reference external" href="http://codespeak.net/pypy/dist/pypy/doc/proxy.html">http://codespeak.net/pypy/dist/pypy/doc/proxy.html</a></li>
+</ul>
+</li>
+<li><p class="first">optimizations:</p>
+<ul class="simple">
+<li>Experimental new optimized implementations for various built in Python
+types (strings, dicts, lists)</li>
+<li>Optimized builtin lookups to not require any dictionary lookups if the
+builtin is not shadowed by a name in the global dictionary.</li>
+<li>Improved inlining (now also working for higher level
+backends) and malloc removal.</li>
+<li>twice the speed of the 0.9 release, overall 2-3 slower than CPython</li>
+</ul>
+</li>
+<li><p class="first">High level backends:</p>
+<ul class="simple">
+<li>It is now possible to translate the PyPy interpreter to run on the .NET
+platform, which gives a very compliant (but somewhat slow) Python
+interpreter.</li>
+<li>the JavaScript backend has evolved to a point where it can be used to write
+AJAX web applications with it. This is still an experimental technique,
+though. For demo applications see:
+<a class="reference external" href="http://play1.codespeak.net/">http://play1.codespeak.net/</a></li>
+</ul>
+</li>
+<li><p class="first">new configuration system:
+There is a new comprehensive configuration system that allows
+fine-grained configuration of the PyPy standard interpreter and the
+translation process.</p>
+</li>
+<li><p class="first">new and improved modules: Since the last release, the signal, mmap, bz2
+and fcntl standard library modules have been implemented for PyPy. The socket,
+_sre and os modules have been greatly improved. In addition we added a the
+pypymagic module that contains PyPy-specific functionality.</p>
+</li>
+<li><p class="first">improved file implementation: Our file implementation was ported to RPython
+and is therefore faster (and not based on libc).</p>
+</li>
+<li><p class="first">The stability of stackless features was greatly improved. For more details
+see: <a class="reference external" href="http://codespeak.net/pypy/dist/pypy/doc/stackless.html">http://codespeak.net/pypy/dist/pypy/doc/stackless.html</a></p>
+</li>
+<li><p class="first">RPython library: The release contains our emerging RPython library that tries
+to make programming in RPython more pleasant. It contains an experimental
+parser generator framework. For more details see:
+<a class="reference external" href="http://codespeak.net/pypy/dist/pypy/doc/rlib.html">http://codespeak.net/pypy/dist/pypy/doc/rlib.html</a></p>
+</li>
+<li><p class="first">improved documentation:</p>
+<ul class="simple">
+<li>extended documentation about stackless features:
+<a class="reference external" href="http://codespeak.net/pypy/dist/pypy/doc/stackless.html">http://codespeak.net/pypy/dist/pypy/doc/stackless.html</a></li>
+<li>PyPy video documentation: eight hours of talks, interviews and features:
+<a class="reference external" href="http://codespeak.net/pypy/dist/pypy/doc/video-index.html">http://codespeak.net/pypy/dist/pypy/doc/video-index.html</a></li>
+<li>technical reports about various aspects of PyPy:
+<a class="reference external" href="http://codespeak.net/pypy/dist/pypy/doc/index-report.html">http://codespeak.net/pypy/dist/pypy/doc/index-report.html</a></li>
+</ul>
+<p>The entry point to all our documentation is:
+<a class="reference external" href="http://codespeak.net/pypy/dist/pypy/doc/index.html">http://codespeak.net/pypy/dist/pypy/doc/index.html</a></p>
+</li>
+</ul>
+</div>
+<div class="section" id="what-about-1-0">
+<h2>What about 1.0?<a class="headerlink" href="#what-about-1-0" title="Permalink to this headline">¶</a></h2>
+<p>In the last week leading up to the release, we decided
+to go for tagging the release as 0.99.0, mainly because
+we have some efforts pending to integrate and complete
+research and coding work:</p>
+<ul class="simple">
+<li>the JIT Compiler Generator is ready, but not fully integrated
+with the PyPy interpreter.  As a result, the JIT does not give
+actual speed improvements yet, so we chose to leave it out of the
+0.99 release: the result doesn&#8217;t meet yet the speed expectations
+that we set for ourselves - and which some blogs and people
+have chosen as the main criterium for looking at PyPy.</li>
+<li>the extension enabling runtime changes of the Python grammar is not
+yet integrated. This will be used to provide Aspect-Oriented
+Programming extensions and Design by Contract facilities in PyPy.</li>
+<li>the Logic object space, which provides Logic Variables in PyPy,
+needs to undergo a bit more testing. A constraint problem solver
+extension module is ready, and needs to be integrated with the codebase.</li>
+</ul>
+<p>PyPy 0.99 is the start for getting to 1.0 end of March 2007,
+which we intend to become a base for a longer (and more relaxed :)
+time to come.</p>
+</div>
+<div class="section" id="funding-partners-and-organizations">
+<h2>Funding partners and organizations<a class="headerlink" href="#funding-partners-and-organizations" title="Permalink to this headline">¶</a></h2>
+<p>PyPy development and activities happen as an open source project
+and with the support of a consortium partially funded by a 28 months
+European Union IST research grant. The full partners of that
+consortium are:</p>
+<blockquote>
+<div>Heinrich-Heine University (Germany), Open End (Sweden)
+merlinux GmbH (Germany), tismerysoft GmbH (Germany)
+Logilab Paris (France), DFKI GmbH (Germany)
+ChangeMaker (Sweden), Impara (Germany)</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pypy-0.99.0: new object spaces, optimizations, configuration ...</a><ul>
+<li><a class="reference internal" href="#what-is-pypy">What is PyPy?</a></li>
+<li><a class="reference internal" href="#key-0-99-0-features">Key 0.99.0 Features</a></li>
+<li><a class="reference internal" href="#what-about-1-0">What about 1.0?</a></li>
+<li><a class="reference internal" href="#funding-partners-and-organizations">Funding partners and organizations</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/release-0.99.0.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

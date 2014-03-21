@@ -1,0 +1,19 @@
+digraph G
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="wibble::log::Sender",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structwibble_1_1log_1_1Sender.html",tooltip="Handle sending a log message."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="wibble::log::FileSender",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structwibble_1_1log_1_1FileSender.html",tooltip="Discard all messages."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="wibble::log::LevelFilter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structwibble_1_1log_1_1LevelFilter.html",tooltip="Log only messages whose level is &gt;= minLevel."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="wibble::log::NullSender",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structwibble_1_1log_1_1NullSender.html",tooltip="Discard all messages."];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="wibble::log::OstreamSender",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structwibble_1_1log_1_1OstreamSender.html",tooltip="Discard all messages."];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="wibble::log::Tee",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structwibble_1_1log_1_1Tee.html",tooltip="Send the same message to multiple streams."];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="wibble::log::Timestamper",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structwibble_1_1log_1_1Timestamper.html",tooltip="Prepend timestamps to log lines."];
+}

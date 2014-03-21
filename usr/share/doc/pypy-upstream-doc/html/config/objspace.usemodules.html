@@ -1,0 +1,169 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>objspace.usemodules &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="objspace-usemodules">
+<h1>objspace.usemodules<a class="headerlink" href="#objspace-usemodules" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.__builtin__.html">objspace.usemodules.__builtin__</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.__pypy__.html">objspace.usemodules.__pypy__</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._ast.html">objspace.usemodules._ast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._cffi_backend.html">objspace.usemodules._cffi_backend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._codecs.html">objspace.usemodules._codecs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._collections.html">objspace.usemodules._collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._continuation.html">objspace.usemodules._continuation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._csv.html">objspace.usemodules._csv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._demo.html">objspace.usemodules._demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._ffi.html">objspace.usemodules._ffi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._file.html">objspace.usemodules._file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._hashlib.html">objspace.usemodules._hashlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._io.html">objspace.usemodules._io</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._locale.html">objspace.usemodules._locale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._lsprof.html">objspace.usemodules._lsprof</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._md5.html">objspace.usemodules._md5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._minimal_curses.html">objspace.usemodules._minimal_curses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._multibytecodec.html">objspace.usemodules._multibytecodec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._multiprocessing.html">objspace.usemodules._multiprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._pickle_support.html">objspace.usemodules._pickle_support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._pypyjson.html">objspace.usemodules._pypyjson</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._random.html">objspace.usemodules._random</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._rawffi.html">objspace.usemodules._rawffi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._sha.html">objspace.usemodules._sha</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._socket.html">objspace.usemodules._socket</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._sre.html">objspace.usemodules._sre</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._ssl.html">objspace.usemodules._ssl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._testing.html">objspace.usemodules._testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._warnings.html">objspace.usemodules._warnings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._weakref.html">objspace.usemodules._weakref</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules._winreg.html">objspace.usemodules._winreg</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.array.html">objspace.usemodules.array</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.binascii.html">objspace.usemodules.binascii</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.bz2.html">objspace.usemodules.bz2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.cmath.html">objspace.usemodules.cmath</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.cppyy.html">objspace.usemodules.cppyy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.cpyext.html">objspace.usemodules.cpyext</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.crypt.html">objspace.usemodules.crypt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.cStringIO.html">objspace.usemodules.cStringIO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.errno.html">objspace.usemodules.errno</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.exceptions.html">objspace.usemodules.exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.fcntl.html">objspace.usemodules.fcntl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.gc.html">objspace.usemodules.gc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.imp.html">objspace.usemodules.imp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.itertools.html">objspace.usemodules.itertools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.marshal.html">objspace.usemodules.marshal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.math.html">objspace.usemodules.math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.micronumpy.html">objspace.usemodules.micronumpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.mmap.html">objspace.usemodules.mmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.operator.html">objspace.usemodules.operator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.oracle.html">objspace.usemodules.oracle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.parser.html">objspace.usemodules.parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.posix.html">objspace.usemodules.posix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.pwd.html">objspace.usemodules.pwd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.pyexpat.html">objspace.usemodules.pyexpat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.pypyjit.html">objspace.usemodules.pypyjit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.rctime.html">objspace.usemodules.rctime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.select.html">objspace.usemodules.select</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.signal.html">objspace.usemodules.signal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.struct.html">objspace.usemodules.struct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.symbol.html">objspace.usemodules.symbol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.sys.html">objspace.usemodules.sys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.termios.html">objspace.usemodules.termios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.thread.html">objspace.usemodules.thread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.time.html">objspace.usemodules.time</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.token.html">objspace.usemodules.token</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.unicodedata.html">objspace.usemodules.unicodedata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.zipimport.html">objspace.usemodules.zipimport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objspace.usemodules.zlib.html">objspace.usemodules.zlib</a></li>
+</ul>
+</div>
+<ul class="simple">
+<li><strong>name:</strong> usemodules</li>
+<li><strong>description:</strong> Which Modules should be used</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/config/objspace.usemodules.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

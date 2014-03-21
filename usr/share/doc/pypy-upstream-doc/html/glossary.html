@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Glossary &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="glossary">
+<span id="id1"></span><h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h1>
+<p>PyPy, like any large project, has developed a jargon of its own.  This
+document gives brief definition of some of these terms and provides
+links to more information.</p>
+<dl class="glossary docutils">
+<dt id="term-annotator">annotator</dt>
+<dd>The component of the <a class="reference internal" href="#term-rpython-toolchain"><em class="xref std std-term">RPython toolchain</em></a> that performs a form
+of <a class="reference internal" href="#term-type-inference"><em class="xref std std-term">type inference</em></a> on the flow graph. See the <a class="reference external" href="translation.html#the-annotation-pass">annotator pass</a>
+in the documentation.</dd>
+<dt id="term-application-level">application level</dt>
+<dd><a class="reference external" href="coding-guide.html#application-level">applevel</a> code is normal Python code running on top of the PyPy or
+<a class="reference internal" href="#term-cpython"><em class="xref std std-term">CPython</em></a> interpreter (see <a class="reference internal" href="#term-interpreter-level"><em class="xref std std-term">interpreter level</em></a>)</dd>
+<dt id="term-backend">backend</dt>
+<dd>Code generator that converts an <a class="reference external" href="coding-guide.html#restricted-python">RPython</a> program to a <a class="reference external" href="getting-started-dev.html#trying-out-the-translator">target
+language</a> using the <a class="reference internal" href="#term-rpython-toolchain"><em class="xref std std-term">RPython toolchain</em></a>.</dd>
+<dt id="term-compile-time">compile-time</dt>
+<dd>In the context of the <a class="reference internal" href="#term-jit"><em class="xref std std-term">JIT</em></a>, compile time is when the JIT is
+generating machine code &#8220;just in time&#8221;.</dd>
+<dt id="term-cpython">CPython</dt>
+<dd>The &#8220;default&#8221; implementation of Python, written in C and
+distributed by the <a class="reference external" href="http://www.python.org/psf/">PSF</a> on <a class="reference external" href="http://www.python.org">http://www.python.org</a>.</dd>
+<dt id="term-external-function">external function</dt>
+<dd>Functions that we don&#8217;t want to implement in Python for various
+reasons (e.g. they need to make calls into the OS) and whose
+implementation will be provided by the backend.</dd>
+<dt id="term-garbage-collection-framework">garbage collection framework</dt>
+<dd>Code that makes it possible to write <a class="reference external" href="garbage_collection.html">PyPy&#8217;s garbage collectors</a>
+in Python itself.</dd>
+<dt id="term-interpreter-level">interpreter level</dt>
+<dd>Code running at this level is part of the implementation of the
+PyPy interpreter and cannot interact normally with <a class="reference internal" href="#term-application-level"><em class="xref std std-term">application
+level</em></a> code; it typically provides implementation for an object
+space and its builtins.</dd>
+<dt id="term-jit">jit</dt>
+<dd><a class="reference external" href="jit/index.html">just in time compiler</a>.</dd>
+<dt id="term-llinterpreter">llinterpreter</dt>
+<dd>Piece of code that is able to interpret flow graphs.  This is very
+useful for testing purposes, especially if you work on the <a class="reference internal" href="#term-rpython"><em class="xref std std-term">RPython</em></a>
+Typer.</dd>
+<dt id="term-lltypesystem">lltypesystem</dt>
+<dd>A <a class="reference external" href="rtyper.html#low-level-types">C-like type model</a> that contains
+structs and pointers.  A <a class="reference internal" href="#term-backend"><em class="xref std std-term">backend</em></a> that uses this type system is also
+called a low-level backend.  The C backend uses this
+typesystem.</dd>
+<dt id="term-low-level-helper">low-level helper</dt>
+<dd>A function that the <a class="reference internal" href="#term-rtyper"><em class="xref std std-term">RTyper</em></a> can use a call to as part of implementing
+some operation in terms of the target <a class="reference internal" href="#term-type-system"><em class="xref std std-term">type system</em></a>.</dd>
+<dt id="term-mixed-module">mixed module</dt>
+<dd>a module that accesses PyPy&#8217;s <a class="reference internal" href="#term-interpreter-level"><em class="xref std std-term">interpreter level</em></a>.  The name comes
+from the fact that the module&#8217;s implementation can be a mixture of
+<a class="reference internal" href="#term-application-level"><em class="xref std std-term">application level</em></a> and <a class="reference internal" href="#term-interpreter-level"><em class="xref std std-term">interpreter level</em></a> code.</dd>
+<dt id="term-object-space">object space</dt>
+<dd>The <a class="reference external" href="objspace.html">object space</a> (often abbreviated to
+&#8220;objspace&#8221;) creates all objects and knows how to perform operations
+on the objects. You may think of an object space as being a library
+offering a fixed API, a set of operations, with implementations
+that a) correspond to the known semantics of Python objects, b)
+extend or twist these semantics, or c) serve whole-program analysis
+purposes.</dd>
+<dt id="term-prebuilt-constant">prebuilt constant</dt>
+<dd>In <a class="reference internal" href="#term-rpython"><em class="xref std std-term">RPython</em></a> module globals are considered constants.  Moreover,
+global (i.e. prebuilt) lists and dictionaries are supposed to be
+immutable (&#8220;prebuilt constant&#8221; is sometimes abbreviated to &#8220;pbc&#8221;).</dd>
+<dt id="term-promotion">promotion</dt>
+<dd><a class="reference internal" href="#term-jit"><em class="xref std std-term">JIT</em></a> terminology.  <em>promotion</em> is a way of &#8220;using&#8221; a <a class="reference internal" href="#term-run-time"><em class="xref std std-term">run-time</em></a>
+value at <a class="reference internal" href="#term-compile-time"><em class="xref std std-term">compile-time</em></a>, essentially by deferring compilation
+until the run-time value is known. See if <a class="reference external" href="jit/index.html">the jit docs</a> help.</dd>
+<dt id="term-rpython">RPython</dt>
+<dd><a class="reference external" href="coding-guide.html#restricted-python">Restricted Python</a>, a limited subset of the <a class="reference external" href="http://www.python.org">Python</a> language.
+The limitations make <a class="reference internal" href="#term-type-inference"><em class="xref std std-term">type inference</em></a> possible.
+It is also the language that the PyPy interpreter itself is written
+in.</dd>
+<dt id="term-rpython-toolchain">RPython toolchain</dt>
+<dd>The <a class="reference external" href="translation.html#the-annotation-pass">annotator pass</a>, <a class="reference external" href="translation.html#the-rpython-typer">The RPython Typer</a>, and various
+<a class="reference internal" href="#term-backend"><em class="xref std std-term">backend</em></a>s.</dd>
+<dt id="term-rtyper">rtyper</dt>
+<dd>Based on the type annotations, the <a class="reference external" href="rtyper.html">RPython Typer</a> turns the flow
+graph into one that fits the model of the target platform/<a class="reference internal" href="#term-backend"><em class="xref std std-term">backend</em></a>
+using either the <a class="reference internal" href="#term-lltypesystem"><em class="xref std std-term">lltypesystem</em></a> or the <em class="xref std std-term">ootypesystem</em>.</dd>
+<dt id="term-run-time">run-time</dt>
+<dd>In the context of the <a class="reference internal" href="#term-jit"><em class="xref std std-term">JIT</em></a>, run time is when the code the JIT has
+generated is executing.</dd>
+<dt id="term-specialization">specialization</dt>
+<dd>A way of controlling how a specific function is handled by the
+<a class="reference internal" href="#term-annotator"><em class="xref std std-term">annotator</em></a>.  One specialization is to treat calls to a function
+with different argument types as if they were calls to different
+functions with identical source.</dd>
+<dt id="term-stackless">stackless</dt>
+<dd>Technology that enables various forms of non conventional control
+flow, such as coroutines, greenlets and tasklets.  Inspired by
+Christian Tismer&#8217;s <a class="reference external" href="http://www.stackless.com">Stackless Python</a>.</dd>
+<dt id="term-standard-interpreter">standard interpreter</dt>
+<dd>It is the <a class="reference external" href="architecture.html#standard-interpreter">subsystem implementing the Python language</a>, composed
+of the bytecode interpreter and of the standard objectspace.</dd>
+<dt id="term-transformation">transformation</dt>
+<dd>Code that modifies flowgraphs to weave in translation aspects</dd>
+<dt id="term-translation-time">translation-time</dt>
+<dd>In the context of the <a class="reference internal" href="#term-jit"><em class="xref std std-term">JIT</em></a>, translation time is when the PyPy
+source is being analyzed and the JIT itself is being created.</dd>
+<dt id="term-translator">translator</dt>
+<dd><a class="reference external" href="getting-started-dev.html#trying-out-the-translator">Tool</a> based on the PyPy interpreter which can translate
+sufficiently static Python programs into low-level code.</dd>
+<dt id="term-type-system">type system</dt>
+<dd>The RTyper can target either the <a class="reference internal" href="#term-lltypesystem"><em class="xref std std-term">lltypesystem</em></a> or the <em class="xref std std-term">ootypesystem</em>.</dd>
+<dt id="term-type-inference">type inference</dt>
+<dd>Deduces either partially or fully the type of expressions as
+described in this <a class="reference external" href="http://en.wikipedia.org/wiki/Type_inference">type inference article on Wikipedia</a>.
+The <a class="reference internal" href="#term-rpython-toolchain"><em class="xref std std-term">RPython toolchain</em></a>&#8216;s flavour of type inference is described
+in the <a class="reference external" href="translation.html#the-annotation-pass">annotator pass</a> section.</dd>
+</dl>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/glossary.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

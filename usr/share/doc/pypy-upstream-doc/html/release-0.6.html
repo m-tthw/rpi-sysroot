@@ -1,0 +1,197 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The PyPy 0.6 release &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-pypy-0-6-release">
+<h1>The PyPy 0.6 release<a class="headerlink" href="#the-pypy-0-6-release" title="Permalink to this headline">¶</a></h1>
+<p><em>The PyPy Development Team is happy to announce the first
+public release of PyPy after two years of spare-time and
+half a year of EU funded development.  The 0.6 release
+is eminently a preview release.</em></p>
+</div>
+<div class="section" id="what-it-is-and-where-to-start">
+<h1>What it is and where to start<a class="headerlink" href="#what-it-is-and-where-to-start" title="Permalink to this headline">¶</a></h1>
+<p>Getting started:    getting-started.html</p>
+<p>PyPy Documentation: index.html</p>
+<p>PyPy Homepage:      <a class="reference external" href="http://pypy.org">http://pypy.org</a></p>
+<p>PyPy is a MIT-licensed reimplementation of Python written in
+Python itself.  The long term goals are an implementation that
+is flexible and easy to experiment with and retarget to
+different platforms (also non-C ones) and such that high
+performance can be achieved through high-level implementations
+of dynamic optimization techniques.</p>
+<p>The interpreter and object model implementations shipped with 0.6 can
+be run on top of CPython and implement the core language features of
+Python as of CPython 2.3.  PyPy passes around 90% of the Python language
+regression tests that do not depend deeply on C-extensions.  Some of
+that functionality is still made available by PyPy piggy-backing on
+the host CPython interpreter.  Double interpretation and abstractions
+in the code-base make it so that PyPy running on CPython is quite slow
+(around 2000x slower than CPython ), this is expected.</p>
+<p>This release is intended for people that want to look and get a feel
+into what we are doing, playing with interpreter and perusing the
+codebase.  Possibly to join in the fun and efforts.</p>
+</div>
+<div class="section" id="interesting-bits-and-highlights">
+<h1>Interesting bits and highlights<a class="headerlink" href="#interesting-bits-and-highlights" title="Permalink to this headline">¶</a></h1>
+<p>The release is also a snap-shot of our ongoing efforts towards
+low-level translation and experimenting with unique features.</p>
+<ul>
+<li><p class="first">By default, PyPy is a Python version that works completely with
+new-style-classes semantics.  However, support for old-style classes
+is still available.  Implementations, mostly as user-level code, of
+their metaclass and instance object are included and can be re-made
+the default with the <tt class="docutils literal"><span class="pre">--oldstyle</span></tt> option.</p>
+</li>
+<li><p class="first">In PyPy, bytecode interpretation and object manipulations
+are well separated between a bytecode interpreter and an
+<em>object space</em> which implements operations on objects.
+PyPy comes with experimental object spaces augmenting the
+standard one through delegation:</p>
+<ul class="simple">
+<li>an experimental object space that does extensive tracing of
+bytecode and object operations;</li>
+<li>the &#8216;thunk&#8217; object space that implements lazy values and a &#8216;become&#8217;
+operation that can exchange object identities.</li>
+</ul>
+<p>These spaces already give a glimpse in the flexibility potential of
+PyPy.  See demo/fibonacci.py and demo/sharedref.py for examples
+about the &#8216;thunk&#8217; object space.</p>
+</li>
+<li><p class="first">The 0.6 release also contains a snapshot of our translation-efforts
+to lower level languages.  For that we have developed an
+annotator which is capable of inferring type information
+across our code base.  The annotator right now is already
+capable of successfully type annotating basically <em>all</em> of
+PyPy code-base, and is included with 0.6.</p>
+</li>
+<li><p class="first">From type annotated code, low-level code needs to be generated.
+Backends for various targets (C, LLVM,...) are included; they are
+all somehow incomplete and have been and are quite in flux. What is
+shipped with 0.6 is able to deal with more or less small/medium examples.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="ongoing-work-and-near-term-goals">
+<h1>Ongoing work and near term goals<a class="headerlink" href="#ongoing-work-and-near-term-goals" title="Permalink to this headline">¶</a></h1>
+<p>Generating low-level code is the main area we are hammering on in the
+next months; our plan is to produce a PyPy version in August/September
+that does not need to be interpreted by CPython anymore and will
+thus run considerably faster than the 0.6 preview release.</p>
+<p>PyPy has been a community effort from the start and it would
+not have got that far without the coding and feedback support
+from numerous people.   Please feel free to give feedback and
+raise questions.</p>
+<blockquote>
+<div><p>contact points: <a class="reference external" href="http://pypy.org/contact.html">http://pypy.org/contact.html</a></p>
+<p>contributor list: contributor.html</p>
+</div></blockquote>
+<p>have fun,</p>
+<blockquote>
+<div><p>Armin Rigo, Samuele Pedroni,</p>
+<p>Holger Krekel, Christian Tismer,</p>
+<p>Carl Friedrich Bolz</p>
+<p>PyPy development and activities happen as an open source project
+and with the support of a consortium funded by a two year EU IST
+research grant. Here is a list of partners of the EU project:</p>
+<blockquote>
+<div><p>Heinrich-Heine University (Germany), AB Strakt (Sweden)</p>
+<p>merlinux GmbH (Germany), tismerysoft GmbH(Germany)</p>
+<p>Logilab Paris (France), DFKI GmbH (Germany)</p>
+<p>ChangeMaker (Sweden)</p>
+</div></blockquote>
+</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The PyPy 0.6 release</a></li>
+<li><a class="reference internal" href="#what-it-is-and-where-to-start">What it is and where to start</a></li>
+<li><a class="reference internal" href="#interesting-bits-and-highlights">Interesting bits and highlights</a></li>
+<li><a class="reference internal" href="#ongoing-work-and-near-term-goals">Ongoing work and near term goals</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/release-0.6.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

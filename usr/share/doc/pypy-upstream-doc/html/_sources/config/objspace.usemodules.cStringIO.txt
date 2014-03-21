@@ -1,0 +1,23 @@
+=============================
+objspace.usemodules.cStringIO
+=============================
+
+* **name:** cStringIO
+
+* **description:** use module cStringIO
+
+* **command-line:** --withmod-cStringIO
+
+* **command-line for negation:** --withoutmod-cStringIO
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the built-in cStringIO module.
+
+If not enabled, importing cStringIO gives you the app-level
+implementation from the standard library StringIO module.

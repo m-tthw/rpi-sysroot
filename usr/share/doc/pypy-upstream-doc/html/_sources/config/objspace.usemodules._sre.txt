@@ -1,0 +1,21 @@
+=========================
+objspace.usemodules.\_sre
+=========================
+
+* **name:** \_sre
+
+* **description:** use module \_sre
+
+* **command-line:** --withmod-\_sre
+
+* **command-line for negation:** --withoutmod-\_sre
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+Use the '_sre' module. 
+This module is expected to be working and is included by default.

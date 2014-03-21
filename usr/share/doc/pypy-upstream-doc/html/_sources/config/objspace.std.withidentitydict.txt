@@ -1,0 +1,48 @@
+=============================
+objspace.std.withidentitydict
+=============================
+
+* **name:** withidentitydict
+
+* **description:** track types that override \_\_hash\_\_, \_\_eq\_\_ or
+  \_\_cmp\_\_ and use a special dict strategy for those which do not
+
+* **command-line:** --objspace-std-withidentitydict
+
+* **command-line for negation:** --no-objspace-std-withidentitydict
+
+* **option type:** boolean option
+
+* **default:** False
+
+* **requirements:**
+
+  + `translation.rweakref`_ must be set to 'True'
+
+.. _`translation.rweakref`: translation.rweakref.html
+
+
+
+
+
+=============================
+objspace.std.withidentitydict
+=============================
+
+* **name:** withidentitydict
+
+* **description:** enable a dictionary strategy for "by identity" comparisons
+
+* **command-line:** --objspace-std-withidentitydict
+
+* **command-line for negation:** --no-objspace-std-withidentitydict
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+Enable a dictionary strategy specialized for instances of classes which
+compares "by identity", which is the default unless you override ``__hash__``,
+``__eq__`` or ``__cmp__``.  This strategy will be used only with new-style
+classes.

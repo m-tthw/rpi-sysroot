@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>What PyPy can do for your objects &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="what-pypy-can-do-for-your-objects">
+<h1><a class="toc-backref" href="#id11">What PyPy can do for your objects</a><a class="headerlink" href="#what-pypy-can-do-for-your-objects" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-pypy-can-do-for-your-objects" id="id11">What PyPy can do for your objects</a><ul>
+<li><a class="reference internal" href="#transparent-proxies" id="id12">Transparent Proxies</a><ul>
+<li><a class="reference internal" href="#example-of-the-core-mechanism" id="id13">Example of the core mechanism</a></li>
+<li><a class="reference internal" href="#example-of-recording-all-operations-on-builtins" id="id14">Example of recording all operations on builtins</a></li>
+<li><a class="reference internal" href="#transparent-proxy-pypy-builtins-and-support" id="id15">Transparent Proxy PyPy builtins and support</a></li>
+<li><a class="reference internal" href="#tputil-helper-module" id="id16">tputil helper module</a></li>
+<li><a class="reference internal" href="#further-points-of-interest" id="id17">Further points of interest</a></li>
+<li><a class="reference internal" href="#implementation-notes" id="id18">Implementation Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Thanks to the <a class="reference external" href="objspace.html">Object Space</a> architecture, any feature that is
+based on proxying, extending, changing or otherwise controlling the
+behavior of all objects in a running program is easy to implement on
+top of PyPy.</p>
+<p>Here is what we have implemented so far, in historical order:</p>
+<ul class="simple">
+<li><em>Dump Object Space</em>: dumps all operations performed on all the objects
+into a large log file.  For debugging your applications.</li>
+<li><em>Transparent Proxies Extension</em>: adds new proxy objects to
+the Standard Object Space that enable applications to
+control operations on application and builtin objects,
+e.g lists, dictionaries, tracebacks.</li>
+</ul>
+<div class="section" id="transparent-proxies">
+<span id="tproxy"></span><h2><a class="toc-backref" href="#id12">Transparent Proxies</a><a class="headerlink" href="#transparent-proxies" title="Permalink to this headline">¶</a></h2>
+<p>PyPy&#8217;s Transparent Proxies allow routing of operations on objects
+to a callable.  Application level code can customize objects without
+interfering with the type system - <tt class="docutils literal"><span class="pre">type(proxied_list)</span> <span class="pre">is</span> <span class="pre">list</span></tt> holds true
+when &#8216;proxied_list&#8217; is a proxied built-in list - while
+giving you full control on all operations that are performed on the
+<tt class="docutils literal"><span class="pre">proxied_list</span></tt>.</p>
+<p>See <a class="reference internal" href="#d12-1">[D12.1]</a> for more context, motivation and usage of transparent proxies.</p>
+<div class="section" id="example-of-the-core-mechanism">
+<h3><a class="toc-backref" href="#id13">Example of the core mechanism</a><a class="headerlink" href="#example-of-the-core-mechanism" title="Permalink to this headline">¶</a></h3>
+<p>The following example proxies a list and will
+return <tt class="docutils literal"><span class="pre">42</span></tt> on any add operation to the list:</p>
+<div class="highlight-python"><pre>$ py.py --objspace-std-withtproxy
+&gt;&gt;&gt;&gt; from __pypy__ import tproxy
+&gt;&gt;&gt;&gt; def f(operation, *args, **kwargs):
+&gt;&gt;&gt;&gt;    if operation == '__add__':
+&gt;&gt;&gt;&gt;         return 42
+&gt;&gt;&gt;&gt;    raise AttributeError
+&gt;&gt;&gt;&gt;
+&gt;&gt;&gt;&gt; i = tproxy(list, f)
+&gt;&gt;&gt;&gt; type(i)
+list
+&gt;&gt;&gt;&gt; i + 3
+42</pre>
+</div>
+</div>
+<div class="section" id="example-of-recording-all-operations-on-builtins">
+<h3><a class="toc-backref" href="#id14">Example of recording all operations on builtins</a><a class="headerlink" href="#example-of-recording-all-operations-on-builtins" title="Permalink to this headline">¶</a></h3>
+<p>Suppose we want to have a list which stores all operations performed on
+it for later analysis.  We can use the small <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/lib_pypy/tputil.py">lib_pypy/tputil.py</a> module to help
+with transparently proxying builtin instances:</p>
+<div class="highlight-python"><pre>from tputil import make_proxy
+
+history = []
+def recorder(operation):
+    history.append(operation)
+    return operation.delegate()
+
+&gt;&gt;&gt;&gt; l = make_proxy(recorder, obj=[])
+&gt;&gt;&gt;&gt; type(l)
+list
+&gt;&gt;&gt;&gt; l.append(3)
+&gt;&gt;&gt;&gt; len(l)
+1
+&gt;&gt;&gt;&gt; len(history)
+2</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">make_proxy(recorder,</span> <span class="pre">obj=[])</span></tt> creates a transparent list
+proxy where we can delegate operations to in the <tt class="docutils literal"><span class="pre">recorder</span></tt> function.
+Calling <tt class="docutils literal"><span class="pre">type(l)</span></tt> does not lead to any operation being executed at all.</p>
+<p>Note that <tt class="docutils literal"><span class="pre">append</span></tt> shows up as <tt class="docutils literal"><span class="pre">__getattribute__</span></tt> and that <tt class="docutils literal"><span class="pre">type(lst)</span></tt>
+does not show up at all - the type is the only aspect of the instance which
+the controller cannot change.</p>
+</div>
+<div class="section" id="transparent-proxy-pypy-builtins-and-support">
+<span id="transparent-proxy-builtins"></span><h3><a class="toc-backref" href="#id15">Transparent Proxy PyPy builtins and support</a><a class="headerlink" href="#transparent-proxy-pypy-builtins-and-support" title="Permalink to this headline">¶</a></h3>
+<p>If you are using the <a class="reference external" href="config/objspace.std.withtproxy.html">&#8211;objspace-std-withtproxy</a> option
+the <a class="reference external" href="__pypy__-module.html">__pypy__</a> module provides the following builtins:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">tproxy(type,</span> <span class="pre">controller)</span></tt>: returns a proxy object
+representing the given type and forwarding all operations
+on this type to the controller.  On each such operation
+<tt class="docutils literal"><span class="pre">controller(opname,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span></tt> is invoked.</li>
+<li><tt class="docutils literal"><span class="pre">get_tproxy_controller(obj)</span></tt>:  returns the responsible
+controller for a given object.  For non-proxied objects
+<tt class="docutils literal"><span class="pre">None</span></tt> is returned.</li>
+</ul>
+</div>
+<div class="section" id="tputil-helper-module">
+<span id="tputil"></span><h3><a class="toc-backref" href="#id16">tputil helper module</a><a class="headerlink" href="#tputil-helper-module" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/lib_pypy/tputil.py">lib_pypy/tputil.py</a> module provides:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">make_proxy(controller,</span> <span class="pre">type,</span> <span class="pre">obj)</span></tt>: function which
+creates a transparent proxy controlled by the given
+&#8216;controller&#8217; callable.  The proxy will appear
+as a completely regular instance of the given
+type but all operations on it are send to the
+specified controller - which receives a
+ProxyOperation instance on each such operation.
+A non-specified type will default to type(obj) if
+<cite>obj</cite> was specified.</p>
+<p>ProxyOperation instances have the following attributes:</p>
+<blockquote>
+<div><p><cite>proxyobj</cite>: the transparent proxy object of this operation.</p>
+<p><cite>opname</cite>: the operation name of this operation</p>
+<p><cite>args</cite>: positional arguments for this operation</p>
+<p><cite>kwargs</cite>: keyword arguments for this operation</p>
+<p><cite>obj</cite>: (if provided to <cite>make_proxy</cite>): a concrete object</p>
+</div></blockquote>
+<p>If you have specified a concrete object instance <cite>obj</cite>
+to your <cite>make_proxy</cite> invocation, you may call
+<tt class="docutils literal"><span class="pre">proxyoperation.delegate()</span></tt> to delegate the operation
+to this object instance.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="further-points-of-interest">
+<h3><a class="toc-backref" href="#id17">Further points of interest</a><a class="headerlink" href="#further-points-of-interest" title="Permalink to this headline">¶</a></h3>
+<p>A lot of tasks could be performed using transparent proxies, including,
+but not limited to:</p>
+<ul class="simple">
+<li>Remote versions of objects, on which we can directly perform operations
+(think about transparent distribution)</li>
+<li>Access to persistent storage such as a database (imagine an
+SQL object mapper which looks like a real object)</li>
+<li>Access to external data structures, such as other languages, as normal
+objects (of course some operations could raise exceptions, but
+since they are purely done on application level, that is not real problem)</li>
+</ul>
+</div>
+<div class="section" id="implementation-notes">
+<h3><a class="toc-backref" href="#id18">Implementation Notes</a><a class="headerlink" href="#implementation-notes" title="Permalink to this headline">¶</a></h3>
+<p>PyPy&#8217;s standard object space allows to internally have multiple
+implementations of a type and change the implementation at run
+time while application level code consistently sees the exact
+same type and object.  Multiple performance optimizations using
+this features are already implemented: see the document
+about <a class="reference external" href="interpreter-optimizations.html">alternative object implementations</a>. Transparent
+Proxies use the architecture to provide control back
+to application level code.</p>
+<p>Transparent proxies are implemented on top of the <a class="reference external" href="objspace.html#the-standard-object-space">standard object
+space</a>, in <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/proxy_helpers.py">pypy/objspace/std/proxy_helpers.py</a>, <a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/proxyobject.py">pypy/objspace/std/proxyobject.py</a> and
+<a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/pypy/objspace/std/transparent.py">pypy/objspace/std/transparent.py</a>.  To use them you will need to pass a
+<a class="reference external" href="config/objspace.std.withtproxy.html">&#8211;objspace-std-withtproxy</a> option to <tt class="docutils literal"><span class="pre">py.py</span></tt> or
+<tt class="docutils literal"><span class="pre">translate.py</span></tt>.  This registers implementations named
+<tt class="docutils literal"><span class="pre">W_TransparentXxx</span></tt> - which usually correspond to an
+appropriate <tt class="docutils literal"><span class="pre">W_XxxObject</span></tt> - and includes some interpreter hacks
+for objects that are too close to the interpreter to be
+implemented in the std objspace. The types of objects that can
+be proxied this way are user created classes &amp; functions,
+lists, dicts, exceptions, tracebacks and frames.</p>
+<table class="docutils citation" frame="void" id="d12-1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[D12.1]</a></td><td><cite>High-Level Backends and Interpreter Feature Prototypes</cite>, PyPy
+EU-Report, 2007, <a class="reference external" href="http://codespeak.net/pypy/extradoc/eu-report/D12.1_H-L-Backends_and_Feature_Prototypes-2007-03-22.pdf">http://codespeak.net/pypy/extradoc/eu-report/D12.1_H-L-Backends_and_Feature_Prototypes-2007-03-22.pdf</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">What PyPy can do for your objects</a><ul>
+<li><a class="reference internal" href="#transparent-proxies">Transparent Proxies</a><ul>
+<li><a class="reference internal" href="#example-of-the-core-mechanism">Example of the core mechanism</a></li>
+<li><a class="reference internal" href="#example-of-recording-all-operations-on-builtins">Example of recording all operations on builtins</a></li>
+<li><a class="reference internal" href="#transparent-proxy-pypy-builtins-and-support">Transparent Proxy PyPy builtins and support</a></li>
+<li><a class="reference internal" href="#tputil-helper-module">tputil helper module</a></li>
+<li><a class="reference internal" href="#further-points-of-interest">Further points of interest</a></li>
+<li><a class="reference internal" href="#implementation-notes">Implementation Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/objspace-proxies.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

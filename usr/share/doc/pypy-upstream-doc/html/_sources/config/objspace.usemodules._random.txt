@@ -1,0 +1,21 @@
+============================
+objspace.usemodules.\_random
+============================
+
+* **name:** \_random
+
+* **description:** use module \_random
+
+* **command-line:** --withmod-\_random
+
+* **command-line for negation:** --withoutmod-\_random
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+Use the '_random' module. It is necessary to use the module "random" from the standard library.
+This module is expected to be working and is included by default.

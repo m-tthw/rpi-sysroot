@@ -1,0 +1,39 @@
+Format: http://dep.debian.net/deps/dep5/
+Upstream-Name: scratchonlinux
+Upstream-Contact: Scratch on Linux <linux@scratch.mit.edu>
+Source: http://my-svn.assembla.com/svn/scratchonlinux/trunk/scratch/src/plugins/
+Debianized-By: Miriam Ruiz <little_miry@yahoo.es>
+Debianized-Date: Thu, 04 Aug 2011 22:35:50 +0200
+
+Files: *
+Copyright: Copyright (C) 2010, MIT
+           Copyright (C) 2010, Derek O'Connell <doc@doconnel.f9.co.uk>
+License: MIT
+
+Files: scratch/unixSeriaPort2Ops.c
+Copyright: Copyright (C) 2010, Derek O'Connell <doc@doconnel.f9.co.uk>
+           Copyright (C) 2007, John Maloney
+License: MIT
+
+Files: debian/*
+Copyright: Copyright (C) 2011, Miriam Ruiz <little_miry@yahoo.es>
+License: MIT
+
+License: MIT
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.

@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Project Documentation &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="project-documentation">
+<h1>Project Documentation<a class="headerlink" href="#project-documentation" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="architecture.html">architecture</a> gives a complete view of PyPy&#8217;s basic design.</p>
+<p><a class="reference external" href="coding-guide.html">coding guide</a> helps you to write code for PyPy (especially also describes
+coding in RPython a bit).</p>
+<p><a class="reference external" href="sprint-reports.html">sprint reports</a> lists reports written at most of our sprints, from
+2003 to the present.</p>
+<p><a class="reference external" href="extradoc.html">papers, talks and related projects</a> lists presentations
+and related projects as well as our published papers.</p>
+<p><a class="reference external" href="video-index.html">PyPy video documentation</a> is a page linking to the videos (e.g. of talks and
+introductions) that are available.</p>
+<p><a class="reference external" href="index-report.html">Technical reports</a> is a page that contains links to the
+reports that we submitted to the European Union.</p>
+<p><a class="reference external" href="dev_method.html">development methodology</a> describes our sprint-driven approach.</p>
+<p><a class="reference external" href="https://bitbucket.org/pypy/pypy/src/default/LICENSE">LICENSE</a> contains licensing details (basically a straight MIT-license).</p>
+<p><a class="reference external" href="glossary.html">Glossary</a> of PyPy words to help you align your inner self with
+the PyPy universe.</p>
+</div>
+<div class="section" id="source-code-documentation">
+<h1>Source Code Documentation<a class="headerlink" href="#source-code-documentation" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="objspace.html">object spaces</a> discusses the object space interface
+and several implementations.</p>
+<p><a class="reference external" href="interpreter.html">bytecode interpreter</a> explains the basic mechanisms
+of the bytecode interpreter and virtual machine.</p>
+<p><a class="reference external" href="interpreter-optimizations.html">interpreter optimizations</a> describes our various strategies for
+improving the performance of our interpreter, including alternative
+object implementations (for strings, dictionaries and lists) in the
+standard object space.</p>
+<p><a class="reference external" href="translation.html">translation</a> is a detailed overview of our translation process.  The
+<a href="#id10"><span class="problematic" id="id11">rtyper_</span></a> is the largest component of our translation process.</p>
+<p><a class="reference external" href="https://bitbucket.org/pypy/extradoc/raw/tip/eu-report/D05.1_Publish_on_translating_a_very-high-level_description.pdf">dynamic-language translation</a> is a paper that describes
+the translation process, especially the flow object space
+and the annotator in detail. (This document is one
+of the <a class="reference external" href="index-report.html">EU reports</a>.)</p>
+<p><a class="reference external" href="low-level-encapsulation.html">low-level encapsulation</a> describes how our approach hides
+away a lot of low level details. This document is also part
+of the <a class="reference external" href="index-report.html">EU reports</a>.</p>
+<p><a class="reference external" href="translation-aspects.html">translation aspects</a> describes how we weave different
+properties into our interpreter during the translation
+process. This document is also part of the <a class="reference external" href="index-report.html">EU reports</a>.</p>
+<p><a class="reference external" href="garbage_collection.html">garbage collector</a> strategies that can be used by the virtual
+machines produced by the translation process.</p>
+<p><a class="reference external" href="parser.html">parser</a> contains (outdated, unfinished) documentation about
+the parser.</p>
+<p><a class="reference external" href="rlib.html">rlib</a> describes some modules that can be used when implementing programs in
+RPython.</p>
+<p><a class="reference external" href="config/">configuration documentation</a> describes the various configuration options that
+allow you to customize PyPy.</p>
+<p><a class="reference external" href="windows.html">pypy on windows</a></p>
+<p><a class="reference external" href="commandline_ref.html">command line reference</a></p>
+<p><a href="#id12"><span class="problematic" id="id13">`JIT Generation in PyPy`_</span></a> describes how we produce the Python Just-in-time Compiler
+from our Python interpreter.</p>
+<p><a class="reference external" href="dir-reference.html">directory cross-reference</a></p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+<li><a class="reference internal" href="glossary.html#glossary"><em>Glossary</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Project Documentation</a></li>
+<li><a class="reference internal" href="#source-code-documentation">Source Code Documentation</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/project-documentation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+=========================
+objspace.usemodules.array
+=========================
+
+* **name:** array
+
+* **description:** use module array
+
+* **command-line:** --withmod-array
+
+* **command-line for negation:** --withoutmod-array
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use interpreter-level version of array module (on by default).

@@ -1,0 +1,23 @@
+==================================
+objspace.usemodules.\_continuation
+==================================
+
+* **name:** \_continuation
+
+* **description:** use module \_continuation
+
+* **command-line:** --withmod-\_continuation
+
+* **command-line for negation:** --withoutmod-\_continuation
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the '_continuation' module. 
+
+Exposes the `continulet` app-level primitives.
+See also :config:`translation.continuation`.

@@ -1,0 +1,11 @@
+This package was debianized by Guenter Geiger (Debian/GNU) <geiger@debian.org> on
+Tue, 12 Aug 2003 11:44:54 +0200.
+
+It was downloaded from qjackctl.sf.net
+
+Upstream Author: Rui Nuno Capela <rncbc@rncbc.org>
+
+Copyright (C) 2003-2009, rncbc aka Rui Nuno Capela
+
+qjackctl is distributed under the GNU General Public License, see
+/usr/share/common-licenses/GPL-2

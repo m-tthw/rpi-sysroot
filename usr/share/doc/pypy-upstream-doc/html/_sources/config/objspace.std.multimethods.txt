@@ -1,0 +1,31 @@
+=========================
+objspace.std.multimethods
+=========================
+
+* **name:** multimethods
+
+* **description:** the multimethod implementation to use
+
+* **command-line:** --objspace-std-multimethods
+
+* **option type:** choice option
+
+* **possible values:**
+
+  + doubledispatch
+
+  + mrd
+
+* **default:** mrd
+
+
+
+
+Choose the multimethod implementation.
+
+* ``doubledispatch`` turns
+  a multimethod call into a sequence of normal method calls.
+
+* ``mrd`` uses a technique known as Multiple Row Displacement
+  which precomputes a few compact tables of numbers and
+  function pointers.

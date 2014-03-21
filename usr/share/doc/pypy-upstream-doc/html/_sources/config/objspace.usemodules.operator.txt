@@ -1,0 +1,21 @@
+============================
+objspace.usemodules.operator
+============================
+
+* **name:** operator
+
+* **description:** use module operator
+
+* **command-line:** --withmod-operator
+
+* **command-line for negation:** --withoutmod-operator
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+Use the 'operator' module. 
+This module is expected to be working and is included by default.

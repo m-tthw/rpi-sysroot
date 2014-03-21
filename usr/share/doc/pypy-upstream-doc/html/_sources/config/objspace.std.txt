@@ -1,0 +1,40 @@
+============
+objspace.std
+============
+
+.. toctree::
+    :maxdepth: 4
+
+    objspace.std.withtproxy
+    objspace.std.withprebuiltint
+    objspace.std.prebuiltintfrom
+    objspace.std.prebuiltintto
+    objspace.std.withsmalllong
+    objspace.std.withstrbuf
+    objspace.std.withprebuiltchar
+    objspace.std.sharesmallstr
+    objspace.std.withspecialisedtuple
+    objspace.std.withcelldict
+    objspace.std.withmapdict
+    objspace.std.withrangelist
+    objspace.std.withliststrategies
+    objspace.std.withtypeversion
+    objspace.std.withmethodcache
+    objspace.std.withmethodcachecounter
+    objspace.std.methodcachesizeexp
+    objspace.std.optimized_int_add
+    objspace.std.optimized_list_getitem
+    objspace.std.builtinshortcut
+    objspace.std.getattributeshortcut
+    objspace.std.newshortcut
+    objspace.std.multimethods
+    objspace.std.withidentitydict
+
+* **name:** std
+
+* **description:** Standard Object Space Options
+
+
+
+
+..  intentionally empty

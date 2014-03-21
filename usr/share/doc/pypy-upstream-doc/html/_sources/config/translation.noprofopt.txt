@@ -1,0 +1,13 @@
+=====================
+translation.noprofopt
+=====================
+
+* **name:** noprofopt
+
+* **description:** Don't use profile based optimization
+
+* **command-line:** --no-profopt
+
+* **option type:** boolean option
+
+* **default:** False

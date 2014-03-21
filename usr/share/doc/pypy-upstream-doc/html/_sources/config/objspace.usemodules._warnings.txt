@@ -1,0 +1,18 @@
+==============================
+objspace.usemodules.\_warnings
+==============================
+
+* **name:** \_warnings
+
+* **description:** use module \_warnings
+
+* **command-line:** --withmod-\_warnings
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+Use the '_warning' module. This module is expected to be working and is included by default.

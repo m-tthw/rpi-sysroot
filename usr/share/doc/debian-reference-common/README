@@ -1,0 +1,52 @@
+==============================================================================
+#            README for debian-reference (Version 2 series)                  #
+#                    Mon Jun 29 14:21:25 UTC 2009                            #
+#                    Osamu Aoki, osamu at debian dot org                     #
+==============================================================================
+
+Thank you installing debian-reference (DR).
+
+This family of documentation packages have their contents in:
+
+  /usr/share/doc/debian-reference-common/README           (this file)
+  /usr/share/doc/debian-reference-common/html/index.html  (index file)
+  /usr/share/doc/debian-reference-common/html/*           (contents)
+  /usr/share/pixmaps/debian-reference.png                 (icon)
+  /usr/share/debian-reference-common/debian-reference     (this starts browser)
+
+== BUGS ==
+
+If you find any issues or shortcomings of this DR, please file bug reports
+using reportbug command against "debian-reference" package.  See also,
+http://bugs.debian.org for how Debian BTS works.
+
+For bug report, it is strongly recommended to write what you want as
+alternative.  "It does not work...", "I can do this...", etc. are not so
+useful.  "This section should be rewritten as ...." is desiarable style.
+
+For simple grammar errors and spell errors, diff against plain text file or
+the source file are most appreciated.
+
+Of course, updating Debian DDP subversion repository with right patch is 
+most appreciated.
+
+== TODO ==
+
+* Close CVS at SF.NET
+* Remove use of asciidoc from original raw.xml preparation.
+
+== SOURCE ==
+
+This source is maintained in alioth ddp SVN repository now.
+
+  http://svn.debian.org/wsvn/ddp/manuals/trunk/quick-reference/
+
+See README.source in the source package for details.
+
+The latest source package can be downloaded by:
+ $ apt-get source debian-reference
+Here, deb-src line in /etc/apt/sources.list should be pointing to unstable.
+
+Osamu
+
+# vim: set tw=78 sts=2 ai expandtab:

@@ -1,0 +1,28 @@
+This is the Debian GNU/Linux prepackaged version of LessTif, the Hungry
+Programmers' version of OSF/Motif. LessTif is intended to be source code
+compatible with Motif 1.2, meaning that the same source will compile with
+both libraries and work exactly the same.
+
+This package was originally put together by Klee Dienes <klee@debian.org>;
+maintenance was taken over by Ray Dassen <jdassen@wi.LeidenUniv.nl>, and
+then by Richard Braakman <dark@xs4all.nl>.   It was then taken over by
+Herbert Xu <herbert@debian.org>.
+
+The sources for LessTif were retrieved from
+  http://www.lesstif.org/
+
+The libXm and libMrm libraries are copyright the Free Software Foundation,
+and are released under the LGPL (version 2 or later), with the exception of
+VaSimple.c, portions of which are also copyright the X Consortium and freely
+redistributable. On Debian GNU/Linux systems, the LGPL can be found in
+/usr/share/common-licenses/LGPL-2 .
+
+The mwm client is copyright Rob Nation, Evans and Sutherland, and M.I.T.,
+and is released under the GPL (version 2 or later) plus a few 'provided this
+copyright notice appear in all copies'. On Debian GNU/Linux systems, the GPL
+can be found in /usr/share/common-licenses/GPL-2 .
+
+The xmbind client is copyright Harald Albrecht, and is released (oddly)
+under the LGPL (version 2 or later).
+
+$Id: copyright,v 1.1 2004/05/27 10:48:25 kobras Exp $

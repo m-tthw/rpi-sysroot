@@ -1,0 +1,27 @@
+=================================
+objspace.std.getattributeshortcut
+=================================
+
+* **name:** getattributeshortcut
+
+* **description:** track types that override \_\_getattribute\_\_
+
+* **command-line:** --objspace-std-getattributeshortcut
+
+* **command-line for negation:** --no-objspace-std-getattributeshortcut
+
+* **option type:** boolean option
+
+* **default:** False
+
+* **requirements:**
+
+  + `translation.rweakref`_ must be set to 'True'
+
+.. _`translation.rweakref`: translation.rweakref.html
+
+
+
+
+
+Performance only: track types that override __getattribute__.

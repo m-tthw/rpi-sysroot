@@ -1,0 +1,21 @@
+========================
+objspace.usemodules.mmap
+========================
+
+* **name:** mmap
+
+* **description:** use module mmap
+
+* **command-line:** --withmod-mmap
+
+* **command-line for negation:** --withoutmod-mmap
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Use the 'mmap' module. 
+This module is expected to be fully working.

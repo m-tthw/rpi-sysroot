@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting Started with PyPy’s Python Interpreter &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="getting-started-with-pypy-s-python-interpreter">
+<h1><a class="toc-backref" href="#id10">Getting Started with PyPy&#8217;s Python Interpreter</a><a class="headerlink" href="#getting-started-with-pypy-s-python-interpreter" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#getting-started-with-pypy-s-python-interpreter" id="id10">Getting Started with PyPy&#8217;s Python Interpreter</a><ul>
+<li><a class="reference internal" href="#translating-the-pypy-python-interpreter" id="id11">Translating the PyPy Python interpreter</a><ul>
+<li><a class="reference internal" href="#translating-with-non-standard-options" id="id12">Translating with non-standard options</a></li>
+<li><a class="reference internal" href="#installation" id="id13">Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running-the-python-interpreter-without-translation" id="id14">Running the Python Interpreter Without Translation</a><ul>
+<li><a class="reference internal" href="#the-pyinteractive-py-interpreter" id="id15">The pyinteractive.py interpreter</a></li>
+<li><a class="reference internal" href="#pyinteractive-py-options" id="id16">pyinteractive.py options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>PyPy&#8217;s Python interpreter is a very compliant Python
+interpreter implemented in RPython.  When compiled, it passes most of
+<a class="reference external" href="http://buildbot.pypy.org/summary?category=applevel&amp;branch=%3Ctrunk%3E">CPythons core language regression tests</a> and comes with many of the extension
+modules included in the standard library including <tt class="docutils literal"><span class="pre">ctypes</span></tt>. It can run large
+libraries such as <a class="reference external" href="http://djangoproject.com">Django</a> and <a class="reference external" href="http://twistedmatrix.com">Twisted</a>. There are some small behavioral
+differences with CPython and some missing extensions, for details see <a class="reference external" href="cpython_differences.html">CPython
+differences</a>.</p>
+<p>To actually use PyPy&#8217;s Python interpreter, the first thing to do is to
+<a class="reference external" href="http://pypy.org/download.html">download a pre-built PyPy</a> for your architecture.</p>
+<div class="section" id="translating-the-pypy-python-interpreter">
+<h2><a class="toc-backref" href="#id11">Translating the PyPy Python interpreter</a><a class="headerlink" href="#translating-the-pypy-python-interpreter" title="Permalink to this headline">¶</a></h2>
+<p>(<strong>Note</strong>: for some hints on how to translate the Python interpreter under
+Windows, see the <a class="reference external" href="windows.html">windows document</a>)</p>
+<p>You can translate the whole of PyPy&#8217;s Python interpreter to low level C code.
+If you intend to build using gcc, check to make sure that
+the version you have is not 4.2 or you will run into <a class="reference external" href="https://bugs.launchpad.net/ubuntu/+source/gcc-4.2/+bug/187391">this bug</a>.</p>
+<ol class="arabic">
+<li><p class="first">First <a class="reference external" href="http://pypy.org/download.html">download a pre-built PyPy</a> for your architecture which you will
+use to translate your Python interpreter.  It is, of course, possible to
+translate with a CPython 2.6 or later, but this is not the preferred way,
+because it will take a lot longer to run &#8211; depending on your architecture,
+between two and three times as long.</p>
+</li>
+<li><p class="first">Install build-time dependencies.  On a Debian box these are:</p>
+<div class="highlight-python"><pre>[user@debian-box ~]$ sudo apt-get install \
+gcc make python-dev libffi-dev libsqlite3-dev pkg-config \
+libz-dev libbz2-dev libncurses-dev libexpat1-dev \
+libssl-dev libgc-dev python-sphinx python-greenlet</pre>
+</div>
+<p>On a Fedora-16 box these are:</p>
+<div class="highlight-python"><pre>[user@fedora-or-rh-box ~]$ sudo yum install \
+gcc make python-devel libffi-devel lib-sqlite3-devel pkgconfig \
+zlib-devel bzip2-devel ncurses-devel expat-devel \
+openssl-devel gc-devel python-sphinx python-greenlet</pre>
+</div>
+<p>On SLES11:</p>
+<blockquote>
+<div><p>$ sudo zypper install gcc make python-devel pkg-config zlib-devel libopenssl-devel libbz2-devel sqlite3-devel libexpat-devel libffi-devel python-curses</p>
+</div></blockquote>
+<p>On Mac OS X, most of these build-time dependencies are installed alongside
+the Developer Tools. However, note that in order for the installation to
+find them you may need to run:</p>
+<blockquote>
+<div><p>$ xcode-select &#8211;install</p>
+</div></blockquote>
+<p>The above command lines are split with continuation characters, giving the necessary dependencies first, then the optional ones.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">pkg-config</span></tt> (to help us locate libffi files)</li>
+<li><tt class="docutils literal"><span class="pre">libz-dev</span></tt> (for the optional <tt class="docutils literal"><span class="pre">zlib</span></tt> module)</li>
+<li><tt class="docutils literal"><span class="pre">libbz2-dev</span></tt> (for the optional <tt class="docutils literal"><span class="pre">bz2</span></tt> module)</li>
+<li><tt class="docutils literal"><span class="pre">libsqlite3-dev</span></tt> (for the optional <tt class="docutils literal"><span class="pre">sqlite3</span></tt> module via cffi)</li>
+<li><tt class="docutils literal"><span class="pre">libncurses-dev</span></tt> (for the optional <tt class="docutils literal"><span class="pre">_minimal_curses</span></tt> module)</li>
+<li><tt class="docutils literal"><span class="pre">libexpat1-dev</span></tt> (for the optional <tt class="docutils literal"><span class="pre">pyexpat</span></tt> module)</li>
+<li><tt class="docutils literal"><span class="pre">libssl-dev</span></tt> (for the optional <tt class="docutils literal"><span class="pre">_ssl</span></tt> module)</li>
+<li><tt class="docutils literal"><span class="pre">libgc-dev</span></tt> (for the Boehm garbage collector: only needed when translating with <cite>&#8211;opt=0, 1</cite> or <cite>size</cite>)</li>
+<li><tt class="docutils literal"><span class="pre">python-sphinx</span></tt> (for the optional documentation build.  You need version 1.0.7 or later)</li>
+</ul>
+</li>
+<li><p class="first">Translation is time-consuming &#8211; 45 minutes on a very fast machine &#8211;
+and RAM-hungry.  As of March 2011, you will need <strong>at least</strong> 2 GB of
+memory on a
+32-bit machine and 4GB on a 64-bit machine.  If your memory resources
+are constrained, or your machine is slow you might want to pick the
+<a class="reference external" href="config/opt.html">optimization level</a> <cite>1</cite> in the next step.  A level of
+<cite>2</cite> or <cite>3</cite> or <cite>jit</cite> gives much better results, though.  But if all
+you want to do is to test that some new feature that you just wrote
+translates, level 1 is enough.</p>
+<p>Let me stress this again: at <tt class="docutils literal"><span class="pre">--opt=1</span></tt> you get the Boehm
+GC, which is here mostly for historical and for testing reasons.
+You really do not want to pick it for a program you intend to use.
+The resulting <tt class="docutils literal"><span class="pre">pypy-c</span></tt> is slow.</p>
+</li>
+<li><p class="first">Run:</p>
+<div class="highlight-python"><pre>cd pypy/goal
+python ../../rpython/bin/rpython --opt=jit targetpypystandalone.py</pre>
+</div>
+<p>possibly replacing <tt class="docutils literal"><span class="pre">--opt=jit</span></tt> with another <a class="reference external" href="config/opt.html">optimization level</a>
+of your choice.  Typical example: <tt class="docutils literal"><span class="pre">--opt=2</span></tt> gives a good (but of
+course slower) Python interpreter without the JIT.</p>
+</li>
+</ol>
+<p>If everything works correctly this will create an executable
+<tt class="docutils literal"><span class="pre">pypy-c</span></tt> in the current directory.  Type <tt class="docutils literal"><span class="pre">pypy-c</span> <span class="pre">--help</span></tt>
+to see the options it supports - mainly the same basic
+options as CPython.  In addition, <tt class="docutils literal"><span class="pre">pypy-c</span> <span class="pre">--info</span></tt> prints the
+translation options that where used to produce this particular
+executable. The executable behaves mostly like a normal Python interpreter:</p>
+<div class="highlight-python"><pre>$ ./pypy-c
+Python 2.7.3 (480845e6b1dd, Jul 31 2013, 11:05:31)
+[PyPy 2.1.0 with GCC 4.7.1] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+And now for something completely different: ``RPython magically makes you rich
+and famous (says so on the tin)''
+
+&gt;&gt;&gt;&gt; 46 - 4
+42
+&gt;&gt;&gt;&gt; from test import pystone
+&gt;&gt;&gt;&gt; pystone.main()
+Pystone(1.1) time for 50000 passes = 0.220015
+This machine benchmarks at 227257 pystones/second
+&gt;&gt;&gt;&gt; pystone.main()
+Pystone(1.1) time for 50000 passes = 0.060004
+This machine benchmarks at 833278 pystones/second
+&gt;&gt;&gt;&gt;</pre>
+</div>
+<p>Note that pystone gets faster as the JIT kicks in.
+This executable can be moved around or copied on other machines; see
+<a class="reference internal" href="#installation">Installation</a> below.</p>
+<p>The <tt class="docutils literal"><span class="pre">translate.py</span></tt> script takes a very large number of options controlling
+what to translate and how.  See <tt class="docutils literal"><span class="pre">translate.py</span> <span class="pre">-h</span></tt>. The default options
+should be suitable for mostly everybody by now.
+Find a more detailed description of the various options in our <a class="reference external" href="config/index.html">configuration
+sections</a>.</p>
+<div class="section" id="translating-with-non-standard-options">
+<h3><a class="toc-backref" href="#id12">Translating with non-standard options</a><a class="headerlink" href="#translating-with-non-standard-options" title="Permalink to this headline">¶</a></h3>
+<p>It is possible to have non-standard features enabled for translation,
+but they are not really tested any more.  Look, for example, at the
+<a class="reference external" href="objspace-proxies.html">objspace proxies</a> document.</p>
+</div>
+<div class="section" id="installation">
+<h3><a class="toc-backref" href="#id13">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>A prebuilt <tt class="docutils literal"><span class="pre">pypy-c</span></tt> can be installed in a standard location like
+<tt class="docutils literal"><span class="pre">/usr/local/bin</span></tt>, although some details of this process are still in
+flux.  It can also be copied to other machines as long as their system
+is &#8220;similar enough&#8221;: some details of the system on which the translation
+occurred might be hard-coded in the executable.</p>
+<p>PyPy dynamically finds the location of its libraries depending on the location
+of the executable.  The directory hierarchy of a typical PyPy installation
+looks like this:</p>
+<div class="highlight-python"><pre>./bin/pypy
+./include/
+./lib_pypy/
+./lib-python/2.7
+./site-packages/</pre>
+</div>
+<p>The hierarchy shown above is relative to a PREFIX directory.  PREFIX is
+computed by starting from the directory where the executable resides, and
+&#8220;walking up&#8221; the filesystem until we find a directory containing <tt class="docutils literal"><span class="pre">lib_pypy</span></tt>
+and <tt class="docutils literal"><span class="pre">lib-python/2.7</span></tt>.</p>
+<p>The archives (.tar.bz2 or .zip) containing PyPy releases already contain the
+correct hierarchy, so to run PyPy it&#8217;s enough to unpack the archive, and run
+the <tt class="docutils literal"><span class="pre">bin/pypy</span></tt> executable.</p>
+<p>To install PyPy system wide on unix-like systems, it is recommended to put the
+whole hierarchy alone (e.g. in <tt class="docutils literal"><span class="pre">/opt/pypy2.1</span></tt>) and put a symlink to the
+<tt class="docutils literal"><span class="pre">pypy</span></tt> executable into <tt class="docutils literal"><span class="pre">/usr/bin</span></tt> or <tt class="docutils literal"><span class="pre">/usr/local/bin</span></tt></p>
+<p>If the executable fails to find suitable libraries, it will report
+<tt class="docutils literal"><span class="pre">debug:</span> <span class="pre">WARNING:</span> <span class="pre">library</span> <span class="pre">path</span> <span class="pre">not</span> <span class="pre">found,</span> <span class="pre">using</span> <span class="pre">compiled-in</span> <span class="pre">sys.path</span></tt>
+and then attempt to continue normally.  If the default path is usable,
+most code will be fine.  However, the <tt class="docutils literal"><span class="pre">sys.prefix</span></tt> will be unset
+and some existing libraries assume that this is never the case.</p>
+</div>
+</div>
+<div class="section" id="running-the-python-interpreter-without-translation">
+<span id="pyinteractive-py-interpreter"></span><h2><a class="toc-backref" href="#id14">Running the Python Interpreter Without Translation</a><a class="headerlink" href="#running-the-python-interpreter-without-translation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-pyinteractive-py-interpreter">
+<h3><a class="toc-backref" href="#id15">The pyinteractive.py interpreter</a><a class="headerlink" href="#the-pyinteractive-py-interpreter" title="Permalink to this headline">¶</a></h3>
+<p>To start interpreting Python with PyPy, install a C compiler that is
+supported by distutils and use Python 2.5 or greater to run PyPy:</p>
+<div class="highlight-python"><pre>cd pypy
+python bin/pyinteractive.py</pre>
+</div>
+<p>After a few seconds (remember: this is running on top of CPython),
+you should be at the PyPy prompt, which is the same as the Python
+prompt, but with an extra &#8220;&gt;&#8221;.</p>
+<p>Now you are ready to start running Python code.  Most Python
+modules should work if they don&#8217;t involve CPython extension
+modules.  <strong>This is slow, and most C modules are not present by
+default even if they are standard!</strong>  Here is an example of
+determining PyPy&#8217;s performance in pystones:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="go">&gt;&gt;&gt;&gt; from test import pystone</span>
+<span class="go">&gt;&gt;&gt;&gt; pystone.main(10)</span>
+</pre></div>
+</div>
+<p>The parameter is the number of loops to run through the test. The
+default is 50000, which is far too many to run in a non-translated
+PyPy version (i.e. when PyPy&#8217;s interpreter itself is being interpreted
+by CPython).</p>
+</div>
+<div class="section" id="pyinteractive-py-options">
+<h3><a class="toc-backref" href="#id16">pyinteractive.py options</a><a class="headerlink" href="#pyinteractive-py-options" title="Permalink to this headline">¶</a></h3>
+<p>To list the PyPy interpreter command line options, type:</p>
+<div class="highlight-python"><pre>cd pypy
+python bin/pyinteractive.py --help</pre>
+</div>
+<p>pyinteractive.py supports most of the options that CPython supports too (in addition to a
+large amount of options that can be used to customize pyinteractive.py).
+As an example of using PyPy from the command line, you could type:</p>
+<div class="highlight-python"><pre>python pyinteractive.py -c "from test import pystone; pystone.main(10)"</pre>
+</div>
+<p>Alternatively, as with regular Python, you can simply give a
+script name on the command line:</p>
+<div class="highlight-python"><pre>python pyinteractive.py ../../lib-python/2.7/test/pystone.py 10</pre>
+</div>
+<p>See our  <a class="reference external" href="config/index.html">configuration sections</a> for details about what all the commandline
+options do.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started with PyPy&#8217;s Python Interpreter</a><ul>
+<li><a class="reference internal" href="#translating-the-pypy-python-interpreter">Translating the PyPy Python interpreter</a><ul>
+<li><a class="reference internal" href="#translating-with-non-standard-options">Translating with non-standard options</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running-the-python-interpreter-without-translation">Running the Python Interpreter Without Translation</a><ul>
+<li><a class="reference internal" href="#the-pyinteractive-py-interpreter">The pyinteractive.py interpreter</a></li>
+<li><a class="reference internal" href="#pyinteractive-py-options">pyinteractive.py options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/getting-started-python.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+==============================
+objspace.honor\_\_builtins\_\_
+==============================
+
+* **name:** honor\_\_builtins\_\_
+
+* **description:** Honor the \_\_builtins\_\_ key of a module dictionary
+
+* **command-line:** --objspace-honor\_\_builtins\_\_
+
+* **command-line for negation:** --no-objspace-honor\_\_builtins\_\_
+
+* **option type:** boolean option
+
+* **default:** False

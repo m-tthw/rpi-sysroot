@@ -1,0 +1,18 @@
+==========================
+objspace.std.prebuiltintto
+==========================
+
+* **name:** prebuiltintto
+
+* **description:** highest integer which is prebuilt
+
+* **command-line:** --prebuiltintto
+
+* **option type:** integer option
+
+* **default:** 100
+
+
+
+
+See :config:`objspace.std.withprebuiltint`.

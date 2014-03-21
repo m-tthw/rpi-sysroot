@@ -1,0 +1,18 @@
+======================
+translation.instrument
+======================
+
+* **name:** instrument
+
+* **description:** internal\: turn instrumentation on
+
+* **option type:** boolean option
+
+* **default:** False
+
+
+
+
+Internal option.
+
+.. internal

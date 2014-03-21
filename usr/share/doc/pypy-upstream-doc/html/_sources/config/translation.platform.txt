@@ -1,0 +1,30 @@
+====================
+translation.platform
+====================
+
+* **name:** platform
+
+* **description:** target platform
+
+* **command-line:** --platform
+
+* **option type:** choice option
+
+* **possible values:**
+
+  + host
+
+  + maemo
+
+  + host
+
+  + distutils
+
+  + arm
+
+* **default:** host
+
+
+
+
+select the target platform, in case of cross-compilation

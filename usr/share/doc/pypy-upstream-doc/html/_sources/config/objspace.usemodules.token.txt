@@ -1,0 +1,21 @@
+=========================
+objspace.usemodules.token
+=========================
+
+* **name:** token
+
+* **description:** use module token
+
+* **command-line:** --withmod-token
+
+* **command-line for negation:** --withoutmod-token
+
+* **option type:** boolean option
+
+* **default:** True
+
+
+
+
+Use the 'token' module. 
+This module is expected to be working and is included by default.

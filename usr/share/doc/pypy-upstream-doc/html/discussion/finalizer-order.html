@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Ordering finalizers in the SemiSpace GC &mdash; PyPy 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="PyPy 2.2.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ordering-finalizers-in-the-semispace-gc">
+<h1>Ordering finalizers in the SemiSpace GC<a class="headerlink" href="#ordering-finalizers-in-the-semispace-gc" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="goal">
+<h2>Goal<a class="headerlink" href="#goal" title="Permalink to this headline">¶</a></h2>
+<p>After a collection, the SemiSpace GC should call the finalizers on
+<em>some</em> of the objects that have one and that have become unreachable.
+Basically, if there is a reference chain from an object a to an object b
+then it should not call the finalizer for b immediately, but just keep b
+alive and try again to call its finalizer after the next collection.</p>
+<p>This basic idea fails when there are cycles.  It&#8217;s not a good idea to
+keep the objects alive forever or to never call any of the finalizers.
+The model we came up with is that in this case, we could just call the
+finalizer of one of the objects in the cycle &#8211; but only, of course, if
+there are no other objects outside the cycle that has a finalizer and a
+reference to the cycle.</p>
+<p>More precisely, given the graph of references between objects:</p>
+<div class="highlight-python"><pre>for each strongly connected component C of the graph:
+    if C has at least one object with a finalizer:
+        if there is no object outside C which has a finalizer and
+        indirectly references the objects in C:
+            mark one of the objects of C that has a finalizer
+            copy C and all objects it references to the new space
+
+for each marked object:
+    detach the finalizer (so that it's not called more than once)
+    call the finalizer</pre>
+</div>
+</div>
+<div class="section" id="algorithm">
+<h2>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h2>
+<p>During deal_with_objects_with_finalizers(), each object x can be in 4
+possible states:</p>
+<div class="highlight-python"><pre>state[x] == 0:  unreachable
+state[x] == 1:  (temporary state, see below)
+state[x] == 2:  reachable from any finalizer
+state[x] == 3:  alive</pre>
+</div>
+<p>Initially, objects are in state 0 or 3 depending on whether they have
+been copied or not by the regular sweep done just before.  The invariant
+is that if there is a reference from x to y, then state[y] &gt;= state[x].</p>
+<p>The state 2 is used for objects that are reachable from a finalizer but
+that may be in the same strongly connected component than the finalizer.
+The state of these objects goes to 3 when we prove that they can be
+reached from a finalizer which is definitely not in the same strongly
+connected component.  Finalizers on objects with state 3 must not be
+called.</p>
+<p>Let closure(x) be the list of objects reachable from x, including x
+itself.  Pseudo-code (high-level) to get the list of marked objects:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">marked</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">objects_with_finalizers</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="n">marked</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">closure</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">state</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">marked</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">state</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">2</span>
+    <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">marked</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This does the right thing independently on the order in which the
+objects_with_finalizers are enumerated.  First assume that [x1, .., xn]
+are all in the same unreachable strongly connected component; no object
+with finalizer references this strongly connected component from
+outside.  Then:</p>
+<ul class="simple">
+<li>when x1 is processed, state[x1] == .. == state[xn] == 0 independently
+of whatever else we did before.  So x1 gets marked and we set
+state[x1] = .. = state[xn] = 2.</li>
+<li>when x2, ... xn are processed, their state is != 0 so we do nothing.</li>
+<li>in the final loop, only x1 is marked and state[x1] == 2 so it stays
+marked.</li>
+</ul>
+<p>Now, let&#8217;s assume that x1 and x2 are not in the same strongly connected
+component and there is a reference path from x1 to x2.  Then:</p>
+<ul class="simple">
+<li>if x1 is enumerated before x2, then x2 is in closure(x1) and so its
+state gets at least &gt;= 2 when we process x1.  When we process x2 later
+we just skip it (&#8220;continue&#8221; line) and so it doesn&#8217;t get marked.</li>
+<li>if x2 is enumerated before x1, then when we process x2 we mark it and
+set its state to &gt;= 2 (before x2 is in closure(x2)), and then when we
+process x1 we set state[x2] == 3.  So in the final loop x2 gets
+removed from the &#8220;marked&#8221; list.</li>
+</ul>
+<p>I think that it proves that the algorithm is doing what we want.</p>
+<p>The next step is to remove the use of closure() in the algorithm in such
+a way that the new algorithm has a reasonable performance &#8211; linear in
+the number of objects whose state it manipulates:</p>
+<div class="highlight-python"><pre>marked = []
+for x in objects_with_finalizers:
+    if state[x] != 0:
+        continue
+    marked.append(x)
+    recursing on the objects y starting from x:
+        if state[y] == 0:
+            state[y] = 1
+            follow y's children recursively
+        elif state[y] == 2:
+            state[y] = 3
+            follow y's children recursively
+        else:
+            don't need to recurse inside y
+    recursing on the objects y starting from x:
+        if state[y] == 1:
+            state[y] = 2
+            follow y's children recursively
+        else:
+            don't need to recurse inside y
+for x in marked:
+    assert state[x] &gt;= 2
+    if state[x] != 2:
+        marked.remove(x)</pre>
+</div>
+<p>In this algorithm we follow the children of each object at most 3 times,
+when the state of the object changes from 0 to 1 to 2 to 3.  In a visit
+that doesn&#8217;t change the state of an object, we don&#8217;t follow its children
+recursively.</p>
+<p>In practice, in the SemiSpace, Generation and Hybrid GCs, we can encode
+the 4 states with a single extra bit in the header:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="28%" />
+<col width="17%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">state</th>
+<th class="head">is_forwarded?</th>
+<th class="head">bit set?</th>
+<th class="head">bit set in the copy?</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>no</td>
+<td>no</td>
+<td>n/a</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>no</td>
+<td>yes</td>
+<td>n/a</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>yes</td>
+<td>whatever</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>So the loop above that does the transition from state 1 to state 2 is
+really just a copy(x) followed by scan_copied().  We must also clear the
+bit in the copy at the end, to clean up before the next collection
+(which means recursively bumping the state from 2 to 3 in the final
+loop).</p>
+<p>In the MiniMark GC, the objects don&#8217;t move (apart from when they are
+copied out of the nursery), but we use the flag GCFLAG_VISITED to mark
+objects that survive, so we can also have a single extra bit for
+finalizers:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="30%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">state</th>
+<th class="head">GCFLAG_VISITED</th>
+<th class="head">GCFLAG_FINALIZATION_ORDERING</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Ordering finalizers in the SemiSpace GC</a><ul>
+<li><a class="reference internal" href="#goal">Goal</a></li>
+<li><a class="reference internal" href="#algorithm">Algorithm</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/discussion/finalizer-order.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">PyPy 2.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, The PyPy Project.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
