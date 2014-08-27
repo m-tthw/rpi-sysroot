@@ -23,7 +23,7 @@
 # Usage: NOT intended to be used manually (if you insist then try: rake travis)
 desc 'Create a new sysroot from Raspbian image'
 task :travis do
-  system 'travis_retry wget http://downloads.raspberrypi.org/raspbian_latest -O raspbian.zip' or abort 'Failed to download latest Raspbian image'
+  system 'wget http://downloads.raspberrypi.org/raspbian_latest -O raspbian.zip' or abort 'Failed to download latest Raspbian image'
   system 'unzip raspbian.zip' or abort 'Failed to unzip Raspbian image'
   system 'sudo kpartx -a -v *.img && sudo mount -o loop /dev/mapper/loop0p2 /mnt' or abort 'Failed to create and mount loop device'
   system 'git clone --depth=1 https://github.com/urho3d/rpi-sysroot.git' or abort 'Failed to clone existing sysroot'
