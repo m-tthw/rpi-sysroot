@@ -1,3 +1,5 @@
+(* ::Package:: *)
+
 BeginPackage["CloudObject`"]
 
 Begin["`Private`"]
@@ -83,7 +85,7 @@ loginDialog[username_String] := With[{btnlblStyle = {"DialogStyle", "ControlStyl
      DialogInput[
       ExpressionCell[
        Framed[
-        Column[{Panel["", Appearance -> CloudDialogImage["TopBanner"], ImageSize -> {Full, Automatic},
+        Column[{Panel["", Appearance -> {"Default" -> CloudDialogImage["TopBanner"]}, ImageSize -> {Full, Automatic},
            FrameMargins -> {{10, 10}, {0, 0}}, 
            Alignment -> {Left, Center}],
           
@@ -93,7 +95,7 @@ loginDialog[username_String] := With[{btnlblStyle = {"DialogStyle", "ControlStyl
             Full,
             ImageMargins -> {{0, 0}, {0, 15}}
             ],
-           Appearance -> CloudDialogImage["BackgroundImage"]
+           Appearance -> {"Default" -> CloudDialogImage["BackgroundImage"]}
            ]
           },
          Spacings -> -0.1
@@ -135,7 +137,19 @@ loginDialog[username_String] := With[{btnlblStyle = {"DialogStyle", "ControlStyl
 (*----------------------------------------------------------------------------------------------------------------------------------*) 
 (*----------------------------------------------------------------------------------------------------------------------------------*) 
   
-CloudDialogImage["NewAccountIcon"] = Image[\!\(\*
+imgr[relPth_List, flNm_String] := FrontEnd`FileName[relPth, flNm]
+
+imgr[flNm_String] := imgr[{"Dialogs", "CloudLogin"}, flNm]
+
+
+imgimportr[relPth_List, flNm_String] := 
+  Dynamic[RawBoxes@
+    FEPrivate`ImportImage[FrontEnd`ToFileName[relPth, flNm]]]
+    
+imgimportr[flNm_String] := 
+ imgimportr[{"Bitmaps", "Dialogs", "CloudLogin"}, flNm]
+
+CloudDialogImage["NewAccountIcon"] = imgimportr["NewAccountIcon.png"](*Image[\!\(\*
 GraphicsBox[
 TagBox[RasterBox[CompressedData["
 1:eJyVWnd8VUXaNgRIbupNgxQhCUlIr7SEc6704kpRpEoHd5VegqvuIvwWcUVZ
@@ -255,9 +269,9 @@ BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
 Selectable->False],
 BaseStyle->"ImageGraphics",
 ImageSizeRaw->{56, 43},
-PlotRange->{{0, 56}, {0, 43}}]\), Magnification -> 1];
+PlotRange->{{0, 56}, {0, 43}}]\), Magnification -> 1]*);
 
-CloudDialogImage["BackgroundImage"] = \!\(\*
+CloudDialogImage["BackgroundImage"] = imgr["Background.9.png"](*\!\(\*
 GraphicsBox[
 TagBox[RasterBox[CompressedData["
 1:eJzt11mKZEUAhtEq9cE11JtL0SW0K+gGfRVaQXpfbqnmeZ47rFKjcAENTXyc
@@ -284,9 +298,10 @@ BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
 Selectable->False],
 BaseStyle->"ImageGraphics",
 ImageSizeRaw->{180, 180},
-PlotRange->{{0, 180}, {0, 180}}]\);
+PlotRange->{{0, 180}, {0, 180}}]\)*);
 
-CloudDialogImage["TopBanner"] = \!\(\*
+CloudDialogImage["TopBanner"] = imgr["Banner.9.png"](*Dynamic@RawBoxes@
+  FEPrivate`FrontEndResource["LocalizedBitmaps", "CloudLoginBanner.9"]*)(*\!\(\*
 GraphicsBox[
 TagBox[RasterBox[CompressedData["
 1:eJztnXmUVNW1h30v74/3d+Y5MYlCTzVXz3PTgAgKAs5xwNmgII44IUpwQMEo
@@ -466,11 +481,11 @@ BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
 Selectable->False],
 BaseStyle->"ImageGraphics",
 ImageSizeRaw->{340, 53},
-PlotRange->{{0, 340}, {0, 53}}]\);
+PlotRange->{{0, 340}, {0, 53}}]\)*);
 
-CloudDialogImage["SigninButton","Default"] = \!\(\*
-                   GraphicsBox[
-                    TagBox[RasterBox[CompressedData["
+CloudDialogImage["SigninButton","Default"] = imgr["SigninButton-Default.9.png"](*\!\(\*
+GraphicsBox[
+TagBox[RasterBox[CompressedData["
 1:eJy1171PE3Ecx/ETqjEWNcYE+9wedfB6VwZJnNSosGhigNYHJEFsDUYXTcDE
 8Ae4GBYXdfMvcDMUWvqASmkr1FagyqB/giOGRPPxcwZi652L6febvJtrv8Pr
 2l+XU5MPYnc6FEWZ2s+XWOLR+cnJxHTcwTcXph9OJDt5EdzJ/LANA47yPzWN
@@ -484,18 +499,17 @@ gnzQEK2g9qJ87ZbFTtHOcS9ZnnbJxp6lneVeshztZTs7SDtkiJbroX3dYn+f
 DepY4F6yLO2i1d5O0c5wL9mCvV195j2OtGqIlgn3onIjaZo/muyJSwePYF7Y
 TvdE8eRMv2m+Uv5MZ4eyB+ech/HYFcJz/gYv2txTTxj3fCq69u4z7QGldczH
 xBGWYjVWb3MlNsPCNs+CuwPBWp5DfwG437Of
-                    "], {{0, 31}, {31, 0}}, {0, 255},
-                    ColorFunction->RGBColor],
-                    BoxForm`ImageTag[
-                    "Byte", ColorSpace -> "RGB", Interleaving -> True],
-                    Selectable->False],
-                    BaseStyle->"ImageGraphics",
-                    ImageSizeRaw->{31, 31},
-                    PlotRange->{{0, 31}, {0, 31}}]\);
+"], {{0, 31}, {31, 0}}, {0, 255},
+ColorFunction->RGBColor],
+BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+Selectable->False],
+BaseStyle->"ImageGraphics",
+ImageSizeRaw->{31, 31},
+PlotRange->{{0, 31}, {0, 31}}]\)*);
                     
-CloudDialogImage["SigninButton","Hover"] = \!\(\*
-                   GraphicsBox[
-                    TagBox[RasterBox[CompressedData["
+CloudDialogImage["SigninButton","Hover"] = imgr["SigninButton-Hover.9.png"](*\!\(\*
+GraphicsBox[
+TagBox[RasterBox[CompressedData["
 1:eJy110lLW2EUxvHrUClarBRcitGS4UakEjMIQiW2UFxIwYIErEgCsW6soIL4
 GSoIrlyZT+DaZapxiNYMV41t4pAqIq5cKoLl+LwSaTRnJfe88A83eRY/Mixy
 m0JjfcPlmqZNvMRDX3DKPz4enP5SiSfd05PhUAUuGgupF004hKM9p6JTg76j
@@ -508,18 +522,17 @@ vldh/8IuGuw0Y8ccLtrS3bK18PYK7E3sosFOMfYy7Dh20WAnGfsn7A3sosFO
 MHYU9jp20Xj7Wtlr2EXj7Zuoo51WsYsGe7vUTi40OSmGXTTYxtD9/9TbIjvc
 W1dPy9K200Oz/k/KXNT+n4pyrYw+1L6hHw1WUp9BpLnF1OYtOo1abPSqqkrZ
 H7XHR90mBtASSiPD5OJoBr1l7gUfDgn26D70DrNzC5w=
-                    "], {{0, 31}, {31, 0}}, {0, 255},
-                    ColorFunction->RGBColor],
-                    BoxForm`ImageTag[
-                    "Byte", ColorSpace -> "RGB", Interleaving -> True],
-                    Selectable->False],
-                    BaseStyle->"ImageGraphics",
-                    ImageSizeRaw->{31, 31},
-                    PlotRange->{{0, 31}, {0, 31}}]\);
+"], {{0, 31}, {31, 0}}, {0, 255},
+ColorFunction->RGBColor],
+BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+Selectable->False],
+BaseStyle->"ImageGraphics",
+ImageSizeRaw->{31, 31},
+PlotRange->{{0, 31}, {0, 31}}]\)*);
                     
-CloudDialogImage["SigninButton","Pressed"] = \!\(\*
-                   GraphicsBox[
-                    TagBox[RasterBox[CompressedData["
+CloudDialogImage["SigninButton","Pressed"] = imgr["SigninButton-Pressed.9.png"](*\!\(\*
+GraphicsBox[
+TagBox[RasterBox[CompressedData["
 1:eJy1l8tPE1EUhytgIDxCKW2n0+kLWvqYsnYv0YU7gxtWJpBgXKkBEsPSlRsV
 FEGCYEFaUIECAmmBtoR3odACxoX/hEsMieb4u1i0MMNGLjf5SOk5+X33npk0
 uVVND+vv5Wk0mtYi/KlvfHy9paWx/U4B/qlrb2tuyscHexb2JYdFWJr/IWeV
@@ -538,18 +551,17 @@ wI3suAHuSrgrFO4fW0YPHaCPNxmceRPZcUMN3NU0WGE/6z7aRv0LennD3Mms
 e0rdnR7BLA6M6OdMxgC3wUMJPdy6agr+mfnPHHfz7aJySqEvw5E0SMG7qnfT
 fKWLwnA/KjUy54Tm38rHFY5uFpZRZ7mFhrG30AUI/sVOQ1o79Wtt9KJcorvF
 OirG/Qe+G5rTi10TG0AE7IF9ziTBM+BUuQueLLpETt1DfwNGSYWo
-                    "], {{0, 31}, {31, 0}}, {0, 255},
-                    ColorFunction->RGBColor],
-                    BoxForm`ImageTag[
-                    "Byte", ColorSpace -> "RGB", Interleaving -> True],
-                    Selectable->False],
-                    BaseStyle->"ImageGraphics",
-                    ImageSizeRaw->{31, 31},
-                    PlotRange->{{0, 31}, {0, 31}}]\);
+"], {{0, 31}, {31, 0}}, {0, 255},
+ColorFunction->RGBColor],
+BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+Selectable->False],
+BaseStyle->"ImageGraphics",
+ImageSizeRaw->{31, 31},
+PlotRange->{{0, 31}, {0, 31}}]\)*);
 
-CloudDialogImage["JoinNowButton","Default"] = \!\(\*
-               GraphicsBox[
-                TagBox[RasterBox[CompressedData["
+CloudDialogImage["JoinNowButton","Default"] = imgr["JoinNowButton-Default.9.png"](*\!\(\*
+GraphicsBox[
+TagBox[RasterBox[CompressedData["
 1:eJztl79qwlAUh2MtWPEBHEspODl3T9FZsCDFTdGaQRNN1BhFQRBB6Oh/hfoC
 nfsKnUodOvQlOlqEltP7k0hjzVRya4Ye+EKS5eP87rkJ9yytxG+OBEHQTtgl
 ntJFVU0ZV8fs4dIoZ9NednNqgpcOFLESfoOlAgyZ8cJYceCNcce4+OEO+Hw+
@@ -560,18 +572,17 @@ eeMJeh+NRnvuYrFImDeeoHd8W93kVhSFMG88Qe4ucm/uZVkmzDpPkLtd34d0
 FwoFwj7jCXIfDAb/btOdz+cJe5wnWPN+v+8m9zvc2OM8Qe427vUB3U/JZPJP
 3OZ/7MPizobDYcKs4xvDC/hzuRyc98J3eT0eD4VCIYrFYoQMnCaRSFAkEiG/
 3w93RNgtHBOvGQ+MZ8bSYR4Zt4xzm7PgtogjO+fQL4e9j4w=
-                  "], {{0, 31}, {31, 0}}, {0, 255},
-                  ColorFunction->RGBColor],
-                 BoxForm`ImageTag[
-                 "Byte", ColorSpace -> "RGB", Interleaving -> True],
-                 Selectable->False],
-                BaseStyle->"ImageGraphics",
-                ImageSizeRaw->{31, 31},
-                PlotRange->{{0, 31}, {0, 31}}]\);
+"], {{0, 31}, {31, 0}}, {0, 255},
+ColorFunction->RGBColor],
+BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+Selectable->False],
+BaseStyle->"ImageGraphics",
+ImageSizeRaw->{31, 31},
+PlotRange->{{0, 31}, {0, 31}}]\)*);
                 
-CloudDialogImage["JoinNowButton","Hover"] = \!\(\*
-               GraphicsBox[
-                TagBox[RasterBox[CompressedData["
+CloudDialogImage["JoinNowButton","Hover"] = imgr["JoinNowButton-Hover.9.png"](*\!\(\*
+GraphicsBox[
+TagBox[RasterBox[CompressedData["
 1:eJzNl7tKK1EUhidHISf4BKlErNKlsj9yIIF0SsAmxQwoFsEDai6T+/0eSKpA
 7ldShFP7ClaihYUvYakIynL/EjFmxkZmYRZ8w55pvllr/hlmbyn/9o5+SZJ0
 9lsc9uTAn9NTWd1fFye76vmhsiYWm3Nw0YAiUdJ3WKgNwYngVvDAwL2gJ9hZ
@@ -584,18 +595,17 @@ QULWOUHv7XZ7pdyBQICQN04w91arpXH7/X5C3jhB7yvmfsT/GrLOCebebDaX
 3U/o+4fcV7IsE7LOCeY+f7+fF9yHdrudkHVON3rH/kD4/ksftWYymchms5Hb
 7SbMQFEUQ/F4POR0OsliscD9V/pc2CYeCC4E14Ibg7kUVATbOnvB9yJGPu1D
 XwEQI/Os
-                  "], {{0, 31}, {31, 0}}, {0, 255},
-                  ColorFunction->RGBColor],
-                 BoxForm`ImageTag[
-                 "Byte", ColorSpace -> "RGB", Interleaving -> True],
-                 Selectable->False],
-                BaseStyle->"ImageGraphics",
-                ImageSizeRaw->{31, 31},
-                PlotRange->{{0, 31}, {0, 31}}]\);
+"], {{0, 31}, {31, 0}}, {0, 255},
+ColorFunction->RGBColor],
+BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+Selectable->False],
+BaseStyle->"ImageGraphics",
+ImageSizeRaw->{31, 31},
+PlotRange->{{0, 31}, {0, 31}}]\)*);
                 
-CloudDialogImage["JoinNowButton","Pressed"] = \!\(\*
-               GraphicsBox[
-                TagBox[RasterBox[CompressedData["
+CloudDialogImage["JoinNowButton","Pressed"] = imgr["JoinNowButton-Pressed.9.png"](*\!\(\*
+GraphicsBox[
+TagBox[RasterBox[CompressedData["
 1:eJzNl8mKE0EYxzvGgGQeQowkl0AuAU+5aCSQfd/Xzr4vM4LMO/gOPsGc5xU8
 iXPw4Et4HBlQPuvXJJhp4mWsOCn4hU5XUf/+1up+0V3lhk8Mw7h4pn5y5vvX
 5+fmZf6p+vPm8t2g61QXz7dwU8MQNYyHsDfOFEvFV8XtEfiu+Kh4ZdM+czqd
@@ -610,14 +620,13 @@ TG/jPLFrMz+bzbSD7cScXP6bNr5ZLBbaQZ+9yWX6Cz3dro1vlsuldubzueV3
 rN1sNlqxa1PjSu/nnvbA7/dbsTl2vLfv51fGn+F0OBzi9Xqtc4a+ix8eCrbt
 4PygrnhnCAaD4nK50H5r3B98JlYU14ovihvNfFJ8ULw88C24G3JE7n2H/gY9
 6vbm
-                  "], {{0, 31}, {31, 0}}, {0, 255},
-                  ColorFunction->RGBColor],
-                 BoxForm`ImageTag[
-                 "Byte", ColorSpace -> "RGB", Interleaving -> True],
-                 Selectable->False],
-                BaseStyle->"ImageGraphics",
-                ImageSizeRaw->{31, 31},
-                PlotRange->{{0, 31}, {0, 31}}]\);
+"], {{0, 31}, {31, 0}}, {0, 255},
+ColorFunction->RGBColor],
+BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+Selectable->False],
+BaseStyle->"ImageGraphics",
+ImageSizeRaw->{31, 31},
+PlotRange->{{0, 31}, {0, 31}}]\)*);
   
 End[]
 

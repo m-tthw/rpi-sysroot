@@ -1,6 +1,6 @@
 /*************************************************************************
 
-        Copyright 1986 through 2013 by Wolfram Research Inc.
+        Copyright 1986 through 2014 by Wolfram Research Inc.
         All rights reserved
 
 *************************************************************************/
@@ -3567,6 +3567,11 @@ typedef unsigned long dev_options;
 #endif
 
 
+#if MLINTERFACE >= 4
+#define MLDEVICE_MODE      MLDEVICE_MASK + 6UL                                    /* long */
+#define MLDEVICE_OPTIONS   MLDEVICE_MASK + 7UL                                    /* long */
+#endif
+
 
 
 #define YIELDVERSION 1
@@ -4408,6 +4413,79 @@ ML_END_EXTERN_C
 
 
 
+
+#ifndef MLSERVICEDISCOVERYAPI_H
+#define MLSERVICEDISCOVERYAPI_H
+
+
+
+
+
+
+#if MLINTERFACE >= 4
+
+ML_EXTERN_C
+
+#define MLSDADDSERVICE      0x0001
+#define MLSDREMOVESERVICE   0x0002
+#define MLSDBROWSEERROR     0x0003
+#define MLSDRESOLVEERROR    0x0004
+#define MLSDREGISTERERROR   0x0005
+#define MLSDMORECOMING      0x0010
+#define MLSDNAMECONFLICT    0x0007
+
+typedef void * MLServiceRef;
+
+typedef void (*MLBrowseCallbackFunction)(MLEnvironment env, MLServiceRef ref, int flag, 
+	const char *serviceName, void *context);
+
+MLDECL(int,     MLBrowseForLinkServices, (MLEnvironment env, 
+    MLBrowseCallbackFunction callbackFunction, const char *domain, void *context, MLServiceRef *ref));
+
+MLDECL(void, MLStopBrowsingForLinkServices, (MLEnvironment env, MLServiceRef ref));
+
+typedef void (*MLResolveCallbackFunction)(MLEnvironment env, MLServiceRef ref, const char *serviceName, 
+	const char *linkName, const char *protocol, int options, void *context);
+
+MLDECL(int, MLResolveLinkService, (MLEnvironment env,
+    MLResolveCallbackFunction, const char *serviceName, void *context, MLServiceRef *ref));
+
+MLDECL(void, MLStopResolvingLinkService, (MLEnvironment env, MLServiceRef ref));
+
+typedef void (*MLRegisterCallbackFunction)(MLEnvironment env, MLServiceRef ref, int flag, const char *serviceName, 
+	void *context);
+
+MLDECL(MLINK, MLRegisterLinkServiceWithPortAndHostname, (MLEnvironment env, 
+    const char *serviceName, unsigned short port, const char *hostname, MLRegisterCallbackFunction function,
+    const char *domain, void *context, MLServiceRef *ref, int *error));
+
+MLDECL(MLINK, MLRegisterLinkServiceWithHostname, (MLEnvironment env,
+    const char *serviceName, const char *hostname, MLRegisterCallbackFunction function,
+    const char *domain, void *context, MLServiceRef *ref, int *error));
+
+MLDECL(MLINK, MLRegisterLinkService, (MLEnvironment env,
+    const char *serviceName, MLRegisterCallbackFunction function,
+    const char *domain, void *context, MLServiceRef *, int *error));
+
+MLDECL(MLINK, MLRegisterLinkServiceUsingLinkProtocol, (MLEnvironment env, 
+	const char *serviceName, unsigned short port, const char *hostname, const char *protocol, 
+	MLRegisterCallbackFunction function, const char *domain, void *context, MLServiceRef *ref, int *error));
+
+MLDECL(void, MLStopRegisteringLinkService, (MLEnvironment env, MLINK link, MLServiceRef ref));
+
+ML_END_EXTERN_C
+
+#endif /* MLINTERFACE >= 4 */
+
+#endif /* end of include guard: MLSERVICEDISCOVERYAPI_H */
+
+
+
+
+
+
+
+
 #ifndef _MLERRORS_H
 #define _MLERRORS_H
 
@@ -4509,7 +4587,16 @@ ML_END_EXTERN_C
 #define MLEBADOPTSTR        54
 #define MLENEEDBIGGERBUFFER 55
 #define MLEBADNUMERICSID    56
-#define MLELAST MLENEEDBIGGERBUFFER
+#define MLESERVICENOTAVAILABLE 57
+#define MLEBADARGUMENT      58
+#define MLEBADDISCOVERYHOSTNAME         59
+#define MLEBADDISCOVERYDOMAINNAME       60
+#define MLEBADSERVICENAME               61
+#define MLEBADDISCOVERYSTATE            62
+#define MLEBADDISCOVERYFLAGS            63
+#define MLEDISCOVERYNAMECOLLISION       64
+#define MLEBADSERVICEDISCOVERY          65
+#define MLELAST MLESERVICENOTAVAILABLE
 #endif
 
 #define MLETRACEON         996  /* */

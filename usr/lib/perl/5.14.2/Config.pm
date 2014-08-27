@@ -96,7 +96,7 @@ tie %Config, 'Config', {
     ldlibpthname => 'LD_LIBRARY_PATH',
     libpth => '/usr/local/lib /lib/arm-linux-gnueabihf /lib /usr/lib/arm-linux-gnueabihf /usr/lib',
     osname => 'linux',
-    osvers => '3.0.59',
+    osvers => '3.2.0-4-mx5',
     path_sep => ':',
     privlibexp => '/usr/share/perl/5.14',
     scriptdir => '/usr/bin',

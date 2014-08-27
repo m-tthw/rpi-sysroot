@@ -3,14 +3,10 @@
 (* created 2013/09/20*)
 
 Paclet[
-    Name -> "OAuth",
-    Version -> "0.0.1",
-    MathematicaVersion -> "10+",
-    Creator -> "Bob Sandheinrich",
-    Extensions -> 
-        {
-            {"Documentation", Language -> "English"}
-        }
+	Name -> "OAuth",
+	Version -> "0.1.0",
+	MathematicaVersion -> "10+",
+	Extensions -> {
+		{"Kernel", Root->"Kernel", Context->{"OAuth`","OAuthLoader`"}}
+	}
 ]
-
-

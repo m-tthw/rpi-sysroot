@@ -9,7 +9,7 @@
 
 (* :Mathematica Version: 9.0 *)
 
-(* :Copyright: Mathematica source code (c) 1999-2013, Wolfram Research, Inc. All rights reserved. *)
+(* :Copyright: Mathematica source code (c) 1999-2014, Wolfram Research, Inc. All rights reserved. *)
 
 (* :Discussion: This file is a component of the PacletManager Mathematica source code. *)
 

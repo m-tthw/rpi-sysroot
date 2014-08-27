@@ -9,7 +9,7 @@
 
 (* :Mathematica Version: 8.1 *)
 
-(* :Copyright: Mathematica source code (c) 1999-2013, Wolfram Research, Inc. All rights reserved. *)
+(* :Copyright: Mathematica source code (c) 1999-2014, Wolfram Research, Inc. All rights reserved. *)
 
 (* :Discussion: This file is a component of the PacletManager Mathematica source code. *)
 
@@ -228,20 +228,14 @@ $pacletVersion = "9.0.0";
 
 (* Not a run-time function; used only during build process, to create the PacletDB.m file.
 
-   The directory arguments for this function are a little weird, to accommodate the pre-existing usage in the
-   doc layout build. The first signature below takes a single doc dir argument, and is suitable for building directly
-   out of a Mathematica layout, with layoutTopLevelDir being simply $InstallationDirectory. The second signature is
-   the one used by the doc build process, and it needs separate dirs for System and Packages docs. The dir you supply for
-   systemDocsDir should have a Documentation/lang/System hierarchy beneath it; The dir you supply for packagesDocsDir
-   should have a Packages dir beneath it (as if you had already gone down inside Documentation/lang).
+   You can build directly out of an installed layout, with layoutTopLevelDir being simply $InstallationDirectory.
+   More precisely, The dir you supply for layoutTopLevelDir merely needs a Documentation/lang/System and
+   Documentation/lang/Packages hierarchy beneath it.
 *)
 BuildDocDBFile[destDir_String, layoutTopLevelDir_String, language_String] :=
-    BuildDocDBFile[destDir, layoutTopLevelDir, FileNameJoin[{layoutTopLevelDir, "Documentation", language}], language]
-
-BuildDocDBFile[destDir_String, systemDocsDir_String, packagesDocsDir_String, language_String] :=
     Module[{systemLinkBasesAndResNames, packagesLinkBasesAndResNames, linkBasesAndResNameLists, hashes,
              scratchFile, strm, startPositions, pos, pacletStartPos, destFile, allMsgs, resNameList},
-        SetDirectory[FileNameJoin[{systemDocsDir, "Documentation", language}]];
+        SetDirectory[FileNameJoin[{layoutTopLevelDir, "Documentation", language}]];
         systemLinkBasesAndResNames =
             Function[{fileName},
                 If[MatchQ[FileNameSplit[fileName], {"System", "ReferencePages", "Messages", __}],
@@ -266,9 +260,7 @@ BuildDocDBFile[destDir_String, systemDocsDir_String, packagesDocsDir_String, lan
                 ]
             ] /@ 
             Flatten[FileNames["*.nb", #, Infinity] & /@ $systemDocDirs];
-            
-        ResetDirectory[];
-        SetDirectory[packagesDocsDir];
+
         packagesLinkBasesAndResNames =
             Function[{fileName},
                 {FileNameSplit[fileName][[2]],

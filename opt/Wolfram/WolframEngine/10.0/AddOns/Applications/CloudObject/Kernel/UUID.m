@@ -77,7 +77,8 @@ ParseUUID[uuid_] := Module[{name, ext, parts, number},
 SetAttributes[ParseUUID,{ReadProtected}];
 Protect[ParseUUID];
 
-UUIDQ[uuid_] := ParseUUID[uuid] =!= {False, False}
+UUIDQ[uuid_String] := ParseUUID[uuid] =!= {False, False}
+UUIDQ[_] := False
 
 SetAttributes[UUIDQ,{ReadProtected}];
 Protect[UUIDQ];

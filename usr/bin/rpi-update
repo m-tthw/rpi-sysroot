@@ -3,7 +3,7 @@
 set -o nounset
 set -o errexit
 
-REPO_URI="http://github.com/Hexxeh/rpi-firmware"
+REPO_URI=${REPO_URI:-"https://github.com/Hexxeh/rpi-firmware"}
 
 UPDATE_SELF=${UPDATE_SELF:-1}
 UPDATE_URI="https://github.com/Hexxeh/rpi-update/raw/master/rpi-update"
@@ -17,21 +17,23 @@ fi
 BRANCH=${BRANCH:-"master"}
 ROOT_PATH=${ROOT_PATH:-"/"}
 BOOT_PATH=${BOOT_PATH:-"/boot"}
+WORK_PATH=${WORK_PATH:-"${ROOT_PATH}/root"}
 SKIP_KERNEL=${SKIP_KERNEL:-0}
+SKIP_SDK=${SKIP_SDK:-0}
 RPI_UPDATE_UNSUPPORTED=${RPI_UPDATE_UNSUPPORTED:-0}
 FW_REPO="${REPO_URI}.git"
-FW_REPOLOCAL="${ROOT_PATH}/root/.rpi-firmware"
+FW_REPOLOCAL="${WORK_PATH}/.rpi-firmware"
 FW_PATH="${BOOT_PATH}"
 FW_MODPATH="${ROOT_PATH}/lib/modules"
 FW_REV=${1:-""}
-GITCMD="git --git-dir=\"${FW_REPOLOCAL}/.git\" --work-tree=\"${FW_REPOLOCAL}\""
-[ "${RPI_UPDATE_UNSUPPORTED}" -ne 0 ] && echo -e "You appear to be trying to update firmware on an incompatible distribution. To force update, run the following:\nsudo -E RPI_UPDATE_UNSUPPORTED=0 ./rpi-update" && exit 1
+FW_REVFILE="${FW_PATH}/.firmware_revision"
+[ "${RPI_UPDATE_UNSUPPORTED}" -ne 0 ] && echo -e "You appear to be trying to update firmware on an incompatible distribution. To force update, run the following:\nsudo -E RPI_UPDATE_UNSUPPORTED=0 rpi-update" && exit 1
 
 function update_self() {
 	echo " *** Performing self-update"
 	_tempFileName="$0.tmp"
 
-	if ! wget --output-document="${_tempFileName}" "${UPDATE_URI}"; then
+	if ! curl -L --output "${_tempFileName}" "${UPDATE_URI}"; then
 		echo " !!! Failed to download update for rpi-update!"
 		echo " !!! Make sure you have ca-certificates installed and that the time is set correctly"
 		exit 1
@@ -43,8 +45,7 @@ function update_self() {
 		exit 1
 	fi
 
-	cat > /root/.updateScript.sh << EOF
-	#!/bin/bash
+	cat > "${WORK_PATH}/.updateScript.sh" << EOF
 	if mv "${_tempFileName}" "$0"; then
 		rm -- "\$0"
 		exec env UPDATE_SELF=0 /bin/bash "$0" "${FW_REV}"
@@ -54,24 +55,25 @@ function update_self() {
 EOF
 
 	echo " *** Relaunching after update"
-	exec /bin/bash /root/.updateScript.sh
+	exec /bin/bash "${WORK_PATH}/.updateScript.sh"
 }
 
 function update_modules {
 	if [[ ${SKIP_KERNEL} -eq 0 ]]; then
-		echo " *** Updating modules"
+		echo " *** Updating kernel modules"
 		cp -vR "${FW_REPOLOCAL}/modules/"* "${FW_MODPATH}/"
 		find "${FW_REPOLOCAL}/modules" -mindepth 1 -maxdepth 1 -type d | while read DIR; do
-			echo " *** depmod $(basename "${DIR}")"
-			depmod -b "${ROOT_PATH}" -a $(basename "${DIR}")
+			BASEDIR=$(basename "${DIR}")
+			echo " *** depmod ${BASEDIR}"
+			depmod -b "${ROOT_PATH}" -a "${BASEDIR}"
 		done
 	else
-		echo " *** As requested, not updating modules"
+		echo " *** As requested, not updating kernel modules"
 	fi
 }
 
-function update_sdk {
-	echo " *** Updating SDK"
+function update_vc_libs {
+	echo " *** Updating VideoCore libraries"
 
 	ELFOUTPUT=$(readelf -a "${ROOT_PATH}/bin/bash")
 	if [ "${ELFOUTPUT}" != "${ELFOUTPUT/VFP_args/}" ]; then
@@ -81,18 +83,29 @@ function update_sdk {
 		echo " *** Using SoftFP libraries"
 		cp -vR "${FW_REPOLOCAL}/vc/softfp/"* "${ROOT_PATH}/"
 	fi
-	cp -vR "${FW_REPOLOCAL}/vc/sdk/"* "${ROOT_PATH}/"
+}
+
+function update_sdk {
+	if [[ ${SKIP_SDK} -eq 0 ]]; then
+		echo " *** Updating SDK"
+		cp -vR "${FW_REPOLOCAL}/vc/sdk/"* "${ROOT_PATH}/"
+	else
+		echo " *** As requested, not updating SDK"
+	fi
 }
 
 function update_firmware {
 	echo " *** Updating firmware"
-	rm -rf ${FW_PATH}/*.elf
-	rm -rf ${FW_PATH}/*.bin
-	cp -v ${FW_REPOLOCAL}/*.elf "${FW_PATH}/"
-	cp -v ${FW_REPOLOCAL}/*.bin "${FW_PATH}/"
-	cp -v ${FW_REPOLOCAL}/*.dat "${FW_PATH}/"
+	rm -rf "${FW_PATH}/"*.elf
+	rm -rf "${FW_PATH}/"*.bin
+	cp -v "${FW_REPOLOCAL}/"*.elf "${FW_PATH}/"
+	cp -v "${FW_REPOLOCAL}/"*.bin "${FW_PATH}/"
+	cp -v "${FW_REPOLOCAL}/"*.dat "${FW_PATH}/"
 	if [[ ${SKIP_KERNEL} -eq 0 ]]; then
 		cp -v "${FW_REPOLOCAL}/"*.img "${FW_PATH}/"
+		if [[ -n $(shopt -s nullglob; echo "${FW_REPOLOCAL}/"*.dtb) ]]; then
+			cp -v "${FW_REPOLOCAL}/"*.dtb "${FW_PATH}/"
+		fi
 	else
 		echo " *** As requested, not updating kernel"
 	fi
@@ -105,12 +118,12 @@ function finalise {
 	fi
 	echo " *** Running ldconfig"
 	ldconfig -r "${ROOT_PATH}"
-	if [[ ${FW_REV} == "" ]]; then
+	if [[ "${FW_REV}" == "" ]]; then
 		echo " *** Storing current firmware revision"
-		eval ${GITCMD} rev-parse ${BRANCH} > "${FW_PATH}/.firmware_revision"
-  else
-    echo ${FW_REV} > "${FW_PATH}/.firmware_revision"
-  fi
+		git --git-dir="${FW_REPOLOCAL}/.git" rev-parse "${BRANCH}" > "${FW_REVFILE}"
+	else
+		echo "${FW_REV}" > "${FW_REVFILE}"
+	fi
 	echo " *** Syncing changes to disk"
 	sync
 }
@@ -119,7 +132,7 @@ function download_repo {
 	echo " *** Setting up firmware (this may take a few minutes)"
 	mkdir -p "${FW_REPOLOCAL}"
 	set +e
-	git clone "${FW_REPO}" "${FW_REPOLOCAL}" --depth=1 --branch ${BRANCH}
+	git clone "${FW_REPO}" "${FW_REPOLOCAL}" --depth=1 --branch "${BRANCH}"
 	RETVAL=$?
 	set -e
 	if [[ ${RETVAL} -ne 0 ]]; then
@@ -130,7 +143,7 @@ function download_repo {
 
 function update_repo {
 	# updating a depth=1 git tree doesn't work, so just kill it and clone a new one
-	rm -rf ${FW_REPOLOCAL}
+	rm -rf "${FW_REPOLOCAL}"
 	download_repo
 }
 
@@ -138,15 +151,26 @@ function do_backup {
 	echo " *** Backing up files"
 	rm -rf "${FW_PATH}.bak"
 	cp -va "${FW_PATH}" "${FW_PATH}.bak"
-	rm -rf "${FW_MODPATH}.bak"
-	cp -va "${FW_MODPATH}" "${FW_MODPATH}.bak"
+	if [[ ${SKIP_KERNEL} -eq 0 ]]; then
+		rm -rf "${FW_MODPATH}.bak"
+		cp -va "${FW_MODPATH}" "${FW_MODPATH}.bak"
+	fi
 }
 
 function do_update {
+	if [[ -f "${FW_REPOLOCAL}/pre-install" ]]; then
+		echo " *** Running pre-install script"
+		source "${FW_REPOLOCAL}/pre-install"
+	fi
 	update_firmware
 	update_modules
+	update_vc_libs
 	update_sdk
 	finalise
+	if [[ -f "${FW_REPOLOCAL}/post-install" ]]; then
+		echo " *** Running post-install script"
+		source "${FW_REPOLOCAL}/post-install"
+	fi
 	echo " *** If no errors appeared, your firmware was successfully $1"
 	if [[ "${ROOT_PATH}" == "/" ]]; then
 		echo " *** A reboot is needed to activate the new firmware"
@@ -156,9 +180,11 @@ function do_update {
 function download_rev {
 	echo " *** Downloading specific firmware revision (this will take a few minutes)"
 	mkdir -p "${FW_REPOLOCAL}"
-	wget "${REPO_URI}/tarball/${FW_REV}" -O "${FW_REPOLOCAL}/${FW_REV}.tar.gz"
-	tar xzf "${FW_REPOLOCAL}/${FW_REV}.tar.gz" -C "${FW_REPOLOCAL}" --strip-components=1
-	rm "${FW_REPOLOCAL}/${FW_REV}.tar.gz"
+	FW_TARBALL="${FW_REPOLOCAL}/${FW_REV}.tar.gz"
+	echo " *** Decompressing downloaded firmware archive"
+	curl -L --output "${FW_TARBALL}" "${REPO_URI}/tarball/${FW_REV}"
+	tar xzf "${FW_TARBALL}" -C "${FW_REPOLOCAL}" --strip-components=1
+	rm "${FW_TARBALL}"
 }
 
 if [[ ${EUID} -ne 0 ]]; then
@@ -176,7 +202,8 @@ if [[ ! -d "${FW_PATH}" ]]; then
 	echo " !!! ${FW_PATH} doesn't exist"
 	exit 1
 fi
-if [[ ! -d "${FW_MODPATH}" ]]; then
+
+if [[ ${SKIP_KERNEL} -eq 0 ]] && [[ ! -d "${FW_MODPATH}" ]]; then
 	echo " !!! ${FW_MODPATH} doesn't exist"
 	exit 1
 fi
@@ -196,13 +223,13 @@ command -v readelf >/dev/null 2>&1 || {
 }
 
 echo " *** ARM/GPU split is now defined in /boot/config.txt using the gpu_mem option!"
-if [[ ${FW_REV} != "" ]]; then
+if [[ "${FW_REV}" != "" ]]; then
 	download_rev
 	do_update "updated to revision ${FW_REV}"
-elif [[ -f "${FW_REPOLOCAL}/.git/config" ]]; then
+elif [[ -f "${FW_REPOLOCAL}/bootcode.bin" ]]; then
 	# ask git server version before spending time cloning
-	GITREV=$(git ls-remote -h ${REPO_URI} refs/heads/${BRANCH} | awk '{print $1}')
-	if [[ -f "${FW_PATH}/.firmware_revision" ]] && [[ $(cat "${FW_PATH}/.firmware_revision") == "$GITREV" ]]; then
+	GITREV=$(git ls-remote -h "${REPO_URI}" "refs/heads/${BRANCH}" | awk '{print $1}')
+	if [[ -f "${FW_REVFILE}" ]] && [[ $(cat "${FW_REVFILE}") == "$GITREV" ]]; then
 		echo " *** Your firmware is already up to date"
 		# no changes made, nothing to finalise
 		# finalise
@@ -212,6 +239,10 @@ elif [[ -f "${FW_REPOLOCAL}/.git/config" ]]; then
 	fi
 else
 	echo " *** We're running for the first time"
+	if [[ -d "${FW_REPOLOCAL}" ]]; then
+		# rpi-update must have errored during the first run
+		rm -rf "${FW_REPOLOCAL}"
+	fi
 	download_repo
 	do_backup
 	do_update "setup"

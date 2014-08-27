@@ -23,7 +23,8 @@ CCompilerDirectories::usage = "CCompilerDirectories[] returns the list of workin
 
 $CCompilerInternalDirectory::usage = "$CCompilerInternalDirectory is a directory used by Mathematica to create DLLs."
 
-CreateObjectFile::usage = "CreateObject[source, name] compiles the C code source file into its object file."
+CreateObjectFile::usage = "CreateObject[source, name] compiles the C code source into its object file.
+CreateObject[{cfile}, name] compiles the C code source file into its object file."
 
 QuoteFile::usage = "QuoteFile[filepath] returns filepath surrounded by quotes."
 
@@ -92,6 +93,8 @@ CreateLibrary::precompiletype = CreateExecutable::precompiletype = CreateObjectF
 CreateLibrary::postcompiletype = CreateExecutable::postcompiletype = CreateObjectFile::postcompiletype = "\"PostCompileCommands\" -> `1` should be a string."
 
 CreateLibrary::debug = CreateExecutable::debug = CreateObjectFile::debug = "Debug specification \"Debug\" -> `1` should be True or False."
+
+CreateLibrary::lang = CreateExecutable::lang = CreateObjectFile::lang = "Language specification \"Language\" -> `1` is not \"C\" or \"C++\"."
 
 Begin["`Private`"];
 

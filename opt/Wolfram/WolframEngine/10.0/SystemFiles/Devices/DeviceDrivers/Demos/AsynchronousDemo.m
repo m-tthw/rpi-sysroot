@@ -1,6 +1,6 @@
-(* $Id: AsynchronousDemo.m,v 1.1.2.1 2013/10/10 19:08:48 bakshee Exp $ *)
+(* $Id: AsynchronousDemo.m,v 1.1.2.4 2013/12/04 22:53:46 bakshee Exp $ *)
 
-(* "DriverVersion" -> 0.001 *)
+(* A demo for DeviceExecuteAsynchronous. Also implements properties. *)
 
 
 BeginPackage["DeviceAPI`Drivers`Demos`AsynchronousDemo`"];
@@ -17,23 +17,29 @@ eventFunction[devHandle_][_, "cookies", data_] := (
 )
 
 getProp[devHandle_,prop_] := properties[devHandle][prop]
+setProp[devHandle_,prop_,rhs_] := properties[devHandle][prop] = rhs
 
 fetch[handles:{_,devHandle_},url_,opts___?OptionQ] := 
 	fetch[handles, url, eventFunction[devHandle], opts]
 
 fetch[_,args__] := URLFetchAsynchronous[args]
 
+async[_,"Read",url_,efun_] := URLFetchAsynchronous[url,efun]
+async[_,"Save",url_,file_,opts___,efun_] := URLSaveAsynchronous[url,file,efun,opts]
+
 		   
 (*-----------------------------------------------------------------*)  
 
-DeviceAPI`DeviceClassRegister["AsynchronousDemo", Null ,
-	"ReadAsynchronousFunction" -> fetch,
+DeviceAPI`DeviceClassRegister["AsynchronousDemo",
+	"ExecuteAsynchronousFunction" -> async,
 	"NativeProperties" -> {"Cookies", "LastAccess"},
 	"GetPropertyFunction" -> getProp,
+	"SetPropertyFunction" -> setProp,
 	"CloseFunction" -> (Quiet[
 		properties[ #[[2]] ]["LastAccess"] =.;
 		properties[ #[[2]] ]["Cookies"] =.;
-	]&)
+	]&),
+	"DriverVersion" -> 0.001
 ];
 
 End[];

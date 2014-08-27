@@ -38,7 +38,7 @@ libapt-pkg.so.4.12 libapt-pkg4.12 #MINVER#
  _Z12UnmountCdromSs@Base 0.8.0
  _Z12_GetErrorObjv@Base 0.8.0
  _Z12pkgFixBrokenR11pkgDepCache@Base 0.8.0
- _Z13AcquireUpdateR10pkgAcquireibb@Base 0.9.7.9+rpi1
+ _Z13AcquireUpdateR10pkgAcquireibb@Base 0.9.7.9+rpi1+deb7u1
  _Z13DeQuoteStringRKN9__gnu_cxx17__normal_iteratorIPKcSsEES5_@Base 0.8.0
  _Z13DeQuoteStringRKSs@Base 0.8.0
  _Z13OutputInDepthmPKc@Base 0.8.0
@@ -457,7 +457,7 @@ libapt-pkg.so.4.12 libapt-pkg4.12 #MINVER#
  _ZN12pkgAcqMethod4FailEb@Base 0.8.0
  _ZN12pkgAcqMethod5FetchEPNS_9FetchItemE@Base 0.8.0
  _ZN12pkgAcqMethod6StatusEPKcz@Base 0.8.0
- _ZN12pkgAcqMethod7DequeueEv@Base 0.9.7.9+rpi1
+ _ZN12pkgAcqMethod7DequeueEv@Base 0.9.7.9+rpi1+deb7u1
  _ZN12pkgAcqMethod7URIDoneERNS_11FetchResultEPS0_@Base 0.8.0
  _ZN12pkgAcqMethod8RedirectERKSs@Base 0.8.0
  _ZN12pkgAcqMethod8URIStartERNS_11FetchResultE@Base 0.8.0
@@ -530,7 +530,7 @@ libapt-pkg.so.4.12 libapt-pkg4.12 #MINVER#
  _ZN13Configuration3SetEPKcRKSs@Base 0.8.0
  _ZN13Configuration3SetEPKcRKi@Base 0.8.0
  _ZN13Configuration4DumpERSo@Base 0.8.0
- _ZN13Configuration4DumpERSoPKcS2_b@Base 0.9.7.9+rpi1
+ _ZN13Configuration4DumpERSoPKcS2_b@Base 0.9.7.9+rpi1+deb7u1
  _ZN13Configuration5ClearERKSs@Base 0.8.0
  _ZN13Configuration5ClearERKSsRKi@Base 0.8.0
  _ZN13Configuration5ClearERKSsS1_@Base 0.8.0
@@ -952,19 +952,19 @@ libapt-pkg.so.4.12 libapt-pkg4.12 #MINVER#
  _ZN3APT11CacheFilter23PackageNameMatchesRegExD2Ev@Base 0.8.0
  _ZN3APT11CacheFilter23PackageNameMatchesRegExclERKN8pkgCache11GrpIteratorE@Base 0.8.0
  _ZN3APT11CacheFilter23PackageNameMatchesRegExclERKN8pkgCache11PkgIteratorE@Base 0.8.0
- _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationC1ERKSsb@Base 0.9.7.9+rpi1
- _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationC2ERKSsb@Base 0.9.7.9+rpi1
- _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationD1Ev@Base 0.9.7.9+rpi1
- _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationD2Ev@Base 0.9.7.9+rpi1
- _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationclERKN8pkgCache11PkgIteratorE@Base 0.9.7.9+rpi1
- _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationclERKN8pkgCache11VerIteratorE@Base 0.9.7.9+rpi1
- _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationclERKPKc@Base 0.9.7.9+rpi1
+ _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationC1ERKSsb@Base 0.9.7.9+rpi1+deb7u1
+ _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationC2ERKSsb@Base 0.9.7.9+rpi1+deb7u1
+ _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationD1Ev@Base 0.9.7.9+rpi1+deb7u1
+ _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationD2Ev@Base 0.9.7.9+rpi1+deb7u1
+ _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationclERKN8pkgCache11PkgIteratorE@Base 0.9.7.9+rpi1+deb7u1
+ _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationclERKN8pkgCache11VerIteratorE@Base 0.9.7.9+rpi1+deb7u1
+ _ZN3APT11CacheFilter39PackageArchitectureMatchesSpecificationclERKPKc@Base 0.9.7.9+rpi1+deb7u1
  _ZN3APT13Configuration10CompressorC1EPKcS3_S3_S3_S3_t@Base 0.8.12
  _ZN3APT13Configuration10CompressorC2EPKcS3_S3_S3_S3_t@Base 0.8.12
  _ZN3APT13Configuration10CompressorD1Ev@Base 0.8.12
  _ZN3APT13Configuration10CompressorD2Ev@Base 0.8.12
  _ZN3APT13Configuration12getLanguagesERKbS2_PPKc@Base 0.8.0
- _ZN3APT13Configuration13checkLanguageESsb@Base 0.9.7.9+rpi1
+ _ZN3APT13Configuration13checkLanguageESsb@Base 0.9.7.9+rpi1+deb7u1
  _ZN3APT13Configuration14getCompressorsEb@Base 0.8.12
  _ZN3APT13Configuration16getArchitecturesERKb@Base 0.8.0
  _ZN3APT13Configuration17checkArchitectureERKSs@Base 0.8.0
@@ -1000,7 +1000,7 @@ libapt-pkg.so.4.12 libapt-pkg4.12 #MINVER#
  _ZN3APT25PackageContainerInterface23FromModifierCommandLineERtPS0_R12pkgCacheFilePKcRKSt4listINS0_8ModifierESaIS8_EERNS_14CacheSetHelperE@Base 0.8.16~exp9
  _ZN3APT25PackageContainerInterface8FromNameER12pkgCacheFileRKSsRNS_14CacheSetHelperE@Base 0.8.16~exp9
  _ZN3APT25PackageContainerInterface8FromTaskEPS0_R12pkgCacheFileSsRNS_14CacheSetHelperE@Base 0.8.16~exp9
- _ZN3APT25PackageContainerInterface9FromGroupEPS0_R12pkgCacheFileSsRNS_14CacheSetHelperE@Base 0.9.7.9+rpi1
+ _ZN3APT25PackageContainerInterface9FromGroupEPS0_R12pkgCacheFileSsRNS_14CacheSetHelperE@Base 0.9.7.9+rpi1+deb7u1
  _ZN3APT25PackageContainerInterface9FromRegExEPS0_R12pkgCacheFileSsRNS_14CacheSetHelperE@Base 0.8.16~exp9
  _ZN3APT25VersionContainerInterface10FromStringEPS0_R12pkgCacheFileSsRKNS0_7VersionERNS_14CacheSetHelperEb@Base 0.8.16~exp9
  _ZN3APT25VersionContainerInterface11FromPackageEPS0_R12pkgCacheFileRKN8pkgCache11PkgIteratorERKNS0_7VersionERNS_14CacheSetHelperE@Base 0.8.16~exp9
@@ -1116,7 +1116,7 @@ libapt-pkg.so.4.12 libapt-pkg4.12 #MINVER#
  _ZN8pkgCdrom12FindPackagesESsRSt6vectorISsSaISsEES3_S3_S3_RSsP14pkgCdromStatusj@Base 0.8.0
  _ZN8pkgCdrom13WriteDatabaseER13Configuration@Base 0.8.0
  _ZN8pkgCdrom14DropBinaryArchERSt6vectorISsSaISsEE@Base 0.8.0
- _ZN8pkgCdrom15DropTranslationERSt6vectorISsSaISsEE@Base 0.9.7.9+rpi1
+ _ZN8pkgCdrom15DropTranslationERSt6vectorISsSaISsEE@Base 0.9.7.9+rpi1+deb7u1
  _ZN8pkgCdrom15WriteSourceListESsRSt6vectorISsSaISsEEb@Base 0.8.0
  _ZN8pkgCdrom16ReduceSourcelistESsRSt6vectorISsSaISsEE@Base 0.8.0
  _ZN8pkgCdrom3AddEP14pkgCdromStatus@Base 0.8.0
@@ -1325,7 +1325,7 @@ libapt-pkg.so.4.12 libapt-pkg4.12 #MINVER#
  _ZNK8pkgCache11DepIterator11IsIgnorableERKNS_11PrvIteratorE@Base 0.8.16~exp10
  _ZNK8pkgCache11DepIterator12OwnerPointerEv@Base 0.8.0
  _ZNK8pkgCache11DepIterator14SmartTargetPkgERNS_11PkgIteratorE@Base 0.8.0
- _ZNK8pkgCache11DepIterator19IsMultiArchImplicitEv@Base 0.9.7.9+rpi1
+ _ZNK8pkgCache11DepIterator19IsMultiArchImplicitEv@Base 0.9.7.9+rpi1+deb7u1
  _ZNK8pkgCache11GrpIterator12OwnerPointerEv@Base 0.8.0
  _ZNK8pkgCache11GrpIterator16FindPreferredPkgERKb@Base 0.8.0
  _ZNK8pkgCache11GrpIterator7FindPkgESs@Base 0.8.0
@@ -1336,7 +1336,7 @@ libapt-pkg.so.4.12 libapt-pkg4.12 #MINVER#
  _ZNK8pkgCache11PkgIterator5StateEv@Base 0.8.0
  _ZNK8pkgCache11PkgIterator8FullNameERKb@Base 0.8.0
  _ZNK8pkgCache11PrvIterator12OwnerPointerEv@Base 0.8.0
- _ZNK8pkgCache11PrvIterator19IsMultiArchImplicitEv@Base 0.9.7.9+rpi1
+ _ZNK8pkgCache11PrvIterator19IsMultiArchImplicitEv@Base 0.9.7.9+rpi1+deb7u1
  _ZNK8pkgCache11VerIterator10CompareVerERKS0_@Base 0.8.0
  _ZNK8pkgCache11VerIterator10NewestFileEv@Base 0.8.0
  _ZNK8pkgCache11VerIterator12DownloadableEv@Base 0.8.0

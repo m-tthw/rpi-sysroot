@@ -106,7 +106,7 @@ DatabaseBuildFun[ "demo"] :=
         {
       SQLColumn["Entry", DataTypeName -> "INTEGER", Nullable -> True],
       SQLColumn["Value", DataTypeName -> "Double", Nullable -> True],
-      SQLColumn["Name", DataTypeName -> "VARCHAR", Nullable -> True]}];
+      SQLColumn["Name", DataTypeName -> "VARCHAR(16)", Nullable -> True]}];
         data = {{1, 5.6, "Day1"},
             {2, 5.9, "Day2"},
             {3, 7.2, "Day3"},

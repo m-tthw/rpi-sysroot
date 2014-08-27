@@ -1621,11 +1621,11 @@ The document you are saving will no longer be fully compatible with Wolfram CDF 
 	"cropImageRectTooltip" -> "Drag to move.\nDouble click to crop.",
 	
 	(* Size-limited output *)
-	"sizeExplanation" -> "A very large output was generated. Here is a sample of it:",
-	"sizeShowLess" -> "Show Less",
-	"sizeShowMore" -> "Show More",
-	"sizeShowAll" -> "Show Full Output",
-	"sizeChangeLimit" -> "Set Size Limit...",
+	"sizeExplanation" -> "A very large output was generated. Showing a sample of it:",
+	"sizeShowLess" -> "show less",
+	"sizeShowMore" -> "show more",
+	"sizeShowAll" -> "show full output",
+	"sizeChangeLimit" -> "set size limit...",
 	
 	(* SystemDialogInput file and sound dialog *)
 	"systemSoundInputText" -> "Input:",

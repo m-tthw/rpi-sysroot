@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //
-//   J/Link source code (c) 1999-2013, Wolfram Research, Inc. All rights reserved.
+//   J/Link source code (c) 1999-2014, Wolfram Research, Inc. All rights reserved.
 //
 //   Use is governed by the terms of the J/Link license agreement, which can be found at
 //   www.wolfram.com/solutions/mathlink/jlink.
@@ -31,29 +31,28 @@ import java.net.URLClassLoader;
 
 public class JLinkClassLoaderHelper extends URLClassLoader {
 
-    
+    JLinkClassLoader top = null;
     JLinkClassLoaderHelper prevLoader = null;
-    
-    private static final Object lockObject = new Object();
-        
-    JLinkClassLoaderHelper(URL[] urls, JLinkClassLoaderHelper prevLoader, ClassLoader parent) {
+            
+    JLinkClassLoaderHelper(URL[] urls, JLinkClassLoaderHelper prevLoader, ClassLoader parent, JLinkClassLoader top) {
         super(urls, parent);
         this.prevLoader = prevLoader;
+        this.top = top;
     }
     
     
     // Cannot override findLoadedClass() because it is final, so give it a new name.
-    private Class findLoadedClassExposed(String name) {
+    Class findLoadedClassExposed(String name) {
         
-       synchronized (lockObject) {
-            Class c = null;
+        synchronized (top) {
             // Give the previous loaders a chance to produce a previously-loaded class.
+            Class c = null;
             if (prevLoader != null)
                 c = prevLoader.findLoadedClassExposed(name);
             if (c == null)
                 c = findLoadedClass(name);
             return c;
-       }
+        }
     }
     
     
@@ -62,33 +61,31 @@ public class JLinkClassLoaderHelper extends URLClassLoader {
     }
 
     protected Class findClass(String name) throws ClassNotFoundException {
-
-        // Allow previous loaders to look the class up in their previously-loaded
-        // sets _before_ calling super.findClass()
-       synchronized (lockObject) {
-            Class c = null;
-            if (prevLoader != null)
-                c = prevLoader.findLoadedClassExposed(name);
+        
+        synchronized (top) {
+            // Allow the whole chain of helper loaders to look the class up in their previously-loaded
+            // sets _before_ calling super.findClass()
+            Class c = top.findLoadedClassExposed(name);            
             if (c == null)
                 // If not previously loaded, then look for it in the current set of URL locations.
                 c = super.findClass(name);
             return c;
-       }
+        }
     }
 
     protected synchronized Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
         
-      synchronized(lockObject) {
-        // First, check if the class has already been loaded
-        Class<?> c = findLoadedClassExposed(name);
-        if (c != null) {
-            if (resolve)
-                resolveClass(c);
-        } else {
-            c = super.loadClass(name, resolve);
+        synchronized (top) {
+            // First, check if the class has already been loaded
+            Class<?> c = top.findLoadedClassExposed(name);
+            if (c != null) {
+                if (resolve)
+                    resolveClass(c);
+            } else {
+                c = super.loadClass(name, resolve);
+            }
+            return c;
         }
-        return c;
-      }
     }
 
 

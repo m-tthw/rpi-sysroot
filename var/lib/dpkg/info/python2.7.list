@@ -69,7 +69,6 @@
 /usr/lib/python2.7/lib-dynload/crypt.so
 /usr/lib/python2.7/lib-dynload/audioop.so
 /usr/lib/python2.7/lib-dynload/imageop.so
-/usr/lib/python2.7/lib-dynload/_hashlib.so
 /usr/lib/python2.7/lib-dynload/nis.so
 /usr/lib/python2.7/lib-dynload/_sqlite3.so
 /usr/lib/python2.7/lib-dynload/readline.so
@@ -85,7 +84,6 @@
 /usr/lib/python2.7/lib-dynload/_codecs_kr.so
 /usr/lib/python2.7/lib-dynload/_io.so
 /usr/lib/python2.7/lib-dynload/bz2.so
-/usr/lib/python2.7/lib-dynload/_ssl.so
 /usr/lib/python2.7/lib-dynload/_codecs_tw.so
 /usr/lib/python2.7/lib-dynload/_codecs_hk.so
 /usr/lib/python2.7/lib-dynload/_bsddb.so

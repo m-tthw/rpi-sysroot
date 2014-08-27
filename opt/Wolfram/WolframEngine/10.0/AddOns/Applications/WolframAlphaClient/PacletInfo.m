@@ -1,6 +1,6 @@
 Paclet[
 	Name->"WolframAlphaClient",
-	Version->"1.4.0",
+	Version->"1.5.0",
 	MathematicaVersion->"8+",
 	Internal->True,
 	Root->".",

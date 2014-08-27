@@ -25,7 +25,6 @@ import java.util.Vector;
  */
 public class JLinkCloudSecurityManager extends JLinkSecurityManager {
 
-    private boolean allowExit = false;
     private boolean hasSetAllowedDirs = false;
     private Vector<String> allowedReadDirs = new Vector<String>();
     private Vector<String> allowedWriteDirs = new Vector<String>();
@@ -39,15 +38,14 @@ public class JLinkCloudSecurityManager extends JLinkSecurityManager {
 	    String javaHome = System.getProperty("java.home");
 	    mathematicaInstallationDir = new File(javaHome).getParentFile().getParentFile().getParentFile().getCanonicalPath();
         allowedReadDirs.add(mathematicaInstallationDir);
+        String tempDir = System.getProperty("java.io.tmpdir");
+        if (tempDir != null)
+            allowedReadDirs.add(new File(tempDir).getCanonicalPath());
         // TODO: Temp for debugging:
-        allowedReadDirs.add(new File("C:\\Users\\tgayley\\Documents\\MathJava\\JLink").getCanonicalPath());
+        //allowedReadDirs.add(new File("C:\\Users\\tgayley\\Documents\\MathJava\\JLink").getCanonicalPath());
 	}
 	
 	
-	// Look at MOnlineEValuationRequest.setProjectDirectories()  for some ideas about how to get user dirs. 
-	// ALSO: "MathematicaOnline`$KernelRequestUserDirectory"
-    //"MathematicaOnline`$KernelRequestReadDirectories", 
-    //"MathematicaOnline`$KernelRequestCommonAreaDirectories
 	public static void setAllowedDirectories(String[] readDirs, String[] writeDirs) {
 	    
 	    JLinkCloudSecurityManager sm = (JLinkCloudSecurityManager) System.getSecurityManager();

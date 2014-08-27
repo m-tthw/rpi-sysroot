@@ -1,3 +1,9 @@
+(*
+	A Mathematica Package that handles 
+	JSON encoding and decoding.
+	
+	@author Marlon Chatman <mcchatman8009@gmail.com>
+*)
 BeginPackage["JSONTools`"]
 
 ToJSON::usage = "ToJSON[expression]	Encodes a given expression into it's corresponding JSON representation";
@@ -12,20 +18,44 @@ Begin["`Private`"]
 (* ::Subsection:: *)
 
 (* The name of the dynamic library filename *)
-$DynamicLibrary = "JSONLink";
+$DynamicLibrary = "json-link";
 
 $MessageHead = General;
 
 (* Evaluate, in order to detirmine the path of the dynamic library  *)
 $LibraryDirectory = FileNameJoin[{DirectoryName[$InputFileName], "LibraryResources", $SystemID}];
 
+cSetOptions = Null;
+cEncodeInt = Null;
+cEncodeReal = Null;
+cEncodeBool = Null;
+cEncodeString = Null;
+cEncodeBoolList = Null;
+cEncodeIntList = Null;
+cEncodeRealList = Null;
+cEncodeExpr = Null;
+cDecodeExpr = Null;
+
+PRINTPRECISION = 1;
+ALLOWSYMBOLS = 2;
+INDENT = 3;
+COMPACT = 4;
+ENSUREASCII = 5;
+SORTKEYS = 6;
+PRESERVEORDER = 7;
+ENCODEANY = 8;
+ESCAPESLASH = 9;
+REJECTDUPLICATES = 10;
+DECODEANY = 11;
+DISABLEEOFCHECK = 12;
+DECODEINTASREAL = 13;
+
 (*****************************************************************************************)
 
 (* ::Section:: *)
 (* Options/Attributes *)
 (******************************************************************************)
-cToJSON = Null;
-cFromJSON = Null;
+
 (* ::Subsection:: *)
 Options[FromJSON]={ 
 	(*
@@ -40,7 +70,8 @@ Options[FromJSON]={
 		 stops after decoding a valid JSON array or object, and thus allows
 		 extra data after the JSON text.
 	*)
-	"DisableEOF" -> False
+	"DisableEOF" -> False,
+	"AllowMessages"->False
 };
 
 Options[ToJSON]={ 
@@ -68,11 +99,7 @@ Options[ToJSON]={
 		ie Lists and Rule Lists
 	*)
 	"PreserveOrder" -> True,
-	(*
-		Without this option set, only objects and arrays can be passed as the root input
-	    to the encoding functions
-	*) 
-	"StrictEncoding" -> True
+	"AllowMessages"->False
 };
 (******************************************************************************)
 (* End of Attributes/Options *)
@@ -153,8 +180,17 @@ initialize[] := initialize[] = Module[{},
 			PrependTo[$LibraryPath, $LibraryDirectory];
 		];
 		loadLibrary[$DynamicLibrary];
-		cToJSON = loadFunction["ToJSON", LinkObject, LinkObject];
-		cFromJSON = loadFunction["FromJSON", LinkObject, LinkObject];
+		cSetOptions = LibraryFunctionLoad[$DynamicLibrary, "setOptions", {{_Integer, 1, "Constant"}}, _Integer];
+		cEncodeInt = LibraryFunctionLoad[$DynamicLibrary, "encodeInt", {_Integer},"UTF8String"];
+		cEncodeReal = LibraryFunctionLoad[$DynamicLibrary, "encodeReal", {_Real}, "UTF8String"];
+		cEncodeBool = LibraryFunctionLoad[$DynamicLibrary, "encodeBool", {_Integer}, "UTF8String"];
+		cEncodeString = LibraryFunctionLoad[$DynamicLibrary, "encodeString", {"UTF8String"}, "UTF8String"];
+		cEncodeBoolList = LibraryFunctionLoad[$DynamicLibrary, "encodeBoolList", {{_Integer, 1, "Constant"}}, "UTF8String"];
+		cEncodeIntList = LibraryFunctionLoad[$DynamicLibrary, "encodeIntList", {{_Integer, 1, "Constant"}}, "UTF8String"];
+		cEncodeRealList = LibraryFunctionLoad[$DynamicLibrary, "encodeRealList", {{_Real, 1, "Constant"}}, "UTF8String"];
+		cEncodeExpr = LibraryFunctionLoad[$DynamicLibrary, "encodeExpr", LinkObject, LinkObject];
+		cDecodeExpr = LibraryFunctionLoad[$DynamicLibrary, "decode_json", LinkObject, LinkObject];
+		
 		True
 	];
 	
@@ -184,15 +220,74 @@ initializedQ[] :=
 	So that once the corresponding library call is made, it has the correct
 	options in memory.
 *)
-InitOptions[options_List]:= Prepend[
-			(*
-				
-				Prepend the PrintPrecision value for correctly formatted reals, 
-				while deleting duplicates. 
-			*)
-			DeleteDuplicates[ Flatten@Join[options,Options[$MessageHead]],( #1[[1]] === #2[[1]] )&] ,
-			"PrintPrecision"-> "MachineRealPrintPrecision" /. SystemOptions["MachineRealPrintPrecision"]
-]
+InitOptions[options_List, FromJSON]:= Module[{mergeOptions,optionsList},
+	optionsList = Map[(0) &, Range[12]];
+	mergeOptions = DeleteDuplicates[ Flatten@Join[options,Options[FromJSON]],( #1[[1]] === #2[[1]] )&];
+	optionsList[[DECODEANY]] = 1;
+	cSetOptions[optionsList]
+];
+
+InitOptions[options_List, ToJSON]:= Module[{mergeOptions,optionsList},
+	optionsList = Map[(0) &, Range[12]];
+	mergeOptions = DeleteDuplicates[ Flatten@Join[options, Options[ToJSON]],( #1[[1]] === #2[[1]] )&];
+	optionsList[[PRINTPRECISION]] = "MachineRealPrintPrecision" /. SystemOptions["MachineRealPrintPrecision"];
+	optionsList[[ALLOWSYMBOLS]] = getOptionField[mergeOptions,"AllowAllSymbols"];
+	optionsList[[INDENT]] = If[getOptionField[mergeOptions,"Compact"]===1,0,1];
+	optionsList[[COMPACT]] = getOptionField[mergeOptions,"Compact"];
+	optionsList[[ENSUREASCII]] =  getOptionField[mergeOptions,"ASCIIOnly"];
+	optionsList[[SORTKEYS]] =  getOptionField[mergeOptions,"SortKeys"];
+	optionsList[[PRESERVEORDER]] =  getOptionField[mergeOptions,"PreserveOrder"];
+	optionsList[[ENCODEANY]] =  1;
+	optionsList[[ESCAPESLASH]] = 0;
+	optionsList[[REJECTDUPLICATES]] =0;
+	cSetOptions[optionsList]
+];
+
+getOptionField[options_List, key_]:=Module[{value},
+	value = (key /. Flatten[{options}] /. key-> 0);
+	Which[SameQ[value, False], 0, SameQ[value, True],1, True,value]
+];
+
+allowMessages[options:OptionsPattern[],head_] := (
+	("AllowMessages" /. DeleteDuplicates[ Flatten@Join[{options}, Options[head]],( #1[[1]] === #2[[1]] )&] /. "AllowMessages"-> False)
+);
+
+encodeJSON[i_Integer]:=(
+	cEncodeInt[i]
+);
+
+encodeJSON[i_Real]:=(
+	cEncodeReal[i]
+);
+
+encodeJSON[str_String]:=(
+	cEncodeString[str]
+);
+
+encodeJSON[bool_(True|False)] :=(
+	cEncodeString[If[bool, 1, 0]]
+);
+
+encodeJSON[intList:{__Integer}]:=(
+	cEncodeIntList[intList]
+);
+
+encodeJSON[realList:{__Real}]:=(
+	cEncodeRealList[realList]
+);
+
+encodeJSON[boolList:{__(True|False)}]:=(
+	cEncodeBoolList[Map[(If[#, 1,0] )&,boolList]]
+);
+
+encodeJSON[expr_]:=(
+	cEncodeExpr[expr]
+);
+
+decodeJSON[str_String] :=(
+	cDecodeExpr[str]
+);
+
 (******************************************************************************)
 (* End of the Internal Functions *)
 
@@ -207,19 +302,23 @@ InitOptions[options_List]:= Prepend[
 	representation
 
 *)
+ToJSON[expr_Association, opts:OptionsPattern[]] :=(
+	ToJSON[Normal[expr], opts]
+);
 ToJSON[expr_, opts:OptionsPattern[]] :=
 	Module[{res},
 		
 		setMessageHead[ToJSON];
 		(
-			res = cToJSON[{InitOptions[List[opts]], expr}];
+			InitOptions[{opts},ToJSON];
+			res = If[allowMessages[{opts}, ToJSON],encodeJSON[expr],Quiet[encodeJSON[expr]]];
 			If[successQ[res], 
 				res,
 				$Failed
 			]
 
 		) /; initializedQ[]
-	]
+	];
 	
 (*
 	FromJSON:
@@ -229,7 +328,8 @@ FromJSON[""] = $Failed;
 FromJSON[jsonstring_String, opts:OptionsPattern[]] := Module[{res},
 		setMessageHead[FromJSON];
 		(
-				res = cFromJSON[{InitOptions[List[opts]] , jsonstring }];
+				InitOptions[{opts},FromJSON];
+				res = If[allowMessages[{opts}, FromJSON],decodeJSON[jsonstring],Quiet[decodeJSON[jsonstring]]];
 				If[successQ[res], 
 					res,
 					$Failed

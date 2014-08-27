@@ -32,12 +32,12 @@ public interface KernelLink extends MathLink {
 	/**
 	 * The version string identifying this release.
 	 */
-	String VERSION = "4.6.0";
+	String VERSION = "4.7.0";
 
 	/**
 	 * The major version number identifying this release.
 	 */
-	double VERSION_NUMBER = 1.0 * 4.6;
+	double VERSION_NUMBER = 1.0 * 4.7;
 
 	// The one and only place that must be changed if I change the package context for the
 	// supporting .m file.

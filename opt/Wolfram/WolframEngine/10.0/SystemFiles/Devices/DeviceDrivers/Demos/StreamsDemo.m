@@ -1,6 +1,4 @@
-(* $Id: StreamsDemo.m,v 1.1.2.1 2013/10/10 19:08:48 bakshee Exp $ *)
-
-(* "DriverVersion" -> 0.001 *)
+(* $Id: StreamsDemo.m,v 1.1.2.3 2013/12/18 23:08:58 bakshee Exp $ *)
 
 BeginPackage["DeviceAPI`Drivers`Demos`StreamsDemo`Dump`"];
 
@@ -57,15 +55,26 @@ DefineOutputStreamMethod["Passthrough",
       }
   ];
   
-bytes = ToCharacterCode[
+$bytes = ToCharacterCode[
 	"Title: The Quick Brown Fox\nAbstract: A fox jumps over dogs.\nThe quick brown fox jumped over the lazy dogs.\n"];
+	
+openRead[_] := openRead[Null,$bytes]
+
+openRead[_,args__] := MapIndexed[
+	OpenRead["inputStream"<>ToString[ #2[[1]] ], Method -> {"ByteList", "Bytes" -> toBytes[#]}]&,
+	{args}
+]
+
+toBytes[s_String] := ToCharacterCode[s]
+toBytes[l_] := l
 		   
 (*-----------------------------------------------------------------*)  
 
-DeviceAPI`DeviceClassRegister["StreamsDemo", Null ,
-	"OpenReadFunction" -> (
-		OpenRead["Quick Brown Fox", Method -> {"ByteList", "Bytes" -> #2}]&),
-	"OpenWriteFunction" -> (OpenWrite["test.bin", Method -> "Passthrough", BinaryFormat -> True]&)
+DeviceAPI`DeviceClassRegister["StreamsDemo",
+	"OpenReadFunction" -> openRead,
+	"OpenWriteFunction" -> (OpenWrite["test.bin", Method -> "Passthrough", BinaryFormat -> True]&),
+	"StatusLabelFunction" -> ("Connected ("<>Sequence@@Riffle[ToString/@{##},", "]<>")"&),
+	"DriverVersion" -> 0.001
 ];
 
 End[];

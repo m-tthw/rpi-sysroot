@@ -69,6 +69,9 @@ Needs["CCompilerDriver`CCompilerDriverBase`"]
 If[$OperatingSystem === "Windows",
 	Needs["CCompilerDriver`VisualStudioCompiler`"];
 ]
+If[$OperatingSystem === "MacOSX",
+	Needs["CCompilerDriver`ClangCompiler`"];
+]
 If[$OperatingSystem =!= "Windows",
 	Needs["CCompilerDriver`GCCCompiler`"];
 ]

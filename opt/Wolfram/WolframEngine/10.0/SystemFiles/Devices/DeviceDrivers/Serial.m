@@ -1,6 +1,6 @@
 (* Mathematica Package *)
 
-(* $Id: Serial.m,v 1.1.2.2 2013/11/16 17:09:00 lambertc Exp $ *)
+(* $Id: Serial.m,v 1.1.2.10 2014/01/21 22:58:16 lambertc Exp $ *)
 
 (*BeginPackage["SerialPort`", { "SerialLink`"}]*)
 BeginPackage["SerialPort`"]
@@ -10,25 +10,42 @@ Needs["SerialLink`"]
 
 Begin["`Private`"] (* Begin Private Context *) 
 
+
 (* ::Section:: *) (* API Registration Function *)
-DeviceAPI`DeviceClassRegister[ "Serial", Null, 
+DeviceAPI`DeviceClassRegister[ "Serial",
 	"OpenFunction" -> iSerialPortOpen,
 	"CloseFunction" -> iSerialPortClose,
 	"ReadFunction" -> iSerialPortRead,
-	"ReadBufferFunction" -> iSerialPortReadList,
-	"WriteBufferFunction" -> iSerialPortWrite,
-	"ExecuteMethodFunction" -> iSerialPortMethods,
-	"ReadAsynchronousFunction" -> iRunSerialPortReadAsynchronousTask,
-	"WriteAsynchronousFunction" -> iRunSerialPortWriteAsynchronousTask
+	"WriteFunction" -> iSerialPortWrite,
+	"ReadBufferFunction" -> iSerialPortReadBuffer,
+	"WriteBufferFunction" -> iSerialPortWriteBuffer,
+	"ExecuteFunction" -> iSerialPortMethods
 ]
+
+DeviceRead::serialargs = "No arguments are expected for DeviceRead on a Serial device.";
+DeviceWrite::serialargs = "A single byte or a Item[\"Break\"] is expected."
+DeviceReadBuffer::serialargs = "The number of bytes to read or a \"ReadTerminator\" is expected.";
+DeviceWriteBuffer::serialargs = "A list of bytes or a string is expected.";
+DeviceExecute::serialargs = "DeviceExecute was called with an unrecognized method or unexpected arguments.";
+DeviceExecute::serialargs = "DeviceExecute of `1` expects `2`.";
 
 (* ::Section:: *) (* Device API Adapter Functions *)
 
 (* ::SubSection:: *) (* Port Management *)
 
+$defaultSerialAddress = Which[
+	$OperatingSystem === "Windows", "COM3",
+	$SystemID === "LinuxARM","/dev/ttyAMA0",
+	$OperatingSystem === "MacOSX" || $OperatingSystem === "Unix", "/dev/ttyS0"
+]
+
+(*iSerialPortOpen[ iHandle_]:= Check[  SerialPortOpen[ $defaultSerialAddress], $Failed];*)
+
+iSerialPortOpen[ iHandle_]:= SerialPortOpen["/dev/ttyAMA0"];
+
 iSerialPortOpen[ iHandle_, args___]:= Check[ SerialPortOpen[ args], $Failed]
 
-iSerialPortClose[ iHandle_, args___]:= Check[ SerialPortClose[ args], $Failed]
+iSerialPortClose[ {iHandle_, dHandle_}, args___]:= Check[ SerialPortClose[ dHandle], $Failed]
 
 (* ::SubSection:: *) (* Synchronous Read *)
 
@@ -38,82 +55,81 @@ Options[ iSerialPortRead]:= Options[ SerialPortRead]
 iSerialPortRead[{ iHandle_, port_SerialPort}, opts:OptionsPattern[]]:= iSerialPortRead[{ iHandle, port}, "Byte", opts]
 iSerialPortRead[{ iHandle_, port_SerialPort}, "Byte", opts:OptionsPattern[]]:= SerialPortRead[ port, "Byte", 1, opts]
 iSerialPortRead[{ iHandle_, port_SerialPort}, "String", opts:OptionsPattern[]]:= SerialPortRead[ port, "String", 1, opts]
+iSerialPortRead[{ iHandle_, port_SerialPort}, args___]:= (
+	Message[ DeviceRead::serialargs];
+	Return[$Failed];
+)
+(*iSerialPortRead[{ iHandle_, port_SerialPort}, "String", opts:OptionsPattern[]]:= SerialPortRead[ port, "String", 1, opts]*)
 
 (* Sync Read a list of bytes already buffered and available. *)
-iSerialPortReadList[{ iHandle_, port_SerialPort}, opts:OptionsPattern[]]:= SerialPortRead[ port, "Byte", opts]
-iSerialPortReadList[{ iHandle_, port_SerialPort}, "Byte", opts:OptionsPattern[]]:= SerialPortRead[ port, "Byte", opts]
+
+iSerialPortReadBuffer[{ iHandle_, port_SerialPort}]:= SerialPortRead[ port, "Byte"];
+iSerialPortReadBuffer[{ iHandle_, port_SerialPort}, n_Integer]:= SerialPortRead[ port, "Byte", n]
+iSerialPortReadBuffer[{ iHandle_, port_SerialPort}, "ReadTerminator" -> rt_]:= SerialPortRead[ port, "Byte", "ReadTerminator"->rt]
+
+iSerialPortReadBuffer[{ iHandle_, port_SerialPort}, args___]:= (
+	Message[ DeviceReadBuffer::serialargs];
+	Return[$Failed];
+)
 
 (* Read a list of bytes and format as a string *)
-iSerialPortReadList[{ iHandle_, port_SerialPort}, "String", opts:OptionsPattern[]]:= SerialPortRead[ port, "String", opts]
+(*iSerialPortReadBuffer[{ iHandle_, port_SerialPort}, "String", opts:OptionsPattern[]]:= SerialPortRead[ port, "String", opts]*)
 
+(*
 (* Sync Read a list of byteCount bytes. *)
-iSerialPortReadList[{ iHandle_, port_SerialPort}, "Byte", byteCount_Integer, opts:OptionsPattern[]]:= SerialPortRead[ port, "Byte", byteCount, opts]:=
+iSerialPortReadBuffer[{ iHandle_, port_SerialPort}, "Byte", byteCount_Integer, opts:OptionsPattern[]]:= SerialPortRead[ port, "Byte", byteCount, opts]:=
 	SerialPortRead[ port, "Byte", byteCount, opts]
 
 (* Sync Read a list of byteCount bytes and format as a string. *)
-iSerialPortReadList[{ iHandle_, port_SerialPort}, "String", byteCount_Integer, opts:OptionsPattern[]]:= SerialPortRead[ port, "String", byteCount, opts]
+iSerialPortReadBuffer[{ iHandle_, port_SerialPort}, "String", byteCount_Integer, opts:OptionsPattern[]]:= SerialPortRead[ port, "String", byteCount, opts]*)
 
+(* ::SubSection:: *) (* Synchronous Write*)
+
+iSerialPortWrite[{ iHandle_, port_SerialPort}, byte_Integer]:= SerialPortWrite[ port, { byte}]
+
+iSerialPortWrite[{ iHandle_, port_SerialPort}, Item["Break"]]:= SerialPortWrite[ port, Break]
+
+iSerialPortWrite[{ iHandle_, port_SerialPort}, bytes__Integer]:= SerialPortWrite[ port, {bytes}]
+
+iSerialPortWrite[{ iHandle_, port_SerialPort}, str_String]:= SerialPortWrite[ port, str]
+
+iSerialPortWrite[{ iHandle_, port_SerialPort}, args___]:= (
+	Message[ DeviceWrite::serialargs];
+	Return[$Failed];
+)
+
+(* ::SubSection:: *) (* Synchronous Write Buffer*)
+	
+(*Options[ iSerialPortWriteBuffer] = { "Timeout" -> 0}*)
+
+iSerialPortWriteBuffer[{ iHandle_, port_SerialPort}, bytes__Integer]:= SerialPortWrite[ port, {bytes}]
+
+iSerialPortWriteBuffer[{ iHandle_, port_SerialPort}, string_String]:= SerialPortWrite[ port, string]
+
+iSerialPortWriteBuffer[{ iHandle_, port_SerialPort}, args___]:= (
+	Message[ DeviceWriteBuffer::serialargs];
+	Return[$Failed];
+)
+	
 (* ::SubSection:: *) (* Synchronous Write *)
 	
-Options[ iSerialPortWrite] = { "Timeout" -> 0}
-
-iSerialPortWrite[{ iHandle_, port_SerialPort}, byte_Integer, opts:OptionsPattern[]]:= SerialPortWrite[ port, byte, opts]
-
-iSerialPortWrite[{ iHandle_, port_SerialPort}, byte__Integer, opts:OptionsPattern[]]:= SerialPortWrite[ port, {byte}, opts]
-
-iSerialPortWrite[{ iHandle_, port_SerialPort}, string_String, opts:OptionsPattern[]]:= SerialPortWrite[ port, string, opts]
-
-iSerialPortWrite[{ iHandle_, port_SerialPort}, Break, opts:OptionsPattern[]]:= SerialPortWrite[ port, Break, opts]
-
-Options[ iSerialPortWriteList] = { "Timeout" -> 0}
-
-iSerialPortWriteList[{ iHandle_, port_SerialPort}, bytes__Integer, opts:OptionsPattern[]]:= SerialPortWrite[port, {bytes}, opts]
-
-iSerialPortWriteList[{ iHandle_, port_SerialPort}, bytes:{ _Integer..}, opts:OptionsPattern[]]:= SerialPortWrite[ port, bytes, opts]
-
-iSerialPortWriteList[{ iHandle_, port_SerialPort}, strings:{ _String..}, opts:OptionsPattern[]]:= 
-	Do[ SerialPortWrite[ port, strings[[i]], opts], {i, Length@strings}]
-	
-(* ::SubSection:: *) (* Synchronous Write *)
-	
-iSerialPortMethods[ port_SerialPort, "SerialPortReadyQ", args_List]:= iSerialPortReadyQ[ port, Sequence@@args]
+iSerialPortMethods[ { iHandle_, port_SerialPort}, "SerialReadyQ", args___]:= iSerialPortReadyQ[ port, args]
 iSerialPortReadyQ[ port_SerialPort]:= SerialPortReadyQ[ port]
 iSerialPortReadyQ[ port_SerialPort, numBytes_Integer]:= SerialPortReadyQ[ port, numBytes]
+iSerialPortReadyQ[ { iHandle_, port_SerialPort}, args___]:=  (
+	Message[ DeviceExecute::serialargs, "SerialReadyQ", "no arguments or the number of bytes available"];
+	Return[$Failed];
+)
 
-iSerialPortMethods[ port_SerialPort, "SerialPortFlush", args_List]:= iSerialPortFlush[ port, Sequence@@args]
-iSerialPortFlush[ port_SerialPort, "Read"]:= SerialPortFlush[ port, "Read"]
 
-(* ::SubSection:: *) (* Asynchronous Write *)
-Options[ iRunSerialPortWriteAsynchronousTask]:= Options[ CreateSerialWriteAsynchronousTask]
+iSerialPortMethods[ { iHandle_, port_SerialPort}, "ReadFlush", args___]:= SerialPortFlush[ port, "Read"]
 
-iRunSerialPortWriteAsynchronousTask[{ iHandle_, port_SerialPort}, opts:OptionsPattern[]]:= 
-	RunSerialPortWriteAsynchronousTask[ port, opts]
-	
-iSerialPortMethods[ port_SerialPort, "SerialPortWriteAsynchronous", args_List]:= 
-	iSerialPortWriteAsynchronous[ port, Sequence@@args]
+iSerialPortMethods[ port_SerialPort, args___]:= (
+	Message[ DeviceExecute::serialargs];
+	Return[$Failed];
+)
 
-iSerialPortWriteAsynchronous[ port_SerialPort, asyncObj_AsynchronousTaskObject, data:(_String | {_Integer..})]:= SerialPortWriteAsynchronous[ asyncObj, data]
-	
-(*iSerialPortWriteAsynchronous[ asyncObj_AsynchronousTaskObject, data:(_String | {_Integer..})]:= SerialPortWriteAsynchronous[ port, data]*)
 
-iSerialPortWriteAsynchronous[ port_SerialPort, asyncObj_AsynchronousTaskObject, Break]:= SerialPortWriteAsynchronous[ asyncObj, Break]
-
-(*iSerialPortWriteAsynchronous[ asyncObj_AsynchronousTaskObject, Break]:= SerialPortWriteAsynchronous[ port, Break]*)
-
-(* ::SubSection:: *) (* Asynchronous Read *)
-
-Options[ iRunSerialPortReadAsynchronousTask]:= Options[ RunSerialPortReadAsynchronousTask]
-
-iRunSerialPortReadAsynchronousTask[{ iHandle_, port_SerialPort}, 
-	format_:"Byte", repeatSpec_:Infinity, numBytesPerBuffer_:Automatic, opts:OptionsPattern[]]:=
-	RunSerialPortReadAsynchronousTask[ port, format, repeatSpec, numBytesPerBuffer, opts]
-	
-iSerialPortMethods[ port_SerialPort, "CurrentSerialPortData", args_List]:= iCurrentSerialPortData[ port, Sequence@@args]
-
-iCurrentSerialPortData[ port_SerialPort, asyncObj_AsynchronousTaskObject]:= CurrentSerialPortData[ asyncObj]
- 
-(* SerialPortFlush method also works for async read *)
-	
 
 End[] (* End Private Context *)
 

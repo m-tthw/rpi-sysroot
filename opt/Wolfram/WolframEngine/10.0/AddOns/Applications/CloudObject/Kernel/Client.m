@@ -1,31 +1,32 @@
 (* Mathematica package *)
 BeginPackage["CloudObject`"]
 
+System`$Permissions;
+System`ClearProperties;
+System`CloudDeploy;
+System`CloudEvaluate;
+System`CloudExport;
+System`CloudFunction;
+System`CloudGet;
+System`CloudImport;
 System`CloudPut;
 System`CloudSave;
-System`LocalizeDefinitions;
-System`CloudGet;
 System`CloudSymbol;
-System`CloudExport;
-System`CloudImport;
-System`CloudDeploy;
 System`ExportForm;
-System`CloudFunction;
-System`CloudEvaluate;
-System`$Permissions;
 System`Permissions;
 System`Properties;
 System`SetProperties;
-System`ClearProperties;
-
-LocalizeDefinitions::usage = "LocalizeDefinitions is an option to Put and CloudPut that specifies \
-whether to wrap hidden symbols in a separate context.";
+System`CloudObjectInformation;
+System`CloudObjectInformationData;
+System`CloudObjects
 
 ExportForm::usage = "ExportForm[expr, form] specifies that expr should be exported in the specified format in functions like CloudDeploy, and in external results from APIFunction and FormFunction.";
 
 Permissions::usage = "Permissions is an option for CloudObject and related constructs that specifies permissions for classes of users to access or perform operations."
 
 $Permissions::usage = "$Permissions is the default setting used for the Permissions option when cloud objects are created.";
+
+CloudSymbol::usage = "CloudSymbol[uri] represents a symbol whose value is stored in the cloud.";
 
 $UseRemoteServer::usage = "$UseRemoteServer controls whether to use the remote cloud or the local server prototype.";
 CloudObject::notauth = "Unable to authenticate with Wolfram Cloud server. Please try authenticating again.";
@@ -40,7 +41,7 @@ CloudObject::notfound = "No CloudObject found at the given address.";
 
 Begin["`Private`"]
 
-Unprotect[CloudPut, CloudSave, LocalizeDefinitions, CloudGet, CloudSymbol, CloudDeploy, ExportForm, CloudFunction, CloudEvaluate]
+Unprotect[CloudPut, CloudSave, CloudGet, CloudSymbol, CloudDeploy, ExportForm, CloudFunction, CloudEvaluate]
 
 $Permissions = "Private";
 
@@ -112,47 +113,73 @@ normalizePermissions[spec_String] := normalizePermissions[{"All" -> spec}]
 normalizePermissions[Automatic] := normalizePermissions[$Permissions]
 normalizePermissions[spec_] := (Message[CloudObject::invperm, spec]; {})
 
-putRawContents[obj_CloudObject, content_, mimetype_, permissions_ : Automatic] := Module[{accessJSON, result},
-    accessJSON = toJSON[normalizePermissions[permissions]];
-    result = responseToString @ execute[obj, Automatic, UseUUID -> False, Body -> content, Type -> mimetype, Parameters -> {"permissions" -> EscapeURL[accessJSON]}];
+escapeAndNormalizePermissions = Composition[EscapeURL, toJSON, normalizePermissions]
+
+putRawContents[obj_CloudObject, content_, mimetype_, permissions_ : Automatic] := Module[{result},
+    result = responseToString @ execute[obj, Automatic, UseUUID -> False, Body -> content, Type -> mimetype, Parameters -> {"permissions" -> escapeAndNormalizePermissions[permissions]}];
     If[result === $Failed, $Failed, obj]
 ]
 
 expressionMimeType["Expression"] = "application/vnd.wolfram.expression";
 expressionMimeType["API"] = "application/vnd.wolfram.expression.api";
+expressionMimeType["FCI"] = "application/vnd.wolfram.expression.fci";
 expressionMimeType["Form"] = "application/vnd.wolfram.expression.form";
 expressionMimeType["NB"] = "application/vnd.wolfram.expression.notebook";
 expressionMimeType[_] = "application/vnd.wolfram.expression";
 expressionMimeType[] = "application/vnd.wolfram.expression";
 
-Options[CloudPut] = {SaveDefinitions -> False, LocalizeDefinitions -> False, Permissions -> Automatic};
+Options[CloudPut] = {SaveDefinitions -> False, "LocalizeDefinitions" -> False, Permissions -> Automatic, "SetIcon" -> False};
 
 CloudPut[expr_, obj : CloudObject[uri_], type_String : "Expression", OptionsPattern[]] := 
-    Module[{defs, content, exprLine, tempfilename},
+    Module[{content, tempfilename, result},
         If[OptionValue[SaveDefinitions],
         (* save definitions *)
-            defs = Language`ExtendedFullDefinition[expr];
-            If[OptionValue[LocalizeDefinitions],
-            (* localize definitions *)
-                AppendTo[defs, 
-                    HoldForm[$CloudSymbol] -> {OwnValues -> {HoldPattern[$CloudSymbol] :> 
-                        Unevaluated[expr]}}
-                ];
-                content = definitionsToString[contextifyDefinitions[defs]];
-                exprLine = cloudSymbolContext <> "$CloudSymbol";,
-            (* do not localize definitions *)
-                content = definitionsToString[defs];
-                exprLine = ToString[Unevaluated[expr], InputForm];
-            ];
-            content = content <> "\n\n" <> exprLine <> "\n";
-            content = ToCharacterCode[content, "UTF-8"],
+        	content = exprToStringBytesWithSaveDefinitions[expr, OptionValue["LocalizeDefinitions"]],
         (* do not save definitions *)
             tempfilename = CreateTemporary[];
             Put[Unevaluated[expr], tempfilename];
             content = BinaryReadList[tempfilename];
         ];
-        putRawContents[obj, content, expressionMimeType[type], OptionValue[Permissions]]
+        result = putRawContents[obj, content, expressionMimeType[type], OptionValue[Permissions]];
+        If[TrueQ[OptionValue["SetIcon"]],
+	        SetCloudIcon[expr, obj]
+        ];
+        result
     ]
+
+SetAttributes[SetCloudIcon, HoldAllComplete];
+$CloudIconFormat = "image/jpg";
+$CloudIconSize = Medium;
+SetCloudIcon[expr_, obj_CloudObject] := 
+	Module[{iconImage, iconTempFile, iconFileContent},
+		iconImage = CloudObject`Iconize`IconizeThumbnails`Iconize[expr, Size -> $CloudIconSize];
+		iconTempFile = CreateTemporary[];
+		Export[iconTempFile, iconImage, $CloudIconFormat];
+		iconFileContent = BinaryReadList[iconTempFile];
+		DeleteFile[iconTempFile];
+		(* TODO Ro's suggestion is to put the icon asynchronously *)
+		$lastSetCloudIconResult = execute[obj, "PUT", "files", {"icon"}, Body -> iconFileContent,
+			Type -> $CloudIconFormat]
+	]
+
+exprToStringBytesWithSaveDefinitions[expr_, localizeDefinitions_] := 
+	Module[{defs, content, exprLine},
+        defs = Language`ExtendedFullDefinition[expr];
+        If[TrueQ[localizeDefinitions],
+        (* localize definitions *)
+            AppendTo[defs, 
+                HoldForm[$CloudSymbol] -> {OwnValues -> {HoldPattern[$CloudSymbol] :> 
+                    Unevaluated[expr]}}
+            ];
+            content = definitionsToString[contextifyDefinitions[defs]];
+            exprLine = cloudSymbolContext <> "$CloudSymbol";,
+        (* do not localize definitions *)
+            content = definitionsToString[defs];
+            exprLine = ToString[Unevaluated[expr], InputForm];
+        ];
+        content = content <> "\n\n" <> exprLine <> "\n";
+        ToCharacterCode[content, "UTF-8"]
+	]
 
 CloudPut[expr_, options : OptionsPattern[]] := 
     CloudPut[Unevaluated[expr], CloudObject[], options]
@@ -165,7 +192,7 @@ CloudPut[args___] := (ArgumentCountQ[CloudPut,Length[DeleteCases[{args},_Rule,In
 Put[expr_, obj_CloudObject] := CloudPut[Unevaluated[expr], obj]
 
 SetAttributes[CloudPut,{ReadProtected}];
-Protect[CloudPut, LocalizeDefinitions];
+Protect[CloudPut];
 
 (*Save*)
 
@@ -189,13 +216,23 @@ Protect[CloudSave];
 
 (*Get*)
 
-Get[co_CloudObject] := Module[{tempfilename, mimetype},
-    {tempfilename, mimetype} = getRawContents[co];
-    If[tempfilename === $Failed,
-        $Failed,
-        cleanup[tempfilename, Get[tempfilename]]
-    ]
-]
+Get[co_CloudObject] :=
+	Module[{tempfilename, mimetype}, 
+		{tempfilename, mimetype} = getRawContents[co];
+		Which[
+			tempfilename === $Failed, $Failed,
+    
+			mimetype === "inode/directory", Message[Get::noopen, co]; $Failed,
+    
+			bundleMimeTypeQ[mimetype], CloudGet[FileNameJoin[{co, ".bundle"}]],
+    
+			True, cleanup[tempfilename, Get[tempfilename]]
+		]
+   ];
+
+bundleMimeTypeQ[mimetype_] := 
+	StringQ[mimetype] && 
+	StringMatchQ[mimetype, "application/vnd.wolfram.bundle" ~~ ___]
 
 CloudGet[uri:(_String|_CloudObject)] := Get[CloudObject[uri]]
 
@@ -286,16 +323,68 @@ CloudObject /: CopyFile[src_CloudObject, target_CloudObject] :=
         content = BinaryReadList[tempfilename];
 	    cleanup[tempfilename, putRawContents[target, content, mimetype, "Private"]]
     ]
+    
+(* ReadList *)
+
+CloudObject /: ReadList[co_CloudObject, rest___] :=
+    Module[{tempfilename, mimetype},
+        {tempfilename, mimetype} = getRawContents[co];
+        If[tempfilename === $Failed, Return[$Failed]];
+        cleanup[tempfilename, 
+            ReadList[tempfilename, rest]
+        ]
+    ]
 
 (* DeleteFile *)
 
 CloudObject /: DeleteFile[co_CloudObject] :=
     responseCheck @ execute[co, "DELETE"]
+    
+(* DeleteDirectory *)
+Unprotect[DeleteDirectory];
+CloudObject /: DeleteDirectory[dir : CloudObject[uri_], OptionsPattern[]] := 
+	Module[{recursive = TrueQ[OptionValue[DeleteContents]], 
+		cloud, uuid, params},
+		{cloud, uuid} = Quiet[getCloudAndUUID[dir]];
+		If[!UUIDQ[uuid], (* named directory not found *)
+			Message[DeleteDirectory::nodir, dir];
+			Return[$Failed];
+		];
+		   
+		params = {"recursive" -> ToLowerCase@ToString[recursive]};
+		execute[cloud, "DELETE", {"files", uuid}, Parameters -> params] /. {
+			{_String, _List} :> Return[Null] (* success *),
+			HTTPError[400] :>
+				If[recursive, Message[CloudObject::srverr]; $Failed, Null],
+			HTTPError[404] :> (Message[DeleteDirectory::nodir, dir];
+				Return[$Failed]),
+			other_ :> (Message[CloudObject::srverr]; Return[$Failed])
+		};
+		(* assert: delete failed with status 400 and recursive was not true ->  
+			directory was not empty. *)
+		(* if directory is a bundle type, does it have only the bundle file? *)
+		(* TODO handle bundle type *)
+		Message[DeleteDirectory::dirne, dir];
+		$Failed
+	];
+Protect[DeleteDirectory];
+
+(* CreateDirectory *)
+
+CloudObject /: CreateDirectory[co_CloudObject] :=
+    responseCheck[
+    	execute[co, Automatic, UseUUID -> False, Type -> "inode/directory"] /. {
+    		HTTPError[400] :> (Message[CreateDirectory::filex, co];
+    			Return[co])
+    	},
+    	co]
 
 (*CloudDeploy*)
 
 deployType[_APIFunction] = "API";
+deployType[_Delayed] = "API";
 deployType[_FormFunction] = "Form";
+deployType[_ExternalFunction] = "FCI";
 deployType[_Notebook] = "NB";
 deployType[_] := "Expression";
 
@@ -305,14 +394,19 @@ ExportForm[expr_Manipulate|expr_Graphics3D] := ExportForm[Notebook[{Cell[BoxData
 
 Options[CloudDeploy] = {Permissions -> Automatic};
 
-CloudDeploy[uri_String | uri_CloudObject, expr_, OptionsPattern[]] := 
+CloudDeploy[uri_CloudObject, apigroup_APIFunctionGroup, opts:OptionsPattern[]] := 
+	apiCloudDeploy[uri, apigroup, opts]
+
+CloudDeploy[uri_CloudObject, expr_, OptionsPattern[]] := 
     CloudPut[Unevaluated[expr], CloudObject[uri], deployType[Unevaluated[expr]], SaveDefinitions -> True, Permissions -> OptionValue[Permissions]]
 
-CloudDeploy[uri_String | uri_CloudObject, ExportForm[expr_, format_, rest___], OptionsPattern[]] :=
+CloudDeploy[uri_CloudObject, ExportForm[expr_, format_, rest___], OptionsPattern[]] :=
     CloudExport[CloudObject[uri], Unevaluated[expr], format, rest, Permissions -> OptionValue[Permissions]]
 
-CloudDeploy[uri_String | uri_CloudObject, expr_NotebookObject|expr_Notebook|expr_Manipulate|expr_Graphics3D, options : OptionsPattern[]] :=
+CloudDeploy[uri_CloudObject, expr_NotebookObject|expr_Notebook|expr_Manipulate|expr_Graphics3D, options : OptionsPattern[]] :=
     CloudDeploy[uri, ExportForm[Unevaluated[expr]], options]
+
+CloudDeploy[uri_String, expr_, options : OptionsPattern[]] := CloudDeploy[CloudObject[uri], Unevaluated[expr], options]
 
 CloudDeploy[expr_, options : OptionsPattern[]] := CloudDeploy[CloudObject[], Unevaluated[expr], options]
 
@@ -320,6 +414,106 @@ CloudDeploy[args___] := (ArgumentCountQ[CloudDeploy,Length[DeleteCases[{args},_R
 
 SetAttributes[CloudDeploy,{ReadProtected}];
 Protect[CloudDeploy];
+
+Options[apiCloudDeploy] = Options[CloudDeploy];
+apiCloudDeploy[dest:CloudObject[uri_], 
+	APIFunctionGroup[apifunctions : {Rule[_String, _APIFunction] ...}, groupOptions___?OptionsQ], 
+	OptionsPattern[]] := 
+	Module[{uriparts = parseURI[uri], useUUID, cloud, diruuid, 
+		apifunctionObjects, apigroup, 
+		permissionsOptionValue = OptionValue[Permissions], 
+		bundleFilename = ".bundle"},
+		(* TODO validate the API names *)
+   
+		(* Step 1 of 3. Ensure the APIFunctionGroup bundle directory exists *)
+		(* TODO check whether something exists at the destination *)
+		If[!FileExistsQ[dest],
+			createBundle[dest, ".api"]
+		];
+
+		{cloud, diruuid} = Take[uriparts, 2];
+		useUUID = Quiet[UUIDQ[diruuid]];(* is this APIFunctionGroup anonymous? *)
+
+		(* Step 2 of 3. deploy the individual functions *)
+		apifunctionObjects = $lastAPIResult = Map[
+			deployAPIFunctionInAPIFunctionGroup[cloud, diruuid, #]&,
+			apifunctions
+		];
+		(* TODO check if any apifunctionObjects failed *)
+
+		(* Step 3 of 3. deploy the APIFunctionGroup content *)
+		apigroup = APIFunctionGroup[
+			Map[Apply[Rule, #]&, 
+				Transpose[{Map[First, apifunctions], apifunctionObjects}]
+			], 
+			groupOptions];
+		If[useUUID,
+			putNamedExpressionIntoUnnamedDirectory[uriparts[[1]], diruuid, 
+				bundleFilename, apigroup, expressionMimeType["Expression"], 
+				permissionsOptionValue],
+		     (* else *)
+			CloudPut[apigroup, CloudObject[uri <> "/" <> bundleFilename], 
+				Permissions -> permissionsOptionValue]
+		];
+
+		dest
+   ];
+
+createBundle[dest_CloudObject, mimeTypeExtension_String:""] := 
+	responseCheck[execute[dest, Automatic, UseUUID -> False, 
+		Type -> "application/vnd.wolfram.bundle"<>mimeTypeExtension], dest];
+
+Options[deployAPIFunctionInAPIFunctionGroup] = {Permissions -> Automatic};
+deployAPIFunctionInAPIFunctionGroup[apiFunctionGroup_CloudObject, 
+	name_String -> apiFn_APIFunction, options:OptionsPattern[]] := 
+	Module[{cloud, diruuid},
+		{cloud, diruuid} = getCloudAndUUID[apiFunctionGroup];
+		deployAPIFunctionInAPIFunctionGroup[cloud, diruuid, name -> apiFn,
+			options]
+	]
+
+deployAPIFunctionInAPIFunctionGroup[cloud_String, diruuid_String?UUIDQ, 
+	name_String -> apiFn_APIFunction, OptionsPattern[]] := 
+	putNamedContentsIntoUnnamedDirectory[cloud, diruuid, name, 
+		exprToStringBytesWithSaveDefinitions[apiFn, False], 
+		expressionMimeType["API"], OptionValue[Permissions]]
+
+putNamedExpressionIntoUnnamedDirectory[obj_CloudObject, filename_String,
+	contents_, mimeType_String:expressionMimeType["Expression"], 
+	permissions_:Automatic] := 
+	Module[{cloud, diruuid},
+		{cloud, diruuid} = getCloudAndUUID[obj];
+		putNamedExpressionIntoUnnamedDirectory[cloud, diruuid, filename, 
+			contents, mimeType, permissions]
+	]
+
+putNamedExpressionIntoUnnamedDirectory[cloud_, diruuid_, filename_String, contents_, mimeType_String, permissions_] := 
+	putNamedContentsIntoUnnamedDirectory[cloud, diruuid, filename,
+		ToCharacterCode[ToString[contents, InputForm]], mimeType, permissions];
+
+putNamedContentsIntoUnnamedDirectory[cloud_, diruuid_, filename_String, contents_List, mimeType_String, permissions_] :=
+	Module[{accessJSON = toJSON[normalizePermissions[permissions]]},
+		responseToString @ 
+		execute[cloud, "POST", {"files"}, Type -> mimeType, 
+			Parameters -> {"path" -> diruuid <> "/" <> filename, 
+				"permissions" -> EscapeURL[accessJSON]}, Body -> contents
+		] /. {
+			uuid_String?UUIDQ :> (CloudObject[cloud <> "/files/" <> uuid]),
+			_ :> $Failed
+		}
+	]
+
+putNamedObjectIntoNamedDirectory[cloud_, path_String, contents_List, mimeType_String, permissions_] :=
+	Module[{accessJSON = toJSON[normalizePermissions[permissions]]},
+		responseToString @ 
+		execute[cloud, "POST", {"files"}, Type -> mimeType, 
+			Parameters -> {"path" -> "user-" <> $WolframUUID <> "/" <> path, 
+				"permissions" -> EscapeURL[accessJSON]}, Body -> contents
+		] /. {
+			uuid_String?UUIDQ :> CloudObject[cloud <> "/files/" <> StringTrim[path, "/"]],
+			_ :> $Failed
+		}
+	]
 
 (* CloudSymbol *)
 
@@ -384,16 +578,158 @@ Properties[obj_CloudObject] := Module[{content},
     ImportString[content, "JSON"]
 ]
 
+Properties[obj_CloudObject, key_String] := 
+	execute[obj, "GET", "files", {"properties", key}] /. {
+		HTTPError[404] :> 
+	    	If[FileExistsQ[obj], 
+	    		Missing["Undefined"], 
+	    		Message[CloudObject::notfound, obj];
+	    		$Failed
+	    	],
+	    {type_String, contentBytes:{_Integer ...}} :> 
+	    	(* server is returning a JSON object for some reason *)
+	    	ImportString[FromCharacterCode[contentBytes], "JSON"][[1,2]],
+	    _ :> (Message[CloudObject::srverr]; $Failed)
+	}
+
+(*
 Properties[obj_CloudObject, key_String] :=
-    responseToString @ execute[obj, "GET", "files", {"properties", key}]
-
-(* use general Properties[obj] for now because the server API does not return the individual value *)
-Properties[obj_CloudObject, key_String] := Replace[key, Join[Properties[obj], {_ :> Missing["Undefined"]}]]
-
+	Properties[obj] /. {
+		properties_List :> Replace[key, Join[properties, {_ :> Missing["Undefined"]}]],
+		_ :> (* CloudObject::notfound should already be issued *) $Failed
+	}
+*)
 Protect[Properties];
 
 SetAttributes[CloudObject,{ReadProtected}];
 Protect[CloudObject]
+
+(* FileExistsQ *)
+Unprotect[FileExistsQ];
+Unprotect[CloudObject];
+
+CloudObject /: FileExistsQ[CloudObject[uri_String]] := 
+	Module[{uriparts = parseURI[uri], cloud},
+		cloud = First[uriparts];
+		If[MatchQ[uriparts, {_String, _String, ___}],
+			(* anonymous cloud object *)
+			MatchQ[execute[cloud, "GET", {"files", uriparts[[2]], {"path"}}],
+				{_String, _List}],
+			(* named cloud object *)
+			MatchQ[execute[cloud, "GET", {"files"}, 
+				Parameters -> {"path" -> uriparts[[3]] <> "/" <> 
+					FileNameJoin[uriparts[[4]], OperatingSystem -> "Unix"]}],
+				{_String, _List}]
+		]
+	];
+
+Protect[FileExistsQ];
+
+(* List objects *)
+CloudObjectsByType[contentType_String] := 
+	Module[{response, uuids},
+		response = responseToString @ execute[$CloudBase, "GET", {"files"}, 
+			Parameters->{"type" -> contentType}];
+		If[!StringQ[response], Return[$Failed]];
+		uuids = Map[FileNameTake[#, -1]&, StringSplit[response]];
+		Map[cloudObjectFromUUID, uuids]
+	]
+
+CloudObjects[] := unnamedCloudObjects[]
+
+CloudObjects[path_String] := CloudObjects[CloudObject[path]]
+
+unnamedCloudObjects[] := 
+	execute[$CloudBase, "GET", {"files"}, Parameters -> {"path" -> ""}] /. {
+		err_HTTPError :> (Message[CloudObject::notfound]; $Failed),
+		{_, bytes_List} :>
+			uuidListingToCloudObjects[bytes]
+	}
+
+uuidListingToCloudObjects[bytes_List] := 
+	uuidListingToCloudObjects[FromCharacterCode[bytes]]
+	
+uuidListingToCloudObjects[listing_String] := 
+	Cases[Map[uuidListEntryToCloudObject, StringSplit[listing]], _CloudObject]
+
+uuidListEntryToCloudObject[text_String] := 
+	StringDrop[text, 7] /. {
+		uuid_?UUIDQ :> cloudObjectFromUUID[uuid],
+		_ :> $Failed
+	}
+
+CloudObjects[dir_CloudObject] := 
+	Module[{cloud, uuid},
+		{cloud, uuid} = getCloudAndUUID[dir];
+		If[!UUIDQ[uuid], Message[CloudObject::notfound]; $Failed];
+		execute[$CloudBase, "GET", {"files", uuid}] /. {
+			err_HTTPError :> (Message[CloudObject::notfound]; $Failed),
+			{_, bytes_List} :>
+				uuidListingToCloudObjects[bytes]
+		}
+	]
+
+(* Cloud file name manipulation *)
+
+Unprotect[FileNameJoin]
+
+FileNameJoin[{CloudObject[uri_, rest___], path___}] := CloudObject[JoinURL[uri, path], rest]
+
+Protect[FileNameJoin]
+
+(* CloudObjectInformation *)
+CloudObjectInformation[obj_CloudObject] := 
+	Module[{cloud, uuid, result, allinfo, files, mimetype},
+		{cloud, uuid} = getCloudAndUUID[obj];
+		If[cloud === $Failed, Return[$Failed]];
+		result = execute[cloud, "GET", {"files", uuid, "info"}];
+		If[result === HTTPError[404],
+			Message[CloudObject::notfound, obj];
+			Return[$Failed]
+		];
+		If[!MatchQ[result, {_String, {_Integer ...}}],
+			Message[CloudObject::srverr];
+			Return[$Failed]
+		];
+		allinfo = Check[ImportString[FromCharacterCode[Last[result]], "JSON"],
+			Message[CloudObject::srverr];
+			Return[$Failed]];
+		files = "files" /. allinfo;
+		If[Length[files] =!= 1,
+			Message[CloudObjectInformation::dirbug]; (* internal error -- info about directories is broken right now *)
+			Return[$Failed]
+		];
+		info = files[[1]];
+		mimetype = "type" /. info;
+		System`CloudObjectInformationData[<|
+			"UUID" -> ("uuid" /. info),
+			"Name" -> ("name" /. info),
+			"OwnerWolframUUID" -> ("owner" /. info),
+			"MimeType" -> mimetype,
+			"FileType" -> 
+				If[mimetype === "inode/directory" || bundleMimeTypeQ[mimetype],
+					Directory,
+					File
+				],
+			"FileByteCount" -> ("fileSize" /. info),
+			"Created" -> DateString[DateList[("created" /. info)]],
+			"LastAccessed" -> DateString[DateList[("lastAccessed" /. info)]]
+		|>]
+	]
+
+(* FileType *)
+
+Unprotect[FileType, CloudObject];
+
+CloudObject /: FileType[co_CloudObject] := 
+	With[{info = Quiet[CloudObjectInformation[co]]},
+		If[Head[info] === System`CloudObjectInformationData,
+			First[info]["FileType"],
+			None
+		]
+	]
+
+Protect[FileType, CloudObject];
 
 End[]
 

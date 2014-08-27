@@ -69,5 +69,5 @@ cbbbe39e66f5b804e97ac0d483e9d631  usr/include/apt-pkg/version.h
 ae7b67a28ab26dcc49f12472c94e2a0d  usr/include/apt-pkg/versionmatch.h
 0474331c56bf052e7757ccf2bf6e46d9  usr/include/apt-pkg/weakptr.h
 0a9faf4bc39390053967e50c703b7c0e  usr/share/doc/libapt-pkg-dev/NEWS.Debian.gz
-95352826b22386ea7df0670f1195e524  usr/share/doc/libapt-pkg-dev/changelog.gz
+cddc1e3a7b283a91d70ec64434adc619  usr/share/doc/libapt-pkg-dev/changelog.gz
 fa9fc3fde34b734ee15aecd2066df5b1  usr/share/doc/libapt-pkg-dev/copyright

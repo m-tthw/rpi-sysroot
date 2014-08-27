@@ -1913,51 +1913,6 @@ FrontEnd`Private`EvaluationModeEvaluate[boxes_, fmt_, "WolframAlphaLong"] := Alp
 
 
 (* ::Subsection::Closed:: *)
-(*Namespace support, V8*)
-
-
-(*
-	DynamicNamespace etc are in the kernel starting in V9, so these rules
-	only need to be loaded if the kernel is older than V9. This block can be
-	removed for V10.
-*)
-
-
-System`DynamicName;
-System`DynamicNamespace;
-System`DynamicReference;
-System`NamespaceBox;
-
-If[$VersionNumber < 9,
-	wasProtected = Unprotect[{TagBox}];
-	
-	Unprotect[{DynamicName, DynamicNamespace, DynamicReference, NamespaceBox}];
-	
-	DynamicNamespace /: MakeBoxes[DynamicNamespace[expr_, opts___?OptionQ], fmt_] := NamespaceBox[MakeBoxes[expr, fmt], opts];
-	DynamicNamespace /: MakeBoxes[DynamicNamespace[name_, expr_, opts___?OptionQ], fmt_] := NamespaceBox[name, MakeBoxes[expr, fmt], opts];
-	
-	NamespaceBox /: MakeExpression[NamespaceBox[boxes_, opts___?OptionQ], fmt_] :=
-		Function[expr, HoldComplete[DynamicNamespace[expr, opts]], HoldAllComplete] @@ MakeExpression[boxes, fmt];
-	NamespaceBox /: MakeExpression[NamespaceBox[name_, boxes_, opts___?OptionQ], fmt_] :=
-		Function[expr, HoldComplete[DynamicNamespace[name, expr, opts]], HoldAllComplete] @@ MakeExpression[boxes, fmt];
-	
-	DynamicName /: MakeBoxes[DynamicName[expr_, name_], fmt_] := TagBox[MakeBoxes[expr, fmt], "DynamicName", BoxID -> name];
-	DynamicName /: MakeBoxes[DynamicName[expr_, name_, "Private"], fmt_] := TagBox[MakeBoxes[expr, fmt], "PrivateDynamicName", BoxID -> name];
-	DynamicName /: MakeBoxes[DynamicName[expr_, name_, "Public"], fmt_] := TagBox[MakeBoxes[expr, fmt], "PublicDynamicName", BoxID -> name];
-	
-	TagBox /: MakeExpression[TagBox[box_, "DynamicName", ___, _[BoxID, name_], ___], fmt_] := Thread[DynamicName[MakeExpression[box, fmt], HoldComplete[name]], HoldComplete];
-	TagBox /: MakeExpression[TagBox[box_, "PrivateDynamicName", ___, _[BoxID, name_], ___], fmt_] := Thread[DynamicName[MakeExpression[box, fmt], HoldComplete[name], "Private"], HoldComplete];
-	TagBox /: MakeExpression[TagBox[box_, "PublicDynamicName", ___, _[BoxID, name_], ___], fmt_] := Thread[DynamicName[MakeExpression[box, fmt], HoldComplete[name], "Public"], HoldComplete];
-	
-	SetAttributes[{DynamicName, DynamicNamespace, DynamicReference, NamespaceBox}, {Protected, ReadProtected}];
-	
-	Protect @@ wasProtected;
-]
-
-
-
-
-(* ::Subsection::Closed:: *)
 (*TableView support*)
 
 

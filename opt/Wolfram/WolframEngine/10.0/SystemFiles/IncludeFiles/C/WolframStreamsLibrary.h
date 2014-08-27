@@ -9,7 +9,7 @@ U.S. Copyright Office as an unpublished work, pursuant to Title 17,
 U.S. Code, Section 408.  Unauthorized copying, adaptation, distribution
 or display is prohibited.
 
-$Id: WolframStreamsLibrary.h,v 1.30 2013/11/18 05:26:10 dlibrik Exp $
+$Id: WolframStreamsLibrary.h,v 1.33 2013/11/24 20:51:52 dlibrik Exp $
 
 *************************************************************************/
 
@@ -75,7 +75,7 @@ struct st_MOutputStream
 	void* handlerIdentity;
 	struct st_MOutputStream* underlyingStream; /* set when this stream is chained */
 
-	mint (*Mfwrite)(struct st_MOutputStream*, char*, size_t);
+	mint (*Mfwrite)(struct st_MOutputStream*, void*, size_t);
 	int (*Mfflush)(struct st_MOutputStream*);
 	int_64 (*Mftell)(struct st_MOutputStream*);
 	char* (*MferrorText)(struct st_MOutputStream*);

@@ -2,7 +2,7 @@
 <gconf>
 	<dir name="apps">
 		<dir name="gksu">
-			<entry name="sudo-mode" mtime="1389131277" type="bool" value="true"/>
+			<entry name="sudo-mode" mtime="1403254657" type="bool" value="true"/>
 		</dir>
 	</dir>
 </gconf>

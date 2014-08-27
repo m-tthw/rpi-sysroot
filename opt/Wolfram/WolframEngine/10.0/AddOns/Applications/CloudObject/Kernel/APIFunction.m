@@ -3,11 +3,11 @@ BeginPackage["CloudObject`"]
 
 System`APIFunction::usage = "APIFunction is a function that takes named parameters.";
 
+System`APIFunctionGroup::usage = "APIFunctionGroup is a group of APIFunctions.";
+
 System`DefaultResultFormat::usage = "DefaultResultFormat is an option to APIFunction and similar functions that specifies the default return format of an API call.";
 
 System`DefaultParameterType::usage = "DefaultParameterType is an option to APIFunction and similar functions that specifies what parameter type to use when none is explicitly given for a parameter.";
-
-System`CloudAPIFunctionHyperlink::usage = "CloudAPIFunctionHyperlink[CloudObject[uri], {\"param1\"->\"value1\", ...}] returns a Hyperlink to an API function evaluation with the given parameters."; 
 
 Begin["`Private`"]
 
@@ -128,88 +128,99 @@ Attributes[isSymbol] = {HoldFirst}
 
 isMissing[expr_] := MatchQ[expr, _Missing]
 
-APIFunction[params_, body_, OptionsPattern[]][args___] := 
-    Module[{defaultType, paramsList, parameters, position, arguments, givenParameters, notGivenParameters, slots, positionalSlots, argvalue},
-        defaultType = OptionValue[DefaultParameterType];
-        If[Head[Unevaluated[params]] === List,
-            paramsList = Hold[params],
-            paramsList = Hold[{params}]
-        ];
-        parameters = ReleaseHold @ Replace[paramsList, {
-            (spec_ -> symbol_?isSymbol) :> (Replace[spec, {
-                {name_String, type_, default_} :> (name -> {HoldPattern[symbol], type, default}),
-                {name_String, type_} :> (name -> {HoldPattern[symbol], type}),
-                {name_String} :> (name -> {HoldPattern[symbol], defaultType}),
-                name_String :> (name -> {HoldPattern[symbol], defaultType}),
-                _ :> (Message[APIFunction::invalidparam, spec, params]; Return[$Failed])
-            }, {0}]),
-            symbol_ :> (SymbolName[symbol] -> {HoldPattern[symbol], Automatic}), 
-            _ :> (Message[APIFunction::invalidparams, params]; Return[$Failed])
-        }, {2}];
-	    position = 1;
-	    arguments = {};
-	    givenParameters = {};
+parseAPIParameters[params_, defaultType_ : Automatic, holdDefault_:False] := Module[{paramsList},
+    If[Head[Unevaluated[params]] === List,
+        paramsList = Hold[params],
+        paramsList = Hold[{params}]
+    ];
+    ReleaseHold @ Replace[paramsList, {
+        (spec_ -> symbol_?isSymbol) :> (Replace[Unevaluated[spec], {
+            {name_String, type_, default_} :> (name -> {HoldPattern[symbol], type, If[TrueQ[holdDefault], Hold[default], default]}), (* TODO consider making holdDefault=True the behavior, but need to change all callers *)
+            {name_String, type_} :> (name -> {HoldPattern[symbol], type}),
+            {name_String} :> (name -> {HoldPattern[symbol], defaultType}),
+            name_String :> (name -> {HoldPattern[symbol], defaultType}),
+            _ :> (Message[APIFunction::invalidparam, spec, params]; Return[$Failed])
+        }, {0}]),
+        symbol_ :> (SymbolName[symbol] -> {HoldPattern[symbol], Automatic}), 
+        _ :> (Message[APIFunction::invalidparams, params]; Return[$Failed])
+    }, {2}]
+]
+    
+Attributes[parseAPIParameters] = {HoldAll}
+
+applyAPIFunction[parameters_, body_, {args___}, fullExpr_] :=
+    Module[{position, arguments, givenParameters, notGivenParameters, slots, positionalSlots, argvalue},
+        position = 1;
+        arguments = {};
+        givenParameters = {};
         positionalSlots = {};
-	    Check[
-		    Map[Function[arg,
-		        If[Head[arg] === Association,
-		        (* Association -> named arguments *)
-		            Cases[parameters, (name_ -> {symbol_, type_, ___}) :> 
-		                If[!isMissing[arg[name]],
-		                    (* Collection contains the formal parameter *)
-		                    AppendTo[arguments, symbol -> convertAPIParameter[arg[name], type]];
-		                    AppendTo[givenParameters, name]
-		                ]
-		            ],
-		        (* no Association *)
-		            If[Head[arg] === List && And @@ (MatchQ[#, _String -> _]& /@ arg),
-		            (* List of Rules -> named arguments *)
-		                Cases[parameters, (name_ -> {symbol_, type_, ___}) :> Module[{missing, value},
-		                    missing = False;
-		                    value = Replace[name, Join[arg, {_ :> (missing = True)}]];
-		                    If[!missing,
-		                        AppendTo[arguments, symbol -> convertAPIParameter[value, type]];
-		                        AppendTo[givenParameters, name]
-		                    ]
-		                ]],
-			        (* positional arguments *)
-				        If[position <= Length[parameters],
-				        (* fill formal parameter from this position *)
-				            argvalue = convertAPIParameter[arg, parameters[[position, 2, 2]]];
-				            AppendTo[arguments, parameters[[position, 2, 1]] -> argvalue]; 
-				            AppendTo[givenParameters, parameters[[position, 1]]];
-				            ++position;,
-				        (* no formal parameter at this position any more *)
-				            argvalue = convertAPIParameter[arg, defaultType];
+        Check[
+            Map[Function[arg,
+                If[Head[arg] === Association,
+                (* Association -> named arguments *)
+                    Cases[parameters, (name_ -> {symbol_, type_, ___}) :> 
+                        If[!isMissing[arg[name]],
+                            (* Collection contains the formal parameter *)
+                            AppendTo[arguments, symbol -> convertAPIParameter[arg[name], type]];
+                            AppendTo[givenParameters, name]
+                        ]
+                    ],
+                (* no Association *)
+                    If[Head[arg] === List && And @@ (MatchQ[#, _String -> _]& /@ arg),
+                    (* List of Rules -> named arguments *)
+                        Cases[parameters, (name_ -> {symbol_, type_, ___}) :> Module[{missing, value},
+                            missing = False;
+                            value = Replace[name, Join[arg, {_ :> (missing = True)}]];
+                            If[!missing,
+                                AppendTo[arguments, symbol -> convertAPIParameter[value, type]];
+                                AppendTo[givenParameters, name]
+                            ]
+                        ]],
+                    (* positional arguments *)
+                        If[position <= Length[parameters],
+                        (* fill formal parameter from this position *)
+                            argvalue = convertAPIParameter[arg, parameters[[position, 2, 2]]];
+                            AppendTo[arguments, parameters[[position, 2, 1]] -> argvalue]; 
+                            AppendTo[givenParameters, parameters[[position, 1]]];
+                            ++position;,
+                        (* no formal parameter at this position any more *)
+                            argvalue = convertAPIParameter[arg, defaultType];
                             AppendTo[positionalSlots, argValue];
-				        ]
-		            ]
-		        ]
-		    ], {args}];
-		    slots = {};
-		    (* Intentionally, do not include optional parameters in the slots. *)
-		    Replace[parameters, (name_ -> {symbol_, type_}) :> If[MemberQ[givenParameters, name],
-		        AppendTo[slots, First @ Cases[arguments, (Verbatim[symbol] -> value_) -> value, {1}, 1]]
-		    ], {1}];
-		    slots = Join[slots, positionalSlots];
-	        notGivenParameters = DeleteCases[parameters, Alternatives @@ (# -> _ & /@ givenParameters)];
-	        Replace[notGivenParameters, {
-	            (name_ -> {_, _}) :> (Message[APIFunction::missingparam, name, {args}]; Return[$Failed]),
-	            (name_ -> {symbol_, type_, default_}) :> AppendTo[arguments, symbol -> default]}, {1}
-	        ];,
-	    (* if any parameter conversion fails *)
-	        Return[$Failed]
-	    ];
-	    log["Arguments: `1`", arguments, DebugLevel -> 2];
-	    
-	    (* Apply arguments, but take into account other scoping constructs (specifically Function). *)
-	    applyScoped[body, Join[arguments, {SlotSequence[n_] :> Sequence @@ slots[[n ;; ]]},
+                        ]
+                    ]
+                ]
+            ], {args}];
+            slots = {};
+            (* Intentionally, do not include optional parameters in the slots. *)
+            Replace[parameters, (name_ -> {symbol_, type_}) :> If[MemberQ[givenParameters, name],
+                AppendTo[slots, First @ Cases[arguments, (Verbatim[symbol] -> value_) -> value, {1}, 1]]
+            ], {1}];
+            slots = Join[slots, positionalSlots];
+            notGivenParameters = DeleteCases[parameters, Alternatives @@ (# -> _ & /@ givenParameters)];
+            Replace[notGivenParameters, {
+                (name_ -> {_, _}) :> (Message[APIFunction::missingparam, name, {args}]; Return[$Failed]),
+                (name_ -> {symbol_, type_, default_}) :> AppendTo[arguments, symbol -> default]}, {1}
+            ];,
+        (* if any parameter conversion fails *)
+            Return[$Failed]
+        ];
+        log["Arguments: `1`", arguments, DebugLevel -> 2];
+        
+        (* Apply arguments, but take into account other scoping constructs (specifically Function). *)
+        applyScoped[body, Join[arguments, {SlotSequence[n_] :> Sequence @@ slots[[n ;; ]]},
             MapIndexed[Function[{value, index}, Slot[First @ index] :> value], slots],
-            {Slot[0] :> APIFunction[Unevaluated[params], Unevaluated[body], {
-                DefaultResultFormat -> OptionValue[DefaultResultFormat],
-                DefaultParameterType -> OptionValue[DefaultParameterType]
-            }]}
+            {Slot[0] :> fullExpr}
         ]]
+    ]
+    
+Attributes[applyAPIFunction] = {HoldAll}
+
+APIFunction[params_, body_, options : OptionsPattern[]][args___] := 
+    Module[{defaultType, parameters},
+        defaultType = OptionValue[DefaultParameterType];
+        parameters = parseAPIParameters[params, defaultType];
+        If[parameters === $Failed, Return[$Failed]];
+        applyAPIFunction[parameters, body, {args}, APIFunction[Unevaluated[params], Unevaluated[body], options]]
 	]
 
 (*TODO: Care about Function scoping.*)
@@ -239,12 +250,12 @@ SetAttributes[APIFunction, {HoldAll,ReadProtected}]
 
 Protect[APIFunction]
 
-CloudAPIFunctionHyperlink[CloudObject[uri_], params_List : {}] :=
+cloudAPIFunctionHyperlink[CloudObject[uri_], params_List : {}] :=
     Hyperlink[uri <> JoinURLSearch[Replace[params, (Rule|RuleDelayed)[key_, value_] :> (key -> ToString[value]), {1}]]]
 
-CloudAPIFunctionHyperlink[CloudObject[uri_], param_ : {}] := CloudAPIFunctionHyperlink[CloudObject[uri], {param}]
+cloudAPIFunctionHyperlink[CloudObject[uri_], param_ : {}] := CloudAPIFunctionHyperlink[CloudObject[uri], {param}]
 
-CloudAPIFunctionHyperlink[uri_, params_] := CloudAPIFunctionHyperlink[CloudObject[uri], params] 
+cloudAPIFunctionHyperlink[uri_, params_] := CloudAPIFunctionHyperlink[CloudObject[uri], params] 
 
 End[]
 

@@ -7,11 +7,11 @@
         tgayley@wolfram.com
 *)
 
-(* :Package Version: 4.6 *)
+(* :Package Version: 4.7 *)
 
 (* :Mathematica Version: 4.0 *)
 
-(* :Copyright: J/Link source code (c) 1999-2013, Wolfram Research, Inc. All rights reserved.
+(* :Copyright: J/Link source code (c) 1999-2014, Wolfram Research, Inc. All rights reserved.
 
    Use is governed by the terms of the J/Link license agreement, which can be found at
    www.wolfram.com/solutions/mathlink/jlink.
@@ -86,12 +86,12 @@ If[SyntaxQ["10.0"] && ToExpression["10.0"] == $VersionNumber && !ValueQ[`Private
    values for these constants) even if the Ant preprocessing step that replaces
    the @name@ parts is not performed. This is for debugging in the Workbench.
 *)
-JLink`Information`$VersionNumber = If[SyntaxQ["4.6"], ToExpression["4.6"], 0.0]
+JLink`Information`$VersionNumber = If[SyntaxQ["4.7"], ToExpression["4.7"], 0.0]
 JLink`Information`$ReleaseNumber = If[SyntaxQ["0"], ToExpression["0"], 0]
-JLink`Information`$BuildNumber = If[SyntaxQ["22"], ToExpression["22"], 0]
-JLink`Information`$CreationID = If[SyntaxQ["20131119034332"], ToExpression["20131119034332"], 0]
-JLink`Information`$CreationDate = If[SyntaxQ["{2013,11,19,03,43,32}"], ToExpression["{2013,11,19,03,43,32}"], {0,0,0,0,0,0}]
-JLink`Information`$Version = "J/Link Version 4.6.0"
+JLink`Information`$BuildNumber = If[SyntaxQ["44"], ToExpression["44"], 0]
+JLink`Information`$CreationID = If[SyntaxQ["20140128184307"], ToExpression["20140128184307"], 0]
+JLink`Information`$CreationDate = If[SyntaxQ["{2014,01,28,18,43,07}"], ToExpression["{2014,01,28,18,43,07}"], {0,0,0,0,0,0}]
+JLink`Information`$Version = "J/Link Version 4.7.0"
 
 
 (*********************  Set modification  ***********************)

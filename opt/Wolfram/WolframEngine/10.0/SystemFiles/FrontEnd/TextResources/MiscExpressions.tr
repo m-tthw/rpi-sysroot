@@ -526,9 +526,9 @@ NOi6zmiceV9F+AAXwaj5
 
 "copyMarkersToGraphicsTemplate" ->
 GraphicsBox[
-  TagBox[RasterBox["imagedata", {{0, "height"}, {"width", 0}}, {0., 1.},
-    ColorFunction->RGBColor],
-   BoxForm`ImageTag["Real", ColorSpace -> "RGB", Interleaving -> True],
+  TagBox[RasterBox["imagedata", "imagerect", {0., 1.},
+    ColorFunction->"colorfunc"],
+   BoxForm`ImageTag["datatype", ColorSpace -> "colorspace", Interleaving -> True],
    Selectable->False],
   BaseStyle->"ImageGraphics",
   ImageSize->Automatic,
@@ -664,7 +664,7 @@ Cell[BoxData[
  TagBox[GridBox[{
     {
      GraphicsBox[{
-       RasterBox["imgData", {{"offsetX1", "offsetY1"}, {"offsetX2", "offsetY2"}}], 
+       RasterBox["imgData", "imagerect", {"chmin", "chmax"}, ColorFunction->"colorfunction"], 
        {EdgeForm[{RGBColor[0, 0, 0], Opacity[0.4], AbsoluteThickness[3]}], FaceForm[None], 
         RectangleBox[{"centerP1", "centerP1"}, {"centerP2", "centerP2"}]}, 
        {EdgeForm[{RGBColor[1, 1, 1], Opacity[0.8], AbsoluteThickness[1]}], FaceForm[None], 
@@ -737,7 +737,7 @@ Cell[BoxData[
  TagBox[GridBox[{
     {
      GraphicsBox[{
-       RasterBox["imgData", {{"offsetX1", "offsetY1"}, {"offsetX2", "offsetY2"}}], 
+       RasterBox["imgData", "imagerect", {"chmin", "chmax"}, ColorFunction->"colorfunction"], 
        {EdgeForm[{RGBColor[0, 0, 0], Opacity[0.4], AbsoluteThickness[3]}], FaceForm[None], 
         RectangleBox[{"centerP1", "centerP1"}, {"centerP2", "centerP2"}]}, 
        {EdgeForm[{RGBColor[1, 1, 1], Opacity[0.8], AbsoluteThickness[1]}], FaceForm[None], 
@@ -835,7 +835,7 @@ Cell[BoxData[
  TagBox[GridBox[{
     {
      GraphicsBox[{
-       RasterBox["imgData", {{"offsetX1", "offsetY1"}, {"offsetX2", "offsetY2"}}], 
+       RasterBox["imgData", "imagerect", {"chmin", "chmax"}, ColorFunction->"colorfunction"], 
        {EdgeForm[{RGBColor[0, 0, 0], Opacity[0.4], AbsoluteThickness[3]}], FaceForm[None], 
         RectangleBox[{"centerP1", "centerP1"}, {"centerP2", "centerP2"}]}, 
        {EdgeForm[{RGBColor[1, 1, 1], Opacity[0.8], AbsoluteThickness[1]}], FaceForm[None], 

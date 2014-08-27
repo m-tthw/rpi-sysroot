@@ -12,6 +12,7 @@
 package com.wolfram.jlink;
 
 import java.io.BufferedReader;
+import java.io.CharArrayReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -60,8 +61,8 @@ public class Install {
     static final int SETVMNAME             = 29;
     static final int SETEXCEPTION          = 30;
 
-        
-	/**
+
+    /**
 	 * This is the entry point called by the Mathematica function InstallJava.
 	 * Users will not call this unless they are trying to manually establish a link between Java
 	 * and Mathematica, instead of using the default launch behavior of InstallJava. For example,
@@ -93,7 +94,7 @@ public class Install {
         }
         if (!isLinked) {
             System.out.println("J/Link (tm)");
-    		System.out.println("Copyright (C) 1999-2013, Wolfram Research, Inc. All Rights Reserved.");
+    		System.out.println("Copyright (C) 1999-2014, Wolfram Research, Inc. All Rights Reserved.");
     		System.out.println("www.wolfram.com");
     		System.out.println("Version " + KernelLink.VERSION);
     		System.out.println("");
@@ -110,8 +111,32 @@ public class Install {
         ConsoleStream.setSystemStdoutStream(System.out);
         ConsoleStream.setSystemStderrStream(System.err);
  
+        // We want to set up the SecurityManager immdiately, so to avoid problems with file permissions
+        // when reading the init file, we read it here and store its content in a char array. After we set
+        // the SecurityManager we parse the contents of this array, so security is in effect while classpath
+        // modifications are being made.
+        BufferedReader initFileReader = null;
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equalsIgnoreCase("-init") && i < args.length - 1) {
+                String initFile = args[i + 1];
+                // Will be wrapped in ""; drop them.
+                if (initFile.startsWith("\""))
+                    initFile = initFile.substring(1, initFile.length() - 2);
+                try {
+                    java.io.Reader rdr = new BufferedReader(new InputStreamReader(new FileInputStream(initFile), "UTF-8"));
+                    char[] chars = new char[30000];
+                    int numChars = rdr.read(chars, 0, 30000);
+                    if (numChars > 0)
+                        initFileReader = new BufferedReader(new CharArrayReader(chars, 0, numChars));
+                    rdr.close();
+                    new File(initFile).delete();
+                } catch (Exception e) {}
+            }
+        }
+
+        // Set a SecurityManager.
         String securityManagerClass = System.getProperty("com.wolfram.jlink.security");
-		try {
+        try {
             if (securityManagerClass == null) {
                 // This security manager only prevents calls to System.exit().
                 System.setSecurityManager(new JLinkSecurityManager());
@@ -122,10 +147,10 @@ public class Install {
                 Class securityClass = Install.class.getClassLoader().loadClass(securityManagerClass);
                 System.setSecurityManager((SecurityManager) securityClass.newInstance());
             }
-		} catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("FATAL ERROR: attempt to set a SecurityManager failed: " + e);
             return;
-		}
+        }
 
 		try {
 			ml = MathLinkFactory.createKernelLink(args);
@@ -150,27 +175,18 @@ public class Install {
         // One reason is that MathLink allows only short command lines in LinkOpen. Another is that
         // we avoid problems with quoting arguments. It's just easier to write them into a file, one
         // set per line, than to try to deal with an extremely long, complex command line.
-        // Users of the init file mechanism _must not_ put operations that take a measurable amount
-        // of time into "run" lines. If you need to kick off a long-running operation, start it on
-		// a thread and return right away.
         // Lines in the init file must fit a precise form, starting with s single keyword, followed
         // by a single space char and space-separated arguments:
         //     cp some/dir/or/jar/file
         //     cpf some/dir           (cpf means don't search for jars in the dir)
-        //     run ClassNameHavingAMainMethod arg1ToMain arg2ToMain ...
+        //     NO LONGER SUPPORTED: run ClassNameHavingAMainMethod arg1ToMain arg2ToMain ...
         // In a "run" line, the args must not have spaces in them. If you need to have spaces
         // (such as in file paths), convert them to %20.
-        for (int i = 0; i < args.length; i++) {
-            if (args[i].equalsIgnoreCase("-init") && i < args.length - 1) {
-                String initFile = args[i + 1];
-                // Will be wrapped in ""; drop them.
-                if (initFile.startsWith("\""))
-                    initFile = initFile.substring(1, initFile.length() - 2);
-                BufferedReader rdr = null;
-                try {
-                    rdr = new BufferedReader(new InputStreamReader(new FileInputStream(initFile), "UTF-8"));
-                    String line;
-                    while ((line = rdr.readLine()) != null) {
+        if (initFileReader != null) {
+            try {
+                String line;
+                while ((line = initFileReader.readLine()) != null) {
+                    try {
                         if (line.startsWith("cp ")) {
                             String addToClassPath = line.substring(3);
                             ml.getClassLoader().addLocations(new String[]{addToClassPath}, true);
@@ -178,6 +194,12 @@ public class Install {
                             String addToClassPath = line.substring(4);
                             ml.getClassLoader().addLocations(new String[]{addToClassPath}, false);
                         } else if (line.startsWith("run ")) {
+                            // I am no longer supporting the "run" lines. That feature was devised for the era when Java
+                            // was launched at startup, and it was importnt to hide the startup time. In fact, the whole
+                            // init file feature was designed for that purpose, but it's a little more work to rip it all
+                            // out, so leaving the cp and cpf lines for now. Not supporting run lines also means that
+                            // the undocumented RegisterJavaInitialization M function is no longer supported.
+                            /*
                             line = line.substring(4);
                             // Split line by spaces. When it was written, spaces within args were converted
                             // to %20.
@@ -187,28 +209,26 @@ public class Install {
                                 String[] argv = new String[cmd.length - 1];
                                 for (int c = 0; c < argv.length; c++)
                                     argv[c] = cmd[c + 1].replaceAll("%20", " ");
-                                try {
-                                    Class c = ml.getClassLoader().loadClass(clsName);
-                                    Method mainMeth = c.getMethod("main", new Class[]{String[].class});
-                                    mainMeth.invoke(null, new Object[]{argv});
-                                } catch (Throwable t) {
-                                    // Do nothing.
-                                }
+                                Class c = ml.getClassLoader().loadClass(clsName);
+                                Method mainMeth = c.getMethod("main", new Class[]{String[].class});
+                                mainMeth.invoke(null, new Object[]{argv});
                             }
+                            */
                         }
+                    } catch (Throwable t) {
+                        // Do nothing if any single line of the init file triggered an exception.
+                        // Just go on to the next one.
                     }
-                } catch (Exception e) {
-                    // Do nothing.
-                } finally {
-                    if (rdr != null)
-                        try {
-                            rdr.close();
-                            new File(initFile).delete();
-                        } catch (Exception ee) {}
                 }
+            } catch (Exception e) {
+                // Do nothing.
+            } finally {
+                try {
+                    initFileReader.close();                            
+                } catch (Exception ee) {}
             }
         }
-        
+      
         // Read timeout parameter or determine if it's a listen link. For a listen link,
         // we don't ever want to time out. User might want Java to wait
         // arbitrarily long before the kernel connects to it. Example is launching Java in

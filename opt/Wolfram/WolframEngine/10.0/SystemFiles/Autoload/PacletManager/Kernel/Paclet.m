@@ -9,7 +9,7 @@
 
 (* :Mathematica Version: 8.1 *)
 
-(* :Copyright: Mathematica source code (c) 1999-2013, Wolfram Research, Inc. All rights reserved. *)
+(* :Copyright: Mathematica source code (c) 1999-2014, Wolfram Research, Inc. All rights reserved. *)
 
 (* :Discussion: This file is a component of the PacletManager Mathematica source code. *)
 
@@ -203,7 +203,7 @@ createPacletFromPackedFile[pathToPacletFile_String] :=
    Returns a list of Paclet expresions.
 *)
 createPacletsFromParentDirs[parentDirs:(_String | {___String}), depth_Integer] :=
-    Cases[CreatePaclet /@ FileNames[{"PacletInfo.m", "PacletInfo.wl"}, parentDirs, depth], _Paclet]
+    Cases[CreatePaclet /@ (Join @@ (FileNames[{"PacletInfo.m", "PacletInfo.wl"}, #, depth]& /@ parentDirs)), _Paclet]
 
 
 (* All creation of paclets from PacletInfo.m data goes through this function. It returns
@@ -548,14 +548,19 @@ PgetDocResourcePath[paclet_, linkBase_, context_, expandedResourceName_, lang_] 
                     pacletRootPath = PgetPathToRoot[paclet];
                     docRoot = EXTgetProperty[ext, "Root", "Documentation"];
                     resPath = EXTgetResourcePath[ext, expandedResourceName];
-                    (* Try with and without a language-specific subdir. *)
-                    fullPath = ToFileName[{pacletRootPath, docRoot, extLanguage}, resPath];
-                    If[FileExistsQ[fullPath],
-                        Return[ExpandFileName[fullPath]]
-                    ];
-                    fullPath = ToFileName[{pacletRootPath, docRoot}, resPath];
-                    If[FileExistsQ[fullPath],
-                       Return[ExpandFileName[fullPath]]
+                    (* If there was a custom path in URL form, use it, otherwise construct a full path to the file. *)
+                    If[StringMatchQ[resPath, "file:*"] || StringMatchQ[resPath, "http:*"],
+                        Return[resPath],
+                    (* else *)
+	                    (* Try with and without a language-specific subdir. *)
+	                    fullPath = ToFileName[{pacletRootPath, docRoot, extLanguage}, resPath];
+	                    If[FileExistsQ[fullPath],
+	                        Return[ExpandFileName[fullPath]]
+	                    ];
+	                    fullPath = ToFileName[{pacletRootPath, docRoot}, resPath];
+	                    If[FileExistsQ[fullPath],
+	                       Return[ExpandFileName[fullPath]]
+	                    ]
                     ]
                 ]
             ],

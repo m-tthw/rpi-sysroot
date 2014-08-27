@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #  MathLink compiler command file
-#  Copyright 1988-2013 Wolfram Research, Inc.
+#  Copyright 1988-2014 Wolfram Research, Inc.
 
 #  Make certain that ${PATH} includes /usr/bin and /bin
 PATH="/usr/bin:/bin:${PATH}"

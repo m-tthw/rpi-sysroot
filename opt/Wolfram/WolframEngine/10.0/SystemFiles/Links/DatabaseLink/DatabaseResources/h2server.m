@@ -3,5 +3,5 @@ JDBCDriver[
   "Driver" -> "org.h2.Driver", 
   "Protocol" -> "jdbc:h2:tcp://",
   "Version" -> DatabaseLink`Information`$VersionNumber, 
-  "Description" -> "H2 Database Engine (Server Mode) - Version 1.3.172 - This mode connects over TCP/IP to an H2 TCP server running on a remote host."
+  "Description" -> "H2 Database Engine (Server Mode) - Version 1.3.174 - This mode connects over TCP/IP to an H2 TCP server running on a remote host."
 ]

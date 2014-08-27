@@ -9,7 +9,7 @@
 
 (* :Mathematica Version: 6.0 *)
 
-(* :Copyright: Mathematica source code (c) 1999-2013, Wolfram Research, Inc. All rights reserved. *)
+(* :Copyright: Mathematica source code (c) 1999-2014, Wolfram Research, Inc. All rights reserved. *)
 
 (* :Discussion: This file is a component of the PacletManager Mathematica source code. *)
 
@@ -183,7 +183,7 @@ If[!ValueQ[$pacletDataChangeTrigger], $pacletDataChangeTrigger = 0]
 
 initializePacletManager[] :=
     executionProtect @
-    Module[{foundManagerPersistentFile, needsCacheRebuild, cachesValid, managerData, lockFile, freshStart,
+    Module[{foundManagerPersistentFile, foundCurrentManagerPersistentFile, needsCacheRebuild, cachesValid, managerData, lockFile, freshStart,
              declareLoadData, preloadData, functionInformation, totalFunctionInformation = {}, filePrefix, feLang},
         $pmMode = If[MemberQ[$CommandLine, "-nopaclet"], "ReadOnly", "Normal"];
         (* Define the dirs the paclet manager uses for data and paclets.
@@ -242,7 +242,7 @@ initializePacletManager[] :=
 
         $managerData = $defaultManagerData;
         (* Restore manager data (disabled/loading state of paclets, allow internet, etc.) *)
-        foundManagerPersistentFile = False;
+        foundManagerPersistentFile = foundCurrentManagerPersistentFile = False;
         filePrefix = "managerData_" <> If[TrueQ[Developer`ProtectedMode[]], "p_", ""];
         $managerPersistentFile = findMostRecentVersion[$userConfigurationDir, filePrefix, ".pmd2"];
         If[StringQ[$managerPersistentFile],
@@ -270,8 +270,13 @@ initializePacletManager[] :=
                     $managerData = managerData;
                     foundManagerPersistentFile = True
                 ]
-            ],
-        (* else *)
+            ]
+        ];
+        foundCurrentManagerPersistentFile = $managerPersistentFile === ToFileName[$userConfigurationDir, filePrefix <> getKernelVersionString[] <> ".pmd2"];
+        (* This variable might hold the name of an older version (because no current version was found), but now make sure that
+           we set it to the correct version, as this is the filename that will be used for writing.
+        *)
+        If[!foundCurrentManagerPersistentFile,
             $managerPersistentFile = ToFileName[$userConfigurationDir, filePrefix <> getKernelVersionString[] <> ".pmd2"]
         ];
 
@@ -325,12 +330,12 @@ initializePacletManager[] :=
         ];
         
         If[MatchQ[preloadData, {__String}],
-            Get /@ preloadData
+            Quiet[Get /@ preloadData]
         ];
         If[MatchQ[declareLoadData, {{_String, _List}..}],
             doDeclareLoad[declareLoadData]
         ];
-        If[!foundManagerPersistentFile,
+        If[!foundCurrentManagerPersistentFile,
             writeManagerData[]
         ];
         initSearchCache[$userTemporaryDir];
@@ -396,7 +401,8 @@ systemPacletDirs[] :=
     {
         ToFileName[{$InstallationDirectory, "SystemFiles", "Links"}],
         ToFileName[{$InstallationDirectory, "SystemFiles", "Autoload"}],
-        ToFileName[{$InstallationDirectory, "AddOns", "Packages"}]
+        (* GUIKit is the only "true" paclet in the Packages dir. As an optimization, ignore the other ones. *)
+        ToFileName[{$InstallationDirectory, "AddOns", "Packages", "GUIKit"}]
     }
 
 (* This is the set of dirs into which we want to support users hand-installing legacy-style apps
@@ -407,17 +413,12 @@ systemPacletDirs[] :=
    installation/removal, we could never trust the serialized data anyway.
 *)
 applicationDirs[] :=
-    Join[
-        {ToFileName[{$InstallationDirectory, "AddOns", "Applications"}]},
-        If[!Developer`$ProtectedMode,
-            {ToFileName[{$UserBaseDirectory, "Applications"}],
-             ToFileName[{$UserBaseDirectory, "Autoload"}],
-             ToFileName[{$BaseDirectory, "Applications"}],
-             ToFileName[{$BaseDirectory, "Autoload"}]},
-        (* else *)
-            {}
-        ]
-    ]
+    {ToFileName[{$InstallationDirectory, "AddOns", "Applications"}],
+     ToFileName[{$UserBaseDirectory, "Applications"}],
+     ToFileName[{$UserBaseDirectory, "Autoload"}],
+     ToFileName[{$BaseDirectory, "Applications"}],
+     ToFileName[{$BaseDirectory, "Autoload"}]
+    }
 
 
 Options[updateManagerData] = {"Write" -> False}
@@ -493,7 +494,7 @@ findMostRecentVersion[dir_String, prefix_String, suffix_String] :=
 resetLanguage[newLanguage_String] :=
     If[newLanguage != $Language,
         $Language = newLanguage;
-        RestartPacletManager[]
+        Quiet @ RestartPacletManager[]
     ]
 
 
@@ -1327,7 +1328,7 @@ PacletInstall::readonly = "The PacletManager application is running in \"read-on
 
 
 Options[PacletInstall] = Options[PacletInstallQueued] = {"IgnoreVersion"->False, "DeletePacletFile"->False,
-                                                          "Site"->Automatic, "UpdateSites" -> False}
+                                                          "Site"->Automatic, "UpdateSites" -> Automatic}
 
 (*
     PacletInstall returns:
@@ -1417,7 +1418,8 @@ PacletInstallQueued[pacletName_String, opts:OptionsPattern[]] := PacletInstallQu
 PacletInstallQueued[p_Paclet, opts:OptionsPattern[]] := PacletInstallQueued[{p["Name"], p["Version"]}, opts]
 
 PacletInstallQueued[{pacletName_String, pacletVersion_String}, opts:OptionsPattern[]] :=
-    Module[{existing, newestExisting, existingVers, availablePaclets, result, remotePaclet, downloadTask, site, isNewSite},
+    Module[{existing, newestExisting, existingVers, availablePaclets, result, 
+              remotePaclet, downloadTask, site, isNewSite, updateSites},
         (* Look for existing installed paclets of the same name. *)
         existing = PacletFind[{pacletName, ""}, "Enabled"->All, "Internal"->All,
                                 "IncludeDocPaclets"->StringMatchQ[pacletName, "SystemDocs_*"]];
@@ -1472,7 +1474,15 @@ PacletInstallQueued[{pacletName_String, pacletVersion_String}, opts:OptionsPatte
             ];
             Return[result]
         ];
-        availablePaclets = PacletFindRemote[{pacletName, pacletVersion}, "UpdateSites" -> OptionValue["UpdateSites"]];
+        (* If UpdatesSites->True, force an update; if Automatic, only do an update if not found in local server cache. *) 
+        updateSites = OptionValue["UpdateSites"];
+        If[TrueQ[updateSites],
+            Quiet[PacletSiteUpdate /@ PacletSites[]]
+        ];
+        availablePaclets = PacletFindRemote[{pacletName, pacletVersion}, "UpdateSites" -> False];
+        If[Length[availablePaclets] == 0 && updateSites === Automatic,
+            availablePaclets = PacletFindRemote[{pacletName, pacletVersion}, "UpdateSites" -> True]
+        ];
         result = $Failed;
         If[Length[availablePaclets] == 0,
             (* Paclet not found on any server. *)
@@ -1792,7 +1802,7 @@ PacletUpdate::fail = "Could not uninstall paclet named `1` at location `2`. Reas
 PacletUpdate::notvalid = "`1` does not refer to a valid paclet in the current session."
 PacletUpdate::uptodate = "No newer version of the paclet named `1` could be found on any available paclet servers."
 
-Options[PacletUpdate] = {"KeepExisting" -> Automatic, "Site" -> Automatic, "UpdateSites" -> False}
+Options[PacletUpdate] = {"KeepExisting" -> Automatic, "Site" -> Automatic, "UpdateSites" -> Automatic}
 
 
 PacletUpdate[pacletName_String, opts:OptionsPattern[]] :=
@@ -1807,7 +1817,7 @@ PacletUpdate[pacletName_String, opts:OptionsPattern[]] :=
     ]
 
 PacletUpdate[paclet_Paclet, opts:OptionsPattern[]] :=
-    Module[{result = Null, remote, bestRemote, site, isNewSite},
+    Module[{result = Null, remote, bestRemote, site, isNewSite, updateSites},
         (* Using the Site option temporarily adds that paclet site, and also forces an immediate update of that site.
            This enables one-shot:   PacletInstall["paclet", "Site" -> "SomeNewSiteIJustFoundOutAbout"]
         *)
@@ -1823,7 +1833,19 @@ PacletUpdate[paclet_Paclet, opts:OptionsPattern[]] :=
             ];
             Return[result]
         ];
-        remote = PacletFindRemote[paclet["Name"], "UpdateSites" -> OptionValue["UpdateSites"]];
+        (* If UpdatesSites->True, force an update; if Automatic, only do an update if not found, or no newer version
+           appears to be available.
+        *) 
+        updateSites = OptionValue["UpdateSites"];
+        If[TrueQ[updateSites],
+            Quiet[PacletSiteUpdate /@ PacletSites[]]
+        ];
+        remote = PacletFindRemote[paclet["Name"], "UpdateSites" -> False];
+        If[updateSites === Automatic && 
+              (Length[remote] == 0 || !PacletNewerQ[First[remote]["Version"], paclet["Version"]]),
+            Quiet[PacletSiteUpdate /@ PacletSites[]];
+            remote = PacletFindRemote[paclet["Name"], "UpdateSites" -> False]
+        ];
         If[Length[remote] > 0,
             bestRemote = First[remote];
             If[PacletNewerQ[bestRemote["Version"], paclet["Version"]],
@@ -2209,6 +2231,7 @@ resourcesLocate[type_String] :=
 
 (* This message is actually issued only from Collections.m. *)
 RebuildPacletData::lock = "Another process appears to be writing into the paclet repository at this time. Try RebuildPacletData[] again."
+RebuildPacletData::basedir = "The current $UserBasePacletsDirectory, `1`, cannot be accessed. User-installed paclets will not be available in this session."
 
 Options[RebuildPacletData] = {"Collections" -> All}
 

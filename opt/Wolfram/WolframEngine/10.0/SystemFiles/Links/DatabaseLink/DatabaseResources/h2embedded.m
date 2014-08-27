@@ -3,5 +3,5 @@ JDBCDriver[
   "Driver" -> "org.h2.Driver", 
   "Protocol" -> "jdbc:h2:",
   "Version" -> DatabaseLink`Information`$VersionNumber, 
-  "Description" -> "H2 Database Engine (Embedded Mode) - Version 1.3.172 - This mode runs the database engine in your application process."
+  "Description" -> "H2 Database Engine (Embedded Mode) - Version 1.3.174 - This mode runs the database engine in your application process."
 ]

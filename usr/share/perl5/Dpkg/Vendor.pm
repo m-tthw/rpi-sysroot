@@ -135,7 +135,7 @@ sub get_vendor_object {
     if ($vendor ne "Default") {
         push @names, $vendor, lc($vendor), ucfirst($vendor), ucfirst(lc($vendor));
     }
-    foreach my $name (@names, "Default") {
+    foreach my $name (@names, "Debian") {
         eval qq{
             require Dpkg::Vendor::$name;
             \$obj = Dpkg::Vendor::$name->new();

@@ -9,7 +9,7 @@
 
 (* :Mathematica Version: 8.1 *)
 
-(* :Copyright: Mathematica source code (c) 1999-2013, Wolfram Research, Inc. All rights reserved. *)
+(* :Copyright: Mathematica source code (c) 1999-2014, Wolfram Research, Inc. All rights reserved. *)
 
 (* :Discussion: This file is a component of the PacletManager Mathematica source code. *)
 
@@ -45,7 +45,7 @@ $extraPacletCollection
 (* Change this when you modify the serialization format of pacletData.pmd2. 
    Change from 1 to 2 corresponded to adding the hash of the Repository dir to the end of the file.
 *)
-$serializationVersion = 2;
+$serializationVersion = 3;
 
 (*****************************  Initialization  ******************************)
 
@@ -56,14 +56,13 @@ $serializationVersion = 2;
 
 PCinitialize[freshStart:(True | False)] :=
     executionProtect @
-    Module[{foundFile, strm, serVersion, pc, oldHash, newHash, lockFile},
+    Module[{foundFile, strm, serVersion, pc, oldHash, newHash, oldCreationDate, lockFile},
         (***** Try to read from serialized file. *****)
         (* Because the persistent file depends on paclets in the layout, it must distinguish
            between different installation directories.
         *)
         $pacletsPersistentFile = ToFileName[$userConfigurationDir, "pacletData" <> "_" <>
-                                             If[TrueQ[Developer`ProtectedMode[]], "p_", ""] <>
-                                               getKernelVersionString[] <> "_" <>
+                                              getKernelVersionString[] <> "_" <>
                                                 ToString[Hash[$InstallationDirectory]] <> ".pmd2"];
         foundFile = FileExistsQ[$pacletsPersistentFile] && !freshStart;
         If[foundFile,
@@ -84,7 +83,7 @@ PCinitialize[freshStart:(True | False)] :=
                        allows us to pick up new paclets that were installed by other instances of Mathematica that
                        share this repository.
                     *)
-                    If[serVersion === $serializationVersion,
+                    If[serVersion > 1,
                         oldHash = Read[strm, Expression];
                         If[IntegerQ[oldHash],
                             newHash = Hash[FileNames["*", $userRepositoryDir]];
@@ -92,6 +91,17 @@ PCinitialize[freshStart:(True | False)] :=
                                 (* Setting this to a non-list value forces a rebuild below. *)
                                 $userPacletCollection=.
                             ]
+                        ]
+                    ];
+                    (* The transition from ser=2 to ser=3 brings another new expression at end: the Wolfram Language
+                      $CreationDate. This catches cases where pacletdata is invalid because a paclet has been added
+                      to a development version of M not associated with a change in the version number.
+                    *)
+                    If[serVersion > 2,
+                        oldCreationDate = Read[strm, Expression];
+                        If[oldCreationDate =!= $CreationDate,
+                            (* Setting this to a non-list value forces a rebuild below. *)
+                            $userPacletCollection=.
                         ]
                     ]                    
                 ];
@@ -136,7 +146,8 @@ PCwrite[] /; $pmMode =!= "ReadOnly" :=
                 Write[strm, $serializationVersion];
                 Write[strm, $userPacletCollection];
                 Write[strm, $layoutPacletCollection];
-                Write[strm, hash]
+                Write[strm, hash];
+                Write[strm, $CreationDate]
             ];
             releaseLock[lockFile]
         ]
@@ -150,43 +161,47 @@ Options[PCrebuild] = {"UserRepositoryDir" -> Automatic, "SharedRepositoryDir" ->
 
 PCrebuild[OptionsPattern[]] :=
     executionProtect @
-    Module[{userRepositoryDir, sharedRepositoryDir, sysPacletDirs, appDirs, collections, lockFile},
+    Module[{userRepositoryDir, sharedRepositoryDir, sysPacletDirs, appDirs, collections, lockFile, result},
         log[1, "Rebuilding"];
+        result = True;
         {userRepositoryDir, sharedRepositoryDir, sysPacletDirs, appDirs, collections} =
               OptionValue[{"UserRepositoryDir", "SharedRepositoryDir", "SystemPacletDirs", "ApplicationDirs", "Collections"}];
         collections = Flatten[{collections}];
-        (* Eliminate any attempts to use disallowed locations if in sandbox. *)
-        If[Developer`ProtectedMode[],
-            If[collections === All,
-                collections = {"User", "Layout", "LayoutDocs", "DownloadedDocs"},
-            (* else *)
-                collections = DeleteCases[collections, "Extra" | "Legacy"]
-            ]
-        ];
         If[collections === {All} || MemberQ[collections, "User"],
             lockFile = ToFileName[$userTemporaryDir, "repository.lock"];
             (* Wait a second to get the lock, but walk away if it can't be acquired. Not that big a deal if we can't write
                the data. If the lock is being held, then some other process is probably writing it anyway.
             *)
-            If[!acquireLock[lockFile, 2, False],
-                Message[RebuildPacletData::lock];
-                Return[False]
-            ];
-            (* Use depth 3 to allow paclets like:
-                   FooPaclet-1.0.0/
-                       FooPaclet/
-                           PacletInfo.m
-               in addition to:
-                   FooPaclet-1.0.0/
-                       PacletInfo.m
-                           FooPaclet/
-            *)
-            $userPacletCollection = createPacletsFromParentDirs[{
-                                             If[userRepositoryDir === Automatic, $userRepositoryDir, userRepositoryDir],
-                                             If[sharedRepositoryDir === Automatic, $sharedRepositoryDir, sharedRepositoryDir]},
-                                             3
-                                      ];
-            releaseLock[lockFile]
+            If[acquireLock[lockFile, 2, False],
+	            (* Use depth 3 to allow paclets like:
+	                   FooPaclet-1.0.0/
+	                       FooPaclet/
+	                           PacletInfo.m
+	               in addition to:
+	                   FooPaclet-1.0.0/
+	                       PacletInfo.m
+	                           FooPaclet/
+	            *)
+	            $userPacletCollection = createPacletsFromParentDirs[{
+	                                             If[userRepositoryDir === Automatic, $userRepositoryDir, userRepositoryDir],
+	                                             If[sharedRepositoryDir === Automatic, $sharedRepositoryDir, sharedRepositoryDir]},
+	                                             3
+	                                      ];
+                releaseLock[lockFile],
+            (* else *)
+                (* We can get here in cases where the lockfile still exists (meaning another M process is reading/writing
+                   to the repository), or, perhaps more commonly, when $UserBasePacletsDirectory is not visible (e.g.,
+                   when the user's home dir is not visible).
+                *)
+	            If[FileInformation[$UserBasePacletsDirectory] === {},
+	                Message[RebuildPacletData::basedir, $UserBasePacletsDirectory],
+	            (* else *)
+                    Message[RebuildPacletData::lock]
+	            ];
+                (* Make sure not to leave this function with the collection undefined. *)
+                If[!ListQ[$userPacletCollection], $userPacletCollection = {}];
+                result = False
+            ]
         ];
         If[collections === {All} || MemberQ[collections, "Layout"],
             $layoutPacletCollection = createPacletsFromParentDirs[
@@ -204,6 +219,7 @@ PCrebuild[OptionsPattern[]] :=
             $extraPacletCollection = createPacletsFromParentDirs[$extraPacletDirs, 2]
         ];
         (* TODO: Sanity check, issue messages, etc. ? *)
+        result
     ]
 
 
@@ -217,7 +233,7 @@ PCrebuild[OptionsPattern[]] :=
 Options[PCfindMatching] =
     {"Name" -> All, "Version" -> All, "Qualifier" -> All, "SystemID" -> Automatic, "MathematicaVersion" -> Automatic,
      "Context" -> All, "Extension" -> All, "Location" -> All, "Internal" -> All, "Creator" -> All, "Publisher" -> All,
-     "Collections" -> {"User", "Layout", "Legacy", "Extra" (* The other values are "LayoutDocs", "DownloadedDocs" *)},
+     "Collections" -> {"User", "Layout", "Legacy", "Extra" (* The other value is "LayoutDocs" *)},
      "Language" -> All, (* Language is weird here, as it is not a top-level field in paclets. But for searches into
                           the layoutdocs collection, it might be useful. Not used by any internal PM features, though. *)
      "Paclets" -> Null}

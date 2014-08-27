@@ -29,8 +29,12 @@ m32r		m32r		m32r			32	big
 m68k		m68k		m68k			32	big
 mips		mips		mips(eb)?		32	big
 mipsel		mipsel		mipsel			32	little
+mips64		mips64		mips64			64	big
+mips64el	mips64el	mips64el		64	little
+or1k		or1k		or1k			32	big
 powerpc		powerpc		(powerpc|ppc)		32	big
 ppc64		powerpc64	(powerpc|ppc)64		64	big
+ppc64el		powerpc64le	powerpc64le		64	little
 s390		s390		s390			32	big
 s390x		s390x		s390x			64	big
 sh3		sh3		sh3			32	little

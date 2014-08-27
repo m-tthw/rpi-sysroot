@@ -1470,6 +1470,10 @@ Package: python3.2-minimal
 Architecture: armhf
 Auto-Installed: 1
 
+Package: python3-numpy
+Architecture: armhf
+Auto-Installed: 0
+
 Package: libfltk1.3
 Architecture: armhf
 Auto-Installed: 1
@@ -1623,6 +1627,10 @@ Architecture: armhf
 Auto-Installed: 1
 
 Package: pypy-setuptools
+Architecture: armhf
+Auto-Installed: 1
+
+Package: libatlas3-base
 Architecture: armhf
 Auto-Installed: 1
 

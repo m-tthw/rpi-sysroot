@@ -70,7 +70,7 @@ public class MRJHandlers implements MRJAboutHandler, MRJQuitHandler {
 		aboutFrame.setLocation(200, 200);
 		aboutFrame.setLayout(null);
 		Label l1 = new Label("                           J/Link version " + Utils.getJLinkVersion());
-		Label l2 = new Label("     Copyright (c) 1999-2013, Wolfram Research, Inc.");
+		Label l2 = new Label("     Copyright (c) 1999-2014, Wolfram Research, Inc.");
 		Label l3 = new Label("This program is launched and managed by Mathematica");
 		Label l4 = new Label("to support calling Java code from Mathematica.");
 		Font f = new Font("Dialog", Font.BOLD, 12);

@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-(* $Id: URLEncode.m,v 1.16 2013/11/14 20:29:51 riccardod Exp $ *)
+(* $Id: URLEncode.m,v 1.17 2013/12/04 18:18:32 bobs Exp $ *)
 
 (* :Summary:
     URLEncode and Decode
@@ -95,7 +95,6 @@ urlbuild[base_List,params_List, opts:OptionsPattern[]]:=Module[
     (urlpercentencode1[#]=(urlencode[##]&))&/@(encodedcomponents/.{All}->{
         "Scheme","User","Password","Domain","Path","Port","Parameters","ParameterValues","Fragment"});
     
-    debugPrint[Definition[urlpercentencode1]];
     Switch[Length[base],
     	0,
         url="";

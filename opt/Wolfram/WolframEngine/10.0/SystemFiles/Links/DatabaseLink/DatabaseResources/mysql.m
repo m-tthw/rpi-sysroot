@@ -3,5 +3,5 @@ JDBCDriver[
   "Driver" -> "com.mysql.jdbc.Driver", 
   "Protocol" -> "jdbc:mysql://",
   "Version" -> DatabaseLink`Information`$VersionNumber,
-  "Description" -> "MySQL using Connector/J - Version 5.1.25 - This supports all known MySQL server versions."
+  "Description" -> "MySQL using Connector/J - Version 5.1.27 - This supports all known MySQL server versions."
 ]

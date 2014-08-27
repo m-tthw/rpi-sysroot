@@ -30,6 +30,8 @@
 /usr/lib/python2.7/sre_constants.py
 /usr/lib/python2.7/fnmatch.py
 /usr/lib/python2.7/lib-dynload
+/usr/lib/python2.7/lib-dynload/_hashlib.so
+/usr/lib/python2.7/lib-dynload/_ssl.so
 /usr/lib/python2.7/md5.py
 /usr/lib/python2.7/runpy.py
 /usr/lib/python2.7/random.py

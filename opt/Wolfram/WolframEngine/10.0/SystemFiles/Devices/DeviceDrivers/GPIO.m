@@ -1,6 +1,6 @@
 (* Mathematica package *)
 
-(* $Id: GPIO.m,v 1.1.2.8 2013/11/19 19:28:30 lambertc Exp $ *)
+(* $Id: GPIO.m,v 1.1.2.10 2013/12/12 00:11:32 bakshee Exp $ *)
 
 BeginPackage["GPIO`", {"GPIOLink`"}]
 
@@ -31,8 +31,8 @@ $BCMToWiringPiMapping = {4 -> "WiringPi7", 17 -> "WiringPi0", 22 -> "WiringPi3",
 
 (* ::Section:: *) (* API Registration Function *)
 If[ $SystemID === "Linux-ARM",
-	DeviceAPI`DeviceClassRegister[ "GPIO", Null, 
-		"FindFunction" -> DeviceOpen,
+	DeviceAPI`DeviceClassRegister[ "GPIO",
+		"FindFunction" -> ({{}}&),
 		"CloseFunction" -> gpioClose,
 		"ConfigureFunction" -> gpioConfigure,
 		"ReadFunction" -> gpioRead,

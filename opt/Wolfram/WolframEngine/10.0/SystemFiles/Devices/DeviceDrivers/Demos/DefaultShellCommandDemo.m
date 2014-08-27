@@ -1,4 +1,4 @@
-(* $Id: DefaultShellCommandDemo.m,v 1.1.2.1 2013/11/09 01:22:28 bakshee Exp $ *)
+(* $Id: DefaultShellCommandDemo.m,v 1.1.2.4 2013/12/13 22:32:16 bakshee Exp $ *)
 
 (* error handling; default arguments *)
 
@@ -26,13 +26,14 @@ open[_,args__] := $Failed
 
 read[{_,h_}] := read[Null, properties[h]["cmnd"] ]
 read[_,c_String] := ReadList["!"<>c, Record]
-read[__] := $Failed
-
+read[_,c_,p_:{}] := read[Null, StringJoin[ Riffle[ToString/@Flatten[{c,p}]," "] ] ]
 
 DeviceAPI`DeviceClassRegister["DefaultShellCommandDemo",
 	"ReadFunction" -> read,
-	"FindFunction" -> DeviceOpen,
+	"WriteFunction" -> read,
+	"FindFunction" -> ({{}}&),
 	"OpenFunction" -> open,
+	"ExecuteFunction" -> read,
 	"DriverVersion" -> 0.001
 ];
 

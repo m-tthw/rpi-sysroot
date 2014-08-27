@@ -8,7 +8,7 @@ U.S. Copyright Office as an unpublished work, pursuant to Title 17,
 U.S. Code, Section 408.  Unauthorized copying, adaptation, distribution
 or display is prohibited.
 
-$Id: WolframLibrary.h,v 1.56 2013/11/18 22:28:35 rknapp Exp $
+$Id: WolframLibrary.h,v 1.57 2013/12/13 15:10:51 rknapp Exp $
 
 *************************************************************************/
 
@@ -246,7 +246,7 @@ struct st_WolframLibraryData
 	int (*unregisterLibraryExpressionManager)(const char *mname);
 	int (*releaseManagedLibraryExpression)(const char *mname, mint id);
 
-	int (*registerLibraryCallbackManager)(const char *name, void (*mfun)(WolframLibraryData, mint, MTensor));
+	int (*registerLibraryCallbackManager)(const char *name, mbool (*mfun)(WolframLibraryData, mint, MTensor));
 	int (*unregisterLibraryCallbackManager)(const char *name);
 	int (*callLibraryCallbackFunction)(mint id, mint ArgC, MArgument *Args, MArgument Res);
 	int (*releaseLibraryCallbackFunction)(mint id);

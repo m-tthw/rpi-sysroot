@@ -11,7 +11,7 @@
 
 (* :Mathematica Version: 8.1 *)
 
-(* :Copyright: Mathematica source code (c) 1999-2013, Wolfram Research, Inc. All rights reserved. *)
+(* :Copyright: Mathematica source code (c) 1999-2014, Wolfram Research, Inc. All rights reserved. *)
 
 (* :Discussion:
 
@@ -67,8 +67,8 @@ If[SyntaxQ["@mathematicaVersionNumber@"] && ToExpression["@mathematicaVersionNum
 *)
 `Information`$VersionNumber = If[SyntaxQ["2.2"], ToExpression["2.2"], 0.0]
 `Information`$ReleaseNumber = If[SyntaxQ["0"], ToExpression["0"], 0]
-`Information`$CreationID = If[SyntaxQ["20131118182627"], ToExpression["20131118182627"], 0]
-`Information`$CreationDate = If[SyntaxQ["{2013,11,18,18,26,27}"], ToExpression["{2013,11,18,18,26,27}"], {0,0,0,0,0,0}]
+`Information`$CreationID = If[SyntaxQ["20140121182320"], ToExpression["20140121182320"], 0]
+`Information`$CreationDate = If[SyntaxQ["{2014,01,21,18,23,20}"], ToExpression["{2014,01,21,18,23,20}"], {0,0,0,0,0,0}]
 `Information`$Version = "PacletManager Version 2.2.0"
 
 

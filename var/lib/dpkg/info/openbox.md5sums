@@ -1,6 +1,6 @@
-65d45bc9b099cb6cb7f34a87fdc3862d  usr/bin/gdm-control
-72709e3f5f0d43649ee4bf2b87974f8c  usr/bin/obxprop
-5957b55853c4794c256ebd677a656b03  usr/bin/openbox
+1dd64ff6a8562a4a784d62f92b875b67  usr/bin/gdm-control
+50d778b5838296d44fe68d83baaab956  usr/bin/obxprop
+0ca97dcd87646e34bd673681025133ef  usr/bin/openbox
 1cf44451489ff27dd67f8cd20a36d2f3  usr/bin/openbox-gnome-session
 2d2c69b2fd628905dec2d0b8c07d287d  usr/bin/openbox-kde-session
 c71429cc8c03cd83e792663cec178910  usr/bin/openbox-session
@@ -13,7 +13,7 @@ c5ab8a0ac914162bbd21b9ed9a1a6372  usr/share/doc/openbox/COMPLIANCE
 a504bcc0460437cec3780c956c1ae76d  usr/share/doc/openbox/NEWS.Debian.gz
 ec0dd4206d394d70268d01a5a08c4a45  usr/share/doc/openbox/README
 040dd686b05c9332d92e607d97426b06  usr/share/doc/openbox/build.html
-5c6e88ad1077fa7a98b7f18d46451b15  usr/share/doc/openbox/changelog.Debian.gz
+947b0d060d22966ba4909124f442cf79  usr/share/doc/openbox/changelog.Debian.gz
 f1e4a3b1ce70ec18e0182fe75250c0e2  usr/share/doc/openbox/changelog.gz
 69076fb212c023e98f43bd623cfa23f3  usr/share/doc/openbox/config.html
 fc2200db344632ae221aecf323c660ac  usr/share/doc/openbox/copyright

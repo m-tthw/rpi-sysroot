@@ -1,6 +1,6 @@
 Paclet[
 	Name->"JLink",
-	Version->"4.6.0",
+	Version->"4.7.0",
 	Extensions->{
 		(* This extension allows paclet:JLink to resolve to the root guide page. *)
 		{"Documentation", Language->"English", Resources->{"Guides/JavaInterface"}},

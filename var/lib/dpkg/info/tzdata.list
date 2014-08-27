@@ -457,10 +457,6 @@
 /usr/share/zoneinfo/right/SystemV/PST8
 /usr/share/zoneinfo/right/SystemV/YST9
 /usr/share/zoneinfo/right/SystemV/HST10
-/usr/share/zoneinfo/right/Mideast
-/usr/share/zoneinfo/right/Mideast/Riyadh87
-/usr/share/zoneinfo/right/Mideast/Riyadh88
-/usr/share/zoneinfo/right/Mideast/Riyadh89
 /usr/share/zoneinfo/posixrules
 /usr/share/zoneinfo/posix
 /usr/share/zoneinfo/posix/Africa
@@ -907,12 +903,7 @@
 /usr/share/zoneinfo/posix/SystemV/PST8
 /usr/share/zoneinfo/posix/SystemV/YST9
 /usr/share/zoneinfo/posix/SystemV/HST10
-/usr/share/zoneinfo/posix/Mideast
-/usr/share/zoneinfo/posix/Mideast/Riyadh87
-/usr/share/zoneinfo/posix/Mideast/Riyadh88
-/usr/share/zoneinfo/posix/Mideast/Riyadh89
 /usr/share/zoneinfo/Pacific
-/usr/share/zoneinfo/Mideast
 /usr/share/zoneinfo/Mexico
 /usr/share/zoneinfo/Indian
 /usr/share/zoneinfo/Europe
@@ -1044,9 +1035,6 @@
 /usr/share/zoneinfo/right/Asia/Seoul
 /usr/share/zoneinfo/right/Asia/Singapore
 /usr/share/zoneinfo/right/Asia/Istanbul
-/usr/share/zoneinfo/right/Asia/Riyadh87
-/usr/share/zoneinfo/right/Asia/Riyadh88
-/usr/share/zoneinfo/right/Asia/Riyadh89
 /usr/share/zoneinfo/right/Europe/Helsinki
 /usr/share/zoneinfo/right/Europe/Vatican
 /usr/share/zoneinfo/right/Europe/Rome
@@ -1215,9 +1203,6 @@
 /usr/share/zoneinfo/posix/Asia/Seoul
 /usr/share/zoneinfo/posix/Asia/Singapore
 /usr/share/zoneinfo/posix/Asia/Istanbul
-/usr/share/zoneinfo/posix/Asia/Riyadh87
-/usr/share/zoneinfo/posix/Asia/Riyadh88
-/usr/share/zoneinfo/posix/Asia/Riyadh89
 /usr/share/zoneinfo/posix/Europe/Helsinki
 /usr/share/zoneinfo/posix/Europe/Vatican
 /usr/share/zoneinfo/posix/Europe/Rome
@@ -1390,9 +1375,6 @@
 /usr/share/zoneinfo/Pacific/Gambier
 /usr/share/zoneinfo/Pacific/Johnston
 /usr/share/zoneinfo/Pacific/Honolulu
-/usr/share/zoneinfo/Mideast/Riyadh87
-/usr/share/zoneinfo/Mideast/Riyadh88
-/usr/share/zoneinfo/Mideast/Riyadh89
 /usr/share/zoneinfo/Mexico/BajaNorte
 /usr/share/zoneinfo/Mexico/BajaSur
 /usr/share/zoneinfo/Mexico/General
@@ -1642,9 +1624,6 @@
 /usr/share/zoneinfo/Asia/Seoul
 /usr/share/zoneinfo/Asia/Singapore
 /usr/share/zoneinfo/Asia/Istanbul
-/usr/share/zoneinfo/Asia/Riyadh87
-/usr/share/zoneinfo/Asia/Riyadh88
-/usr/share/zoneinfo/Asia/Riyadh89
 /usr/share/zoneinfo/Arctic/Longyearbyen
 /usr/share/zoneinfo/Antarctica/Casey
 /usr/share/zoneinfo/Antarctica/Davis

@@ -1,13 +1,14 @@
 (* Mathematica Package *)
 
 BeginPackage["CloudObject`"]
-System`CloudObject;
-System`$CloudBase;
 
+System`$CloudBase;
+System`CloudBase;
 System`CloudDirectory;
+System`CloudObject;
 System`SetCloudDirectory;
 
-System`CloudObject::usage = 
+CloudObject::usage = 
   "CloudObject[uri] is a reference to an object in the cloud.";
 
 CloudBase::usage = 
@@ -20,6 +21,11 @@ SetCloudDirectory::usage = "SetCloudDirectory[dir] sets the current directory in
 
 $CloudDebug::usage = "$CloudDebug controls whether debug information should be printed while accessing cloud functionality.";
 $CloudDebugLevel::usage = "$CloudDebugLevel controls the level of debug information.";
+
+CloudObject::uristring = "URI `1` expected to be a string.";
+CloudObject::invaliduri = "The URI `1` is not valid.";
+CloudObject::unauth = "URI `1` only valid when authenticated.";
+CloudObject::invalidbase = "Invalid CloudBase `1`; a fully qualified domain expected.";
 
 Begin["`Private`"]
 
@@ -81,10 +87,10 @@ parseURI[uri_, currentCloud_, currentUser_, rootPath_, currentPath_, objectsRoot
                 ],
             "user:",
                 If[! host && Length[pathname] >= 1,
-                	user = First[pathname];  path = pathname
+                	user = First[pathname];  path = Rest[pathname]
                 ],
             "http:" | "https:" | False,
-                If[protocol =!= False && host =!= False, 
+                If[protocol =!= False && host =!= False,
                     cloud = protocol <> "//" <> host; PrependTo[pathname, ""]
                 ];
                 If[protocol === False && Length[pathname] >= 1,
@@ -111,7 +117,13 @@ parseURI[uri_, currentCloud_, currentUser_, rootPath_, currentPath_, objectsRoot
                     (* URI is of the form .../objects/<username>..." *)
                         log["Username-based URI `1`", pathname, DebugLevel -> 2];
                         user = First[pathname];
-                        If[user === "~", user = If[currentUser === None, "", userUUIDPrefix <> currentUser]];
+                        If[user === "~",
+                            If [currentUser === None,
+                                user = CloudConnect[],
+                                user = currentUser
+                            ];
+                            user = If[user === None || user === $Failed || !StringQ[user], "", userUUIDPrefix <> user]
+                        ];
                         log["User: `1`", user, DebugLevel -> 2];
                         path = Rest[pathname];
                     ]
@@ -133,28 +145,30 @@ parseURI[uri_, base_] := Module[{currentPath},
 ]
 
 parseURI[uri_] := parseURI[uri, $CloudBase]
-    
+
+getUUID[CloudObject[uri_String]] := 
+	parseURI[uri] /. {
+		{_, uuid_String, __} :> uuid,
+		_ :> $Failed
+	}
+
+getUUID[_] := $Failed
+
+cloudObjectFromUUID[uuid_String] := CloudObject[$CloudBase<>"/objects/"<>uuid]
+
 Unprotect[CloudObject]
 
 Options[CloudObject] = {CloudBase -> Automatic};
 
-CloudBase::invalid = "Invalid CloudBase `1`; a fully qualified domain expected.";
-
 getCloudBase[base_] := Module[{protocol, host, pathname, search},
     {protocol, host, pathname, search} = ParseURL[base];
     If[protocol === False || Length[pathname] > 0 || Length[search] > 0,
-        Message[CloudBase::invalid, base]; Automatic,
+        Message[CloudObject::invalidbase, base]; Automatic,
         If[StringLength[base] >= 1 && StringTake[base, -1] =!= "/", base <> "/", base]
     ]
 ]
 
 getCloudBase[Automatic] = Automatic;
-
-CloudObject::uristring = "URI `1` expected to be a string.";
-
-CloudObject::invaliduri = "The URI `1` is not valid.";
-
-CloudObject::unauth = "URI `1` only valid when authenticated.";
 
 CloudObject[OptionsPattern[]] := Module[{base = getCloudBase[OptionValue[CloudBase]]},
     If[base === Automatic, base = $CloudBase];
@@ -203,7 +217,9 @@ CloudObject[co : CloudObject[uri_], OptionsPattern[]] :=
     ]
     
 (* Only use hyperlinks inside CloudObject in desktop Mathematica. Otherwise, a "This feature is not supported" dialog is shown. *)
-If[$CloudEvaluation =!= True,
+If[$CloudEvaluation === True,
+    (* In the Cloud, use RawBoxFormat to produce interactive output. *)
+    Format[CloudObject[uri_String], StandardForm] := CloudSystem`RawBoxFormat @ Interpretation[CloudObject[Hyperlink[uri]], CloudObject[uri]],
     Format[CloudObject[uri_String], StandardForm] := Interpretation[CloudObject[Hyperlink[uri]], CloudObject[uri]]
 ]
 

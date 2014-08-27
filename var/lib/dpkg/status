@@ -766,11 +766,11 @@ Package: libxml2
 Status: install ok installed
 Priority: standard
 Section: libs
-Installed-Size: 1527
+Installed-Size: 1538
 Maintainer: Debian XML/SGML Group <debian-xml-sgml-pkgs@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
-Version: 2.8.0+dfsg1-7+nmu2
+Version: 2.8.0+dfsg1-7+nmu3
 Depends: libc6 (>= 2.13-28), liblzma5 (>= 5.1.1alpha+20120614), zlib1g (>= 1:1.2.3.3)
 Pre-Depends: multiarch-support
 Recommends: xml-core
@@ -904,12 +904,12 @@ Package: libssl1.0.0
 Status: install ok installed
 Priority: important
 Section: libs
-Installed-Size: 2251
+Installed-Size: 2256
 Maintainer: Debian OpenSSL Team <pkg-openssl-devel@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: openssl
-Version: 1.0.1e-2+rpi1
+Version: 1.0.1e-2+rvt+deb7u10
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), zlib1g (>= 1:1.1.4), debconf (>= 0.5) | debconf-2.0
 Pre-Depends: multiarch-support
 Description: SSL shared libraries
@@ -945,7 +945,7 @@ Installed-Size: 29
 Maintainer: Debian OpenSSH Maintainers <debian-ssh@lists.debian.org>
 Architecture: all
 Source: openssh
-Version: 1:6.0p1-4
+Version: 1:6.0p1-4+deb7u1
 Depends: openssh-client, openssh-server
 Description: secure shell client and server (metapackage)
  This metapackage is a convenient way to install both the OpenSSH client
@@ -1526,12 +1526,12 @@ Package: libsoup2.4-1
 Status: install ok installed
 Priority: optional
 Section: libs
-Installed-Size: 431
+Installed-Size: 430
 Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: libsoup2.4
-Version: 2.38.1-2
+Version: 2.38.1-3
 Depends: libc6 (>= 2.13-28), libglib2.0-0 (>= 2.31.8), libxml2 (>= 2.7.4), zlib1g (>= 1:1.1.4), glib-networking (>= 2.32.0)
 Pre-Depends: multiarch-support
 Description: HTTP library implementation in C -- Shared library
@@ -1565,7 +1565,7 @@ Maintainer: Debian LSB Team <debian-lsb@lists.debian.org>
 Architecture: all
 Multi-Arch: foreign
 Source: lsb
-Version: 4.1+Debian8+rpi1
+Version: 4.1+Debian8+rpi1+deb7u1
 Description: Linux Standard Base 4.1 init script functionality
  The Linux Standard Base (http://www.linuxbase.org/) is a standard
  core system that third-party applications written for Linux can
@@ -1580,12 +1580,12 @@ Package: libcurl3-gnutls
 Status: install ok installed
 Priority: optional
 Section: libs
-Installed-Size: 514
+Installed-Size: 515
 Maintainer: Alessandro Ghedini <ghedo@debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: curl
-Version: 7.26.0-1+wheezy7
+Version: 7.26.0-1+wheezy9
 Replaces: libcurl4-gnutls
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libgcrypt11 (>= 1.4.5), libgnutls26 (>= 2.12.17-0), libgssapi-krb5-2 (>= 1.10+dfsg~), libidn11 (>= 1.13), libldap-2.4-2 (>= 2.4.7), librtmp0 (>= 2.3), libssh2-1 (>= 1.2.6), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
@@ -1640,12 +1640,12 @@ Package: libsoup-gnome2.4-1
 Status: install ok installed
 Priority: optional
 Section: libs
-Installed-Size: 86
+Installed-Size: 85
 Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: libsoup2.4
-Version: 2.38.1-2
+Version: 2.38.1-3
 Depends: libc6 (>= 2.13-28), libglib2.0-0 (>= 2.31.7), libgnome-keyring0 (>= 2.20.3), libsoup2.4-1 (>= 2.33.92), libsqlite3-0 (>= 3.5.9), libxml2 (>= 2.6.27), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
 Description: HTTP library implementation in C -- GNOME support library
@@ -2253,9 +2253,9 @@ Installed-Size: 2620
 Maintainer: Matthias Klose <doko@debian.org>
 Architecture: armhf
 Source: python2.7
-Version: 2.7.3-6
+Version: 2.7.3-6+deb7u2
 Replaces: python2.7 (<< 2.6)
-Depends: python2.7 (= 2.7.3-6), libc6 (>= 2.13-28), libgcc1 (>= 1:4.1.1), zlib1g (>= 1:1.2.0)
+Depends: python2.7 (= 2.7.3-6+deb7u2), libc6 (>= 2.13-28), libgcc1 (>= 1:4.1.1), zlib1g (>= 1:1.2.0)
 Description: Shared Python runtime library (version 2.7)
  Version 2.7 of the high-level, interactive object oriented language,
  includes an extensive class library with lots of goodies for
@@ -2349,7 +2349,7 @@ Installed-Size: 14083
 Maintainer: Niko Tyni <ntyni@debian.org>
 Architecture: all
 Source: perl
-Version: 5.14.2-21+rpi2
+Version: 5.14.2-21+rpi2+deb7u1
 Replaces: libansicolor-perl, libarchive-tar-perl, libattribute-handlers-perl, libautodie-perl, libcgi-pm-perl, libcpan-meta-perl, libcpan-meta-yaml-perl, libcpanplus-perl, libdigest-perl, libextutils-cbuilder-perl, libextutils-command-perl, libextutils-install-perl, libextutils-parsexs-perl, libfile-path-perl, libfile-spec-perl, libfile-temp-perl, libhttp-tiny-perl, libi18n-langtags-perl, libio-zlib-perl, libjson-pp-perl, liblocale-codes-perl, liblocale-maketext-perl, liblocale-maketext-simple-perl, libmath-bigint-perl, libmath-complex-perl, libmodule-build-perl, libmodule-corelist-perl, libmodule-load-conditional-perl, libmodule-load-perl, libmodule-metadata-perl, libmodule-pluggable-perl, libnet-perl, libnet-ping-perl, libparams-check-perl, libparent-perl, libparse-cpan-meta-perl, libperl-ostype-perl, libperl4-corelibs-perl, libpod-escapes-perl, libpod-parser-perl, libpod-simple-perl, libshell-perl, libtest-harness-perl, libtest-simple-perl, libthread-queue-perl, libtime-local-perl, libunicode-collate-perl, libversion-perl, libversion-requirements-perl, podlators-perl
 Provides: libansicolor-perl, libarchive-tar-perl, libattribute-handlers-perl, libautodie-perl, libcgi-pm-perl, libcpan-meta-perl, libcpan-meta-yaml-perl, libcpanplus-perl, libdigest-perl, libextutils-cbuilder-perl, libextutils-command-perl, libextutils-install-perl, libextutils-parsexs-perl, libfile-path-perl, libfile-spec-perl, libfile-temp-perl, libhttp-tiny-perl, libi18n-langtags-perl, libio-zlib-perl, libjson-pp-perl, liblocale-codes-perl, liblocale-maketext-perl, liblocale-maketext-simple-perl, libmath-bigint-perl, libmath-complex-perl, libmodule-build-perl, libmodule-corelist-perl, libmodule-load-conditional-perl, libmodule-load-perl, libmodule-metadata-perl, libmodule-pluggable-perl, libnet-perl, libnet-ping-perl, libparams-check-perl, libparent-perl, libparse-cpan-meta-perl, libperl-ostype-perl, libperl4-corelibs-perl, libpod-escapes-perl, libpod-parser-perl, libpod-simple-perl, libshell-perl, libtest-harness-perl, libtest-simple-perl, libthread-queue-perl, libtime-local-perl, libunicode-collate-perl, libversion-perl, libversion-requirements-perl, podlators-perl
 Depends: perl (>= 5.14.2-1), libswitch-perl, libclass-isa-perl
@@ -2547,12 +2547,12 @@ Package: libwbclient0
 Status: install ok installed
 Priority: optional
 Section: libs
-Installed-Size: 145
+Installed-Size: 149
 Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: samba
-Version: 2:3.6.6-6+deb7u2
+Version: 2:3.6.6-6+deb7u3
 Depends: libc6 (>= 2.13-28)
 Pre-Depends: multiarch-support, dpkg (>= 1.15.6~)
 Breaks: libpam-smbpass (<< 2:3.4.1), libsmbclient (<< 2:3.4.1), samba (<< 2:3.4.1), samba-common (<< 2:3.4.1), samba-tools (<< 2:3.4.1), smbclient (<< 2:3.4.1), smbfs (<< 2:3.4.1), swat (<< 2:3.4.1), winbind (<< 2:3.4.1)
@@ -2806,16 +2806,16 @@ Package: dpkg-dev
 Status: install ok installed
 Priority: optional
 Section: utils
-Installed-Size: 1573
+Installed-Size: 1577
 Origin: debian
 Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
 Bugs: debbugs://bugs.debian.org
 Architecture: all
 Multi-Arch: foreign
 Source: dpkg
-Version: 1.16.12
+Version: 1.16.14+rpi1
 Replaces: manpages-it (<< 2.80-4)
-Depends: libdpkg-perl (= 1.16.12), bzip2, xz-utils, patch, make, binutils, base-files (>= 5.0.0)
+Depends: libdpkg-perl (= 1.16.14+rpi1), bzip2, xz-utils, patch, make, binutils, base-files (>= 5.0.0)
 Recommends: gcc | c-compiler, build-essential, fakeroot, gnupg, gpgv, libalgorithm-merge-perl
 Suggests: debian-keyring
 Breaks: devscripts (<< 2.10.26), dpkg-cross (<< 2.0.0)
@@ -2834,10 +2834,10 @@ Package: rpi-update
 Status: install ok installed
 Priority: extra
 Section: unknown
-Installed-Size: 36
+Installed-Size: 37
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: all
-Version: 20130510
+Version: 20140321
 Depends: binutils, git-core
 Description: Raspberry Pi firmware updating tool
 Homepage: https://github.com/asb/rpi-update
@@ -2900,14 +2900,14 @@ Package: libc6-dev
 Status: install ok installed
 Priority: optional
 Section: libdevel
-Installed-Size: 8078
+Installed-Size: 8088
 Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: eglibc
-Version: 2.13-38+rpi2
+Version: 2.13-38+rpi2+deb7u1
 Provides: libc-dev
-Depends: libc6 (= 2.13-38+rpi2), libc-dev-bin (= 2.13-38+rpi2), linux-libc-dev
+Depends: libc6 (= 2.13-38+rpi2+deb7u1), libc-dev-bin (= 2.13-38+rpi2+deb7u1), linux-libc-dev
 Recommends: gcc | c-compiler
 Suggests: glibc-doc, manpages-dev
 Breaks: binutils (<< 2.20.1-1), binutils-gold (<< 2.20.1-11), cmake (<< 2.8.4+dfsg.1-5), gcc-4.4 (<< 4.4.6-4), gcc-4.5 (<< 4.5.3-2), gcc-4.6 (<< 4.6.0-12), libhwloc-dev (<< 1.2-3), libjna-java (<< 3.2.7-4), liblouis-dev (<< 2.3.0-2), liblouisxml-dev (<< 2.4.0-2), make (<< 3.81-8.1), pkg-config (<< 0.26-1)
@@ -3056,11 +3056,11 @@ Package: openssl
 Status: install ok installed
 Priority: optional
 Section: utils
-Installed-Size: 1034
+Installed-Size: 1035
 Maintainer: Debian OpenSSL Team <pkg-openssl-devel@lists.alioth.debian.org>
 Architecture: armhf
-Version: 1.0.1e-2+rpi1
-Depends: libc6 (>= 2.13-28), libssl1.0.0 (>= 1.0.1), zlib1g (>= 1:1.1.4)
+Version: 1.0.1e-2+rvt+deb7u10
+Depends: libc6 (>= 2.13-28), libssl1.0.0 (>= 1.0.1e-2+deb7u5), zlib1g (>= 1:1.1.4)
 Suggests: ca-certificates
 Conffiles:
  /etc/ssl/openssl.cnf 7df26c55291b33344dc15e3935dabaf3
@@ -3166,11 +3166,11 @@ Essential: yes
 Status: install ok installed
 Priority: required
 Section: perl
-Installed-Size: 4539
+Installed-Size: 4540
 Maintainer: Niko Tyni <ntyni@debian.org>
 Architecture: armhf
 Source: perl
-Version: 5.14.2-21+rpi2
+Version: 5.14.2-21+rpi2+deb7u1
 Replaces: libperl5.8 (<< 5.8.0-20), libscalar-list-utils-perl, libsocket-perl, libxsloader-perl, perl (<< 5.10.1-12), perl-modules (<< 5.10.1-1)
 Provides: libscalar-list-utils-perl, libsocket-perl, libxsloader-perl, perl5-base, perlapi-5.14.2
 Pre-Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), dpkg (>= 1.14.20)
@@ -3266,12 +3266,12 @@ Package: apt
 Status: install ok installed
 Priority: important
 Section: admin
-Installed-Size: 3140
+Installed-Size: 3179
 Maintainer: APT Development Team <deity@lists.debian.org>
 Architecture: armhf
-Version: 0.9.7.9+rpi1
+Version: 0.9.7.9+rpi1+deb7u1
 Replaces: manpages-pl (<< 20060617-3~)
-Depends: libapt-pkg4.12 (>= 0.9.7.9+rpi1), libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libstdc++6 (>= 4.6), raspbian-archive-keyring, gnupg
+Depends: libapt-pkg4.12 (>= 0.9.7.9+rpi1+deb7u1), libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libstdc++6 (>= 4.6), raspbian-archive-keyring, gnupg
 Suggests: aptitude | synaptic | wajig, dpkg-dev, apt-doc, xz-utils, python-apt
 Conflicts: python-apt (<< 0.7.93.2~)
 Conffiles:
@@ -3297,11 +3297,11 @@ Package: raspberrypi-bootloader
 Status: install ok installed
 Priority: extra
 Section: admin
-Installed-Size: 52667
+Installed-Size: 43876
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: armhf
 Source: raspberrypi-firmware
-Version: 1.20140107-1
+Version: 1.20140618-1
 Description: Raspberry Pi bootloader
  This package contains the Raspberry Pi bootloader (plus, temporarily, a
  kernel).
@@ -3512,6 +3512,25 @@ Description: simple interprocess messaging system (GLib-based shared library)
  .
  See the dbus description for more information about D-Bus in general.
 Homepage: http://www.freedesktop.org/wiki/Software/DBusBindings
+
+Package: python-picamera
+Status: install ok installed
+Priority: extra
+Section: python
+Installed-Size: 368
+Maintainer: Dave Hughes <dave@waveform.org.uk>
+Architecture: armhf
+Source: picamera
+Version: 1.5-1
+Depends: python (>= 2.7), python (<< 2.8), libraspberrypi0, python-numpy
+Suggests: python-picamera-docs, python-rpi.gpio
+Description: Pure Python interface to the Raspberry Pi's camera module.
+ picamera is a library for working with the Raspberry Pi's camera module from
+ within Python without having to resort to subprocesses. The majority of the
+ functionality of raspistill and raspivid is replicated by the library.
+ .
+ This is the Python 2 version of the package.
+Homepage: http://pypi.python.org/pypi/picamera
 
 Package: netsurf-common
 Status: install ok installed
@@ -3748,18 +3767,18 @@ Package: libmagic1
 Status: install ok installed
 Priority: standard
 Section: libs
-Installed-Size: 2435
+Installed-Size: 2436
 Maintainer: Daniel Baumann <daniel.baumann@progress-technologies.net>
 Architecture: armhf
 Multi-Arch: same
 Source: file
-Version: 5.11-2
+Version: 5.11-2+deb7u3
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
 Suggests: file
 Conffiles:
- /etc/magic 272913026300e7ae9b5e2d51f138e674
  /etc/magic.mime 272913026300e7ae9b5e2d51f138e674
+ /etc/magic 272913026300e7ae9b5e2d51f138e674
 Description: File type determination library using "magic" numbers
  This library can be used to classify files according to magic number tests. It
  implements the core functionality of the file command.
@@ -3973,11 +3992,11 @@ Package: tzdata
 Status: install ok installed
 Priority: required
 Section: libs
-Installed-Size: 1503
+Installed-Size: 1465
 Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 Architecture: all
 Multi-Arch: foreign
-Version: 2013h-0wheezy1
+Version: 2014a-0wheezy1
 Replaces: libc0.1, libc0.3, libc6, libc6.1
 Provides: tzdata-wheezy
 Depends: debconf (>= 0.5) | debconf-2.0
@@ -4097,13 +4116,13 @@ Package: jackd2
 Status: install ok installed
 Priority: optional
 Section: sound
-Installed-Size: 1966
+Installed-Size: 1965
 Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
 Architecture: armhf
-Version: 1.9.8~dfsg.4+20120529git007cdc37-5+rpi
+Version: 1.9.8~dfsg.4+20120529git007cdc37-5+rpi2
 Replaces: jack-daemon, jackd (<< 3), libjack0 (<= 1.9.5~dfsg-13)
 Provides: jack-daemon
-Depends: libasound2 (>= 1.0.18), libc6 (>= 2.13-28), libdbus-1-3 (>= 1.0.2), libexpat1 (>= 2.0.1), libgcc1 (>= 1:4.4.0), libjack-jackd2-0 (= 1.9.8~dfsg.4+20120529git007cdc37-5+rpi), libsamplerate0 (>= 0.1.7), libsndfile1 (>= 1.0.20), libstdc++6 (>= 4.6), debconf (>= 0.5) | debconf-2.0, python, coreutils (>= 4.0), python-dbus
+Depends: libasound2 (>= 1.0.18), libc6 (>= 2.13-28), libdbus-1-3 (>= 1.0.2), libexpat1 (>= 2.0.1), libgcc1 (>= 1:4.4.0), libjack-jackd2-0 (= 1.9.8~dfsg.4+20120529git007cdc37-5+rpi2), libsamplerate0 (>= 0.1.7), libsndfile1 (>= 1.0.20), libstdc++6 (>= 4.6), debconf (>= 0.5) | debconf-2.0, python, coreutils (>= 4.0), python-dbus
 Pre-Depends: multiarch-support
 Recommends: qjackctl, libpam-modules
 Suggests: jack-tools, meterbridge
@@ -4350,14 +4369,14 @@ Package: libdpkg-perl
 Status: install ok installed
 Priority: optional
 Section: perl
-Installed-Size: 1839
+Installed-Size: 1843
 Origin: debian
 Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
 Bugs: debbugs://bugs.debian.org
 Architecture: all
 Multi-Arch: foreign
 Source: dpkg
-Version: 1.16.12
+Version: 1.16.14+rpi1
 Replaces: dpkg (<< 1.15.8), dpkg-dev (<< 1.15.6)
 Depends: dpkg (>= 1.15.8), perl, libtimedate-perl
 Recommends: libfile-fcntllock-perl, bzip2, xz-utils
@@ -4515,7 +4534,7 @@ Installed-Size: 120
 Maintainer: Debian QA Group <packages@qa.debian.org>
 Architecture: armhf
 Source: openbox
-Version: 3.5.0-7
+Version: 3.5.0-7+rpi1
 Replaces: libobparser15, libobparser16
 Depends: libc6 (>= 2.13-28), libglib2.0-0 (>= 2.24.0), libxext6, libxinerama1, libxml2 (>= 2.7.4), libxrandr2, libxrender1
 Conflicts: libobparser15, libobparser16
@@ -4566,7 +4585,7 @@ Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 Architecture: armhf
 Multi-Arch: foreign
 Source: eglibc
-Version: 2.13-38+rpi2
+Version: 2.13-38+rpi2+deb7u1
 Replaces: libc0.1-dev, libc0.3-dev, libc6-dev, libc6.1-dev
 Depends: libc6 (>= 2.13-28), libc6 (<< 2.14)
 Recommends: manpages-dev
@@ -4658,7 +4677,7 @@ Installed-Size: 954
 Maintainer: Matthias Klose <doko@debian.org>
 Architecture: all
 Source: python2.7
-Version: 2.7.3-6
+Version: 2.7.3-6+deb7u2
 Replaces: python2.7 (<< 2.6.1-2)
 Depends: python2.7, python-tk (>= 2.6~a3), python2.7-tk
 Enhances: python2.7
@@ -4670,11 +4689,11 @@ Package: python3-pifacedigital-scratch-handler
 Status: install ok installed
 Priority: optional
 Section: python
-Installed-Size: 37
+Installed-Size: 39
 Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
 Architecture: all
 Source: pifacedigital-scratch-handler
-Version: 2.0.4-1
+Version: 2.0.5-1
 Depends: python3 (>= 3.2), python3-pifacedigitalio (>= 3.0.0), python3-pifacedigitalio (<< 4.0.0)
 Description: The PiFace Digital Scratch Handler.
  Python 3 program which handles communication between PiFace Digital and
@@ -4684,12 +4703,12 @@ Package: libapt-pkg4.12
 Status: install ok installed
 Priority: important
 Section: libs
-Installed-Size: 2637
+Installed-Size: 2645
 Maintainer: APT Development Team <deity@lists.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: apt
-Version: 0.9.7.9+rpi1
+Version: 0.9.7.9+rpi1+deb7u1
 Depends: libbz2-1.0, libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libstdc++6 (>= 4.6), zlib1g (>= 1:1.2.3.3)
 Pre-Depends: multiarch-support
 Breaks: apt (<< 0.9.4~)
@@ -4759,11 +4778,11 @@ Package: libxfont1
 Status: install ok installed
 Priority: optional
 Section: libs
-Installed-Size: 263
+Installed-Size: 268
 Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
 Architecture: armhf
 Source: libxfont
-Version: 1:1.4.5-2
+Version: 1:1.4.5-4
 Depends: libbz2-1.0, libc6 (>= 2.13-28), libfontenc1, libfreetype6 (>= 2.2.1), zlib1g (>= 1:1.1.4)
 Conflicts: xprint (<< 2:1.6.0-1)
 Description: X11 font rasterisation library
@@ -4805,12 +4824,12 @@ Package: omxplayer
 Status: install ok installed
 Priority: optional
 Section: video
-Installed-Size: 9216
+Installed-Size: 7920
 Maintainer: Sergio Conde <sergio@sconde.net>
 Architecture: armhf
-Version: 0.3.3~git20131216~b34143c
+Version: 0.3.5~git20140322~39e6342
 Provides: omxplayer
-Depends: libpcre3, libfreetype6, fonts-freefont-ttf, dbus
+Depends: libpcre3, libfreetype6, fonts-freefont-ttf, dbus, libssl1.0.0
 Suggests: fbset, x11-xserver-utils
 Description: Command line media player for Raspberry Pi
  .
@@ -5298,8 +5317,8 @@ Installed-Size: 104
 Maintainer: Daniel Baumann <daniel.baumann@progress-technologies.net>
 Architecture: armhf
 Multi-Arch: foreign
-Version: 5.11-2
-Depends: libc6 (>= 2.13-28), libmagic1 (= 5.11-2), zlib1g (>= 1:1.1.4)
+Version: 5.11-2+deb7u3
+Depends: libc6 (>= 2.13-28), libmagic1 (= 5.11-2+deb7u3), zlib1g (>= 1:1.1.4)
 Description: Determines file type using "magic" numbers
  File tests each argument in an attempt to classify it. There are three sets of
  tests, performed in this order: filesystem tests, magic number tests, and
@@ -5379,7 +5398,7 @@ Maintainer: Oleksandr Moskalenko <malex@debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: lcms2
-Version: 2.2+git20110628-2.2
+Version: 2.2+git20110628-2.2+deb7u1
 Depends: libc6 (>= 2.13-28)
 Pre-Depends: multiarch-support
 Suggests: liblcms2-utils
@@ -5396,11 +5415,11 @@ Package: python3-rpi.gpio
 Status: install ok installed
 Priority: optional
 Section: python
-Installed-Size: 84
+Installed-Size: 85
 Maintainer: Ben Croston <ben@croston.org>
 Architecture: armhf
 Source: rpi.gpio
-Version: 0.5.4-1
+Version: 0.5.5-1
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), python3 (>= 3.2.3-3~), python3 (<< 3.3)
 Description: Python 3 GPIO module for Raspberry Pi
  This is the RPi.GPIO Python 3 module, for supporting GPIO on a
@@ -5588,12 +5607,12 @@ Package: libapt-inst1.5
 Status: install ok installed
 Priority: important
 Section: libs
-Installed-Size: 688
+Installed-Size: 690
 Maintainer: APT Development Team <deity@lists.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: apt
-Version: 0.9.7.9+rpi1
+Version: 0.9.7.9+rpi1+deb7u1
 Depends: libapt-pkg4.12 (>= 0.8.16~exp9), libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libstdc++6 (>= 4.4.0)
 Pre-Depends: multiarch-support
 Description: deb package format runtime library
@@ -5719,11 +5738,11 @@ Package: locales
 Status: install ok installed
 Priority: standard
 Section: localization
-Installed-Size: 15118
+Installed-Size: 15119
 Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 Architecture: all
 Source: eglibc
-Version: 2.13-38+rpi2
+Version: 2.13-38+rpi2+deb7u1
 Replaces: base-config, lliurex-belocs-locales-data
 Depends: glibc-2.13-1, debconf (>= 0.5) | debconf-2.0
 Conflicts: base-config, belocs-locales-bin, belocs-locales-data
@@ -5788,13 +5807,13 @@ Package: python2.7
 Status: install ok installed
 Priority: optional
 Section: python
-Installed-Size: 8598
+Installed-Size: 8552
 Maintainer: Matthias Klose <doko@debian.org>
 Architecture: armhf
-Version: 2.7.3-6
+Version: 2.7.3-6+deb7u2
 Replaces: python-profiler (<= 2.7.1-2)
 Provides: python-argparse, python2.7-argparse, python2.7-celementtree, python2.7-cjkcodecs, python2.7-ctypes, python2.7-elementtree, python2.7-profiler, python2.7-wsgiref
-Depends: python2.7-minimal (= 2.7.3-6), mime-support, libbz2-1.0, libc6 (>= 2.13-28), libdb5.1, libexpat1 (>= 2.1~beta3), libgcc1 (>= 1:4.4.0), libncursesw5 (>= 5.6+20070908), libreadline6 (>= 6.0), libsqlite3-0 (>= 3.5.9), libssl1.0.0 (>= 1.0.0), libtinfo5
+Depends: python2.7-minimal (= 2.7.3-6+deb7u2), mime-support, libbz2-1.0, libc6 (>= 2.13-28), libdb5.1, libexpat1 (>= 2.1~beta3), libgcc1 (>= 1:4.4.0), libncursesw5 (>= 5.6+20070908), libreadline6 (>= 6.0), libsqlite3-0 (>= 3.5.9), libtinfo5
 Suggests: python2.7-doc, binutils
 Breaks: python-virtualenv (<< 1.7.1.2-2~), vim-athena (<< 2:7.3.547-4), vim-gnome (<< 2:7.3.547-4), vim-gtk (<< 2:7.3.547-4), vim-nox (<< 2:7.3.547-4)
 Conflicts: python-profiler (<= 2.7.1-2)
@@ -6044,13 +6063,13 @@ Package: curl
 Status: install ok installed
 Priority: optional
 Section: web
-Installed-Size: 348
+Installed-Size: 351
 Maintainer: Alessandro Ghedini <ghedo@debian.org>
 Architecture: armhf
-Version: 7.26.0-1+wheezy7
+Version: 7.26.0-1+wheezy9
 Replaces: curl-ssl
 Provides: curl-ssl
-Depends: libc6 (>= 2.13-28), libcurl3 (= 7.26.0-1+wheezy7), zlib1g (>= 1:1.1.4)
+Depends: libc6 (>= 2.13-28), libcurl3 (= 7.26.0-1+wheezy9), zlib1g (>= 1:1.1.4)
 Description: command line tool for transferring data with URL syntax
  curl is a command line tool for transferring data with URL syntax, supporting
  DICT, FILE, FTP, FTPS, GOPHER, HTTP, HTTPS, IMAP, IMAPS, LDAP, POP3, POP3S,
@@ -6163,12 +6182,12 @@ Package: libsmbclient
 Status: install ok installed
 Priority: optional
 Section: libs
-Installed-Size: 5226
+Installed-Size: 5247
 Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: samba
-Version: 2:3.6.6-6+deb7u2
+Version: 2:3.6.6-6+deb7u3
 Depends: libc6 (>= 2.13-28), libcap2 (>= 2.10), libcomerr2 (>= 1.01), libgcc1 (>= 1:4.4.0), libgssapi-krb5-2 (>= 1.10+dfsg~), libk5crypto3 (>= 1.6.dfsg.2), libkrb5-3 (>= 1.10+dfsg~), libldap-2.4-2 (>= 2.4.7), libtalloc2 (>= 2.0.4~git20101213), libtdb1 (>= 1.2.7+git20101214), libwbclient0 (>= 2:3.6.0~pre3), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support, dpkg (>= 1.15.6~)
 Description: shared library for communication with SMB/CIFS servers
@@ -6205,13 +6224,13 @@ Installed-Size: 414
 Maintainer: Santiago Vila <sanvila@debian.org>
 Architecture: armhf
 Multi-Arch: foreign
-Version: 7.1wheezy2+rpi1
+Version: 7.1wheezy5+rpi1
 Replaces: base, dpkg (<= 1.15.0), miscutils
 Provides: base
 Pre-Depends: awk
 Breaks: initscripts (<< 2.88dsf-13.3), sendfile (<< 2.1b.20080616-5.2~)
 Conffiles:
- /etc/debian_version 35c59f284c90220635fb2e3696448900
+ /etc/debian_version 183d476e5f65a2f5252a5043ba3688c0
  /etc/dpkg/origins/debian 731423fa8ba067262f8ef37882d1e742
  /etc/dpkg/origins/raspbian 759c556ddf77629de852f78389ad87ce
  /etc/host.conf 4eb63731c9f5e30903ac4fc07a7fe3d6
@@ -6271,6 +6290,23 @@ Description: Tools for mounting and manipulating filesystems
  This package provides the mount(8), umount(8), swapon(8),
  swapoff(8), and losetup(8) commands.
 Homepage: http://userweb.kernel.org/~kzak/util-linux/
+
+Package: python3-serial
+Status: install ok installed
+Priority: optional
+Section: python
+Installed-Size: 288
+Maintainer: Matthias Klose <doko@debian.org>
+Architecture: all
+Source: pyserial
+Version: 2.5-2.1
+Depends: python3 (>= 3.1.3-13~)
+Suggests: python3-wxgtk2.8 | python3-wxgtk
+Description: pyserial - module encapsulating access for the serial port
+ This module capsulates the access for the serial port. It provides
+ backends for standard Python running on Windows, Linux, BSD (possibly
+ any POSIX compilant system). The module named "serial" automatically
+ selects the appropriate backend.
 
 Package: gtk2-engines
 Status: install ok installed
@@ -6592,12 +6628,12 @@ Package: libraspberrypi0
 Status: install ok installed
 Priority: extra
 Section: libs
-Installed-Size: 1156
+Installed-Size: 1158
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: armhf
 Source: raspberrypi-firmware
-Version: 1.20140107-1
-Depends: raspberrypi-bootloader (= 1.20140107-1)
+Version: 1.20140618-1
+Depends: raspberrypi-bootloader (= 1.20140618-1)
 Conffiles:
  /etc/ld.so.conf.d/00-vmcs.conf 72e0d5818fc513ece1b964f25f7e7882
 Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV
@@ -6714,12 +6750,12 @@ Package: libraspberrypi-doc
 Status: install ok installed
 Priority: extra
 Section: libdevel
-Installed-Size: 32159
+Installed-Size: 32412
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: armhf
 Source: raspberrypi-firmware
-Version: 1.20140107-1
-Depends: libraspberrypi0 (= 1.20140107-1)
+Version: 1.20140618-1
+Depends: libraspberrypi0 (= 1.20140618-1)
 Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV (headers)
  This package contains headers, example code, and other development files for
  implementations of EGL, OpenGL ES, OpenVG, OpenWF Composition, and others for
@@ -7032,7 +7068,7 @@ Maintainer: Debian PhotoTools Maintainers <pkg-phototools-devel@lists.alioth.deb
 Architecture: armhf
 Multi-Arch: same
 Source: openjpeg
-Version: 1.3+dfsg-4.7
+Version: 1.3+dfsg-4.8
 Depends: libc6 (>= 2.13-28)
 Pre-Depends: multiarch-support
 Description: JPEG 2000 image compression/decompression library
@@ -7175,7 +7211,7 @@ Maintainer: Michael van der Kolff <mvanderkolff@gmail.com>
 Architecture: armhf
 Multi-Arch: same
 Source: jbigkit
-Version: 2.0-2
+Version: 2.0-2+deb7u1
 Depends: libc6 (>= 2.13-28)
 Pre-Depends: multiarch-support
 Description: JBIGkit libraries
@@ -7490,13 +7526,13 @@ Package: python2.7-minimal
 Status: install ok installed
 Priority: optional
 Section: python
-Installed-Size: 5193
+Installed-Size: 5240
 Maintainer: Matthias Klose <doko@debian.org>
 Architecture: armhf
 Source: python2.7
-Version: 2.7.3-6
+Version: 2.7.3-6+deb7u2
 Replaces: python2.7 (<< 2.7.1~rc1-2~)
-Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.1.1), zlib1g (>= 1:1.2.0)
+Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.1.1), libssl1.0.0 (>= 1.0.0), zlib1g (>= 1:1.2.0)
 Recommends: python2.7
 Suggests: binfmt-support
 Conflicts: binfmt-support (<< 1.1.2)
@@ -7870,7 +7906,7 @@ Installed-Size: 891
 Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: foreign
-Version: 1.0.4-7
+Version: 1.0.4-7wheezy1
 Replaces: devicekit-disks
 Depends: libatasmart4 (>= 0.13), libc6 (>= 2.13-28), libdbus-1-3 (>= 1.0.2), libdbus-glib-1-2 (>= 0.88), libdevmapper1.02.1 (>= 2:1.02.20), libgcc1 (>= 1:4.4.0), libglib2.0-0 (>= 2.24.0), libgudev-1.0-0 (>= 146), liblvm2app2.2 (>= 2.02.95), libparted0debian1 (>= 2.2-1), libpolkit-gobject-1-0 (>= 0.99), libsgutils2-2 (>= 1.27), libudev0 (>= 0.140), udev, dbus
 Recommends: policykit-1, hdparm, dosfstools, ntfs-3g, eject, cryptsetup-bin
@@ -7927,11 +7963,11 @@ Package: python-rpi.gpio
 Status: install ok installed
 Priority: optional
 Section: python
-Installed-Size: 159
+Installed-Size: 160
 Maintainer: Ben Croston <ben@croston.org>
 Architecture: armhf
 Source: rpi.gpio
-Version: 0.5.4-1
+Version: 0.5.5-1
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), python (>= 2.6.6-7~), python (<< 2.8)
 Description: Python GPIO module for Raspberry Pi
  This is the RPi.GPIO Python module, for supporting GPIO on a
@@ -8009,7 +8045,7 @@ Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
 Architecture: all
 Multi-Arch: foreign
 Source: samba
-Version: 2:3.6.6-6+deb7u2
+Version: 2:3.6.6-6+deb7u3
 Replaces: samba (<< 3.0.20b-1), samba4-common (<< 4.0.0~alpha7-1)
 Depends: ucf, debconf (>= 0.5) | debconf-2.0
 Pre-Depends: dpkg (>= 1.15.6~)
@@ -8077,11 +8113,11 @@ Package: wget
 Status: install ok installed
 Priority: important
 Section: web
-Installed-Size: 2130
+Installed-Size: 2131
 Maintainer: Noël Köthe <noel@debian.org>
 Architecture: armhf
 Multi-Arch: foreign
-Version: 1.13.4-3
+Version: 1.13.4-3+deb7u1
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libgcrypt11 (>= 1.4.5), libgnutls26 (>= 2.12.17-0), libgpg-error0 (>= 1.10), libidn11 (>= 1.13), zlib1g (>= 1:1.1.4), dpkg (>= 1.15.4) | install-info
 Conflicts: wget-ssl
 Conffiles:
@@ -8394,6 +8430,24 @@ Description: Library of Optimized Inner Loops Runtime Compiler
  This package contains the orc shared libraries.  It is typically
  installed automatically when an application or library requires it.
 Homepage: http://code.entropywave.com/projects/orc/
+
+Package: python-serial
+Status: install ok installed
+Priority: optional
+Section: python
+Installed-Size: 472
+Maintainer: Matthias Klose <doko@debian.org>
+Architecture: all
+Source: pyserial
+Version: 2.5-2.1
+Depends: python2.6 | python2.7, python (>= 2.6.6-7~), python (<< 2.8)
+Suggests: python-wxgtk2.8 | python-wxgtk2.6 | python-wxgtk
+Description: pyserial - module encapsulating access for the serial port
+ This module capsulates the access for the serial port. It provides
+ backends for standard Python running on Windows, Linux, BSD (possibly
+ any POSIX compilant system). The module named "serial" automatically
+ selects the appropriate backend.
+Python-Version: 2.6, 2.7
 
 Package: mawk
 Status: install ok installed
@@ -8978,14 +9032,14 @@ Package: smbclient
 Status: install ok installed
 Priority: optional
 Section: net
-Installed-Size: 36268
+Installed-Size: 36416
 Maintainer: Debian Samba Maintainers <pkg-samba-maint@lists.alioth.debian.org>
 Architecture: armhf
 Source: samba
-Version: 2:3.6.6-6+deb7u2
+Version: 2:3.6.6-6+deb7u3
 Replaces: samba (<< 2.999+3.0.alpha21-4), smbget
 Provides: samba-client
-Depends: samba-common (= 2:3.6.6-6+deb7u2), libc6 (>= 2.13-28), libcap2 (>= 2.10), libcomerr2 (>= 1.01), libgcc1 (>= 1:4.4.0), libgssapi-krb5-2 (>= 1.10+dfsg~), libk5crypto3 (>= 1.6.dfsg.2), libkrb5-3 (>= 1.10+dfsg~), libldap-2.4-2 (>= 2.4.7), libpopt0 (>= 1.14), libreadline6 (>= 6.0), libtalloc2 (>= 2.0.4~git20101213), libtdb1 (>= 1.2.7+git20101214), libtinfo5, libwbclient0 (>= 2:3.6.0~pre3), zlib1g (>= 1:1.1.4)
+Depends: samba-common (= 2:3.6.6-6+deb7u3), libc6 (>= 2.13-28), libcap2 (>= 2.10), libcomerr2 (>= 1.01), libgcc1 (>= 1:4.4.0), libgssapi-krb5-2 (>= 1.10+dfsg~), libk5crypto3 (>= 1.6.dfsg.2), libkrb5-3 (>= 1.10+dfsg~), libldap-2.4-2 (>= 2.4.7), libpopt0 (>= 1.14), libreadline6 (>= 6.0), libtalloc2 (>= 2.0.4~git20101213), libtdb1 (>= 1.2.7+git20101214), libtinfo5, libwbclient0 (>= 2:3.6.0~pre3), zlib1g (>= 1:1.1.4)
 Pre-Depends: dpkg (>= 1.15.6~)
 Suggests: cifs-utils
 Conflicts: samba4-clients (<< 4.0.0~beta1+dfsg1-1)
@@ -9172,12 +9226,12 @@ Package: libcurl3
 Status: install ok installed
 Priority: optional
 Section: libs
-Installed-Size: 531
+Installed-Size: 535
 Maintainer: Alessandro Ghedini <ghedo@debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: curl
-Version: 7.26.0-1+wheezy7
+Version: 7.26.0-1+wheezy9
 Replaces: libcurl2 (<< 1:7.11.2-2), libcurl4
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libgssapi-krb5-2 (>= 1.10+dfsg~), libidn11 (>= 1.13), libldap-2.4-2 (>= 2.4.7), librtmp0 (>= 2.3), libssh2-1 (>= 1.2.6), libssl1.0.0 (>= 1.0.1), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
@@ -9208,7 +9262,7 @@ Installed-Size: 148
 Maintainer: Debian QA Group <packages@qa.debian.org>
 Architecture: armhf
 Source: openbox
-Version: 3.5.0-7
+Version: 3.5.0-7+rpi1
 Replaces: libobrender15, libobrender16
 Depends: libc6 (>= 2.13-28), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libglib2.0-0 (>= 2.24.0), libice6 (>= 1:1.0.0), libimlib2, libobt0 (>= 3.5.0), libpango1.0-0 (>= 1.18.0), libsm6, libx11-6, libxft2 (>> 2.1.1), libxml2 (>= 2.6.27)
 Conflicts: libobrender15, libobrender16
@@ -9893,12 +9947,12 @@ Package: libraspberrypi-dev
 Status: install ok installed
 Priority: extra
 Section: libdevel
-Installed-Size: 2834
+Installed-Size: 3156
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: armhf
 Source: raspberrypi-firmware
-Version: 1.20140107-1
-Depends: libraspberrypi0 (= 1.20140107-1)
+Version: 1.20140618-1
+Depends: libraspberrypi0 (= 1.20140618-1)
 Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV (headers)
  This package contains headers and other development files for implementations
  of EGL, OpenGL ES, OpenVG, OpenWF Composition, and others for the Raspberry
@@ -10574,13 +10628,13 @@ Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alio
 Architecture: armhf
 Multi-Arch: same
 Source: jackd2
-Version: 1.9.8~dfsg.4+20120529git007cdc37-5+rpi
+Version: 1.9.8~dfsg.4+20120529git007cdc37-5+rpi2
 Replaces: libjack-0.116
 Provides: libjack-0.116
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libsamplerate0 (>= 0.1.7), libstdc++6 (>= 4.6)
 Pre-Depends: multiarch-support
-Suggests: jackd2 (= 1.9.8~dfsg.4+20120529git007cdc37-5+rpi)
-Conflicts: jackd2 (>> 1.9.8~dfsg.4+20120529git007cdc37-5+rpi), jackd2 (<< 1.9.8~dfsg.4+20120529git007cdc37-5+rpi), libjack-0.116, libjack0
+Suggests: jackd2 (= 1.9.8~dfsg.4+20120529git007cdc37-5+rpi2)
+Conflicts: jackd2 (>> 1.9.8~dfsg.4+20120529git007cdc37-5+rpi2), jackd2 (<< 1.9.8~dfsg.4+20120529git007cdc37-5+rpi2), libjack-0.116, libjack0
 Description: JACK Audio Connection Kit (libraries)
  JACK is a low-latency sound server, allowing multiple applications to
  connect to one audio device, and to share audio between themselves.
@@ -10662,19 +10716,19 @@ Maintainer: Debian OpenSSH Maintainers <debian-ssh@lists.debian.org>
 Architecture: armhf
 Multi-Arch: foreign
 Source: openssh
-Version: 1:6.0p1-4
+Version: 1:6.0p1-4+deb7u1
 Replaces: openssh-client (<< 1:3.8.1p1-11), ssh, ssh-krb5
 Provides: ssh-server
-Depends: libc6 (>= 2.13-28), libcomerr2 (>= 1.01), libgcc1 (>= 1:4.4.0), libgssapi-krb5-2 (>= 1.10+dfsg~), libkrb5-3 (>= 1.6.dfsg.2), libpam0g (>= 0.99.7.1), libselinux1 (>= 1.32), libssl1.0.0 (>= 1.0.1), libwrap0 (>= 7.6-4~), zlib1g (>= 1:1.1.4), debconf (>= 1.2.0) | debconf-2.0, openssh-client (= 1:6.0p1-4), libpam-runtime (>= 0.76-14), libpam-modules (>= 0.72-9), adduser (>= 3.9), dpkg (>= 1.9.0), lsb-base (>= 3.2-13), procps
+Depends: libc6 (>= 2.13-28), libcomerr2 (>= 1.01), libgcc1 (>= 1:4.4.0), libgssapi-krb5-2 (>= 1.10+dfsg~), libkrb5-3 (>= 1.6.dfsg.2), libpam0g (>= 0.99.7.1), libselinux1 (>= 1.32), libssl1.0.0 (>= 1.0.1), libwrap0 (>= 7.6-4~), zlib1g (>= 1:1.1.4), debconf (>= 1.2.0) | debconf-2.0, openssh-client (= 1:6.0p1-4+deb7u1), libpam-runtime (>= 0.76-14), libpam-modules (>= 0.72-9), adduser (>= 3.9), dpkg (>= 1.9.0), lsb-base (>= 3.2-13), procps
 Recommends: xauth, ncurses-term, openssh-blacklist, openssh-blacklist-extra
 Suggests: ssh-askpass, rssh, molly-guard, ufw, monkeysphere
 Conflicts: rsh-client (<< 0.16.1-1), sftp, ssh (<< 1:3.8.1p1-9), ssh-krb5 (<< 1:4.3p2-7), ssh-nonfree (<< 2), ssh-socks, ssh2
 Conffiles:
  /etc/ufw/applications.d/openssh-server 486b78d54b93cc9fdc950c1d52ff479e
- /etc/pam.d/sshd ee93e13ec6aa3f3120c6939a2880a5b6
- /etc/default/ssh 500e3cf069fe9a7b9936108eb9d9c035
- /etc/init.d/ssh 33017d7ec97eda623412c3fd05dedb8f
  /etc/network/if-up.d/openssh-server f9d5bc239ec0720cb8ad6e1455fbf21e
+ /etc/default/ssh 500e3cf069fe9a7b9936108eb9d9c035
+ /etc/pam.d/sshd ee93e13ec6aa3f3120c6939a2880a5b6
+ /etc/init.d/ssh 33017d7ec97eda623412c3fd05dedb8f
 Description: secure shell (SSH) server, for secure access from remote machines
  This is the portable version of OpenSSH, a free implementation of
  the Secure Shell protocol as specified by the IETF secsh working
@@ -10985,7 +11039,7 @@ Maintainer: Debian GnuTLS Maintainers <pkg-gnutls-maint@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: gnutls26
-Version: 2.12.20-7
+Version: 2.12.20-8+deb7u2
 Replaces: gnutls0, gnutls0.4, gnutls3
 Depends: libc6 (>= 2.13-28), libgcrypt11 (>= 1.4.5), libp11-kit0 (>= 0.11), libtasn1-3 (>= 1.6-0), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
@@ -11236,28 +11290,62 @@ Essential: yes
 Status: install ok installed
 Priority: required
 Section: admin
-Installed-Size: 5772
+Installed-Size: 6365
 Origin: debian
 Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
 Bugs: debbugs://bugs.debian.org
 Architecture: armhf
 Multi-Arch: foreign
-Version: 1.16.12
+Version: 1.16.14+rpi1
 Replaces: manpages-it (<< 2.80-4)
-Pre-Depends: libbz2-1.0, libc6 (>= 2.6), liblzma5 (>= 5.1.1alpha+20120614), libselinux1 (>= 1.32), zlib1g (>= 1:1.1.4), tar (>= 1.23)
+Pre-Depends: libbz2-1.0, libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), liblzma5 (>= 5.1.1alpha+20120614), libselinux1 (>= 1.32), zlib1g (>= 1:1.1.4), tar (>= 1.23)
 Suggests: apt
 Breaks: apt (<< 0.7.7), aptitude (<< 0.4.7-1), dpkg-dev (<< 1.15.8), libdpkg-perl (<< 1.15.8), pinfo (<< 0.6.9-3.1), tkinfo (<< 2.8-3.1)
 Conffiles:
+ /etc/logrotate.d/dpkg 782ea5ae536f67ff51dc8c3e2eeb4cf9
+ /etc/cron.daily/dpkg b6b8dc21210ea50db7cc4636f521758f
  /etc/dpkg/dpkg.cfg f4413ffb515f8f753624ae3bb365b81b
  /etc/alternatives/README 69c4ba7f08363e998e0f2e244a04f881
- /etc/cron.daily/dpkg b6b8dc21210ea50db7cc4636f521758f
- /etc/logrotate.d/dpkg 782ea5ae536f67ff51dc8c3e2eeb4cf9
 Description: Debian package management system
  This package provides the low-level infrastructure for handling the
  installation and removal of Debian software packages.
  .
  For Debian package development tools, install dpkg-dev.
 Homepage: http://wiki.debian.org/Teams/Dpkg
+
+Package: libatlas3-base
+Status: install ok installed
+Priority: optional
+Section: libs
+Installed-Size: 12845
+Maintainer: Debian Science Team <debian-science-maintainers@lists.alioth.debian.org>
+Architecture: armhf
+Source: atlas
+Version: 3.8.4-9+deb7u1+rpi1
+Replaces: atlas2 (<< 3.2.1-1), libatlas3gf-2.0 (<< 3.8.3-25), libatlas3gf-altivec (<< 3.8.3-25), libatlas3gf-amd64sse3 (<< 3.8.3-25), libatlas3gf-base (<< 3.8.4-4), libatlas3gf-core2sse3 (<< 3.8.3-25), libatlas3gf-corei7sse3 (<< 3.8.3-25), libatlas3gf-ev6 (<< 3.8.3-25), libatlas3gf-sse (<< 3.8.3-25), libatlas3gf-sse2 (<< 3.8.3-25), libatlas3gf-sse3 (<< 3.8.3-25), libatlas3gf-v9 (<< 3.8.3-25), libblas3gf (<< 1.2.20110419-3), liblapack3gf (<< 3.4.0-1), libopenblas-base (<< 0.1.1-3)
+Provides: libatlas.so.3, libatlas.so.3gf, libblas.so.3, libblas.so.3gf, liblapack.so.3, liblapack.so.3gf
+Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libgfortran3 (>= 4.6)
+Suggests: liblapack3
+Breaks: libatlas3gf-base (<< 3.8.4-4), libblas3gf (<< 1.2.20110419-3), liblapack3gf (<< 3.4.0-1), libopenblas-base (<< 0.1.1-3)
+Conflicts: atlas2 (<< 3.2.1-1), libatlas3gf-2.0 (<< 3.8.3-25), libatlas3gf-altivec (<< 3.8.3-25), libatlas3gf-amd64sse3 (<< 3.8.3-25), libatlas3gf-base (<< 3.8.4-4), libatlas3gf-core2sse3 (<< 3.8.3-25), libatlas3gf-corei7sse3 (<< 3.8.3-25), libatlas3gf-ev6 (<< 3.8.3-25), libatlas3gf-sse (<< 3.8.3-25), libatlas3gf-sse2 (<< 3.8.3-25), libatlas3gf-sse3 (<< 3.8.3-25), libatlas3gf-v9 (<< 3.8.3-25), libblas3gf (<< 1.2-5), liblapack3gf (<< 3.2.1-4)
+Description: Automatically Tuned Linear Algebra Software, generic shared
+ ATLAS is an approach for the automatic generation and optimization of
+ numerical software. Currently ATLAS supplies optimized versions for the
+ complete set of linear algebra kernels known as the Basic Linear Algebra
+ Subroutines (BLAS), and a subset of the linear algebra routines in the
+ LAPACK library.
+ .
+ The libraries in this package are built without any processor extension
+ instructions, and should run on all processors of this general
+ architecture, albeit less than optimally.
+ .
+ Before version 3.8.3-25, optimized binary packages were provided.
+ However, due to the fact that most Atlas optimisation are done at build time,
+ it has been decided to remove them and give priority to locally built packages.
+ .
+ For more information on how to rebuild locally atlas, see the section:
+ "Building Optimized Atlas Packages on your ARCH" in README.Debian
+Homepage: http://math-atlas.sourceforge.net/
 
 Package: raspi-config
 Status: install ok installed
@@ -11469,11 +11557,11 @@ Package: wolfram-engine
 Status: install ok installed
 Priority: optional
 Section: non-free/devel
-Installed-Size: 419002
+Installed-Size: 443329
 Maintainer: Wolfram Research, Inc. <raspberrypi@wolfram.com>
 Architecture: armhf
-Version: 10.0.0+2013112003
-Depends: java7-runtime
+Version: 10.0.0+2014012903
+Depends: java7-runtime, libatlas3-base (>= 3.8.4-9)
 Pre-Depends: debconf (>= 0.5) | debconf-2.0
 Recommends: oracle-java7-jdk
 Description: Mathematica® and the Wolfram Language
@@ -11558,6 +11646,25 @@ Description: Library of various useful C++ code
     control, thread functions;
   * gregorian calendar operations.
 Homepage: http://web.mornfall.net/libwibble.html
+
+Package: python3-picamera
+Status: install ok installed
+Priority: extra
+Section: python
+Installed-Size: 354
+Maintainer: Dave Hughes <dave@waveform.org.uk>
+Architecture: armhf
+Source: picamera
+Version: 1.5-1
+Depends: python3 (>= 3.2.3-3~), libraspberrypi0, python3-numpy
+Suggests: python-picamera-docs, python3-rpi.gpio
+Description: Pure Python interface to the Raspberry Pi's camera module.
+ picamera is a library for working with the Raspberry Pi's camera module from
+ within Python without having to resort to subprocesses. The majority of the
+ functionality of raspistill and raspivid is replicated by the library.
+ .
+ This is the Python 3 version of the package.
+Homepage: http://pypi.python.org/pypi/picamera
 
 Package: glib-networking-common
 Status: install ok installed
@@ -11889,13 +11996,13 @@ Package: libyaml-0-2
 Status: install ok installed
 Priority: optional
 Section: libs
-Installed-Size: 137
+Installed-Size: 138
 Maintainer: Anders Kaseorg <andersk@mit.edu>
 Architecture: armhf
 Multi-Arch: same
 Source: libyaml
-Version: 0.1.4-2
-Depends: libc6 (>= 2.4)
+Version: 0.1.4-2+deb7u4
+Depends: libc6 (>= 2.13-28)
 Pre-Depends: multiarch-support
 Description: Fast YAML 1.1 parser and emitter library
  LibYAML is a C library for parsing and emitting data in YAML 1.1, a
@@ -12176,8 +12283,8 @@ Maintainer: APT Development Team <deity@lists.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: apt
-Version: 0.9.7.9+rpi1
-Depends: libapt-pkg4.12 (= 0.9.7.9+rpi1), libapt-inst1.5 (= 0.9.7.9+rpi1), zlib1g-dev
+Version: 0.9.7.9+rpi1+deb7u1
+Depends: libapt-pkg4.12 (= 0.9.7.9+rpi1+deb7u1), libapt-inst1.5 (= 0.9.7.9+rpi1+deb7u1), zlib1g-dev
 Description: development files for APT's libapt-pkg and libapt-inst
  This package contains the header files and libraries for
  developing with APT's libapt-pkg Debian package manipulation
@@ -12434,16 +12541,16 @@ Package: perl
 Status: install ok installed
 Priority: standard
 Section: perl
-Installed-Size: 11029
+Installed-Size: 11030
 Maintainer: Niko Tyni <ntyni@debian.org>
 Architecture: armhf
-Version: 5.14.2-21+rpi2
+Version: 5.14.2-21+rpi2+deb7u1
 Replaces: libarchive-tar-perl (<= 1.38-2), libcompress-raw-bzip2-perl, libcompress-raw-zlib-perl, libcompress-zlib-perl, libdevel-dprof-perl, libdigest-md5-perl, libdigest-sha-perl, libencode-perl, libio-compress-base-perl, libio-compress-bzip2-perl, libio-compress-perl, libio-compress-zlib-perl, libmime-base64-perl, libmodule-corelist-perl (<< 2.14-2), libstorable-perl, libsys-syslog-perl, libthreads-perl, libthreads-shared-perl, libtime-hires-perl, libtime-piece-perl, perl-base (<< 5.10.1-12), perl-doc (<< 5.8.0-1), perl-modules (<< 5.8.1-1)
 Provides: data-dumper, libcompress-raw-bzip2-perl, libcompress-raw-zlib-perl, libcompress-zlib-perl, libdevel-dprof-perl, libdigest-md5-perl, libdigest-sha-perl, libencode-perl, libio-compress-base-perl, libio-compress-bzip2-perl, libio-compress-perl, libio-compress-zlib-perl, libmime-base64-perl, libstorable-perl, libsys-syslog-perl, libthreads-perl, libthreads-shared-perl, libtime-hires-perl, libtime-piece-perl, perl5
-Depends: perl-base (= 5.14.2-21+rpi2), perl-modules (>= 5.14.2-21+rpi2), libbz2-1.0, libc6 (>= 2.13-28), libdb5.1, libgcc1 (>= 1:4.4.0), libgdbm3 (>= 1.8.3), zlib1g (>= 1:1.2.3.3)
+Depends: perl-base (= 5.14.2-21+rpi2+deb7u1), perl-modules (>= 5.14.2-21+rpi2+deb7u1), libbz2-1.0, libc6 (>= 2.13-28), libdb5.1, libgcc1 (>= 1:4.4.0), libgdbm3 (>= 1.8.3), zlib1g (>= 1:1.2.3.3)
 Recommends: netbase
 Suggests: perl-doc, libterm-readline-gnu-perl | libterm-readline-perl-perl, make
-Breaks: dh-make-perl (<< 0.73-1), ftpmirror (<< 1.96+dfsg-13), libcompress-raw-bzip2-perl (<< 2.033), libcompress-raw-zlib-perl (<< 2.033), libcompress-zlib-perl (<< 2.033), libdevel-dprof-perl (<< 20110228.00), libdigest-md5-perl (<< 2.51), libdigest-sha-perl (<< 5.71-2), libencode-perl (<< 2.44-1+deb7u1), libhtml-template-compiled-perl (<< 0.95-1), libio-compress-base-perl (<< 2.033), libio-compress-bzip2-perl (<< 2.033), libio-compress-perl (<< 2.033), libio-compress-zlib-perl (<< 2.033), libload-perl (<< 0.20-1), libmime-base64-perl (<< 3.13), libnet-jifty-perl (<< 0.14-1), libperl-apireference-perl (<< 0.09-1), libregexp-optimizer-perl (<< 0.15-3), libsoap-lite-perl (<< 0.712-4), libstorable-perl (<< 2.27), libsys-syslog-perl (<< 0.27), libthreads-perl (<< 1.83), libthreads-shared-perl (<< 1.37), libtime-hires-perl (<< 1.9721.01), libtime-piece-perl (<< 1.20.01), libxml-parser-lite-tree-perl (<< 0.14-1), libyaml-perl (<< 0.73-1), mrtg (<< 2.16.3-3.1), perl-doc (<< 5.14.2-1)
+Breaks: dh-make-perl (<< 0.73-1), ftpmirror (<< 1.96+dfsg-13), libcompress-raw-bzip2-perl (<< 2.033), libcompress-raw-zlib-perl (<< 2.033), libcompress-zlib-perl (<< 2.033), libdevel-dprof-perl (<< 20110228.00), libdigest-md5-perl (<< 2.51), libdigest-sha-perl (<< 5.71-2+deb7u1), libencode-perl (<< 2.44-1+deb7u1), libhtml-template-compiled-perl (<< 0.95-1), libio-compress-base-perl (<< 2.033), libio-compress-bzip2-perl (<< 2.033), libio-compress-perl (<< 2.033), libio-compress-zlib-perl (<< 2.033), libload-perl (<< 0.20-1), libmime-base64-perl (<< 3.13), libnet-jifty-perl (<< 0.14-1), libperl-apireference-perl (<< 0.09-1), libregexp-optimizer-perl (<< 0.15-3), libsoap-lite-perl (<< 0.712-4), libstorable-perl (<< 2.27), libsys-syslog-perl (<< 0.27), libthreads-perl (<< 1.83), libthreads-shared-perl (<< 1.37), libtime-hires-perl (<< 1.9721.01), libtime-piece-perl (<< 1.20.01), libxml-parser-lite-tree-perl (<< 0.14-1), libyaml-perl (<< 0.73-1), mrtg (<< 2.16.3-3.1), perl-doc (<< 5.14.2-1)
 Conflicts: libjson-pp-perl (<< 2.27200-2)
 Description: Larry Wall's Practical Extraction and Report Language
  An interpreted scripting language, known among some as "Unix's Swiss
@@ -12864,12 +12971,12 @@ Essential: yes
 Status: install ok installed
 Priority: required
 Section: libs
-Installed-Size: 3009
+Installed-Size: 3011
 Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 Architecture: armhf
 Multi-Arch: foreign
 Source: eglibc
-Version: 2.13-38+rpi2
+Version: 2.13-38+rpi2+deb7u1
 Replaces: libc0.1, libc0.3, libc6, libc6.1
 Breaks: libc0.1 (<< 2.10), libc0.3 (<< 2.10), libc6 (<< 2.10), libc6.1 (<< 2.10)
 Conffiles:
@@ -13337,12 +13444,12 @@ Package: multiarch-support
 Status: install ok installed
 Priority: required
 Section: libs
-Installed-Size: 179
+Installed-Size: 180
 Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 Architecture: armhf
 Multi-Arch: foreign
 Source: eglibc
-Version: 2.13-38+rpi2
+Version: 2.13-38+rpi2+deb7u1
 Depends: libc6 (>= 2.13-5)
 Description: Transitional package to ensure multiarch compatibility
  This is a transitional package used to ensure multiarch support is present
@@ -13924,7 +14031,7 @@ Maintainer: Debian OpenSSH Maintainers <debian-ssh@lists.debian.org>
 Architecture: armhf
 Multi-Arch: foreign
 Source: openssh
-Version: 1:6.0p1-4
+Version: 1:6.0p1-4+deb7u1
 Replaces: ssh, ssh-krb5
 Provides: rsh-client, ssh-client
 Depends: libc6 (>= 2.13-28), libedit2 (>= 2.11-20080614-1), libgcc1 (>= 1:4.4.0), libgssapi-krb5-2 (>= 1.10+dfsg~), libselinux1 (>= 1.32), libssl1.0.0 (>= 1.0.1), zlib1g (>= 1:1.1.4), debconf (>= 1.2.0) | debconf-2.0, adduser (>= 3.10), dpkg (>= 1.7.0), passwd
@@ -14042,14 +14149,14 @@ Package: libc6
 Status: install ok installed
 Priority: required
 Section: libs
-Installed-Size: 8694
+Installed-Size: 8698
 Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: eglibc
-Version: 2.13-38+rpi2
+Version: 2.13-38+rpi2+deb7u1
 Provides: glibc-2.13-1
-Depends: libc-bin (= 2.13-38+rpi2), libgcc1
+Depends: libc-bin (= 2.13-38+rpi2+deb7u1), libgcc1
 Suggests: glibc-doc, debconf | debconf-2.0, locales
 Breaks: locales (<< 2.13), locales-all (<< 2.13), nscd (<< 2.13)
 Conflicts: prelink (<= 0.0.20090311-1), tzdata (<< 2007k-1), tzdata-etch
@@ -14239,11 +14346,11 @@ Package: apt-utils
 Status: install ok installed
 Priority: important
 Section: admin
-Installed-Size: 1249
+Installed-Size: 1264
 Maintainer: APT Development Team <deity@lists.debian.org>
 Architecture: armhf
 Source: apt
-Version: 0.9.7.9+rpi1
+Version: 0.9.7.9+rpi1+deb7u1
 Depends: libapt-inst1.5 (>= 0.8.0), libapt-pkg4.12 (>= 0.8.16~exp9), libc6 (>= 2.13-28), libdb5.1, libgcc1 (>= 1:4.4.0), libstdc++6 (>= 4.4.0)
 Suggests: xz-utils
 Description: package managment related utility programs
@@ -15074,12 +15181,12 @@ Package: libraspberrypi-bin
 Status: install ok installed
 Priority: extra
 Section: misc
-Installed-Size: 527
+Installed-Size: 532
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: armhf
 Source: raspberrypi-firmware
-Version: 1.20140107-1
-Depends: libraspberrypi0 (= 1.20140107-1)
+Version: 1.20140618-1
+Depends: libraspberrypi0 (= 1.20140618-1)
 Description: Miscellaneous Raspberry Pi utilities
  This package contains various utilities for interacting with the Raspberry
  Pi's VideoCore IV.
@@ -15418,22 +15525,22 @@ Package: openbox
 Status: install ok installed
 Priority: optional
 Section: x11
-Installed-Size: 1255
+Installed-Size: 1256
 Maintainer: Debian QA Group <packages@qa.debian.org>
 Architecture: armhf
-Version: 3.5.0-7
+Version: 3.5.0-7+rpi1
 Provides: x-session-manager, x-window-manager
-Depends: libc6 (>= 2.13-28), libglib2.0-0 (>= 2.24.0), libice6 (>= 1:1.0.0), libobrender27 (>= 3.5.0), libobt0 (>= 3.5.0), libsm6, libstartup-notification0 (>= 0.7), libx11-6, libxau6, libxext6, libxinerama1, libxml2 (>= 2.7.4), libxrandr2, libxrender1
+Depends: libc6 (>= 2.13-28), libglib2.0-0 (>= 2.24.0), libice6 (>= 1:1.0.0), libobrender27 (>= 3.5.0), libobt0 (>= 3.5.0), libsm6, libstartup-notification0 (>= 0.7), libx11-6, libxau6, libxcursor1 (>> 1.1.2), libxext6, libxinerama1, libxml2 (>= 2.7.4), libxrandr2, libxrender1
 Pre-Depends: dpkg (>= 1.15.7.2)
 Recommends: openbox-themes, obconf
 Suggests: menu, ttf-dejavu, python, libxml2-dev
 Breaks: menu (<< 2.1.12)
 Conffiles:
  /etc/menu-methods/openbox 454ed1e8309e6fc60b0d16894d541dfd
- /etc/xdg/openbox/autostart 2e828424c93a51d910382b53a9729166
- /etc/xdg/openbox/menu.xml 96647f77053f8d73987a6e2b77b18e8f
- /etc/xdg/openbox/environment 34bbf463555dbfb8f97fe957489d73b7
  /etc/xdg/openbox/rc.xml da6375c910abc7dfb69f26b6bd7deb70
+ /etc/xdg/openbox/environment 34bbf463555dbfb8f97fe957489d73b7
+ /etc/xdg/openbox/menu.xml 96647f77053f8d73987a6e2b77b18e8f
+ /etc/xdg/openbox/autostart 2e828424c93a51d910382b53a9729166
 Description: standards compliant, fast, light-weight, extensible window manager
  Openbox works with your applications, and makes your desktop easier to manage.
  This is because the approach to its development was the opposite of what seems

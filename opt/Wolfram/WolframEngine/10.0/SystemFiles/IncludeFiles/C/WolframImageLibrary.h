@@ -8,7 +8,7 @@ U.S. Copyright Office as an unpublished work, pursuant to Title 17,
 U.S. Code, Section 408.  Unauthorized copying, adaptation, distribution
 or display is prohibited.
 
-$Id: WolframImageLibrary.h,v 1.4 2013/11/07 17:19:40 piotrw Exp $
+$Id: WolframImageLibrary.h,v 1.6 2014/01/17 20:46:39 piotrw Exp $
 
 *************************************************************************/
 
@@ -27,9 +27,9 @@ typedef unsigned __int8 raw_t_ubit8;
 typedef unsigned __int16 raw_t_ubit16;
 #else
 #include <stdint.h>
-typedef int8 raw_t_bit;
-typedef uint8 raw_t_ubit8;
-typedef uint16 raw_t_ubit16;
+typedef unsigned char raw_t_bit;
+typedef unsigned char raw_t_ubit8;
+typedef unsigned short raw_t_ubit16;
 #endif
 
 typedef float raw_t_real32;
@@ -43,7 +43,7 @@ enum MImage_Data_Type {
 	MImage_Type_Bit8,
 	MImage_Type_Bit16,
 	MImage_Type_Real32,
-	MImage_Type_Real64
+	MImage_Type_Real
 };
 
 typedef enum MImage_Data_Type imagedata_t;
@@ -57,6 +57,7 @@ enum MImage_CS_Type {
     MImage_CS_XYZ,
     MImage_CS_LUV,
     MImage_CS_LAB,
+	MImage_CS_LCH,
     MImage_CS_Automatic
 };
 

@@ -6,11 +6,11 @@
         tgayley@wolfram.com
 *)
 
-(* :Package Version: 4.6 *)
+(* :Package Version: 4.7 *)
 
 (* :Mathematica Version: 4.0 *)
 
-(* :Copyright: J/Link source code (c) 1999-2013, Wolfram Research, Inc. All rights reserved.
+(* :Copyright: J/Link source code (c) 1999-2014, Wolfram Research, Inc. All rights reserved.
 
    Use is governed by the terms of the J/Link license agreement, which can be found at
    www.wolfram.com/solutions/mathlink/jlink.
@@ -66,6 +66,7 @@ JVMArguments::usage =
 CreateExtraLinks::usage =
 "CreateExtraLinks is an option to InstallJava that allows you to specify whether J/Link should establish the special extra links it uses internally. Only very advanced programmers will be concerned with this option. The default value is Automatic."
 
+(* This is no longer supported (starting in M10. *)
 RegisterJavaInitialization::usage =
 "RegisterJavaInitialization is an internal symbol."
 
@@ -416,6 +417,7 @@ Options[ReinstallJava] = Options[InstallJava]
 ReinstallJava[args___] := PreemptProtect[UninstallJava[]; InstallJava[args]]
 
 
+(* RegisterJavaInitialization is no longer supported (starting in M10. Using it has no effect. *)
 (* Register some Java initialization to occur while Java is launching. Public, but not
    documented for users. Will be used by internal code (such as the PacletManager).
    Argument strings must fit a precise form, starting with s single keyword, followed

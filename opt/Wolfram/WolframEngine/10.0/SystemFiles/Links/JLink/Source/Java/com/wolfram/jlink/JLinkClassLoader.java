@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //
-//   J/Link source code (c) 1999-2013, Wolfram Research, Inc. All rights reserved.
+//   J/Link source code (c) 1999-2014, Wolfram Research, Inc. All rights reserved.
 //
 //   Use is governed by the terms of the J/Link license agreement, which can be found at
 //   www.wolfram.com/solutions/mathlink/jlink.
@@ -98,18 +98,11 @@ public class JLinkClassLoader extends ClassLoader {
     public Enumeration getResources(String name) throws IOException { return helper.getResources(name); }
     public synchronized InputStream getResourceAsStream(String name) { return helper.getResourceAsStream(name); }
     public synchronized Class loadClass(String name) throws ClassNotFoundException { return helper.loadClass(name); }
-
-
-    // URI class was introduced in Java 1.4. We want to use it if available.
-	private static boolean jvmHasURIClass;
-	static {
-		try {
-			Class.forName("java.net.URI");
-			jvmHasURIClass = true;
-		} catch (Throwable t) {
-			jvmHasURIClass = false;
-		}
-	}
+    // Cannot override findLoadedClass() because it is final, so give it a new name. This method is part of the fix for
+    // bug 190015. Every time a helper loader does findClass(), it is essential that it go all the way back to here,
+    // so that the complete chain of helpers is searched for an already-loaded class. It is not enough for helpers to
+    // only search "later" helpers for classes--they must also search earlier ones in the chain as well.
+    synchronized Class findLoadedClassExposed(String name) { return helper.findLoadedClassExposed(name); }
 
     ///////////////////////////////////  Static Interface  //////////////////////////////////
 
@@ -177,7 +170,7 @@ public class JLinkClassLoader extends ClassLoader {
      */
     public JLinkClassLoader(ClassLoader parent) {
 		super(parent);
-		helper = new JLinkClassLoaderHelper(new URL[0], null, parent);
+		helper = new JLinkClassLoaderHelper(new URL[0], null, parent, this);
 	}
 
 
@@ -260,12 +253,10 @@ public class JLinkClassLoader extends ClassLoader {
 		for (int i = 0; i < existingLocs.length; i++) {
 			if (existingLocs[i].getProtocol().equals("file")) {
 				String fileString = existingLocs[i].getFile();
-				if (jvmHasURIClass) {
-					try {
-						URI u = new URI(existingLocs[i].toString());
-						fileString = u.getPath();
-					} catch (Exception e) {}
-				}
+				try {
+					URI u = new URI(existingLocs[i].toString());
+					fileString = u.getPath();
+				} catch (Exception e) {}
 				result[i] = fileString;
 			} else {
 				result[i] = existingLocs[i].toString();
@@ -304,7 +295,7 @@ public class JLinkClassLoader extends ClassLoader {
                     if (!urlsToAdd.contains(u))
                         newURLSet.add(u);
                 }
-                helper = new JLinkClassLoaderHelper((URL[]) newURLSet.toArray(new URL[newURLSet.size()]), helper, getParent());
+                helper = new JLinkClassLoaderHelper((URL[]) newURLSet.toArray(new URL[newURLSet.size()]), helper, getParent(), this);
 	        }
 	    } else {
 	        // Remove any "new" URLs that are already in the classpath.
@@ -322,14 +313,9 @@ public class JLinkClassLoader extends ClassLoader {
 
 
 	private static URL fileToURL(File f) throws MalformedURLException {
-
 		// Using toURI() ensures proper handling of spaces in path names. The toURL() method
 		// is broken in that regard and will not be fixed by Sun for backwards compatibility reasons.
-		if (jvmHasURIClass) {
-			return f.toURI().toURL();
-		} else {
-			return f.toURL();
-		}
+		return f.toURI().toURL();
 	}
 
 }

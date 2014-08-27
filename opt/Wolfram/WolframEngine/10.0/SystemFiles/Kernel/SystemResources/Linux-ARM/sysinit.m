@@ -106,7 +106,7 @@ $CharacterEncoding = $SystemCharacterEncoding;
 
 SetDirectory[ ToFileName[{$InstallationDirectory, "SystemFiles", "CharacterEncodings"}]];
 
-System`$CharacterEncodings = DeleteCases[ StringTake[#, {1, -3}] & /@ FileNames[ "*.m"], "UTF-8" ];
+System`$CharacterEncodings = StringTake[#, {1, -3}] & /@ FileNames[ "*.m"];
 
 Protect[ System`$CharacterEncodings];
 
@@ -207,14 +207,43 @@ Developer`RegisterInputStream["HTTP",
 	Get["HTTPClient`"]; HTTPClient`Private`Initialize[]];
 
 CloudObject`Private`$CloudObjectAutoloads = Hold[
-	System`APIFunction, System`DefaultReturnType, 
-	System`DefaultParameterType, System`CloudConnect, 
-	System`CloudPut, System`CloudSave, System`CloudGet, 
-	System`CloudFunction, System`CloudEvaluate, System`CloudDeploy, 
-	System`ExportForm, System`LocalizeDefinitions, System`DefaultView, 
-	System`CloudObject, System`$CloudBase, System`$CloudRootDirectory, 
-	System`$CloudDirectory, System`FormFunction, System`CreateUUID,
-	System`CloudDisconnect, System`$CloudConnected
+    System`$CloudBase,
+    System`$CloudConnected,
+    System`$CloudDirectory,
+    System`$CloudRootDirectory,
+    System`$RegisteredUserName,
+    System`$Permissions,
+	System`APIFunction,
+	System`APIFunctionGroup,
+	System`ClearProperties,
+	System`CloudBase,
+    System`CloudConnect,
+    System`CloudDeploy,
+    System`CloudDirectory,
+    System`CloudDisconnect,
+    System`CloudEvaluate,
+    System`CloudExport,
+    System`CloudFunction,
+    System`CloudGet,
+    System`CloudImport,
+    System`CloudObject,
+    System`CloudObjectInformation,
+    System`CloudObjectInformationData,
+    System`CloudPut,
+    System`CloudSave,
+    System`CloudSymbol,
+    System`CreateUUID,
+	System`DefaultParameterType,
+	System`DefaultReturnType,
+	System`DefaultView,
+	System`EmbedCode,
+	System`ExportForm,
+	System`ExternalFunction,
+    System`FormFunction,
+	System`LocalizeDefinitions,
+	System`Permissions,
+	System`SetCloudDirectory,
+	System`SetProperties
 ]
 
 Internal`DisableCloudObjectAutoloader[] := Block[{$Path},
@@ -225,6 +254,17 @@ Package`DeclareLoad[
 	List @@ CloudObject`Private`$CloudObjectAutoloads, 
 	"CloudObjectLoader`",
 	Package`ExportedContexts -> {"CloudObject`"}
+]
+
+MUnit`Package`$MUnitAutoloads = Hold[
+    System`VerificationTest,
+    System`TestResultAnalyze
+]
+
+Package`DeclareLoad[
+	List @@ MUnit`Package`$MUnitAutoloads, 
+	"MUnitLoader`",
+	Package`ExportedContexts -> {"MUnit`"}
 ]
 
 
@@ -240,7 +280,8 @@ QuantityUnits`Private`$QuantityUnitsAutoloads = Hold[
 	QuantityUnits`Private`quantifyPacletRequest, System`CurrencyConvert,
 	System`QuantityVariable, System`QuantityVariableIdentifier,
 	System`QuantityVariablePhysicalQuantity, System`QuantityVariableDimensions, 
-	System`QuantityVariableCanonicalUnit
+	System`QuantityVariableCanonicalUnit, System`QuantityVariableCombinations,
+	System`IncludeQuantities
 ]
 
 Begin["QuantityUnits`Private`"];
@@ -273,16 +314,35 @@ End[];
 
 Package`DeclareLoad[
 	List @@ QuantityUnits`Private`$QuantityUnitsAutoloads, 
-	"QuantityUnits`",
+	"QuantityUnitsLoader`",
 	Package`ExportedContexts -> {"QuantityUnits`"}
 ]
 
+(* just a small sample here for starters *)
+EntityFramework`Private`$EVDataPacletHeads = Hold[System`AdministrativeDivisionData, System`AirportData, 
+System`BridgeData, System`BroadcastStationData, System`BuildingData, 
+System`CompanyData, System`ConstellationData, System`DamData, 
+System`DeepSpaceProbeData, System`EarthImpactData, 
+System`FiniteGroupData, System`GeneData, System`HistoricalPeriodData, 
+System`IslandData, System`IsotopeData, System`LakeData, 
+System`LaminaData, System`MannedSpaceMissionData, 
+System`MedicalTestData, System`MeteorShowerData, System`MFIDData, 
+System`MineralData, System`MountainData, System`MovieData, 
+System`NeighborhoodData, System`NuclearExplosionData, 
+System`NuclearReactorData, System`OceanData, System`ParkData, 
+System`ParticleAcceleratorData, System`PeriodicTilingData, 
+System`PersonData, System`PhysicalSystemData, System`PlaneCurveData, 
+System`PlantData, System`PopularCurveData, System`SatelliteData, 
+System`SNPData, System`SolarSystemFeatureData, System`SpaceCurveData, 
+System`SpeciesData, System`SurfaceData, System`TropicalStormData, 
+System`TunnelData, System`UnderseaFeatureData, System`VolcanoData, 
+System`WaterfallData, System`ZIPCodeData];
 
-EntityFramework`Private`$EntityFrameworkAutoloads = Hold[
+EntityFramework`Private`$EntityFrameworkAutoloads = Join[Hold[
        System`Entity, System`EntityValue, System`EntityProperty, System`EntityProperties,
        System`CommonName, System`CanonicalName, System`TypeName,
-       Experimental`FindEntities, Internal`AddToEntityNameCache
-]
+       Experimental`FindEntities, Internal`AddToEntityNameCache, Internal`PreloadEntityNameCache
+   ], EntityFramework`Private`$EVDataPacletHeads];
 
 (* The following are provisional option names used by EntityFramework,
    they don't need to autoload anything, but need to be declared somewhere *)
@@ -356,19 +416,22 @@ Package`DeclareLoad[
 		{System`URLEncode, System`URLDecode, System`URLBuild, System`URLParse, System`URLShorten, System`URLExpand, 
 			System`URLQueryEncode, System`URLQueryDecode, System`URLExistsQ,
 			System`ServiceConnect, System`ServiceDisconnect,System`ServiceObject, System`ServiceExecute,System`SendMessage},
-		"OAuth`",
+		"OAuthLoader`",
 		Package`HiddenImport -> True
 	]
  
 Package`DeclareLoad[
-		{System`Classify, System`Predict, System`ClassifierFunction, System`PredictorFunction},
+		{System`Classify, System`ClassifierFunction, System`ClassifierMeasurements,
+		 System`Predict,  System`PredictorFunction,  System`PredictorMeasurements
+		},
        "MachineLearning`"
 	]
 
 Package`DeclareLoad[{
 		System`StartProcess, System`RunProcess, System`KillProcess,
 		System`ProcessConnection, System`ProcessInformation, System`ProcessStatus,
-		System`ProcessObject},
+		System`ProcessObject, System`Processes, System`$SystemShell,
+		System`EndOfBuffer, System`ReadString, System`ReadLine, System`WriteLine},
 		"ProcessLink`"
 ]
 
@@ -378,17 +441,6 @@ Package`DeclareLoad[
 			System`TemplateIf, System`TemplateSequence, System`TemplateSlot, System`TemplateExpression, System`TemplateWith, System`TemplateBlock
 		},
        "Templating`"
-	]
-
-Package`DeclareLoad[
-		{
-			System`DataAssembly, System`PartSpecification, 
-			System`InferType, System`InduceType, System`NormalizeType, System`TypeChecksQ,
-			System`ConformsQ, System`TypeQ, System`ValidTypeQ,
-			System`ListType, System`TupleType, System`StructType, System`IndexType, System`ScalarType, System`Enum, System`ForeignKey,
-			System`GroupedBy, System`Selected, System`CountedBy, System`Flattened, System`Computed, System`IndexedBy
-		},
-       "DataModel`"
 	]
 
 

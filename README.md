@@ -1,4 +1,4 @@
 rpi-sysroot
 ===========
 
-Raspberry PI sysroot (Raspbian Wheezy 2014-01-07) with Urho3D prerequisite software packages preinstalled.
+Raspberry PI sysroot (2014-06-20-wheezy-raspbian) with Urho3D prerequisite software packages preinstalled.

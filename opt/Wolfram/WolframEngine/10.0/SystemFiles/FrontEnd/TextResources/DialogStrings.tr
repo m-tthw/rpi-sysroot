@@ -1028,7 +1028,13 @@ Do you want to review your unsaved documents before closing?
 @@resource reviewUnsavedDocsDialogSubText
 If you don't review your documents, all your changes could be lost.
 @|
-@@resource quitingApplicationWarningDialogText
+@@resource quitingApplicationWarningDialogText Macintosh
+Closing the last notebook will quit the application. What do you want to do?
+@|
+@@resource quitingApplicationWarningDialogText X
+"Closing the last notebook will quit the application. Would you like to quit now?"
+@|
+@@resource quitingApplicationWarningDialogText Windows
 Closing the last notebook will quit the application. What do you want to do?
 @|
 @@resource quitKernelDialogMainText

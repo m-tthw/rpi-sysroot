@@ -14,12 +14,67 @@
 TBhfAoaRxDiRMEyMCwmTKobNPGLFOJAwqWLsSJhUMTYkTKoYKxImVYwFCVND
 jBkJ01OMCQlTQ4wRCdNKDBkQLQbFeMWQ8haGGFQczgYASpEPZw==
     "],
-    "Byte", ColorSpace -> "RGB", Interleaving -> True]}
+    "Byte", ColorSpace -> "RGB", Interleaving -> True]},
+
+"ControlEqualAppearance" -> {
+"Default" -> Image[CompressedData["
+1:eJzNlEEKwjAQRYO68ADuXHkUPUI9QQu6FaogPaql+y5KN1klXTQ+KxSEJCQY
+wQ8tafv/z0w6M7vikp0XQojrmluW3/dlmVfHFQ+H6nYqliw2XFuu19oEQ3wi
+XPgjaK3btm2a5uEFBGiQ/W5KKchd1w3DMI6ji8YnCH3f13WNxEzHYo0NgpQy
+PB3IBIDQakgKbBru9gbpILQaciwkEmuIBKHVkOA95+YCEoQuw1i3WWgt0X8z
+tL5Pbpj2pyQvG+qTKo01pBdchU0HEXxs69GtrtYz03CAwKYhw4F0CMAzHOY4
+E46vLyFSYHZ7Aul8tyo=
+      "], "Byte", ColorSpace -> "RGB", Interleaving -> True]}
 }
 @|
 @|
 @@resource WABitmaps
 {
+"CompactMathematicaForm" -> 
+GraphicsBox[
+  TagBox[RasterBox[{{168, 132, 128, 125, 134, 134, 125, 128, 132, 168}, {131, 132, 168, 
+    176, 134, 134, 176, 168, 132, 131}, {135, 131, 247, 227, 132, 132, 227, 247, 131, 
+    135}, {134, 131, 239, 158, 127, 127, 158, 239, 131, 134}, {134, 131, 240, 167, 128, 
+    128, 167, 240, 131, 134}, {134, 131, 239, 158, 127, 127, 158, 239, 131, 134}, {135, 
+    131, 247, 227, 132, 132, 227, 247, 131, 135}, {131, 132, 168, 176, 133, 133, 176, 
+    168, 132, 131}, {171, 135, 130, 128, 137, 137, 128, 130, 135, 171}}, {{0, 9}, {10, 
+    0}}, {0, 255},
+    ColorFunction->GrayLevel],
+   BoxForm`ImageTag["Byte", ColorSpace -> "Grayscale", Interleaving -> None],
+   Selectable->False],
+  BaseStyle->"ImageGraphics",
+  ImageSize->Magnification[1],
+  ImageSizeRaw->{10, 9},
+  BaselinePosition->(Bottom -> Baseline),
+  PlotRange->{{0, 10}, {0, 9}}],
+
+"CompactAlphaForm" -> 
+GraphicsBox[
+  TagBox[RasterBox[{{{251, 174, 113}, {248, 111, 1}, {248, 111, 1}, {248, 111, 1}, {248,
+     111, 1}, {248, 111, 1}, {248, 111, 1}, {248, 111, 1}, {251, 174, 113}}, {{248, 111,
+     1}, {248, 101, 0}, {248, 95, 0}, {248, 96, 0}, {248, 96, 0}, {248, 96, 0}, {248, 
+    95, 0}, {248, 101, 0}, {248, 111, 1}}, {{248, 111, 1}, {248, 111, 1}, {255, 255, 
+    255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {248, 111,
+     1}, {248, 111, 1}}, {{248, 111, 1}, {248, 111, 1}, {250, 178, 120}, {250, 177, 
+    119}, {250, 177, 119}, {250, 177, 119}, {250, 178, 120}, {248, 111, 1}, {248, 111, 
+    1}}, {{248, 111, 1}, {248, 111, 1}, {248, 111, 1}, {248, 111, 1}, {248, 111, 1}, {
+    248, 111, 1}, {248, 111, 1}, {248, 111, 1}, {248, 111, 1}}, {{248, 111, 1}, {248, 
+    111, 1}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 
+    255, 255}, {248, 111, 1}, {248, 111, 1}}, {{248, 111, 1}, {248, 111, 1}, {250, 178, 
+    120}, {250, 177, 119}, {250, 177, 119}, {250, 177, 119}, {250, 178, 120}, {248, 111,
+     1}, {248, 111, 1}}, {{248, 111, 1}, {248, 111, 1}, {248, 111, 1}, {248, 111, 1}, {
+    248, 111, 1}, {248, 111, 1}, {248, 111, 1}, {248, 111, 1}, {248, 111, 1}}, {{251, 
+    174, 113}, {248, 111, 1}, {248, 111, 1}, {248, 111, 1}, {248, 111, 1}, {248, 111, 
+    1}, {248, 111, 1}, {248, 111, 1}, {251, 174, 113}}}, {{0, 9}, {9, 0}}, {0, 255},
+    ColorFunction->RGBColor],
+   BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
+   Selectable->False],
+  BaseStyle->"ImageGraphics",
+  ImageSize->Magnification[1],
+  ImageSizeRaw->{9, 9},
+  BaselinePosition->(Bottom -> Baseline),
+  PlotRange->{{0, 9}, {0, 9}}],
+
 "EqualSmall" -> 
 GraphicsBox[TagBox[RasterBox[CompressedData["
 1:eJxTTMoPSuNkYGAoZgESPpnFJWg8ZmRe5m8gI3MdiCgEEmiSP0Di+
@@ -230,20 +285,25 @@ GraphicsBox[
   PlotRange->{{0, 6}, {0, 2}}],
 
 "LinguisitcAssumptionsIcon" -> 
- GraphicsBox[
+GraphicsBox[
   TagBox[RasterBox[CompressedData["
-1:eJxTTMoPSmVmYGAQAmI2IAaxIeCD/VChf/0EgZf25WDwHC5+5zYY2MuDwX6C
-4rjMIZXGZX4EGNyA8mEAtzgucwbKPXNmg8Btezkw2EdxfIWDASKccZkvAwZ3
-7AXB4CBBc0Zp6tB2YPAOg549CwReEU3jModU9+AyH5YOiKVxmTPU3TPY4muU
-xk8PtvgabOl5sLlnsMXXQNEASYkktw==
-    "], {{0, 18}, {6, 0}}, {0., 1.},
+1:eJylUjFuwkAQREmKVPlDvkFjOU8gLwApaVzYIpEixCuQ3PgL7vwBCpdAY1my
+ZRkbsA2NKZAoXUyYE4ssRBpy0tqze7N7d7P7OjB7nw+dTufr+fTp9X/04bA/
+en86OW+j74/B4wm8nI1BtFbTNNjv9yjLEqvVShkxY9y7tY7HI9brNZbLJbIs
+Q57nyogZ4x451znX/GuTfMnl+ZvN5uY54gumkSvvYQ59eRe5xIyRyzvSl3eI
+BuSFYYjFYoE0TRWXOAgCxY2iCPP5HEmSXGqSs91uMR6PoWkafN9XNXRdh2ma
+OBwOsG0b3W4Xnudht9td7s98x3EUbzabIY5jWJaFyWSCuq7hui4Mw8B0OkVV
+VSpPzuSftaRvxMIpikL5vLNwRRfRWfRs69veE12oqdT5q3ft3pArs3NP3/8z
+Z/fM9S9h2sfU
+    "], {{0, 14}, {14, 0}}, {0, 255},
     ColorFunction->RGBColor],
-   BoxForm`ImageTag["Real", ColorSpace -> "RGB", Interleaving -> True],
+   BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> True],
    Selectable->False],
   BaseStyle->"ImageGraphics",
   ImageSize->Magnification[1],
-  ImageSizeRaw->{6, 18},
-  PlotRange->{{0, 6}, {0, 18}}],
+  ImageSizeRaw->{14, 14},
+  BaselinePosition->(Center -> Center),
+  PlotRange->{{0, 14}, {0, 14}}],
 
 "PodInfoBackground" -> 
 PaneBox[

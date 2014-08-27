@@ -39,7 +39,7 @@ $SyntaxHandler::sntxnc = "$SyntaxHandler could not correct syntax error."
 $SyntaxHandler::sntxrun = "Trying to correct syntax using the specified $SyntaxHandler."
 AbsoluteTime::arg = "Argument `1` cannot be interpreted as a date or time input."
 AbsoluteTime::str = "String `1` cannot be interpreted as a date in format `2`."
-AbsoluteTime::zone = "Time zone specification `1` should be a real number."
+General::zone = "Time zone specification `1` should be a real number."
 AccountingForm::expint = EngineeringForm::expint = NumberForm::expint = PaddedForm::expint = ScientificForm::expint = "Result `1` obtained by applying the value of the ExponentFunction option to `2` should be an integer or Null."
 AccountingForm::iprf = EngineeringForm::iprf = NumberForm::iprf = PaddedForm::iprf = ScientificForm::iprf = "Formatting specification `1` should be a positive integer or a pair of positive integers."
 Accumulate::bdmtd = "Value of option Method -> `1` is not Automatic or \"CompensatedSummation\"."
@@ -175,13 +175,22 @@ CoefficientArrays::eelist = "The first argument `1` should be a list of polynomi
 ColorOutput::colpn = ToColor::colpn = "Result `1` obtained during color conversion by applying function `2` to color `3` contains a non-numerical argument."
 ColumnForm::colmh = "Horizontal alignment specification `1` is not Left, Center, or Right."
 ColumnForm::colmv = "Vertical alignment specification `1` is not Below, Center, or Above."
-General::invas = "The argument `1` is not a valid Association or a rule."
-General::invrl = "The argument `1` is not a valid Association or a rule or a list of rules."
+General::invas = "The argument `1` is not a valid Association or rule."
+General::invaa = "The argument `1` is not a valid Association or a list of Associations."
+General::invrl = "The argument `1` is not a valid Association or rule or a list of rules."
+General::invrp = "The argument `1` is not a valid Association or list."
 General::invdt = "The argument `1` is not a rule or a list of rules."
+General::invdt1 = "The argument `1` is not a valid list of rules."
 General::invar = "The argument `1` is not a valid list of Associations or rules."
+General::invla = "The argument `1` contains incompatible elements."
+General::incpt = "Incompatible elements in `1` cannot be joined."
 General::invru = "The argument `1` is not a valid Association or a list of rules."
-Association::incmp = "The arguments `1` and `2` are incompatible."
+General::keynx = "Key `1` does not exist in Association `2`."
+General::kvlen = "Key specification `1` has unequal lengths."
+Lookup::luarg = "`1` has an incorrect number of arguments."
+Association::incmp = "The arguments `1` and `2` in `3` are incompatible."
 Association::list1 = "The argument `1` is not a valid list of Associations or rules or lists of rules."
+JoinBy::jbspc = "The join method `1` is not \"Inner\", \"Outer\", \"Left\", or \"Right\"."
 Compile::argcomp = "The comparison, `1`, is invalid for arguments of type `2`."
 Compile::argcompten = "The comparison, `1`, is invalid for tensor arguments."
 Compile::argset = "The assignment to `1` is illegal; it is not valid to assign a value to an argument."
@@ -277,7 +286,7 @@ CompiledFunction::cfnlts = "Null tensor with rank > 1 encountered at instruction
 CompiledFunction::cfnv = "CompiledFunction object is invalid and cannot be used."
 CompiledFunction::initf = "Initialization failure in CompiledFunction; uncompiled evaluation will be used."
 CompiledFunction::cfver = "Incorrect version number; CompiledFunction object cannot be used."
-CompiledFunction::mldot = "MathLink compiler cannot interpret Dot, Det, and Inverse operations; proceeding with uncompiled evaluation."
+CompiledFunction::mldot = "WolframLink compiler cannot interpret Dot, Det, and Inverse operations; proceeding with uncompiled evaluation."
 LibraryFunction::cfsa = CompiledFunction::cfsa = "Argument `1` at position `2` should be a `3`."
 LibraryFunction::cfta = CompiledFunction::cfta = "Argument `1` at position `2` should be a rank `3` tensor of `4`s."
 LibraryFunction::lfspar = "Argument `1` at position `2` is not a SparseArray or a list representation that can be converted into a SparseArray."
@@ -368,7 +377,6 @@ DateDifference::inc = "Argument `1` is not a time unit or a list of time units."
 DateDifference::twoarg = "Argument `1` is not a time unit or a list of time units, nor can it be interpreted as a date."
 DateList::arg = "Argument `1` cannot be interpreted as a date or time input."
 DateList::str = "String `1` cannot be interpreted as a date in format `2`."
-DateList::zone = $TimeZone::zone = "Time zone specification `1` should be a real number."
 $TimeZone::tznan = "$TimeZone specification `1` is not a number. Using the system time zone instead."
 DateList::ambig = DateString::ambig = AbsoluteTime::ambig = "Warning: the interpretation of the string `1` as a date is ambiguous."
 DateList::zspec = "Time zone specification `1` cannot be converted to a valid date."
@@ -377,7 +385,6 @@ DateString::arg = "Argument `1` cannot be interpreted as a date or time input or
 DateString::fmt = "`1` is not a valid date format."
 DateString::fmtarg = "`1` specifies the date format twice."
 DateString::str = "String `1` cannot be interpreted as a date in format `2`."
-DateString::zone = "Time zone specification `1` should be a real number."
 DateString::prs = "Date parser is not available."
 DateListPlot::ntdt = "The first argument to DateListPlot should be a list of pairs of dates and real values, a list of real values, or a list of several such lists."
 DateListPlot::ntstep = "The value `1` is not a valid date step specification."
@@ -463,7 +470,7 @@ DSolve::twoivarg = NDSolve::twoivarg = NDSolveValue::twoivarg = ParametricNDSolv
 DSolve::alliv = NDSolve::alliv = NDSolveValue::alliv = ParametricNDSolve::alliv = ParametricNDSolveValue::alliv = NDSolve`ProcessEquations::alliv = RSolve::alliv = "The function `1` was specified without dependence on all the independent variables. Each function must depend on all the independent variables."
 DSolve::baddv = NDSolve::baddv = NDSolveValue::baddv = ParametricNDSolve::baddv = ParametricNDSolveValue::baddv = NDSolve`ProcessEquations::baddv = RSolve::baddv = "The dependent variable `1` is not clearly specified in the form `2`."
 DSolve::ndord = NDSolve::ndord = NDSolveValue::ndord = ParametricNDSolve::ndord = ParametricNDSolveValue::ndord = NDSolve`ProcessEquations::ndord = NDSolve`Reinitialize::ndord = "Derivative order `1` in term `2` should be a non-negative machine-sized integer."
-DSolve::maxev = "The maximum number of events, 100, has been reached. The currently computed solution has been returned."
+DSolve::maxev = "The maximum number of events, `1`, has been reached. The currently computed solution has been returned."
 RSolve::rord = "Recurrence order `1` of equation `2` is not a machine-sized integer."
 RSolve::piarg = "All arguments in position `1` of `2` should be either of the form `3` + integer or q^integer * `3`. Mixtures of these forms are not allowed."
 RecurrenceTable::excptn = "Value `1` is a numerical exception."
@@ -501,7 +508,7 @@ DumpSave::outref = "Encountered references to an external object `1` such as a f
 SparseArray`SVDArnoldi::svdwop = SingularValueList::svdwop = SingularValueDecomposition::svdwop = "The option `1` with value `2` is not accepted by `3`."
 SparseArray`SVDArnoldi::noimp = SingularValueList::noimp = SingularValueDecomposition::noimp = "The generalized `1` for sparse matrices is not implemented."
 SparseArray`SVDArnoldi::emeth = SparseArray`Arnoldi::emeth = SingularValueList::emeth = SingularValueDecomposition::emeth = "The method specified by Method -> `1` should be either Automatic or Arnoldi."
-Eigenvalues::emeth = Eigenvectors::emeth = Eigensystem::emeth = "The method specified by Method -> `1` should be either Automatic, Arnoldi, or BandedMatrix."
+Eigenvalues::emeth = Eigenvectors::emeth = Eigensystem::emeth = "The method specified by Method -> `1` should be Automatic, Arnoldi, Banded, or FEAST."
 SparseArray`SVDArnoldi::genbd = SparseArray`Arnoldi::genbd = SingularValueList::genbd = SingularValueDecomposition::genbd = Eigenvalues::genbd = Eigenvectors::genbd = Eigensystem::genbd = "The generalized `1` for band matrices is not implemented."
 Eigenvalues::chnpdef = Eigenvectors::chnpdef = Eigensystem::chnpdef = "The second matrix `1` in the first argument seems not to be positive definite, which is required for the Arnoldi method."
 SingularValueList::take = "Cannot take singular values `1` through `2` out of the total of `3` singular values."
@@ -568,6 +575,7 @@ SparseArray`SparseArraySort::bdmtd = "Value of option Method -> `1` is not \"Mer
 Eigensystem::geidm = Eigenvectors::geidm = Eigenvalues::geidm = "Incompatible matrix dimensions."
 Eigensystem::geinsl = Eigenvectors::geinsl = Eigenvalues::geinsl = "Cannot find a solution for the generalized eigenproblem."
 Eigensystem::geinsl1 = Eigenvectors::geinsl1 = Eigenvalues::geinsl1 = "Warning: a solution for the generalized eigenproblem may be incorrect."
+Eigensystem::geinzv = Eigenvectors::geinzv = Eigenvalues::geinzv = "Warning: cannot find all the generalized eigenvectors."
 LinearAlgebra`Internal`Orthogonalize::orbop = Orthogonalize::orbop = "`1` is not a valid value for the Method option."
 LinearAlgebra`Internal`Orthogonalize::ornex = Orthogonalize::ornex = "The option Method -> Reorthogonalization cannot be used with exact precision vectors. It is replaced with Method -> GramSchmidt."
 LinearAlgebra`Internal`Orthogonalize::ornh = Orthogonalize::ornh = "The option Method -> Householder cannot be used with symbolic or exact precision vectors."
@@ -636,11 +644,11 @@ Rasterize::type = "`1` cannot be rasterized."
 ExtendedGCD::egcd = "Arguments in `1` should be integers."
 ExtendedGCD::egcdz = "ExtendedGCD[0,0] has no unique solution."
 LinearSolve::notrhsm = "Incorrect value of the second argument. Only the strings \"N\", \"T\", \"C\", or \"J\" are valid."
-LinearSolve::rmeth = "Value of option Method -> `1` should be \"Cholesky\", \"Multifrontal\", \"Krylov\", \"CofactorExpansion\", \"OneStepRowReduction\", \"DivisionFreeRowReduction\", \"Direct\", \"IterativeRefinement\", \"BandedMatrix\", or Automatic."
+LinearSolve::rmeth = "Value of option Method -> `1` should be \"Cholesky\", \"Multifrontal\", \"Krylov\", \"CofactorExpansion\", \"OneStepRowReduction\", \"DivisionFreeRowReduction\", \"Direct\", \"IterativeRefinement\", \"Banded\", or Automatic."
 LinearSolve::mronly = "Only machine-real code is available for sparse matrices. If your matrix is not too large, consider trying again after using Normal on the matrix."
 LinearSolve::exanexb = "The factorized exact matrix may generate an incorrect result for an inexact right-hand side. Either use the two-argument form of LinearSolve, or use an approximate matrix in the one-argument form."
-Eigenvalues::bdnziv = Eigenvectors::bdnziv = Eigensystem::bdnziv = LinearSolve::bdnziv = "The method \"BandedMatrix\" does not accept a sparse matrix with a nonzero implicit value."
-Eigenvalues::bdnmt = Eigenvectors::bdnmt = Eigensystem::bdnmt = LinearSolve::bdnmt = "The method \"BandedMatrix\" accepts only sparse matrices with elements that are machine-real or machine-complex numbers."
+Eigenvalues::bdnziv = Eigenvectors::bdnziv = Eigensystem::bdnziv = LinearSolve::bdnziv = "The method \"Banded\" does not accept a sparse matrix with a nonzero implicit value."
+Eigenvalues::bdnmt = Eigenvectors::bdnmt = Eigensystem::bdnmt = LinearSolve::bdnmt = "The method \"Banded\" accepts only sparse matrices with elements that are machine-real or machine-complex numbers."
 LinearSolveFunction::mconly = LinearSolve::mconly = "Only machine number code is available for sparse matrices. If your matrix is not too large, consider trying again after using Normal on the matrix."
 LinearSolveFunction::spfac = "The sparse LU factors are not available separately."
 General::mcovl = "The computation encountered machine-number overflow. Only machine-number code is available for sparse matrices. If your matrix is not too large, consider trying again after using Normal on the matrix."
@@ -887,7 +895,7 @@ Optimization`NonlinearInteriorPoint::badit = "`1` is not a valid value for the M
 Optimization`NonlinearInteriorPoint::uneq = "The constraints, `1`, contain unequal type constraints that are not supported."
 Optimization`NonlinearInteriorPoint::elem = "The constraints, `1`, contain element type constraints that are not supported."
 Optimization`NonlinearInteriorPoint::malf = "The constraints, `1`, are malformed. This may be, for example, because the constraints do not form equalities or inequalities."
-First::first = "`1` has a length of zero and no first element."
+First::nofirst = "`1` has a length of zero and no first element."
 General::fitc = "Number of coordinates (`1`) is not equal to the number of variables (`2`)."
 Fit::fitd = "First argument `1` in Fit is not a list or a rectangular array."
 DesignMatrix::fitd = "First argument `1` in DesignMatrix is not a list or a rectangular array."
@@ -1079,6 +1087,7 @@ General::vecmat = "Argument `1` at position `2` is neither a non-empty vector no
 General::vecmat1 = "Argument `1` is neither a non-empty vector nor a non-empty matrix."
 General::ndims = "The arguments `1` and `2` have incorrect dimensions."
 General::targ = "Argument `1` at position `2` is not List or SparseArray."
+LeviCivitTensor::targ = "Argument `1` at position `2` is not List, SparseArray, or SymmetrizedArray."
 General::mbox = "MatchBox cannot occur in transformation rule source."
 General::mbrpos = "Position `2` in `1` must be one of `3`."
 General::meprec = "Internal precision limit $MaxExtraPrecision = `1` reached while evaluating `2`."
@@ -1181,7 +1190,7 @@ General::privv = "Privilege violation during `1`."
 General::pspec = "Part specification `1` is neither a machine-sized integer nor a list of machine-sized integers."
 General::pspec1 = "Part specification `1` is invalid."
 General::psl = "Position specification `1` in `2` is not a machine-sized integer or a list of machine-sized integers."
-General::psl1 = "Position specification `1` is invalid."
+General::psl1 = "Position specification `1` in `2` is invalid."
 General::pvec = "Unable to find principal vectors for eigenvalue `1`."
 General::rawvar = "Parameter `1` in `2` is a raw expression and cannot be used as a variable."
 General::rdeg = "`1` computation failed due to inability to use roots of the polynomial `2` of degree `3`, which exceeds $MaxRootDegree. Increasing the value of $MaxRootDegree may allow `1` to succeed."
@@ -1456,6 +1465,7 @@ Import::expectdir = "First argument `1` is not a directory specification."
 Import::costr = "`1` in `2` is not a string. This option must be specified as a string."
 Import::errelem = "The Import element `1` is not a valid element for the `2` format."
 Import::fmterr = "Cannot import data as `1` format."
+Import::elemerr = "Cannot import `1` element."
 Import::format = "Cannot import data as `1`."
 Import::frmerr = "Cannot import frame `1` as `2` format."
 Import::nodirsup = "Cannot import directory `1` as `2`."
@@ -1695,10 +1705,13 @@ Internal`PoleAssignment::rsmit = Internal`DiscreteRiccatiSolve::rsmit = Internal
 Internal`RiccatiSolve::rcdsc = DiscreteRiccatiSolve::rcdsc = RiccatiSolve::rcdsc = "The method `1` cannot be used with an explicit descriptor matrix."
 Internal`RiccatiSolve::exdsc = DiscreteRiccatiSolve::exdsc = RiccatiSolve::exdsc = "The Riccati equation containing an explicit descriptor matrix cannot be solved for exact numeric matrices."
 Internal`PoleAssignment::ncsol = "Cannot compute a solution to the pole assignment problem."
-Developer`LaunchFrontEnd::nxsrv = "An x server is required for that operation."
+Developer`LaunchFrontEnd::nxsrv = "Failed to launch the front end. The front end requires an X server to run."
 Developer`LinearExpressionToMatrix::nonlin = Developer`LinearExpressionToSparseMatrix::nonlin = "The expression `1` is not linear in the variables `2`."
 Developer`LinearExpressionToMatrix::lexp = Developer`LinearExpressionToSparseMatrix::lexp = "The first argument `1` is not a list of expressions or a list of equations."
 LinearRecurrence::invd = "The arguments `2` and `3` in `1` have incompatible dimensions."
+LinkAdvertiseService::portn = "The argument `1` lies outside the valid TCP port number range; port numbers can be 0-65535.";
+LinkAdvertiseService::hostn = "Value of Hostname -> `1` should be a string.";
+LinkAdvertiseService::domn = "Value of Domain -> `1` should be a string.";
 LinkConnect::linkc = "Unable to connect to `1`."
 LinkObject::linkd = "Unable to communicate with closed link `1`."
 LinkObject::linkn = "Argument `1` in `2` has an invalid LinkObject number; the link may be closed."
@@ -1706,7 +1719,7 @@ LinkObject::linkv = LinkWrite::linkv = LinkWriteHeld::linkv = "Argument `1` in `
 LinkObject::linkw = "Unable to write data to closed link `1`."
 LinkObject::linkx = "Argument `1` in `2` is not an open LinkObject."
 LinkOpen::linkh = "Value of LinkHost -> `1` should be a string."
-LinkOpen::linki = "MathLink could not be initialized."
+LinkOpen::linki = "WolframLink could not be initialized."
 LinkOpen::linkm = "Value of LinkMode -> `1` should be Launch, ParentConnect, Listen, or Connect."
 LinkOpen::linknm = "Either a link name or a value for LinkMode must be given."
 LinkOpen::linkpl = "Value of option LinkProtocol -> `1` should be `2` or Automatic."
@@ -1717,6 +1730,11 @@ LinkRead::linksz = "Expression with head `1` and length `2` is too big to read."
 LinkSelect::linknl = "`1` unexpectedly is not a LinkObject."
 LinkSelect::linksle = "Could not select a LinkObject in `1`."
 LinkSelect::linkzl = "Argument `1` in `2` does not contain a LinkObject."
+LinkService::badst = "DNS service discovery in a bad state."
+LinkService::notav = "Link service named `1` not available."
+LinkService::notb = "Not currently browsing for link services."
+LinkService::notc = "DNS service discovery mechanism not connected."
+LinkService::noserv = "WolframLink service discovery and advertisement not available; DNS service discovery not installed on this machine."
 LinkWriteHeld::linkhl = "Argument `1` in `2` is not a held expression."
 ListConvolve::kldims = ListCorrelate::kldims = "The kernel `1` and list `2` are not both non-empty lists with the same tensor rank."
 ListConvolve::nlen = ListCorrelate::nlen = "The end conditions cannot be satisfied. A zero-length list will be returned."
@@ -1790,6 +1808,7 @@ MessageName::messg = "`1` cannot be set to `2`. It must be set to a string."
 General::mgre = "Message group `1` was not resolved to a list of messages of the form symbol::name or symbol::name::language."
 Minimize::wksol = ArgMin::wksol = "Warning: there is no minimum in the region in which the objective function is defined and the constraints are satisfied; returning a result on the boundary."
 Minimize::natt = ArgMin::natt = "The minimum is not attained at any point satisfying the given constraints."
+Monitor::bddly = "The value `1` given for the delay is not a positive number or time increment; proceeding with the default delay."
 N::arg = "Argument `1` is not of the form {precision, accuracy}."
 NDSolve::acoeffs = NDSolveValue::acoeffs = ParametricNDSolve::acoeffs = ParametricNDSolveValue::acoeffs = NDSolve`Iterate::acoeffs = "Unable to automatically determine the coefficients of the method `1`. Try specifying the coefficients as an option."
 NDSolve::sprkdm = NDSolveValue::sprkdm = ParametricNDSolve::sprkdm = ParametricNDSolveValue::sprkdm = NDSolve`Iterate::sprkdm = "The dimension `1` of the differential system in the method `2` is not even."
@@ -2291,7 +2310,7 @@ NSolve::closesols = "Projections of some solutions are close together. This may 
 NSolve::illcnd = "Possible ill-conditioning detected in system. Likely cause is exact or approximate multiplicity. This may cause solutions to suffer from loss of precision. Use of sufficiently large WorkingPrecision may resolve this."
 NSolve::nsolprec = "Cannot obtain small residual. Use of sufficiently large WorkingPrecision may resolve this."
 NSolve::infsolns = "Infinite solution set has dimension at least `1`. Returning intersection of solutions with `2` == 1."
-NSolve::hom = "The homotopy method requires a square system of polynomial equations in at least two variables, and that working precision is set to be machine precision."
+NSolve::hom = "The homotopy method requires a square system of polynomial equations in at least two variables."
 NSum::bdmtd = "`1` is not a valid specification of a numerical summation approximation algorithm."
 NSum::istep = "Cannot get from `1` to `2` in steps of `3`."
 NSum::itfn = "`1` does not have the correct form for an iterator."
@@ -2702,7 +2721,7 @@ ResetDirectory::dtop = "Directory stack is empty."
 Resultant::method = Discriminant::method = "Value of option Method -> `1` should be Automatic, \"SylvesterMatrix\", \"BezoutMatrix\", Subresultants, or Modular."
 Resultant::var = "Not a valid variable in `1`."
 Rest::norest = "Cannot take Rest of expression `1` with length zero."
-Most::norest = "Cannot take Most of expression `1` with length zero."
+Most::nomost = "Cannot take Most of expression `1` with length zero."
 Rest::norest1 = "Cannot take Rest of expression with length zero."
 Most::norest1 = "Cannot take Most of expression with length zero."
 Reverse::headlm = "Head `1` is inconsistent with Head `2` encountered at previous levels."
@@ -3079,7 +3098,7 @@ XML`Parser`XMLGet::ilgprsr = "XMLParser[`1`]."
 XML`Parser`XMLGet::memfail = "XMLGet failed due to a problem allocating memory."
 XML`Parser`XMLGet::nfprserr = "`1`."
 XML`Parser`XMLGet::prserr = "`1`."
-XML`Parser`XMLGet::put = "Received MathLink message `1` when generating XML output."
+XML`Parser`XMLGet::put = "Received WolframLink message `1` when generating XML output."
 XML`Parser`XMLGet::unknop = "`1` is not a recognized option."
 XML`Parser`XMLGet::xmlprsop = "XMLParser object or option expected at position `1` in `2`."
 XML`Parser`XMLGetString::ilgprsr = "XMLParser[`1`]."
@@ -3256,7 +3275,7 @@ General::dataseterr = "`1` is not a valid dataset or list of datasets."
 General::updpkg = "The `1` functionality has been updated. See the compatibility page for compatibility information. Use <<Legacy`.``1` to load the legacy version."
 General::markersize = "Invalid size `1`. A PlotMarker must be of the form {marker, size}."
 Commonest::arg1 = "The first argument is expected to be a list."
-Commonest::arg2 = "The second argument `1` is expected to be a positive integer."
+Commonest::arg2 = "The second argument `1` is expected to be a non-negative integer."
 Commonest::dstlms = "The requested number of elements `1` is greater than the number of distinct elements `2`. Only `2` elements will be returned."
 General::obsfun = "The function `1` is now obsolete and has been superseded by `2`."
 General::obspkg = "`1` is now obsolete. The legacy version being loaded may conflict with current functionality. See the Compatibility Guide for updating information."
@@ -3297,6 +3316,7 @@ General::olddata = "Unable to update data for `1` to the latest version."
 General::network = "`1` requires active Internet connectivity."
 General::timeout = "A network operation for `1` timed out. Please try again later."
 Blend::arg = "`1` is not a valid list of colors or images, or pairs of a real number and a color or an image."
+Blend::argch = "Blend of images with Automatic color space and a different number of channels is not supported."
 Blend::argp = "`1` should be a real number."
 Blend::argl = "`1` should be a real number or a list of non-negative numbers, which has the same length as `2`."
 Blend::argm = ToColor::colconv = "`1` should be one of RGBColor, Hue, CYMKColor, or GrayLevel."
@@ -3368,7 +3388,7 @@ General::imgcsmsw = "The specified color space `1` and the number of channels `2
 General::imgcsbit = "The specified color space `1` is not compatible with the image type \"Bit\". Try Automatic instead."
 General::imgcolor = "The value of option `1` -> `2` is not a valid color specification for image color space `3`."
 General::imgnsch = "`1` should be a single-channel image."
-General::cscycl = "`1` does not support images with HSB color space with a cyclic Hue channel. Assuming Automatic color space instead."
+General::cscycl = "`1` does not support images with a cyclic Hue channel. Assuming Automatic color space instead."
 GeodesicDilation::arg2 = GeodesicErosion::arg2 = "The second argument `1` is neither a rectangular array nor an image."
 GeodesicErosion::imgchne = GeodesicDilation::imgchne = "`1` and `2` should be images with the same number of channels."
 GeodesicErosion::dimsne = GeodesicDilation::dimsne = "`1` and `2` should be images or arrays with the same dimensions."
@@ -3377,7 +3397,7 @@ Image::imgil = "The specified value of Interleaving option `1` does not match th
 Image3D::imgarray = "The specified argument `1` should be an array of rank 3 or 4 with machine-sized numbers."
 Image3D::img3dprop = "`1` should be a list of images of consistent dimension and color space."
 ColorCombine::ccbinput = "`1` should be a list of images with the same image dimensions."
-ColorConvert::ccvinput = "`1` should be a valid image, color directives, or a list of machine-sized real numbers of length up to 5."
+ColorConvert::ccvinput = "`1` should be a valid image, a color directive, a list of machine-sized real numbers of length up to 5, or a list of such objects."
 ColorConvert::ccvchan = "`1` is not compatible with the color space `2`."
 ColorConvert::csamb = "The image color space `1` is ambiguous.";
 ColorConvert::icccs = "The color space `1` is not supported in color profile `2`."
@@ -3714,6 +3734,7 @@ General::rlstrt = "The value `1` in the starting value specification `2` is expe
 EstimatedDistribution::nttp = "The value `1` is not a valid estimator type."
 FindDistributionParameters::nttp = "The value `1` is not a valid estimator type."
 EstimatedDistribution::prms = EstimatedProcess::prms = "The parameters to be estimated in `1` are not the same as the parameters in `2`."
+FindProcessParameters::notmpl = "Process structure templates are not supported for FindProcessParameters.";
 FindDistributionParameters::prms = FindProcessParameters::prms = "The parameters to be estimated in `1` are not the same as the parameters in `2`."
 EstimatedDistribution::ntpe = "The value `1` is not a valid ParameterEstimator value. The estimator should be one of \"MaximumLikelihood\", \"MethodOfMoments\", \"MethodOfCentralMoments\", \"MethodOfCumulants\", or \"MethodOfFactorialMoments\"."
 FindDistributionParameters::ntpe = "The value `1` is not a valid ParameterEstimator value. The estimator should be one of \"MaximumLikelihood\", \"MethodOfMoments\", \"MethodOfCentralMoments\", \"MethodOfCumulants\", or \"MethodOfFactorialMoments\"."
@@ -3748,10 +3769,20 @@ MarkovProcessProperties::invmproc = FirstPassageTimeDistribution::invmproc = "Th
 MarkovProcessProperties::invmprop = "The specified argument `1` is not a valid property for `2`."
 General::symsmat = "The transition matrix should be numeric."
 LogLikelihood::syminit = "The initial state should be a vector or a positive integer."
-FindHiddenMarkovStates::impseq = LogLikelihood::impseq = Likelihood::impseq = MarkovProcesses`ForwardAlgorithm::impseq = EstimatedProcess::impseq = FindProcessParameters::impseq = "The emission data is incompatible with the given hidden Markov model."
-EstimatedProcess::overfit = FindProcessParameters::overfit = "Possible overfitting detected. Try constraining the number of iterations via the option ProcessEstimator -> {method, \"MaxIterations\" -> maxiters}."
+DiscreteMarkovProcess::invp0 = ContinuousMarkovProcess::invp0 = HiddenMarkovProcess::invp0 = "The initial state probabilities are invalid."
+DiscreteMarkovProcess::invsm = ContinuousMarkovProcess::invsm = HiddenMarkovProcess::invsm = "The state transition probabilities are invalid."
+ContinuousMarkovProcess::invqvec = "The transition rate vector is invalid."
+HiddenMarkovProcess::invem = "The emission distributions are invalid."
+HiddenMarkovProcess::inctem = "The lengths of the transition matrix and list of emissions are inconsistent."
+HiddenMarkovProcess::sspath = "There must be a path from each silent state to one or more emitting states."
+FindHiddenMarkovStates::impseq = MarkovProcesses`ForwardAlgorithm::impseq = EstimatedProcess::impseq = FindProcessParameters::impseq = "The emission data is incompatible with the given hidden Markov model."
+EstimatedProcess::invpar = FindProcessParameters::invpar = EstimatedDistribution::invpar = FindDistributionParameters::invpar = "The symbolic model has duplicate or invalid parameters."
 EstimatedProcess::hminsfdt = FindProcessParameters::hminsfdt = "There is insufficient data to estimate the emission distribution for one or more hidden states."
 EstimatedProcess::aifail = FindProcessParameters::aifail = "Unable to automatically select initial parameters. Please specify a reasonable initial estimate for the parameters."
+EstimatedProcess::supund = FindProcessParameters::supund = "Supervised training requires a TemporalData for the state path to be included as metadata. The default method Automatic will be used."
+EstimatedProcess::seuneq = FindProcessParameters::seuneq = "The emission sequence is shorter than the state sequence. In the absence of an initial process, silent states should be specified in the elided form."
+EstimatedProcess::cnomsg = FindProcessParameters::cnomsg = "The clustering-based estimation method does not allow Missing values in the data."
+EstimatedProcess::invemd = FindProcessParameters::invemd = "The emission distributions computed by the algorithm are invalid. This may indicate that there is not enough data, an underflow occurred, or that other distributions would be a better fit to the data."
 EstimatedProcess::uneqft = FindProcessParameters::uneqft = "All of the sequences must start at the same time."
 EstimatedProcess::prcdmn = FindProcessParameters::prcdmn = "The dimensionality of the data must match that of the process to be estimated."
 SmoothKernelDistribution::hvtl = "The data contains extreme outliers. Density estimation may fail with automatic settings."
@@ -3802,17 +3833,21 @@ Radon::dist = "The distance specification `1` should be a pair of different real
 Radon::ctr = "The center specification `1` should be a pair of real numbers."
 InverseRadon::hfilter = "`1` is not a valid filter specification."
 InverseRadon::bdproj = "The projection specification `1` should be a positive integer or All."
-ChromaticityPlot::clrspace = "The argument `1` is not a color profile or a supported color space or a list of them."
+ChromaticityPlot::clrspace = "The argument `1` is not a color profile, a supported color space, an image, a graphic, a color directive, or a list of them."
 ChromaticityPlot::reference = "The argument `1` is not a reference space or a list of a reference space and a brightness value."
 ChromaticityPlot::refspace = "The reference space `1` is not a supported color space."
 ChromaticityPlot::refbrght = "The brightness `1` should be a number between 0 and 1."
-ChromaticityPlot::spctrm = "Accepted values for the Appearance option are \"VisibleSpectrum\", \"VisibleSpectrumFilled\", None, or Automatic. The value \"VisibleSpectrumFilled\" is supported only for the reference spaces \"CIE31\" and \"CIE76\"."
+ChromaticityPlot::spctrm = "Accepted values for the Appearance option are \"VisibleSpectrum\", \"VisibleSpectrumFilled\", None, or Automatic."
 ChromaticityPlot::style = "Accepted values for the PlotStyle option are \"Filled\", None, a list of them, or Automatic."
-ChromaticityPlot::whtpt = "Accepted values for the ShowWhitePoint option are True or False."
-RandomColor::bdmdl = "`1` is not a valid model specification. Supported models are \"Luminance\", \"Hue\", \"Chroma\", and color directives patterns."
-RandomColor::bdval = "`1` is not a real number, a color directive, or a symbolic distribution."
-RandomColor::bdcol = "`1` should be a valid color directive, a list of valid color directives, or All."
-RandomColor::alpha = "The value of option IncludeAlphaChannel -> `1` should be True, False, Automatic, or a real number between 0 and 1."
+ChromaticityPlot::whtpt = "Accepted values for the ShowWhitePoint option are True or False, or a list of them with the same length as the number of input color spaces."
+ChromaticityPlot::mppts = ChromaticityPlot3D::mppts = "Value of option MaxPlotPoints -> `1` is not Infinity or a positive integer."
+ChromaticityPlot3D::clrspace = "The argument `1` is not a color profile, a supported color space, an image, a graphic, a color directive, or a list of them.";
+ChromaticityPlot3D::refspace = "The reference space `1` is not a supported color space.";
+ChromaticityPlot3D::spctrm = "Accepted values for the Appearance option are \"VisibleSpectrum\", None, or Automatic."
+ChromaticityPlot3D::style = "Accepted values for the PlotStyle option are \"Filled\", None, a list of them, or Automatic."
+ChromaticityPlot3D::whtpt = "Accepted values for the ShowWhitePoint option are True or False, or a list of them with the same length as the number of input color spaces."
+RandomColor::bdmdl = "`1` is not a valid model specification. Models can be specified through color directives patterns."
+RandomColor::bdcol = "`1` should be a supported color space or color directive."
 RandomImage::bddist = "The specified random distribution `1` should generate a real number or a list of real numbers."
 RandomImage::compat = "The specified color space `1` and the distribution `2` are not compatible."
 ConstantImage::bdarg = "The argument `1` should be a positive real number, a list of positive real numbers, or a valid color directive."
@@ -4035,7 +4070,7 @@ StateSpaceModel::tnsq = "Row and column separators in `1` do not yield a square 
 StateSpaceModel::nveq = "In attempting to linearize a system of state-space equations, the number of vector components `1` in `2` did not match the number of {variable, value} pairs `3` in `4`."
 StateSpaceModel::mnames = TransferFunctionModel::mnames = "Value of option SystemsModelLabels -> `1` is not None or a vector of names."
 StateSpaceModel::shmn = TransferFunctionModel::shmn = "Value of option ShowSystemsModelLabels -> `1` is not True, False, Automatic, or a proper list these values."
-StateSpaceModel::farg = "`1` is not a valid TransferFunctionModel or a list of state-space matrices in the form {a, b, ...}."
+StateSpaceModel::farg = "`1` is not a valid systems model or a list of state-space matrices in the form {a, b, ...}."
 StateSpaceModel::farglin = "If StateSpaceModel is called with 3 arguments, the first argument `1` is expected to represent the right-hand side(s) of state-space equation(s); it must be a scalar, a vector, or a list of such elements."
 StateSpaceModel::farglinm = "If StateSpaceModel is called with 3 arguments, the first argument `1` is expected to represent the right-hand side(s) of state-space equation(s); it must be a scalar, a vector, or a list of such elements. State-space matrices must be supplied as a list {a, b, c}."
 StateSpaceModel::fargleq = "If StateSpaceModel is called with 5 or 6 arguments, the first argument `1` is expected to represent state-space equation(s); it must be an equation or a system of equations."
@@ -4052,14 +4087,14 @@ StateSpaceModel::rlte = "Value of option StateSpaceRealization -> `1` is ignored
 StateSpaceModel::indep = "Linearization has produced zero-valued matrices."
 StateSpaceModel::nosol = "Linearized equations `1` do not appear to have solution for `2`. Try supplying variables to eliminate."
 StateSpaceModel::nosolelim = "Linearized equations `1` do not appear to have solution for `2` after eliminating variables `3`."
-StateSpaceModel::impr = "Improper transfer function `1` cannot be converted to a state-space object."
+StateSpaceModel::impr = "Improper transfer function `1` cannot be converted to a standard state-space object."
 StateSpaceModel::ctcf = "Unable to extract polynomial coefficient list."
 StateSpaceModel::nioss = "Cannot create a state-space model for a system `1` with no inputs and outputs."
 StateSpaceModel::type = "`1` is already a state-space model. You can use StateSpaceTransform to find another realization."
 TransferFunctionModel::resf = "The highest power term `1` in the resolvent matrix expansion is not a zero matrix. The result may be inaccurate."
 TransferFunctionModel::mvr = "`1` is not a transfer-function model in one variable."
 TransferFunctionModel::method = "Value of option Method -> `1` is not Automatic, \"DeterminantExpansion\", \"ResolventIdentities\", \"Inverse\", or Generic."
-TransferFunctionModel::farg = "`1` is not a valid StateSpaceModel; a scalar; a vector; a matrix; a triplet {z, p, g} that represents zeros, poles, and gains of the transfer matrix; or a list of the form {num, den}, where num is a matrix of numerators and den is either a scalar or a matrix of denominators."
+TransferFunctionModel::farg = "`1` is not a valid systems model; a scalar; a vector; a matrix; a triplet {z, p, g} that represents zeros, poles, and gains of the transfer matrix; or a list of the form {num, den}, where num is a matrix of numerators and den is either a scalar or a matrix of denominators."
 TransferFunctionModel::fargs = "The first argument `1` cannot be interpreted as a polynomial matrix in `2`."
 ZeroPoleGainModel::delay="ZeroPoleGainModel does not support time delays."
 General::nddim = "Numerator and denominator matrices of `1` do not have the same dimensions."
@@ -4079,8 +4114,6 @@ StateSpaceModel::bsol = "The created state-space matrices may not be correct. Tr
 StateSpaceModel::imerr = "A state-space realization could not be found for the improper transfer function."
 StateSpaceModel::nolindel = "The time delays could not be separated into linear delays of the inputs, outputs, states, and state derivatives."
 StateSpaceModel::nolindel = "The time delays could not be separated into linear delays of the inputs, outputs, states, and state derivatives."
-StateSpaceTransform::arg2 = "The second argument `1` of StateSpaceTransform is not a square matrix, a pair of non-empty matrices {m, mi}, or a list of two elements, one of which is a square matrix and the other is Automatic."
-StateSpaceTransform::farg = "The first argument `1` of StateSpaceTransform must be a StateSpaceModel object."
 TransferFunctionModel::dvar = "`1` is interpreted as a transfer-function matrix in the variable `2`."
 StateResponse::incinit = "A consistent initial condition could not be found for the given system and input."
 StateResponse::acausal = "A solution could not be found because the system is acausal."
@@ -4546,17 +4579,18 @@ LinearAlgebra`FeastEigensystem::tol = LinearAlgebra`FeastEigenvalues::tol = Line
 LinearAlgebra`FeastEigensystem::maxit = LinearAlgebra`FeastEigenvalues::maxit = LinearAlgebra`FeastEigenvectors::maxit = "The value of option MaxIterations -> `1` should be a positive integer."
 LinearAlgebra`FeastEigensystem::cntpts = LinearAlgebra`FeastEigenvalues::cntpts = LinearAlgebra`FeastEigenvectors::cntpts = "The value of option ContourPoints -> `1` should be one of {3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48}. The default value is 8."
 LinearAlgebra`FeastEigensystem::bandsol = LinearAlgebra`FeastEigenvalues::bandsol = LinearAlgebra`FeastEigenvectors::bandsol = "The value of option UseBandedSolver -> `1` should be either True or False." 
-LinearAlgebra`FeastEigensystem::restrt = LinearAlgebra`FeastEigenvalues::restrt = LinearAlgebra`FeastEigenvectors::restrt = "The value of option NumberOfRestart -> `1` should be zero or a positive integer."
-LinearAlgebra`FeastEigensystem::noeig = LinearAlgebra`FeastEigenvalues::noeig = LinearAlgebra`FeastEigenvectors::noeig = "Warning: No eigenvalues are found in the given search interval."
-LinearAlgebra`FeastEigensystem::subsmll = LinearAlgebra`FeastEigenvalues::subsmll = LinearAlgebra`FeastEigenvectors::subsmll = "Warning: Subspace dimension is too small."
-LinearAlgebra`FeastEigensystem::linfail = LinearAlgebra`FeastEigenvalues::linfail = LinearAlgebra`FeastEigenvectors::linfail = "Internal error occurred in the inner linear system solver."
-LinearAlgebra`FeastEigensystem::eigfail = LinearAlgebra`FeastEigenvalues::eigfail = LinearAlgebra`FeastEigenvectors::eigfail = "Internal error occurred in the reduced eigensystem solver."
-LinearAlgebra`FeastEigensystem::intpar = LinearAlgebra`FeastEigenvalues::intpar = LinearAlgebra`FeastEigenvectors::intpar = "A wrong value of an internal parameter (error `1`)."
-LinearAlgebra`FeastEigensystem::nosymh  = LinearAlgebra`FeastEigenvalues::nosymh  = LinearAlgebra`FeastEigenvectors::nosymh  = "The input matrix `1` should be real symmetric or complex Hermitian."
-LinearAlgebra`FeastEigensystem::nochol = LinearAlgebra`FeastEigenvalues::nochol = LinearAlgebra`FeastEigenvectors::nochol = "The input matrix `1` is not positive definite."
+LinearAlgebra`FeastEigensystem::restrt = LinearAlgebra`FeastEigenvalues::restrt = LinearAlgebra`FeastEigenvectors::restrt = "The value of option NumberOfRestarts -> `1` should be zero or a positive integer."
+Eigensystem::noeig = Eigenvalues::noeig = Eigenvectors::noeig = LinearAlgebra`FeastEigensystem::noeig = LinearAlgebra`FeastEigenvalues::noeig = LinearAlgebra`FeastEigenvectors::noeig = "No eigenvalues are found in the given search interval."
+Eigensystem::subsmll = Eigenvalues::subsmll = Eigenvectors::subsmll = "Warning: Subspace dimension is too small for the FEAST method. Increase the option \"SubspaceSize\"."
+LinearAlgebra`FeastEigensystem::subsmll = LinearAlgebra`FeastEigenvalues::subsmll = LinearAlgebra`FeastEigenvectors::subsmll = "Warning: Subspace dimension is too small for the FEAST method. Increase the fourth argument."
+Eigensystem::linfail = Eigenvalues::linfail = Eigenvectors::linfail = LinearAlgebra`FeastEigensystem::linfail = LinearAlgebra`FeastEigenvalues::linfail = LinearAlgebra`FeastEigenvectors::linfail = "Internal error occurred in the inner linear system solver."
+Eigensystem::eigfail = Eigenvalues::eigfail = Eigenvectors::eigfail = LinearAlgebra`FeastEigensystem::eigfail = LinearAlgebra`FeastEigenvalues::eigfail = LinearAlgebra`FeastEigenvectors::eigfail = "Internal error occurred in the reduced eigensystem solver."
+Eigensystem::intpar = Eigenvalues::intpar = Eigenvectors::intpar = LinearAlgebra`FeastEigensystem::intpar = LinearAlgebra`FeastEigenvalues::intpar = LinearAlgebra`FeastEigenvectors::intpar = "A wrong value of an internal parameter (error `1`)."
+Eigensystem::nosymh  = Eigenvalues::nosymh  = Eigenvectors::nosymh  = LinearAlgebra`FeastEigensystem::nosymh  = LinearAlgebra`FeastEigenvalues::nosymh  = LinearAlgebra`FeastEigenvectors::nosymh  = "The input matrix `1` should be real symmetric or complex Hermitian."
+Eigensystem::nochol = Eigenvalues::nochol = Eigenvectors::nochol = LinearAlgebra`FeastEigensystem::nochol = LinearAlgebra`FeastEigenvalues::nochol = LinearAlgebra`FeastEigenvectors::nochol = "The input matrix `1` is not positive definite."
 Eigensystem::nofeast = Eigenvalues::nofeast = Eigenvectors::nofeast = LinearAlgebra`FeastEigensystem::nofeast = LinearAlgebra`FeastEigenvalues::nofeast = LinearAlgebra`FeastEigenvectors::nofeast = "The library for the method FEAST is missing, so `1` is unable to compute the solution."
 LinearAlgebra`FeastEigenvalues::wrarch = LinearAlgebra`FeastEigenvectors::wrarch = LinearAlgebra`FeastEigensystem::wrarch = "A wrong platform or a wrong MKL library."
-LinearAlgebra`FeastEigenvalues::wcfail = LinearAlgebra`FeastEigenvectors::wcfail = LinearAlgebra`FeastEigensystem::wcfail = "Warning: Algorithm failed to converge."
+Eigenvalues::wcfail = Eigenvectors::wcfail = Eigensystem::wcfail = LinearAlgebra`FeastEigenvalues::wcfail = LinearAlgebra`FeastEigenvectors::wcfail = LinearAlgebra`FeastEigensystem::wcfail = "Warning: Algorithm failed to converge."
 LinearAlgebra`FeastEigenvalues::dbginfo = LinearAlgebra`FeastEigenvectors::dbginfo = LinearAlgebra`FeastEigensystem::dbginfo = "The value of the option PrintDebugInfo can be only True or False."
 EigenvectorCentrality::arfail = "Arnoldi failed to find the maximum eigenvector." 
 FinancialDerivative::unrec = "Unrecognized set of arguments to function FinancialDerivative[].";
@@ -4773,6 +4807,12 @@ DominantColors::mindist = "Value of option MinColorDistance -> `1`\ is not Autom
 DominantColors::level = "Expecting a positive machine integer value instead of `1`."
 DominantColors::color = "Expecting a color specification instead of `1`."
 DominantColors::failed = "An error occurred."
+Entity::etype="`1` is not a known entity type.";
+Entity::ename="`1` is not a known entity of type `2`.";
+EntityProperty::pname="`1` is not a known property for entity type `2`.";
+EntityValue::val="Variables `1` already have a value and could affect the result.";
+TypeName::noent = CommonName::noent = CanonicalName::noent = "`1` is not an entity.";
+EntityProperty::qname = "`1` is not a known qualifier of `3` property `2`.";
 Quantity::thdep = "Invalid \"ThreadDepth\" specification `1`. \"ThreadDepth\" must be a non-negative integer.";
 Quantity::compat = "`1` and `2` are incompatible units";
 Quantity::compatu = "Incompatible units.";
@@ -4803,6 +4843,7 @@ FormulaData::mnpq="The inputs for `1` are not quantities.";
 FormulaData::nvfn="`1` is not a valid formula name. Use FormulaLookup[`1`] to get a list of formula names.";
 FormulaData::indet="Unable to distinguish specific quantity variable for `1`";
 QuantityVariable::unkpq = "Unknown physical quantity specification `1`";
+QuantityVariableCombinations::dim="physical quantity `1` is dimensionless and will be omitted.";
 General::qvprm = "Argument `1` at position `2` is expected to be a quantity variable.";
 ThermodynamicData::notent = "`1` is not a known entity, class, or tag for ThermodynamicData. Use ThermodynamicData[] for a list of entities.";
 ThermodynamicData::notprop = "`1` is not a known property for ThermodynamicData. Use ThermodynamicData[\"Properties\"] for a list of entities.";
@@ -4812,15 +4853,55 @@ ThermodynamicData::para = "Parameter list includes parameters other than Pressur
 ThermodynamicData::quant = "`1` is not a real number.";
 ThermodynamicData::quants = "List `1` does not consist of real numbers.";
 ThermodynamicData::unit = "`1` uses incorrect units.";
-ThermodynamicData::time = "Calculation exceeded time limit.";
+ThermodynamicData::time = Sunrise::time = Sunset::time = SunPosition::time = MoonPosition::time = MoonPhase::time = SolarEclipse::time = LunarEclipse::time = "Calculation exceeded time limit.";
+AirPressureData::unit="`1` is an unrecognized unit system.";
+AirPressureData::arg="Argument `1` cannot be interpreted as a date or time input.";
+AirPressureData::incr="Argument `1` is not a time increment.";
+AirTemperatureData::unit="`1` is an unrecognized unit system.";
+AirTemperatureData::arg="Argument `1` cannot be interpreted as a date or time input.";
+AirTemperatureData::incr="Argument `1` is not a time increment.";
+WindSpeedData::unit="`1` is an unrecognized unit system.";
+WindSpeedData::arg="Argument `1` cannot be interpreted as a date or time input.";
+WindSpeedData::incr="Argument `1` is not a time increment.";
+WindDirectionData::arg="Argument `1` cannot be interpreted as a date or time input.";
+WindDirectionData::incr="Argument `1` is not a time increment.";
+WindDirectionData::unit="`1` is an unrecognized unit system.";
+WindVectorData::arg="Argument `1` cannot be interpreted as a date or time input.";
+WindVectorData::incr="Argument `1` is not a time increment.";
+WindVectorData::unit="`1` is an unrecognized unit system.";
+AirPressureData::extended="Extended values in both location and date are not supported.";
+AirTemperatureData::extended="Extended values in both location and date are not supported.";
+WindSpeedData::extended="Extended values in both location and date are not supported.";
+WindDirectionData::extended="Extended values in both location and date are not supported.";
+WindVectorData::extended="Extended values in both location and date are not supported.";
+WeatherData::notentity="`1` is not a valid entity for `2`.";
+WeatherData::interval="Invalid value `1` for option IntervalValue.";
+StandardAtmosphereData::qdim="`1` is not a unit of length.";
+StandardAtmosphereData::qrange="The altitude `1` falls outside of the supported range from `2` to `3` Meters.";
+StandardAtmosphereData::nsupport="`1` is not supported for `2`.";
+EarthquakeData::compat1 = "`1` is not compatible with distance.";
+EarthquakeData::compat2 = "`1` is not compatible with angular degrees.";
+EarthquakeData::notentity = "`1` is not a valid entity for EarthquakeData.";
+EarthquakeData::notmag = "magnitude `1` should be a number between -1 and 10.";
+EarthquakeData::notmags = "magnitudes `1` should be minimum and maximum values in the range -1 and 10.";
+EarthquakeData::datespec = "date `1` is incorrectly formatted.";
+EarthquakeData::datespec2 = "date `1` should be earlier than `2`.";
+EarthquakeData::notprop = "`1` is not a known property or list of properties for EarthquakeData.  Use EarthquakeData[\"Properties\"] to find a list of available properties.";
+GeoDisk::badformat = "Improperly formatted GeoDisk specification.";
+GeoDisk::coord = "`1` exceeds the value possible on a globe.";
+GeoDisk::badformat="Improperly formatted GeoDisk specification.";
+GeoDisk::coord="`1` exceeds the value possible on a globe.";
 DateObject::str = "String `1` cannot be interpreted as a date.";
-DateObject::tzstr = "String `1` cannot be interpretaed as a timezone.";
+TimeObject::str = "String `1` cannot be interpreted as a time.";
+DateObject::tzstr = "String `1` cannot be interpreted as a time zone.";
+DateObject::nodate = "Unable to interpret date specification `1`.";
 TimeZoneConvert::dobj = CalendarConvert::dobj = "`1` is not a valid DateObject specification.";
 General::nodobj = "First argument `2` in `1` is not a DateObject.";
 TimeZoneConvert::notz = "Argument `1` in TimeZoneConvert is not a valid TimeZone specification.";
 CalendarConvert::nocal = "Argument `1` in CalendarConvert is not a known CalendarType specification.";
 DateObject::zone = "Argument `1` in DateObject is not a recognized TimeZone specification.";
 DateObject::nocal = "Argument `1` in DateObject is not a known CalendarType specification.";
+DateObject::form = "Argument `1` in DateObject cannot be interpreted as a date string format";
 ImageMeasurements::invprop = "`1` is not a known image measurements property."
 ImageMeasurements::imginv = "Expecting an image or a graphic instead of `1`."
 ImageFileFilter::input = ImageFileScan::input = ImageFileApply::input = "Expecting a file name instead of `1`."
@@ -4886,7 +4967,7 @@ TemporalData::badarg = "The lengths implied by the states `1` and time stamps `2
 TemporalData::stdmns = "The argument `1` is expected to be Automatic or a positive integer."
 TemporalData::dmmtch = "The dimensions of the elements of `1` should match."
 TemporalData::dmnsns = "The dimensionality implied by the states in `1` is mixed. A single-state dimensionality is expected."
-TemporalData::dmmtch2 = "The value of the StateDimensions `1` does not agree with the dimension of the state space `2`."
+TemporalData::dmmtch2 = "The dimensionality of the time series values `1` is inconsistent with ValueDimensions->`2`."
 TemporalData::pthspc = "The path specification `1` is expected to be one of All, a positive integer less than or equal to the number of paths, a list of such integers, or a span corresponding to such a list."
 TemporalData::tpspc = "The time specification `1` should be one of Automatic, a time range, a list containing a list of explicit times, or a list containing one such specification for each path in the data."
 TemporalData::msngmthd = "The missing data method is not valid."
@@ -4903,9 +4984,9 @@ RandomFunction::unsproc = "The specification `1` is not a random process recogni
 RandomFunction::err = "Process path generation resulted in an error."
 MorphologicalComponents::mtd3d = "`1` method does not work with Image3D objects and arrays of rank 3."
 EstimatedProcess::invprc = "The argument `1` at position 2 must be a valid random process."
-EstimatedProcess::strtv = "The argument `1` at position 3 should be Automatic or a list of parameter\[Hyphen]value pairs corresponding to the unspecified parameters in `2`."
+EstimatedProcess::strtv = "The argument `1` at position 3 should be Automatic, an instantiated random process, or a list of parameter\[Hyphen]value pairs corresponding to the unspecified parameters in `2`."
 FindProcessParameters::invprc = "The argument `1` at position 2 must be a valid random process."
-FindProcessParameters::strtv = "The argument `1` at position 3 should be Automatic or a list of parameter\[Hyphen]value pairs corresponding to the unspecified parameters in `2`.";
+FindProcessParameters::strtv = "The argument `1` at position 3 should be Automatic, an instantiated random process, or a list of parameter\[Hyphen]value pairs corresponding to the unspecified parameters in `2`.";
 EstimatedProcess::ntsprt = "One or more data points are not in the support of the process `1`."
 FindProcessParameters::ntsprt = "One or more data points are not in the support of the process `1`."
 EstimatedProcess::mlnimp = "Estimation is not currently supported for the parameters in process `1`."
@@ -4968,9 +5049,14 @@ TimeSeriesModelFit::mmalag = "The maximum moving-average order specification `1`
 TimeSeriesModelFit::maxstep = "The maximum stepwise step size `1` should be a positive integer."
 TimeSeriesModelFit::tsmfmc = "The maximum number of candidates to retain `1` should be a positive integer or Infinity."
 TimeSeriesModel::bdlgmx = "The maximum lag specification `1` should be a positive integer."
+TimeSeriesRescale::trng = "The argument `1` is not a valid pair of strictly increasing time points."
+TimeSeriesResample::cmnt = "The set of time points common to all paths of `1` is expected to be non-empty."
+TimeSeriesResample::negdt = "The sampling increment `1` must be positive."
 General::rsmplng = "The data is not uniformly spaced and will be automatically resampled to the resolution of the minimum time increment."
 NExpectation::nrsmpls = "Unable to generate the necessary samples from `1`."
 NProbability::nrsmpls = "Unable to generate the necessary samples from `1`."
+TimeSeriesThread::tspcs = TimeSeriesInsert::tspcs =  "Time series arguments with an equal number of paths are expected."
+TimeSeriesMapThread::eqlen = "The argument `1` must be a list of lists whose lengths are equal to lengths of each data sequence `2`."
 ImageData::imgdargs = CommonImages::arg3 = ConstantImage::bdtype ="The specified data type `1` should be \"Bit\", \"Byte\", \"Bit16\", \"Real32\", \"Real\", or Automatic."
 CommonImages::arg1 = "The specified argument `1` should be a list of images."
 CommonImages::cspad = "The specified padding value `1` is incompatible with the specified color space `2`."
@@ -4996,18 +5082,59 @@ FinancialBond::nummat="When a rate schedule is used, the maturity, the settlemen
 FinancialBond::faczer="A face value is necessary when specifying the coupon as a rate."
 DSolveValue::dsvb = "There are multiple solution branches for the equations, but DSolveValue will return only one. Use DSolve to get all of the solution branches."
 RSolveValue::rsvb = "There are multiple solution branches for the equations, but RSolveValue will return only one. Use RSolve to get all of the solution branches."
+ColorNegate::imginv = "`1` should be a valid image, a color directive, or a list of such objects."
+LunarEclipse::arg = MoonPhase::arg = MoonPosition::arg = SolarEclipse::arg = SunPosition::arg = Sunrise::arg = Sunset::arg = "`1` is an invalid argument."
+MoonPosition::locfun = SunPosition::locfun = Sunrise::locfun = Sunset::locfun = "The location function `1` should be Automatic, Max, Min, Mean, or Interval."
+MoonPosition::coord = SunPosition::coord = "The coordinate system `1` should be \"Equatorial\" or \"Horizon\". \"Horizon\" will be used instead."
+LunarEclipse::evincr = SolarEclipse::evincr = Sunrise::evincr = Sunset::eventincr = "`1` is expected to be \"Next\" or \"Last\". \"Next\" will be used instead."
+SolarEclipse::ectype="`1` is expected to be one of Automatic, \"Annular\", \"Hybrid\",\"Partial\", or \"Total\". Automatic will be used instead."
+LunarEclipse::ectype="`1` is expected to be one of Automatic,\"Partial\",or \"Total\". Automatic will be used instead."
+MoonPosition::locdate= SunPosition::locdate= Sunrise::locdate= Sunset::locdate="`1` is not a valid location or date specification."
+MoonPosition::loc= SunPosition::loc= Sunrise::loc= Sunset::loc="`1` is not a valid location specification."
+LunarEclipse::dtspec= MoonPhase::dtspec= MoonPosition::dtspec= SolarEclipse::dtspec= SunPosition::dtspec= Sunrise::dtspec= Sunset::dtspec="`1` is not a valid date specification."
+MoonPosition::dtoba= SunPosition::dtoba= Sunrise::dtoba= Sunset::dtoba="`1` is not Automatic, DateObject, or TimeObject. Automatic will be used instead."
+BarcodeImage::err = "Unknown error occurred.";
+BarcodeImage::data = "Expecting a string instead of `1`.";
+BarcodeImage::format = "Expecting \"Aztec\", \"Codabar\", \"Code39\", \"Code128\", \"DataMatrix\", \"EAN8\", \"EAN13\", \"ITF\", \"PDF417\", \"QR\", or \"UPC\" instead of `1`.";
+BarcodeImage::imgsize = "Expecting a pair of positive machine integer values instead of `1`.";
+BarcodeImage::upca = "Expecting a string of 11 or 12 digits instead of `1`.";
+BarcodeImage::upcacs = "Invalid UPC checksum `1`. The correct value `2` will be used.";
+BarcodeImage::ean13 = "Expecting a string of 12 or 13 digits instead of `1`.";
+BarcodeImage::ean13cs = "Invalid EAN13 checksum `1`. The correct value `2` will be used.";
+BarcodeImage::ean8 = "Expecting a string of 7 or 8 digits instead of `1`.";
+BarcodeImage::ean8cs = "Invalid EAN8 checksum `1`. The correct value `2` will be used.";
+BarcodeImage::code39 = "Expecting a string of length 80 or less containing uppercase letters, numeric digits, or special characters (-, ., $, /, +, %, and space) instead of `1`.";
+BarcodeImage::code128 = "Expecting a string of length 80 or less containing printable ASCII characters instead of `1`.";
+BarcodeImage::qr = "Expecting a string of characters defined in ISO/IEC 8859-1 of length up to `2`, a string of alphanumeric characters of length `3`, or a string of digits of length up to `4` instead of `1`.";
+BarcodeImage::dmatrix = "Expecting a string of characters defined in ISO/IEC 8859-1 of length up to 2335 or a string of digits of length up to 3116 instead of `1`.";
+BarcodeImage::aztec = "Expecting a string of characters defined in ISO/IEC 8859-1 of length up to 3000 or a string of digits of length up to 3748 instead of `1`.";
+BarcodeImage::pdf417 = "Expecting a string of characters defined in ISO/IEC 8859-1 of length between 2 and 1781 or a string of digits of length between 2 and 2610 instead of `1`.";
+BarcodeImage::pdflev = "Level `1` is currently not supported.";
+BarcodeImage::itf = "Expecting a string of 80 or fewer (but even) digits instead of `1`.";
+BarcodeImage::codabar = "Expecting a string containing digits or special characters (-, $, :, /, +, .) instead of `1`.";
+BarcodeRecognize::err = "Unknown error occurred.";
+BarcodeRecognize::format = "Expecting \"Aztec\", ,\"Codabar\", \"Code39\", \"Code93\", \"Code128\", \"DataMatrix\", \"EAN8\", \"EAN13\", \"ExpandedGS1\", \"GS1\", \"ITF\" ,\"Maxicode\", \"PDF417\", \"QR\", \"UPC\", \"UPCE\", or a list of these formats instead of `1`.";
+BarcodeRecognize::props = "Expecting \"BoundingBox\", \"Data\", \"Format\", \"Orientation\", or a list of these properties instead of `1`." 
+General::noclass = "A driver for `1` was not found on your local computer. Please add the driver directory to $Path or load the driver with Get."
+General::noop = "`1` not supported for `2`."
+General::ncdev = "`1` is not open."
+General::dargx = "`1` called with `2` arguments; no more than 2 arguments are expected."
+General::ncdevx = "Unable to automatically open a device in the `1` class to perform this operation. Try opening a device first."
+General::ncdevc = "There are no open devices in the `1` class to perform this operation. Try opening a device first."
+DeviceObject::nvdev = "`1` is not a valid device."
 DeviceObject::nodev = "Device `1` with ID `2` is not available."
 DeviceObject::notype = "Unknown type `1` in `2`."
 DeviceObject::noprop = "Unknown property or type `1` in `2`."
+DeviceObject::nopropd = "`1` does not have a property `2`."
+DeviceObject::nopropdx = "`1` does not have a properties `2`."
+DeviceObject::nonpropdx = "`1` does not have one or more native properties `2`."
+DeviceObject::setmemb = "Cannot assign `1` on `2`."
+DeviceObject::setmprop = "Cannot set standardized properties `1` together with native properties `2`. Please assign them separately."
 DeviceObject::nostype = "Unknown subtype `1` of type `2` in `3`."
-DeviceOpen::singc = "Cannot open more than one device of the signleton class `1`."
+DeviceOpen::singc = "Cannot open more than one device of the singleton class `1`."
 DeviceMembers::naccess = "Access to `1` not defined for subtype `2` of type `3` in `4`."
-DeviceInputStream::nostr = "No input streams are defined for ``."
-DeviceOutputStream::nostr = "No output streams are defined for ``."
-General::noclass = "A driver for `1` was not found on your local computer. Please add the driver directory to $Path or load it with Get."
-General::noop = "Operation not defined for `1`."
-General::ncdev = "`1` is not open."
-General::dargx = "`1` called with `2` arguments; no more than 2 arguments are expected."
-General::ncdevx = "There is no open device in the `1` class to perform this operation."
+DeviceExecuteAsynchronous::noopa = "Asynchronous operation `1` is not supported for `2`."
+DeviceClose::ncdevc = "There are no open devices in the `1` class."
 DeviceReadTimeSeries::tslow = "The result may have taken longer to obtain and/or may have a smaller number of data points because `1` measurement(s) took longer than the requested interval `2`, about `3` seconds (on average)." 
 DeviceAPI`DeviceClassRegister::readp = "Class `1` is read-protected."
+DeviceAPI`DeviceClassRegister::props = "Invalid property specification `1`. Properties must be specified as a list of rules."

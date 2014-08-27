@@ -24,24 +24,19 @@ checkError[response_] := With[{res=MatchQ[response, HTTPError[_Integer]]},
     res
 ]
 
-callServer[url_, mimetype_: "text/plain", httpVerb_: "GET", body_: {}] := Module[{response,status, headers, content, callFunction, userid, finalURL},
+callServer[url_, mimetype_: "text/plain", httpVerb_: "GET", body_: {}] := Module[{response,status, headers, content, callFunction, finalURL},
    If[$UseRemoteServer === True,
        log["Calling remote server `1` with MIME type `2`", url, mimetype, DebugLevel -> 2];
        If[body =!= {},
            log["Content: `1`", body, DebugLevel -> 3];
        ];
-       If[$CloudEvaluation === True,
-       (* If we're in the cloud, skip authentication and pass the user ID as a URL parameter. *)
-           If[StringMatchQ[url, __ ~~ "?" ~~ __], userid = "&userId=" <> $WolframUUID, userid = "?userId=" <> $WolframUUID];
-           finalURL = url <> userid,
        (* Otherwise, check for actual authentication. *)
-           If[Not[TrueQ[authenticatedQ[]]],
-               With[{res=CloudConnect[]}, (*TODO: what to do for stand-alone kernel? *)
-                   If[UnsameQ[res, $WolframID], Message[CloudObject::notauth]; Return[HTTPError[401]]]
-               ]
-           ];
-           finalURL = url;
+       If[Not[TrueQ[authenticatedQ[]]],
+           With[{res=CloudConnect[]}, (*TODO: what to do for stand-alone kernel? *)
+               If[UnsameQ[res, $WolframID], Message[CloudObject::notauth]; Return[HTTPError[401]]]
+           ]
        ];
+       finalURL = url;
        callFunction = If[TrueQ[$CloudConnected], authenticatedURLFetch, URLFetch];(*TODO: this is where CallPacket would go to call controler*)
        response = callFunction[finalURL, {"StatusCode", "Headers", "ContentData"}, 
            "Method"->httpVerb, "Headers"->{"Content-Type"->mimetype}, "BodyData"->body,
@@ -69,8 +64,12 @@ getUUID[cloud_, path_] := Module[{pathString, uuid},
 getCloudAndUUID[obj : CloudObject[uri_]] :=
     Module[{cloud, uuid, user, path, ext, extraPath, search},
         {cloud, uuid, user, path, ext, extraPath, search} = parseURI[uri];
-        If[!uuid,
-            uuid = getUUID[cloud, {user, path}]
+        If[uuid === False,
+            uuid = getUUID[cloud, {user, path}],
+        (* uuid set, check for path inside it (file inside an unnamed directory) *)
+            If[extraPath =!= {},
+                uuid = getUUID[cloud, {uuid, extraPath}]
+            ]
         ];
         {cloud, uuid}
     ]
@@ -92,17 +91,46 @@ getCloudAndUUIDOrPath[obj : CloudObject[uri_]] :=
 
 Options[execute] = {Parameters -> {}, Body -> {}, Type -> "text/plain", UseUUID -> True};
 
-execute[cloud_String, method_String, path_List : {}, OptionsPattern[]] := Module[{url},
-    (* TODO: Here is the place to switch to a Java CallPacket mechanism in the cloud. *)
+(* perform the execute locally, we are already in the cloud *)
+Options[executeInCloud] = Options[execute];
+executeInCloud[cloud_String, method_String, path_List : {}, OptionsPattern[]] := 
+	Module[{url},
+	    url = JoinURL[{cloud, path}] <> JoinURLSearch[OptionValue[Parameters]];
+	    ($lastExecuteResult = CloudSystem`Private`writeCallPacketService[
+			CloudSystem`CloudObject`DoCloudOperation[method, path,
+				 OptionValue[Parameters] /. 
+				 	{params:{__} :> MapAt[URLDecode, params, {All, 2}]},
+				 OptionValue[Type], OptionValue[Body]
+			]
+		]) /. {
+			{type_String, resultFile_String} :>
+				{type, BinaryReadList[resultFile]},
+			finalResult : {_String, _List} :> finalResult,
+			err:HTTPError[_Integer?Positive] :> err,
+			_ :> HTTPError[500]
+		}
+	]
+
+(* make an HTTP request to perform the execute *)
+Options[executeRemotely] = Options[execute];
+executeRemotely[cloud_String, method_String, path_List : {}, OptionsPattern[]] := Module[{url},
     url = JoinURL[{cloud, path}] <> JoinURLSearch[OptionValue[Parameters]];
     callServer[url, OptionValue[Type], method, OptionValue[Body]]
 ]
 
+execute[cloud_String, method_String, path_List : {}, opts:OptionsPattern[]] := 
+	If[TrueQ[System`$CloudEvaluation],
+		executeInCloud[cloud, method, path, opts]
+		,
+		executeRemotely[cloud, method, path, opts]
+	]
+
 execute[obj_CloudObject, method : _String | Automatic : "GET", api_String : "files", subpath_List : {}, options : OptionsPattern[]] :=
     Module[{cloud, uuid, path, methodToUse},
         If[OptionValue[UseUUID] === True,
-	        {cloud, uuid} = getCloudAndUUID[obj];
-	        If[uuid === False, Message[CloudObject::notfound]; Return[{$Failed, $Failed}]];
+	        {cloud, uuid} = Quiet[getCloudAndUUID[obj]];
+	        If[!StringQ[uuid], Message[CloudObject::notfound]; Return[{$Failed, $Failed}]];
+	        log["Executing on UUID `1`", uuid];
 	        execute[cloud, method, {api, uuid, subpath}, options],
 	    (* else *)
             {cloud, uuid, path} = getCloudAndUUIDOrPath[obj];
@@ -135,6 +163,14 @@ responseToFile[response_?checkError] := {$Failed, $Failed}
 responseCheck[_] := Null
 responseCheck[{$Failed, $Failed}] := $Failed
 responseCheck[response_?checkError] := $Failed
+
+responseCheck[response_, result_] := Module[{check},
+    check = responseCheck[response];
+    If [check === $Failed,
+        check,
+        result
+    ]
+]
 
 End[]
 

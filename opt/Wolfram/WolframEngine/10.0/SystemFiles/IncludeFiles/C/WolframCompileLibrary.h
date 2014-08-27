@@ -8,7 +8,7 @@ U.S. Copyright Office as an unpublished work, pursuant to Title 17,
 U.S. Code, Section 408.  Unauthorized copying, adaptation, distribution
 or display is prohibited.
 
-$Id: WolframCompileLibrary.h,v 1.28 2012/01/17 18:48:12 marks Exp $
+$Id: WolframCompileLibrary.h,v 1.29 2013/11/25 23:39:34 rknapp Exp $
 
 *************************************************************************/
 
@@ -105,6 +105,7 @@ typedef struct st_WolframCompileLibrary_Functions
 	LibraryFunctionPointer (*getFunctionCallPointer)(const char *);
 	mbool (*checkFloatingPointException)(void *, int, const unsigned int);
 	MTensor (*getRankZeroMTensor)(void *, int, mint);
+	int (*MTensor_fillFromMTensor)(MTensor, MTensor *);
 	}* WolframCompileLibrary_Functions;
 
 #endif

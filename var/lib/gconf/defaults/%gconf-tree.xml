@@ -3,7 +3,7 @@
 	<dir name="schemas">
 		<dir name="apps">
 			<dir name="gksu">
-				<entry name="save-keyring" mtime="1389130873" type="schema" stype="string" owner="gksu">
+				<entry name="save-keyring" mtime="1403254159" type="schema" stype="string" owner="gksu">
 					<local_schema locale="C" short_desc="Keyring to which passwords will be saved">
 						<default type="string">
 							<stringvalue>session</stringvalue>
@@ -15,7 +15,7 @@
 	</longdesc>
 					</local_schema>
 				</entry>
-				<entry name="save-to-keyring" mtime="1389130873" type="schema" stype="bool" owner="gksu">
+				<entry name="save-to-keyring" mtime="1403254159" type="schema" stype="bool" owner="gksu">
 					<local_schema locale="C" short_desc="Save password to gnome-keyring">
 						<default type="bool" value="true"/>
 						<longdesc>
@@ -24,7 +24,7 @@
 	</longdesc>
 					</local_schema>
 				</entry>
-				<entry name="display-no-pass-info" mtime="1389130873" type="schema" stype="bool" owner="gksu">
+				<entry name="display-no-pass-info" mtime="1403254159" type="schema" stype="bool" owner="gksu">
 					<local_schema locale="C" short_desc="Display information message when no password is needed">
 						<default type="bool" value="true"/>
 						<longdesc>
@@ -34,7 +34,7 @@
 	</longdesc>
 					</local_schema>
 				</entry>
-				<entry name="prompt" mtime="1389130873" type="schema" stype="bool" owner="gksu">
+				<entry name="prompt" mtime="1403254159" type="schema" stype="bool" owner="gksu">
 					<local_schema locale="C" short_desc="Prompt for grabbing">
 						<default type="bool" value="false"/>
 						<longdesc>
@@ -44,7 +44,7 @@
 	</longdesc>
 					</local_schema>
 				</entry>
-				<entry name="sudo-mode" mtime="1389130873" type="schema" stype="bool" owner="gksu">
+				<entry name="sudo-mode" mtime="1403254159" type="schema" stype="bool" owner="gksu">
 					<local_schema locale="C" short_desc="Sudo mode">
 						<default type="bool" value="false"/>
 						<longdesc>
@@ -54,7 +54,7 @@
 	</longdesc>
 					</local_schema>
 				</entry>
-				<entry name="force-grab" mtime="1389130873" type="schema" stype="bool" owner="gksu">
+				<entry name="force-grab" mtime="1403254159" type="schema" stype="bool" owner="gksu">
 					<local_schema locale="C" short_desc="Force keyboard and mouse grab">
 						<default type="bool" value="false"/>
 						<longdesc>
@@ -63,7 +63,7 @@
 	</longdesc>
 					</local_schema>
 				</entry>
-				<entry name="disable-grab" mtime="1389130873" type="schema" stype="bool" owner="gksu">
+				<entry name="disable-grab" mtime="1403254159" type="schema" stype="bool" owner="gksu">
 					<local_schema locale="C" short_desc="Disable keyboard and mouse grab">
 						<default type="bool" value="false"/>
 						<longdesc>
@@ -79,13 +79,13 @@
 	</dir>
 	<dir name="apps">
 		<dir name="gksu">
-			<entry name="save-keyring" mtime="1389130873" schema="/schemas/apps/gksu/save-keyring"/>
-			<entry name="save-to-keyring" mtime="1389130873" schema="/schemas/apps/gksu/save-to-keyring"/>
-			<entry name="display-no-pass-info" mtime="1389130873" schema="/schemas/apps/gksu/display-no-pass-info"/>
-			<entry name="prompt" mtime="1389130873" schema="/schemas/apps/gksu/prompt"/>
-			<entry name="sudo-mode" mtime="1389130873" schema="/schemas/apps/gksu/sudo-mode"/>
-			<entry name="force-grab" mtime="1389130873" schema="/schemas/apps/gksu/force-grab"/>
-			<entry name="disable-grab" mtime="1389130873" schema="/schemas/apps/gksu/disable-grab"/>
+			<entry name="save-keyring" mtime="1403254159" schema="/schemas/apps/gksu/save-keyring"/>
+			<entry name="save-to-keyring" mtime="1403254159" schema="/schemas/apps/gksu/save-to-keyring"/>
+			<entry name="display-no-pass-info" mtime="1403254159" schema="/schemas/apps/gksu/display-no-pass-info"/>
+			<entry name="prompt" mtime="1403254159" schema="/schemas/apps/gksu/prompt"/>
+			<entry name="sudo-mode" mtime="1403254159" schema="/schemas/apps/gksu/sudo-mode"/>
+			<entry name="force-grab" mtime="1403254159" schema="/schemas/apps/gksu/force-grab"/>
+			<entry name="disable-grab" mtime="1403254159" schema="/schemas/apps/gksu/disable-grab"/>
 		</dir>
 	</dir>
 </gconf>

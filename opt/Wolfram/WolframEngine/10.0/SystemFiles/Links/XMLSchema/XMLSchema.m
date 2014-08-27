@@ -10,8 +10,8 @@ XMLSchema`Information`$VersionNumber = 1.0;
 
 XMLSchema`Information`$ReleaseNumber = 0;
 
-XMLSchema`Information`$CreationID = If[SyntaxQ["2"], ToExpression["2"], 0]
-XMLSchema`Information`$CreationDate = If[SyntaxQ["{2013, 10, 29, 14, 34, 18}"], ToExpression["{2013, 10, 29, 14, 34, 18}"], {0,0,0,0,0,0}]
+XMLSchema`Information`$CreationID = If[SyntaxQ["3"], ToExpression["3"], 0]
+XMLSchema`Information`$CreationDate = If[SyntaxQ["{2013, 12, 06, 10, 24, 57}"], ToExpression["{2013, 12, 06, 10, 24, 57}"], {0,0,0,0,0,0}]
 
 
 (* Functions used to work with schema definitions *)

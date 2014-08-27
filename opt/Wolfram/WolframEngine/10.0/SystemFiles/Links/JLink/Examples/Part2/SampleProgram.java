@@ -57,9 +57,12 @@ public class SampleProgram {
 			// when it is launched.
 			ml.discardAnswer();
 
+			// This demonstrates a simple way to send a computation. Very useful if it is convenient to
+			// create the input as a Java string. Note that the result is thrown away by discardAnswer().
 			ml.evaluate("<<MyPackage.m");
 			ml.discardAnswer();
 
+			// This demonstrates how to read a result.
 			ml.evaluate("2+2");
 			ml.waitForAnswer();
 			int result = ml.getInteger();

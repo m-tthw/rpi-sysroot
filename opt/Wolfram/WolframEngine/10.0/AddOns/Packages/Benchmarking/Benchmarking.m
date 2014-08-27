@@ -31,13 +31,13 @@ BeginPackage["Benchmarking`"];
 
 (* === Usage & Options =================================================== *)
 
-$Benchmarks = {"MathematicaMark9"};
+$Benchmarks = {"WolframMark"};
 $Benchmarks::usage = "$Benchmarks is list of benchmarks that can be run by \
 this package.";
 
-If[!ValueQ[Benchmark::usage], Benchmark::usage = "\!\(\*RowBox[{\"Benchmark\", \"[\", \"]\"}]\) runs the \!\(\*StyleBox[\"MathematicaMark9\", FontSlant -> \"Italic\"]\) benchmark."];
-If[!ValueQ[BenchmarkReport::usage], BenchmarkReport::usage = "\!\(\*RowBox[{\"BenchmarkReport\", \"[\", \"]\"}]\) runs the \!\(\*StyleBox[\"MathematicaMark9\", FontSlant -> \"Italic\"]\) benchmark and produces a report in a separate notebook comparing this system to a selection of reference systems. \n\!\(\*RowBox[{\"BenchmarkReport\", \"[\", RowBox[{SubscriptBox[StyleBox[\"system\", \"TI\"], StyleBox[\"1\", \"TR\"]], \",\", SubscriptBox[StyleBox[\"system\", \"TI\"], StyleBox[\"2\", \"TR\"]], \",\", StyleBox[\"\[Ellipsis]\", \"TR\"], \",\", SubscriptBox[StyleBox[\"data\", \"TI\"], StyleBox[\"1\", \"TR\"]], \",\", SubscriptBox[StyleBox[\"data\", \"TI\"], StyleBox[\"2\", \"TR\"]], \",\", StyleBox[\"\[Ellipsis]\", \"TR\"]}], \"]\"}]\) produces a custom report comparing the specified systems from $BenchmarkSystems and the specified data returned from Benchmark."];
-If[!ValueQ[$BenchmarkSystems::usage], $BenchmarkSystems::usage = "$BenchmarkSystems gives the names of systems for which the \!\(\*StyleBox[\"MathematicaMark9\", FontSlant -> \"Italic\"]\) benchmark data is known."];
+If[!ValueQ[Benchmark::usage], Benchmark::usage = "\!\(\*RowBox[{\"Benchmark\", \"[\", \"]\"}]\) runs the \!\(\*StyleBox[\"WolframMark\", FontSlant -> \"Italic\"]\) benchmark."];
+If[!ValueQ[BenchmarkReport::usage], BenchmarkReport::usage = "\!\(\*RowBox[{\"BenchmarkReport\", \"[\", \"]\"}]\) runs the \!\(\*StyleBox[\"WolframMark\", FontSlant -> \"Italic\"]\) benchmark and produces a report in a separate notebook comparing this system to a selection of reference systems. \n\!\(\*RowBox[{\"BenchmarkReport\", \"[\", RowBox[{SubscriptBox[StyleBox[\"system\", \"TI\"], StyleBox[\"1\", \"TR\"]], \",\", SubscriptBox[StyleBox[\"system\", \"TI\"], StyleBox[\"2\", \"TR\"]], \",\", StyleBox[\"\[Ellipsis]\", \"TR\"], \",\", SubscriptBox[StyleBox[\"data\", \"TI\"], StyleBox[\"1\", \"TR\"]], \",\", SubscriptBox[StyleBox[\"data\", \"TI\"], StyleBox[\"2\", \"TR\"]], \",\", StyleBox[\"\[Ellipsis]\", \"TR\"]}], \"]\"}]\) produces a custom report comparing the specified systems from $BenchmarkSystems and the specified data returned from Benchmark."];
+If[!ValueQ[$BenchmarkSystems::usage], $BenchmarkSystems::usage = "$BenchmarkSystems gives the names of systems for which the \!\(\*StyleBox[\"WolframMark\", FontSlant -> \"Italic\"]\) benchmark data is known."];
 
 
 BenchmarkReport::unknown = "None of the requested systems could be found \
@@ -574,7 +574,7 @@ benchmarkcompare[data__List, opts___Rule] := Module[
  		StyleBox["Mathematica", FontSlant -> "Italic"], " ",
 		ToString[NumberForm[$VersionNumber,{2,1},
 			NumberPadding -> {"","0"}]],
-		". ", StyleBox["MathematicaMark", FontSlant -> "Italic"],
+		". ", StyleBox["WolframMark", FontSlant -> "Italic"],
 		" is a trademark of Wolfram Research, Inc."
 		}], "SmallText", ShowCellBracket -> False]
 	}];
@@ -614,7 +614,7 @@ or False.";
 BenchmarkReport[opts___Rule] :=
 Module[{results, reporttypeopt, verboseopt, compare},
 	{benchmarktorun, verboseopt} = {"BenchmarkName", "Verbose"} /. {opts}
-		/. {"BenchmarkName" -> "MathematicaMark9",
+		/. {"BenchmarkName" -> "WolframMark",
 		"Verbose" -> True};
 	reporttypeopt = "ReportType" /. {opts} /. If[$FrontEnd =!= Null,
 		{"ReportType" -> "Notebook"}, {"ReportType" -> "Text"}];
@@ -735,7 +735,7 @@ Module[{allbenchmarkstorun, benchmarkstorun, benchmarksran = {}, testresult,
 		months, verboseopt, checkpointopt, runinparallel,
 		systemnames, machinename, totalruntime, pfactor},
 	{benchmarktorun, verboseopt} = {"BenchmarkName", "Verbose"} /. {opts}
-		/. {"BenchmarkName" -> "MathematicaMark9",
+		/. {"BenchmarkName" -> "WolframMark",
 			"Verbose" -> True};
 	If[!MemberQ[$Benchmarks, benchmarktorun],
 		Message[Benchmark::benchnotfnd, benchmarktorun];Return[]];
@@ -884,7 +884,7 @@ benchmarktests = {
 
 {
 	"TestName" -> "Polynomial Expansion",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		BenchmarkTiming[
 			Expand[Times @@ Table[(c + x)^3, {c, #}]];
@@ -892,7 +892,7 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Matrix Arithmetic",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		Module[{m}, BenchmarkTiming[
 			SeedRandom[1];
@@ -903,7 +903,7 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Matrix Multiplication",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		Module[{m1,m2}, BenchmarkTiming[
 			SeedRandom[1];
@@ -914,7 +914,7 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Eigenvalues of a Matrix",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		Module[{a,b,m}, BenchmarkTiming[
 			SeedRandom[1];
@@ -926,13 +926,13 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Digits of Pi",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		BenchmarkTiming[N[Pi, #];]&[1000000]
 },
 {
 	"TestName" -> "Large Integer Multiplication",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		Module[{a}, BenchmarkTiming[
 			SeedRandom[1];
@@ -942,7 +942,7 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Gamma Function",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		Module[{a}, BenchmarkTiming[
 			SeedRandom[1];
@@ -952,7 +952,7 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Discrete Fourier Transform",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		Module[{data}, BenchmarkTiming[
 			SeedRandom[1];
@@ -962,7 +962,7 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Numerical Integration",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		BenchmarkTiming[NIntegrate[Sin[x^2+y^2],
 			{x, -#*Pi, #*Pi}, {y, -#*Pi, #*Pi}];
@@ -970,7 +970,7 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Matrix Transpose",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		Module[{m}, BenchmarkTiming[
 			SeedRandom[1];
@@ -980,7 +980,7 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Random Number Sort",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		Module[{a}, BenchmarkTiming[
 			SeedRandom[1];
@@ -990,7 +990,7 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Data Fitting",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		Module[{data}, BenchmarkTiming[
 			data = Flatten[Table[{x, y, z, Log[120*x] -
@@ -1002,7 +1002,7 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Singular Value Decomposition",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		Module[{m}, BenchmarkTiming[
 			SeedRandom[1];
@@ -1012,7 +1012,7 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Solving a Linear System",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		Module[{m, v}, BenchmarkTiming[
 			SeedRandom[1];
@@ -1023,7 +1023,7 @@ benchmarktests = {
 },
 {
 	"TestName" -> "Elementary Functions",
-	"Keywords" -> {"MathematicaMark9"},
+	"Keywords" -> {"WolframMark"},
 	"Code" :>
 		Module[{m1, m2}, BenchmarkTiming[
 			SeedRandom[1];
@@ -1046,7 +1046,7 @@ $BenchmarkLibrary = {
 	{
     "MachineName" -> "3.07 GHz Core i7-950 (8 Cores)", 
  	"System" -> "Windows 7 Pro (64-bit) Desktop", 
- 	"BenchmarkName" -> "MathematicaMark9", 
+ 	"BenchmarkName" -> "WolframMark", 
  	"FullVersionNumber" -> "8.0.0", 
  	"Date" -> "May 7, 2010", 
  	"BenchmarkResult" -> 1, 
@@ -1069,33 +1069,33 @@ $BenchmarkLibrary = {
    		{"Solving a Linear System", 0.859}},
    	"BenchmarkReference"->True
    	},{
-   	"MachineName" -> "1.73 GHz Core i7-820QM (8 Cores)",
- 	"System" -> "Windows 7 Ultimate (64-bit) Laptop",
- 	"BenchmarkName" -> "MathematicaMark9", 
- 	"FullVersionNumber" -> "8.0.0", 
-  	"Date" -> "May 7, 2010", 
-  	"BenchmarkResult" -> 0.731,
- 	"TotalTime" -> 18.937, 
- 	"Results" -> {
- 		{"Data Fitting", 1.264},
-   		{"Digits of Pi", 1.186}, 
-   		{"Discrete Fourier Transform", 1.14},
-   		{"Eigenvalues of a Matrix", 1.264}, 
-   		{"Elementary Functions", 1.327}, 
-   		{"Gamma Function", 1.155},
-   		{"Large Integer Multiplication", 1.124}, 
-   		{"Matrix Arithmetic", 1.171}, 
-   		{"Matrix Multiplication", 1.592},
-   		{"Matrix Transpose", 1.249}, 
-   		{"Numerical Integration", 1.626},
-   		{"Polynomial Expansion", 1.077}, 
-   		{"Random Number Sort", 1.093},
-   		{"Singular Value Decomposition", 1.436},
-   		{"Solving a Linear System", 1.233}}
-   	},{
+   	"MachineName" -> "Intel(R) Core(TM) i5-3550 CPU @ 3.30GHz",
+   	"System" -> "Microsoft Windows (64-bit)", 
+	"BenchmarkName" -> "WolframMark",
+	"FullVersionNumber" -> "10.0.0", 
+	"Date" -> "January 17, 2014",
+	"BenchmarkResult" -> 1.659, 
+	"TotalTime" -> 8.344,
+	"Results" -> {
+		{"Data Fitting", 0.469}, 
+		{"Digits of Pi", 0.344},
+		{"Discrete Fourier Transform", 0.484}, 
+		{"Eigenvalues of a Matrix", 0.531},
+		{"Elementary Functions", 0.797}, 
+		{"Gamma Function", 0.453},
+		{"Large Integer Multiplication", 0.469}, 
+		{"Matrix Arithmetic", 0.625},
+		{"Matrix Multiplication", 0.438}, 
+		{"Matrix Transpose", 0.859},
+		{"Numerical Integration", 0.688}, 
+		{"Polynomial Expansion", 0.109},
+		{"Random Number Sort", 1.}, 
+		{"Singular Value Decomposition", 0.547},
+		{"Solving a Linear System", 0.531}}
+    },{
    	"MachineName" -> "2.4 Ghz Core 2 Duo Mobile T8300 (2 Cores)", 
    	"System" -> "MacBook OS X Snow Leopard (64-bit) Laptop",
- 	"BenchmarkName" -> "MathematicaMark9", 
+ 	"BenchmarkName" -> "WolframMark", 
  	"FullVersionNumber" -> "8.0.0",
  	"Date" -> "May 7, 2010", 
  	"BenchmarkResult" -> 0.465,
@@ -1119,7 +1119,7 @@ $BenchmarkLibrary = {
    	},{
    	"MachineName" -> "2.80 GHz Core 2 Duo Mobile T9600 (2 Cores)",
  	"System" -> "Windows 7 Pro (64-bit) Laptop",
- 	"BenchmarkName" -> "MathematicaMark9", 
+ 	"BenchmarkName" -> "WolframMark", 
  	"FullVersionNumber" -> "8.0.0", 
  	"Date" -> "May 7, 2010", 
  	"BenchmarkResult" -> 0.670,
@@ -1143,7 +1143,7 @@ $BenchmarkLibrary = {
    	},{
    	"MachineName" -> "1.6 GHz Core 2 Duo Mobile L7500 (2 Cores)",
  	"System" -> "Windows 7 Pro (32-bit) Laptop",
- 	"BenchmarkName" -> "MathematicaMark9", 
+ 	"BenchmarkName" -> "WolframMark", 
  	"FullVersionNumber" -> "8.0.0", 
  	"Date" -> "May 7, 2010", 
  	"BenchmarkResult" -> 0.316,
@@ -1167,7 +1167,7 @@ $BenchmarkLibrary = {
    	},{
    	"MachineName" -> "2.93 GHz Core i7-940 (8 Cores)", 
    	"System" -> "Linux Ubuntu (64-bit) Desktop",
-	"BenchmarkName" -> "MathematicaMark9",
+	"BenchmarkName" -> "WolframMark",
 	"FullVersionNumber" -> "8.0.0", 
 	"Date" -> "May 7, 2010",
 	"BenchmarkResult" -> 0.885, 
@@ -1189,33 +1189,33 @@ $BenchmarkLibrary = {
   		{"Singular Value Decomposition", 0.895},
   		{"Solving a Linear System", 0.855}}
   	},{
-  	"MachineName" -> "3.00 GHz Core 2 Duo E8400 (2 Cores)", 
-  	"System" -> "Linux Ubuntu (64-bit) Desktop",
- 	"BenchmarkName" -> "MathematicaMark9", 
- 	"FullVersionNumber" -> "8.0.0",
- 	"Date" -> "May 7, 2010", 
- 	"BenchmarkResult" -> 0.777,
- 	"TotalTime" -> 17.813, 
- 	"Results" -> {
- 		{"Data Fitting", 1.05},
-   		{"Digits of Pi", 0.869}, 
-   		{"Discrete Fourier Transform", 1.884},
-   		{"Eigenvalues of a Matrix", 1.181}, 
-   		{"Elementary Functions", 1.449},
-   		{"Gamma Function", 0.755}, 
-   		{"Large Integer Multiplication", 0.79},
-   		{"Matrix Arithmetic", 1.725}, 
-   		{"Matrix Multiplication", 1.428},
-   		{"Matrix Transpose", 1.13}, 
-   		{"Numerical Integration", 1.026},
-   		{"Polynomial Expansion", 0.839}, 
-   		{"Random Number Sort", 1.213},
-   		{"Singular Value Decomposition", 1.149}, 
-   		{"Solving a Linear System", 1.325}}
-   	},{
+  	"MachineName" -> "Intel Core i7-3770 CPU @ 3.40GHz (8 cores)",
+  	"System" -> "Linux x86 (64-bit)", 
+	"BenchmarkName" -> "WolframMark",
+	"FullVersionNumber" -> "10.0.0", 
+	"Date" -> "January 17, 2014",
+	"BenchmarkResult" -> 1.886, 
+	"TotalTime" -> 7.34,
+	"Results" -> {
+		{"Data Fitting", 0.379}, 
+		{"Digits of Pi", 0.313}, 
+		{"Discrete Fourier Transform", 0.48}, 
+		{"Eigenvalues of a Matrix", 0.423},
+		{"Elementary Functions", 0.616}, 
+		{"Gamma Function", 0.414},
+		{"Large Integer Multiplication", 0.403}, 
+		{"Matrix Arithmetic", 0.684},
+		{"Matrix Multiplication", 0.4}, 
+		{"Matrix Transpose", 0.746},
+		{"Numerical Integration", 0.64}, 
+		{"Polynomial Expansion", 0.09},
+		{"Random Number Sort", 0.854}, 
+		{"Singular Value Decomposition", 0.452},
+		{"Solving a Linear System", 0.446}}
+    },{
    	"MachineName" -> "2.60 GHz Core 2 Duo Mobile T7800 (2 Cores)",
 	"System" -> "Windows XP Pro (32-bit) Laptop",
-	"BenchmarkName" -> "MathematicaMark9", 
+	"BenchmarkName" -> "WolframMark", 
 	"FullVersionNumber" -> "8.0.0",
 	"Date" -> "May 10, 2010", 
 	"BenchmarkResult" -> 0.436,
@@ -1239,7 +1239,7 @@ $BenchmarkLibrary = {
    },{
    	"MachineName" -> "2.13 GHz Core 2 Duo E6400 (2 Cores)", 
    	"System" -> "Windows Vista (32-bit) Server",
- 	"BenchmarkName" -> "MathematicaMark9", 
+ 	"BenchmarkName" -> "WolframMark", 
  	"FullVersionNumber" -> "8.0.0",
  	"Date" -> "May 10, 2010", 
  	"BenchmarkResult" -> 0.363, 
@@ -1263,7 +1263,7 @@ $BenchmarkLibrary = {
    	},{
    	"MachineName" -> "2 \[Times] 2.66 GHz Dual Core Xeon 5150 (4 Cores)", 
    	"System" -> "MacPro OS X Snow Leopard (64-bit) Server",
- 	"BenchmarkName" -> "MathematicaMark9", 
+ 	"BenchmarkName" -> "WolframMark", 
  	"FullVersionNumber" -> "8.0.0",
  	"Date" -> "May 10, 2010", 
  	"BenchmarkResult" -> 0.559, 
@@ -1287,7 +1287,7 @@ $BenchmarkLibrary = {
    	},{
    	"MachineName" -> "2 \[Times] 2.26 GHz Quad Core Xeon E5520 (8 Cores)", 
    	"System" -> "Mac XServe OS X (64-bit) Server",
- 	"BenchmarkName" -> "MathematicaMark9", 
+ 	"BenchmarkName" -> "WolframMark", 
  	"FullVersionNumber" -> "8.0.0",
  	"Date" -> "May 10, 2010", 
  	"BenchmarkResult" -> 0.69, 
@@ -1311,7 +1311,7 @@ $BenchmarkLibrary = {
    	},{
    	"MachineName" -> "2 \[Times] 2.00 GHz G5 PowerPC (2 Cores)", 
    	"System" -> "Mac OS X (32-bit) Desktop",
- 	"BenchmarkName" -> "MathematicaMark9", 
+ 	"BenchmarkName" -> "WolframMark", 
  	"FullVersionNumber" -> "8.0.0",
  	"Date" -> "May 10, 2010", 
  	"BenchmarkResult" -> 0.137,
@@ -1333,77 +1333,77 @@ $BenchmarkLibrary = {
    		{"Singular Value Decomposition", 9.745}, 
    		{"Solving a Linear System", 5.835}}
    	},{
-   	"MachineName" -> "3.06 GHz Core 2 Duo E8435 (2 Cores)", 
-   	"System" -> "iMac OS X Snow Leopard (64-bit) Desktop",
- 	"BenchmarkName" -> "MathematicaMark9", 
- 	"FullVersionNumber" -> "8.0.0",
- 	"Date" -> "May 10, 2010", 
- 	"BenchmarkResult" -> 0.732,
- 	"TotalTime" -> 18.912, 
- 	"Results" -> {
- 		{"Data Fitting", 1.063},
-   		{"Digits of Pi", 1.074}, 
-   		{"Discrete Fourier Transform", 1.65},
-   		{"Eigenvalues of a Matrix", 0.928}, 
-   		{"Elementary Functions", 1.94},
-   		{"Gamma Function", 0.851}, 
-   		{"Large Integer Multiplication", 0.883},
-   		{"Matrix Arithmetic", 1.648}, 
-   		{"Matrix Multiplication", 1.424},
-   		{"Matrix Transpose", 1.321}, 
-   		{"Numerical Integration", 1.114},
-   		{"Polynomial Expansion", 1.006}, 
-   		{"Random Number Sort", 1.468},
-   		{"Singular Value Decomposition", 1.155}, 
-   		{"Solving a Linear System", 1.387}}
-   	},{
-   	"MachineName" -> "2.67 GHz Core 2 Quad Q9450 (4 Cores)", 
-   	"System" -> "Linux Debian (64-bit) Desktop", 
-  	"BenchmarkName" -> "MathematicaMark9", 
-  	"FullVersionNumber" -> "8.0.0", 
- 	"Date" -> "May 10, 2010", 
- 	"BenchmarkResult" -> 0.798, 
- 	"TotalTime" -> 17.346, 
- 	"Results" -> {
- 		{"Data Fitting", 1.105}, 
- 		{"Digits of Pi", 0.956}, 
-   		{"Discrete Fourier Transform", 1.598}, 
-   		{"Eigenvalues of a Matrix", 1.14}, 
-   		{"Elementary Functions", 1.165}, 
-   		{"Gamma Function", 0.832}, 
-   		{"Large Integer Multiplication", 0.889}, 
-   		{"Matrix Arithmetic", 1.77}, 
-   		{"Matrix Multiplication", 0.917}, 
-   		{"Matrix Transpose", 1.252}, 
-   		{"Numerical Integration", 1.208}, 
-   		{"Polynomial Expansion", 0.975}, 
-   		{"Random Number Sort", 1.44}, 
-   		{"Singular Value Decomposition", 1.043}, 
-   		{"Solving a Linear System", 1.056}}
-   	},{
-   	"MachineName" -> "2 \[Times] 2.80 GHz Opteron 254 (2 Cores)",
- 	"System" -> "Windows XP Pro (64-bit) Server",
- 	"BenchmarkName" -> "MathematicaMark9", 
- 	"FullVersionNumber" -> "8.0.0",
- 	"Date" -> "May 11, 2010", 
- 	"BenchmarkResult" -> 0.384,
- 	"TotalTime" -> 36.063, 
- 	"Results" -> {
- 		{"Data Fitting", 2.297},
-   		{"Digits of Pi", 1.094}, 
-   		{"Discrete Fourier Transform", 2.703},
-   		{"Eigenvalues of a Matrix", 2.375}, 
-   		{"Elementary Functions", 4.828},
-   		{"Gamma Function", 0.781}, 
-   		{"Large Integer Multiplication", 0.906},
-   		{"Matrix Arithmetic", 2.063}, 
-   		{"Matrix Multiplication", 4.141},
-   		{"Matrix Transpose", 2.312}, 
-   		{"Numerical Integration", 1.703},
-   		{"Polynomial Expansion", 1.938}, 
-   		{"Random Number Sort", 1.578},
-   		{"Singular Value Decomposition", 4.031}, 
-   		{"Solving a Linear System", 3.313}}
+   	"MachineName" -> "2.2 GHz Intel Core i7",
+   	"System" -> "Mac OS X x86 (64-bit)", 
+	"BenchmarkName" -> "WolframMark",
+	"FullVersionNumber" -> "10.0.0", 
+	"Date" -> "January 17, 2014",
+	"BenchmarkResult" -> 1.204, 
+	"TotalTime" -> 11.494,
+	"Results" -> {
+		{"Data Fitting", 0.842}, 
+		{"Digits of Pi", 0.472},
+		{"Discrete Fourier Transform", 0.491}, 
+		{"Eigenvalues of a Matrix", 0.682},
+   		{"Elementary Functions", 0.829}, 
+		{"Gamma Function", 0.584},
+		{"Large Integer Multiplication", 0.534}, 
+		{"Matrix Arithmetic", 1.638},
+		{"Matrix Multiplication", 0.726}, 
+		{"Matrix Transpose", 0.824},
+		{"Numerical Integration", 0.92}, 
+		{"Polynomial Expansion", 0.124},
+   		{"Random Number Sort", 1.198}, 
+		{"Singular Value Decomposition", 0.881},
+		{"Solving a Linear System", 0.749}}
+    },{
+    "MachineName" -> "ARMv6-compatible processor rev 7 (v6l)",
+    "System" -> "Linux ARM (32-bit)", 
+	"BenchmarkName" -> "WolframMark",
+	"FullVersionNumber" -> "10.0.0", 
+	"Date" -> "January 18, 2014",
+	"BenchmarkResult" -> 0.005, 
+	"TotalTime" -> 3010.747,
+	"Results" -> {
+		{"Data Fitting", 31.843}, 
+		{"Digits of Pi", 15.552},
+		{"Discrete Fourier Transform", 84.43}, 
+		{"Eigenvalues of a Matrix", 144.463},
+		{"Elementary Functions", 183.054}, 
+		{"Gamma Function", 16.485},
+		{"Large Integer Multiplication", 20.019}, 
+		{"Matrix Arithmetic", 28.879},
+		{"Matrix Multiplication", 1164.784}, 
+		{"Matrix Transpose", 37.595},
+		{"Numerical Integration", 36.452}, 
+		{"Polynomial Expansion", 4.699},
+		{"Random Number Sort", 25.726}, 
+		{"Singular Value Decomposition", 444.153},
+		{"Solving a Linear System", 772.613}}
+	},{
+   	"MachineName" -> "Intel Core i7 CPU",
+   	"System" -> "Microsoft Windows (64-bit)", 
+	"BenchmarkName" -> "WolframMark",
+	"FullVersionNumber" -> "10.0.0", 
+	"Date" -> "January 27, 2014",
+	"BenchmarkResult" -> 0.841, 
+	"TotalTime" -> 16.46,
+	"Results" -> {
+		{"Data Fitting", 0.926}, 
+		{"Digits of Pi", 0.719},
+		{"Discrete Fourier Transform", 0.684}, 
+		{"Eigenvalues of a Matrix", 1.232},
+		{"Elementary Functions", 1.435}, 
+		{"Gamma Function", 0.888},
+		{"Large Integer Multiplication", 0.853}, 
+		{"Matrix Arithmetic", 1.019},
+		{"Matrix Multiplication", 1.403}, 
+		{"Matrix Transpose", 1.326},
+		{"Numerical Integration", 1.583}, 
+		{"Polynomial Expansion", 0.152},
+		{"Random Number Sort", 1.441}, 
+		{"Singular Value Decomposition", 1.467},
+		{"Solving a Linear System", 1.332}}
    	} 
 };
 

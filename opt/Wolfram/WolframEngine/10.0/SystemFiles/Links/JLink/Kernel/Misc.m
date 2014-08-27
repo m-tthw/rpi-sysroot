@@ -5,11 +5,11 @@
         tgayley@wolfram.com
 *)
 
-(* :Package Version: 4.6 *)
+(* :Package Version: 4.7 *)
 
 (* :Mathematica Version: 4.0 *)
 
-(* :Copyright: J/Link source code (c) 1999-2013, Wolfram Research, Inc. All rights reserved.
+(* :Copyright: J/Link source code (c) 1999-2014, Wolfram Research, Inc. All rights reserved.
 
    Use is governed by the terms of the J/Link license agreement, which can be found at
    www.wolfram.com/solutions/mathlink/jlink.

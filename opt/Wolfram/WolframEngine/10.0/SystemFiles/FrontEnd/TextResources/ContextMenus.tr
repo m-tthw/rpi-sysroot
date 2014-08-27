@@ -43,7 +43,6 @@
         MenuItem["Make &Hyperlink...", "CreateHyperlinkDialog"],
         MenuItem["Insert Table/&Matrix...", "CreateGridBoxDialog"],
         MenuItem["Chec&k Spelling...", "FindNextMisspelling"],
-        MenuItem["Reverse &Quote", "ReverseQuote"],
         Menu["Citatio&n",
         {
             MenuItem["Insert Bibliographical &Reference...", "InsertBibReference"],

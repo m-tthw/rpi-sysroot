@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    230525,       5170]
-NotebookOptionsPosition[    230078,       5149]
-NotebookOutlinePosition[    230584,       5171]
-CellTagsIndexPosition[    230504,       5166]
+NotebookDataLength[    231818,       5194]
+NotebookOptionsPosition[    231372,       5173]
+NotebookOutlinePosition[    231877,       5195]
+CellTagsIndexPosition[    231797,       5190]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -1108,8 +1108,7 @@ obj]]]; $CellContext`imgTake = ImageTake[
                     $CellContext`image$$[], 
                     Part[$CellContext`range, 1], 
                     Part[$CellContext`range, 2]]; $CellContext`alpha = 
-                    AlphaChannel[
-                    ToExpression[$CellContext`imgSel]]; $CellContext`result = 
+                    ToExpression[$CellContext`imgSel]; $CellContext`result = 
                     ImageAdd[$CellContext`imgTake, 
                     ColorNegate[$CellContext`alpha]]; CopyToClipboard[
                     ExpressionCell[$CellContext`result, "Input"]]]], 
@@ -1133,9 +1132,7 @@ $CellContext`imgTake = Map[ImageTake[
                     $CellContext`image$$[], 
                     Part[#, 1], 
                     Part[#, 2]]& , $CellContext`range]; $CellContext`alpha = 
-                    Map[AlphaChannel[
-                    
-                    ToExpression[#]]& , $CellContext`imgSel]; \
+                    Map[ToExpression, $CellContext`imgSel]; \
 $CellContext`result = MapThread[ImageAdd[#, 
                     
                     ColorNegate[#2]]& , {$CellContext`imgTake, \
@@ -2478,69 +2475,77 @@ $CellContext`size$$ = 4},
                     Blank[], 
                     Blank[]}, 
                     Pattern[$CellContext`c, 
-                    Blank[]][
-                    BlankNullSequence[]]}]}], $CellContext`headings$$ = {
+                    Blank[]], 
+                    Pattern[$CellContext`type, 
+                    Blank[]], {
+                    Pattern[$CellContext`min, 
+                    Blank[]], 
+                    Pattern[$CellContext`max, 
+                    Blank[]]}, 
+                    Blank[]}]}], $CellContext`headings$$ = {
                     "x", "y", "", "row", "col", "", 
                     Apply[Sequence, 
-                    Switch[
-                    Last[
-                    First[$CellContext`data$]], 
-                    GrayLevel[
-                    Blank[]], {"G"}, 
-                    GrayLevel[
+                    Switch[{
+                    Part[
+                    First[$CellContext`data$], 3], 
+                    Part[
+                    First[$CellContext`data$], 6]}, {GrayLevel, {
+                    Blank[]}}, {"G"}, {GrayLevel, {
                     Blank[], 
-                    Blank[]], {"G", "A"}, 
-                    Hue[
-                    Blank[]], {"H"}, 
-                    Hue[
+                    Blank[]}}, {"G", "\[Alpha]"}, {Hue, {
+                    Blank[]}}, {"H"}, {Hue, {
                     Blank[], 
-                    Blank[]], {"H", "S"}, 
-                    Hue[
+                    Blank[]}}, {"H", "S"}, {Hue, {
                     Blank[], 
                     Blank[], 
-                    Blank[]], {"H", "S", "B"}, 
-                    Hue[
+                    Blank[]}}, {"H", "S", "B"}, {Hue, {
                     Blank[], 
                     Blank[], 
                     Blank[], 
-                    Blank[]], {"H", "S", "B", "A"}, 
-                    CMYKColor[
+                    Blank[]}}, {"H", "S", "B", "\[Alpha]"}, {CMYKColor, {
                     Blank[], 
                     Blank[], 
                     Blank[], 
-                    Blank[]], {"C", "M", "Y", "K"}, 
-                    CMYKColor[
+                    Blank[]}}, {"C", "M", "Y", "K"}, {CMYKColor, {
                     Blank[], 
                     Blank[], 
                     Blank[], 
                     Blank[], 
-                    Blank[]], {"C", "M", "Y", "K", "A"}, 
-                    RGBColor[
+                    Blank[]}}, {"C", "M", "Y", "K", "\[Alpha]"}, {RGBColor, {
                     Blank[], 
                     Blank[], 
-                    Blank[]], {"R", "G", "B"}, 
-                    RGBColor[
+                    Blank[]}}, {"R", "G", "B"}, {RGBColor, {
+                    Blank[], 
+                    Blank[], 
+                    Blank[]}}, {"R", "G", "B", "\[Alpha]"}, {"LAB", {
+                    Blank[], 
+                    Blank[], 
+                    Blank[]}}, {"L", "A", "B"}, {"LAB", {
                     Blank[], 
                     Blank[], 
                     Blank[], 
-                    Blank[]], {"R", "G", "B", "A"}, 
-                    LABColor[
+                    Blank[]}}, {"L", "A", "B", "\[Alpha]"}, {"LUV", {
                     Blank[], 
                     Blank[], 
-                    Blank[]], {"L", "A", "B"}, 
-                    LUVColor[
+                    Blank[]}}, {"L", "U", "V"}, {"LUV", {
                     Blank[], 
                     Blank[], 
-                    Blank[]], {"L", "U", "V"}, 
-                    XYZColor[
+                    Blank[], 
+                    Blank[]}}, {"L", "U", "V", "\[Alpha]"}, {"XYZ", {
                     Blank[], 
                     Blank[], 
-                    Blank[]], {"X", "Y", "Z"}, 
+                    Blank[]}}, {"X", "Y", "Z"}, {"XYZ", {
                     Blank[], 
-                    Table["", {
+                    Blank[], 
+                    Blank[], 
+                    Blank[]}}, {"X", "Y", "Z", "\[Alpha]"}, 
+                    Blank[], 
+                    Table[
+                    ToString[$CellContext`i], {$CellContext`i, 
+                    Min[5, 
                     Length[
                     Last[
-                    First[$CellContext`data$]]]}]]]}; If[
+                    First[$CellContext`data$]]]]}]]]}; If[
                     TrueQ[FrontEnd`Private`$UseTableViewForCoordinatesTool], 
                     TableView[
                     Cases[$CellContext`data$, {{
@@ -2553,13 +2558,22 @@ $CellContext`size$$ = 4},
                     Pattern[$CellContext`row, 
                     Blank[]]}, 
                     Pattern[$CellContext`c, 
-                    Blank[]][
-                    Pattern[$CellContext`cargs, 
-                    BlankNullSequence[]]]} :> {$CellContext`x, $CellContext`y,
-                     "", 
+                    Blank[]], 
+                    Pattern[$CellContext`type, 
+                    Blank[]], {
+                    Pattern[$CellContext`min, 
+                    Blank[]], 
+                    Pattern[$CellContext`max, 
+                    Blank[]]}, 
+                    Pattern[$CellContext`values, 
+                    Blank[]]} :> {$CellContext`x, $CellContext`y, "", 
                     Round[$CellContext`row], 
-                    Round[$CellContext`col], "", $CellContext`cargs}], 
-                    Alignment -> Right, AppearanceElements -> {}, 
+                    Round[$CellContext`col], "", 
+                    Apply[Sequence, 
+                    Take[$CellContext`values, 
+                    Min[5, 
+                    Length[$CellContext`values]]]]}], Alignment -> Right, 
+                    AppearanceElements -> {}, 
                     ImageSize -> {Automatic, 200}], $CellContext`size$$ = 
                     Min[
                     
@@ -2579,15 +2593,23 @@ $CellContext`size$$ = 4},
                     Pattern[$CellContext`row, 
                     Blank[]]}, 
                     Pattern[$CellContext`c, 
-                    Blank[]][
-                    Pattern[$CellContext`cargs, 
-                    BlankNullSequence[]]]} :> {$CellContext`x, $CellContext`y, 
+                    Blank[]], 
+                    Pattern[$CellContext`type, 
+                    Blank[]], {
+                    Pattern[$CellContext`min, 
+                    Blank[]], 
+                    Pattern[$CellContext`max, 
+                    Blank[]]}, 
+                    Pattern[$CellContext`values, 
+                    Blank[]]} :> {$CellContext`x, $CellContext`y, 
                     Item["", Frame -> {{True, True}, {False, False}}], 
                     Round[$CellContext`row], 
                     Round[$CellContext`col], 
-                    Item[
-                    "", Frame -> {{True, True}, {
-                    False, False}}], $CellContext`cargs}], 
+                    Item["", Frame -> {{True, True}, {False, False}}], 
+                    Apply[Sequence, 
+                    Take[$CellContext`values, 
+                    Min[5, 
+                    Length[$CellContext`values]]]]}], 
                     ItemSize -> {{$CellContext`size$$, $CellContext`size$$, 
                     0, $CellContext`size$$, $CellContext`size$$, 
                     0, {$CellContext`size$$}}}, Spacings -> {1, 1}, Alignment -> 
@@ -2698,9 +2720,10 @@ $CellContext`size$$ = 4},
                     DynamicBox[FEPrivate`FrontEndResource[
                     "ImageEditModeMenu", "CoordinatesCopyCoordinates"],
                     BaseStyle->{"TextStyling"}]:>
-                    Block[{$CellContext`data = MathLink`CallFrontEnd[
+                    Block[{$CellContext`data = Reverse[
+                    MathLink`CallFrontEnd[
                     FrontEnd`Value[
-                    FEPrivate`GetImagePixelPointMarkersList[]]]}, 
+                    FEPrivate`GetImagePixelPointMarkersList[]]]]}, 
                     CopyToClipboard[
                     ExpressionCell[
                     Part[$CellContext`data, All, 1], "Input"]]], 
@@ -2708,9 +2731,10 @@ $CellContext`size$$ = 4},
                     DynamicBox[FEPrivate`FrontEndResource[
                     "ImageEditModeMenu", "CoordinatesCopyIndices"],
                     BaseStyle->{"TextStyling"}]:>
-                    Block[{$CellContext`data = MathLink`CallFrontEnd[
+                    Block[{$CellContext`data = Reverse[
+                    MathLink`CallFrontEnd[
                     FrontEnd`Value[
-                    FEPrivate`GetImagePixelPointMarkersList[]]]}, 
+                    FEPrivate`GetImagePixelPointMarkersList[]]]]}, 
                     CopyToClipboard[
                     ExpressionCell[
                     Round[
@@ -2719,19 +2743,19 @@ $CellContext`size$$ = 4},
                     DynamicBox[FEPrivate`FrontEndResource[
                     "ImageEditModeMenu", "CoordinatesCopyColorValues"],
                     BaseStyle->{"TextStyling"}]:>
-                    Block[{$CellContext`data = MathLink`CallFrontEnd[
+                    Block[{$CellContext`data = Reverse[
+                    MathLink`CallFrontEnd[
                     FrontEnd`Value[
-                    FEPrivate`GetImagePixelPointMarkersList[]]]}, 
+                    FEPrivate`GetImagePixelPointMarkersList[]]]]}, 
                     CopyToClipboard[
                     ExpressionCell[
-                    Part[$CellContext`data, All, 3], "Input"]]]},
+                    Part[$CellContext`data, All, 6], "Input"]]]},
                     Appearance->None,
                     MenuStyle->"RibbonText",
                     Method->"Queued"]}
                     },
                     DefaultBaseStyle->"Column",
                     GridBoxAlignment->{"Columns" -> {{Left}}},
-                    
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                     
@@ -2868,6 +2892,7 @@ $CellContext`size$$ = 4},
                     },
                     AutoDelete->False,
                     GridBoxAlignment->{"Rows" -> {{Baseline}}},
+                    
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                     GridBoxSpacings->{"Columns" -> {{0.5}}}],
@@ -2875,7 +2900,6 @@ $CellContext`size$$ = 4},
                     },
                     AutoDelete->False,
                     GridBoxAlignment->{"Columns" -> {{Left}}},
-                    
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                     GridBoxSpacings->{"Columns" -> {{5}}, "Rows" -> {{1}}}],
@@ -3029,7 +3053,6 @@ $CellContext`size$$ = 4},
                  
                  GridBoxAlignment->{
                   "Columns" -> {Left, Left, Right}, "Rows" -> {{Center}}},
-                 
                  GridBoxItemSize->{
                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                  GridBoxSpacings->{"Columns" -> {{0}}, "Rows" -> {{0}}}],
@@ -3128,6 +3151,7 @@ $CellContext`size$$ = 4},
                     FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
+                    
                     FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
                     "MaskLineIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
@@ -3481,7 +3505,6 @@ $CellContext`size$$ = 4},
                     BaseStyle -> {"TextStyling"}], "Tooltip"]& ], False->
                     TagBox[
                     TooltipBox[
-                    
                     SetterBox[
                     Dynamic[$CellContext`maskTool$$, ($CellContext`maskTool$$ = \
 #; FrontEndExecute[
@@ -3530,7 +3553,6 @@ $CellContext`size$$ = 4},
                     PaneSelectorBox[{True->
                     TagBox[
                     TooltipBox[
-                    
                     SetterBox[
                     Dynamic[$CellContext`maskTool$$, ($CellContext`maskTool$$ = \
 #; FrontEndExecute[
@@ -3721,6 +3743,7 @@ $CellContext`size$$ = 4},
                     "GetDiskImageMask"]; FrontEndExecute[
                     FrontEnd`Select2DTool[$CellContext`maskTool$$]])& ],
                     Enabled->Dynamic[
+                    
                     MemberQ[{"GetRectangleImageMask", "GetDiskImageMask", 
                     "GetFrameImageMask", "GetCircleImageMask", 
                     "GetPolygonImageMask", "GetHollowPolygonImageMask", 
@@ -3918,7 +3941,6 @@ $CellContext`size$$ = 4},
                     
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
-                    
                     GridBoxSpacings->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{1}}}],
                     "Column"],
@@ -4206,6 +4228,7 @@ $CellContext`size$$ = 4},
                  GridBoxSpacings->{"Columns" -> {{0}}, "Rows" -> {{0}}}],
                 "Grid"],
                Alignment->{Left, Center},
+               
                Appearance->{
                 "Default" -> 
                  FrontEnd`FileName[{"Ribbons", "Common"}, 
@@ -4499,8 +4522,7 @@ $CellContext`size$$ = 4},
                     CurrentValue[
                     FrontEnd`AttachedCellParent[], 
                     "GraphicsBoxOptionsImageSize"]]]; PopupMenu[
-                    Dynamic[
-                    BoxForm`localvar$$, {(BoxForm`localvar$$ = #)& , (
+                    Dynamic[BoxForm`localvar$$, {(BoxForm`localvar$$ = #)& , (
                     BoxForm`localvar$$ = #)& , (BoxForm`localvar$$ = #; 
                     PreIncrement[BoxForm`update$$])& }], {Automatic -> Dynamic[
                     RawBoxes[
@@ -4534,6 +4556,7 @@ $CellContext`size$$ = 4},
                     0.7019607843137254, 0.7019607843137254, 
                     0.7019607843137254],
                     GridBoxAlignment->{"Columns" -> {Right, Left}},
+                    
                     GridBoxDividers->{
                     "Columns" -> {{False}}, "Rows" -> {{False}, True, False}},
                     
@@ -4641,8 +4664,8 @@ $CellContext`size$$ = 4},
                     Rectangle[{
                     IntegerPart[
                     CurrentValue[$FrontEnd, "RasterExploreViewRange"]/2], 
-                    IntegerPart[
-                    CurrentValue[$FrontEnd, "RasterExploreViewRange"]/2]}, {
+                    IntegerPart[CurrentValue[$FrontEnd, 
+                    "RasterExploreViewRange"]/2]}, {
                     IntegerPart[CurrentValue[$FrontEnd, 
                     "RasterExploreViewRange"]/2] + 1, 
                     IntegerPart[CurrentValue[$FrontEnd, 
@@ -4727,6 +4750,7 @@ $CellContext`size$$ = 4},
                     
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                    
                     GridBoxSpacings->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{0.1}}}],
                     "Column"], False->
@@ -5149,7 +5173,7 @@ $CellContext`image$$[]]; $CellContext`imageThumbnail$$[]]; If[
 },
 WindowSize->{808, 911},
 WindowMargins->{{556, Automatic}, {Automatic, 89}},
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (November 13, \
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (December 5, \
 2013)",
 StyleDefinitions->"Default.nb"
 ]
@@ -5159,18 +5183,18 @@ StyleDefinitions->"Default.nb"
 (*CellTagsOutline
 CellTagsIndex->{
  "AttachedImage2D"->{
-  Cell[558, 20, 229516, 5127, 60, InheritFromParent,
+  Cell[558, 20, 230810, 5151, 60, InheritFromParent,
    CellTags->"AttachedImage2D"]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"AttachedImage2D", 230394, 5160}
+ {"AttachedImage2D", 231687, 5184}
  }
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 229516, 5127, 60, InheritFromParent,
+Cell[558, 20, 230810, 5151, 60, InheritFromParent,
  CellTags->"AttachedImage2D"]
 }
 ]

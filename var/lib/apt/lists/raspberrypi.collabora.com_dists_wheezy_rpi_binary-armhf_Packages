@@ -1,76 +1,18 @@
-Package: weston
-Priority: optional
-Section: x11
-Installed-Size: 696
-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
-Architecture: armhf
-Version: 1.1.0-0rpi2013060501
-Depends: libc6 (>= 2.13-28), libcairo2 (>= 1.10.0), libgcc1 (>= 1:4.4.0), libjpeg8 (>= 8c), libmtdev1 (>= 1.1.0), libpixman-1-0 (>= 0.19.6), libpng12-0 (>= 1.2.13-4), libudev0 (>= 146), libwayland0 (>= 1.0.90), libx11-6, libx11-xcb1, libxcb-render0, libxcb-shape0, libxcb-shm0, libxcb-xfixes0, libxcb1 (>= 1.8), libxcursor1 (>> 1.1.2), libxkbcommon0 (>= 0.2.0)
-Filename: pool/rpi/w/weston/weston_1.1.0-0rpi2013060501_armhf.deb
-Size: 311386
-MD5sum: 15d896c7d0d3ed833efe075b4a6772dc
-SHA1: 355fe65beaecdbed39e3aab06b2b22c5f3b2dfd8
-SHA256: 0cd3954dc380b772ec652362f2b1ff445da934d3f277a337020dea13bec11099
-Description: reference implementation of a Wayland compositor
- Part of the Wayland project is also the Weston reference implementation
- of a Wayland compositor. Weston can run as an X client or under Linux
- KMS and ships with a few demo clients. The Weston compositor is a minimal
- and fast compositor and is suitable for many embedded and mobile use
- cases.
-
-Package: weston-dev
-Priority: optional
-Section: x11
-Installed-Size: 51
-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
-Architecture: armhf
-Source: weston
-Version: 1.1.0-0rpi2013050801
-Depends: weston (= 1.1.0-0rpi2013050801)
-Filename: pool/rpi/w/weston/weston-dev_1.1.0-0rpi2013050801_armhf.deb
-Size: 10436
-MD5sum: 7d250250c78f572f90412837b76ab04d
-SHA1: 0fd2393a9106551da396fffa271101b3023afb8f
-SHA256: 3ecbd6eebbb828896d353cfdbb4f8efdc089a80618fa121ca238062f4806defb
-Description: development files for Weston Wayland compositor
- Weston is the reference implementation of a Wayland compositor. This
- package installs development files to build external plugins for
- Weston.
-
-Package: weston
-Priority: optional
-Section: x11
-Installed-Size: 695
-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
-Architecture: armhf
-Version: 1.1.0-0rpi2013050801
-Depends: libc6 (>= 2.13-28), libcairo2 (>= 1.10.0), libgcc1 (>= 1:4.4.0), libjpeg8 (>= 8c), libmtdev1 (>= 1.1.0), libpixman-1-0 (>= 0.19.6), libpng12-0 (>= 1.2.13-4), libudev0 (>= 146), libwayland0 (>= 1.0.90), libx11-6, libx11-xcb1, libxcb-render0, libxcb-shape0, libxcb-shm0, libxcb-xfixes0, libxcb1 (>= 1.8), libxcursor1 (>> 1.1.2), libxkbcommon0 (>= 0.2.0)
-Filename: pool/rpi/w/weston/weston_1.1.0-0rpi2013050801_armhf.deb
-Size: 311192
-MD5sum: 78ff6135f21d0ef545d36b74f959905a
-SHA1: 7dc054315e40b6c79cfde47912b4485b80bdd5f6
-SHA256: a1e53115e1918ddb31e29c74d770c2c81719b617c455197b559dde937b988408
-Description: reference implementation of a Wayland compositor
- Part of the Wayland project is also the Weston reference implementation
- of a Wayland compositor. Weston can run as an X client or under Linux
- KMS and ships with a few demo clients. The Weston compositor is a minimal
- and fast compositor and is suitable for many embedded and mobile use
- cases.
-
 Package: libwayland-dev
-Priority: extra
-Section: libdevel
-Installed-Size: 375
-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
-Architecture: armhf
 Source: wayland
 Version: 1.1.0-0rpi1
+Architecture: armhf
+Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+Installed-Size: 375
 Depends: libwayland0 (= 1.1.0-0rpi1), libc6 (>= 2.13-28), libexpat1 (>= 2.0.1)
+Homepage: http://wayland.freedesktop.org/
+Priority: extra
+Section: libdevel
 Filename: pool/rpi/w/wayland/libwayland-dev_1.1.0-0rpi1_armhf.deb
 Size: 110568
-MD5sum: eb745cd36390517b2542a31358cf4fd8
-SHA1: d74044d8641a295cb0af831244048fcaf8f20a74
 SHA256: e80426385aa355927123f9cedb28087015bdc596fe86c7dc9f053513c0cd734f
+SHA1: d74044d8641a295cb0af831244048fcaf8f20a74
+MD5sum: eb745cd36390517b2542a31358cf4fd8
 Description: wayland compositor infrastructure - development files
  Wayland is a protocol for a compositor to talk to its clients as well
  as a C library implementation of that protocol. The compositor can be
@@ -81,49 +23,24 @@ Description: wayland compositor infrastructure - development files
  .
  This package contains the development headers for the libraries found
  in libwayland0. Non-developers likely have little use for this package.
-Homepage: http://wayland.freedesktop.org/
-
-Package: libwayland0-dbg
-Priority: extra
-Section: debug
-Installed-Size: 200
-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
-Architecture: armhf
-Source: wayland
-Version: 1.1.0-0rpi1
-Depends: libwayland0 (= 1.1.0-0rpi1)
-Filename: pool/rpi/w/wayland/libwayland0-dbg_1.1.0-0rpi1_armhf.deb
-Size: 123734
-MD5sum: f33d0be328c72e0797813e5a285fd35d
-SHA1: 2b0f5f45c896649326145a5b5fa782ed1b88fb25
-SHA256: 4f15c9b3396b9c35ac20c4b79407beb8c772f6aebf568a722338b17528a517f6
-Description: wayland compositor infrastructure - shared libraries (debug)
- Wayland is a protocol for a compositor to talk to its clients as well
- as a C library implementation of that protocol. The compositor can be
- a standalone display server running on Linux kernel modesetting and
- evdev input devices, an X application, or a wayland client
- itself. The clients can be traditional applications, X servers
- (rootless or fullscreen) or other display servers.
- .
- This package contains the debug version of the libraries found in
- libwayland0. Non-developers likely have little use for this package.
-Homepage: http://wayland.freedesktop.org/
 
 Package: libwayland0
-Priority: optional
-Section: libs
-Installed-Size: 144
-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
-Architecture: armhf
 Source: wayland
 Version: 1.1.0-0rpi1
-Depends: libc6 (>= 2.13-28), libffi5 (>= 3.0.9)
+Architecture: armhf
+Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+Installed-Size: 144
 Pre-Depends: multiarch-support
+Depends: libc6 (>= 2.13-28), libffi5 (>= 3.0.9)
+Multi-Arch: same
+Homepage: http://wayland.freedesktop.org/
+Priority: optional
+Section: libs
 Filename: pool/rpi/w/wayland/libwayland0_1.1.0-0rpi1_armhf.deb
 Size: 48078
-MD5sum: 2e87355ee111a759252422eedc28d301
-SHA1: 91ec8fb53cca0309093af20d4056fb0a66a23378
 SHA256: a80d0a2eeb02dc45ec192b88b4747beff07573065e4e14a890552e49739eb8e4
+SHA1: 91ec8fb53cca0309093af20d4056fb0a66a23378
+MD5sum: 2e87355ee111a759252422eedc28d301
 Description: wayland compositor infrastructure - shared libraries
  Wayland is a protocol for a compositor to talk to its clients as well
  as a C library implementation of that protocol. The compositor can be
@@ -136,23 +53,48 @@ Description: wayland compositor infrastructure - shared libraries
  right now. As a consequence, generated dependencies are made as
  strict as possible. It should only be used by mesa and weston for
  the time being.
-Multi-Arch: same
+
+Package: libwayland0-dbg
+Source: wayland
+Version: 1.1.0-0rpi1
+Architecture: armhf
+Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+Installed-Size: 200
+Depends: libwayland0 (= 1.1.0-0rpi1)
 Homepage: http://wayland.freedesktop.org/
+Priority: extra
+Section: debug
+Filename: pool/rpi/w/wayland/libwayland0-dbg_1.1.0-0rpi1_armhf.deb
+Size: 123734
+SHA256: 4f15c9b3396b9c35ac20c4b79407beb8c772f6aebf568a722338b17528a517f6
+SHA1: 2b0f5f45c896649326145a5b5fa782ed1b88fb25
+MD5sum: f33d0be328c72e0797813e5a285fd35d
+Description: wayland compositor infrastructure - shared libraries (debug)
+ Wayland is a protocol for a compositor to talk to its clients as well
+ as a C library implementation of that protocol. The compositor can be
+ a standalone display server running on Linux kernel modesetting and
+ evdev input devices, an X application, or a wayland client
+ itself. The clients can be traditional applications, X servers
+ (rootless or fullscreen) or other display servers.
+ .
+ This package contains the debug version of the libraries found in
+ libwayland0. Non-developers likely have little use for this package.
 
 Package: libxkbcommon-dev
-Priority: extra
-Section: libdevel
-Installed-Size: 2116
-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
-Architecture: armhf
 Source: libxkbcommon
 Version: 0.3.0-0rpi1
+Architecture: armhf
+Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+Installed-Size: 2116
 Depends: libxkbcommon0 (= 0.3.0-0rpi1)
+Homepage: http://www.xkbcommon.org/
+Priority: extra
+Section: libdevel
 Filename: pool/rpi/libx/libxkbcommon/libxkbcommon-dev_0.3.0-0rpi1_armhf.deb
 Size: 418266
-MD5sum: 51350614b430c868bd3d344532cc1a09
-SHA1: 675829104454161bff491b8a0f48962d7c5d86a2
 SHA256: b6fa75101226409e606b8e4fc53938eb31fb8e36b157087bf91397972ec09532
+SHA1: 675829104454161bff491b8a0f48962d7c5d86a2
+MD5sum: 51350614b430c868bd3d344532cc1a09
 Description: library interface to the XKB compiler - development files
  xkbcommon is a library to handle keyboard descriptions, including loading them
  from disk, parsing them and handling their state. It's mainly meant for client
@@ -167,23 +109,24 @@ Description: library interface to the XKB compiler - development files
  .
  This module can be found at
  git://anongit.freedesktop.org/git/xorg/lib/libxkbcommon
-Homepage: http://www.xkbcommon.org/
 
 Package: libxkbcommon0
-Priority: optional
-Section: libs
-Installed-Size: 321
-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
-Architecture: armhf
 Source: libxkbcommon
 Version: 0.3.0-0rpi1
-Depends: xkb-data, libc6 (>= 2.13-28)
+Architecture: armhf
+Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+Installed-Size: 321
 Pre-Depends: multiarch-support
+Depends: xkb-data, libc6 (>= 2.13-28)
+Multi-Arch: same
+Homepage: http://www.xkbcommon.org/
+Priority: optional
+Section: libs
 Filename: pool/rpi/libx/libxkbcommon/libxkbcommon0_0.3.0-0rpi1_armhf.deb
 Size: 135186
-MD5sum: 23e7af48fa87b40cb5f42140368eedb7
-SHA1: 386c657e6f3ee15512448a93e3741d861bb584b1
 SHA256: 708e5a33089dec3275f59ea22fe569ec949715537f44c25fb1eabf437a26662e
+SHA1: 386c657e6f3ee15512448a93e3741d861bb584b1
+MD5sum: 23e7af48fa87b40cb5f42140368eedb7
 Description: library interface to the XKB compiler - shared library
  This package provides a library to handle keyboard descriptions, including
  loading them from disk, parsing them and handling their state. It's mainly
@@ -195,6 +138,24 @@ Description: library interface to the XKB compiler - shared library
  .
  This module can be found at
  git://anongit.freedesktop.org/git/xorg/lib/libxkbcommon
-Multi-Arch: same
-Homepage: http://www.xkbcommon.org/
+
+Package: weston
+Version: 1.1.0-0rpi2013060501
+Architecture: armhf
+Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+Installed-Size: 696
+Depends: libc6 (>= 2.13-28), libcairo2 (>= 1.10.0), libgcc1 (>= 1:4.4.0), libjpeg8 (>= 8c), libmtdev1 (>= 1.1.0), libpixman-1-0 (>= 0.19.6), libpng12-0 (>= 1.2.13-4), libudev0 (>= 146), libwayland0 (>= 1.0.90), libx11-6, libx11-xcb1, libxcb-render0, libxcb-shape0, libxcb-shm0, libxcb-xfixes0, libxcb1 (>= 1.8), libxcursor1 (>> 1.1.2), libxkbcommon0 (>= 0.2.0)
+Priority: optional
+Section: x11
+Filename: pool/rpi/w/weston/weston_1.1.0-0rpi2013060501_armhf.deb
+Size: 311386
+SHA256: 0cd3954dc380b772ec652362f2b1ff445da934d3f277a337020dea13bec11099
+SHA1: 355fe65beaecdbed39e3aab06b2b22c5f3b2dfd8
+MD5sum: 15d896c7d0d3ed833efe075b4a6772dc
+Description: reference implementation of a Wayland compositor
+ Part of the Wayland project is also the Weston reference implementation
+ of a Wayland compositor. Weston can run as an X client or under Linux
+ KMS and ships with a few demo clients. The Weston compositor is a minimal
+ and fast compositor and is suitable for many embedded and mobile use
+ cases.
 

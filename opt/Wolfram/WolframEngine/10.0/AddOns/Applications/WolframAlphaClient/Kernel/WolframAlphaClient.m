@@ -4,7 +4,7 @@
 (*Package header*)
 
 
-(* $Id: WolframAlphaClient.m,v 1.593 2013/11/19 22:03:05 lou Exp $ *)
+(* $Id: WolframAlphaClient.m,v 1.610 2014/01/29 16:53:42 lou Exp $ *)
 
 (* :Summary: Support for using the Wolfram|Alpha webservice API from within Mathematica. *)
 
@@ -479,9 +479,21 @@ setBehavior["no tear offs"] := (
 
 
 
+openerPanel[{label_, expr_}, open_:True] := OpenerView[{label, Panel[expr]}, open]
+
+
+
 AlphaQueryPreferences[] :=
 CreateDialog[{
-	Panel[
+	openerPanel[{
+		"Server",
+		Row[{
+			SetterBar[dynamicPreference["BaseURL", "Automatic"], Last /@ $AlphaQueryBaseURLs],
+			Button["Other\[Ellipsis]", setServer["other"], Method -> "Queued", BaseStyle -> {}]
+		}]
+	}],
+	openerPanel[{
+		"Front End Preferences",
 		Grid[{
 			{"Wolfram|Alpha server", InputField[dynamicPreference["BaseURL", "Automatic"], String, FieldSize -> {{20,20},{1,Infinity}}]},
 			{"AppID", InputField[dynamicPreference["AppID", "Automatic"], String, FieldSize -> {{20,20},{1,Infinity}}]},
@@ -521,26 +533,29 @@ CreateDialog[{
 							CurrentValue[$FrontEnd, {PrivateFrontEndOptions, "WolframAlphaSettings", "SendMathematicaSessionInfo"}] = True;
 							$AlphaQuerySendMathematicaSessionInfo = True;)
 					},
-					Appearance -> "PopupMenu"
+					Appearance -> "PopupMenu",
+					DefaultBaseStyle -> {},
+					DefaultMenuStyle -> {}
 				]
 			},			
-			{"", Item[Row[{Button["Help\[Ellipsis]", SystemOpen["paclet:ref/WolframAlpha"]], Button["Reset", clearPreferences[]]}], Alignment -> Right]}
-		}, Alignment ->{{Right, Left}}],
-		"Front End Preferences"
-	],
-	Panel[
+			{"", Item[Row[{Button["Help\[Ellipsis]", SystemOpen["paclet:ref/WolframAlpha"], BaseStyle -> {}], Button["Reset", clearPreferences[], BaseStyle -> {}]}], Alignment -> Right]}
+		}, Alignment ->{{Right, Left}}]
+	}],
+	openerPanel[{
+		"Kernel Preferences",
 		Grid[{
 			(* {"Query JSP", InputField[Dynamic[$AlphaQueryJSP], String, FieldSize -> {{40,40},{1,Infinity}}]}, *)
 			{Row[{Checkbox[Dynamic[$AlphaQueryPrefixQ]], "Query prefix"}], InputField[Dynamic[$AlphaQueryPrefix], String, FieldSize -> {{40,40},{1,Infinity}}, Enabled -> Dynamic[$AlphaQueryPrefixQ]]},
-			{"", OpenerView[{"Timeouts",
-				Panel @ Grid[{
+			{"", openerPanel[{
+				"Timeouts",
+				Grid[{
 					{"scan timeout", InputField[Dynamic[$AlphaQueryScanTimeout], Expression, FieldSize -> {{20,20},{1,Infinity}}]},
 					{"pod timeout", InputField[Dynamic[$AlphaQueryPodTimeout], Expression, FieldSize -> {{20,20},{1,Infinity}}]},
 					{"format timeout", InputField[Dynamic[$AlphaQueryFormatTimeout], Expression, FieldSize -> {{20,20},{1,Infinity}}]},
 					{"async timeout", InputField[Dynamic[$AlphaQueryAsynchoronousTimeout], Expression, FieldSize -> {{20,20},{1,Infinity}}]}}, Alignment ->{{Right, Left}}]}, False]},
 			{"", Row[{Checkbox[Dynamic[$AlphaQueryExtrusionEvaluateCachedMForms]], "Evaluate cached minputs and moutputs"}]},
-			{"", OpenerView[{"Formats", Panel @ CheckboxBar[Dynamic[$AlphaQueryFormats], {"image", "cell", "minput", "moutput", "sound", "msound", "dataformats", "computabledata", "formatteddata", "imagemap"}, Appearance -> "Vertical"]}, False]},
-			{"", OpenerView[{"AppearanceElements", Panel @ CheckboxBar[Dynamic[$AlphaQueryAppearanceElements], $AllAlphaQueryAppearanceElements, Appearance -> "Vertical"]}, False]},
+			{"", openerPanel[{"Formats", CheckboxBar[Dynamic[$AlphaQueryFormats], {"image", "cell", "minput", "moutput", "sound", "msound", "dataformats", "computabledata", "formatteddata", "imagemap"}, Appearance -> "Vertical"]}, False]},
+			{"", openerPanel[{"AppearanceElements", CheckboxBar[Dynamic[$AlphaQueryAppearanceElements], $AllAlphaQueryAppearanceElements, Appearance -> "Vertical"]}, False]},
 			{"", Row[{Checkbox[Dynamic[$AlphaQueryExtrusionShowMOutputs]], "Show moutputs in the extrusion"}]},
 			{"", Row[{Checkbox[Dynamic[$AlphaQueryShowLinksByDefault]], "Show links by default"}]},
 			{"", Row[{Checkbox[Dynamic[$AlphaQueryAdditionalInformation]], "Show additional information"}]},
@@ -549,38 +564,30 @@ CreateDialog[{
 			{"Pod width", InputField[Dynamic[$AlphaQueryPodWidth], Expression, FieldSize -> {{40,40},{1,Infinity}}]},
 			{"Time constraint", InputField[Dynamic[$AlphaQueryTimeConstraint], Expression, FieldSize -> {{40,40},{1,Infinity}}]},
 			{"Other parameters", InputField[Dynamic[$AlphaQueryRawParameters], Expression, FieldSize -> {{40,40},{1,Infinity}}]},
-			{"", Button["Sample URL\[Ellipsis]", CreateDocument[ExpressionCell[WolframAlpha["sinx", "URL", alphaQueryOptions[]], "Input"]], Method -> "Queued", ImageSize -> Automatic]}
-		}, Alignment ->{{Right, Left}}],
-		"Kernel Preferences"
-	],
-	Panel[
+			{"", Button["Sample URL\[Ellipsis]", CreateDocument[ExpressionCell[WolframAlpha["sinx", "URL", alphaQueryOptions[]], "Input"]], Method -> "Queued", ImageSize -> Automatic, BaseStyle -> {}]}
+		}, Alignment ->{{Right, Left}}]
+	}],
+	openerPanel[{
+		"Display behavior",
 		Row[{
-			SetterBar[dynamicPreference["BaseURL", "Automatic"], Last /@ $AlphaQueryBaseURLs, BaseStyle -> "ControlStyle"],
-			Button["Other\[Ellipsis]", setServer["other"], Method -> "Queued"]
-		}],
-		"Server"
-	],
-	Panel[
+			Button["Default", setBehavior["default"], BaseStyle -> {}],
+			Button["CDF", setBehavior["CDF"], BaseStyle -> {}],
+			Button["No inputs", setBehavior["no inputs"], BaseStyle -> {}],
+			Button["Only inputs", setBehavior["only inputs"], BaseStyle -> {}], 
+			Button["Use images", setBehavior["images"], BaseStyle -> {}],
+			Button["images, iPhone", setBehavior["iPhone images"], BaseStyle -> {}],
+			Button["images, iPhone landscape", setBehavior["iPhone landscape images"], BaseStyle -> {}]
+		}]
+	}, False],
+	openerPanel[{
+		"Tear off behavior",
 		Row[{
-			Button["Default", setBehavior["default"]],
-			Button["CDF", setBehavior["CDF"]],
-			Button["No inputs", setBehavior["no inputs"]],
-			Button["Only inputs", setBehavior["only inputs"]], 
-			Button["Use images", setBehavior["images"]],
-			Button["images, iPhone", setBehavior["iPhone images"]],
-			Button["images, iPhone landscape", setBehavior["iPhone landscape images"]]
-		}],
-		"Display behavior"
-	],
-	Panel[
-		Row[{
-			Button["Default", setBehavior["pod menus"]],
-			Button["Pod and subpod menus", setBehavior["pod and subpod menus"]],
-			Button["Buttons", setBehavior["tear off buttons"]],
-			Button["None", setBehavior["no tear offs"]]
-		}],
-		"Tear off behavior"
-	]
+			Button["Default", setBehavior["pod menus"], BaseStyle -> {}],
+			Button["Pod and subpod menus", setBehavior["pod and subpod menus"], BaseStyle -> {}],
+			Button["Buttons", setBehavior["tear off buttons"], BaseStyle -> {}],
+			Button["None", setBehavior["no tear offs"], BaseStyle -> {}]
+		}]
+	}, False]
 	},
 	WindowTitle -> "AlphaQuery Preferences",
 	NotebookEventActions -> {},
@@ -2769,6 +2776,7 @@ loggingImport[url_, args___] :=
 				StringMatchQ[url, "*query.jsp*"], TooltipBox[StyleBox["\[FilledCircle]", FontSize -> 18, FontColor -> RGBColor[0,0,1]], "query.jsp"],
 				StringMatchQ[url, "*mparse.jsp*"], TooltipBox[StyleBox["\[FilledDiamond]", FontSize -> 18, FontColor -> RGBColor[0,1,0]], "mparse.jsp"],
 				StringMatchQ[url, "*recalc.jsp*"], TooltipBox[StyleBox["\[Star]", FontSize -> 36, FontColor -> RGBColor[1,0,0]], "recalc.jsp"],
+				StringMatchQ[url, "*compute.jsp*"], TooltipBox[StyleBox["\[DoubleStruckCapitalC]", FontSize -> 18, FontColor -> RGBColor[.5,0,.5], FontWeight -> Bold], "compute.jsp"],
 				True, TooltipBox[StyleBox["\[EmptyCircle]", FontSize -> 18, FontColor -> RGBColor[0,0,1]], "other"]
 			],
 			CellMargins -> {{Inherited, Inherited}, {0, Inherited}}
@@ -2796,7 +2804,7 @@ loggingImport[url_, args___] :=
 
 writeToLog[expr_, opts___] :=
 (
-	If[!MemberQ[Notebooks[], $AlphaQueryLogNotebook],
+	If[Head[$AlphaQueryLogNotebook] =!= NotebookObject || !MemberQ[Last /@ Notebooks[], Last @ $AlphaQueryLogNotebook],
 		$AlphaQueryLogNotebook = NotebookPut[
 			Notebook[{},
 				WindowTitle -> "Alpha Query Log",
@@ -3924,10 +3932,10 @@ $FromMWARules:= $FromMWARules = {
     Internal`MWASymbols`MWAProperty->EntityProperty,
     Internal`MWASymbols`MWAData->EntityValue,
     Internal`MWASymbols`MWAQuantity->Quantity,
-    Internal`MWASymbols`MWADateObject->WolframAlphaDate,
-    Internal`MWASymbols`MWADateRange->System`WolframAlphaDateSpan
-};
-$ToMWARules:= $ToMWARules= Reverse/@$FromMWARules;
+    Internal`MWASymbols`MWADateObject->DateObject,
+    Internal`MWASymbols`MWADateRange->Interval};
+
+$ToMWARules:= $ToMWARules= Reverse/@Drop[$FromMWARules, -1];  (* don't include the Interval rewrite rule *)
 
 
 
@@ -7692,22 +7700,32 @@ urldecode[str_] := ExternalService`DecodeString[str]
 ExternalService`DecodeString[] doesn't properly decode all characters,
 like the '+' character. Thus, we universally rely on the more robust
 JLink versions, below.
+
+Update: In V10, we use the new System` context functions.
 *)
 
 
-urlencode[str_] := (
-	Needs["JLink`"];
-	Symbol["JLink`InstallJava"][];
-	Symbol["JLink`LoadJavaClass"]["java.net.URLEncoder"];
-	Symbol["java`net`URLEncoder`encode"][str, "UTF-8"]
-)
+urlencode[str_] := 
+Module[{result},
+	If[NameQ["System`URLEncode"] && StringQ[result = Symbol["System`URLEncode"][str]],
+		result,
+		Needs["JLink`"];
+		Symbol["JLink`InstallJava"][];
+		Symbol["JLink`LoadJavaClass"]["java.net.URLEncoder"];
+		Symbol["java`net`URLEncoder`encode"][str, "UTF-8"]
+	]
+]
 
-urldecode[str_] := (
-	Needs["JLink`"];
-	Symbol["JLink`InstallJava"][];
-	Symbol["JLink`LoadJavaClass"]["java.net.URLDecoder"];
-	Symbol["java`net`URLDecoder`decode"][str, "UTF-8"]
-)
+urldecode[str_] := 
+Module[{result},
+	If[NameQ["System`URLDecode"] && StringQ[result = Symbol["System`URLDecode"][str]],
+		result,
+		Needs["JLink`"];
+		Symbol["JLink`InstallJava"][];
+		Symbol["JLink`LoadJavaClass"]["java.net.URLDecoder"];
+		Symbol["java`net`URLDecoder`decode"][str, "UTF-8"]
+	]
+]
 
 
 (* ::Subsection::Closed:: *)
@@ -7831,7 +7849,8 @@ returnWolframAlphaExpression[q_, {opts___}] := HoldComplete[WolframAlpha[q, opts
 
 $LinguisticAssistantQuantityQuery = True;
 
-$LinguisticAssistantCompact = False;
+$LinguisticAssistantCompact = True;
+
 
 
 (*
@@ -7841,7 +7860,7 @@ new linguistic assistant at the insertion point.
 
 
 AlphaIntegration`LinguisticAssistant[nb_NotebookObject] := 
-Block[{info, content},
+Block[{info, content, boxes},
 	info = MathLink`CallFrontEnd[FrontEnd`CellInformation[nb]];
 	(* If there are too many cells in the selection, don't do anything *)
 	If[Length[info] > 1,
@@ -7876,8 +7895,11 @@ Block[{info, content},
 		MemberQ[info, "ContentData" -> BoxData] &&
 		MemberQ[info, "Formatted" -> True] && 
 		MemberQ[info, "CursorPosition" -> {m_, n_}] &&
-		StringQ[content = First[MathLink`CallFrontEnd[FrontEnd`ExportPacket[BoxData[NotebookRead[nb]], "InputText"]]]] &&
-		If[MemberQ[{"\\[Placeholder]", "\\[SelectionPlaceholder]"}, content], content = ""];
+		If[MatchQ[boxes = NotebookRead[nb],
+			"\[Placeholder]" | "\[SelectionPlaceholder]" | TagBox[_, "Placeholder" | "SelectionPlaceholder", ___]],
+			content = "", 
+			content = First[MathLink`CallFrontEnd[FrontEnd`ExportPacket[BoxData[boxes], "InputText"]]]];
+		StringQ[content] && 
 		StringLength[content] < 200,
 		Return @ doEnterLinguisticAssistant[nb, content]
 	];
@@ -7913,52 +7935,54 @@ AlphaIntegration`LinguisticAssistant[str_String, chosenAssumptions:{___String}] 
 
 (* Single-decker *)
 AlphaIntegration`LinguisticAssistantBoxes[str_String, version:(1|2), Dynamic[query_], Dynamic[boxes_], Dynamic[allassumptions_], Dynamic[assumptions_], Dynamic[open_]] :=
-	Overlay[
-		{
-			Framed[
-				Which[
-					open === {1},
-					If[!MatchQ[open, {1|2}], open = {2}]; (* legacy notebooks may have the setting open = {1,2} *)
+	Panel[
+		Which[
+
+			open === {1},
+			Grid[{{
+				linguisticEditSwitchToExpression[query, Dynamic[open]],
+				Pane[
 					linguisticTopInputField[Dynamic[query], Dynamic[boxes], Dynamic[allassumptions], Dynamic[assumptions], Dynamic[open]],
+					BaselinePosition -> Baseline,
+					ImageMargins -> {{0,3},{0,2}}
+				]
+			}}, Alignment -> Baseline, BaselinePosition -> {1,2}, Spacings -> 0.3],
 
-					boxes === "None",
-					Grid[{Flatten @ {
-						linguisticAssumptions[Dynamic[query], Dynamic[boxes], Dynamic[allassumptions], Dynamic[assumptions], Dynamic[open]],
-						Style[
-							Row[{
-								"(",
-								If[allassumptions === {},
-									Dynamic[FEPrivate`FrontEndResource["WAStrings", "NoTranslations"]],
-									Dynamic[FEPrivate`FrontEndResource["WAStrings", "NoTranslation"]]
-								],
-								")",
-								"  ",
-								suggestionsDialogButton["NoTranslations", query, "MathematicaParse"]	
-							}],
-							"DialogStyle",
-							Gray
-						],
-						linguisticEditQueryCompact[query, Dynamic[open]]
-					}}, Spacings -> {{0, 0.5, 0.5}, 1}, Alignment -> Center],
-
-					True,
-					Grid[{Flatten @ {
-						linguisticAssumptions[Dynamic[query], Dynamic[boxes], Dynamic[allassumptions], Dynamic[assumptions], Dynamic[open]],
-						linguisticBottomInputField[Dynamic[boxes]],
-						linguisticEditQueryCompact[query, Dynamic[open]]
-					}}, Spacings -> {{0, 0.5, 0.5}, 1}, Alignment -> Center]
+			boxes === "None",
+			Grid[{Flatten @ {
+				linguisticEditSwitchToQuery[query, Dynamic[open]],
+				Pane[
+					Style[
+						Row[{
+							"(",
+							If[allassumptions === {},
+								Dynamic[FEPrivate`FrontEndResource["WAStrings", "NoTranslations"]],
+								Dynamic[FEPrivate`FrontEndResource["WAStrings", "NoTranslation"]]
+							],
+							")",
+							"  ",
+							suggestionsDialogButton["NoTranslations", query, "MathematicaParse"]	
+						}],
+						"DialogStyle",
+						Gray
+					],
+					BaselinePosition -> Baseline,
+					ImageMargins -> {{0,0},{2,1}}
 				],
-				
-				FrameStyle -> If[open === {1}, Orange, LightGray],
-				RoundingRadius -> 5,
-				ImageMargins -> {{5, 0}, {0, 0}},
-				FrameMargins -> {{6, 4}, {4, 4}}
-			],
-			Dynamic[RawBoxes[FEPrivate`FrontEndResource["WABitmaps", "EqualSmall"]]]
-		},
-		{1, 2},
-		1,
-		Alignment -> {Left, Center}
+				linguisticAssumptions[Dynamic[query], Dynamic[boxes], Dynamic[allassumptions], Dynamic[assumptions], Dynamic[open]]
+			}}, Alignment -> Baseline, BaselinePosition -> {1,2}, Spacings -> 0.3],
+
+			True,
+			Grid[{Flatten @ {
+				linguisticEditSwitchToQuery[query, Dynamic[open]],
+				linguisticBottomInputField[Dynamic[boxes]],
+				linguisticAssumptions[Dynamic[query], Dynamic[boxes], Dynamic[allassumptions], Dynamic[assumptions], Dynamic[open]]
+			}}, Alignment -> Baseline, BaselinePosition -> {1,2}, Spacings -> 0.3]
+		],
+		
+		Appearance :> FEPrivate`FrontEndResource["WAExpressions", "ControlEqualAppearance"],
+		BaselinePosition -> Baseline,
+		DefaultBaseStyle -> {}
 	] /; $LinguisticAssistantCompact
 
 
@@ -8070,6 +8094,55 @@ linguisticAssumptions[Dynamic[query_], Dynamic[boxes_], Dynamic[allassumptions_]
 				Mouseover[Style["\[RightGuillemet]", Orange], Style["\[RightGuillemet]", Red]]
 			],
 			Quiet[WolframAlpha[]]; (* trigger autoloading *)
+			With[{box = EvaluationBox[], cell = Cell[BoxData[ToBoxes[
+					Panel[
+						Grid[{{
+							"",
+							Item[Button[
+								Dynamic[RawBoxes[FEPrivate`FrontEndResource["FEBitmaps", "CircleXIcon"]]],
+  								NotebookDelete[EvaluationCell[]], Appearance -> None], Alignment -> Right]
+							},
+							{
+							DynamicModule[{},
+								(* replace the button- and actionmenu-function with the LinguisticAssistant version *)
+								Column[Flatten[FormatAllAssumptions["Assumptions", assumptionsListToXML[allassumptions], Dynamic[query], Dynamic[query], Dynamic[{}]]]] /.
+									HoldPattern[updateWithAssumptions][nb_, assumptioninputs_, Dynamic[q_], Dynamic[opts_]] :> 
+										updateWithAssumptionsLinguisticAssistant[query, Dynamic[boxes], Dynamic[allassumptions], Dynamic[assumptions], Dynamic[open], assumptioninputs],
+								InheritScope -> True
+							],
+							SpanFromLeft
+							}}
+						],
+						ImageSize -> 600
+					]]],
+					"DialogStyle",
+					Background -> White, (*for opacity*)
+					Deployed -> True,
+					Evaluator -> CurrentValue["RunningEvaluator"],
+					ShowSelection -> False
+				]},
+				SelectionMove[box, All, Expression];
+				MathLink`CallFrontEnd[FrontEnd`AttachCell[
+					box, cell, {Offset[{7,7},0], {Left, Bottom}}, {Left, Top},
+					"ClosingActions" -> {"SelectionDeparture", "ParentChanged", "EvaluatorQuit"}]
+				]]
+			,
+			Appearance -> None,
+			BaselinePosition -> If[TrueQ[$LinguisticAssistantCompact], (Center -> Center), (Axis -> Axis)]
+		],
+		Dynamic[FEPrivate`FrontEndResource["WAStrings", "AlternateInterpretations"]]
+	] /; $LinguisticAssistantCompact
+
+
+ 
+linguisticAssumptions[Dynamic[query_], Dynamic[boxes_], Dynamic[allassumptions_], Dynamic[assumptions_], Dynamic[open_]] :=
+	Tooltip[
+		Button[
+			If[TrueQ[$LinguisticAssistantCompact],
+				Dynamic[RawBoxes[FEPrivate`FrontEndResource["WABitmaps", "LinguisitcAssumptionsIcon"]]],
+				Mouseover[Style["\[RightGuillemet]", Orange], Style["\[RightGuillemet]", Red]]
+			],
+			Quiet[WolframAlpha[]]; (* trigger autoloading *)
 			CreateDocument[{
 					TextCell["", CellMargins -> 0],
 					ExpressionCell[
@@ -8126,32 +8199,102 @@ updateWithAssumptionsLinguisticAssistant[query_, Dynamic[boxes_], Dynamic[allass
 (
 	assumptions = removeDuplicateAssumptions[assumptions, assumptioninputs];
 	doNewFastParse[query, Dynamic[boxes], Dynamic[allassumptions], Dynamic[assumptions], Dynamic[open]];
-	NotebookClose[ButtonNotebook[]];
+	If[$LinguisticAssistantCompact, NotebookDelete[EvaluationCell[]], NotebookClose[ButtonNotebook[]]];
 )
 
 
-linguisticEditQueryCompact[query_, Dynamic[open_]] :=
+
+
+
+(* attachedMouseover1: Float an indicator to the left of the icon. *)
+
+attachedMouseover1[a_, b_] := 
+	DynamicModule[{box, attached},
+		EventHandler[a, {
+			"MouseEntered" :> (attached = MathLink`CallFrontEnd @ FrontEnd`AttachCell[
+				box, Cell[BoxData[ToBoxes[b]]], {Offset[{2, 2}, 0], {Left, Bottom}}, {Right, Bottom}]),
+			"MouseExited" :> (NotebookDelete[attached]; attached =.)
+		}],
+		Initialization :> (box = EvaluationBox[])
+	]
+
+(* attachedMouseover2: Float choices over the original icon. *)
+
+attachedMouseover2[a_, b_] :=
+	DynamicModule[{box, attached},
+		EventHandler[a, {
+			"MouseEntered" :> (attached = MathLink`CallFrontEnd @ FrontEnd`AttachCell[
+				box,
+				Cell[BoxData[ToBoxes[EventHandler[b, "MouseExited" :> (NotebookDelete[attached]; attached =.)]]]],
+				{Offset[{0,0}, 0], {Center,Center}}, {Center,Center}])
+		}],
+		Initialization :> (box = EvaluationBox[])
+	]
+
+
+linguisticEditSwitchToExpression[query_, Dynamic[open_]] :=
+attachedMouseover2[
+	Pane[
+		Dynamic[RawBoxes[FEPrivate`FrontEndResource["WABitmaps", "CompactAlphaForm"]]],
+		BaselinePosition -> Baseline,
+		ImageMargins -> {{0,0},{5,5}}
+	],
 	Tooltip[
 		Button[
-			Mouseover[
-				Style["\[ReturnIndicator]", Smaller, Orange],
-				Style["\[ReturnIndicator]", Smaller, Red],
-				ContentPadding -> False
+			Column[{
+				Dynamic[RawBoxes[FEPrivate`FrontEndResource["WABitmaps", "CompactAlphaForm"]]],
+				Dynamic[RawBoxes[FEPrivate`FrontEndResource["WABitmaps", "CompactMathematicaForm"]]]
+				}, Spacings -> -0.2, Alignment -> Center, Background -> White
+			],
+			open = {1,2};
+			MathLink`CallFrontEnd[FrontEnd`BoxReferenceFind[
+				FE`BoxReference[MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]], {FE`Parent["LinguisticAssistant"]}],
+				AutoScroll -> True
+			]];
+			,
+			Appearance -> None,
+			BaselinePosition -> Baseline,
+			(*BaseStyle -> {},*)
+			ContentPadding -> False,
+			Method -> "Queued"
+		],
+		Dynamic[FEPrivate`FrontEndResource["WAStrings", "LinguisticFormToMathematica"]]
+	]
+]
+
+
+linguisticEditSwitchToQuery[query_, Dynamic[open_]] :=
+attachedMouseover2[
+	Pane[
+		Dynamic[RawBoxes[FEPrivate`FrontEndResource["WABitmaps", "CompactMathematicaForm"]]],
+		BaselinePosition -> Baseline,
+		ImageMargins -> {{0,0},{5,5}}
+	],
+	Tooltip[
+		Button[
+			Column[{
+				Dynamic[RawBoxes[FEPrivate`FrontEndResource["WABitmaps", "CompactAlphaForm"]]],
+				Dynamic[RawBoxes[FEPrivate`FrontEndResource["WABitmaps", "CompactMathematicaForm"]]]
+				}, Spacings -> -0.2, Alignment -> Center, Background -> White
 			],
 			open = {1};
 			MathLink`CallFrontEnd[FrontEnd`BoxReferenceFind[
 				FE`BoxReference[MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]], {FE`Parent["LinguisticAssistant"]}],
 				AutoScroll -> True
 			]];
-			FrontEndExecute[FrontEnd`FrontEndToken["Tab"]];			
+			FrontEndExecute[FrontEnd`FrontEndToken["Tab"]];
+			FrontEndExecute[FrontEnd`FrontEndToken["MoveNext"]];
 			,
 			Appearance -> None,
+			BaselinePosition -> Baseline,
+			(*BaseStyle -> {},*)
 			ContentPadding -> False,
-			BaseStyle -> {},
 			Method -> "Queued"
 		],
-		Row[{"Edit query: ", "\"", query, "\""}]
+		Row[{Dynamic[FEPrivate`FrontEndResource["WAStrings", "EditLinguisticForm"]], "\"", query, "\""}]
 	]
+]
+
 
 
 linguisticOpener[location_, Dynamic[open_]] :=
@@ -8239,7 +8382,7 @@ linguisticTopInputField[Dynamic[query_], Dynamic[boxes_], Dynamic[allassumptions
 		],
 		{ "ReturnKeyDown" :> 
 			(
-				If[$LinguisticAssistantCompact, open = {2}];
+				If[$LinguisticAssistantCompact, open = {1,2}];
 				MathLink`CallFrontEnd[FrontEnd`BoxReferenceFind[
 					FE`BoxReference[MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]], {FE`Parent["LinguisticAssistant"]}],
 					AutoScroll -> True
@@ -8280,18 +8423,21 @@ linguisticBottomInputField[Dynamic[boxes_]] :=
 			AutoScroll -> True
 		]],
 		Appearance -> None,
-		BaseStyle -> {ScriptLevel -> 0, ShowStringCharacters -> True}
+		BaselinePosition -> Baseline,
+		BaseStyle -> {ScriptLevel -> 0, ShowStringCharacters -> True},
+		ContentPadding -> True
 	]
 
 
-(* An empty query should clear everything *)
-doNewFastParse["", Dynamic[boxes_], Dynamic[allassumptions_], Dynamic[assumptions_], Dynamic[open_]] :=
+(* An empty query or a placeholder query should clear everything *)
+doNewFastParse[query_String, Dynamic[boxes_], Dynamic[allassumptions_], Dynamic[assumptions_], Dynamic[open_]] :=
 	(
 		boxes = "None";
 		allassumptions = {};
 		assumptions = {};
 		open = {1};
-	)
+	) /; (query === "" || StringMatchQ[query, "*FrameBox[*Placeholder*]*"])
+
 
 (*flag managing special display of Quantity in ctrl+=*)
 Internal`SetValueNoTrack[QuantityUnits`Private`$WolframAlphaInputFlag,True];
@@ -8322,7 +8468,7 @@ doNewFastParse[query_, Dynamic[boxes_], Dynamic[allassumptions_], Dynamic[assump
 		];
 		
 		If[parse === None, boxes = "None", boxes = ToExpression[parse, InputForm, AlphaQueryMakeBoxes]];
-		open = If[TrueQ[$LinguisticAssistantCompact], {2}, {1,2}];
+		open = If[TrueQ[$LinguisticAssistantCompact], {1,2}, {1,2}];
 		allassumptions = DeleteCases[newassumptions, {___, "type" -> (Alternatives @@ $FormulaAssumptionTypes), ___}];
 		assumptions = Select[assumptions, !FreeQ[allassumptions, #]&]
 	]

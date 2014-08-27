@@ -830,7 +830,7 @@ If[$OperatingSystem === "Windows",
 		Module[{shellScriptBaseName = funName <> ".sh", shellScript},
 			shellScript = FileNameJoin[{workDir, shellScriptBaseName}];
 			If[!TrueQ[createBinary],
-				Export[shellScript, "!/bin/sh\n"<>compileCommands, "Text"];
+				Export[shellScript, "#!/bin/sh\n"<>compileCommands, "Text"];
 			];
 			{compileCommands, shellScript}
 		]

@@ -43,6 +43,7 @@ $StandardOptions :=
 		"CredentialsProvider"->Automatic,
 		"ConnectTimeout"->0,
 		"ReadTimeout"->0,
+		"DisplayProxyDialog" -> True,
 		"OAuthAuthentication"->None
 	}
 	
@@ -53,6 +54,10 @@ Options[setStandardOptions] := $StandardOptions
 (* By default only return the content of the site *)
 URLFetch[url_String, opts:OptionsPattern[]] :=
 	URLFetch[url, "Content", opts]
+
+allowCredintalDialog[opts:OptionsPattern[]] := (
+	"DisplayProxyDialog" /. Flatten[{opts}] /. "DisplayProxyDialog"->True
+);
 	
 URLFetch[url_String, res:(_String|_List|All), opts:OptionsPattern[]] /; InitializeQ[] :=
 	Module[{handle, output, error, stdOpts, elements, wellFormedURL, oauth, token, args},	
@@ -76,7 +81,7 @@ URLFetch[url_String, res:(_String|_List|All), opts:OptionsPattern[]] /; Initiali
 	
 			If[handle["Proxies"] === {},
 				handle["Return"] = CURLPerform[handle];
-				If[CURLStatusCode[handle] === 401,
+				If[CURLStatusCode[handle] === 401 && allowCredintalDialog[opts],
 					If[credWrapper[handle, url, OptionValue["CredentialsProvider"]],
 						handle["Return"] = CURLPerform[handle];	
 					]
@@ -86,13 +91,13 @@ URLFetch[url_String, res:(_String|_List|All), opts:OptionsPattern[]] /; Initiali
 					CURLOption[handle, "CURLOPT_PROXY", handle["Proxies"][[i]]];
 					handle["Return"] = CURLPerform[handle];
 				
-					If[handle["Return"] === 0 && CURLStatusCode[handle] === 401,
+					If[handle["Return"] === 0 && CURLStatusCode[handle] === 401 && allowCredintalDialog[opts],
 						If[credWrapper[handle, url, OptionValue["CredentialsProvider"]],
 							handle["Return"] = CURLPerform[handle];
 						]
 					];
 					
-					If[handle["Return"] === 0 && CURLStatusCode[handle] === 407,
+					If[handle["Return"] === 0 && CURLStatusCode[handle] === 407 && allowCredintalDialog[opts],
 						If[proxyCredentials[handle, url],
 							handle["Return"] = CURLPerform[handle];
 						]
@@ -444,15 +449,7 @@ parseList[handle_, list_List, elements_] :=
 
 (****************************************************************************)
 
-buildData[handle_CURLHandle, data_List, "POST"] /; InitializeQ[] := 
-	Module[{res}, 
-		res = Quiet[Check[StringExpression[ Sequence @@ Riffle[CURLEscape[ToString[First[#]]] <> "=" <> CURLEscape[ToString[Last[#]]]
-			 & /@ data, "&"]], Throw[$Failed]]];
-		CURLOption[handle, "CURLOPT_COPYPOSTFIELDS", res];
-	]
-
-
-buildData[handle_CURLHandle, data_List, "GET"] /; InitializeQ[] := 
+buildData[handle_CURLHandle, data_List, method_String] /; InitializeQ[] := 
 	Quiet[
 		Check[
 			StringExpression[ 
@@ -462,10 +459,6 @@ buildData[handle_CURLHandle, data_List, "GET"] /; InitializeQ[] :=
 			Throw[$Failed]
 		]
 	]
-
-buildData[handle_CURLHandle, data_List, _String] /; InitializeQ[] :=
-	buildData[handle, data, "GET"]
-	
 
 (****************************************************************************)
 
@@ -738,7 +731,12 @@ setStandardOptions[handle_CURLHandle, url_String, opts:OptionsPattern[]] :=
 		CURLOption[handle, "CURLOPT_POSTREDIR", HTTPClient`CURLInfo`Private`$CURLPostRedir]; 
 		CURLOption[handle, "CURLOPT_TIMEOUT", OptionValue["ReadTimeout"]];
 		CURLOption[handle, "CURLOPT_CONNECTTIMEOUT", OptionValue["ConnectTimeout"]];
-		
+		(* Always ensure that a Method is set intially, at Top Level. *)
+		If[StringMatchQ[method, ""],
+			CURLOption[handle, "CURLOPT_CUSTOMREQUEST", "GET"],
+			CURLOption[handle, "CURLOPT_CUSTOMREQUEST", method]
+		];
+
 		If[OptionValue["Username"] =!= "",
 			CURLOption[handle, "CURLOPT_USERNAME", OptionValue["Username"]]
 		];
@@ -752,7 +750,7 @@ setStandardOptions[handle_CURLHandle, url_String, opts:OptionsPattern[]] :=
 		If[OptionValue["Headers"] =!= {},
 			addHeaders[handle, OptionValue["Headers"]]
 		];
-		
+
 		If[method === "POST",
 			CURLOption[handle, "CURLOPT_POST", True];	
 		];
@@ -766,17 +764,14 @@ setStandardOptions[handle_CURLHandle, url_String, opts:OptionsPattern[]] :=
 		];
 		
 		If[OptionValue["Parameters"] =!= {},
-			If[method === "POST",
-				buildData[handle, OptionValue["Parameters"], method],
-				finalURL  = url <> "?" <> buildData[handle, OptionValue["Parameters"], method]
-			]	
-		];
-		
-		If[StringQ[OptionValue["BodyData"]] && OptionValue["BodyData"] =!= "", 
-			CURLOption[handle, "CURLOPT_COPYPOSTFIELDS", OptionValue["BodyData"]];
 			If[method === "GET",
-				CURLOption[handle, "CURLOPT_CUSTOMREQUEST", "GET"]		
+				finalURL  = url <> "?" <> buildData[handle, OptionValue["Parameters"], method],
+				CURLOption[handle, "CURLOPT_COPYPOSTFIELDS", buildData[handle, OptionValue["Parameters"], method]]
 			]
+		];
+		(* If the Parmeters are set then, we don't want to set the body. *)
+		If[StringQ[OptionValue["BodyData"]] && ( OptionValue["Parameters"] ==={} ), 
+			CURLOption[handle, "CURLOPT_COPYPOSTFIELDS", OptionValue["BodyData"]];
 		];
 		
 		CURLCredentialsProvider[handle, ToString[OptionValue["CredentialsProvider"]]];
@@ -790,8 +785,8 @@ setStandardOptions[handle_CURLHandle, url_String, opts:OptionsPattern[]] :=
 					""
 			] & /@ OptionValue["MultipartData"]
 		];
-
-		If[MatchQ[OptionValue["BodyData"], {__Integer}],
+		(* If the Parmeters are set then, we don't want to set the body. *)
+		If[MatchQ[OptionValue["BodyData"], {__Integer}|{}]&& ( OptionValue["Parameters"] ==={}) ,
 			CURLOption[handle, "CURLOPT_POSTFIELDSIZE", Length[OptionValue["BodyData"]]];
 			CURLOption[handle, "CURLOPT_COPYPOSTFIELDS", OptionValue["BodyData"]]
 		];

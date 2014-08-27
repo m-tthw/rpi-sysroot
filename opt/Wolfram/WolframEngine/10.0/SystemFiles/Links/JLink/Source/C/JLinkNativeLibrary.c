@@ -94,8 +94,8 @@ GET_AWT_PROC getAWTproc = NULL;
 #  define PTR_FROM_JLONG(x) ((void*) (int) (x))
 #endif
 
-static jobject MakeArrayN(JNIEnv* env, int type, int depth, long* dims, int curDepth, long lenInFinalDim, const void* startAddr);
-static jobject MakeArray1(JNIEnv* env, int type, long len, const void* startAddr);
+static jobject MakeArrayN(JNIEnv* env, int type, int depth, int* dims, int curDepth, int lenInFinalDim, const void* startAddr);
+static jobject MakeArray1(JNIEnv* env, int type, int len, const void* startAddr);
 
 /* The structure stored in the link's UserData area. Used to support yield/msg functions. */
 struct cookie {
@@ -1491,7 +1491,7 @@ MLYDEFN(devyield_result, yield_func, (MLINK mlp, MLYieldParameters yp)) {
 
 /***************************************************************************************/
 
-static jobject MakeArray1(JNIEnv* env, int type, long len, const void* startAddr) {
+static jobject MakeArray1(JNIEnv* env, int type, int len, const void* startAddr) {
 
 	int i;
 
@@ -1570,7 +1570,7 @@ static jobject MakeArray1(JNIEnv* env, int type, long len, const void* startAddr
 }
 
 
-static jobject MakeArrayN(JNIEnv* env, int type, int depth, long* dims, int curDepth, long lenInFinalDim, const void* startAddr) {
+static jobject MakeArrayN(JNIEnv* env, int type, int depth, int* dims, int curDepth, int lenInFinalDim, const void* startAddr) {
 
 	jobjectArray joa;
 	int i, datSize;
@@ -1629,7 +1629,7 @@ static jobject MakeArrayN(JNIEnv* env, int type, int depth, long* dims, int curD
 	}
 	for (i = 0; i < dims[curDepth]; i++) {
 		jobject jo;
-		long jump = lenInFinalDim;
+		size_t jump = lenInFinalDim;
 		int j;
 		for (j = curDepth + 1; j < curDepth + depth - 1; j++)
 			jump *= dims[j];

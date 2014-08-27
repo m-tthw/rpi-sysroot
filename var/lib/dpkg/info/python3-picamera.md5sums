@@ -1,0 +1,15 @@
+0efd3d20a0a35832068125893887e9d3  usr/lib/python3/dist-packages/picamera-1.5.egg-info/PKG-INFO
+614f9fa5ab39944e1c51464a026112b1  usr/lib/python3/dist-packages/picamera-1.5.egg-info/SOURCES.txt
+68b329da9893e34099c7d8ad5cb9c940  usr/lib/python3/dist-packages/picamera-1.5.egg-info/dependency_links.txt
+98c8b12bc9b10a91ce68f0f591d431db  usr/lib/python3/dist-packages/picamera-1.5.egg-info/requires.txt
+accf135fb7a2e423e2dddb8c6764dd4f  usr/lib/python3/dist-packages/picamera-1.5.egg-info/top_level.txt
+e833d4ade5906d99d92cf052f81746f0  usr/lib/python3/dist-packages/picamera/__init__.py
+aa34f044e2136c3e526ada557d129387  usr/lib/python3/dist-packages/picamera/array.py
+09163f46f1e2d804aae588931735b0b8  usr/lib/python3/dist-packages/picamera/bcm_host.py
+e4a5c3ef0a00848579f757e974c2af4d  usr/lib/python3/dist-packages/picamera/camera.py
+d8ddf682bbd10f43d04ba51fe630d8b7  usr/lib/python3/dist-packages/picamera/encoders.py
+7f70fcfa4cd20e744f5ad69dac6bc684  usr/lib/python3/dist-packages/picamera/exc.py
+d86ee91f8380cb6e1b61871f83e68320  usr/lib/python3/dist-packages/picamera/mmal.py
+89cfef85718d401fc485b20f89b7dc1b  usr/lib/python3/dist-packages/picamera/streams.py
+f3459b71b85f5115707137281ed514b9  usr/share/doc/python3-picamera/changelog.Debian.gz
+73e8ecfb718b98d45d4d7f6f9aec1ba3  usr/share/doc/python3-picamera/copyright
