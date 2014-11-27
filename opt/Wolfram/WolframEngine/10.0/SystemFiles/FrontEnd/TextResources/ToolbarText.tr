@@ -94,21 +94,21 @@
 @|
 @@resource DynamicUpdatingToolbarText
 {
-"dynamicWarning" -> RowBox[{"To view dynamic content in this notebook, open it in", " ", 
+"dynamicWarning" -> RowBox[{"Open this notebook in a", " ", 
   TagBox[
-   ButtonBox[StyleBox[PaneSelectorBox[{False -> 
-       StyleBox["\"Wolfram Mathematica\"", RGBColor[1, 0, 0], 
+   ButtonBox[PaneSelectorBox[{False -> 
+       StyleBox["\"Wolfram Desktop or Wolfram Cloud product\"", RGBColor[1, 0, 0], 
         StripOnInput -> False], 
-      True -> StyleBox["\"Wolfram Mathematica\"", "HyperlinkActive", 
+      True -> StyleBox["\"Wolfram Desktop or Wolfram Cloud product\"", "HyperlinkActive", 
         StripOnInput -> False]}, 
      Dynamic[CurrentValue["MouseOver"], 
       ImageSizeCache -> {36.`, {1.`, 8.`}}], ImageSize -> Automatic, 
-     FrameMargins -> 0], FontSlant -> "Italic"], 
+     FrameMargins -> 0], 
      Appearance -> None, Evaluator -> None,
      ButtonFunction :> FEPrivate`FrontEndExecute[{FrontEnd`NotebookLocate[{URL[
-             "http://www.wolfram.com/mathematica/"], None}]}]
+             "http://www.wolfram.com/products/"], None}]}]
     ], 
-   MouseAppearanceTag["LinkHand"]], "."}]
+   MouseAppearanceTag["LinkHand"]], " ", "to view dynamic content."}]
 }
 @|
 @@resource MessageToolbarText
@@ -152,8 +152,14 @@
 @|
 @@resource VersionedStylesheetToolbar
 {
-	"MainText" -> "You opened a notebook with an old default styling from a previous version of Mathematica. We have updated your notebook's appearance for Mathematica 9.",
+	"MainText" -> "You opened a notebook with an old default styling. We have updated your notebook's appearance.",
 	"KeepText" -> "Continue with updated styling",
 	"RevertText" -> "Revert to older styling",
 	"RememberText" -> "Do this for all notebooks"
 }
+@|
+@@resource WolframCloudSyncToolbar
+{
+	"MainText" -> "The synchronization operation for this document has failed."
+}
+@|

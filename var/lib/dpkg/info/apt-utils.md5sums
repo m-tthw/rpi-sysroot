@@ -1,10 +1,10 @@
-92e51aeef85aa12026d8b21bd02434c5  usr/bin/apt-extracttemplates
-3d3ca3e9ceee45f3caecfb7b21408def  usr/bin/apt-ftparchive
-348aa9ba556b2f6a71b26651f3b5ea5d  usr/bin/apt-sortpkgs
-e5bc3ed12c15c31677a986558edf0ad3  usr/lib/apt/solvers/apt
-23edfdaa26bf11ddcebb6c58a1c99871  usr/lib/apt/solvers/dump
+31b26b4e9d5f014bac9876d057043c25  usr/bin/apt-extracttemplates
+e587f249883fd395a92773afcd583c05  usr/bin/apt-ftparchive
+989c0423f650673d02b9564b12217f8a  usr/bin/apt-sortpkgs
+5edf4637aaa50da2343c0c7ad78f4789  usr/lib/apt/solvers/apt
+9a93e1fbff3c65b9fb380171d4b4ce20  usr/lib/apt/solvers/dump
 0a9faf4bc39390053967e50c703b7c0e  usr/share/doc/apt-utils/NEWS.Debian.gz
-cddc1e3a7b283a91d70ec64434adc619  usr/share/doc/apt-utils/changelog.gz
+e2a2037f326a35920cc270eb4fe6c45d  usr/share/doc/apt-utils/changelog.gz
 fa9fc3fde34b734ee15aecd2066df5b1  usr/share/doc/apt-utils/copyright
 1eba0dddae9c9687d13b5c3901622fa8  usr/share/doc/apt-utils/examples/apt-ftparchive.conf
 99d445e99dfded37b4e0b936c928cd0b  usr/share/locale/ar/LC_MESSAGES/apt-utils.mo

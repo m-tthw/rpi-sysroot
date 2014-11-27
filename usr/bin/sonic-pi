@@ -1,1 +1,3 @@
-/opt/sonic-pi/app/gui/application
+#!/bin/sh
+
+/opt/sonic-pi/bin/sonic-pi

@@ -1636,13 +1636,12 @@ public abstract class KernelLinkImpl extends MathLinkImpl implements KernelLink 
 
 
     ///////////////////////////////////////////////////////////
-
-
+    
     private void discardAnswerNoPacketListeners() throws MathLinkException {
 
 		// We're already synchronized here...
 		Vector v = packetListeners;
-		packetListeners = null;
+		packetListeners = new Vector(0);
 		discardAnswer();
 		packetListeners = v;
 	}

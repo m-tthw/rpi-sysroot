@@ -5,7 +5,7 @@
         tgayley@wolfram.com
 *)
 
-(* :Package Version: 4.7 *)
+(* :Package Version: 4.8 *)
 
 (* :Mathematica Version: 4.0 *)
 
@@ -31,7 +31,7 @@
 
 
 JavaBlock::usage =
-"JavaBlock[expr] causes all new Java objects returned to Mathematica during the evaluation of expr to be released when expr finishes. It is an error to refer to such an object after JavaBlock ends. See the usage message for ReleaseJavaObject for more information. JavaBlock only affects new objects, not additional references to ones that have previously been seen. If a JavaBlock returns a single JavaObject as a result, that object will not be released. JavaBlock is a way to mark a set of objects as temporary so they can be automatically cleaned up when the block of code ends."
+"JavaBlock[expr] causes all new Java objects returned to the Wolfram Language during the evaluation of expr to be released when expr finishes. It is an error to refer to such an object after JavaBlock ends. See the usage message for ReleaseJavaObject for more information. JavaBlock only affects new objects, not additional references to ones that have previously been seen. If a JavaBlock returns a single JavaObject as a result, that object will not be released. JavaBlock is a way to mark a set of objects as temporary so they can be automatically cleaned up when the block of code ends."
 
 BeginJavaBlock::usage =
 "BeginJavaBlock[] and EndJavaBlock[] are equivalent to the JavaBlock function, except that they work across a larger span than the evaluation of a single expression. Every BeginJavaBlock[] must have a paired EndJavaBlock[]."
@@ -49,7 +49,7 @@ ReleaseObject::usage =
 "ReleaseObject is deprecated. The new name is ReleaseJavaObject."
 
 ReleaseJavaObject::usage =
-"ReleaseJavaObject[javaobject] tells the Java memory-management system to forget about any references to the specified JavaObject that are being maintained solely for the sake of Mathematica. The JavaObject in Mathematica is no longer valid after the call. You call ReleaseJavaObject when you are completely finished with an object in Mathematica, and you want to allow it to be garbage-collected in Java."
+"ReleaseJavaObject[javaobject] tells the Java memory-management system to forget about any references to the specified JavaObject that are being maintained solely for the sake of the Wolfram Language. The JavaObject in the Wolfram Language is no longer valid after the call. You call ReleaseJavaObject when you are completely finished with an object in the Wolfram Language, and you want to allow it to be garbage-collected in Java."
 
 
 Begin["`Package`"]

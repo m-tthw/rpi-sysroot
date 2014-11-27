@@ -102,7 +102,8 @@ public class JLinkClassLoader extends ClassLoader {
     // bug 190015. Every time a helper loader does findClass(), it is essential that it go all the way back to here,
     // so that the complete chain of helpers is searched for an already-loaded class. It is not enough for helpers to
     // only search "later" helpers for classes--they must also search earlier ones in the chain as well.
-    synchronized Class findLoadedClassExposed(String name) { return helper.findLoadedClassExposed(name); }
+    // Note that callers should always be synchronized, so this method is not -- and cannot be; cf bug 271621
+    Class findLoadedClassExposed(String name) { return helper.findLoadedClassExposed(name); }
 
     ///////////////////////////////////  Static Interface  //////////////////////////////////
 

@@ -5,7 +5,7 @@
         tgayley@wolfram.com
 *)
 
-(* :Package Version: 4.7 *)
+(* :Package Version: 4.8 *)
 
 (* :Mathematica Version: 4.0 *)
 		     
@@ -30,10 +30,10 @@
 
 
 AllowRaggedArrays::usage =
-"AllowRaggedArrays[True] lets you pass ragged (i.e., non-rectangular) arrays to Java. For example, a method that takes int[][] could be passed {{1,2},{3}}. AllowRaggedArrays[True] can drastically reduce the speed with which large arrays are passed back and forth between Mathematica and Java. Call AllowRaggedArrays[False] to restore the default behavior."
+"AllowRaggedArrays[True] lets you pass ragged (i.e., non-rectangular) arrays to Java. For example, a method that takes int[][] could be passed {{1,2},{3}}. AllowRaggedArrays[True] can drastically reduce the speed with which large arrays are passed back and forth between the Wolfram Language and Java. Call AllowRaggedArrays[False] to restore the default behavior."
 
 $RelaxedTypeChecking::usage =
-"$RelaxedTypeChecking is a flag that can be set to True to speed up the validation performed in Mathematica (via pattern tests) on arrays of data being sent as arguments to Java calls. For a very large matrix, it can be expensive to test that it is, say, a rectangular matrix of integers before it is sent to Java. The speed is gained by making the tests much less strict, so you must make sure that you pass methods exactly the arguments they expect. The default value is False. You can set and reset the value whenever you want; a typical use would be Block[{$RelaxedTypeChecking = True}, callToJava[largeMatrix]]."
+"$RelaxedTypeChecking is a flag that can be set to True to speed up the validation performed in the Wolfram Language (via pattern tests) on arrays of data being sent as arguments to Java calls. For a very large matrix, it can be expensive to test that it is, say, a rectangular matrix of integers before it is sent to Java. The speed is gained by making the tests much less strict, so you must make sure that you pass methods exactly the arguments they expect. The default value is False. You can set and reset the value whenever you want; a typical use would be Block[{$RelaxedTypeChecking = True}, callToJava[largeMatrix]]."
 
 
 Begin["`Package`"]

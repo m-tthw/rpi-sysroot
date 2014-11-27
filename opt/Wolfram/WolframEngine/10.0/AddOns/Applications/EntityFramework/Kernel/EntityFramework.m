@@ -1,91 +1,37 @@
-
+(*System`Quantity;*)
 System`Entity;
 System`EntityValue;
 System`EntityProperty;
 System`EntityProperties;
 System`CommonName;
 System`CanonicalName;
-System`TypeName;
+System`EntityTypeName;
+System`EntityClass;
+System`EntityPropertyClass;
+System`EntityList;
+System`EntityClassList;
 Experimental`FindEntities;
-System`FormatName;
-System`Qualifiers;
-System`SourceEntityType;
-System`StripWrappers;
 Internal`DisableEntityFramework;
 Internal`AddToEntityNameCache;
 Internal`PreloadEntityNameCache;
+Internal`BulkFetchEntityNames;
 
 EntityFramework`MakeEntityFrameworkBoxes;
 
 Begin["EntityFramework`Private`"];
 
 (*symbols to be protected/read protected (except option names FormatName/Qualifiers/SourceEntityType)*)
-$readProtectedSymbols={Entity, EntityValue, EntityProperty, Experimental`FindEntities};
-$protectedSymbols = {FormatName, Qualifiers, SourceEntityType};
+$readProtectedSymbols={Entity, EntityValue, EntityClass, EntityProperty, EntityPropertyClass, 
+	Experimental`FindEntities, CanonicalName, CommonName, EntityList, EntityClassList,
+	EntityProperties,EntityTypeName};
 	
 Unprotect@@$readProtectedSymbols;
-Unprotect@@$protectedSymbols;
 
-
-
-(*** temporary style options until stylesheet is in place ***)
-
-$entityStyleBoxOptions = If[Quiet[!MatchQ[CurrentValue[{StyleDefinitions,"Entity"}], {__}]],
- { 
-  ShowStringCharacters -> False, 
-  TemplateBoxOptions->{
-    Editable -> False,  
-    DisplayFunction -> (
-      TooltipBox[
-        FrameBox[StyleBox[#1, FontFamily -> "Helvetica", FontColor -> RGBColor[0.395437, 0.20595, 0.061158]]], 
-        #3
-      ]&), 
-    InterpretationFunction -> (#2 & )
-  },
-  FrameBoxOptions -> {
-    FrameStyle -> RGBColor[1., 0.504768, 0.], 
-    Background -> RGBColor[1., 0.980392, 0.921569], 
-    FrameMargins -> {{5, 5}, {1.5, 1.5}}, 
-    ImageMargins -> {{2, 2}, {2, 2}}, 
-    BaselinePosition -> Scaled[0.3], 
-  RoundingRadius -> 4
-  }
- }
- ,
- {}
-];
-
-$entityPropertyStyleBoxOptions = If[Quiet[!MatchQ[CurrentValue[{StyleDefinitions,"EntityProperty"}], {__}]],
- {
-  ShowStringCharacters -> False, 
-  TemplateBoxOptions->{
-    Editable -> False,  
-    DisplayFunction -> (
-      TooltipBox[
-        FrameBox[StyleBox[#1, FontSlant -> Italic, FontWeight -> Plain, FontFamily -> "Helvetica", FontColor -> RGBColor[0.395437, 0.20595, 0.061158]]], 
-        #3
-      ]&), 
-   InterpretationFunction -> (#2 & )
-  },
-  FrameBoxOptions -> {
-    FrameStyle -> RGBColor[0.94227,0.703639,0.033387], 
-    Background -> RGBColor[1., 0.980392, 0.921569], 
-    FrameMargins -> {{5, 5}, {1.5, 1.5}}, 
-    ImageMargins -> {{2, 2}, {2, 2}}, 
-    BaselinePosition -> Scaled[0.3], 
-    RoundingRadius -> 4
-  }
- }
- ,
- {}
-];
-
-
+$tag = "EntityFrameworkCatchThrowTag";
 (*** Formatting code ***)
-
-(* This first part will move to StartUp/Typeset/TypesetInit.m when I'm sure
-   EntityFramework`MakeEntityFrameworkBoxes in in the builds *)
-(*protected = Unprotect[System`Entity, System`EntityProperty, EntityFramework`MakeEntityFrameworkBoxes];*)
+Needs["WolframAlphaClient`"];(*initialize WAClient*)
+(* this should only have to live in TypesetInit.m, but for some reason gets clobbered when this is loaded... *)
+Unprotect[System`Entity, System`EntityProperty, EntityFramework`MakeEntityFrameworkBoxes];
 
 SetAttributes[EntityFramework`MakeEntityFrameworkBoxes, HoldAllComplete];
 
@@ -96,281 +42,318 @@ Entity /: MakeBoxes[x_Entity, fmt_] := (Entity;(*trigger auto-loader*)
 EntityProperty /: MakeBoxes[x_EntityProperty, fmt_] := (Entity;(*trigger auto-loader*)
   With[{boxes = EntityFramework`MakeEntityFrameworkBoxes[x, fmt]}, boxes /; boxes =!= $Failed])
 
-(*Protect @@ protected;*)
+EntityValue /: MakeBoxes[x_EntityValue, fmt_] := (Entity;(*trigger auto-loader*)
+  With[{boxes = EntityFramework`MakeEntityFrameworkBoxes[x, fmt]}, boxes /; boxes =!= $Failed])
+  
+EntityClass /: MakeBoxes[x_EntityClass, fmt_] := (Entity;(*trigger auto-loader*)
+  With[{boxes = EntityFramework`MakeEntityFrameworkBoxes[x, fmt]}, boxes /; boxes =!= $Failed])
 
-(* MakeExpression rules are needed when no front end is present *)
+EntityPropertyClass /: MakeBoxes[x_EntityPropertyClass, fmt_] := (Entity;(*trigger auto-loader*)
+  With[{boxes = EntityFramework`MakeEntityFrameworkBoxes[x, fmt]}, boxes /; boxes =!= $Failed])
 
-MakeExpression[TemplateBox[{_, interp_, ___}, "Entity", ___], fmt_] := MakeExpression[interp, fmt];
-
-MakeExpression[TemplateBox[{_, interp_, ___}, "EntityProperty", ___], fmt_] := MakeExpression[interp, fmt];
+(* MakeExpression rules now live in TypesetInit.m *)
 
 $entitynametimeout = 0.8; (* Seconds timeout for single entity formatting *)
 
-makeTooltip[e_] := With[{str=ToString[DeleteCases[e, FormatName|SourceEntityType -> _, Infinity], InputForm]}, 
+makeTooltip[e_] := With[{str=ToString[e, InputForm]}, 
    MakeBoxes[str, StandardForm]
 ]
 
-entityLabelRules = {
-  "AdministrativeDivision"->"administrative division",
-  "Aircraft"->"aircraft",
-  "Airline"->"airline",
-  "Airport"->"airport",
-  "AmusementPark"->"amusement park",
-  "AmusementParkRide"->"amusement park ride",
-  "AmusementParkType"->"amusement park type",
-  "Artwork"->"artwork",
-  "Astronomical"->"astronomical entity",
-  "AstronomicalObservatory"->"astronomical observatory",
-  "AtmosphericLayer"->"atmospheric layer",
-  "Battery"->"battery",
-  "Biomolecule"->"biomolecule",
-  "BoardGame"->"board game",
-  "Book"->"book",
-  "Bridge"->"bridge",
-  "BroadcastStation"->"broadcast station",
-  "BroadcastStationClassification"->"broadcast station classification",
-  "Building"->"building",
-  "Castle"->"castle",
-  "CatBreed"->"cat breed",
-  "Character"->"character",
-  "Chemical"->"chemical",
-  "City"->"city",
-  "ClimateType"->"climate type",
-  "Cloud"->"cloud",
-  "Color"->"color",
-  "CommonMaterial"->"common material",
-  "Company"->"company",
-  "ComputationalComplexityClass"->"computational complexity class",
-  "Constellation"->"constellation",
-  "ContinuedFraction"->"continued fraction",
-  "ContinuedFractionSource"->"continued fraction source",
-  "Country"->"country",
-  "CrystalFamily"->"crystal family",
-  "CrystallographicSpaceGroup"->"crystallographic space group",
-  "CrystalSystem"->"crystal system",
-  "Dam"->"dam",
-  "DeepSpaceProbe"->"deep space probe",
-  "Desert"->"desert",
-  "Dinosaur"->"dinosaur",
-  "Disease"->"disease",
-  "DisplayFormat"->"display format",
-  "DistrictCourt"->"district court",
-  "DogBreed"->"dogbreed",
-  "DrugChemical"->"drugchemical",
-  "EarthImpact"->"earthimpact",
-  "EclipseType"->"eclipsetype",
-  "Element"->"element",
-  "EthnicGroup"->"ethnic group",
-  "FamousAlgorithm"->"algorithm",
-  "FamousChemistryProblem"->"chemistry problem",
-  "FamousGem"->"gem",
-  "FamousMathGame"->"math game",
-  "FamousMathProblem"->"math problem",
-  "FamousPhysicsProblem"->"physics problem",
-  "FictionalCharacter"->"fictional character",
-  "FileFormat"->"file format",
-  "Financial"->"financial entity",
-  "FiniteGroup"->"finite group",
-  "FrequencyAllocation"->"frequency allocation range",
-  "Gene"->"gene",
-  "Geodesy"->"geodetic entity",
-  "GeologicalLayer"->"geological layer",
-  "GeologicalPeriod"->"geological period",
-  "Geometry"->"geometry",
-  "GivenName"->"given name",
-  "Glacier"->"glacier",
-  "Graph"->"graph",
-  "HistoricalCountry"->"historical country",
-  "HistoricalEvent"->"historical event",
-  "HistoricalPeriod"->"historical period",
-  "HistoricalSite"->"historic site",
-  "Hospital"->"hospital",
-  "IceAge"->"iceage",
-  "IntegerSequence"->"integer sequence",
-  "Invention"->"invention",
-  "Island"->"island",
-  "Isotope"->"isotope",
-  "Knot"->"knot",
-  "Lake"->"lake",
-  "Lamina"->"lamina",
-  "Language"->"language",
-  "Lattice"->"lattice",
-  "LatticeSystem"->"lattice system",
-  "Library"->"library",
-  "MannedSpaceMission"->"mannedspacemission",
-  "MathematicalFunctionIdentity"->"mathematicalfunctionidentity",
-  "MathWorld"->"Math World topic",
-  "MatterPhase"->"matter phase",
-  "MedicalTest"->"medical test",
-  "MeteorShower"->"meteor shower",
-  "Mine"->"mine",
-  "Mineral"->"mineral",
-  "MoonPhase"->"moonphase",
-  "Mountain"->"mountain",
-  "Movie"->"movie",
-  "Museum"->"museum",
-  "MusicAct"->"music act",
-  "MusicAlbum"->"music album",
-  "MusicAlbumRelease"->"music album release",
-  "MusicalInstrument"->"musical instrument",
-  "MusicWork"->"music work",
-  "MusicWorkRecording"->"music work recording",
-  "Mythology"->"mythological figure",
-  "NaturalHazard"->"natural hazard",
-  "NaturalResource"->"natural resource",
-  "NotableComputer"->"computer",
-  "NuclearExplosion"->"nuclear explosion",
-  "NuclearReactor"->"nuclear reactor",
-  "ObjectStatus"->"object status",
-  "Ocean"->"ocean",
-  "Park"->"park",
-  "Particle"->"particle",
-  "ParticleAccelerator"->"particle accelerator",
-  "Periodical"->"periodical",
-  "PeriodicTiling"->"periodic tiling",
-  "Person"->"person",
-  "PhysicalSystem"->"physical system",
-  "PlaneCurve"->"plane curve",
-  "Pokemon"->"Pokemon",
-  "PokemonAbilities"->"Pokemon ability",
-  "PokemonGeneration"->"Pokemon generation",
-  "PokemonPokedexColor"->"Pokedex color",
-  "PokemonType"->"Pokemon type",
-  "Polyhedron"->"polyhedron",
-  "PopularCurve"->"popular curve",
-  "PreservationStatus"->"historic preservation status",
-  "Protein"->"protein",
-  "Religion"->"religion",
-  "River"->"river",
-  "Rocket"->"rocket",
-  "RocketFunction"->"rocket function",
-  "Satellite"->"satellite",
-  "Ship"->"ship",
-  "SNP"->"SNP",
-  "SolarSystemFeature"->"solar system feature",
-  "SpaceCurve"->"space curve",
-  "Species"->"species specification",
-  "SportObject"->"sport object",
-  "Stadium"->"stadium",
-  "StormType"->"storm type",
-  "Surface"->"surface",
-  "Surname"->"surname",
-  "TerrainType"->"terrain type",
-  "TropicalStorm"->"tropical storm",
-  "Tunnel"->"tunnel",
-  "UnderseaFeature"->"undersea feature",
-  "University"->"university",
-  "USPublicSchool"->"public school",
-  "USSchoolDistrict"->"school district",
-  "VisualArtsArtForm"->"art form",
-  "VisualArtsArtGenre"->"art genre",
-  "Volcano"->"volcano",
-  "WallpaperGroup"->"wallpaper group",
-  "Waterfall"->"waterfall",
-  "Wood"->"wood",
-  "Word"->"word",
-  "WritingSystem"->"writing system",
-  "ZIPCode"->"ZIP code"
-};
+MakeTypesetBoxes = Function[Null, Block[{BoxForm`UseTextFormattingQ = False}, MakeBoxes[##]], HoldAllComplete];
+
 
 EntityFramework`MakeEntityFrameworkBoxes[__] = $Failed;
 
-EntityFramework`MakeEntityFrameworkBoxes[e:Entity[etype_, ename_, opts___], StandardForm]/;!TrueQ[$dontFormatEntity] := 
+(* Entity[] formatting *)
+
+EntityFramework`MakeEntityFrameworkBoxes[e:Entity[etype_String, ename:(_String|_List|_Integer), opts___], StandardForm]/;!TrueQ[$dontFormatEntity] := 
   With[{fname = GetEntityName[e, $entitynametimeout]},
     With[{tooltip = makeTooltip[e],
       label = ToBoxes[If[StringQ[Unevaluated[etype]], etype /. entityLabelRules, "unknown"], StandardForm],
       boxes = Block[{$dontFormatEntity=True}, 
-        With[{strip=DeleteCases[e, "InternalSetFormatName"->_, Infinity]}, MakeBoxes[strip, StandardForm]]]
+        With[{strip=e}, MakeBoxes[strip, StandardForm]]]
       },
-      TemplateBox[{MakeBoxes[fname,StandardForm], boxes, tooltip, label}, "Entity",
-          Sequence @@ If[$entityStyleBoxOptions === {}, {}, {InterpretationFunction -> (#2&), BaseStyle -> $entityStyleBoxOptions}]
+      TemplateBox[{MakeTypesetBoxes[fname,StandardForm], boxes, tooltip, label}, "Entity"
       ]
-    ]/; StringQ[fname]
+    ]/; OKEntityNameQ[fname]
   ]
 
-EntityFramework`MakeEntityFrameworkBoxes[e:Entity[etype_, ename_, opts___], TraditionalForm] := 
-  With[{fname = GetEntityName[e, $entitynametimeout]}, InterpretationBox[fname, e]/;StringQ[fname]]
+EntityFramework`MakeEntityFrameworkBoxes[e:Entity[etype_String, ename:(_String|_List|_Integer), opts___], TraditionalForm] := 
+  With[{fname = GetEntityName[e, $entitynametimeout]},
+    With[{boxes = MakeTypesetBoxes[fname, TraditionalForm]},
+      InterpretationBox[boxes, e, BaseStyle -> "Entity"]
+    ]/;OKEntityNameQ[fname]
+  ]
 
-EntityFramework`MakeEntityFrameworkBoxes[e:EntityProperty[pname_, opts:OptionsPattern[]], StandardForm]/;!TrueQ[$dontFormatEntity] := 
-  With[{fname = OptionValue[EntityProperty,{opts},FormatName]},
+(* EntityProperty[] formatting *)
+
+EntityFramework`MakeEntityFrameworkBoxes[e:EntityProperty[etype_String, pname:(_String|_List), opts:OptionsPattern[]], StandardForm]/;!TrueQ[$dontFormatEntity] := 
+  With[{fname = GetEntityName[e, $entitynametimeout]},
     With[{tooltip = makeTooltip[e],
       boxes = Block[{$dontFormatEntity=True}, MakeBoxes[e, StandardForm]]},
-      TemplateBox[{MakeBoxes[fname,StandardForm], boxes, tooltip}, "EntityProperty",
-          Sequence @@ If[$entityPropertyStyleBoxOptions === {}, {}, {InterpretationFunction -> (#2&), BaseStyle -> $entityPropertyStyleBoxOptions}]]
-    ]/; StringQ[fname]
+      TemplateBox[{MakeTypesetBoxes[fname,StandardForm], boxes, tooltip}, "EntityProperty"]
+    ]/; OKEntityNameQ[fname]
   ]
   
-EntityFramework`MakeEntityFrameworkBoxes[e:EntityProperty[pname_, opts:OptionsPattern[]], TraditionalForm] := 
-  With[{fname = OptionValue[EntityProperty,{opts},FormatName]}, InterpretationBox[fname, e]/;StringQ[fname]]
+EntityFramework`MakeEntityFrameworkBoxes[e:EntityProperty[etype_String,pname:(_String|_List), opts:OptionsPattern[]], TraditionalForm] := 
+  With[{fname = GetEntityName[e, $entitynametimeout]},
+    With[{boxes = MakeTypesetBoxes[fname, TraditionalForm]},
+      InterpretationBox[boxes, e, BaseStyle -> "EntityProperty"]
+    ]/;OKEntityNameQ[fname]
+  ]
 
+(* EntityValue[] formatting *)
 
+EntityFramework`MakeEntityFrameworkBoxes[EntityValue[e:(_Entity | _EntityClass), prop_EntityProperty], fmt:StandardForm] := 
+Module[{eboxes = MakeBoxes[e, fmt], propboxes = MakeBoxes[prop, fmt]},
+	If[ TrueQ[BoxForm`$UseTextFormattingForEntityValue] || Head[eboxes] =!= TemplateBox || Head[propboxes] =!= TemplateBox,
+		RowBox[{"EntityValue", "[", RowBox[{eboxes, ",", propboxes}], "]"}],
+		TemplateBox[{eboxes, propboxes}, "EntityValue"]
+	]
+]
+
+(* EntityClass[] formatting *)
+
+EntityFramework`MakeEntityFrameworkBoxes[e:EntityClass[etype_String, ename:(_String|_List|All), opts___], StandardForm]/;!TrueQ[$dontFormatEntity] := 
+  With[{fname = GetEntityName[e, $entitynametimeout]},
+    With[{tooltip = makeTooltip[e],
+      label = ToBoxes[If[StringQ[Unevaluated[etype]], etype /. entityClassLabelRules, "unknown"], StandardForm],
+      boxes = Block[{$dontFormatEntity=True}, 
+        MakeBoxes[e, StandardForm]]
+      },
+      TemplateBox[{MakeTypesetBoxes[fname,StandardForm], boxes, tooltip, label}, "EntityClass"]
+    ]/; OKEntityNameQ[fname]
+  ]
+
+EntityFramework`MakeEntityFrameworkBoxes[e:EntityClass[etype_String, ename:(_String|_List|All), opts___], TraditionalForm] := 
+  With[{fname = GetEntityName[e, $entitynametimeout]},
+    With[{boxes = MakeTypesetBoxes[fname, TraditionalForm]},
+      InterpretationBox[boxes, e, BaseStyle -> "EntityClass"]
+    ]/;OKEntityNameQ[fname]
+  ]
+
+(* EntityPropertyClass[] formatting *)
+
+EntityFramework`MakeEntityFrameworkBoxes[e:EntityPropertyClass[ptype_String, pname:(_String|_List), opts:OptionsPattern[]], StandardForm]/;!TrueQ[$dontFormatEntity] := 
+  With[{fname = GetEntityName[e, $entitynametimeout]},
+    With[{tooltip = makeTooltip[e],
+      boxes = Block[{$dontFormatEntity=True}, MakeBoxes[e, StandardForm]]},
+      TemplateBox[{MakeTypesetBoxes[fname,StandardForm], boxes, tooltip}, "EntityPropertyClass"]
+    ]/; OKEntityNameQ[fname]
+  ]
+  
+EntityFramework`MakeEntityFrameworkBoxes[e:EntityPropertyClass[ptype_String, pname:(_String|_List), opts:OptionsPattern[]], TraditionalForm] := 
+  With[{fname = GetEntityName[e, $entitynametimeout]},
+    With[{boxes = MakeTypesetBoxes[fname, TraditionalForm]},
+      InterpretationBox[boxes, e, BaseStyle -> "EntityPropertyClass"]
+    ]/;OKEntityNameQ[fname]
+  ]
 
 (*** Entity Name Cache ***)
 (*** Very basic down values based, partly because the plan is to cache it on disk as well ***)
 $EntityNamesMXFile = FileNameJoin[{DirectoryName[DirectoryName[$InputFileName]],"Resources",$SystemID,"EntityNames.mx"}];
-$MaxEntityCacheSizeTotal = 10^6;
+$EntityNameCacheDirectory = FileNameJoin[{DirectoryName[DirectoryName[$InputFileName]],"Resources",$SystemID}]
+$MaxEntityCacheSizeTotal = 4*10^6;
 
-loadEntityNamesMX[file_String] := Module[{},
+$specialCacheEntityTypes = {"City", "Chemical"};
+
+initSpecialCacheCases[]:=Module[{},
+	Set[specialCacheNotLoadedQ[#],True]&/@$specialCacheEntityTypes
+];
+
+markCacheLoaded["City"] := Set[specialCacheNotLoadedQ["City"],False]
+markCacheLoaded["Chemical"] := Set[specialCacheNotLoadedQ["Chemical"],False]
+
+
+EntityNameCacheFileLookup["City"] = FileNameJoin[{$EntityNameCacheDirectory,"CityEntityNames.mx"}]
+EntityNameCacheFileLookup["Chemical"] = FileNameJoin[{$EntityNameCacheDirectory,"ChemicalEntityNames.mx"}]
+
+loadMXFile[file_String] := Module[{},
 	If[FileExistsQ[file],
-		Get[file](*TODO: add any other special error checking incase MX file is garbled*)
+		Get[file]
 	]
 ];
 
 initEntityNameCache[] := Module[{},
-  Clear[rawENC];
+  Clear[rawENC,rawENClass,rawEPC,rawEPClass,rawEPQ];
   rawENC[__] = None;
-  loadEntityNamesMX[$EntityNamesMXFile];(*initialize with shipping EntityNames if available*)
+  rawENClass[__] = None;
+  rawEPC[__] = None;
+  rawEPClass[__] = None;
+  rawEPQ[__] = None;
+  loadMXFile[$EntityNamesMXFile];(*initialize with shipping EntityNames if available*)
   $rawENCSize = 0;(*build-in entities don't count against cache size*)
+  specialCacheNotLoadedQ[__]=False;(*reset loading flags for special data-paclet caches*)
+  initSpecialCacheCases[];
+  EPDC[__] = False;
 ];
 initEntityNameCache[];
 
-EntityNameCacheFetch[{type_, name_}] := rawENC[{type, name}]  (* add file loading later *)
-EntityNameCacheAdd[{type_, name_}, fname_String] := Module[{},
-  If[$rawENCSize > $MaxEntityCacheSizeTotal, initEntityNameCache[]];
-  If[!StringQ[rawENC[{type, name}]], $rawENCSize++];
-  rawENC[{type, name}] = fname
-]
-EntityNameCacheClear[] := initEntityNameCache[]
-EntityNameCacheSize[] := $rawENCSize;
-Internal`AddToEntityNameCache[x_List] := EntityNameCacheAdd/@x
-Internal`AddToEntityNameCache[x__] = EntityNameCacheAdd[x];  (* externally exposed function *)
 
-Internal`PreloadEntityNameCache[expr_]:= Module[{res = {}, entities=Cases[Hold[expr], Entity[type_,name_]/;rawENC[{type,name}]=!=None, Infinity]},
+EntityNameCacheFetch[Entity[type_, name_]]/;specialCacheNotLoadedQ[type] := Module[{},
+	markCacheLoaded[type];
+	loadMXFile[EntityNameCacheFileLookup[type]];
+	EntityNameCacheFetch[Entity[type,name]]
+]
+EntityNameCacheFetch[Entity[type_, name_]] := rawENC[{type, name}]  (* add file loading later *)
+EntityNameCacheFetch[EntityClass[type_, name_]] := rawENClass[{type, name}]
+EntityNameCacheFetch[EntityProperty[type_, name_]] := rawEPC[{type, name}]
+EntityNameCacheFetch[EntityPropertyClass[type_, name_]] := rawEPClass[{type,name}]
+EntityNameCacheFetch[EntityPropertyQualifier[type_, prop_,name_]] := rawEPQ[{type,prop,name}]
+EntityNameCacheFetch[EntityPropertyQualifier[type_, prop_, qualname_, name_]] := With[{first=rawEPQ[{type,prop,qualname,name}]},
+	If[UnsameQ[first,None],first,EntityNameCacheFetch[EntityPropertyQualifier[type, prop,name]]]](*TODO: remove once this is finalized*)
+
+cachableNameQ[_?OKEntityNameQ]:=True
+cachableNameQ[_Missing] := True
+cachableNameQ[_] := False
+
+EntityNameCacheAdd[h_[type_, name_,extra___], fname_?cachableNameQ] := Catch[With[
+	{container=Switch[h,
+		Entity,rawENC,
+		EntityClass,rawENClass,
+		EntityProperty,rawEPC,
+		EntityPropertyClass,rawEPClass,
+		EntityPropertyQualifier, rawEPQ,
+		_,Throw[$Failed,$tag]]},
+  If[$rawENCSize > $MaxEntityCacheSizeTotal, initEntityNameCache[]];
+  If[!OKEntityNameQ[container[{type, name, extra}]], $rawENCSize++];
+  container[{type, name, extra}] = fname
+],$tag]
+
+EntityPropertyDataCachingAdd[prop:{_String,_String},True] := Set[EPDC[prop],True]
+
+EntityNameCacheClear[] := initEntityNameCache[]
+
+EntityNameCacheSize[] := $rawENCSize;
+
+Internal`AddToEntityNameCache[x_List] := EntityNameCacheAdd[Apply[Entity,#,{1}]]&/@x
+Internal`AddToEntityNameCache[entity_List,name_] := EntityNameCacheAdd[Entity@@entity,name]
+Internal`AddToEntityNameCache[x__] := EntityNameCacheAdd[x];  (* externally exposed function *)
+
+Internal`PreloadEntityNameCache[expr_]:= Module[{res = {}, entities=Cases[Hold[expr], Entity[type_,name_]/;rawENC[{type,name}]===None, Infinity]},
 	If[entities=!={}, res = Internal`MWACompute["MWAEntityNames",{DeleteDuplicates[entities]}]];
-	If[MatchQ[res, {__Rule}],
-		EntityNameCacheAdd[#[[1]], #[[2]]] &/@ res;
+	If[MatchQ[res, (HoldComplete|Hold)[{__Rule}]],
+		EntityNameCacheAdd[Entity@@#[[1]], #[[2]]] &/@ ReleaseHold[res];
 		Length[res]
 		,
 		0
 	]
 ]
 
+(* used by Dataset component for faster formatting -- taliesinb *)
+Internal`BulkFetchEntityNames[list_] := Module[
+	{res = {}, entities= DeleteCases[list, Entity[type_,name_]/;rawENC[{type,name}] =!= None]},
+	If[entities=!={}, 
+		 entities = DeleteDuplicates[entities];
+		 If[Length[entities] > 32,
+		 	GeneralUtilities`TemporaryInformation["Retrieving Entity names"]; (* if GU isn't loaded, well, nothing happens *)
+		 ];
+		res = Internal`MWACompute["MWAEntityNames",{DeleteDuplicates[entities]}];
+	];
+	If[MatchQ[res, (HoldComplete|Hold)[{__Rule}]],
+		EntityNameCacheAdd[Entity@@#[[1]], #[[2]]] &/@ ReleaseHold[res];
+	];		
+	Replace[rawENC[{#[[1]],#[[2]]}]& /@ list, None -> $Failed, {1}]
+]
+
 (*** End Entity Name Cache code ***)
-
-
-getEntityNameServer[type_String,name_]:=Module[{apires},
-  apires = Internal`MWACompute["MWAEntityNames",{{type, name}}];
+OKEntityNameQ[_String]:=True
+OKEntityNameQ[Null]:=False
+OKEntityNameQ[$Failed]:=False
+OKEntityNameQ[_$Failed]:=False
+OKEntityNameQ[_rawENC]:=False
+OKEntityNameQ[_rawENClass]:=False
+OKEntityNameQ[_rawEPC]:=False
+OKEntityNameQ[_rawEPClass]:=False
+OKEntityNameQ[_rawEPQ]:=False
+OKEntityNameQ[_Symbol]:=False
+OKEntityNameQ[_Missing]:=False
+OKEntityNameQ[_Rule]:=False
+OKEntityNameQ[_List]:=False
+OKEntityNameQ[other_]:=With[{n=ToString[Head[other]]},Catch[(*TODO: put something more robust here*)
+	MemberQ[$ContextPath,Quiet[Check[Context[n],Throw[False,OKEntityNameQ]]]],
+	OKEntityNameQ
+]]
+(*TODO:Migrate to MWANames once it's working*)
+getEntityNameServer[Entity[type_String,name_]]:=Module[{apires},
+  apires = Internal`MWACompute["MWAEntityNames",{Entity[type, name]}];
   apires = ReleaseHold[apires];
-  If[!StringQ[apires], $Failed, apires]
+  Which[
+  	StringQ[apires], apires,
+  	MatchQ[apires,{_Rule}], Last[First[apires]],
+  	OKEntityNameQ[apires], apires,
+  	True, $Failed
+  ]
 ]
 
-Attributes[GetEntityName] = {HoldFirst}; (* to prevent auto-stripping of InternalSetFormatName option *)
-GetEntityName[Entity[etype_, ename_, "InternalSetFormatName" -> fname_, ___], _] := Module[{},
-  EntityNameCacheAdd[{etype, ename}, fname];
-  fname
+getEntityNameServer[EntityClass[type_String,name_]]:=Module[{apires},
+  apires = Internal`MWACompute["MWANames",{EntityClass[type,name]}];
+  apires = ReleaseHold[apires];
+  If[!MatchQ[apires,{___,"EntityClassNameRules" -> {_Rule},___}], $Failed, 
+  	{type,name}/.("EntityClassNameRules"/.apires)]
 ]
-GetEntityName[Entity[etype_, ename_, opts___], timeout_] :=
+
+getEntityNameServer[EntityProperty[type_String,name_]]:=Module[{apires},
+  apires = Internal`MWACompute["MWANames",{EntityProperty[type,name]}];
+  apires = ReleaseHold[apires];
+  If[!MatchQ[apires,{___,"PropertyNameRules" -> {_Rule},___}], $Failed, 
+  	{type,name}/.("PropertyNameRules"/.apires)]
+]
+
+getEntityNameServer[EntityProperty[type_String,name_,qualifiers_List]]:=Module[{apires,qual},
+  apires = Internal`MWACompute["MWANames",{EntityProperty[type,name,qualifiers]}];
+  apires = ReleaseHold[apires];
+  If[!MatchQ[apires,{___,"PropertyNameRules" -> {_Rule},___}], $Failed, 
+  	qual=replaceWithDefault["QualifierValueNameRules",apires,{}];
+  	qual=({type,name,Sequence@@#}&/@qualifiers)/.qual;
+  	qual = (qual /. {type,name,_,x_} :> {type,name,x})/.replaceWithDefault["QualifierValueNameRules",apires,{}];
+  	qual = qual /. {type,name,x_} :> x;
+  	qual = (qual /. Interval[i_List]:>Row[i,"to"]) /. date_DateObject :> DateString[date];
+  	{
+  		{type,name}/.replaceWithDefault["PropertyNameRules",apires,{}],
+  		qual
+  		}]
+]
+
+getEntityNameServer[EntityPropertyClass[type_String,name_]]:=Module[{apires},
+  apires = Internal`MWACompute["MWANames",{EntityPropertyClass[type,name]}];
+  apires = ReleaseHold[apires];
+  If[!MatchQ[apires,{___,"PropertyClassNameRules" -> {_Rule},___}], $Failed, 
+  	{type,name}/.("PropertyClassNameRules"/.apires)]
+]
+
+getEntityNameServer[other___] := $Failed
+
+makeEPQualifierName[None,___] := None
+makeEPQualifierName[propName_, qualNames_List] := Row[
+	{propName, "\[ThinSpace]|\[ThinSpace]", Row[
+	DeleteCases[qualNames,None],
+	";"]}
+]
+
+
+(*special case for EntityProperty with Qualifiers*)
+GetEntityName[EntityProperty[etype_,ename_,qualifiers:{_Rule..}], timeout_] :=
+Module[{propName = None, qualNames = None},
+	propName = EntityNameCacheFetch[EntityProperty[etype, ename]];
+	qualNames = Map[EntityNameCacheFetch[EntityPropertyQualifier[etype,ename,Sequence@@#]]&,qualifiers];
+	If[Not[FreeQ[{propName,qualNames},None]] && timeout >0 ,
+		If[Length[#]===2,{propName,qualNames}=#]&[TimeConstrained[getEntityNameServer[EntityProperty[etype, ename,qualifiers]], timeout, $Failed]];
+		EntityNameCacheAdd[EntityProperty[etype, ename],propName];
+		Thread[EntityNameCacheAdd[Map[EntityPropertyQualifier[etype, ename, Sequence@@#] &, qualifiers], qualNames]]
+	];
+	makeEPQualifierName[propName,qualNames]
+]
+
+GetEntityName[h_[etype_, ename_, opts___], timeout_] :=
 Module[{res = None},
-  res = Cases[Flatten[{opts}], ("FormatName"|FormatName->x_):>x];
-  If[res =!= {}, Return[res[[1]]]];
-  res = EntityNameCacheFetch[{etype, ename}];
+  res = EntityNameCacheFetch[h[etype, ename]];
   If[res === None && timeout > 0,
-    res = TimeConstrained[getEntityNameServer[etype, ename], timeout, $Failed];
-    EntityNameCacheAdd[{etype, ename}, res]  (* only fires if res is _String *)
+    res = TimeConstrained[getEntityNameServer@@List[h[etype, ename]], timeout, $Failed];
+    EntityNameCacheAdd[h[etype, ename], res]  (* only fires if res is _String *)
   ];
   res
 ]
-
 
 
 (* takes list of message data from MWACompute and issues the messages *)
@@ -379,17 +362,7 @@ issueMWAMessages[msg_]:=Cases[
   {{s_Symbol,tag_String},args___}:>Message[MessageName[s,tag],args],Infinity]
 
 
-
-Options[EntityProperty]={FormatName->None, Qualifiers->{}, SourceEntityType->{}};
-
-(* Experimental stripping of "InternalSetFormatName", probably will not use this *)
-(*
-Entity[etype_, ename_, "InternalSetFormatName" -> fname_, rest___] := Module[{},
-  EntityNameCacheAdd[{etype, ename}, fname];
-  Entity[etype, ename, rest]
-]
-*)
-
+Unprotect[EntityProperty,EntityPropertyClass];
 
 (**  Core EntityValue  code **)
 
@@ -403,27 +376,105 @@ ConvertTemporaryMWASymbols[x_, newcontext_String:"Global`"] := Module[{names, ne
 
 ]
 
+Internal`CacheEntityNames[res_] := Module[{rules,apires=ReleaseHold[res]},
+	If[MatchQ[apires,{_Rule..}],
+		rules = replaceWithDefault["EntityNameRules",apires, {}];
+	    EntityNameCacheAdd[Entity@@#[[1]], #[[2]]] &/@ rules;
+	    rules = replaceWithDefault["EntityClassNameRules",apires, {}];
+	    EntityNameCacheAdd[EntityClass@@#[[1]], #[[2]]] &/@ rules;
+	    rules = replaceWithDefault["PropertyNameRules",apires, {}];
+	    EntityNameCacheAdd[EntityProperty@@#[[1]], #[[2]]] &/@ rules;
+	    rules = replaceWithDefault["PropertyClassNameRules",apires, {}];
+	    EntityNameCacheAdd[EntityPropertyClass@@#[[1]], #[[2]]] &/@ rules;
+	    rules = replaceWithDefault["QualifierValueNameRules", apires, {}];
+	    EntityNameCacheAdd[EntityPropertyQualifier@@#[[1]], #[[2]]] &/@ rules;
+	    rules = replaceWithDefault["CachingRules", apires, {}];
+	    EntityPropertyDataCachingAdd@@#& /@ rules;
+	]
+]
+
 ReleaseMWAComputeHold=ReleaseHold;   (* possibly add security features here *)
+SetAttributes[Internal`MWASymbols`MWAData, HoldAll];(*see 268678*)
 
 replaceWithDefault[expr_,rules_,default_,level_:{0}]:=Replace[expr,Flatten[{rules,_->default}],level]
+Unprotect[EntityValue]; (*deal with weird edge-case; sometimes get re-protected during loading*)
+$GetEntitiesInBatches = True;(*on by default*)
+$CacheEntityMembers = True; (*on by default*)
+$CacheEntityData = False; (*off by default*)
+$GetEntityDataInBatches = True;(*on by default*)
+$GetEntityClassDataInBatches = True;(*on by default*)
 
-Options[EntityValue] = {StripWrappers -> False};
-(* This needs argument checking added *)
-$GetEntitiesInBatches = False;(*off by default*)
-EntityValue[class:(_Entity|_String),"Entities"]/;TrueQ[$GetEntitiesInBatches] := GetAllEntities[class]
-EntityValue[e___]:=Module[{res,apires, rules, msg},
+$SpecialEVStrings = {
+	"Entities","EntityClasses","EntityCount","Properties",
+	"EntityCanonicalNames", "EntityClassCanonicalNames","RandomEntities",
+	"PropertyCanonicalNames","SampleEntities","SampleEntityClasses",
+	"EntityClassCount","PropertyClasses","PropertyClassCanonicalNames",
+	"RandomEntityClasses"};
+$SpecialEVRanges = {
+	{"RandomEntities", _} , {"Entities", _} , {"EntityCanonicalNames", _} , 
+	{"EntityClasses", _} , {"RandomEntityClasses", _} , {"Properties", _}, 
+	{"PropertyClasses", _}, {"EntityClassCanonicalNames", _}, 
+	{"PropertyCanonicalNames", _}, {"PropertyClassCanonicalNames", _}};
+$SpecialEVPatterns = Alternatives@@Join[$SpecialEVStrings,$SpecialEVRanges];
+$BatchedQualifiers = {"EntityAssociation", "Date", "Note"};
+$UnbatchedQualifierPatterns = With[{alts=Alternatives@@$BatchedQualifiers},{_,Except[alts]}];
+
+getQueryID[]:=ExportString[Hash[{$MachineID,$LicenseID,AbsoluteTime[]}],"Base64"](*TODO: replace with CreateUUID if doesn't req loading CloudObject*)
+$EVQIDF = True;
+
+EntityValue[args___]/;TrueQ[$EVQIDF]:=Block[{Internal`$QueryID=getQueryID[],$EVQIDF=False,res},
+		res = iEntityValue[args];
+		res /; res =!= $Failed
+	]
+EntityValue[args___] := With[{res=iEntityValue[args]},
+	res /; res =!= $Failed
+]
+
+iEntityValue[group:(_Entity|_String|_EntityClass),type:("Entities"|"EntityCanonicalNames")]/;TrueQ[$GetEntitiesInBatches] := GetAllEntities[group,type]
+iEntityValue[type:(_Entity|_String), classtype:("EntityClasses"|"EntityClassCanonicalNames")]/;TrueQ[$GetEntitiesInBatches] := GetAllEntityClasses[type, classtype]
+iEntityValue[Entity[type_,pat___,Span[start_Integer,end_Integer]],"Entities"]/;TrueQ[$CacheEntityMembers] := Block[
+	{$CacheEntityMembers=False},
+EntityFramework`Caching`cacheEntityMembers[{type,pat}, {start, end}]
+]
+iEntityValue[entity:(_Entity|{_Entity..}),property:(_String|_EntityProperty)]/;TrueQ[$CacheEntityData] := Block[{$CacheEntityData},
+	EntityFramework`Caching`cacheEntityData[entity,property]]
+	
+iEntityValue[input_,props_List,arg___]/;Not[TrueQ[$EPLF]] := Block[{
+	$EPLF = True, 
+	$EntityValueListThresholdValue = Max[1,Floor[2*$EntityValueListThresholdValue/Length[props]]]},
+	iEntityValue[input,props,arg]
+]
+iEntityValue[list:{(_Entity|_Missing)..},args___]/;TrueQ[Length[list]>$EntityValueListThresholdValue]:= GetEntityValueInChunks[list,args]
+iEntityValue[type:(_String|Entity[_String]),args__] /; TrueQ[$GetEntityDataInBatches] := Block[{$GetEntityDataInBatches=False},
+	If[MatchQ[{args},{$SpecialEVPatterns}|$UnbatchedQualifierPatterns],
+		EntityValue[type,args],
+		GetAllEntityValues[type,args]
+	]
+]
+iEntityValue[class_EntityClass,args__]/;TrueQ[$GetEntityClassDataInBatches] := Block[{$GetEntityClassDataInBatches=False},
+	If[MatchQ[{args},{$SpecialEVPatterns}|$UnbatchedQualifierPatterns],
+		EntityValue[class,args],
+		GetAllEntityClassValues[class,args]
+	]
+]
+iEntityValue[list:{_EntityClass..}, args___] /;And[!TrueQ[$galf], Length[list]>1]:= Block[{$galf=True},With[{groups=Table[{i, i}, {i, Length[list]}]},
+	EntityFramework`Dialog`interruptableDataDownloadManager[groups,list,args]]]
+iEntityValue[e___]:=Module[{res,apires, msg},Block[
+	{WolframAlphaClient`Private`$AlphaQueryMMode=If[
+		MemberQ[$EVMMODES,WolframAlphaClient`Private`$AlphaQueryMMode],
+		WolframAlphaClient`Private`$AlphaQueryMMode,
+		"entity"]},
     apires=Internal`MWACompute["MWACalculateData",Internal`MWASymbols`MWAData[e, "Version"->0.1	]];
     apires=ReleaseMWAComputeHold[apires];
+    If[SameQ[apires,$Failed["ComputationTimeout"]],Message[EntityValue::timeout,EntityValue]];
     If[!OptionQ[apires], res = $Failed];
     If[res =!= $Failed, 
 	    res=replaceWithDefault["Result",apires,$Failed];
 	    msg = replaceWithDefault["Messages", apires, {}];
 	    If[msg =!= {}, issueMWAMessages[msg]];
-	    rules = replaceWithDefault["EntityNameRules",apires, {}];
-	    EntityNameCacheAdd[#[[1]], #[[2]]] &/@ rules;
 		res = ConvertTemporaryMWASymbols[res]/.$Failed[_]->$Failed;
     ];
-	res/;res =!= $Failed
+	res]
 ]
 
 Experimental`FindEntities[s_String,filter_:Automatic]:=Module[{res,apires, rules},
@@ -433,49 +484,103 @@ Experimental`FindEntities[s_String,filter_:Automatic]:=Module[{res,apires, rules
   res=replaceWithDefault["Result",apires,$Failed];
   If[MatchQ["Messages"/.apires,{__}],Message[Internal`FindEntities::TODO]];   
   rules = replaceWithDefault["EntityNameRules",apires, {}];
-  EntityNameCacheAdd[#[[1]], #[[2]]] &/@ rules;
+  EntityNameCacheAdd[Entity@@#[[1]], #[[2]]] &/@ rules;
   ConvertTemporaryMWASymbols[res]
 ]
 
-EntityProperties[e_] := EntityValue[e, "Properties"]
+GetEntityNames[expr_, n_] := Catch[
+ Module[{apires}, 
+  apires = TimeConstrained[
+  	Internal`MWACompute["MWANames", {expr}],
+  	n,
+  	Throw[Table[Missing["NotAvailable"],{i,Length[expr]}],$tag]];(*populate with missings if timed out*)
+  apires = ReleaseHold[apires];
+  cleanUpFormatNameResults[EntityNameCacheFetch/@expr]
+],$tag]
+  
+cleanUpFormatNameResults[res_List] := Map[
+	If[OKEntityNameQ[#],#,Missing["NotAvailable"]]&,
+	res]
+cleanUpFormatNameResults[other_] := other
+  
+bulkFetchCommonNames[entities_List, n_] := Module[{res = 
+   Reap[Map[
+     With[{r = EntityNameCacheFetch[#]}, 
+       If[cachableNameQ[r], r, Sow[#]; sowPlaceholder[#]]] &, entities]], ask, temp}, 
+    ask = Last[res];
+    If[UnsameQ[ask, {}], 
+    	ask = First[ask];(*remove outer list*)
+    	temp = GetEntityNames[ask, n];
+    	ask = Thread[sowPlaceholder /@ ask -> temp];
+    	res = First[res] /. ask,(*TODO:handle errors*)
+    res = First[res]];
+  res]
 
-TypeName[Entity[type_,___]]:= type
-CommonName[e:Entity[type_,name_,___]]:= GetEntityName[e, 10]
-CanonicalName[Entity[type_, name_, ___]] := name
-CommonName[ep:EntityProperty[_, opts:OptionsPattern[]]] := With[{res=OptionValue[EntityProperty,{opts},FormatName]}, res/;res=!= None]
-CanonicalName[ep:EntityProperty[name_, opts:OptionsPattern[]]] := name
-(* TODO: Add error messages for CommonName/CanonicalName/EntityProperties *)
-TypeName[arg:Except[_Entity]] := (Message[TypeName::noent,arg];Null/;False)
-TypeName[args___]:=(ArgumentCountQ[TypeName,Length[{args}],1,1];Null/;False)
+Entity/:EntityProperty[ep__][Entity[e__]] := EntityValue[Entity[e],EntityProperty[ep]]
+Entity/:EntityPropertyClass[epc__][Entity[e__]] := EntityValue[Entity[e],EntityPropertyClass[epc]]
+Entity/:Entity[e__][args__] := EntityValue[Entity[e],args]
+
+EntityClass/:EntityProperty[ep__][EntityClass[ec__]] := EntityValue[EntityClass[ec],EntityProperty[ep]]
+EntityClass/:EntityPropertyClass[epc__][EntityClass[ec__]] := EntityValue[EntityClass[ec],EntityPropertyClass[epc]]
+EntityClass/:EntityClass[e__][args__] := EntityValue[EntityClass[e],args]
+
+EntityProperty/:Entity[e__][EntityProperty[ep__]] := EntityValue[Entity[e],EntityProperty[ep]]
+EntityProperty/:EntityClass[ec__][EntityProperty[ep__]] := EntityValue[EntityClass[ec],EntityProperty[ep]]
+
+EntityPropertyClass/:Entity[e__][EntityPropertyClass[epc__]] := EntityValue[Entity[e],EntityPropertyClass[epc]]
+EntityPropertyClass/:EntityClass[ec__][EntityPropertyClass[epc__]] := EntityValue[EntityClass[ec],EntityPropertyClass[epc]]
+
+EntityProperties[e_] := With[{res=EntityValue[e, "Properties"]},res/;!MatchQ[res,_EntityValue]]
+EntityProperties[args___] := (ArgumentCountQ[EntityProperties,Length[{args}],1,1];Null/;False)
+
+EntityTypeName[e:(Entity|EntityClass|EntityProperty|EntityPropertyClass)[type_,___]]:= type
+EntityTypeName[l_List] := Map[EntityTypeName,l]
+EntityTypeName[args___]:=(ArgumentCountQ[EntityTypeName,Length[{args}],1,1];Null/;False)
+EntityTypeName[arg:Except[_Entity|_String|_EntityClass|_EntityProperty|_EntityPropertyClass|_List]] := (Message[EntityTypeName::noent,arg];Null/;False)
+
+CommonName[e:(Entity|EntityClass|EntityProperty|EntityPropertyClass)[type_,name_,___]]:= With[{res=GetEntityName[e, 10]},If[OKEntityNameQ[res],res,Missing["NotAvailable"]]]
+CommonName[entities:{(_Entity|_EntityClass|_EntityProperty|_EntityPropertyClass|_Missing)..}] := bulkFetchCommonNames[entities,10]
+CommonName[l_List] := Map[CommonName,l]
 CommonName[args___]:=(ArgumentCountQ[CommonName,Length[{args}],1,1];Null/;False)
-CommonName[arg:Except[_Entity|EntityProperty]] := (Message[CommonName::noent,arg];Null/;False)
+CommonName[arg:Except[_Entity|_EntityProperty|_EntityClass|_EntityPropertyClass|_List]] := (Message[CommonName::noent,arg];Null/;False)
+
+CanonicalName[e:(Entity|EntityClass|EntityProperty|EntityPropertyClass)[type_, name_, ___]] := name
+CanonicalName[l_List] := Map[CanonicalName,l]
 CanonicalName[args___]:=(ArgumentCountQ[CanonicalName,Length[{args}],1,1];Null/;False)
-CanonicalName[arg:Except[_Entity|EntityProperty]] := (Message[CanonicalName::noent,arg];Null/;False)
-(* TODO: Make most of these "listable", use single server call for CommonName *)
+CanonicalName[arg:Except[_Entity|_EntityProperty|_EntityClass|_EntityPropertyClass|_List]] := (Message[CanonicalName::noent,arg];Null/;False)
+
+EntityList[type:(_String|_Entity|_EntityClass)] := With[{res=EntityValue[type,"Entities"]},res/;MatchQ[res,_List]]
+EntityList[args___]:=(ArgumentCountQ[EntityList,Length[{args}],1,1];Null/;False)
+EntityList[arg:Except[_Entity|_String|_EntityClass]] := (Message[EntityList::noent,arg];Null/;False)
+
+EntityClassList[type:(_Entity|_String)] := With[{res=EntityValue[type,"EntityClasses"]},res/;MatchQ[res,_List]]
+EntityClassList[args___]:=(ArgumentCountQ[EntityClassList,Length[{args}],1,1];Null/;False)
+EntityClassList[arg:Except[_Entity|_String]] := (Message[EntityClassList::noent,arg];Null/;False)
 
 (*** Wrappers for *Data functions ***)
-(* The following list should match the similar list in sysinit.m *)
-If[!ListQ[$EVDataPacletHeads],
-	$EVDataPacletHeads = Hold[System`AdministrativeDivisionData, System`AircraftData,
+$EVDataPacletHeads = Hold[System`AdministrativeDivisionData, System`AircraftData,
 System`AirportData, 
-System`BridgeData, System`BroadcastStationData, System`BuildingData, 
+System`BridgeData, System`BroadcastStationData, System`BuildingData, System`CometData,
 System`CompanyData, System`ConstellationData, System`DamData, 
 System`DeepSpaceProbeData, System`EarthImpactData, 
-System`FiniteGroupData, System`GeneData, System`HistoricalPeriodData, 
-System`IslandData, System`IsotopeData, System`LakeData, 
+System`ExoplanetData, System`GalaxyData,
+System`GeologicalPeriodData, System`HistoricalPeriodData, 
+System`IslandData, System`LanguageData, System`LakeData, 
 System`LaminaData, System`MannedSpaceMissionData, 
-System`MedicalTestData, System`MeteorShowerData, System`MFIDData, 
-System`MineralData, System`MountainData, System`MovieData, 
+System`MedicalTestData, System`MeteorShowerData, 
+System`MineralData, System`MinorPlanetData, System`MountainData, 
+System`MovieData, System`NebulaData,
 System`NeighborhoodData, System`NuclearExplosionData, 
 System`NuclearReactorData, System`OceanData, System`ParkData, 
-System`ParticleAcceleratorData, System`PeriodicTilingData, 
+System`ParticleAcceleratorData, 
 System`PersonData, System`PhysicalSystemData, System`PlaneCurveData, 
-System`PlantData, System`PopularCurveData, System`SatelliteData, 
-System`SNPData, System`SolarSystemFeatureData, System`SpaceCurveData, 
-System`SpeciesData, System`SurfaceData, System`TropicalStormData, 
-System`TunnelData, System`UnderseaFeatureData, System`VolcanoData, 
-System`WaterfallData, System`ZIPCodeData]
-];
+System`PlanetData, System`PlanetaryMoonData, System`PlantData, 
+System`PulsarData, System`SatelliteData, 
+System`SolarSystemFeatureData, System`SolidData, System`SpaceCurveData, 
+System`SpeciesData, System`StarData, System`StarClusterData, System`SupernovaData, 
+System`SurfaceData, System`TropicalStormData, 
+System`TunnelData, System`UnderseaFeatureData, 
+System`UniversityData, System`VolcanoData, System`ZIPCodeData];
 
 $entityStandardNamePattern[dp_] = _String;
 $entityStandardNamePattern["Acronym" | "AdministrativeDivision" | "City" | "GivenName"] = {__String};
@@ -497,44 +602,84 @@ Clear@@$EVDataPacletHeads;
 
 (#[args___] := With[{res=EVDataPacletDispatch[#, {args}]}, res/;res=!=$Failed]) & /@ (List@@$EVDataPacletHeads);
 
+With[{heads=List@@$EVDataPacletHeads}, SetAttributes[heads,ReadProtected]];
 Protect@@$EVDataPacletHeads;
 
-(* TODO: head-specific messages *)
 (* TODO: add flag to indicate entity or entity class when not specified *)
 Clear[EVDataPacletDispatch];
 EVDataPacletDispatch[head_, args_] := Module[{etype, res},
   etype = dataHeadToEntityTypeLookup[head];
-  If[etype === None, Return[$Failed] (*shouldn't happen*)];
+  If[etype === None, Return[$Failed] (*shouldn't happen*)]; Block[{WolframAlphaClient`Private`$AlphaQueryMMode="paclet"},
   res = Switch[args,
    {} | {All | "Entities"}, 
        EntityValue[Entity[etype], "Entities"],
-   {"Classes"}, 
+   {"Classes"|"EntityClasses"}, 
        EntityValue[Entity[etype], "EntityClasses"],
-   {"Properties" | "PropertyCanonicalNames" | "SampleEntities" | "SampleEntityClasses"| "EntityCanonicalNames"},
+   {"Properties" | "PropertyCanonicalNames" | "SampleEntities" | "SampleEntityClasses"| 
+   	"EntityCanonicalNames" | "EntityCount" | "EntityClassCount" | "EntityClassCanonicalNames"|
+   	"RandomEntityClasses"|"PropertyClassCanonicalNames"|"PropertyClasses"|"RandomEntities"},
        EntityValue[etype, args[[1]]],
+   {Alternatives@@$SpecialEVRanges},
+   	   EntityValue[etype, args[[1]]],
+   {_, _, _, __},(*too many args*)
+   	   ArgumentCountQ[head,Length[args],0,3];$Failed,
    {$entityStandardNamePattern[etype], ___},
-       EntityValue[Entity[etype, args[[1]]], Sequence @@ Rest[args]],
-   {{($entityStandardNamePattern[etype] | _Entity) ..}, __},
-       EntityValue[If[MatchQ[#, _Entity], #, Entity[etype, #]] & /@ args[[1]], Sequence @@ Rest[args]],
-   {_Entity, ___},
-       EntityValue @@ args,
+       If[ValidArgsForEtypeQ[head, etype, args],EntityValue[Entity[etype, args[[1]]], Sequence @@ Rest[args]],$Failed],
+   {{($entityStandardNamePattern[etype] | _Entity) ..}, ___},
+       If[ValidArgsForEtypeQ[head, etype, args],EntityValue[If[MatchQ[#, _Entity], #, Entity[etype, #]] & /@ args[[1]], Sequence @@ Rest[args]],$Failed],
+   {Entity[etype,___], ___},
+       If[ValidArgsForEtypeQ[head, etype, args],EntityValue @@ args,$Failed],
+   {EntityClass[etype,___]},
+   	   If[ValidArgsForEtypeQ[head, etype, args],EntityValue[First[args],"Entities"],$Failed],
+   {EntityClass[etype,___],___},
+   	   If[ValidArgsForEtypeQ[head, etype, args],EntityValue @@ args,$Failed],
+   {EntityPropertyClass[etype,___] ___},
+       If[ValidArgsForEtypeQ[head, etype, args],EntityValue @@ args,$Failed],
    _,
-       $Failed
-   ];
-   If[!FreeQ[res, $Failed|EntityValue], res = $Failed];
+       With[{arg=If[ListQ[args]&&Length[args]>0,First[args],Null]},(*safety valve in case we have bad arguments; shouldn't actually need this...*)
+       	Message[head::notent,arg,head];$Failed]
+   ]];
+   If[MatchQ[res, $Failed|_EntityValue], res = $Failed];
    res
   ]
   
+ValidArgsForEtypeQ[head_,etype_,args_List] := Switch[args,
+	{},True,
+	{_}, True,
+	{_,_String,___},True,
+	{_,(EntityProperty|EntityPropertyClass)[etype,__],___},True,
+	{_,_List,___},True,(*TODO: fine-tune this; need to support things like {"RandomEntities",8} on top of _EntityProperty.. and _EntityPropertyClass..*)
+	{_,_,___},With[{prop=Part[args,2]},Message[head::notprop,prop,head];False],
+	_, False
+]
+  
 (*** End code for wrappers ***)
+$EVMMODES= {"utility", "paclet", "entity", "semantic"};
 
-entityCount[class_String] := With[{r = EntityValue[class, "EntityCount"]}, Set[entityCount[class], r]/;IntegerQ[r]]
+entityCount[class:(_String|_Entity|_EntityClass)] := Block[{WolframAlphaClient`Private`$AlphaQueryMMode="utility"},
+	With[{r = EntityValue[class, "EntityCount"]}, 
+		If[MatchQ[r,_Missing], Throw[r,$tag]];
+		Set[entityCount[class], r]/;IntegerQ[r]]]
 entityCount[___] := Throw[$Failed, $tag]
 
-$EntityBatchThreshold = 1000;
+entityClassCount[class:(_String|_Entity)] := Block[{WolframAlphaClient`Private`$AlphaQueryMMode="utility"},
+	With[{r = EntityValue[class, "EntityClassCount"]}, Set[entityClassCount[class], r]/;IntegerQ[r]]]
+entityClassCount[___] := Throw[$Failed, $tag]
 
-batchEntitiesQ[class_String] := TrueQ[entityCount[class] > $EntityBatchThreshold]
+$EntityBatchThreshold = 2500;
+$EntityValueListThresholdValue = 128;
+
+batchEntitiesQ[class:(_String|_Entity|_EntityClass)] := TimeConstrained[
+	TrueQ[entityCount[class] > $EntityBatchThreshold],
+	10,False]
 batchEntitiesQ[__] := False
 
+batchEntityClassesQ[class_] := TimeConstrained[
+	TrueQ[entityClassCount[class] > $EntityBatchThreshold],
+	10,False]
+batchEntityClassesQ[__] := False
+
+divideEntityCountIntoBatches[0] := Throw[{},$tag]
 divideEntityCountIntoBatches[n_Integer] /; n > $EntityBatchThreshold := Block[
 	{steps = Range[1, n, $EntityBatchThreshold], pairs},
 	pairs = {#, # + $EntityBatchThreshold - 1} & /@ steps;
@@ -543,68 +688,76 @@ divideEntityCountIntoBatches[n_Integer] /; n > $EntityBatchThreshold := Block[
 divideEntityCountIntoBatches[n_Integer] /; n > 0 := {{1, n}}
 divideEntityCountIntoBatches[___] := Throw[$Failed, $tag]
 
-downloadEntityBatch[class_String, {start_Integer, stop_Integer}] := 
- EntityValue[class, EntityProperty[{"Entities", {start, stop}}]]
-downloadEntityBatch[___] := Throw[$Failed, $tag]
-
-$textStyle = 
-  Sequence[FontFamily -> "Verdana", FontSize -> 11, 
-   FontColor -> RGBColor[0.2, 0.4, 0.6]];
-
-$frameStyle = 
-  Sequence[FrameMargins -> {{24, 24}, {8, 8}}, 
-   FrameStyle -> RGBColor[0.2, 0.4, 0.6], 
-   Background -> RGBColor[0.96, 0.98, 1.],
-   RoundingRadius -> 3];
-   
-$buttonStyle = Sequence[
-	Appearance -> None, 
-	ContentPadding -> False, 
-	BaselinePosition -> Bottom
+wrapWithAppropriateHead[etype_String,{start_,stop_},type_String] := wrapWithAppropriateHead[etype,_,{start,stop},type]
+wrapWithAppropriateHead[etype_String,pat_,{start_,stop_},type_]:= Switch[type,
+	"Entities"|"EntityCanonicalNames",Entity[etype,pat,Span[start,stop]],
+	_, EntityClass[etype,pat,Span[start,stop]]
 ]
 
-interruptableEntityDownloadManager[class_String, batches_List] := 
- Block[{elements = Length[batches], list = {}}, 
-  DynamicModule[{stopQ = False, progress = 0, cell, stopping = False, 
-    display = 
-     Tooltip[Style["\[FilledSquare]", 20, Red], "Stop download"]},
-   cell = 
-    PrintTemporary[
-     Framed[Grid[{{Style[
-     Row[{"Downloading ", Dynamic[progress], " of ", elements, 
-       " resources..."}], $textStyle]}, {Row[{ProgressIndicator[
-       Dynamic[progress], {0, elements}], 
-      Button[Dynamic[display], 
-       Set[display, Style["Stopping...", $textStyle]];
-       Set[stopQ, True], $buttonStyle]}, "  "]}}, 
-  Alignment -> Left], $frameStyle]];
-   list = Reap[Catch[
-      Do[
-       If[TrueQ[stopQ],
-        Throw["Stopped", $tag],
-        progress++; 
-        Sow[downloadEntityBatch[class, 
-          batches[[progress]]]]], {elements}];
-      list,
-      $tag]]];
-  First[Join @@@ Last[list]]
-  ]
-  
-GetAllEntities[Entity[class_String,___]]:=GetAllEntities[class]
-GetAllEntities[class_String] := Catch[
+wrapWithAppropriateHead[EntityClass[etype_],{start_,stop_},type_String] := wrapWithAppropriateHead[EntityClass[etype,_],{start,stop},type]
+wrapWithAppropriateHead[class:EntityClass[etype_, pat_],{start_,stop_},type_String] := Switch[type,
+	"Entities"|"EntityCanonicalNames",Entity[class,_,Span[start,stop]],
+	_,EntityClass[etype,pat,Span[start,stop]]
+]
+
+downloadEntityBatch[etype_String,{start_Integer,stop_Integer},type_String] := Module[{},
+	If[ListQ[#],#,Message[EntityValue::batmis,start,stop];{}]&[EntityValue[wrapWithAppropriateHead[etype,{start,stop},type], type]]
+]
+downloadEntityBatch[Entity[etype_],args__] := downloadEntityBatch[Entity[etype,_],args]
+downloadEntityBatch[Entity[etype_,pat_,___],{start_Integer,stop_Integer},type_String] := Module[{},
+	If[ListQ[#],#,Message[EntityValue::batmis,start,stop];{}]&[EntityValue[wrapWithAppropriateHead[etype,pat,{start,stop},type], type]]
+]
+downloadEntityBatch[class_EntityClass, {start_Integer, stop_Integer}, type_String] := Module[{},
+ If[ListQ[#],#,Message[EntityValue::batmis,start,stop];{}]&[EntityValue[wrapWithAppropriateHead[class,{start,stop},type], type]]
+]
+downloadEntityBatch[___] := Throw[$Failed, $tag]
+
+GetAllEntities[class:(_Entity|_String|_EntityClass), type_String] := Block[{$GetEntitiesInBatches=False},Catch[
+  With[{batches = divideEntityCountIntoBatches[entityCount[class]]},
+    EntityFramework`Dialog`interruptableEntityDownloadManager[class, batches, type]], $tag]
+]
+
+GetAllEntityValues[type_, args__] := Block[{$GetEntityDataInBatches = False,$EntityBatchThreshold=$EntityValueListThresholdValue},Catch[
+  If[batchEntitiesQ[type],
+   With[{batches = divideEntityCountIntoBatches[entityCount[type]]},
+    EntityFramework`Dialog`interruptableDataDownloadManager[type, batches, {args}]],
+   EntityValue[type, args]
+   ], $tag]
+	
+]
+
+GetAllEntityClassValues[class_EntityClass, args__] := Block[{
+	$GetEntityClassDataInBatches = False,$EntityBatchThreshold=$EntityValueListThresholdValue},Catch[
   If[batchEntitiesQ[class],
    With[{batches = divideEntityCountIntoBatches[entityCount[class]]},
-    interruptableEntityDownloadManager[class, batches]],
-   EntityValue[class, "Entities"]
+    EntityFramework`Dialog`interruptableDataDownloadManager[class, batches, {args}]],
+   EntityValue[class, args]
    ], $tag]
+	
+]
+
+GetAllEntityClasses[class_, type_String] := Block[{$GetEntitiesInBatches=False},Catch[
+  If[batchEntityClassesQ[class],
+   With[{batches = divideEntityCountIntoBatches[entityClassCount[class]]},
+    EntityFramework`Dialog`interruptableEntityDownloadManager[class, batches, type]],
+   EntityValue[class, type]
+   ], $tag]
+]
+
+GetEntityValueInChunks[entities_,args___] := Block[{$EntityBatchThreshold=$EntityValueListThresholdValue,groups},
+	groups=divideEntityCountIntoBatches[Length[entities]];
+	EntityFramework`Dialog`interruptableDataDownloadManager[groups,entities,args]
+]
 
 (*keep various flags & symbols from triggering Dynamic updating*)
-Internal`SetValueNoTrack[{$dontFormatEntity}, True];
+Internal`SetValueNoTrack[{$dontFormatEntity,$EVQIDF,Internal`$QueryID,$EPLF}, True];
 
 With[{s=$readProtectedSymbols},SetAttributes[s,{ReadProtected}]];
-Protect@@$protectedSymbols;
 Protect@@$readProtectedSymbols;
-   
+
+If[FileExistsQ[#],Get[#]]&[FileNameJoin[{DirectoryName[$InputFileName],"Caching.m"}]];
+If[FileExistsQ[#],Get[#]]&[FileNameJoin[{DirectoryName[$InputFileName],"Dialog.m"}]];
+If[FileExistsQ[#],Get[#]]&[FileNameJoin[{DirectoryName[$InputFileName],"ToFromEntity.m"}]];
    
 End[];
 

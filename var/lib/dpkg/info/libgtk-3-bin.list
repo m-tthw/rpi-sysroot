@@ -1,5 +1,7 @@
 /.
 /usr
+/usr/bin
+/usr/bin/gtk-launch
 /usr/sbin
 /usr/sbin/update-icon-caches
 /usr/share
@@ -8,13 +10,13 @@
 /usr/share/man/man8/update-icon-caches.8.gz
 /usr/share/man/man1
 /usr/share/man/man1/gtk-update-icon-cache-3.0.1.gz
+/usr/share/man/man1/gtk-launch.1.gz
 /usr/share/man/man1/gtk-query-immodules-3.0.1.gz
 /usr/share/doc
 /usr/share/doc/libgtk-3-bin
 /usr/share/doc/libgtk-3-bin/changelog.Debian.gz
 /usr/share/doc/libgtk-3-bin/copyright
 /usr/share/doc/libgtk-3-bin/AUTHORS
-/usr/bin
-/usr/share/doc/libgtk-3-bin/README.gz
-/usr/share/doc/libgtk-3-bin/NEWS.gz
 /usr/bin/gtk-update-icon-cache-3.0
+/usr/share/doc/libgtk-3-bin/NEWS.gz
+/usr/share/doc/libgtk-3-bin/README.gz

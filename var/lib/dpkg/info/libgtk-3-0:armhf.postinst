@@ -5,20 +5,9 @@ IMMODULES_DIR=/usr/lib/arm-linux-gnueabihf/gtk-3.0/3.0.0/immodules
 IMMODULES_DIR_OLD=/usr/lib/gtk-3.0/3.0.0/immodules
 
 if [ "$1" = triggered ]; then
-    for trigger in $2; do
-        if ! [ -d $trigger ]; then
-            continue
-        fi
-        case $trigger in
-          $IMMODULES_DIR|$IMMODULES_DIR_OLD)
-            # This is triggered everytime an application installs a
-            # GTK immodule loader
-            /usr/lib/arm-linux-gnueabihf/libgtk-3-0/gtk-query-immodules-3.0 \
-                $(find $IMMODULES_DIR $IMMODULES_DIR_OLD -name *.so 2> /dev/null) \
-            > /usr/lib/arm-linux-gnueabihf/gtk-3.0/3.0.0/immodules.cache || true
-            ;;
-        esac
-    done
+    # This is triggered everytime an application installs a
+    # GTK immodule loader
+    /usr/lib/arm-linux-gnueabihf/libgtk-3-0/gtk-query-immodules-3.0 --update-cache || true
     exit 0
 fi
 
@@ -31,8 +20,6 @@ fi
 
 # Also handle the initial installation
 if [ -d $IMMODULES_DIR ] || [ -d $IMMODULES_DIR_OLD ]; then
-     /usr/lib/arm-linux-gnueabihf/libgtk-3-0/gtk-query-immodules-3.0 \
-         $(find $IMMODULES_DIR $IMMODULES_DIR_OLD -name *.so 2> /dev/null) \
-     > /usr/lib/arm-linux-gnueabihf/gtk-3.0/3.0.0/immodules.cache || true
+     /usr/lib/arm-linux-gnueabihf/libgtk-3-0/gtk-query-immodules-3.0 --update-cache || true
 fi
 

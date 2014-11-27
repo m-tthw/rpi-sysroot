@@ -12,10 +12,7 @@ Begin["`Private`"]
 
 $packageFile = $InputFileName;
 
-$exeName = Switch[ $SystemID,
-	"Linux-ARM",
-		"TinkerForgeWeatherStationTools.exe"
-];
+$exeName = "TinkerForgeWeatherStationTools.exe";
 
 $mathLinkExe = FileNameJoin[{FileNameTake[$packageFile, {1,-2}], "Binaries", $SystemID, $exeName}];
 

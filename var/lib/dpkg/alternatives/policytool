@@ -3,7 +3,7 @@ auto
 policytool.1.gz
 /usr/share/man/man1/policytool.1.gz
 
-/usr/lib/jvm/jdk-7-oracle-armhf/jre/bin/policytool
-317
-/usr/lib/jvm/jdk-7-oracle-armhf/man/man1/policytool.1.gz
+/usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt/jre/bin/policytool
+318
+/usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt/man/man1/policytool.1.gz
 

@@ -40,7 +40,7 @@ import java.util.Enumeration;
 
 public class JLinkSystemClassLoader extends ClassLoader {
 
-    private ClassLoader origSystemLoader;
+    private final ClassLoader origSystemLoader;
 
     private ClassLoader getDelegateLoader() {
         ClassLoader jlinkLoader = JLinkClassLoader.getInstance();

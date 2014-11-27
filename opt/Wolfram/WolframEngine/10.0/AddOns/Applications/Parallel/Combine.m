@@ -8,7 +8,7 @@
    partition lists and work on the pieces in parallel
  *)
 
-(* :Package Version: 1.0 ($Id: Combine.m,v 1.55 2012/11/19 15:20:41 maeder Exp $) *)
+(* :Package Version: 1.0 ($Id: Combine.m,v 1.56 2014/05/05 14:16:44 maeder Exp $) *)
 
 (* :Mathematica Version: 7 *)
 
@@ -55,7 +55,7 @@ General::meth = "`1` is not a valid Method option specification for `2`; using `
 Begin["`Private`"] (*****************************************************)
 
 `$PackageVersion = 2.0;
-`$CVSRevision = StringReplace["$Revision: 1.55 $", {"$"->"", " "->"", "Revision:"->""}]
+`$CVSRevision = StringReplace["$Revision: 1.56 $", {"$"->"", " "->"", "Revision:"->""}]
 
 Needs["Parallel`Parallel`"]
 Needs["Parallel`Kernels`"]
@@ -170,8 +170,16 @@ ParallelCombine[args__] := parallelCombine[args]
 
 (* is abortable, because ParallelDispatch and ConcurrentEvaluate are *)
 
+(* two flat functions, Union and Intersection, have options... *)
+
+parallelCombine[func_, (h:Union|Intersection)[args___, oo:OptionsPattern[]], opts:OptionsPattern[]] :=
+  With[{hh=h[##,oo]&},
+	parallelCombine[func, Unevaluated[hh[args]], hh, opts]
+  ]
+
 parallelCombine[func_, expr:h_Symbol[___], opts:OptionsPattern[]]/; MemberQ[Attributes[h], Flat] :=
 	parallelCombine[func, Unevaluated[expr], h, opts]
+
 parallelCombine[func_, expr_, opts:OptionsPattern[]] := parallelCombine[func, Unevaluated[expr], Join, opts]
 
 (* sequential case; leave out comb, it is assumed to be OneIdentity *)

@@ -773,7 +773,11 @@ propertiesToOptions[p_] := With[
  * Reconstructs url from server, port, db.  One or more may be blank.
  *)
 propToUrl[p_] := Module[
-    {separator = "/", sp},
+    {separator, sp},
+    separator = Switch[p["Type"],
+    	"SQLite(Memory)", ":",
+    	_, "/"
+    ];
     sp = StringJoin @@ Riffle[{p["Server"], p["Port"]} /. "" -> Sequence[], ":"];
     StringJoin @@ Riffle[{sp, p["Database"] <> p["Attributes"]} /. "" -> Sequence[], separator]
 ];
@@ -927,7 +931,7 @@ $RDBMSSpecificProperties = {
     },
 
     "SQLite(Memory)" -> {
-        "GUIVariant" -> "Memory, no database",
+        "GUIVariant" -> "Memory",
         "hostedQ" -> False
     },
 

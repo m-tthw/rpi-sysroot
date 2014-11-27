@@ -29,7 +29,8 @@
 "MC",
 "MP",
 "Mathematica",
-"MathematicaMono"
+"MathematicaMono",
+"MathematicaSans"
 }
 @|
 @|
@@ -104,6 +105,30 @@ MenuItem["Install Palette...", FrontEndExecute[{
 }
 @|
 @|
+@@resource openMenuItems Macintosh
+{"Open...", "Open from Wolfram Cloud..."}
+@|
+@|
+@@resource saveMenuItems Macintosh
+{"Save...", "Save As...", "Save to Wolfram Cloud..."}
+@|
+@|
+@@resource openMenuItems X
+{"&Open...", "Open from Wolfram Cloud..."}
+@|
+@|
+@@resource saveMenuItems X
+{"&Save...", "Save &As...", "Save to Wolfram Cloud..."}
+@|
+@|
+@@resource openMenuItems Windows
+{"&Open...", "Open from Wolfram Cloud..."}
+@|
+@|
+@@resource saveMenuItems Windows
+{"&Save...", "Save &As...", "Save to Wolfram Cloud..."}
+@|
+@|
 @@resource cdfPreviewMenuItems Macintosh
 {{"CDF Player", "FreeCDF"}, {"Player Pro", "EnterpriseCDF"}}
 @|
@@ -116,6 +141,14 @@ MenuItem["Install Palette...", FrontEndExecute[{
 {{"&CDF Player", "&FreeCDF"}, {"&Player Pro", "&EnterpriseCDF"}}
 @|
 @|
+@@resource wolframCloudSignIn
+Sign in...
+@|
+@|
+@@resource wolframCloudSignOut
+Sign out
+@|
+@|
 @@resource untitledStringNum
 Untitled-
 @|
@@ -125,7 +158,11 @@ Untitled
 @|
 @|
 @@resource previewWindowTitle
-Preview of
+CDF Player Preview of
+@|
+@|
+@@resource previewProWindowTitle
+Player Pro Preview of
 @|
 @|
 @@resource saveAsStringNum
@@ -319,6 +356,18 @@ Bytes Free
 Available
 %ldK In
 Clipboard
+@|
+@|
+@@resource aboutBoxMenuItemString Macintosh
+About %s...
+@|
+@|
+@@resource aboutBoxMenuItemString Windows
+&About %s...
+@|
+@|
+@@resource aboutBoxMenuItemString X
+&About %s...
 @|
 @|
 @@resource saveChangesStringNum
@@ -991,9 +1040,9 @@ License Expired
 @@resource fileFilters
 {
 "All files\.00*.*\.00\.00",
-"All files (*.*)\.00*.*\.00Notebooks (*.nb)\.00*.nb;*.nbml\.00Packages (*.m)\.00*.m\.00Version 2.x notebooks (*.ma)\.00*.ma\.00Text files (*.txt)\.00*.txt\.00Bitmap files (*.bmp)\.00*.bmp\.00EPS files (*.eps)\.00*.eps\.00Metafiles (*.?mf)\.00*.emf;*.wmf\.00Wave files (*.wav)\.00*.wav\.00\.00",
-"All files (*.*)\.00*.*\.00Notebooks (*.nb)\.00*.nb;*.nbml\.00\.00",
-"All files (*.*)\.00*.*\.00Packages (*.m)\.00*.m\.00\.00",
+"All files (*.*)\.00*.*\.00Notebooks (*.nb, *.cdf)\.00*.nb;*.cdf;*.nbp;*.nbml\.00Packages (*.wl, *.m)\.00*.wl;*.m\.00Version 2.x notebooks (*.ma)\.00*.ma\.00Text files (*.txt)\.00*.txt\.00Bitmap files (*.bmp)\.00*.bmp\.00EPS files (*.eps)\.00*.eps\.00Metafiles (*.?mf)\.00*.emf;*.wmf\.00Wave files (*.wav)\.00*.wav\.00\.00",
+"All files (*.*)\.00*.*\.00Notebooks (*.nb, *.cdf)\.00*.nb;*.cdf;*.nbp;*.nbml\.00\.00",
+"All files (*.*)\.00*.*\.00Packages (*.wl, *.m)\.00*.wl;*.m\.00\.00",
 "All files (*.*)\.00*.*\.00Version 2.x notebooks (*.ma)\.00*.ma\.00\.00",
 "All files (*.*)\.00*.*\.00EPS files (*.eps)\.00*.eps\.00\.00",
 "All files (*.*)\.00*.*\.00Text files (*.txt)\.00*.txt\.00\.00",
@@ -1003,10 +1052,10 @@ License Expired
 "All files (*.*)\.00*.*\.00Bitmap files (*.bmp)\.00*.bmp\.00\.00",
 "All files (*.*)\.00*.*\.00Rich Text files (*.rtf)\.00*.rtf\.00\.00",
 "All files (*.*)\.00*.*\.00Wave files (*.wav)\.00*.wav\.00\.00",
-"All files (*.*)\.00*.*\.00Known file types\.00*.nb;*.nbml;*.m;*.ma;*.eps;*.txt;*.emf;*.wmf;*.bmp;*.rtf;*.wav\.00\.00",
+"All files (*.*)\.00*.*\.00Known file types\.00*.nb;*.cdf;*.nbp;*.nbml;*.wl;*.m;*.ma;*.eps;*.txt;*.emf;*.wmf;*.bmp;*.rtf;*.wav\.00\.00",
 "All files (*.*)\.00*.*\.00Executables (*.exe)\.00*.exe\.00\.00",
 "All files (*.*)\.00*.*\.00Printer files (*.prn)\.00*.prn\.00\.00",
-"Wolfram Mathematica Files\.00*.cdf;*.nb;*.nbp;*.m\.00\.00"
+"Wolfram Files\.00*.cdf;*.nb;*.nbp;*.wl;*.m\.00\.00"
 }
 @|
 @@resource OptionInspectorHeading1
@@ -1150,6 +1199,9 @@ http://register.wolfram.com/?version=`version`&license=`license`&source=Mathemat
 @@resource WolframPlayerPublishURL
 http://www.wolfram.com/publish.html?filename=`filename`
 @|
+@@resource WolframCloudAccountSettingsURL
+https://www.wolframcloud.com/app/account/
+@|
 @@resource JapanesePostScriptFontName
 Ryumin-Light-RKSJ-H
 @|
@@ -1244,7 +1296,8 @@ ShowSelection->False,
 WindowFrameElements->{},
 WindowElements->{},
 DockedCells->{},
-ClosingSaveDialog->False
+ClosingSaveDialog->False,
+UndoOptions->{"Enabled"->False}
 ]
 @|
 @|
@@ -1261,7 +1314,8 @@ CellGrouping->Manual,
 WindowElements -> {"StatusArea", "MemoryMonitor", "MagnificationPopUp", "HorizontalScrollBar", "VerticalScrollBar"},
 ButtonBoxOptions -> {Alignment -> Left},
 DockedCells->{},
-ShowStringCharacters->False
+ShowStringCharacters->False,
+UndoOptions->{"Enabled"->False}
 ]
 @|
 @|
@@ -1579,7 +1633,8 @@ GridBoxOptions->{ColumnLines->True,
 ColumnAlignments->Left},
 GraphicsOptions->{ImageSize->100},
 Graphics3DOptions->{ImageSize->100},
-ShowStringCharacters->False
+ShowStringCharacters->False,
+UndoOptions->{"Enabled"->False}
 ]
 @|
 @|
@@ -1621,10 +1676,11 @@ The document you are saving will no longer be fully compatible with Wolfram CDF 
 	"cropImageRectTooltip" -> "Drag to move.\nDouble click to crop.",
 	
 	(* Size-limited output *)
-	"sizeExplanation" -> "A very large output was generated. Showing a sample of it:",
+	"sizeExplanation" -> "A very large output was generated. Showing a sample of it.",
+	"sizeBriefExplanation" -> "large output",
 	"sizeShowLess" -> "show less",
 	"sizeShowMore" -> "show more",
-	"sizeShowAll" -> "show full output",
+	"sizeShowAll" -> "show all",
 	"sizeChangeLimit" -> "set size limit...",
 	
 	(* SystemDialogInput file and sound dialog *)
@@ -1642,9 +1698,9 @@ The document you are saving will no longer be fully compatible with Wolfram CDF 
 	"GIF" -> {"*.gif"},
 	"JPEG" -> {"*.jpg", "*.jpeg"},
 	"LaTeX Document (*.tex)" -> {"*.tex"},
-	"Wolfram Language Notebook (*.nb)" -> {"*.nb"},
-	"Wolfram Language Package (*.m)" -> {"*.m"},
-	"Wolfram Language Files (*.nb, *.cdf, *.nbp, *.m, *.ma)" -> {"*.nb", "*.cdf"," *.nbp", "*.ma", "*.m"},
+	"Wolfram Notebook (*.nb)" -> {"*.nb"},
+	"Wolfram Language Package (*.wl, *.m)" -> {"*.wl", "*.m"},
+	"Wolfram Files (*.nb, *.cdf, *.nbp, *.wl, *.ma, *.m)" -> {"*.nb", "*.cdf"," *.nbp", "*.wl", "*.ma", "*.m"},
 	"PDF Document (*.pdf)" -> {"*.pdf"},
 	"Plain Text (*.txt)" -> {"*.txt"},
 	"PNG" -> {"*.png"},
@@ -1711,10 +1767,10 @@ The document you are saving will no longer be fully compatible with Wolfram CDF 
 	"whyJumpLabel" -> "Jump to ",
 	
 	(* Install palette *)
-	"installTypesList" -> {"Palette","Stylesheet","Package",".mx File","MathLink Program", "Application"},
+	"installTypesList" -> {"Palette","Stylesheet","Package",".mx File","WSTP Program", "Application"},
 	"installFileFilter" -> {"MX files (*.mx)" -> {"*.mx"}, "All files" -> {"*"}},
 	"installApplicationFilter" -> {"Compressed files (*.zip, *.gz, *.tar, *.bz2)" -> {"*.zip", "*.gz", "*.tar", "*.bz2"}, "All files" -> {"*"}},
-	"installProgramFilter" -> {"MathLink Program (*.exe)" -> {"*.exe"}, "All files" -> {"*"}},
+	"installProgramFilter" -> {"WSTP Program (*.exe)" -> {"*.exe"}, "All files" -> {"*"}},
 	"installFromClip" -> "From Clipboard",
 	"installFromFile" -> "From File...",
 	"installFromDir" -> "From Directory...",
@@ -1817,7 +1873,7 @@ The document you are saving will no longer be fully compatible with Wolfram CDF 
 	"navigatorHowTo" -> "\"How To\" Topics \[RightGuillemet]",
 	
 	(* About box strings *)
-	"aboutboxTitle" -> "About the Wolfram Language",
+	"aboutboxTitle" -> "About Wolfram Mathematica",
 	"aboutboxTitlePlayer" -> "About Wolfram CDF Player",
 	"aboutboxTitlePlayerPro" -> "About Wolfram Player Pro",
 	"aboutboxVersion" -> "Version Number",
@@ -1866,15 +1922,17 @@ The document you are saving will no longer be fully compatible with Wolfram CDF 
 	"imageEditAfter" -> "After",
 	"imageEditTitle"-> "Adjust Image",
 
-	"image3DColorFunctionEditTitle"-> "ColorFunction Editor",
+	"image3DColorFunctionEditTitle"-> "Color Function Editor",
 	"image3DColorFunctionEditHistogram"-> "Histogram",
 	"image3DColorFunctionEditOpacity"-> "Opacity",
 	"image3DColorFunctionEditColors"-> "Color Source",
 	"image3DColorFunctionEditCustom"-> "Custom",
 	"image3DColorFunctionEditBackground"-> "Background",
 	"image3DColorFunctionEditCopy"-> "Copy Function",
-	"image3DColorFunctionEditEdges" -> "Press \!\(\*StyleBox[\"\[CommandKey]\",\nFontSize->16]\) and click to insert an opacity node here.\n\nClick and drag to move the adjacent nodes simultaneously.",
-	"image3DColorFunctionEditVertices" -> "Press \!\(\*StyleBox[\"\[CommandKey]\",\nFontSize->16]\) and click to remove this color & opacity node.\n\nDouble-click to assign a new color.",
+	"image3DColorFunctionEditEdges" -> "Press \!\(\*StyleBox[\"\[AltKey]\",\nFontSize->16]\) and click to insert an opacity node here.\n\nClick and drag to move the adjacent nodes simultaneously.",
+	"image3DColorFunctionEditEdgesMac" -> "Press \!\(\*StyleBox[\"\[CommandKey]\",\nFontSize->16]\) and click to insert an opacity node here.\n\nClick and drag to move the adjacent nodes simultaneously.",
+	"image3DColorFunctionEditVertices" -> "Press \!\(\*StyleBox[\"\[AltKey]\",\nFontSize->16]\) and click to remove this color & opacity node.\n\nDouble-click to assign a new color.",
+	"image3DColorFunctionEditVerticesMac" -> "Press \!\(\*StyleBox[\"\[CommandKey]\",\nFontSize->16]\) and click to remove this color & opacity node.\n\nDouble-click to assign a new color.",
 	"image3DColorFunctionEditFixedVertices" -> "Double-click to assign a new color.",
 	
 	(*Palette strings*)
@@ -2101,14 +2159,14 @@ Failed to replace any matches
 @@resource Image3DEditModeMenu
 {
 	(* top level tooltips *)
-	"ColorFunctionTooltip" -> "ColorFunction Editor",
+	"ColorFunctionTooltip" -> "Color Function Editor",
 	"ClippingTooltip" -> "Clipping",
 	"ViewOptionsTooltip" -> "View Options",
 	"InformationTooltip" -> "Image Information",
 	(* titles *)
-	"ColorFunctionTitle" -> "ColorFunction Editor",
+	"ColorFunctionTitle" -> "Color Function Editor",
 	"ClippingTitle" -> "Clipping",
-	"ViewOptionsTitle" -> "View options",
+	"ViewOptionsTitle" -> "View Options",
 	"InformationTitle" -> "Image Information",
 	(* captions *)
 	"ColorFunctionCaption" -> "Set the transfer function to map data levels to opacity and color.",
@@ -2116,7 +2174,7 @@ Failed to replace any matches
 	"ViewOptionsCaption" -> "Change how the image appears in the notebook.",
 	"InformationCaption" -> "",
 	(* color function tab *)
-	"ColorFunctionSingleChannel" -> "The ColorFunction Editor currently supports images with a single channel.",
+	"ColorFunctionSingleChannel" -> "The Color Function Editor currently supports images with a single channel.",
 	"ColorFunctionChannelCount" -> "This image has `1` channels.",
 	(* clipping tab *)
 	"ClippingOrientation" -> "Orientation",
@@ -2128,7 +2186,7 @@ Failed to replace any matches
 	"ClippingDirectionCustom" -> "custom normal vector",
 	"ClippingNewPlanes" -> "New clipping planes",
 	(* view tab *)
-	"ViewPoint" -> "Viewpoint",
+	"ViewPoint" -> "View Point",
 	"ViewPointDefault" -> "Default",
 	"ViewPointFront" -> "Front",
 	"ViewPointBack" -> "Back",
@@ -2138,6 +2196,10 @@ Failed to replace any matches
 	"ViewPointRight" -> "Right",
 	"ViewBoundingBox" -> "Show bounding box",
 	"ViewRelativeSize" -> "Relative Size",
+	"ViewBoxRatio" -> "Box Ratio:",
+	"ViewVoxelRatio" -> "Voxel Ratio:",
+	"ViewResetButton" -> "Reset",
+	"ViewResetButtonTooltip" -> "Reset relative size",
 	"ViewRatioDefault" -> "Default",
 	"ViewRatio1:1:1" -> "1:1:1",
 	"ViewRatioCustom" -> "Custom",
@@ -2153,7 +2215,7 @@ Failed to replace any matches
 	"Magnification" -> "Magnification",
 	"MagnificationAutomatic" -> "Automatic",
 	"MagnificationOther" -> "other",
-	"DataHistogram" -> "Data Histogram",
+	"DataHistogram" -> "Histogram of data values",
 	"CopyHistogram" -> "Copy Histogram"
 }
 @|
@@ -2277,6 +2339,17 @@ var cdf = new cdfplugin();
 cdf.setDefaultContent('<a href="http://www.wolfram.com/cdf-player/"><img  src="`2`"></a>');
 cdf.embed('`1`', `100`, `101`);
 </script>
+@|
+@@resource undoInformationDescriptionText
+{
+	(* "internal name" -> "localized name" *)
+	"Type"->"Typing",
+	"Click"->"Click",
+	"Draw"->"Drawing"
+	"Delete"->"Deletion",
+	"Style"->"Style Change",
+	"Evaluate"->"Evaluation"
+}
 @|
 
 

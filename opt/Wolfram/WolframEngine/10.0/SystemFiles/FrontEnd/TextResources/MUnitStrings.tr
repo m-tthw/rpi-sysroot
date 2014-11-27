@@ -1,0 +1,17 @@
+@|
+@| *****************************************************************************************
+@|
+@| DO NOT PLACE REAL RESOURCE VALUES IN THIS FILE.
+@| 
+@| This file only exists so the TRM build will know which @@resource names
+@| are present.  It is not included in the front end layout, so any actual
+@| values specified for resources below will be ignored.
+@|
+@| *****************************************************************************************
+@|
+@|
+@@resource MUnitStrings
+{
+}
+@|
+@|

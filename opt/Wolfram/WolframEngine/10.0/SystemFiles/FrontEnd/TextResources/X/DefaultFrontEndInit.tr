@@ -6,7 +6,6 @@ PrivatePaths -> {
 	}},
 
 FontSubstitutions->{
-	"MathematicaSans" -> "Mathematica",
 	"Helv" -> "Helvetica",
 	"Arial" -> "Helvetica",
 	"Times"->"Utopia",
@@ -16,27 +15,6 @@ FontSubstitutions->{
 	"Charter" -> "Helvetica",
 	"Lucidatypewriter" -> "Courier",
 	"Fixed" -> "Monaco",
-	"Math1" -> "Mathematica1",
-	"Math1Mono" -> "Mathematica1Mono",
-	"Math2" -> "Mathematica2",
-	"Math2Mono" -> "Mathematica2Mono",
-	"Math3" -> "Mathematica3",
-	"Math3Mono" -> "Mathematica3Mono",
-	"Math4" -> "Mathematica4",
-	"Math4Mono" -> "Mathematica4Mono",
-	"Math5" -> "Mathematica5",
-	"Math5Mono" -> "Mathematica5Mono",
-	"DefaultKanjiFont" -> "Sazanami Gothic",
-	"DefaultMonoKanjiFont" -> "Sazanami Gothic",
-	"DefaultKoreanFont" -> "Baekmuk Batang",
-	"DefaultMonoKoreanFont" -> "Baekmuk Batang",
-	"DefaultChineseSimplifiedFont" -> "AR PL KaitiM GB",
-	"DefaultMonoChineseSimplifiedFont" -> "AR PL KaitiM GB",
-	"DefaultChineseTraditionalFont" -> "AR PL KaitiM Big5",
-	"DefaultMonoChineseTraditionalFont" -> "AR PL KaitiM Big5",
-	"JFontSans" -> "Automatic",
-	"JFontSansBold" -> "Automatic",
-	"JFontText" -> "Automatic",
 	"AGaramond" -> "Times",
 	"Avant Garde" -> "Helvetica",
 	"Bodoni" -> "Times",
@@ -56,7 +34,7 @@ FontSubstitutions->{
 	"Garamond" -> "Times",
 	"Geneva" -> "Helvetica",
 	"GillSans" -> "Gill Sans",
-	"Gill Sans" -> "Helvetica",
+	"Gill Sans" -> "Lato",
 	"Goudy" -> "Times",
 	"Helvetica Condensed" -> "Helvetica",
 	"C Helvetica Condensed" -> "Helvetica",
@@ -103,6 +81,7 @@ FontSubstitutions->{
 	"Helvetica Neue" -> "Arial",
 	"Baskerville" -> "Georgia",
 	"Cochin" -> "Constantia",
+	"Lato" -> "Swiss721bt",
 
 	(* Vista fonts *)
 	"Calibri" -> "Arial",
@@ -166,5 +145,13 @@ FontSubstitutions->{
 
 	(* Wolfram|Alpha fonts *)
 	"Bitstream Vera Sans" -> "Helvetica"
+},
+
+PrivateFrontEndOptions -> {
+	"DialogSettings" -> {
+		"Login" -> {
+			"RememberMe" -> True
+		}
+	}
 }
 ];

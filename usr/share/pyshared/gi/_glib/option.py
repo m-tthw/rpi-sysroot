@@ -32,7 +32,8 @@ GOptionGroup in glib.
 import sys
 import optparse
 from optparse import OptParseError, OptionError, OptionValueError, \
-                     BadOptionError, OptionConflictError
+    BadOptionError, OptionConflictError
+from ..module import get_introspection_module
 
 if sys.version_info >= (3, 0):
     _basestring = str
@@ -41,8 +42,10 @@ else:
     _basestring = basestring
     _bytes = str
 
-import gi._glib
-_glib = sys.modules['gi._glib._glib']
+from gi._glib import _glib
+GLib = get_introspection_module('GLib')
+
+OPTION_CONTEXT_ERROR_QUARK = GLib.quark_to_string(GLib.option_error_quark())
 
 __all__ = [
     "OptParseError",
@@ -55,6 +58,7 @@ __all__ = [
     "OptionParser",
     "make_option",
 ]
+
 
 class Option(optparse.Option):
     """Represents a command line option
@@ -90,7 +94,7 @@ class Option(optparse.Option):
         'optional_arg',
     ]
 
-    REMAINING = '--' + _glib.OPTION_REMAINING
+    REMAINING = '--' + GLib.OPTION_REMAINING
 
     def __init__(self, *args, **kwargs):
         optparse.Option.__init__(self, *args, **kwargs)
@@ -104,7 +108,6 @@ class Option(optparse.Option):
         if not self.help:
             raise ValueError("%s needs a help message.", self._long_opts[0])
 
-
     def _set_opt_string(self, opts):
         if self.REMAINING in opts:
             self._long_opts.append(self.REMAINING)
@@ -117,25 +120,26 @@ class Option(optparse.Option):
         flags = 0
 
         if self.hidden:
-            flags |= _glib.OPTION_FLAG_HIDDEN
+            flags |= GLib.OptionFlags.HIDDEN
 
         if self.in_main:
-            flags |= _glib.OPTION_FLAG_IN_MAIN
+            flags |= GLib.OptionFlags.IN_MAIN
 
         if self.takes_value():
             if self.optional_arg:
-                flags |= _glib.OPTION_FLAG_OPTIONAL_ARG
+                flags |= GLib.OptionFlags.OPTIONAL_ARG
         else:
-            flags |= _glib.OPTION_FLAG_NO_ARG
+            flags |= GLib.OptionFlags.NO_ARG
 
         if self.type == 'filename':
-            flags |= _glib.OPTION_FLAG_FILENAME
+            flags |= GLib.OptionFlags.FILENAME
 
         for (long_name, short_name) in zip(self._long_opts, self._short_opts):
             yield (long_name[2:], _bytes(short_name[1]), flags, self.help, self.metavar)
 
         for long_name in self._long_opts[len(self._short_opts):]:
             yield (long_name[2:], _bytes('\0'), flags, self.help, self.metavar)
+
 
 class OptionGroup(optparse.OptionGroup):
     """A group of command line options.
@@ -193,25 +197,25 @@ class OptionGroup(optparse.OptionGroup):
             except OptionValueError:
                 error = sys.exc_info()[1]
                 gerror = _glib.GError(str(error))
-                gerror.domain = _glib.OPTION_ERROR
-                gerror.code = _glib.OPTION_ERROR_BAD_VALUE
+                gerror.domain = OPTION_CONTEXT_ERROR_QUARK
+                gerror.code = GLib.OptionError.BAD_VALUE
                 gerror.message = str(error)
                 raise gerror
 
         group = _glib.OptionGroup(self.name, self.description,
-                                    self.help_description, callback)
+                                  self.help_description, callback)
         if self.translation_domain:
             group.set_translation_domain(self.translation_domain)
 
         entries = []
         for option in self.option_list:
             entries.extend(option._to_goptionentries())
- 
+
         group.add_entries(entries)
 
         return group
 
-    def get_option_group(self, parser = None):
+    def get_option_group(self, parser=None):
         """ Returns the corresponding GOptionGroup object.
 
         Can be used as parameter for gnome_program_init(), gtk_init().
@@ -227,6 +231,7 @@ class OptionGroup(optparse.OptionGroup):
                 self.defaults[option.dest] = option.check_value(
                     opt_str, default)
         self.values = optparse.Values(self.defaults)
+
 
 class OptionParser(optparse.OptionParser):
     """Command line parser with GOption support.
@@ -302,7 +307,7 @@ class OptionParser(optparse.OptionParser):
     def add_option_group(self, *args, **kwargs):
         if isinstance(args[0], _basestring):
             optparse.OptionParser.add_option_group(self,
-                OptionGroup(self, *args, **kwargs))
+                                                   OptionGroup(self, *args, **kwargs))
             return
         elif len(args) == 1 and not kwargs:
             if isinstance(args[0], OptionGroup):
@@ -337,13 +342,13 @@ class OptionParser(optparse.OptionParser):
                 self, args, values)
         except _glib.GError:
             error = sys.exc_info()[1]
-            if error.domain != _glib.OPTION_ERROR:
+            if error.domain != OPTION_CONTEXT_ERROR_QUARK:
                 raise
-            if error.code == _glib.OPTION_ERROR_BAD_VALUE:
+            if error.code == GLib.OptionError.BAD_VALUE:
                 raise OptionValueError(error.message)
-            elif error.code == _glib.OPTION_ERROR_UNKNOWN_OPTION:
+            elif error.code == GLib.OptionError.UNKNOWN_OPTION:
                 raise BadOptionError(error.message)
-            elif error.code == _glib.OPTION_ERROR_FAILED:
+            elif error.code == GLib.OptionError.FAILED:
                 raise OptParseError(error.message)
             else:
                 raise

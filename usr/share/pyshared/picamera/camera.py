@@ -47,6 +47,7 @@ import mimetypes
 import ctypes as ct
 import fractions
 import threading
+from operator import itemgetter
 
 import picamera.mmal as mmal
 import picamera.bcm_host as bcm_host
@@ -58,17 +59,24 @@ from picamera.exc import (
     PiCameraNotRecording,
     PiCameraAlreadyRecording,
     PiCameraMMALError,
+    PiCameraDeprecated,
     mmal_check,
     )
 from picamera.encoders import (
     PiVideoFrame,
     PiVideoFrameType,
     PiVideoEncoder,
-    PiImageEncoder,
+    PiRawVideoEncoder,
+    PiCookedVideoEncoder,
     PiRawOneImageEncoder,
     PiRawMultiImageEncoder,
     PiCookedOneImageEncoder,
     PiCookedMultiImageEncoder,
+    )
+from picamera.renderers import (
+    PiPreviewRenderer,
+    PiOverlayRenderer,
+    PiNullSink,
     )
 
 try:
@@ -86,20 +94,27 @@ def _control_callback(port, buf):
 _control_callback = mmal.MMAL_PORT_BH_CB_T(_control_callback)
 
 
-# Guardian variable set upon initialization of PiCamera and used to ensure that
-# no more than one PiCamera is instantiated at a given time
-_CAMERA = None
-
-
 class PiCameraFraction(fractions.Fraction):
     """
     Extends :class:`~fractions.Fraction` to act as a (numerator, denominator)
     tuple when required.
     """
     def __len__(self):
+        warnings.warn(
+            PiCameraDeprecated(
+                'Accessing framerate as a tuple is deprecated; this value is '
+                'now a Fraction, so you can query the numerator and '
+                'denominator properties directly, convert to an int or float, '
+                'or perform arithmetic operations and comparisons directly'))
         return 2
 
     def __getitem__(self, index):
+        warnings.warn(
+            PiCameraDeprecated(
+                'Accessing framerate as a tuple is deprecated; this value is '
+                'now a Fraction, so you can query the numerator and '
+                'denominator properties directly, convert to an int or float, '
+                'or perform arithmetic operations and comparisons directly'))
         if index == 0:
             return self.numerator
         elif index == 1:
@@ -130,10 +145,15 @@ def to_rational(value):
             try:
                 # tuple
                 n, d = value
+                warnings.warn(
+                    PiCameraDeprecated(
+                        "Setting framerate or gains as a tuple is deprecated; "
+                        "please use one of Python's many numeric classes like "
+                        "int, float, Decimal, or Fraction instead"))
             except (TypeError, ValueError):
-                # anything else...
-                n = int(value)
-                d = 1
+                # try and convert anything else (e.g. Decimal) to a Fraction
+                value = Fraction(value)
+                n, d = value.numerator, value.denominator
     # Ensure denominator is reasonable
     if d == 0:
         raise PiCameraValueError("Denominator cannot be 0")
@@ -143,14 +163,52 @@ def to_rational(value):
     return n, d
 
 
+def to_fraction(rational):
+    """
+    Converts an MMAL_RATIONAL_T to a Fraction instance.
+    """
+    return fractions.Fraction(rational.num, rational.den)
+
+
+def docstring_values(values, indent=8):
+    """
+    Formats a dictionary of values for inclusion in a docstring.
+    """
+    return ('\n' + ' ' * indent).join(
+        "* ``'%s'``" % k
+        for (k, v) in
+        sorted(values.items(), key=itemgetter(1)))
+
+
 class PiCamera(object):
     """
     Provides a pure Python interface to the Raspberry Pi's camera module.
 
-    Upon construction, this class initializes the camera. As there is only a
-    single camera supported by the Raspberry Pi, this means that only a single
-    instance of this class can exist at any given time (it is effectively a
-    singleton class although it is not implemented as such).
+    Upon construction, this class initializes the camera. The *camera_num*
+    parameter (which defaults to 0) selects the camera module that the instance
+    will represent. Only the Raspberry Pi compute module currently supports
+    more than one camera, and this class has not yet been tested with more than
+    one module.
+
+    The *stereo_mode* and *stereo_decimate* parameters configure dual cameras
+    on a compute module for sterescopic mode. These parameters can only be set
+    at construction time; they cannot be altered later without closing the
+    :class:`PiCamera` instance and recreating it. The *stereo_mode* parameter
+    defaults to ``'none'`` (no stereoscopic mode) but can be set to
+    ``'side-by-side'`` or ``'top-bottom'`` to activate a stereoscopic mode. If
+    the *stereo_decimate* parameter is ``True``, the resolution of the two
+    cameras will be halved so that the resulting image has the same dimensions
+    as if stereoscopic mode were not being used.
+
+    .. warning::
+
+        Stereoscopic mode is untested in picamera at this time. If you have the
+        necessary hardware, the author would be most interested to hear of your
+        experiences!
+
+    The :attr:`resolution` of the camera is initially set to the display's
+    resolution unless the display has been disabled (e.g. with ``tvservice
+    -o``) in which case a default of 1280x720 is used.
 
     No preview or recording is started automatically upon construction.  Use
     the :meth:`capture` method to capture images, the :meth:`start_recording`
@@ -163,8 +221,7 @@ class PiCamera(object):
     when the camera is idle.
 
     When you are finished with the camera, you should ensure you call the
-    :meth:`close` method to release the camera resources (failure to do this
-    leads to GPU memory leaks)::
+    :meth:`close` method to release the camera resources::
 
         camera = PiCamera()
         try:
@@ -206,6 +263,7 @@ class PiCamera(object):
         }
 
     EXPOSURE_MODES = {
+        'off':           mmal.MMAL_PARAM_EXPOSUREMODE_OFF,
         'auto':          mmal.MMAL_PARAM_EXPOSUREMODE_AUTO,
         'night':         mmal.MMAL_PARAM_EXPOSUREMODE_NIGHT,
         'nightpreview':  mmal.MMAL_PARAM_EXPOSUREMODE_NIGHTPREVIEW,
@@ -237,9 +295,10 @@ class PiCamera(object):
         'none':          mmal.MMAL_PARAM_IMAGEFX_NONE,
         'negative':      mmal.MMAL_PARAM_IMAGEFX_NEGATIVE,
         'solarize':      mmal.MMAL_PARAM_IMAGEFX_SOLARIZE,
-        'posterize':     mmal.MMAL_PARAM_IMAGEFX_POSTERIZE,
-        'whiteboard':    mmal.MMAL_PARAM_IMAGEFX_WHITEBOARD,
-        'blackboard':    mmal.MMAL_PARAM_IMAGEFX_BLACKBOARD,
+        # The following don't work
+        #'posterize':     mmal.MMAL_PARAM_IMAGEFX_POSTERIZE,
+        #'whiteboard':    mmal.MMAL_PARAM_IMAGEFX_WHITEBOARD,
+        #'blackboard':    mmal.MMAL_PARAM_IMAGEFX_BLACKBOARD,
         'sketch':        mmal.MMAL_PARAM_IMAGEFX_SKETCH,
         'denoise':       mmal.MMAL_PARAM_IMAGEFX_DENOISE,
         'emboss':        mmal.MMAL_PARAM_IMAGEFX_EMBOSS,
@@ -257,6 +316,15 @@ class PiCamera(object):
         'colorpoint':    mmal.MMAL_PARAM_IMAGEFX_COLOURPOINT,
         'colorbalance':  mmal.MMAL_PARAM_IMAGEFX_COLOURBALANCE,
         'cartoon':       mmal.MMAL_PARAM_IMAGEFX_CARTOON,
+        'deinterlace1':  mmal.MMAL_PARAM_IMAGEFX_DEINTERLACE_DOUBLE,
+        'deinterlace2':  mmal.MMAL_PARAM_IMAGEFX_DEINTERLACE_ADV,
+        }
+
+    DRC_STRENGTHS = {
+        'off':    mmal.MMAL_PARAMETER_DRC_STRENGTH_OFF,
+        'low':    mmal.MMAL_PARAMETER_DRC_STRENGTH_LOW,
+        'medium': mmal.MMAL_PARAMETER_DRC_STRENGTH_MEDIUM,
+        'high':   mmal.MMAL_PARAMETER_DRC_STRENGTH_HIGH,
         }
 
     RAW_FORMATS = {
@@ -268,18 +336,21 @@ class PiCamera(object):
         'bgra': mmal.MMAL_ENCODING_BGRA,
         }
 
+    STEREO_MODES = {
+        'none':         mmal.MMAL_STEREOSCOPIC_MODE_NONE,
+        'side-by-side': mmal.MMAL_STEREOSCOPIC_MODE_SIDE_BY_SIDE,
+        'top-bottom':   mmal.MMAL_STEREOSCOPIC_MODE_BOTTOM,
+        }
+
     _METER_MODES_R    = {v: k for (k, v) in METER_MODES.items()}
     _EXPOSURE_MODES_R = {v: k for (k, v) in EXPOSURE_MODES.items()}
     _AWB_MODES_R      = {v: k for (k, v) in AWB_MODES.items()}
     _IMAGE_EFFECTS_R  = {v: k for (k, v) in IMAGE_EFFECTS.items()}
     _RAW_FORMATS_R    = {v: k for (k, v) in RAW_FORMATS.items()}
+    _DRC_STRENGTHS_R  = {v: k for (k, v) in DRC_STRENGTHS.items()}
+    _STEREO_MODES_R   = {v: k for (k, v) in STEREO_MODES.items()}
 
-    def __init__(self):
-        global _CAMERA
-        if _CAMERA:
-            raise PiCameraRuntimeError(
-                "Only one PiCamera object can be in existence at a time")
-        _CAMERA = self
+    def __init__(self, camera_num=0, stereo_mode='none', stereo_decimate=False):
         bcm_host.bcm_host_init()
         mimetypes.add_type('application/h264',  '.h264',  False)
         mimetypes.add_type('application/mjpeg', '.mjpg',  False)
@@ -288,19 +359,24 @@ class PiCamera(object):
         self._camera = None
         self._camera_config = None
         self._preview = None
-        self._preview_connection = None
-        self._null_sink = None
+        self._preview_alpha = 255
+        self._preview_layer = 2
+        self._preview_fullscreen = True
+        self._preview_window = None
         self._splitter = None
         self._splitter_connection = None
         self._encoders_lock = threading.Lock()
         self._encoders = {}
+        self._overlays = []
         self._raw_format = 'yuv'
+        self._image_effect_params = None
         self._exif_tags = {
             'IFD0.Model': 'RP_OV5647',
             'IFD0.Make': 'RaspberryPi',
             }
         try:
-            self._init_camera()
+            self._init_camera(
+                camera_num, self.STEREO_MODES[stereo_mode], stereo_decimate)
             self._init_defaults()
             self._init_preview()
             self._init_splitter()
@@ -321,7 +397,7 @@ class PiCamera(object):
                 # GPIO reference so we don't try anything further
                 GPIO = None
 
-    def _init_camera(self):
+    def _init_camera(self, num, stereo_mode, stereo_decimate):
         self._camera = ct.POINTER(mmal.MMAL_COMPONENT_T)()
         self._camera_config = mmal.MMAL_PARAMETER_CAMERA_CONFIG_T(
             mmal.MMAL_PARAMETER_HEADER_T(
@@ -340,8 +416,19 @@ class PiCamera(object):
                     "and ensure that the camera has been enabled.")
             else:
                 raise
+
         if not self._camera[0].output_num:
             raise PiCameraError("Camera doesn't have output ports")
+
+        mp = mmal.MMAL_PARAMETER_INT32_T(
+            mmal.MMAL_PARAMETER_HEADER_T(
+                mmal.MMAL_PARAMETER_CAMERA_NUM,
+                ct.sizeof(mmal.MMAL_PARAMETER_INT32_T)
+            ),
+            num)
+        mmal_check(
+            mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
+            prefix="Unable to select camera %d" % num)
 
         mmal_check(
             mmal.mmal_port_enable(
@@ -352,9 +439,12 @@ class PiCamera(object):
         # Get screen resolution
         w = ct.c_uint32()
         h = ct.c_uint32()
-        bcm_host.graphics_get_display_size(0, w, h)
-        w = int(w.value)
-        h = int(h.value)
+        if bcm_host.graphics_get_display_size(0, w, h) == -1:
+            w = 1280
+            h = 720
+        else:
+            w = int(w.value)
+            h = int(h.value)
         cc = self._camera_config
         cc.max_stills_w = w
         cc.max_stills_h = h
@@ -372,6 +462,21 @@ class PiCamera(object):
 
         for p in self.CAMERA_PORTS:
             port = self._camera[0].output[p]
+            # Don't attempt to set this if stereo mode isn't requested as it'll
+            # break compatibility on older firmwares
+            if stereo_mode != mmal.MMAL_STEREOSCOPIC_MODE_NONE:
+                mp = mmal.MMAL_PARAMETER_STEREOSCOPIC_MODE_T(
+                    mmal.MMAL_PARAMETER_HEADER_T(
+                        mmal.MMAL_PARAMETER_STEREOSCOPIC_MODE,
+                        ct.sizeof(mmal.MMAL_PARAMETER_STEREOSCOPIC_MODE_T),
+                    ),
+                    mode=stereo_mode,
+                    decimate=stereo_decimate,
+                    swap_eyes=False,
+                    )
+                mmal_check(
+                    mmal.mmal_port_parameter_set(port, mp.hdr),
+                    prefix="Unable to set stereoscopic mode on output %d" % p)
             fmt = port[0].format
             fmt[0].encoding = mmal.MMAL_ENCODING_I420 if p != self.CAMERA_PREVIEW_PORT else mmal.MMAL_ENCODING_OPAQUE
             fmt[0].encoding_variant = mmal.MMAL_ENCODING_I420
@@ -414,7 +519,7 @@ class PiCamera(object):
         self.color_effects = None
         self.rotation = 0
         self.hflip = self.vflip = False
-        self.crop = (0.0, 0.0, 1.0, 1.0)
+        self.zoom = (0.0, 0.0, 1.0, 1.0)
 
     def _init_splitter(self):
         # Create a splitter component for the video port. This is to permit
@@ -437,54 +542,12 @@ class PiCamera(object):
             self._splitter[0].input[0])
 
     def _init_preview(self):
-        # Create and enable the preview component, but don't actually connect
-        # it to the camera at this time
-        self._preview = ct.POINTER(mmal.MMAL_COMPONENT_T)()
-        mmal_check(
-            mmal.mmal_component_create(
-                mmal.MMAL_COMPONENT_DEFAULT_VIDEO_RENDERER, self._preview),
-            prefix="Failed to create preview component")
-        if not self._preview[0].input_num:
-            raise PiCameraError("No input ports on preview component")
-
-        mp = mmal.MMAL_DISPLAYREGION_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_DISPLAYREGION,
-                ct.sizeof(mmal.MMAL_DISPLAYREGION_T)
-            ))
-        mp.set = (
-            mmal.MMAL_DISPLAY_SET_LAYER |
-            mmal.MMAL_DISPLAY_SET_ALPHA |
-            mmal.MMAL_DISPLAY_SET_FULLSCREEN)
-        mp.layer = 2
-        mp.alpha = 255
-        mp.fullscreen = 1
-        mmal_check(
-            mmal.mmal_port_parameter_set(self._preview[0].input[0], mp.hdr),
-            prefix="Unable to set preview port parameters")
-
-        mmal_check(
-            mmal.mmal_component_enable(self._preview),
-            prefix="Preview component couldn't be enabled")
-
         # Create a null-sink component, enable it and connect it to the
         # camera's preview port. If nothing is connected to the preview port,
         # the camera doesn't measure exposure and captured images gradually
         # fade to black (issue #22)
-        self._null_sink = ct.POINTER(mmal.MMAL_COMPONENT_T)()
-        mmal_check(
-            mmal.mmal_component_create(
-                mmal.MMAL_COMPONENT_DEFAULT_NULL_SINK, self._null_sink),
-            prefix="Failed to create null sink component")
-        if not self._null_sink[0].input_num:
-            raise PiCameraError("No input ports on null sink component")
-        mmal_check(
-            mmal.mmal_component_enable(self._null_sink),
-            prefix="Null sink component couldn't be enabled")
-
-        self._preview_connection = self._connect_ports(
-            self._camera[0].output[self.CAMERA_PREVIEW_PORT],
-            self._null_sink[0].input[0])
+        self._preview = PiNullSink(
+            self, self._camera[0].output[self.CAMERA_PREVIEW_PORT])
 
     def _connect_ports(self, output_port, input_port):
         result = ct.POINTER(mmal.MMAL_CONNECTION_T)()
@@ -522,7 +585,7 @@ class PiCamera(object):
             mmal.mmal_connection_disable(self._splitter_connection),
             prefix="Failed to disable splitter connection")
         mmal_check(
-            mmal.mmal_connection_disable(self._preview_connection),
+            mmal.mmal_connection_disable(self._preview.connection),
             prefix="Failed to disable preview connection")
         mmal_check(
             mmal.mmal_component_disable(self._camera),
@@ -534,7 +597,7 @@ class PiCamera(object):
             mmal.mmal_component_enable(self._camera),
             prefix="Failed to enable camera")
         mmal_check(
-            mmal.mmal_connection_enable(self._preview_connection),
+            mmal.mmal_connection_enable(self._preview.connection),
             prefix="Failed to enable preview connection")
         mmal_check(
             mmal.mmal_connection_enable(self._splitter_connection),
@@ -743,7 +806,10 @@ class PiCamera(object):
         pipeline). Finally, *options* includes extra keyword arguments that
         should be passed verbatim to the encoder.
         """
-        return PiVideoEncoder(
+        encoder_class = (
+                PiRawVideoEncoder if format in self.RAW_FORMATS else
+                PiCookedVideoEncoder)
+        return encoder_class(
                 self, camera_port, output_port, format, resize, **options)
 
     def close(self):
@@ -757,29 +823,23 @@ class PiCamera(object):
         resources associated with the camera; this is necessary to prevent GPU
         memory leaks.
         """
-        global _CAMERA
         for port in list(self._encoders):
             self.stop_recording(splitter_port=port)
         assert not self.recording
+        for overlay in list(self._overlays):
+            self.remove_overlay(overlay)
+        if self._preview:
+            self._preview.close()
+            self._preview = None
         if self._splitter_connection:
             mmal.mmal_connection_destroy(self._splitter_connection)
             self._splitter_connection = None
-        if self._preview_connection:
-            mmal.mmal_connection_destroy(self._preview_connection)
-            self._preview_connection = None
-        if self._null_sink:
-            mmal.mmal_component_destroy(self._null_sink)
-            self._null_sink = None
         if self._splitter:
             mmal.mmal_component_destroy(self._splitter)
             self._splitter = None
-        if self._preview:
-            mmal.mmal_component_destroy(self._preview)
-            self._preview = None
         if self._camera:
             mmal.mmal_component_destroy(self._camera)
             self._camera = None
-        _CAMERA = None
 
     def __enter__(self):
         return self
@@ -787,59 +847,127 @@ class PiCamera(object):
     def __exit__(self, exc_type, exc_value, exc_tb):
         self.close()
 
-    def start_preview(self):
+    def start_preview(self, **options):
         """
-        Displays the preview window.
+        Displays the preview overlay.
 
-        This method starts a new preview running at the configured resolution
-        (see :attr:`resolution`). Most camera properties can be modified "live"
-        while the preview is running (e.g. :attr:`brightness`). The preview
-        overrides whatever is currently visible on the display. More
-        specifically, the preview does not rely on a graphical environment like
-        X-Windows (it can run quite happily from a TTY console); it is simply
-        an overlay on the Pi's video output.
+        This method starts a camera preview as an overlay on the Pi's primary
+        display (HDMI or composite). A :class:`PiRenderer` instance (more
+        specifically, a :class:`PiPreviewRenderer`) is constructed with the
+        keyword arguments captured in *options*, and is returned from the
+        method (this instance is also accessible from the :attr:`preview`
+        attribute for as long as the renderer remains active).  By default, the
+        renderer will be opaque and fullscreen.
 
-        To stop the preview and reveal the display again, call
-        :meth:`stop_preview`. The preview can be started and stopped multiple
-        times during the lifetime of the :class:`PiCamera` object.
+        This means the default preview overrides whatever is currently visible
+        on the display. More specifically, the preview does not rely on a
+        graphical environment like X-Windows (it can run quite happily from a
+        TTY console); it is simply an overlay on the Pi's video output. To stop
+        the preview and reveal the display again, call :meth:`stop_preview`.
+        The preview can be started and stopped multiple times during the
+        lifetime of the :class:`PiCamera` object.
+
+        All other camera properties can be modified "live" while the preview is
+        running (e.g. :attr:`brightness`).
 
         .. note::
-            Because the preview typically obscures the screen, ensure you have
-            a means of stopping a preview before starting one. If the preview
-            obscures your interactive console you won't be able to Alt+Tab back
-            to it as the preview isn't in a window. If you are in an
-            interactive Python session, simply pressing Ctrl+D usually suffices
-            to terminate the environment, including the camera and its
+
+            Because the default preview typically obscures the screen, ensure
+            you have a means of stopping a preview before starting one. If the
+            preview obscures your interactive console you won't be able to
+            Alt+Tab back to it as the preview isn't in a window. If you are in
+            an interactive Python session, simply pressing Ctrl+D usually
+            suffices to terminate the environment, including the camera and its
             associated preview.
         """
         self._check_camera_open()
-        # Switch the camera's preview port from the null sink to the
-        # preview component
-        if self._preview_connection:
-            mmal.mmal_connection_destroy(self._preview_connection)
-            self._null_connection = None
-        self._preview_connection = self._connect_ports(
-            self._camera[0].output[self.CAMERA_PREVIEW_PORT],
-            self._preview[0].input[0])
+        self._preview.close()
+        options.setdefault('layer', self._preview_layer)
+        options.setdefault('alpha', self._preview_alpha)
+        options.setdefault('fullscreen', self._preview_fullscreen)
+        options.setdefault('window', self._preview_window)
+        renderer = PiPreviewRenderer(
+            self, self._camera[0].output[self.CAMERA_PREVIEW_PORT], **options)
+        self._preview = renderer
+        return renderer
 
     def stop_preview(self):
         """
-        Closes the preview window display.
+        Hides the preview overlay.
 
         If :meth:`start_preview` has previously been called, this method shuts
-        down the preview display which generally results in the underlying TTY
-        becoming visible again. If a preview is not currently running, no
-        exception is raised - the method will simply do nothing.
+        down the preview display which generally results in the underlying
+        display becoming visible again. If a preview is not currently running,
+        no exception is raised - the method will simply do nothing.
         """
         self._check_camera_open()
-        # This is the reverse of start_preview; disconnect the camera from the
-        # preview component (if it's connected) and connect it to the null sink
-        if self._preview_connection:
-            mmal.mmal_connection_destroy(self._preview_connection)
-            self._preview_connection = None
-        self._preview_connection = self._connect_ports(
-            self._camera[0].output[self.CAMERA_PREVIEW_PORT],
-            self._null_sink[0].input[0])
+        self._preview.close()
+        self._preview = PiNullSink(
+            self, self._camera[0].output[self.CAMERA_PREVIEW_PORT])
+
+    def add_overlay(self, source, size=None, **options):
+        """
+        Adds a static overlay to the preview output.
+
+        This method creates a new static overlay using the same rendering
+        mechanism as the preview. Overlays will appear on the Pi's video
+        output, but will not appear in captures or video recordings. Multiple
+        overlays can exist; each call to :meth:`add_overlay` returns a new
+        :class:`PiOverlayRenderer` instance representing the overlay.
+
+        The optional *size* parameter specifies the size of the source image as
+        a ``(width, height)`` tuple. If this is omitted or ``None`` then the
+        size is assumed to be the same as the camera's current
+        :attr:`resolution`.
+
+        The *source* must be an object that supports the :ref:`buffer protocol
+        <bufferobjects>` which has the same length as an image in `RGB`_ format
+        (colors represented as interleaved unsigned bytes) with the specified
+        *size* after the width has been rounded up to the nearest multiple of
+        32, and the height has been rounded up to the nearest multiple of 16.
+
+        For example, if *size* is ``(1280, 720)``, then *source* must be a
+        buffer with length 1280 × 720 × 3 bytes, or 2,764,800 bytes (because
+        1280 is a multiple of 32, and 720 is a multiple of 16 no extra rounding
+        is required).  However, if *size* is ``(97, 57)``, then *source* must
+        be a buffer with length 128 × 64 × 3 bytes, or 24,576 bytes (pixels
+        beyond column 97 and row 57 in the source will be ignored).
+
+        New overlays default to *layer* 0, whilst the preview defaults to layer
+        2. Higher numbered layers obscure lower numbered layers, hence new
+        overlays will be invisible (if the preview is running) by default. You
+        can make the new overlay visible either by making any existing preview
+        transparent (with the :attr:`~PiRenderer.alpha` property) or by moving
+        the overlay into a layer higher than the preview (with the
+        :attr:`~PiRenderer.layer` property).
+
+        All keyword arguments captured in *options* are passed onto the
+        :class:`PiRenderer` constructor. All camera properties except
+        :attr:`resolution` and :attr:`framerate` can be modified while overlays
+        exist. The reason for these exceptions is that the overlay has a static
+        resolution and changing the camera's mode would require resizing of the
+        source.
+
+        .. _RGB: http://en.wikipedia.org/wiki/RGB
+        """
+        renderer = PiOverlayRenderer(self, source, size, **options)
+        self._overlays.append(renderer)
+        return renderer
+
+    def remove_overlay(self, overlay):
+        """
+        Removes a static overlay from the preview output.
+
+        This method removes an overlay which was previously created by
+        :meth:`add_overlay`. The *overlay* parameter specifies the
+        :class:`PiRenderer` instance that was returned by :meth:`add_overlay`.
+        """
+        if not overlay in self._overlays:
+            raise PiCameraRuntimeError(
+                "The specified overlay is not owned by this instance of "
+                "PiCamera")
+        overlay.close()
+        self._overlays.remove(overlay)
 
     def start_recording(
             self, output, format=None, resize=None, splitter_port=1, **options):
@@ -864,6 +992,11 @@ class PiCamera(object):
 
         * ``'h264'`` - Write an H.264 video stream
         * ``'mjpeg'`` - Write an M-JPEG video stream
+        * ``'yuv'`` - Write the raw video data to a file in YUV420 format
+        * ``'rgb'`` - Write the raw video data to a file in 24-bit RGB format
+        * ``'rgba'`` - Write the raw video data to a file in 32-bit RGBA format
+        * ``'bgr'`` - Write the raw video data to a file in 24-bit BGR format
+        * ``'bgra'`` - Write the raw video data to a file in 32-bit BGRA format
 
         If *resize* is not ``None`` (the default), it must be a two-element
         tuple specifying the width and height that the video recording should
@@ -888,9 +1021,11 @@ class PiCamera(object):
           'constrained'.
 
         * *intra_period* - The key frame rate (the rate at which I-frames are
-          inserted in the output). Defaults to 0, but can be any positive
-          32-bit integer value representing the number of frames between
-          successive I-frames.
+          inserted in the output). Defaults to None, but can be any 32-bit
+          integer value representing the number of frames between successive
+          I-frames. The special value 0 causes the encoder to produce a single
+          initial I-frame, and then only P-frames subsequently. Note that
+          :meth:`split_recording` will fail in this mode.
 
         * *inline_headers* - When ``True``, specifies that the encoder should
           output SPS/PPS headers within the stream to ensure GOPs (groups of
@@ -914,9 +1049,8 @@ class PiCamera(object):
 
         * *bitrate* - The bitrate at which video will be encoded. Defaults to
           17000000 (17Mbps) if not specified.  The maximum value is 25000000
-          (25Mbps). Bitrate 0 is special and seems to indicate a "reasonable
-          bitrate" default, but should be avoided due to a firmware issue
-          which prevents :meth:`split_recording` from working when it is used.
+          (25Mbps). Bitrate 0 indicates the encoder should not use bitrate
+          control (the encoder is limited by the quality only).
 
         * *quality* - Specifies the quality that the encoder should attempt
           to maintain. For the ``'h264'`` format, use values between 10 and 40
@@ -939,6 +1073,11 @@ class PiCamera(object):
             The *quantization* parameter was deprecated in favor of *quality*,
             and the *motion_output* parameter was added.
         """
+        if 'quantization' in options:
+            warnings.warn(
+                PiCameraDeprecated(
+                    'The quantization option is deprecated; please use '
+                    'quality instead (same value)'))
         with self._encoders_lock:
             camera_port, output_port = self._get_ports(True, splitter_port)
             format = self._get_video_format(output, format)
@@ -996,11 +1135,14 @@ class PiCamera(object):
             The *motion_output* parameter was added
         """
         try:
-            self._encoders[splitter_port].split(output, options.get('motion_output'))
+            with self._encoders_lock:
+                encoder = self._encoders[splitter_port]
         except KeyError:
             raise PiCameraNotRecording(
                     'There is no recording in progress on '
                     'port %d' % splitter_port)
+        else:
+            encoder.split(output, options.get('motion_output'))
 
     def wait_recording(self, timeout=0, splitter_port=1):
         """
@@ -1024,11 +1166,14 @@ class PiCamera(object):
         """
         assert timeout is not None
         try:
-            self._encoders[splitter_port].wait(timeout)
+            with self._encoders_lock:
+                encoder = self._encoders[splitter_port]
         except KeyError:
             raise PiCameraNotRecording(
                     'There is no recording in progress on '
                     'port %d' % splitter_port)
+        else:
+            encoder.wait(timeout)
 
     def stop_recording(self, splitter_port=1):
         """
@@ -1049,11 +1194,19 @@ class PiCamera(object):
             The *splitter_port* parameter was added
         """
         try:
-            self.wait_recording(0, splitter_port)
-        finally:
             with self._encoders_lock:
-                encoder = self._encoders.pop(splitter_port)
-            encoder.close()
+                encoder = self._encoders[splitter_port]
+        except KeyError:
+            raise PiCameraNotRecording(
+                    'There is no recording in progress on '
+                    'port %d' % splitter_port)
+        else:
+            try:
+                self.wait_recording(0, splitter_port)
+            finally:
+                encoder.close()
+                with self._encoders_lock:
+                    del self._encoders[splitter_port]
 
     def record_sequence(
             self, outputs, format='h264', resize=None, splitter_port=1, **options):
@@ -1142,9 +1295,9 @@ class PiCamera(object):
             try:
                 encoder.wait(0)
             finally:
+                encoder.close()
                 with self._encoders_lock:
                     del self._encoders[splitter_port]
-                encoder.close()
 
     def capture(
             self, output, format=None, use_video_port=False, resize=None,
@@ -1169,23 +1322,14 @@ class PiCamera(object):
         one of the following strings:
 
         * ``'jpeg'`` - Write a JPEG file
-
         * ``'png'`` - Write a PNG file
-
         * ``'gif'`` - Write a GIF file
-
         * ``'bmp'`` - Write a Windows bitmap file
-
         * ``'yuv'`` - Write the raw image data to a file in YUV420 format
-
         * ``'rgb'`` - Write the raw image data to a file in 24-bit RGB format
-
         * ``'rgba'`` - Write the raw image data to a file in 32-bit RGBA format
-
         * ``'bgr'`` - Write the raw image data to a file in 24-bit BGR format
-
         * ``'bgra'`` - Write the raw image data to a file in 32-bit BGRA format
-
         * ``'raw'`` - Deprecated option for raw captures; the format is taken
           from the deprecated :attr:`raw_format` attribute
 
@@ -1217,7 +1361,8 @@ class PiCamera(object):
         additional options, which are:
 
         * *quality* - Defines the quality of the JPEG encoder as an integer
-          ranging from 1 to 100. Defaults to 85.
+          ranging from 1 to 100. Defaults to 85. Please note that JPEG quality
+          is not a percentage and `definitions of quality`_ vary widely.
 
         * *thumbnail* - Defines the size and quality of the thumbnail to embed
           in the Exif metadata. Specifying ``None`` disables thumbnail
@@ -1244,7 +1389,13 @@ class PiCamera(object):
             The *splitter_port* parameter was added, and *bayer* was added as
             an option for the ``'jpeg'`` format
 
+        .. _definitions of quality: http://photo.net/learn/jpeg/#qual
         """
+        if format == 'raw':
+            warnings.warn(
+                PiCameraDeprecated(
+                    'The "raw" format option is deprecated; specify the '
+                    'required format directly instead ("yuv", "rgb", etc.)'))
         with self._encoders_lock:
             camera_port, output_port = self._get_ports(use_video_port, splitter_port)
             format = self._get_image_format(output, format)
@@ -1266,14 +1417,14 @@ class PiCamera(object):
                 raise PiCameraRuntimeError(
                     'Timed out waiting for capture to end')
         finally:
+            encoder.close()
             with self._encoders_lock:
                 if use_video_port:
                     del self._encoders[splitter_port]
-            encoder.close()
 
     def capture_sequence(
             self, outputs, format='jpeg', use_video_port=False, resize=None,
-            splitter_port=0, **options):
+            splitter_port=0, burst=False, **options):
         """
         Capture a sequence of consecutive images from the camera.
 
@@ -1287,6 +1438,16 @@ class PiCamera(object):
         *options* parameters are the same as in :meth:`capture`, but *format*
         defaults to ``'jpeg'``.  The format is **not** derived from the
         filenames in *outputs* by this method.
+
+        If *use_video_port* is ``False`` (the default), the *burst* parameter
+        can be used to make still port captures faster.  Specifically, this
+        prevents the preview from switching resolutions between captures which
+        significantly speeds up consecutive captures from the still port. The
+        downside is that this mode is currently has several bugs; the major
+        issue is that if captures are performed too quickly some frames will
+        come back severely underexposed. It is recommended that users avoid the
+        *burst* parameter unless they absolutely require it and are prepared to
+        work around such issues.
 
         For example, to capture 3 consecutive images::
 
@@ -1327,6 +1488,9 @@ class PiCamera(object):
         .. versionchanged:: 1.3
             The *splitter_port* parameter was added
         """
+        if use_video_port and burst:
+            raise PiCameraRuntimeError(
+                'Burst is only valid with still port captures')
         with self._encoders_lock:
             camera_port, output_port = self._get_ports(use_video_port, splitter_port)
             format = self._get_image_format('', format)
@@ -1346,20 +1510,36 @@ class PiCamera(object):
                 encoder.start(outputs)
                 encoder.wait()
             else:
-                for output in outputs:
-                    encoder.start(output)
-                    if not encoder.wait(self.CAPTURE_TIMEOUT):
-                        raise PiCameraRuntimeError(
-                            'Timed out waiting for capture to end')
+                if burst:
+                    mmal_check(
+                        mmal.mmal_port_parameter_set_boolean(
+                            camera_port,
+                            mmal.MMAL_PARAMETER_CAMERA_BURST_CAPTURE,
+                            mmal.MMAL_TRUE),
+                        prefix="Failed to set burst capture")
+                try:
+                    for output in outputs:
+                        encoder.start(output)
+                        if not encoder.wait(self.CAPTURE_TIMEOUT):
+                            raise PiCameraRuntimeError(
+                                'Timed out waiting for capture to end')
+                finally:
+                    if burst:
+                        mmal_check(
+                            mmal.mmal_port_parameter_set_boolean(
+                                camera_port,
+                                mmal.MMAL_PARAMETER_CAMERA_BURST_CAPTURE,
+                                mmal.MMAL_FALSE),
+                            prefix="Failed to set burst capture")
         finally:
+            encoder.close()
             with self._encoders_lock:
                 if use_video_port:
                     del self._encoders[splitter_port]
-            encoder.close()
 
     def capture_continuous(
             self, output, format=None, use_video_port=False, resize=None,
-            splitter_port=0, **options):
+            splitter_port=0, burst=False, **options):
         """
         Capture images continuously from the camera as an infinite iterator.
 
@@ -1412,6 +1592,16 @@ class PiCamera(object):
         The *format*, *use_video_port*, *splitter_port*, *resize*, and
         *options* parameters are the same as in :meth:`capture`.
 
+        If *use_video_port* is ``False`` (the default), the *burst* parameter
+        can be used to make still port captures faster.  Specifically, this
+        prevents the preview from switching resolutions between captures which
+        significantly speeds up consecutive captures from the still port. The
+        downside is that this mode is currently has several bugs; the major
+        issue is that if captures are performed too quickly some frames will
+        come back severely underexposed. It is recommended that users avoid the
+        *burst* parameter unless they absolutely require it and are prepared to
+        work around such issues.
+
         For example, to capture 60 images with a one second delay between them,
         writing the output to a series of JPEG files named image01.jpg,
         image02.jpg, etc. one could do the following::
@@ -1453,6 +1643,9 @@ class PiCamera(object):
         .. versionchanged:: 1.3
             The *splitter_port* parameter was added
         """
+        if use_video_port and burst:
+            raise PiCameraRuntimeError(
+                'Burst is only valid with still port captures')
         with self._encoders_lock:
             camera_port, output_port = self._get_ports(use_video_port, splitter_port)
             format = self._get_image_format(output, format)
@@ -1465,39 +1658,56 @@ class PiCamera(object):
             if use_video_port:
                 self._encoders[splitter_port] = encoder
         try:
-            if isinstance(output, bytes):
-                # If we're fed a bytes string, assume it's UTF-8 encoded and
-                # convert it to Unicode. Technically this is wrong
-                # (file-systems use all sorts of encodings), but UTF-8 is a
-                # reasonable default and this keeps compatibility with Python 2
-                # simple although it breaks the edge cases of non-UTF-8 encoded
-                # bytes strings with non-UTF-8 encoded file-systems
-                output = output.decode('utf-8')
-            if isinstance(output, str):
-                counter = 1
-                while True:
-                    filename = output.format(
-                        counter=counter,
-                        timestamp=datetime.datetime.now(),
-                        )
-                    encoder.start(filename)
-                    if not encoder.wait(self.CAPTURE_TIMEOUT):
-                        raise PiCameraRuntimeError(
-                            'Timed out waiting for capture to end')
-                    yield filename
-                    counter += 1
-            else:
-                while True:
-                    encoder.start(output)
-                    if not encoder.wait(self.CAPTURE_TIMEOUT):
-                        raise PiCameraRuntimeError(
-                            'Timed out waiting for capture to end')
-                    yield output
+            if burst:
+                mmal_check(
+                    mmal.mmal_port_parameter_set_boolean(
+                        camera_port,
+                        mmal.MMAL_PARAMETER_CAMERA_BURST_CAPTURE,
+                        mmal.MMAL_TRUE),
+                    prefix="Failed to set burst capture")
+            try:
+                if isinstance(output, bytes):
+                    # If we're fed a bytes string, assume it's UTF-8 encoded
+                    # and convert it to Unicode. Technically this is wrong
+                    # (file-systems use all sorts of encodings), but UTF-8 is a
+                    # reasonable default and this keeps compatibility with
+                    # Python 2 simple although it breaks the edge cases of
+                    # non-UTF-8 encoded bytes strings with non-UTF-8 encoded
+                    # file-systems
+                    output = output.decode('utf-8')
+                if isinstance(output, str):
+                    counter = 1
+                    while True:
+                        filename = output.format(
+                            counter=counter,
+                            timestamp=datetime.datetime.now(),
+                            )
+                        encoder.start(filename)
+                        if not encoder.wait(self.CAPTURE_TIMEOUT):
+                            raise PiCameraRuntimeError(
+                                'Timed out waiting for capture to end')
+                        yield filename
+                        counter += 1
+                else:
+                    while True:
+                        encoder.start(output)
+                        if not encoder.wait(self.CAPTURE_TIMEOUT):
+                            raise PiCameraRuntimeError(
+                                'Timed out waiting for capture to end')
+                        yield output
+            finally:
+                if burst:
+                    mmal_check(
+                        mmal.mmal_port_parameter_set_boolean(
+                            camera_port,
+                            mmal.MMAL_PARAMETER_CAMERA_BURST_CAPTURE,
+                            mmal.MMAL_FALSE),
+                        prefix="Failed to set burst capture")
         finally:
+            encoder.close()
             with self._encoders_lock:
                 if use_video_port:
                     del self._encoders[splitter_port]
-            encoder.close()
 
     @property
     def closed(self):
@@ -1522,13 +1732,15 @@ class PiCamera(object):
         """
         Returns ``True`` if the :meth:`start_preview` method has been called,
         and no :meth:`stop_preview` call has been made yet.
+
+        .. deprecated:: 1.8
+            Test whether :attr:`preview` is ``None`` instead.
         """
-        return (
-                bool(self._preview_connection)
-                and self._preview_connection[0].is_enabled
-                and self._preview_connection[0].in_[0].name.startswith(
-                    mmal.MMAL_COMPONENT_DEFAULT_VIDEO_RENDERER)
-                )
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.previewing is deprecated; test PiCamera.preview '
+                'is not None instead'))
+        return isinstance(self._preview, PiPreviewRenderer)
 
     @property
     def exif_tags(self):
@@ -1648,11 +1860,16 @@ class PiCamera(object):
         """)
 
     def _get_raw_format(self):
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.raw_format is deprecated; use required format '
+                'directly with capture methods instead'))
         return self._raw_format
     def _set_raw_format(self, value):
         warnings.warn(
-            'PiCamera.raw_format is deprecated; use required format directly '
-            'with capture methods instead', DeprecationWarning)
+            PiCameraDeprecated(
+                'PiCamera.raw_format is deprecated; use required format '
+                'directly with capture methods instead'))
         try:
             self.RAW_FORMATS[value]
         except KeyError:
@@ -1667,18 +1884,13 @@ class PiCamera(object):
         """)
 
     def _get_frame(self):
-        # XXX This is rather messy; see if we can't come up with a better
-        # design in 2.0
-        if not self._encoders:
-            raise PiCameraRuntimeError(
-                "Cannot query frame information when camera is not recording")
-        elif len(self._encoders) == 1:
-            return next(iter(self._encoders.values())).frame
-        else:
-            return {
-                    port: encoder.frame
-                    for (port, encoder) in self._encoders.items()
-                    }
+        for e in self._encoders.values():
+            try:
+                return e.frame
+            except AttributeError:
+                pass
+        raise PiCameraRuntimeError(
+            "Cannot query frame information when camera is not recording")
     frame = property(_get_frame, doc="""
         Retrieves information about the current frame recorded from the camera.
 
@@ -1689,9 +1901,9 @@ class PiCamera(object):
 
         If multiple video recordings are currently in progress (after multiple
         calls to :meth:`start_recording` with different values for the
-        ``splitter_port`` parameter), this attribute will return a
-        :class:`dict` mapping active port numbers to a :class:`PiVideoFrame`
-        tuples.
+        ``splitter_port`` parameter), which encoder's frame information is
+        returned is arbitrary. If you require information from a specific
+        encoder, you will need to extract it from :attr:`_encoders` explicitly.
 
         Querying this property when the camera is not recording will result in
         an exception.
@@ -1714,14 +1926,36 @@ class PiCamera(object):
         n, d = to_rational(value)
         if not (0 <= n / d <= 90):
             raise PiCameraValueError("Invalid framerate: %.2ffps" % (n / d))
+        if n / d >= 1.0:
+            fps_low = 1
+            fps_high = 30
+        elif n / d >= 0.166:
+            fps_low = fractions.Fraction(166, 1000)
+            fps_high = fractions.Fraction(999, 1000)
+        else:
+            fps_low = fractions.Fraction(50, 1000)
+            fps_high = fractions.Fraction(166, 1000)
         self._disable_camera()
-        for port in (self.CAMERA_VIDEO_PORT, self.CAMERA_PREVIEW_PORT):
-            fmt = self._camera[0].output[port][0].format[0].es[0]
-            fmt.video.frame_rate.num = n
-            fmt.video.frame_rate.den = d
+        for port_num in self.CAMERA_PORTS:
+            port = self._camera[0].output[port_num]
+            mp = mmal.MMAL_PARAMETER_FPS_RANGE_T(
+                mmal.MMAL_PARAMETER_HEADER_T(
+                    mmal.MMAL_PARAMETER_FPS_RANGE,
+                    ct.sizeof(mmal.MMAL_PARAMETER_FPS_RANGE_T)
+                ),
+                fps_low=mmal.MMAL_RATIONAL_T(*to_rational(fps_low)),
+                fps_high=mmal.MMAL_RATIONAL_T(*to_rational(fps_high)),
+                )
             mmal_check(
-                mmal.mmal_port_format_commit(self._camera[0].output[port]),
-                prefix="Camera video format couldn't be set")
+                mmal.mmal_port_parameter_set(port, mp.hdr),
+                prefix="Framerate limits couldn't be set on port %d" % port_num)
+            if port_num != self.CAMERA_CAPTURE_PORT:
+                fmt = port[0].format[0].es[0]
+                fmt.video.frame_rate.num = n
+                fmt.video.frame_rate.den = d
+                mmal_check(
+                    mmal.mmal_port_format_commit(port),
+                    prefix="Camera video format couldn't be set on port %d" % port_num)
         self._enable_camera()
     framerate = property(_get_framerate, _set_framerate, doc="""
         Retrieves or sets the framerate at which video-port based image
@@ -1768,7 +2002,7 @@ class PiCamera(object):
     def _set_resolution(self, value):
         self._check_camera_open()
         self._check_recording_stopped()
-        n, d = self.framerate
+        f = self.framerate
         try:
             w, h = value
         except (TypeError, ValueError) as e:
@@ -1780,10 +2014,12 @@ class PiCamera(object):
         self._camera_config.max_preview_video_w = w
         self._camera_config.max_preview_video_h = h
         mmal_check(
-            mmal.mmal_port_parameter_set(self._camera[0].control, self._camera_config.hdr),
+            mmal.mmal_port_parameter_set(
+                self._camera[0].control, self._camera_config.hdr),
             prefix="Failed to set preview resolution")
-        for port in (self.CAMERA_CAPTURE_PORT, self.CAMERA_VIDEO_PORT, self.CAMERA_PREVIEW_PORT):
-            fmt = self._camera[0].output[port][0].format[0].es[0]
+        for port_num in self.CAMERA_PORTS:
+            port = self._camera[0].output[port_num]
+            fmt = port[0].format[0].es[0]
             fmt.video.width = mmal.VCOS_ALIGN_UP(w, 32)
             fmt.video.height = mmal.VCOS_ALIGN_UP(h, 16)
             fmt.video.crop.x = 0
@@ -1791,11 +2027,11 @@ class PiCamera(object):
             fmt.video.crop.width = w
             fmt.video.crop.height = h
             if port != self.CAMERA_CAPTURE_PORT:
-                fmt.video.frame_rate.num = n
-                fmt.video.frame_rate.den = d
+                fmt.video.frame_rate.num = f.numerator
+                fmt.video.frame_rate.den = f.denominator
             mmal_check(
-                mmal.mmal_port_format_commit(self._camera[0].output[port]),
-                prefix="Camera video format couldn't be set")
+                mmal.mmal_port_format_commit(port),
+                prefix="Camera video format couldn't be set on port %d" % port_num)
         self._enable_camera()
     resolution = property(_get_resolution, _set_resolution, doc="""
         Retrieves or sets the resolution at which image captures, video
@@ -1813,7 +2049,8 @@ class PiCamera(object):
         closed, and no recording must be active when the property is set.
 
         The property defaults to the Pi's currently configured display
-        resolution.
+        resolution unless the display has been disabled (with `tvservice -o`)
+        in which case it defaults to 1280x720 (720p).
 
         .. note::
 
@@ -2032,9 +2269,9 @@ class PiCamera(object):
 
         When queried, the :attr:`shutter_speed` property returns the shutter
         speed of the camera in microseconds, or 0 which indicates that the
-        speed will be automatically determined according to lighting
-        conditions. Faster shutter times naturally require greater amounts of
-        illumination and vice versa.
+        speed will be automatically determined by the auto-exposure algorithm.
+        Faster shutter times naturally require greater amounts of illumination
+        and vice versa.
 
         When set, the property adjusts the shutter speed of the camera, which
         most obviously affects the illumination of subsequently captured
@@ -2043,12 +2280,221 @@ class PiCamera(object):
 
         .. note::
 
+            You can query the :attr:`exposure_speed` attribute to determine the
+            actual shutter speed being used when this attribute is set to 0.
+            Please note that this capability requires an up to date firmware
+            (#692 or later).
+
+        .. note::
+
             In later firmwares, this attribute is limited by the value of the
             :attr:`framerate` attribute. For example, if framerate is set to
             30fps, the shutter speed cannot be slower than 33,333µs (1/fps).
         """)
 
+    def _get_settings(self):
+        """
+        Returns the current camera settings as an MMAL structure.
+
+        This is a utility method for :meth:`_get_exposure_speed`,
+        :meth:`_get_analog_gain`, etc. all of which rely on the
+        MMAL_PARAMETER_CAMERA_SETTINGS structure to determine their values.
+        """
+        mp = mmal.MMAL_PARAMETER_CAMERA_SETTINGS_T(
+            mmal.MMAL_PARAMETER_HEADER_T(
+                mmal.MMAL_PARAMETER_CAMERA_SETTINGS,
+                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_SETTINGS_T)
+                ))
+        mmal_check(
+            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
+            prefix="Failed to get camera settings")
+        return mp
+
+    def _get_exposure_speed(self):
+        self._check_camera_open()
+        return self._get_settings().exposure
+    exposure_speed = property(
+        _get_exposure_speed, doc="""
+        Retrieves the current shutter speed of the camera.
+
+        When queried, this property returns the shutter speed currently being
+        used by the camera. If you have set :attr:`shutter_speed` to a non-zero
+        value, then :attr:`exposure_speed` and :attr:`shutter_speed` should be
+        equal. However, if :attr:`shutter_speed` is set to 0 (auto), then you
+        can read the actual shutter speed being used from this attribute.  The
+        value is returned as an integer representing a number of microseconds.
+        This is a read-only property.
+
+        .. versionadded:: 1.6
+        """)
+
+    def _get_analog_gain(self):
+        self._check_camera_open()
+        return to_fraction(self._get_settings().analog_gain)
+    analog_gain = property(
+        _get_analog_gain, doc="""
+        Retrieves the current analog gain of the camera.
+
+        When queried, this property returns the analog gain currently being
+        used by the camera. The value represents the analog gain of the sensor
+        prior to digital conversion. The value is returned as a
+        :class:`~fractions.Fraction` instance.
+
+        .. versionadded:: 1.6
+        """)
+
+    def _get_digital_gain(self):
+        self._check_camera_open()
+        return to_fraction(self._get_settings().digital_gain)
+    digital_gain = property(
+        _get_digital_gain, doc="""
+        Retrieves the current digital gain of the camera.
+
+        When queried, this property returns the digital gain currently being
+        used by the camera. The value represents the digital gain the camera
+        applies after conversion of the sensor's analog output. The value is
+        returned as a :class:`~fractions.Fraction` instance.
+
+        .. versionadded:: 1.6
+        """)
+
+    def _get_video_denoise(self):
+        self._check_camera_open()
+        mp = mmal.MMAL_BOOL_T()
+        mmal_check(
+            mmal.mmal_port_parameter_get_boolean(
+                self._camera[0].control,
+                mmal.MMAL_PARAMETER_VIDEO_DENOISE,
+                mp
+                ),
+            prefix="Failed to get video denoise")
+        return mp.value != mmal.MMAL_FALSE
+    def _set_video_denoise(self, value):
+        self._check_camera_open()
+        mmal_check(
+            mmal.mmal_port_parameter_set_boolean(
+                self._camera[0].control,
+                mmal.MMAL_PARAMETER_VIDEO_DENOISE,
+                (mmal.MMAL_FALSE, mmal.MMAL_TRUE)[bool(value)]
+                ),
+            prefix="Failed to set video stabilization")
+    video_denoise = property(
+        _get_video_denoise, _set_video_denoise, doc="""
+        Retrieves or sets whether denoise will be applied to video recordings.
+
+        When queried, the :attr:`video_denoise` property returns a boolean
+        value indicating whether or not the camera software will apply a
+        denoise algorithm to video recordings.
+
+        When set, the property activates or deactivates the denoise algorithm
+        for video recordings. The property can be set while recordings or
+        previews are in progress. The default value is ``True``.
+
+        .. versionadded:: 1.7
+        """)
+
+    def _get_image_denoise(self):
+        self._check_camera_open()
+        mp = mmal.MMAL_BOOL_T()
+        mmal_check(
+            mmal.mmal_port_parameter_get_boolean(
+                self._camera[0].control,
+                mmal.MMAL_PARAMETER_STILLS_DENOISE,
+                mp
+                ),
+            prefix="Failed to get image denoise")
+        return mp.value != mmal.MMAL_FALSE
+    def _set_image_denoise(self, value):
+        self._check_camera_open()
+        mmal_check(
+            mmal.mmal_port_parameter_set_boolean(
+                self._camera[0].control,
+                mmal.MMAL_PARAMETER_STILLS_DENOISE,
+                (mmal.MMAL_FALSE, mmal.MMAL_TRUE)[bool(value)]
+                ),
+            prefix="Failed to set image stabilization")
+    image_denoise = property(
+        _get_image_denoise, _set_image_denoise, doc="""
+        Retrieves or sets whether denoise will be applied to image captures.
+
+        When queried, the :attr:`image_denoise` property returns a boolean
+        value indicating whether or not the camera software will apply a
+        denoise algorithm to image captures.
+
+        When set, the property activates or deactivates the denoise algorithm
+        for image captures. The property can be set while recordings or
+        previews are in progress. The default value is ``True``.
+
+        .. versionadded:: 1.7
+        """)
+
+    def _get_drc_strength(self):
+        self._check_camera_open()
+        mp = mmal.MMAL_PARAMETER_DRC_T(
+            mmal.MMAL_PARAMETER_HEADER_T(
+                mmal.MMAL_PARAMETER_DYNAMIC_RANGE_COMPRESSION,
+                ct.sizeof(mmal.MMAL_PARAMETER_DRC_T)
+                ))
+        mmal_check(
+            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
+            prefix="Failed to get dynamic range compression strength")
+        return self._DRC_STRENGTHS_R[mp.strength]
+    def _set_drc_strength(self, value):
+        self._check_camera_open()
+        try:
+            mp = mmal.MMAL_PARAMETER_DRC_T(
+                mmal.MMAL_PARAMETER_HEADER_T(
+                    mmal.MMAL_PARAMETER_DYNAMIC_RANGE_COMPRESSION,
+                    ct.sizeof(mmal.MMAL_PARAMETER_DRC_T)
+                    ),
+                self.DRC_STRENGTHS[value]
+                )
+            mmal_check(
+                mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
+                prefix="Failed to set dynamic range compression strength")
+        except KeyError:
+            raise PiCameraValueError(
+                "Invalid dynamic range compression strength: %s" % value)
+    drc_strength = property(
+        _get_drc_strength, _set_drc_strength, doc="""
+        Retrieves or sets the dynamic range compression strength of the camera.
+
+        When queried, the :attr:`drc_strength` property returns a string
+        indicating the amount of `dynamic range compression`_ the camera
+        applies to images.
+
+        When set, the attributes adjusts the strength of the dynamic range
+        compression applied to the camera's output. Valid values are given
+        in the list below:
+
+        {values}
+
+        The default value is ``'off'``. All possible values for the attribute
+        can be obtained from the ``PiCamera.DRC_STRENGTHS`` attribute.
+
+        .. _dynamic range compression: http://en.wikipedia.org/wiki/Gain_compression
+
+        .. versionadded:: 1.6
+        """.format(values=docstring_values(DRC_STRENGTHS)))
+
     def _get_ISO(self):
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.ISO is deprecated; use PiCamera.iso instead'))
+        return self.iso
+    def _set_ISO(self, value):
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.ISO is deprecated; use PiCamera.iso instead'))
+        self.iso = value
+    ISO = property(_get_ISO, _set_ISO, doc="""
+        Retrieves or sets the apparent ISO setting of the camera.
+
+        .. deprecated:: 1.8
+            Please use the :attr:`iso` attribute instead.
+        """)
+
+    def _get_iso(self):
         self._check_camera_open()
         mp = ct.c_uint32()
         mmal_check(
@@ -2057,45 +2503,63 @@ class PiCamera(object):
                 mmal.MMAL_PARAMETER_ISO,
                 mp
                 ),
-            prefix="Failed to get ISO")
+            prefix="Failed to get iso")
         return mp.value
-    def _set_ISO(self, value):
+    def _set_iso(self, value):
         self._check_camera_open()
         try:
-            if not (0 <= value <= 800):
+            if not (0 <= value <= 1600):
                 raise PiCameraValueError(
-                    "Invalid ISO value: %d (valid range 0..800)" % value)
+                    "Invalid iso value: %d (valid range 0..800)" % value)
         except TypeError:
-            raise PiCameraValueError("Invalid ISO value: %s" % value)
+            raise PiCameraValueError("Invalid iso value: %s" % value)
         mmal_check(
             mmal.mmal_port_parameter_set_uint32(
                 self._camera[0].control,
                 mmal.MMAL_PARAMETER_ISO,
                 value
                 ),
-            prefix="Failed to set ISO")
-    ISO = property(_get_ISO, _set_ISO, doc="""
+            prefix="Failed to set iso")
+    iso = property(_get_iso, _set_iso, doc="""
         Retrieves or sets the apparent ISO setting of the camera.
 
-        When queried, the :attr:`ISO` property returns the ISO setting of the
+        When queried, the :attr:`iso` property returns the ISO setting of the
         camera, a value which represents the `sensitivity of the camera to
-        light`_. Lower ISO speeds (e.g. 100) imply less sensitivity than higher
-        ISO speeds (e.g. 400 or 800). Lower sensitivities tend to produce less
+        light`_. Lower values (e.g. 100) imply less sensitivity than higher
+        values (e.g. 400 or 800). Lower sensitivities tend to produce less
         "noisy" (smoother) images, but operate poorly in low light conditions.
 
         When set, the property adjusts the sensitivity of the camera. Valid
-        values are between 0 (auto) and 800. The actual value used when ISO is
+        values are between 0 (auto) and 1600. The actual value used when iso is
         explicitly set will be one of the following values (whichever is
         closest): 100, 200, 320, 400, 500, 640, 800.
 
-        ISO can be adjusted while previews or recordings are in progress. The
-        default value is 0 which means the ISO is automatically set according
-        to image-taking conditions.
+        The attribute can be adjusted while previews or recordings are in
+        progress. The default value is 0 which means automatically determine a
+        value according to image-taking conditions.
 
         .. note::
 
-            With ISO settings other than 0 (auto), the :attr:`exposure_mode`
+            You can query the :attr:`analog_gain` and :attr:`digital_gain`
+            attributes to determine the actual gains being used by the camera.
+            If both are 1.0 this equates to ISO 100.  Please note that this
+            capability requires an up to date firmware (#692 or later).
+
+        .. note::
+
+            With iso settings other than 0 (auto), the :attr:`exposure_mode`
             property becomes non-functional.
+
+        .. note::
+
+            Some users on the Pi camera forum have noted that higher ISO values
+            than 800 (specifically up to 1600) can be achieved in certain
+            conditions with :attr:`exposure_mode` set to ``'sports'`` and
+            :attr:`iso` set to 0.  It doesn't appear to be possible to manually
+            request an ISO setting higher than 800, but the picamera library
+            will permit settings up to 1600 in case the underlying firmware
+            permits such settings in particular circumstances.
+
 
         .. _sensitivity of the camera to light: http://en.wikipedia.org/wiki/Film_speed#Digital
         """)
@@ -2133,28 +2597,21 @@ class PiCamera(object):
         which the camera `determines the exposure`_ as one of the following
         strings:
 
-        +---------------+---------------------------------------------------+
-        | Value         | Description                                       |
-        +===============+===================================================+
-        | ``'average'`` | The camera measures the average of the entire     |
-        |               | scene.                                            |
-        +---------------+---------------------------------------------------+
-        | ``'spot'``    | The camera measures the center of the scene.      |
-        +---------------+---------------------------------------------------+
-        | ``'backlit'`` | The camera measures a larger central area,        |
-        |               | ignoring the edges of the scene.                  |
-        +---------------+---------------------------------------------------+
-        | ``'matrix'``  | The camera measures several points within the     |
-        |               | scene.                                            |
-        +---------------+---------------------------------------------------+
+        {values}
 
-        When set, the property adjusts the camera's metering mode. The property
-        can be set while recordings or previews are in progress. The default
-        value is ``'average'``. All possible values for the attribute can be
-        obtained from the ``PiCamera.METER_MODES`` attribute.
+        When set, the property adjusts the camera's metering mode. All modes
+        set up two regions: a center region, and an outer region. The major
+        `difference between each mode`_ is the size of the center region. The
+        ``'backlit'`` mode has the largest central region (30% of the width),
+        while ``'spot'`` has the smallest (10% of the width).
+
+        The property can be set while recordings or previews are in progress.
+        The default value is ``'average'``. All possible values for the
+        attribute can be obtained from the ``PiCamera.METER_MODES`` attribute.
 
         .. _determines the exposure: http://en.wikipedia.org/wiki/Metering_mode
-        """)
+        .. _difference between each mode: http://www.raspberrypi.org/forums/viewtopic.php?p=565644#p565644
+        """.format(values=docstring_values(METER_MODES)))
 
     def _get_video_stabilization(self):
         self._check_camera_open()
@@ -2169,20 +2626,13 @@ class PiCamera(object):
         return mp.value != mmal.MMAL_FALSE
     def _set_video_stabilization(self, value):
         self._check_camera_open()
-        try:
-            mmal_check(
-                mmal.mmal_port_parameter_set_boolean(
-                    self._camera[0].control,
-                    mmal.MMAL_PARAMETER_VIDEO_STABILISATION,
-                    {
-                        False: mmal.MMAL_FALSE,
-                        True:  mmal.MMAL_TRUE,
-                        }[value]
-                    ),
-                prefix="Failed to set video stabilization")
-        except KeyError:
-            raise PiCameraValueError(
-                "Invalid video stabilization boolean value: %s" % value)
+        mmal_check(
+            mmal.mmal_port_parameter_set_boolean(
+                self._camera[0].control,
+                mmal.MMAL_PARAMETER_VIDEO_STABILISATION,
+                (mmal.MMAL_FALSE, mmal.MMAL_TRUE)[bool(value)]
+                ),
+            prefix="Failed to set video stabilization")
     video_stabilization = property(
         _get_video_stabilization, _set_video_stabilization, doc="""
         Retrieves or sets the video stabilization mode of the camera.
@@ -2276,12 +2726,15 @@ class PiCamera(object):
 
         When queried, the :attr:`exposure_mode` property returns a string
         representing the exposure setting of the camera. The possible values
-        can be obtained from the ``PiCamera.EXPOSURE_MODES`` attribute.
+        can be obtained from the ``PiCamera.EXPOSURE_MODES`` attribute, and
+        are as follows:
+
+        {values}
 
         When set, the property adjusts the camera's exposure mode.  The
         property can be set while recordings or previews are in progress. The
         default value is ``'auto'``.
-        """)
+        """.format(values=docstring_values(EXPOSURE_MODES)))
 
     def _get_awb_mode(self):
         self._check_camera_open()
@@ -2314,25 +2767,23 @@ class PiCamera(object):
 
         When queried, the :attr:`awb_mode` property returns a string
         representing the auto-white-balance setting of the camera. The possible
-        values can be obtained from the ``PiCamera.AWB_MODES`` attribute.
+        values can be obtained from the ``PiCamera.AWB_MODES`` attribute, and
+        are as follows:
+
+        {values}
 
         When set, the property adjusts the camera's auto-white-balance mode.
         The property can be set while recordings or previews are in progress.
         The default value is ``'auto'``.
-        """)
+        """.format(values=docstring_values(AWB_MODES)))
 
     def _get_awb_gains(self):
-        raise NotImplementedError
-        #self._check_camera_open()
-        #mp = mmal.MMAL_PARAMETER_AWB_GAINS_T(
-        #    mmal.MMAL_PARAMETER_HEADER_T(
-        #        mmal.MMAL_PARAMETER_CUSTOM_AWB_GAINS,
-        #        ct.sizeof(mmal.MMAL_PARAMETER_AWB_GAINS_T)
-        #        ))
-        #mmal_check(
-        #    mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
-        #    prefix="Failed to get auto-white-balance gains")
-        #return mp.r_gain, mp.b_gain
+        self._check_camera_open()
+        mp = self._get_settings()
+        return (
+            to_fraction(mp.awb_red_gain),
+            to_fraction(mp.awb_blue_gain),
+            )
     def _set_awb_gains(self, value):
         self._check_camera_open()
         try:
@@ -2355,7 +2806,12 @@ class PiCamera(object):
             mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
             prefix="Failed to set auto-white-balance gains")
     awb_gains = property(_get_awb_gains, _set_awb_gains, doc="""
-        Sets the auto-white-balance gains of the camera.
+        Gets or sets the auto-white-balance gains of the camera.
+
+        When queried, this attribute returns a tuple of values representing
+        the `(red, blue)` balance of the camera. The `red` and `blue` values
+        are returned :class:`~fractions.Fraction` instances. The values will
+        be between 0.0 and 8.0.
 
         When set, this attribute adjusts the camera's auto-white-balance gains.
         The property can be specified as a single value in which case both red
@@ -2368,8 +2824,11 @@ class PiCamera(object):
         .. note::
 
             This attribute only has an effect when :attr:`awb_mode` is set to
-            ``'off'``. The write-only nature of this attribute is a firmware
-            limitation.
+            ``'off'``.
+
+        .. versionchanged:: 1.6
+
+            Prior to version 1.6, this attribute was write-only.
         """)
 
     def _get_image_effect(self):
@@ -2396,6 +2855,7 @@ class PiCamera(object):
             mmal_check(
                 mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
                 prefix="Failed to set image effect")
+            self._image_effect_params = None
         except KeyError:
             raise PiCameraValueError("Invalid image effect: %s" % value)
     image_effect = property(_get_image_effect, _set_image_effect, doc="""
@@ -2404,12 +2864,166 @@ class PiCamera(object):
         When queried, the :attr:`image_effect` property returns a string
         representing the effect the camera will apply to captured video. The
         possible values can be obtained from the ``PiCamera.IMAGE_EFFECTS``
-        attribute.
+        attribute, and are as follows:
+
+        {values}
 
         When set, the property changes the effect applied by the camera.  The
         property can be set while recordings or previews are in progress, but
         only certain effects work while recording video (notably ``'negative'``
         and ``'solarize'``). The default value is ``'none'``.
+        """.format(values=docstring_values(IMAGE_EFFECTS)))
+
+    def _get_image_effect_params(self):
+        self._check_camera_open()
+        return self._image_effect_params
+    def _set_image_effect_params(self, value):
+        self._check_camera_open()
+        to_int = lambda x: int(x)
+        to_byte = lambda x: max(0, min(255, int(x)))
+        to_bool = lambda x: (0, 1)[bool(x)]
+        to_8dot8 = lambda x: int(x * 256)
+        valid_transforms = {
+            'solarize': [
+                (to_bool, to_byte, to_byte, to_byte, to_byte),
+                (to_byte, to_byte, to_byte, to_byte),
+                (to_bool,),
+                ],
+            'colorpoint': [
+                (lambda x: max(0, min(3, int(x))),),
+                ],
+            'colorbalance': [
+                (to_8dot8, to_8dot8, to_8dot8, to_8dot8, to_int, to_int),
+                (to_8dot8, to_8dot8, to_8dot8, to_8dot8),
+                (to_8dot8, to_8dot8, to_8dot8),
+                ],
+            'colorswap': [
+                (to_bool,),
+                ],
+            'posterise': [
+                (lambda x: max(2, min(31, int(x))),),
+                ],
+            'blur': [
+                (lambda x: max(1, min(2, int(x))),),
+                ],
+            'film': [
+                (to_byte, to_byte, to_byte),
+                ],
+            'watercolor': [
+                (),
+                (to_byte, to_byte),
+                ]
+            }
+        # Ensure params is a tuple
+        try:
+            params = tuple(i for i in value)
+        except TypeError:
+            params = (value,)
+        # Find the parameter combination for the current effect
+        effect = self.image_effect
+        param_transforms = [
+            transforms for transforms in valid_transforms.get(effect, [])
+            if len(transforms) == len(params)
+            ]
+        if not param_transforms:
+            raise PiCameraValueError(
+                'invalid set of parameters for effect "%s"' % effect)
+        param_transforms = param_transforms[0]
+        params = tuple(
+            transform(p)
+            for (transform, p) in zip(param_transforms, params)
+            )
+        mp = mmal.MMAL_PARAMETER_IMAGEFX_PARAMETERS_T(
+            mmal.MMAL_PARAMETER_HEADER_T(
+                mmal.MMAL_PARAMETER_IMAGE_EFFECT_PARAMETERS,
+                ct.sizeof(mmal.MMAL_PARAMETER_IMAGEFX_PARAMETERS_T)
+                ),
+            effect=self.IMAGE_EFFECTS[effect],
+            num_effect_params=len(params),
+            effect_parameter=params,
+            )
+        mmal_check(
+            mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
+            prefix="Failed to set image effect parameters")
+        self._image_effect_params = value
+    image_effect_params = property(
+            _get_image_effect_params, _set_image_effect_params, doc="""
+        Retrieves or sets the parameters for the current :attr:`effect
+        <image_effect>`.
+
+        When queried, the :attr:`image_effect_params` property either returns
+        ``None`` (for effects which have no configurable parameters, or if no
+        parameters have been configured), or a tuple of numeric values up to
+        six elements long.
+
+        When set, the property changes the parameters of the current
+        :attr:`effect <image_effect>` as a sequence of numbers, or a single
+        number. Attempting to set parameters on an effect which does not
+        support parameters, or providing an incompatible set of parameters for
+        an effect will raise a :exc:`PiCameraValueError` exception.
+
+        The effects which have parameters, and what combinations those
+        parameters can take is as follows:
+
+        +--------------------+----------------+-----------------------------------------+
+        | Effect             | Parameters     | Description                             |
+        +====================+================+=========================================+
+        | ``'solarize'``     | *yuv*,         | *yuv* controls whether data is          |
+        |                    | *x0*, *y1*,    | processed as RGB (0) or YUV(1). Input   |
+        |                    | *y2*, *y3*     | values from 0 to *x0* - 1 are remapped  |
+        |                    |                | linearly onto the range 0 to *y0*.      |
+        |                    |                | Values from *x0* to 255 are remapped    |
+        |                    |                | linearly onto the range *y1* to *y2*.   |
+        |                    +----------------+-----------------------------------------+
+        |                    | *x0*, *y0*,    | Same as above, but *yuv* defaults to    |
+        |                    | *y1*, *y2*     | 0 (process as RGB).                     |
+        |                    +----------------+-----------------------------------------+
+        |                    | *yuv*          | Same as above, but *x0*, *y0*, *y1*,    |
+        |                    |                | *y2* default to 128, 128, 128, 0        |
+        |                    |                | respectively.                           |
+        +--------------------+----------------+-----------------------------------------+
+        | ``'colorpoint'``   | *quadrant*     | *quadrant* specifies which quadrant     |
+        |                    |                | of the U/V space to retain chroma       |
+        |                    |                | from: 0=green, 1=red/yellow, 2=blue,    |
+        |                    |                | 3=purple. There is no default; this     |
+        |                    |                | effect does nothing until parameters    |
+        |                    |                | are set.                                |
+        +--------------------+----------------+-----------------------------------------+
+        | ``'colorbalance'`` | *lens*,        | *lens* specifies the lens shading       |
+        |                    | *r*, *g*, *b*, | strength (0.0 to 256.0, where 0.0       |
+        |                    | *u*, *v*       | indicates lens shading has no effect).  |
+        |                    |                | *r*, *g*, *b* are multipliers for their |
+        |                    |                | respective color channels (0.0 to       |
+        |                    |                | 256.0). *u* and *v* are offsets added   |
+        |                    |                | to the U/V plane (0 to 255).            |
+        |                    +----------------+-----------------------------------------+
+        |                    | *lens*,        | Same as above but *u* are defaulted     |
+        |                    | *r*, *g*, *b*  | to 0.                                   |
+        |                    +----------------+-----------------------------------------+
+        |                    | *lens*,        | Same as above but *g* also defaults to  |
+        |                    | *r*, *b*       | to 1.0.                                 |
+        +--------------------+----------------+-----------------------------------------+
+        | ``'colorswap'``    | *dir*          | If *dir* is 0, swap RGB to BGR. If      |
+        |                    |                | *dir* is 1, swap RGB to BRG.            |
+        +--------------------+----------------+-----------------------------------------+
+        | ``'posterise'``    | *steps*        | Control the quantization steps for the  |
+        |                    |                | image. Valid values are 2 to 32, and    |
+        |                    |                | the default is 4.                       |
+        +--------------------+----------------+-----------------------------------------+
+        | ``'blur'``         | *size*         | Specifies the size of the kernel. Valid |
+        |                    |                | values are 1 or 2.                      |
+        +--------------------+----------------+-----------------------------------------+
+        | ``'film'``         | *strength*,    | *strength* specifies the strength of    |
+        |                    | *u*, *v*       | effect. *u* and *v* are offsets added   |
+        |                    |                | to the U/V plane (0 to 255).            |
+        +--------------------+----------------+-----------------------------------------+
+        | ``'watercolor'``   | *u*, *v*       | *u* and *v* specify offsets to add to   |
+        |                    |                | the U/V plane (0 to 255).               |
+        |                    +----------------+-----------------------------------------+
+        |                    |                | No parameters indicates no U/V effect.  |
+        +--------------------+----------------+-----------------------------------------+
+
+        .. versionadded:: 1.8
         """)
 
     def _get_color_effects(self):
@@ -2496,9 +3110,9 @@ class PiCamera(object):
         When queried, the :attr:`rotation` property returns the rotation
         applied to the image. Valid values are 0, 90, 180, and 270.
 
-        When set, the property changes the color effect applied by the camera.
-        The property can be set while recordings or previews are in progress.
-        The default value is ``0``.
+        When set, the property changes the rotation applied to the camera's
+        input. The property can be set while recordings or previews are in
+        progress. The default value is ``0``.
         """)
 
     def _get_vflip(self):
@@ -2579,7 +3193,7 @@ class PiCamera(object):
         default value is ``False``.
         """)
 
-    def _get_crop(self):
+    def _get_zoom(self):
         self._check_camera_open()
         mp = mmal.MMAL_PARAMETER_INPUT_CROP_T(
             mmal.MMAL_PARAMETER_HEADER_T(
@@ -2588,20 +3202,20 @@ class PiCamera(object):
                 ))
         mmal_check(
             mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
-            prefix="Failed to get crop")
+            prefix="Failed to get zoom")
         return (
             mp.rect.x / 65535.0,
             mp.rect.y / 65535.0,
             mp.rect.width / 65535.0,
             mp.rect.height / 65535.0,
             )
-    def _set_crop(self, value):
+    def _set_zoom(self, value):
         self._check_camera_open()
         try:
             x, y, w, h = value
         except (TypeError, ValueError) as e:
             raise PiCameraValueError(
-                "Invalid crop rectangle (x, y, w, h) tuple: %s" % value)
+                "Invalid zoom rectangle (x, y, w, h) tuple: %s" % value)
         mp = mmal.MMAL_PARAMETER_INPUT_CROP_T(
             mmal.MMAL_PARAMETER_HEADER_T(
                 mmal.MMAL_PARAMETER_INPUT_CROP,
@@ -2616,194 +3230,301 @@ class PiCamera(object):
             )
         mmal_check(
             mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
-            prefix="Failed to set crop")
-    crop = property(_get_crop, _set_crop, doc="""
-        Retrieves or sets the crop applied to the camera's input.
+            prefix="Failed to set zoom")
+    zoom = property(_get_zoom, _set_zoom, doc="""
+        Retrieves or sets the zoom applied to the camera's input.
 
-        When queried, the :attr:`crop` property returns a ``(x, y, w, h)``
+        When queried, the :attr:`zoom` property returns a ``(x, y, w, h)``
         tuple of floating point values ranging from 0.0 to 1.0, indicating the
-        proportion of the image to include in the output (the "Region of
-        Interest" or ROI). The default value is ``(0.0, 0.0, 1.0, 1.0)`` which
-        indicates that everything should be included. The property can be set
-        while recordings or previews are in progress.
+        proportion of the image to include in the output (this is also known as
+        the "Region of Interest" or ROI). The default value is ``(0.0, 0.0,
+        1.0, 1.0)`` which indicates that everything should be included. The
+        property can be set while recordings or previews are in progress.
+        """)
+
+    def _get_crop(self):
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.crop is deprecated; use PiCamera.zoom instead'))
+        return self.zoom
+    def _set_crop(self, value):
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.crop is deprecated; use PiCamera.zoom instead'))
+        self.zoom = value
+    crop = property(_get_crop, _set_crop, doc="""
+        Retrieves or sets the zoom applied to the camera's input.
+
+        .. deprecated:: 1.8
+            Please use the :attr:`zoom` attribute instead.
+        """)
+
+    def _get_overlays(self):
+        return self._overlays
+    overlays = property(_get_overlays, doc="""
+        Retrieves all active :class:`PiRenderer` overlays.
+
+        If no overlays are current active, :attr:`overlays` will return an
+        empty iterable. Otherwise, it will return an iterable of
+        :class:`PiRenderer` instances which are currently acting as overlays.
+        Note that the preview renderer is an exception to this: it is *not*
+        included as an overlay despite being derived from :class:`PiRenderer`.
+        """)
+
+    def _get_preview(self):
+        self._check_camera_open()
+        if isinstance(self._preview, PiPreviewRenderer):
+            return self._preview
+    preview = property(_get_preview, doc="""
+        Retrieves the :class:`PiRenderer` displaying the camera preview.
+
+        If no preview is currently active, :attr:`preview` will return
+        ``None``.  Otherwise, it will return the instance of
+        :class:`PiRenderer` which is currently connected to the camera's
+        preview port for rendering what the camera sees. You can use the
+        attributes of the :class:`PiRenderer` class to configure the appearance
+        of the preview. For example, to make the preview semi-transparent::
+
+            import picamera
+
+            with picamera.PiCamera() as camera:
+                camera.start_preview()
+                camera.preview.alpha = 128
+
+        .. versionadded:: 1.8
         """)
 
     def _get_preview_alpha(self):
-        mp = mmal.MMAL_DISPLAYREGION_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_DISPLAYREGION,
-                ct.sizeof(mmal.MMAL_DISPLAYREGION_T)
-            ))
-        mmal_check(
-            mmal.mmal_port_parameter_get(self._preview[0].input[0], mp.hdr),
-            prefix="Failed to get preview alpha")
-        return mp.alpha
+        self._check_camera_open()
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.preview_alpha is deprecated; use '
+                'PiCamera.preview.alpha instead'))
+        if self.preview:
+            return self.preview.alpha
+        else:
+            return self._preview_alpha
     def _set_preview_alpha(self, value):
         self._check_camera_open()
-        try:
-            if not (0 <= value <= 255):
-                raise PiCameraValueError(
-                    "Invalid alpha value: %d (valid range 0..255)" % value)
-        except TypeError:
-            raise PiCameraValueError("Invalid alpha value: %s" % value)
-        mp = mmal.MMAL_DISPLAYREGION_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_DISPLAYREGION,
-                ct.sizeof(mmal.MMAL_DISPLAYREGION_T)
-                ),
-            set=mmal.MMAL_DISPLAY_SET_ALPHA,
-            alpha=value
-            )
-        mmal_check(
-            mmal.mmal_port_parameter_set(self._preview[0].input[0], mp.hdr),
-            prefix="Failed to set preview alpha")
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.preview_alpha is deprecated; use '
+                'PiCamera.preview.alpha instead'))
+        if self.preview:
+            self.preview.alpha = value
+        else:
+            self._preview_alpha = value
     preview_alpha = property(_get_preview_alpha, _set_preview_alpha, doc="""
         Retrieves or sets the opacity of the preview window.
 
-        When queried, the :attr:`preview_alpha` property returns a value
-        between 0 and 255 indicating the opacity of the preview window, where 0
-        is completely transparent and 255 is completely opaque. The default
-        value is 255. The property can be set while recordings or previews are
-        in progress.
-
-        .. note::
-
-            If the preview is not running, the property will not reflect
-            changes to it, but they will be in effect next time the preview is
-            started. In other words, you can set preview_alpha to 128, but
-            querying it will still return 255 (the default) until you call
-            :meth:`start_preview` at which point the preview will appear
-            semi-transparent and :attr:`preview_alpha` will suddenly return
-            128. This appears to be a firmware issue.
+        .. deprecated:: 1.8
+            Please use the :attr:`~PiRenderer.alpha` attribute of the
+            :attr:`preview` object instead.
         """)
 
     def _get_preview_layer(self):
-        mp = mmal.MMAL_DISPLAYREGION_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_DISPLAYREGION,
-                ct.sizeof(mmal.MMAL_DISPLAYREGION_T)
-            ))
-        mmal_check(
-            mmal.mmal_port_parameter_get(self._preview[0].input[0], mp.hdr),
-            prefix="Failed to get preview alpha")
-        return mp.layer
+        self._check_camera_open()
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.preview_layer is deprecated; '
+                'use PiCamera.preview.layer instead'))
+        if self.preview:
+            return self.preview.layer
+        else:
+            return self._preview_layer
     def _set_preview_layer(self, value):
         self._check_camera_open()
-        mp = mmal.MMAL_DISPLAYREGION_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_DISPLAYREGION,
-                ct.sizeof(mmal.MMAL_DISPLAYREGION_T)
-                ),
-            set=mmal.MMAL_DISPLAY_SET_LAYER,
-            layer=value
-            )
-        mmal_check(
-            mmal.mmal_port_parameter_set(self._preview[0].input[0], mp.hdr),
-            prefix="Failed to set preview layer")
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.preview_layer is deprecated; '
+                'use PiCamera.preview.layer instead'))
+        if self.preview:
+            self.preview.layer = value
+        else:
+            self._preview_layer = value
     preview_layer = property(
             _get_preview_layer, _set_preview_layer, doc="""
         Retrieves of sets the layer of the preview window.
 
-        The :attr:`preview_layer` property is an integer which controls the
-        layer that the preview window occupies. It defaults to 2 which results
-        in the preview appearing above all other output.
-
-        .. warning::
-
-            Operation of this attribute is not yet fully understood. The
-            documentation above is incomplete and may be incorrect!
+        .. deprecated:: 1.8
+            Please use the :attr:`~PiRenderer.layer` attribute of the
+            :attr:`preview` object instead.
         """)
 
     def _get_preview_fullscreen(self):
-        mp = mmal.MMAL_DISPLAYREGION_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_DISPLAYREGION,
-                ct.sizeof(mmal.MMAL_DISPLAYREGION_T)
-            ))
-        mmal_check(
-            mmal.mmal_port_parameter_get(self._preview[0].input[0], mp.hdr),
-            prefix="Failed to get preview fullscreen")
-        return mp.fullscreen != mmal.MMAL_FALSE
+        self._check_camera_open()
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.preview_fullscreen is deprecated; '
+                'use PiCamera.preview.fullscreen instead'))
+        if self.preview:
+            return self.preview.fullscreen
+        else:
+            return self._preview_fullscreen
     def _set_preview_fullscreen(self, value):
         self._check_camera_open()
-        value = bool(value)
-        mp = mmal.MMAL_DISPLAYREGION_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_DISPLAYREGION,
-                ct.sizeof(mmal.MMAL_DISPLAYREGION_T)
-                ),
-            set=mmal.MMAL_DISPLAY_SET_FULLSCREEN,
-            fullscreen={
-                False: mmal.MMAL_FALSE,
-                True:  mmal.MMAL_TRUE,
-                }[value]
-            )
-        mmal_check(
-            mmal.mmal_port_parameter_set(self._preview[0].input[0], mp.hdr),
-            prefix="Failed to set preview fullscreen")
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.preview_fullscreen is deprecated; '
+                'use PiCamera.preview.fullscreen instead'))
+        if self.preview:
+            self.preview.fullscreen = value
+        else:
+            self._preview_fullscreen = value
     preview_fullscreen = property(
             _get_preview_fullscreen, _set_preview_fullscreen, doc="""
         Retrieves or sets full-screen for the preview window.
 
-        The :attr:`preview_fullscreen` property is a bool which controls
-        whether the preview window takes up the entire display or not. When
-        set to ``False``, the :attr:`preview_window` property can be used to
-        control the precise size of the preview display. The property can be
-        set while recordings or previews are active.
-
-        .. note::
-
-            The :attr:`preview_fullscreen` attribute is afflicted by the same
-            issue as :attr:`preview_alpha` with regards to changes while the
-            preview is not running.
+        .. deprecated:: 1.8
+            Please use the :attr:`~PiRenderer.fullscreen` attribute of the
+            :attr:`preview` object instead.
         """)
 
     def _get_preview_window(self):
-        mp = mmal.MMAL_DISPLAYREGION_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_DISPLAYREGION,
-                ct.sizeof(mmal.MMAL_DISPLAYREGION_T)
-            ))
-        mmal_check(
-            mmal.mmal_port_parameter_get(self._preview[0].input[0], mp.hdr),
-            prefix="Failed to get preview window")
-        return (
-            mp.dest_rect.x,
-            mp.dest_rect.y,
-            mp.dest_rect.width,
-            mp.dest_rect.height,
-            )
+        self._check_camera_open()
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.preview_window is deprecated; '
+                'use PiCamera.preview.window instead'))
+        if self.preview:
+            return self.preview.window
+        else:
+            return self._preview_window
     def _set_preview_window(self, value):
         self._check_camera_open()
-        try:
-            x, y, w, h = value
-        except (TypeError, ValueError) as e:
-            raise PiCameraValueError(
-                "Invalid window rectangle (x, y, w, h) tuple: %s" % value)
-        mp = mmal.MMAL_DISPLAYREGION_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_DISPLAYREGION,
-                ct.sizeof(mmal.MMAL_DISPLAYREGION_T)
-                ),
-            set=mmal.MMAL_DISPLAY_SET_DEST_RECT,
-            dest_rect=mmal.MMAL_RECT_T(x, y, w, h),
-            )
-        mmal_check(
-            mmal.mmal_port_parameter_set(self._preview[0].input[0], mp.hdr),
-            prefix="Failed to set preview window")
-    preview_window = property(_get_preview_window, _set_preview_window, doc="""
+        warnings.warn(
+            PiCameraDeprecated(
+                'PiCamera.preview_window is deprecated; '
+                'use PiCamera.preview.window instead'))
+        if self.preview:
+            self.preview.window = value
+        else:
+            self._preview_window = value
+    preview_window = property(
+            _get_preview_window, _set_preview_window, doc="""
         Retrieves or sets the size of the preview window.
 
-        When the :attr:`preview_fullscreen` property is set to ``False``, the
-        :attr:`preview_window` property specifies the size and position of the
-        preview window on the display. The property is a 4-tuple consisting of
-        ``(x, y, width, height)``. The property can be set while recordings or
-        previews are active.
+        .. deprecated:: 1.8
+            Please use the :attr:`~PiRenderer.window` attribute of the
+            :attr:`preview` object instead.
+        """)
 
-        .. note::
+    def _get_annotate_text(self):
+        self._check_camera_open()
+        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
+            mmal.MMAL_PARAMETER_HEADER_T(
+                mmal.MMAL_PARAMETER_ANNOTATE,
+                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
+            ))
+        mmal_check(
+            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
+            prefix="Failed to get annotation text")
+        if mp.enable:
+            return mp.text.decode('ascii')
+        else:
+            return ''
+    def _set_annotate_text(self, value):
+        self._check_camera_open()
+        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
+            mmal.MMAL_PARAMETER_HEADER_T(
+                mmal.MMAL_PARAMETER_ANNOTATE,
+                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
+            ))
+        mmal_check(
+            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
+            prefix="Failed to get annotation status")
+        if value or bool(mp.show_frame_num):
+            mp.enable = True
+            try:
+                mp.text = value.encode('ascii')
+            except ValueError as e:
+                raise PiCameraValueError(str(e))
+        else:
+            mp.enable = False
+        mmal_check(
+            mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
+            prefix="Failed to set annotation text")
+    annotate_text = property(_get_annotate_text, _set_annotate_text, doc="""
+        Retrieves or sets a text annotation for all output.
 
-            The :attr:`preview_window` attribute is afflicted by the same issue
-            as :attr:`preview_alpha` with regards to changes while the preview
-            is not running.
+        When queried, the :attr:`annotate_text` property returns the current
+        annotation (if no annotation has been set, this is simply a blank
+        string).
+
+        When set, the property immediately applies the annotation to the
+        preview (if it is running) and to any future captures or video
+        recording. Strings longer than 255 characters, or strings containing
+        non-ASCII characters will raise a :exc:`PiCameraValueError`. The
+        default value is ``''``.
+        """)
+
+    def _get_annotate_frame_num(self):
+        self._check_camera_open()
+        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
+            mmal.MMAL_PARAMETER_HEADER_T(
+                mmal.MMAL_PARAMETER_ANNOTATE,
+                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
+            ))
+        mmal_check(
+            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
+            prefix="Failed to get annotation frame number")
+        return mp.show_frame_num != mmal.MMAL_FALSE
+    def _set_annotate_frame_num(self, value):
+        self._check_camera_open()
+        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
+            mmal.MMAL_PARAMETER_HEADER_T(
+                mmal.MMAL_PARAMETER_ANNOTATE,
+                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
+            ))
+        mmal_check(
+            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
+            prefix="Failed to get annotation status")
+        mp.enable = bool(value) or bool(mp.text)
+        mp.show_frame_num = bool(value)
+        mmal_check(
+            mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
+            prefix="Failed to set annotation frame number")
+    annotate_frame_num = property(
+            _get_annotate_frame_num, _set_annotate_frame_num, doc="""
+        Controls whether the current frame number is drawn as an annotation.
+
+        The :attr:`annotate_frame_num` attribute is a bool indicating whether
+        or not the current frame number is rendered as an annotation, similar
+        to :attr:`annotate_text`. The default is ``False``.
+        """)
+
+    def _get_annotate_background(self):
+        self._check_camera_open()
+        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
+            mmal.MMAL_PARAMETER_HEADER_T(
+                mmal.MMAL_PARAMETER_ANNOTATE,
+                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
+            ))
+        mmal_check(
+            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
+            prefix="Failed to get annotation background")
+        return mp.black_text_background != mmal.MMAL_FALSE
+    def _set_annotate_background(self, value):
+        self._check_camera_open()
+        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
+            mmal.MMAL_PARAMETER_HEADER_T(
+                mmal.MMAL_PARAMETER_ANNOTATE,
+                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
+            ))
+        mmal_check(
+            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
+            prefix="Failed to get annotation status")
+        mp.black_text_background = bool(value)
+        mmal_check(
+            mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
+            prefix="Failed to set annotation background")
+    annotate_background = property(
+            _get_annotate_background, _set_annotate_background, doc="""
+        Controls whether a black background is drawn behind the annotation.
+
+        The :attr:`annotate_bg` attribute is a bool indicating whether or not a
+        black background will be drawn behind the :attr:`annotation text
+        <annotate_text>`. The background will appear in all output including
+        image captures and video recording. The default is ``False``.
         """)
 

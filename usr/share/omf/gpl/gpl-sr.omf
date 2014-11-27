@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<omf>
+  <resource>
+    <creator>(Задужбина слободног софтвера)</creator>
+    <maintainer>(Пројекат Гномове документације)</maintainer>
+    <title>Гнуова општа јавна лиценца</title>
+    <date>1991-06</date>
+    <version identifier="2" date="1991-06"/>
+    <subject category="General|Licenses"/>
+    <description>Лиценце већине софтвера су намењене одузимању ваше слободе његовог дељења и мењања. Насупрот томе, ГНУ Општа јавна лиценца је осмишљена да гарантује вашу слободу дељења и размене слободног софтвера — да би осигурала слободу софтвера за све његове кориснике.</description>
+    <type>license</type>
+    <format mime="text/xml" dtd="-//OASIS//DTD DocBook XML V4.1.2//EN"/>
+    <identifier url="file:///usr/share/gnome/help/gpl/sr/gpl.xml"/>
+    <language code="sr"/>
+    <relation seriesid="8cfbd6d6-7013-11db-88b9-f8317a4e5c26"/>
+    <rights holder="Free Software Foundation"/>
+  </resource>
+</omf>

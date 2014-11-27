@@ -1,0 +1,49 @@
+<font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Sliding Parameters</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Whilst exploring the synth and FX args, you might have noticed that there are a number of parameters ending with <code style="font-size:15px; color:deeppink; background-color:white">_slide</code>. You might have even tried calling them and seeing no effect. This is because they’re not normal parameters, they’re special parameters that only work when you control synths as introduced in the previous section.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Consider the following example:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">s = play 60, release: 5
+sleep 0.5
+control s, note: 65
+sleep 0.5
+control s, note: 67
+sleep 3
+control s, note: 72
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Here, hear the synth pitch changing immediately on each control. However, we might want the pitch to slide between changes. As we’re controlling the <code style="font-size:15px; color:deeppink; background-color:white">note:</code> parameter, to add slide, we need to set the <code style="font-size:15px; color:deeppink; background-color:white">note_slide</code> parameter:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">s = play 60, release: 5, note_slide: 1
+sleep 0.5
+control s, note: 65
+sleep 0.5
+control s, note: 67
+sleep 3
+control s, note: 72
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now we hear the notes being bent between controls. It sounds nice doesn’t it. You can speed up the sliding by using a shorter time such as <code style="font-size:15px; color:deeppink; background-color:white">note_slide: 0.2</code> or slow it down by using a longer slide time. </p>
+
+<p style="font-size:15px;color:#5e5e5e;">Every parameter that can be controlled has a corresponding <code style="font-size:15px; color:deeppink; background-color:white">_slide</code> parameter for you to play with.</p>
+
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Sliding is sticky</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Once you’ve set a <code style="font-size:15px; color:deeppink; background-color:white">_slide</code> parameter on a running synth, it will be remembered and used every time you slide the corresponding parameter. To stop sliding you must set the <code style="font-size:15px; color:deeppink; background-color:white">_slide</code> value to 0 before the next control.</p>
+
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Sliding FX Parameters</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">It is also possible to slide FX parameters:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">with_fx :wobble, phase: 1, phase_slide: 5 do |e|
+  use_synth :dsaw
+  play 50, release: 5
+  control e, phase: 0.025
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now have fun sliding things around for smooth transitions and flowing control…</p>
+</font>

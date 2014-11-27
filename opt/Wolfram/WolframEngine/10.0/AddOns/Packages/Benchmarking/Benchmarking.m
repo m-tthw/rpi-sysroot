@@ -135,7 +135,7 @@ formatresults[]:
 *)
 formatresults[a_Integer, b_] := formatresults[N[a], b]
 
-formatresults[a_Real, b_] := ToString[NumberForm[a, {Infinity, b}, NumberPadding -> {"","0"}]]
+formatresults[a_Real, b_] := ToString[Quiet@NumberForm[a, {Infinity, b}, NumberPadding -> {"","0"}]]
 
 
 (*printTemporaryOrPrint*)
@@ -455,7 +455,7 @@ benchmarkcompare[data__List, opts___Rule] := Module[
 		"=== " <> benchmark <> " System Comparison ===\n\n",
 		StringReplace[ToString[TableForm[Join[
 			{("MachineName" /. #) <> "\n" <> ("System" /. #),
-			ToString[NumberForm[("BenchmarkResult" /. #), {4,2},
+			ToString[Quiet@NumberForm[("BenchmarkResult" /. #), {4,2},
 			NumberPadding -> {"", "0"}]] <> "\n"}&
 		/@ fullcomplist], TableSpacing -> {2,3}]], "\n\n" -> "\n"],
 		"\n\n(Faster systems give larger numbers)\n"];
@@ -468,9 +468,9 @@ benchmarkcompare[data__List, opts___Rule] := Module[
 				{i, Length[testidlist]}]]},
  			Join[{("MachineName" /. #) <> "\n"
 				<> ("System" /. #),
-				NumberForm[("TotalTime" /. #), {4,1},
+				Quiet@NumberForm[("TotalTime" /. #), {4,1},
  					NumberPadding -> {"", "0"}]},
- 				NumberForm[#, {3,2},
+ 				Quiet@NumberForm[#, {4,2},
  					NumberPadding -> {"", "0"}]&
 					/@ (("Results" /. #)[[All,2]])
  				]& /@ fullcomplist
@@ -489,8 +489,8 @@ benchmarkcompare[data__List, opts___Rule] := Module[
 				{"Mathematica Version:",
 					"FullVersionNumber" /. #},
 				{"Benchmark Result:", ToString[
-           				NumberForm[("BenchmarkResult" /. #),
-					{3, 2}, NumberPadding -> {"", "0"}]]}
+           				Quiet@NumberForm[("BenchmarkResult" /. #),
+					{4, 2}, NumberPadding -> {"", "0"}]]}
 			} & /@ highlightlist)
 			)), "\n", textreport], textreport
 		]; (* If *)
@@ -514,7 +514,7 @@ benchmarkcompare[data__List, opts___Rule] := Module[
 				{"Mathematica Version:",
 					"FullVersionNumber" /. #},
 				{"Benchmark Result:", ToString[NumberForm[
-					("BenchmarkResult" /. #), {3,2},
+					("BenchmarkResult" /. #), {4,2},
 					NumberPadding -> {"","0"}]]}
          	}], ColumnAlignments -> Left, ColumnSpacings -> 2]],
 			"Text", ShowStringCharacters -> False,
@@ -1261,30 +1261,30 @@ $BenchmarkLibrary = {
    		{"Singular Value Decomposition", 3.124},
    		{"Solving a Linear System", 2.603}}
    	},{
-   	"MachineName" -> "2 \[Times] 2.66 GHz Dual Core Xeon 5150 (4 Cores)", 
-   	"System" -> "MacPro OS X Snow Leopard (64-bit) Server",
- 	"BenchmarkName" -> "WolframMark", 
- 	"FullVersionNumber" -> "8.0.0",
- 	"Date" -> "May 10, 2010", 
- 	"BenchmarkResult" -> 0.559, 
- 	"TotalTime" -> 24.761,
- 	"Results" -> {
- 		{"Data Fitting", 1.561}, 
- 		{"Digits of Pi", 1.26},
-   		{"Discrete Fourier Transform", 2.2}, 
-   		{"Eigenvalues of a Matrix", 1.344},
-   		{"Elementary Functions", 2.444}, 
-   		{"Gamma Function", 1.023},
-   		{"Large Integer Multiplication", 1.119}, 
-   		{"Matrix Arithmetic", 2.032},
-   		{"Matrix Multiplication", 1.196}, 
-   		{"Matrix Transpose", 2.972},
-   		{"Numerical Integration", 1.549}, 
-   		{"Polynomial Expansion", 1.188},
-   		{"Random Number Sort", 1.768}, 
-   		{"Singular Value Decomposition", 1.464},
-   		{"Solving a Linear System", 1.641}}
-   	},{
+   	"MachineName" -> "3.5 GHz 6-Core Intel Xeon E5",
+   	"System" -> "Mac OS X x86 (64-bit)", 
+	"BenchmarkName" -> "WolframMark",
+	"FullVersionNumber" -> "10.0.0", 
+	"Date" -> "February 20, 2014",
+	"BenchmarkResult" -> 1.883, 
+	"TotalTime" -> 7.351,
+	"Results" -> {
+		{"Data Fitting", 0.608}, 
+		{"Digits of Pi", 0.36},
+		{"Discrete Fourier Transform", 0.277}, 
+		{"Eigenvalues of a Matrix", 0.447},
+		{"Elementary Functions", 0.297}, 
+		{"Gamma Function", 0.465},
+		{"Large Integer Multiplication", 0.425}, 
+		{"Matrix Arithmetic", 0.993},
+		{"Matrix Multiplication", 0.289}, 
+		{"Matrix Transpose", 0.673},
+		{"Numerical Integration", 0.694}, 
+		{"Polynomial Expansion", 0.092},
+		{"Random Number Sort", 0.885}, 
+		{"Singular Value Decomposition", 0.425},
+		{"Solving a Linear System", 0.421}}
+    },{
    	"MachineName" -> "2 \[Times] 2.26 GHz Quad Core Xeon E5520 (8 Cores)", 
    	"System" -> "Mac XServe OS X (64-bit) Server",
  	"BenchmarkName" -> "WolframMark", 

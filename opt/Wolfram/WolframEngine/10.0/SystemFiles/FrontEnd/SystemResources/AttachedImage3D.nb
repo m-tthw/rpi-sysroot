@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     88738,       1973]
-NotebookOptionsPosition[     88294,       1952]
-NotebookOutlinePosition[     88798,       1974]
-CellTagsIndexPosition[     88719,       1969]
+NotebookDataLength[     99507,       2191]
+NotebookOptionsPosition[     99067,       2170]
+NotebookOutlinePosition[     99567,       2192]
+CellTagsIndexPosition[     99488,       2187]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -36,14 +36,14 @@ $CellContext`cell$$},
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "ColorFunctionIcon.png"]],
                    ImageSizeCache->{18., {9., 14.}}], "RibbonTabLabel",
                   StripOnInput->False], True->
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "ColorFunctionIconHighlight.png"]],
                    ImageSizeCache->{18., {9., 14.}}], "RibbonTabLabelActive",
                   StripOnInput->False]}, Dynamic[
@@ -97,14 +97,14 @@ $CellContext`cell$$},
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "ClippingIcon.png"]],
                    ImageSizeCache->{20., {9., 14.}}], "RibbonTabLabel",
                   StripOnInput->False], True->
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "ClippingIconHighlight.png"]],
                    ImageSizeCache->{20., {9., 14.}}], "RibbonTabLabelActive",
                   StripOnInput->False]}, Dynamic[
@@ -157,13 +157,14 @@ $CellContext`cell$$},
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "ViewOptionsIcon.png"]],
                    ImageSizeCache->{19., {9., 14.}}], "RibbonTabLabel",
                   StripOnInput->False], True->
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "ViewOptionsIconHighlight.png"]],
                    ImageSizeCache->{19., {9., 14.}}], "RibbonTabLabelActive",
                   StripOnInput->False]}, Dynamic[
@@ -217,14 +218,14 @@ $CellContext`cell$$},
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "InformationIcon.png"]],
                    ImageSizeCache->{17., {9., 14.}}], "RibbonTabLabel",
                   StripOnInput->False], True->
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "InformationIconHighlight.png"]],
                    ImageSizeCache->{17., {9., 14.}}], "RibbonTabLabelActive",
                   StripOnInput->False]}, Dynamic[
@@ -354,12 +355,11 @@ $CellContext`cell$$},
                     ButtonBox[
                     PaneSelectorBox[{False->
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
-                    "Close.png"]]], True->
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, "Close.png"]]],
+                     True->
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "Close-Hover.png"]]]}, Dynamic[
                     CurrentValue["MouseOver"]],
                     FrameMargins->0,
@@ -469,7 +469,6 @@ $CellContext`cell$$},
                     },
                     DefaultBaseStyle->"Column",
                     GridBoxAlignment->{"Columns" -> {{Left}}},
-                    
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                     
@@ -484,12 +483,11 @@ $CellContext`cell$$},
                     ButtonBox[
                     PaneSelectorBox[{False->
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
-                    "Close.png"]]], True->
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, "Close.png"]]],
+                     True->
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "Close-Hover.png"]]]}, Dynamic[
                     CurrentValue["MouseOver"]],
                     FrameMargins->0,
@@ -527,7 +525,7 @@ $CellContext`cell$$},
                 
                 DynamicModuleBox[{$CellContext`plotRange$$, \
 $CellContext`vec1$$, $CellContext`vec2$$, $CellContext`vec3$$, \
-$CellContext`show$$ = {1}, $CellContext`lock$$ = {
+$CellContext`show$$ = {}, $CellContext`lock$$ = {
                  False, False, False, False, False, 
                   False}, $CellContext`xyzControls$$, \
 $CellContext`vecControls$$}, 
@@ -609,7 +607,7 @@ $CellContext`plotRange$$, 5, 6,
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "Plus.png"]]]], 
                     Dynamic[
                     RawBoxes[
@@ -748,6 +746,7 @@ $CellContext`step$}]}; PaneSelector[{False -> IntervalSlider[
                     MinIntervalSize -> $CellContext`step$], True -> 
                     Experimental`IntervalStepper[
                     Dynamic[
+                    
                     CurrentValue[$CellContext`box$, {
                     "Raster3DBoxOptionsPlotRange", $CellContext`i$}]], \
 {$CellContext`min$, $CellContext`max$, $CellContext`step$}, Method -> 
@@ -758,12 +757,12 @@ $CellContext`step$}]}; PaneSelector[{False -> IntervalSlider[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "Locked.png"]]]], False -> Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "Unlocked.png"]]]]}, Alignment -> Bottom], 
                     Checkbox[
                     Dynamic[
@@ -786,7 +785,7 @@ $CellContext`k$}] = None]& ]],
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "Close-Small.png"]]]], 
                     CurrentValue[$CellContext`box$, {
                     "Raster3DBoxOptionsPlotRange", $CellContext`i$}] = \
@@ -976,12 +975,12 @@ $CellContext`step$}, Method -> "FixedInterval"]},
                     Dynamic[$CellContext`locked$], {True -> Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "Locked.png"]]]], False -> Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "Unlocked.png"]]]]}, Alignment -> Bottom], 
                     Checkbox[
                     Dynamic[
@@ -1003,7 +1002,7 @@ $CellContext`step$}, Method -> "FixedInterval"]},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "Close-Small.png"]]]], 
                     CurrentValue[$CellContext`box$, {
                     "Graphics3DBoxOptionsClipPlanes", $CellContext`i$}] = 
@@ -1021,8 +1020,8 @@ $CellContext`step$}, Method -> "FixedInterval"]},
                  
                  Initialization:>
                   Module[{$CellContext`tmp$, $CellContext`aa$, \
-$CellContext`bb$, $CellContext`cc$}, $CellContext`plotRange$$ = 
-                    AbsoluteCurrentValue[
+$CellContext`bb$, $CellContext`cc$, $CellContext`userclips$, \
+$CellContext`defaultvecs$}, $CellContext`plotRange$$ = AbsoluteCurrentValue[
                     FrontEnd`AttachedCellParent[], 
                     "Graphics3DBoxOptionsPlotRange"]; If[
                     Not[
@@ -1047,8 +1046,7 @@ $CellContext`plotRange$$ = {{0, 100}, {0, 100}, {0,
                     "Graphics3DBoxOptionsPlotRange"] = \
 $CellContext`plotRange$$]; If[
                     Not[
-                    MatchQ[
-                    AbsoluteCurrentValue[
+                    MatchQ[$CellContext`userclips$ = AbsoluteCurrentValue[
                     FrontEnd`AttachedCellParent[], 
                     "Raster3DBoxOptionsPlotRange"], {
                     Repeated[{
@@ -1087,7 +1085,14 @@ $CellContext`plotRange$$]; If[
                     Part[
                     
                     Tuples[$CellContext`plotRange$$], $CellContext`t]], \
-{$CellContext`t, 8}]; $CellContext`tmp$ = AbsoluteCurrentValue[
+{$CellContext`t, 8}]; $CellContext`defaultvecs$ = {{$CellContext`vec1$$, 
+                    Min[$CellContext`aa$], 
+                    Max[$CellContext`aa$]}, {$CellContext`vec2$$, 
+                    Min[$CellContext`bb$], 
+                    Max[$CellContext`bb$]}, {$CellContext`vec3$$, 
+                    Min[$CellContext`cc$], 
+                    Max[$CellContext`cc$]}}; $CellContext`tmp$ = 
+                    AbsoluteCurrentValue[
                     FrontEnd`AttachedCellParent[], 
                     "Graphics3DBoxOptionsClipPlanes"]; If[
                     MatchQ[$CellContext`tmp$, 
@@ -1178,7 +1183,46 @@ $CellContext`vec3$$ = Extract[$CellContext`tmp$, {{5, 1}, {5, 2}, {5,
                     Append[-$CellContext`vec3$$, -Min[$CellContext`cc$]]}; 
                    CurrentValue[
                     FrontEnd`AttachedCellParent[], 
-                    "Graphics3DBoxOptionsClipPlanesStyle"] = Table[None, {6}]; 
+                    "Graphics3DBoxOptionsClipPlanesStyle"] = 
+                    Table[None, {6}]; $CellContext`show$$ = {}; If[
+                    And[
+                    MatchQ[$CellContext`userclips$, {
+                    Repeated[{
+                    PatternTest[
+                    Blank[], NumericQ], 
+                    PatternTest[
+                    Blank[], NumericQ]}]}], 
+                    MatchQ[$CellContext`plotRange$$, {
+                    Repeated[{
+                    PatternTest[
+                    Blank[], NumericQ], 
+                    PatternTest[
+                    Blank[], NumericQ]}]}]], 
+                    If[Part[$CellContext`userclips$, 1] != 
+                    Part[$CellContext`plotRange$$, 1], 
+                    AppendTo[$CellContext`show$$, 1]]; 
+                    If[Part[$CellContext`userclips$, 2] != 
+                    Part[$CellContext`plotRange$$, 2], 
+                    AppendTo[$CellContext`show$$, 2]]; 
+                    If[Part[$CellContext`userclips$, 3] != 
+                    Part[$CellContext`plotRange$$, 3], 
+                    AppendTo[$CellContext`show$$, 3]]; Null]; 
+                   If[Part[$CellContext`defaultvecs$, 
+                    1] != {$CellContext`vec1$$, 
+                    Min[$CellContext`aa$], 
+                    Max[$CellContext`aa$]}, 
+                    AppendTo[$CellContext`show$$, 4]]; 
+                   If[Part[$CellContext`defaultvecs$, 
+                    2] != {$CellContext`vec2$$, 
+                    Min[$CellContext`bb$], 
+                    Max[$CellContext`bb$]}, 
+                    AppendTo[$CellContext`show$$, 5]]; 
+                   If[Part[$CellContext`defaultvecs$, 
+                    3] != {$CellContext`vec3$$, 
+                    Min[$CellContext`cc$], 
+                    Max[$CellContext`cc$]}, 
+                    AppendTo[$CellContext`show$$, 6]]; 
+                   If[$CellContext`show$$ === {}, $CellContext`show$$ = {3}]; 
                    Null]],
                 FrameMargins->10],
                
@@ -1238,12 +1282,11 @@ $CellContext`vec3$$ = Extract[$CellContext`tmp$, {{5, 1}, {5, 2}, {5,
                     ButtonBox[
                     PaneSelectorBox[{False->
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
-                    "Close.png"]]], True->
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, "Close.png"]]],
+                     True->
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "Close-Hover.png"]]]}, Dynamic[
                     CurrentValue["MouseOver"]],
                     FrameMargins->0,
@@ -1295,7 +1338,7 @@ $CellContext`vec3$$ = Extract[$CellContext`tmp$, {{5, 1}, {5, 2}, {5,
                     {
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image3D"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image3D"}, 
                     "ViewOptionsIcon.png"]]], 
                     
                     DynamicBox[FEPrivate`FrontEndResource[
@@ -1448,12 +1491,17 @@ $CellContext`vec3$$ = Extract[$CellContext`tmp$, {{5, 1}, {5, 2}, {5,
               PanelBox[
                PaneBox[
                 
-                DynamicModuleBox[{$CellContext`ratio$$, \
-$CellContext`ratiox$$, $CellContext`ratioy$$, $CellContext`ratioz$$, \
-$CellContext`boxRatios$$, $CellContext`boxed$$, $CellContext`setBoxRatio$$}, 
+                DynamicModuleBox[{$CellContext`bratio$$, $CellContext`brx$$, \
+$CellContext`bry$$, $CellContext`brz$$, $CellContext`vratio$$, \
+$CellContext`vrx$$, $CellContext`vry$$, $CellContext`vrz$$, \
+$CellContext`setBoxRatio$$, $CellContext`boxRatioToVoxelRatio$$, \
+$CellContext`voxelRatioToBoxRatio$$, $CellContext`initBoxRatios$$, \
+$CellContext`dimx$$, $CellContext`dimy$$, $CellContext`dimz$$, \
+$CellContext`boxed$$}, 
                  TagBox[GridBox[{
                     {
                     StyleBox[
+                    
                     DynamicBox[FEPrivate`FrontEndResource[
                     "Image3DEditModeMenu", "ViewRelativeSize"],
                     BaseStyle->{"TextStyling"}],
@@ -1461,16 +1509,31 @@ $CellContext`boxRatios$$, $CellContext`boxed$$, $CellContext`setBoxRatio$$},
                     FontWeight->Bold]},
                     {
                     TagBox[GridBox[{
-                    {"\<\"Ratio:\"\>", 
+                    {
+                    
+                    DynamicBox[FEPrivate`FrontEndResource[
+                    "Image3DEditModeMenu", "ViewBoxRatio"],
+                    BaseStyle->{"TextStyling"}], 
                     
                     PopupMenuBox[
-                    Dynamic[$CellContext`ratio$$, (
-                    Switch[$CellContext`ratio$$ = #, 
-                    "Default", $CellContext`boxRatios$$ = Automatic, 
-                    "1:1:1", $CellContext`boxRatios$$ = {1, 1, 1}, 
-                    "Custom", $CellContext`boxRatios$$ = \
-{$CellContext`ratiox$$, $CellContext`ratioy$$, $CellContext`ratioz$$}]; \
-$CellContext`setBoxRatio$$[$CellContext`boxRatios$$])& ], {"Default"->
+                    Dynamic[$CellContext`bratio$$, (
+                    Switch[$CellContext`bratio$$ = #, 
+                    "Default", $CellContext`vratio$$ = 
+                    "Default"; {$CellContext`vrx$$, $CellContext`vry$$, \
+$CellContext`vrz$$} = {1, 1, 
+                    1}; {$CellContext`brx$$, $CellContext`bry$$, \
+$CellContext`brz$$} = \
+$CellContext`voxelRatioToBoxRatio$$[{$CellContext`vrx$$, $CellContext`vry$$, \
+$CellContext`vrz$$}], "1:1:1", $CellContext`vratio$$ = 
+                    "Custom"; {$CellContext`brx$$, $CellContext`bry$$, \
+$CellContext`brz$$} = {1, 1, 
+                    1}; {$CellContext`vrx$$, $CellContext`vry$$, \
+$CellContext`vrz$$} = \
+$CellContext`boxRatioToVoxelRatio$$[{$CellContext`brx$$, $CellContext`bry$$, \
+$CellContext`brz$$}], "Custom", $CellContext`vratio$$ = 
+                    "Custom"]; \
+$CellContext`setBoxRatio$$[{$CellContext`brx$$, $CellContext`bry$$, \
+$CellContext`brz$$}])& ], {"Default"->
                     
                     DynamicBox[FEPrivate`FrontEndResource[
                     "Image3DEditModeMenu", "ViewRatioDefault"],
@@ -1487,35 +1550,155 @@ $CellContext`setBoxRatio$$[$CellContext`boxRatios$$])& ], {"Default"->
                     MenuStyle->"RibbonText"], 
                     PaneSelectorBox[{False->"\<\"\"\>", True->
                     TagBox[GridBox[{
-                    {"\<\"x\"\>", 
+                    {
+                    InterpretationBox[
+                    StyleBox[
+                    GraphicsBox[{},
+                    BaselinePosition->Baseline,
+                    ImageSize->{10, 0}],
+                    CacheGraphics->False],
+                    Spacer[10]], "\<\"x\"\>", 
                     InputFieldBox[Dynamic[
-                    Round[$CellContext`ratiox$$, 0.01], If[
+                    Round[$CellContext`brx$$, 0.01], If[
                     
-                    Positive[#], $CellContext`ratiox$$ = #; \
-$CellContext`setBoxRatio$$[{#, $CellContext`ratioy$$, \
-$CellContext`ratioz$$}]]& ], Number,
+                    Positive[#], $CellContext`brx$$ = #; $CellContext`vrx$$ = \
+#/$CellContext`dimx$$; $CellContext`setBoxRatio$$[{$CellContext`brx$$, \
+$CellContext`bry$$, $CellContext`brz$$}]]& ], Number,
                     FieldSize->{{5, 5}, {1, 1}}], "\<\"y\"\>", 
                     InputFieldBox[Dynamic[
-                    Round[$CellContext`ratioy$$, 0.01], If[
+                    Round[$CellContext`bry$$, 0.01], If[
                     
-                    Positive[#], $CellContext`ratioy$$ = #; \
-$CellContext`setBoxRatio$$[{$CellContext`ratiox$$, #, \
-$CellContext`ratioz$$}]]& ], Number,
+                    Positive[#], $CellContext`bry$$ = #; $CellContext`vry$$ = \
+#/$CellContext`dimy$$; $CellContext`setBoxRatio$$[{$CellContext`brx$$, \
+$CellContext`bry$$, $CellContext`brz$$}]]& ], Number,
                     FieldSize->{{5, 5}, {1, 1}}], "\<\"z\"\>", 
                     InputFieldBox[Dynamic[
-                    Round[$CellContext`ratioz$$, 0.01], If[
+                    Round[$CellContext`brz$$, 0.01], If[
                     
-                    Positive[#], $CellContext`ratioz$$ = #; \
-$CellContext`setBoxRatio$$[{$CellContext`ratiox$$, $CellContext`ratioy$$, \
-#}]]& ], Number,
+                    Positive[#], $CellContext`brz$$ = #; $CellContext`vrz$$ = \
+#/$CellContext`dimz$$; $CellContext`setBoxRatio$$[{$CellContext`brx$$, \
+$CellContext`bry$$, $CellContext`brz$$}]]& ], Number,
                     FieldSize->{{5, 5}, {1, 1}}]}
                     },
                     AutoDelete->False,
                     
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
-                    "Grid"]}, Dynamic[$CellContext`ratio$$ === "Custom"],
-                    ImageSize->Automatic]}
+                    "Grid"]}, Dynamic[$CellContext`bratio$$ === "Custom"],
+                    ImageSize->Automatic], 
+                    ItemBox[
+                    TagBox[
+                    TooltipBox[
+                    ButtonBox[
+                    
+                    DynamicBox[FEPrivate`FrontEndResource[
+                    "Image3DEditModeMenu", "ViewResetButton"],
+                    BaseStyle->{"TextStyling"}],
+                    
+                    Appearance:>FEPrivate`FrontEndResource[
+                    "FEExpressions", "GrayButtonNinePatchAppearance"],
+                    BaseStyle->"RibbonText",
+                    
+                    ButtonFunction:>({$CellContext`brx$$, $CellContext`bry$$, \
+$CellContext`brz$$} = $CellContext`initBoxRatios$$; {$CellContext`vrx$$, \
+$CellContext`vry$$, $CellContext`vrz$$} = \
+$CellContext`boxRatioToVoxelRatio$$[$CellContext`initBoxRatios$$]; Which[
+                    
+                    TrueQ[{$CellContext`vrx$$, $CellContext`vrz$$, \
+$CellContext`vrz$$} == {1, 1, 
+                    1}], $CellContext`bratio$$ = ($CellContext`vratio$$ = 
+                    "Default"), 
+                    
+                    TrueQ[{$CellContext`brx$$, $CellContext`bry$$, \
+$CellContext`brz$$} == {1, 1, 1}], $CellContext`bratio$$ = 
+                    "1:1:1"; $CellContext`vratio$$ = "Custom", 
+                    True, $CellContext`bratio$$ = ($CellContext`vratio$$ = 
+                    "Custom")]; \
+$CellContext`setBoxRatio$$[$CellContext`initBoxRatios$$]),
+                    Evaluator->Automatic,
+                    FrameMargins->{{15, 15}, {1, 1}},
+                    ImageSize->Automatic,
+                    Method->"Preemptive"],
+                    DynamicBox[
+                    FEPrivate`FrontEndResource[
+                    "Image3DEditModeMenu", "ViewResetButtonTooltip"], 
+                    BaseStyle -> {"TextStyling"}]],
+                    Annotation[#, 
+                    Dynamic[
+                    RawBoxes[
+                    FEPrivate`FrontEndResource[
+                    "Image3DEditModeMenu", "ViewResetButtonTooltip"]], 
+                    BaseStyle -> {"TextStyling"}], "Tooltip"]& ],
+                    Alignment->{Right, Bottom},
+                    ItemSize->Fit,
+                    StripOnInput->False]},
+                    {
+                    
+                    DynamicBox[FEPrivate`FrontEndResource[
+                    "Image3DEditModeMenu", "ViewVoxelRatio"],
+                    BaseStyle->{"TextStyling"}], 
+                    
+                    PopupMenuBox[
+                    Dynamic[$CellContext`vratio$$, (
+                    Switch[$CellContext`vratio$$ = #, 
+                    "Default", $CellContext`bratio$$ = 
+                    "Default"; {$CellContext`vrx$$, $CellContext`vry$$, \
+$CellContext`vrz$$} = {1, 1, 
+                    1}; {$CellContext`brx$$, $CellContext`bry$$, \
+$CellContext`brz$$} = \
+$CellContext`voxelRatioToBoxRatio$$[{$CellContext`vrx$$, $CellContext`vry$$, \
+$CellContext`vrz$$}], "Custom", $CellContext`bratio$$ = 
+                    "Custom"]; \
+$CellContext`setBoxRatio$$[{$CellContext`brx$$, $CellContext`bry$$, \
+$CellContext`brz$$}])& ], {"Default"->
+                    
+                    DynamicBox[FEPrivate`FrontEndResource[
+                    "Image3DEditModeMenu", "ViewRatioDefault"],
+                    BaseStyle->{"TextStyling"}], "Custom"->
+                    
+                    DynamicBox[FEPrivate`FrontEndResource[
+                    "Image3DEditModeMenu", "ViewRatioCustom"],
+                    BaseStyle->{"TextStyling"}]},
+                    BaseStyle->"RibbonText",
+                    MenuStyle->"RibbonText"], 
+                    PaneSelectorBox[{False->"\<\"\"\>", True->
+                    TagBox[GridBox[{
+                    {
+                    InterpretationBox[
+                    StyleBox[
+                    GraphicsBox[{},
+                    BaselinePosition->Baseline,
+                    ImageSize->{10, 0}],
+                    CacheGraphics->False],
+                    Spacer[10]], "\<\"x\"\>", 
+                    InputFieldBox[Dynamic[
+                    Round[$CellContext`vrx$$, 0.01], If[
+                    
+                    Positive[#], $CellContext`vrx$$ = #; $CellContext`brx$$ = \
+# $CellContext`dimx$$; $CellContext`setBoxRatio$$[{$CellContext`brx$$, \
+$CellContext`bry$$, $CellContext`brz$$}]]& ], Number,
+                    FieldSize->{{5, 5}, {1, 1}}], "\<\"y\"\>", 
+                    InputFieldBox[Dynamic[
+                    Round[$CellContext`vry$$, 0.01], If[
+                    
+                    Positive[#], $CellContext`vry$$ = #; $CellContext`bry$$ = \
+# $CellContext`dimy$$; $CellContext`setBoxRatio$$[{$CellContext`brx$$, \
+$CellContext`bry$$, $CellContext`brz$$}]]& ], Number,
+                    FieldSize->{{5, 5}, {1, 1}}], "\<\"z\"\>", 
+                    InputFieldBox[Dynamic[
+                    Round[$CellContext`vrz$$, 0.01], If[
+                    
+                    Positive[#], $CellContext`vrz$$ = #; $CellContext`brz$$ = \
+# $CellContext`dimz$$; $CellContext`setBoxRatio$$[{$CellContext`brx$$, \
+$CellContext`bry$$, $CellContext`brz$$}]]& ], Number,
+                    FieldSize->{{5, 5}, {1, 1}}]}
+                    },
+                    AutoDelete->False,
+                    
+                    GridBoxItemSize->{
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                    "Grid"]}, Dynamic[$CellContext`vratio$$ === "Custom"],
+                    ImageSize->Automatic], "\[SpanFromAbove]"}
                     },
                     AutoDelete->False,
                     
@@ -1531,7 +1714,7 @@ $CellContext`setBoxRatio$$[{$CellContext`ratiox$$, $CellContext`ratioy$$, \
                     FrontEnd`Private`Image3DEditingSetOption[
                     ButtonNotebook[], 
                     Dynamic[$CellContext`image$$], {
-                    Boxed -> $CellContext`boxed$$}, "ViewOptions"])& ],
+                    Boxed -> $CellContext`boxed$$}])& ],
                     BaselinePosition->Scaled[0.3]], 
                     
                     DynamicBox[FEPrivate`FrontEndResource[
@@ -1540,7 +1723,6 @@ $CellContext`setBoxRatio$$[{$CellContext`ratiox$$, $CellContext`ratioy$$, \
                     },
                     AutoDelete->False,
                     GridBoxAlignment->{"Rows" -> {{Baseline}}},
-                    
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                     GridBoxSpacings->{"Columns" -> {{0.5}}}],
@@ -1548,8 +1730,12 @@ $CellContext`setBoxRatio$$[{$CellContext`ratiox$$, $CellContext`ratioy$$, \
                    },
                    DefaultBaseStyle->"Column",
                    GridBoxAlignment->{"Columns" -> {{Left}}},
-                   GridBoxItemSize->{
-                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                   
+                   GridBoxDividers->{
+                    "Columns" -> {{None}}, 
+                    "RowsIndexed" -> {-2 -> GrayLevel[0.85]}},
+                   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Fit}}},
+                   
                    
                    GridBoxSpacings->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{1}}}],
@@ -1559,39 +1745,73 @@ $CellContext`setBoxRatio$$[{$CellContext`ratiox$$, $CellContext`ratioy$$, \
                    DownValues[$CellContext`setBoxRatio$$] = {HoldPattern[
                     $CellContext`setBoxRatio$$[
                     Pattern[$CellContext`setting$, 
-                    Blank[]]]] :> FrontEnd`Private`Image3DEditingSetOption[
+                    Blank[]]]] :> (FrontEnd`Private`Image3DEditingSetOption[
                     ButtonNotebook[], 
                     Dynamic[$CellContext`image$$], {
-                    BoxRatios -> $CellContext`setting$}, "ViewOptionsTab"]}}},
+                    BoxRatios -> $CellContext`setting$}]; If[
+                    
+                    And[$CellContext`bratio$$ === 
+                    "1:1:1", $CellContext`setting$ != {1, 1, 
+                    1}], $CellContext`bratio$$ = "Custom"])}}, {
+                   DownValues[$CellContext`boxRatioToVoxelRatio$$] = {
+                    HoldPattern[
+                    $CellContext`boxRatioToVoxelRatio$$[
+                    Pattern[$CellContext`setting$, 
+                    
+                    Blank[]]]] :> $CellContext`setting$/{$CellContext`dimx$$, \
+$CellContext`dimy$$, $CellContext`dimz$$}}}, {
+                   DownValues[$CellContext`voxelRatioToBoxRatio$$] = {
+                    HoldPattern[
+                    $CellContext`voxelRatioToBoxRatio$$[
+                    Pattern[$CellContext`setting$, 
+                    
+                    Blank[]]]] :> $CellContext`setting$ {$CellContext`dimx$$, \
+$CellContext`dimy$$, $CellContext`dimz$$}}}},
                  
-                 Initialization:>($CellContext`boxed$$ = ReplaceAll[Boxed, 
+                 Initialization:>({$CellContext`dimx$$, $CellContext`dimy$$, \
+$CellContext`dimz$$} = ImageDimensions[
+                    $CellContext`image$$[]]; $CellContext`boxed$$ = 
+                   ReplaceAll[Boxed, 
                     Flatten[{
                     Options[
                     $CellContext`image$$[], Boxed], Boxed -> 
-                    False}]]; $CellContext`boxRatios$$ = ReplaceAll[BoxRatios, 
+                    False}]]; $CellContext`initBoxRatios$$ = 
+                   ReplaceAll[BoxRatios, 
                     Flatten[{
                     Options[
                     $CellContext`image$$[], BoxRatios], BoxRatios -> 
-                    Automatic}]]; 
-                  Switch[$CellContext`boxRatios$$, 
-                    Automatic, $CellContext`ratio$$ = 
-                    "Default"; {$CellContext`ratiox$$, $CellContext`ratioy$$, \
-$CellContext`ratioz$$} = {1, 1, 1}, 
+                    Automatic}]]; Switch[$CellContext`initBoxRatios$$, 
                     
                     Alternatives[{1, 1, 1}, {1., 1., 
-                    1.}], $CellContext`ratio$$ = 
-                    "1:1:1"; {$CellContext`ratiox$$, $CellContext`ratioy$$, \
-$CellContext`ratioz$$} = $CellContext`boxRatios$$, {
+                    1.}], {$CellContext`brx$$, $CellContext`bry$$, \
+$CellContext`brz$$} = $CellContext`initBoxRatios$$; {$CellContext`vrx$$, \
+$CellContext`vry$$, $CellContext`vrz$$} = \
+$CellContext`initBoxRatios$$/{$CellContext`dimx$$, $CellContext`dimy$$, \
+$CellContext`dimz$$}; $CellContext`bratio$$ = "1:1:1"; $CellContext`vratio$$ = 
+                    "Custom", {
                     PatternTest[
                     Blank[], NumericQ], 
                     PatternTest[
                     Blank[], NumericQ], 
                     PatternTest[
-                    Blank[], NumericQ]}, $CellContext`ratio$$ = 
-                    "Custom"; {$CellContext`ratiox$$, $CellContext`ratioy$$, \
-$CellContext`ratioz$$} = $CellContext`boxRatios$$]; Null)],
+                    Blank[], 
+                    NumericQ]}, {$CellContext`brx$$, $CellContext`bry$$, \
+$CellContext`brz$$} = $CellContext`initBoxRatios$$; {$CellContext`vrx$$, \
+$CellContext`vry$$, $CellContext`vrz$$} = \
+$CellContext`initBoxRatios$$/{$CellContext`dimx$$, $CellContext`dimy$$, \
+$CellContext`dimz$$}; $CellContext`bratio$$ = "Custom"; $CellContext`vratio$$ = 
+                    "Custom", 
+                    Alternatives[Automatic, 
+                    
+                    Blank[]], {$CellContext`vrx$$, $CellContext`vry$$, \
+$CellContext`vrz$$} = {1, 1, 
+                    1}; {$CellContext`brx$$, $CellContext`bry$$, \
+$CellContext`brz$$} = {$CellContext`dimx$$, $CellContext`dimy$$, \
+$CellContext`dimz$$}; $CellContext`bratio$$ = 
+                    "Default"; $CellContext`vratio$$ = 
+                    "Default"]; $CellContext`initBoxRatios$$ = \
+{$CellContext`brx$$, $CellContext`bry$$, $CellContext`brz$$}; Null)],
                 FrameMargins->10],
-               
                Appearance->{
                 "Default" -> 
                  FrontEnd`FileName[{"Ribbons", "Common"}, 
@@ -1629,12 +1849,11 @@ $CellContext`ratioz$$} = $CellContext`boxRatios$$]; Null)],
                     ButtonBox[
                     PaneSelectorBox[{False->
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
-                    "Close.png"]]], True->
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, "Close.png"]]],
+                     True->
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "Close-Hover.png"]]]}, Dynamic[
                     CurrentValue["MouseOver"]],
                     FrameMargins->0,
@@ -1832,11 +2051,11 @@ $CellContext`ratioz$$} = $CellContext`boxRatios$$]; Null)],
                     },
                     AutoDelete->False,
                     ColumnsEqual->True,
-                    
                     FrameStyle->RGBColor[
                     0.7019607843137254, 0.7019607843137254, 
                     0.7019607843137254],
                     GridBoxAlignment->{"Columns" -> {Right, Left}},
+                    
                     GridBoxDividers->{
                     "Columns" -> {{False}}, "Rows" -> {{False}, True, False}},
                     
@@ -1881,7 +2100,6 @@ $CellContext`ratioz$$} = $CellContext`boxRatios$$]; Null)],
                     
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
-                    
                     GridBoxSpacings->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{0.8}}}],
                     "Column"]}
@@ -1922,24 +2140,24 @@ $CellContext`ratioz$$} = $CellContext`boxRatios$$]; Null)],
      GridBoxSpacings->{"Columns" -> {{0}}, "Rows" -> {{0}}}],
     "Column"],
    DynamicModuleValues:>{},
-   Initialization:>If[
-     ValueQ[FrontEnd`Private`$RibbonDefaultPage], 
-     Ribbon`Private`page$$ = FrontEnd`Private`$RibbonDefaultPage; 
-     ClearAll[FrontEnd`Private`$RibbonDefaultPage]]],
+   Initialization:>(If[
+      ValueQ[FrontEnd`Private`$RibbonDefaultPage], Ribbon`Private`page$$ = 
+      FrontEnd`Private`$RibbonDefaultPage]; 
+    ClearAll[FrontEnd`Private`$RibbonDefaultPage])],
   BaseStyle->"RibbonText",
   DynamicModuleValues:>{},
   Initialization:>(If[
      Image`Image3DQ[
      FrontEnd`Private`$Image3DEditorDefaultImage], $CellContext`image$$[] = 
       FrontEnd`Private`$Image3DEditorDefaultImage; 
-     ClearAll[FrontEnd`Private`$Image3DEditorDefaultImage], \
-$CellContext`image$$[] := With[{$CellContext`expr$ = ToExpression[
+     Null, $CellContext`image$$[] := With[{$CellContext`expr$ = ToExpression[
           MathLink`CallFrontEnd[
            FrontEnd`NotebookRead[
             FrontEnd`AttachedCellParent[]]]]}, 
        If[
         Image`Image3DQ[$CellContext`expr$], $CellContext`image$$[] = \
-$CellContext`expr$]]]; Null),
+$CellContext`expr$]]]; ClearAll[FrontEnd`Private`$Image3DEditorDefaultImage]; 
+   Null),
   SynchronousInitialization->False]],
  Evaluator->"System",
  Deployed->True,
@@ -1952,8 +2170,8 @@ $CellContext`expr$]]]; Null),
 },
 WindowSize->{808, 911},
 WindowMargins->{{556, Automatic}, {Automatic, 89}},
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (November 13, \
-2013)",
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 18, \
+2014)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -1962,18 +2180,18 @@ StyleDefinitions->"Default.nb"
 (*CellTagsOutline
 CellTagsIndex->{
  "AttachedImage3D"->{
-  Cell[558, 20, 87732, 1930, 60, InheritFromParent,
+  Cell[558, 20, 98505, 2148, 60, InheritFromParent,
    CellTags->"AttachedImage3D"]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"AttachedImage3D", 88610, 1963}
+ {"AttachedImage3D", 99379, 2181}
  }
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 87732, 1930, 60, InheritFromParent,
+Cell[558, 20, 98505, 2148, 60, InheritFromParent,
  CellTags->"AttachedImage3D"]
 }
 ]

@@ -8,11 +8,10 @@ ImportExport`RegisterImport[
  {
    (* Post-processors *)
    "Sound" -> ElementsToSound,
-   "SampledSoundList" -> ElementsToSampledSoundList,
-   "AudioEncoding" -> ElementsToAudioEncoding
+   "SampledSoundList" -> ElementsToSampledSoundList
  },
  "DefaultElement" -> "Sound",
- "Options" -> {"AudioChannels", "AudioEncoding", "SampleRate"},
+ "Options" -> {"AudioChannels", "SampleRate"},
  "Sources" -> ImportExport`DefaultSources["Audio"],
  "AvailableElements" -> {"AudioChannels", "Data", "SampledSoundList", "SampleRate", "Sound"},
  "FunctionChannels" -> {"FileNames"},

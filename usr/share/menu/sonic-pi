@@ -1,0 +1,4 @@
+?package(sonic-pi):needs="X11" section="Education"\
+ title="Sonic Pi" command="/usr/bin/sonic-pi"\
+ longtitle="Learn to program with music"\
+ icon="/usr/share/pixmaps/sonic-pi.png"

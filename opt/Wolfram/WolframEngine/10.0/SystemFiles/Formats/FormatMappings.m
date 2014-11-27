@@ -19,5 +19,6 @@
 "Flash"->"SWF",
 "HTMLMathML"->"XHTMLMathML",
 "RichText"->"RTF",
-"JAR"->"ZIP"
+"JAR"->"ZIP",
+"WEBP"->"WebP"
 }

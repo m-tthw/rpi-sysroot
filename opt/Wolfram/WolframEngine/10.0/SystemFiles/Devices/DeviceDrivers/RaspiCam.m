@@ -9,7 +9,7 @@ Begin["`Private`"]
 (* Implementation of the package *)
 
 If[$SystemID === "Linux-ARM",
-	DeviceAPI`DeviceClassRegister["RaspiCam",
+	DeviceFramework`DeviceClassRegister["RaspiCam",
 		"FindFunction" -> ({{}}&),
 	 	"ReadFunction" -> RaspiCurrentImage
 	 ];

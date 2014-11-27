@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-(* $Id: TinkerForgeWeatherStation.m,v 1.1.2.9 2014/01/10 19:48:06 pradipto Exp $ *)
+(* $Id: TinkerForgeWeatherStation.m,v 1.1.2.11.2.1 2014/07/17 22:16:57 lambertc Exp $ *)
 
 BeginPackage["TinkerForgeWeatherStation`", {"TinkerForgeWeatherStationTools`"}]
 
@@ -157,7 +157,7 @@ executeFunction[{ipconn_,handles_}, "ClearLCDDisplay" ,args___] :=
         Tinkerforge`BrickletLCD20x4ClearDisplay[lcd]
     ]
 
-DeviceAPI`DeviceClassRegister["TinkerForgeWeatherStation",
+DeviceFramework`DeviceClassRegister["TinkerForgeWeatherStation",
     "OpenManagerFunction" :> prepFunction,
     "MakeManagerHandleFunction" -> (makeHandleFunction[]&),
     "CloseFunction" :> closeFunction,

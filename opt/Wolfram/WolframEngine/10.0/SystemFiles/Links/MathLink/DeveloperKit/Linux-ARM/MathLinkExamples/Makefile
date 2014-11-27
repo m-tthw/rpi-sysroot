@@ -18,39 +18,39 @@ LIBDIR = ${CADDSDIR}
 MPREP = ${CADDSDIR}/mprep
 RM = rm
 
-CC = /usr/local/bin/gcc
-CXX = /usr/bin/g++
+CC = /usr/bin/cc
+CXX = /usr/bin/c++
 
 BINARIES = addtwo bitops counter factor factor2 factor3 quotient reverse sumalist
 
 all : $(BINARIES)
 
 addtwo : addtwotm.o addtwo.o
-	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} addtwotm.o addtwo.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -o $@
+	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} addtwotm.o addtwo.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -luuid -o $@
 
 bitops : bitopstm.o bitops.o
-	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} bitopstm.o bitops.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -o $@
+	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} bitopstm.o bitops.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -luuid -o $@
 
 counter : countertm.o
-	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} countertm.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -o $@
+	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} countertm.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -luuid -o $@
 
 factor : factor.o
-	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} factor.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -o $@
+	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} factor.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -luuid -o $@
 
 factor2 : factor2.o
-	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} factor2.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -o $@
+	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} factor2.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -luuid -o $@
 
 factor3 : factor3.o
-	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} factor3.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -o $@
+	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} factor3.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -luuid -o $@
 
 quotient : quotient.o
-	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} quotient.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -o $@
+	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} quotient.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -luuid -o $@
 
 reverse : reversetm.o
-	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} reversetm.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -o $@
+	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} reversetm.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -luuid -o $@
 
 sumalist : sumalisttm.o
-	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} sumalisttm.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -o $@
+	${CXX} ${EXTRA_CFLAGS} -I${INCDIR} sumalisttm.o -L${LIBDIR} -lML32i4 -lm -lpthread -lrt -lstdc++ -ldl -luuid -o $@
 
 .c.o :
 	${CC} -c ${EXTRA_CFLAGS} -I${INCDIR} $<

@@ -238,6 +238,7 @@
             MenuItem["&HSB Color", "ImageToHSB"],
             MenuItem["&XYZ Color", "ImageToXYZ"],
             MenuItem["&LAB Color", "ImageToLAB"],
+            MenuItem["&LCH Color", "ImageToLCH"],
             MenuItem["LU&V Color", "ImageToLUV"],
             MenuItem["&CMYK Color", "ImageToCMYK"],
             MenuItem["A&utomatic", "ImageToAutomatic"],
@@ -303,6 +304,7 @@
             MenuItem["&HSB Color", "ImageToHSB"],
             MenuItem["&XYZ Color", "ImageToXYZ"],
             MenuItem["&LAB Color", "ImageToLAB"],
+            MenuItem["&LCH Color", "ImageToLCH"],
             MenuItem["LU&V Color", "ImageToLUV"],
             MenuItem["&CMYK Color", "ImageToCMYK"],
             MenuItem["A&utomatic", "Image3DToAutomatic"],
@@ -1149,6 +1151,14 @@
         Delimiter,
         MenuItem["Copy Data", KernelExecute[ TableView`CopyEvent[ButtonNotebook[]]], MenuEvaluator -> Automatic],
         MenuItem["Paste Data", KernelExecute[ TableView`PasteData[ButtonNotebook[]]], MenuEvaluator -> Automatic]
+    },
+
+    "SystemsModelMinimal" -> {
+        MenuItem["Full Display", KernelExecute[Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], MenuEvaluator -> Automatic]
+    },
+
+    "SystemsModelFull" -> {
+        MenuItem["Minimal Display", KernelExecute[Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], MenuEvaluator -> Automatic]
     },
 
     "Palette" -> {

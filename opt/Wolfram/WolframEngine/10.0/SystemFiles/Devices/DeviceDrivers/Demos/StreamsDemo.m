@@ -1,4 +1,4 @@
-(* $Id: StreamsDemo.m,v 1.1.2.3 2013/12/18 23:08:58 bakshee Exp $ *)
+(* $Id: StreamsDemo.m,v 1.4 2014/04/16 01:47:13 bakshee Exp $ *)
 
 BeginPackage["DeviceAPI`Drivers`Demos`StreamsDemo`Dump`"];
 
@@ -55,25 +55,50 @@ DefineOutputStreamMethod["Passthrough",
       }
   ];
   
-$bytes = ToCharacterCode[
-	"Title: The Quick Brown Fox\nAbstract: A fox jumps over dogs.\nThe quick brown fox jumped over the lazy dogs.\n"];
-	
-openRead[_] := openRead[Null,$bytes]
+firstWord[s_] := Module[{str = StringToStream[s],res},
+	res = Read[str, Word];
+	Close[str];
+	res
+]
+		   
 
-openRead[_,args__] := MapIndexed[
-	OpenRead["inputStream"<>ToString[ #2[[1]] ], Method -> {"ByteList", "Bytes" -> toBytes[#]}]&,
-	{args}
+(* usage: DeviceOpen["StreamsDemo", {in,out}] or {{in1,in2...},{out1,out2...}} *)
+	
+openRead[_] := openRead[Null,{}]
+
+openRead[_,i_,___] := Map[
+	OpenRead[firstWord[#], Method -> {"ByteList", "Bytes" -> ToCharacterCode[#]}]&,
+	ToString/@Flatten[{i}]
 ]
 
-toBytes[s_String] := ToCharacterCode[s]
-toBytes[l_] := l
-		   
+
+openWrite[_,_:{}] := openWrite[Null,Null,{}]
+
+openWrite[_,_,o_] := Map[
+	OpenWrite[
+		FileNameJoin[{$TemporaryDirectory,#}],
+		Method -> "Passthrough", BinaryFormat -> True
+	]&,
+	ToString/@Flatten[{o}]
+]
+
+setLabels[dev_] := DeviceFramework`DeviceStatusLabels[dev] =
+{
+	"Connected ("<>Sequence@@Riffle[
+		FileNameTake/@First/@DeviceStreams[dev],
+		", "
+	]<>")",
+	"Not connected"
+}
+
 (*-----------------------------------------------------------------*)  
 
-DeviceAPI`DeviceClassRegister["StreamsDemo",
+DeviceFramework`DeviceClassRegister["StreamsDemo",
 	"OpenReadFunction" -> openRead,
-	"OpenWriteFunction" -> (OpenWrite["test.bin", Method -> "Passthrough", BinaryFormat -> True]&),
-	"StatusLabelFunction" -> ("Connected ("<>Sequence@@Riffle[ToString/@{##},", "]<>")"&),
+	"OpenWriteFunction" -> openWrite,
+	"PreconfigureFunction" -> setLabels,
+	"Singleton" -> True,
+	"DeregisterOnClose" -> True,
 	"DriverVersion" -> 0.001
 ];
 

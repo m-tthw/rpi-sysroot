@@ -1,6 +1,6 @@
 Paclet[
 	Name->"JLink",
-	Version->"4.7.0",
+	Version->"4.8.0",
 	Extensions->{
 		(* This extension allows paclet:JLink to resolve to the root guide page. *)
 		{"Documentation", Language->"English", Resources->{"Guides/JavaInterface"}},
@@ -142,18 +142,18 @@ Paclet[
             {"ReferencePages/Java/SyntaxTokenizer", "JavaDoc/com/wolfram/jlink/ui/SyntaxTokenizer.html"},
             {"ReferencePages/Java/LinkSnooper", "JavaDoc/com/wolfram/jlink/util/LinkSnooper.html"},
             {"ReferencePages/Java/MathematicaTask", "JavaDoc/com/wolfram/jlink/util/MathematicaTask.html"},
-            {"example/Part1/BouncingBalls", "../Examples/Part1/BouncingBalls.nb"},
-            {"example/Part1/FileChooserDialog", "../Examples/Part1/FileChooserDialog.nb"},
-            {"example/Part1/GetURL", "../Examples/Part1/GetURL.nb"},
-            {"example/Part1/ModalInputDialog", "../Examples/Part1/ModalInputDialog.nb"},
-            {"example/Part1/Palette", "../Examples/Part1/Palette.nb"},
-            {"example/Part1/Piano", "../Examples/Part1/Piano.nb"},
-            {"example/Part1/ProgressBar", "../Examples/Part1/ProgressBar.nb"},
-            {"example/Part1/RealTimeAlgebra", "../Examples/Part1/RealTimeAlgebra.nb"},
-            {"example/Part1/RealTimePlotting", "../Examples/Part1/RealTimePlotting.nb"},
-            {"example/Part1/SimpleModal", "../Examples/Part1/SimpleModal.nb"},
-            {"example/Part1/Spirograph", "../Examples/Part1/Spirograph.nb"},
-            {"example/Part1/Scribble", "../Examples/Part1/Scribble.nb"}
+            {"ExamplePages/Part1/BouncingBalls", "../Examples/Part1/BouncingBalls.nb"},
+            {"ExamplePages/Part1/FileChooserDialog", "../Examples/Part1/FileChooserDialog.nb"},
+            {"ExamplePages/Part1/GetURL", "../Examples/Part1/GetURL.nb"},
+            {"ExamplePages/Part1/ModalInputDialog", "../Examples/Part1/ModalInputDialog.nb"},
+            {"ExamplePages/Part1/Palette", "../Examples/Part1/Palette.nb"},
+            {"ExamplePages/Part1/Piano", "../Examples/Part1/Piano.nb"},
+            {"ExamplePages/Part1/ProgressBar", "../Examples/Part1/ProgressBar.nb"},
+            {"ExamplePages/Part1/RealTimeAlgebra", "../Examples/Part1/RealTimeAlgebra.nb"},
+            {"ExamplePages/Part1/RealTimePlotting", "../Examples/Part1/RealTimePlotting.nb"},
+            {"ExamplePages/Part1/SimpleModal", "../Examples/Part1/SimpleModal.nb"},
+            {"ExamplePages/Part1/Spirograph", "../Examples/Part1/Spirograph.nb"},
+            {"ExamplePages/Part1/Scribble", "../Examples/Part1/Scribble.nb"}
             }
         }
 	}

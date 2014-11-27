@@ -5,7 +5,7 @@
         tgayley@wolfram.com
 *)
 
-(* :Package Version: 4.7 *)
+(* :Package Version: 4.8 *)
 
 (* :Mathematica Version: 4.0 *)
 		     
@@ -34,7 +34,7 @@ MakeJavaObject::usage =
 "MakeJavaObject[expr] constructs a new Java object whose \"value\" is expr. The expression must be an integer (in which case the created object is of type java.lang.Integer), real (java.lang.Double), String (java.lang.String), or True/False (java.lang.Boolean). It can also be a list or matrix of numbers, Strings, or True/False, in which case the returned object is a Java array of the corresponding primitive type (for example, MakeJavaObject[{1,2,3}] would create an int[] with these values). MakeJavaObject is a shorthand for calling JavaNew. It is typically used when you need to call a Java method that is typed to take Object, and you want to pass it a numeric, String, or array value. You use MakeJavaObject to manually convert such arguments into Java objects before passing them to the method."
 
 MakeJavaExpr::usage =
-"MakeJavaExpr[expr] constructs a new Java object of the J/Link Expr class that represents the Mathematica expression expr."
+"MakeJavaExpr[expr] constructs a new Java object of the J/Link Expr class that represents the Wolfram Language expression expr."
 
 
 Begin["`Package`"]
@@ -52,9 +52,11 @@ MakeJavaObject::arg =
 MakeJavaObject::empty =
 "MakeJavaObject cannot operate on `1` because it has no elements from which to extract type information. Use JavaNew to create empty arrays."
 
-MakeJavaObject[i_?Developer`MachineIntegerQ] := JavaNew["java.lang.Integer", i]
+MakeJavaObject[i_?Developer`MachineIntegerQ] :=
+    If[-2147483648 <= i <= 2147483647, JavaNew["java.lang.Integer", i], JavaNew["java.lang.Long", i]]
 MakeJavaObject[i_Integer] := JavaNew["java.math.BigInteger", ToString[i, FormatType->InputForm, NumberMarks->False]]
-MakeJavaObject[jvm_JVM, i_?Developer`MachineIntegerQ] := JavaNew[jvm, "java.lang.Integer", i]
+MakeJavaObject[jvm_JVM, i_?Developer`MachineIntegerQ] := 
+    If[-2147483648 <= i <= 2147483647, JavaNew[jvm, "java.lang.Integer", i], JavaNew[jvm, "java.lang.Long", i]]
 MakeJavaObject[jvm_JVM, i_Integer] := JavaNew[jvm, "java.math.BigInteger", ToString[i, FormatType->InputForm, NumberMarks->False]]
 
 MakeJavaObject[x_?Developer`MachineRealQ] := JavaNew["java.lang.Double",x]

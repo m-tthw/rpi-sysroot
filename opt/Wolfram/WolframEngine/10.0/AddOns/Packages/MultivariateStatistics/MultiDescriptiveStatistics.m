@@ -189,7 +189,8 @@ the maximum likelihood estimate (MLE) or unbiased estimate of a statistic \
 should be used."]
 
 (* geometric primitives *)
-
+(* following commented out to prevent shadowing problems with System`Ellipsoid *)
+(*
 If[ Not@ValueQ[Ellipsoid::usage],
 Ellipsoid::usage =
 "Ellipsoid[{x1, ..., xp}, {r1, ..., rp}, {d1, ..., dp}] represents a \
@@ -197,6 +198,7 @@ p-dimensional ellipsoid centered at the point {x1, ..., xp}, where the ith \
 semi-axis has radius ri and lies in direction di. Ellipsoid[{x1, ..., xp}, \
 {r1, ..., rp}, IdentityMatrix[p]] simplifies to Ellipsoid[{x1, ..., xp}, \
 {r1, ..., rp}], an ellipsoid aligned with the coordinate axes."]
+*)
 
 KendallRankCorrelation::realvec=SpearmanRankCorrelation::realvec="The argument `1` \
 at position `2` is expected to be a vector of real values with length greater than 1."
@@ -1086,8 +1088,10 @@ Ellipsoid/: Graphics[Ellipsoid[mu_, r_, d1_?VectorQ], opts___Rule] :=
 
 
 (* For p=2, use Circle instead of ParametricPlot when ellipse is not tilted. *)
+(*
 Ellipsoid/: Graphics[Ellipsoid[mu_, r_], opts___Rule] :=
   Graphics[Circle[mu, r], opts] /; Length[mu]==Length[r]==2
+*)
 
 
 (* p=3 *)
@@ -1117,29 +1121,29 @@ graphicsEllipsoid[mu_, r_, d1_, opts___Rule] :=
   ]
 
 
-(* ================ rules permitting graphics directives =================== *)
+(* === rules permitting graphics directives for 3-arg forms =========== *)
 
 Unprotect[Graphics]
-Graphics[{d1___, Ellipsoid[e___], d2___}, opts___Rule] :=
-        With[{primitive1 = Graphics[Ellipsoid[e]][[1,1,-1,-1]]},
+Graphics[{d1___, Ellipsoid[e1_,e2_, e3_], d2___}, opts___Rule] :=
+        With[{primitive1 = Graphics[Ellipsoid[e1, e2, e3]][[1,1,-1,-1]]},
                 Graphics[Join[{d1}, {primitive1}, {d2}], opts]
         ]
 
-Graphics[{g1___, {directives___, Ellipsoid[e___]}, g2___}, opts___Rule] :=
-        With[{primitive1 = Graphics[Ellipsoid[e]][[1,1,-1,-1]]},
+Graphics[{g1___, {directives___, Ellipsoid[e1_, e2_, e3_]}, g2___}, opts___Rule] :=
+        With[{primitive1 = Graphics[Ellipsoid[e1, e2, e3]][[1,1,-1,-1]]},
                 Graphics[{g1, Join[{directives}, {primitive1}], g2}]
         ]
 
 Protect[Graphics]
 
 Unprotect[Graphics3D]
-Graphics3D[{d1___, Ellipsoid[e___], d2___}, opts___Rule] :=
-        With[{primitive1 = Graphics3D[Ellipsoid[e]][[1]]},
+Graphics3D[{d1___, Ellipsoid[e1_, e2_, e3_], d2___}, opts___Rule] :=
+        With[{primitive1 = Graphics3D[Ellipsoid[e1, e2, e3]][[1]]},
                 Graphics3D[Join[{d1}, {primitive1}, {d2}], opts]
         ]
 
-Graphics3D[{g1___, {directives___, Ellipsoid[e___]}, g2___}, opts___Rule] :=
-        With[{primitive1 = Graphics3D[Ellipsoid[e]][[1]]},
+Graphics3D[{g1___, {directives___, Ellipsoid[e1_, e2_, e3_]}, g2___}, opts___Rule] :=
+        With[{primitive1 = Graphics3D[Ellipsoid[e1, e2, e3]][[1]]},
                 Graphics3D[{g1, Join[{directives}, {primitive1}], g2}]
         ]
 Protect[Graphics3D]

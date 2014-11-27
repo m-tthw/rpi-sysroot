@@ -5,7 +5,7 @@
         tgayley@wolfram.com
 *)
 
-(* :Package Version: 4.7 *)
+(* :Package Version: 4.8 *)
 
 (* :Mathematica Version: 4.0 *)
 
@@ -28,11 +28,11 @@
    everywhere within the implementation of J/Link, but not to clients.
 *)
 
-UseJVM::usage = "UseJVM[jvm, body] acts like a wrapper that causes all J/Link calls in it s body to use the specified JVM as the default Java runtime. UseJVM will only be used by advanced programmers who want to have more than one Java runtime installed into Mathematica."
+UseJVM::usage = "UseJVM[jvm, body] acts like a wrapper that causes all J/Link calls in it s body to use the specified JVM as the default Java runtime. UseJVM will only be used by advanced programmers who want to have more than one Java runtime installed into the Wolfram Language."
 
-GetJVM::usage = "GetJVM[link] returns the JVM expression that corresponds to the given link, which was returned from InstallJava[]. GetJVM will only be used by advanced programmers who want to have more than one Java runtime installed into Mathematica."
+GetJVM::usage = "GetJVM[link] returns the JVM expression that corresponds to the given link, which was returned from InstallJava[]. GetJVM will only be used by advanced programmers who want to have more than one Java runtime installed into the Wolfram Language."
 
-JVM::usage = "JVM is the head of an expression that identifies a particular Java runtime installed into the current Mathematica session via InstallJava[]."
+JVM::usage = "JVM is the head of an expression that identifies a particular Java runtime installed into the current Wolfram Language session via InstallJava[]."
 
 
 Begin["`Package`"]

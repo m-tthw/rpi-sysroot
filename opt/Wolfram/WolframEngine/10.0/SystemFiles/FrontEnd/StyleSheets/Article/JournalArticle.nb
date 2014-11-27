@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    144488,       4580]
-NotebookOptionsPosition[     84604,       3158]
-NotebookOutlinePosition[     85289,       3184]
-CellTagsIndexPosition[     85202,       3179]
+NotebookDataLength[    144747,       4586]
+NotebookOptionsPosition[     84864,       3164]
+NotebookOutlinePosition[     85548,       3190]
+CellTagsIndexPosition[     85461,       3185]
 MenuPosition->1100
 WindowFrame->Normal*)
 
@@ -3111,11 +3111,17 @@ Cell[CellGroupData[{
 
 Cell[StyleData["Reference"],
  CellMargins->{{12, 10}, {0, 4}},
+ CellFrameLabels->{{
+    Cell[
+     TextData[{
+       CounterBox["Reference", CounterFunction :> (Part[
+          CharacterRange["A", "Z"], #]& )], "."}], "Reference", CellBaseline -> 
+     Baseline, TextAlignment -> Right], Inherited}, {Inherited, Inherited}},
  TextAlignment->Left,
  TextJustification->0.5,
  LineSpacing->{1, 2},
  ParagraphSpacing->{0, 0},
- ParagraphIndent->-18,
+ ParagraphIndent->0,
  TabSpacings->{0.1, 1, 1.5},
  CounterIncrements->"Reference",
  CounterAssignments->{{"Item1Numbered", 0}},
@@ -3161,8 +3167,8 @@ WindowSize->{708, 581},
 WindowMargins->{{0, Automatic}, {Automatic, -1}},
 TrackCellChangeTimes->False,
 MenuSortingValue->1100,
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (August 15, \
-2013)",
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 25, \
+2014)",
 StyleDefinitions->"StylesheetFormatting.nb",
 PrivateNotebookOptions -> {"NotebookAuthor" -> ""}
 ]
@@ -3178,7 +3184,7 @@ CellTagsIndex->{
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"AuthorFormCustomization", 85070, 3173}
+ {"AuthorFormCustomization", 85329, 3179}
  }
 *)
 (*NotebookFileOutline
@@ -3338,7 +3344,7 @@ Cell[10461, 399, 69, 1, 70, 47, 0, "StyleData", "Text", "DoubleSpacedPrintout"]
 Cell[CellGroupData[{
 Cell[10591, 407, 65, 0, 33, "Section"],
 Cell[CellGroupData[{
-Cell[10681, 411, 56, 0, 70, "Subsection"],
+Cell[10681, 411, 56, 0, 45, "Subsection"],
 Cell[CellGroupData[{
 Cell[10762, 415, 32, 0, 70, "Subsubsection"],
 Cell[CellGroupData[{
@@ -3444,7 +3450,7 @@ Cell[14524, 566, 59, 0, 70, 59, 0, "StyleData", "SubsubsectionAlt", \
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[14668, 575, 42, 0, 70, "Subsection"],
+Cell[14668, 575, 42, 0, 29, "Subsection"],
 Cell[CellGroupData[{
 Cell[14735, 579, 33, 0, 70, "Subsubsection"],
 Cell[CellGroupData[{
@@ -3715,7 +3721,7 @@ Cell[28728, 1091, 79, 1, 70, 57, 0, "StyleData", "Item3Paragraph", \
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[28892, 1101, 33, 0, 70, "Subsection"],
+Cell[28892, 1101, 33, 0, 29, "Subsection"],
 Cell[CellGroupData[{
 Cell[28950, 1105, 34, 0, 70, "Subsubsection"],
 Cell[CellGroupData[{
@@ -4019,7 +4025,7 @@ Cell[46023, 1688, 161, 3, 70, 61, 0, "StyleData", "QED", "All",
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[46245, 1698, 48, 0, 70, "Subsection"],
+Cell[46245, 1698, 48, 0, 29, "Subsection"],
 Cell[CellGroupData[{
 Cell[46318, 1702, 31, 0, 70, "Subsubsection"],
 Cell[CellGroupData[{
@@ -4325,7 +4331,7 @@ Cell[68640, 2498, 72, 1, 70, 50, 0, "StyleData", "Caption", \
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[68773, 2506, 33, 0, 70, "Subsection"],
+Cell[68773, 2506, 33, 0, 29, "Subsection"],
 Cell[CellGroupData[{
 Cell[68831, 2510, 54, 1, 70, "Subsubsection"],
 Cell[CellGroupData[{
@@ -4455,7 +4461,7 @@ Cell[76816, 2835, 77, 1, 70, 43, 0, "StyleData", "AbstractMath", "Printout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[76954, 2843, 37, 0, 70, "Subsection"],
+Cell[76954, 2843, 37, 0, 29, "Subsection"],
 Cell[CellGroupData[{
 Cell[77016, 2847, 377, 12, 70, 41, 0, "StyleData", "AcknowledgmentsSection", \
 "All",
@@ -4478,7 +4484,7 @@ Cell[77980, 2884, 123, 3, 70, 46, 0, "StyleData", "Acknowledgments", \
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[78152, 2893, 30, 0, 70, "Subsection"],
+Cell[78152, 2893, 30, 0, 29, "Subsection"],
 Cell[CellGroupData[{
 Cell[78207, 2897, 486, 15, 70, 34, 0, "StyleData", "AppendixSection", "All",
  CounterIncrements->"AppendixSection",
@@ -4516,7 +4522,7 @@ Cell[80340, 2980, 80, 1, 70, 47, 0, "StyleData", "AppendixEquation", \
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[80469, 2987, 55, 1, 70, "Subsection"],
+Cell[80469, 2987, 55, 1, 29, "Subsection"],
 Cell[CellGroupData[{
 Cell[80549, 2992, 473, 15, 70, 33, 0, "StyleData", "EndnoteSection", "All",
  CounterIncrements->"EndnoteSection",
@@ -4552,9 +4558,9 @@ Cell[82557, 3072, 72, 1, 70, 44, 0, "StyleData", "EndnoteNumber", "Printout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[82678, 3079, 32, 0, 70, "Subsection"],
+Cell[82678, 3079, 32, 0, 29, "Subsection"],
 Cell[CellGroupData[{
-Cell[82735, 3083, 518, 16, 70, 35, 0, "StyleData", "ReferenceSection", "All",
+Cell[82735, 3083, 518, 16, 63, 35, 0, "StyleData", "ReferenceSection", "All",
  CounterIncrements->"ReferenceSection",
  CounterAssignments->{{"Reference", 0}},
  MenuSortingValue->2250],
@@ -4564,20 +4570,20 @@ Cell[83360, 3105, 80, 1, 70, 47, 0, "StyleData", "ReferenceSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[83477, 3111, 313, 10, 70, 28, 0, "StyleData", "Reference", "All",
+Cell[83477, 3111, 573, 16, 31, 28, 0, "StyleData", "Reference", "All",
  CounterIncrements->"Reference",
  CounterAssignments->{{"Item1Numbered", 0}},
  MenuSortingValue->2260],
-Cell[83793, 3123, 116, 3, 70, 44, 0, "StyleData", "Reference", "Presentation"],
-Cell[83912, 3128, 166, 5, 70, 40, 0, "StyleData", "Reference", "Printout"]
+Cell[84053, 3129, 116, 3, 70, 44, 0, "StyleData", "Reference", "Presentation"],
+Cell[84172, 3134, 166, 5, 70, 40, 0, "StyleData", "Reference", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[84115, 3138, 270, 8, 70, 33, 0, "StyleData", "ReferenceLabel", "All",
+Cell[84375, 3144, 270, 8, 35, 33, 0, "StyleData", "ReferenceLabel", "All",
  CounterIncrements->"ReferenceLabel",
  StyleMenuListing->None],
-Cell[84388, 3148, 78, 1, 70, 49, 0, "StyleData", "ReferenceLabel", \
+Cell[84648, 3154, 78, 1, 70, 49, 0, "StyleData", "ReferenceLabel", \
 "Presentation"],
-Cell[84469, 3151, 95, 2, 70, 45, 0, "StyleData", "ReferenceLabel", \
+Cell[84729, 3157, 95, 2, 70, 45, 0, "StyleData", "ReferenceLabel", \
 "Printout"]
 }, Closed]]
 }, Closed]]
@@ -4587,4 +4593,3 @@ Cell[84469, 3151, 95, 2, 70, 45, 0, "StyleData", "ReferenceLabel", \
 *)
 
 (* End of internal cache information *)
-

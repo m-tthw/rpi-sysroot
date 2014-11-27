@@ -1,0 +1,92 @@
+<font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Functions</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Once you start writing lots of code, you may wish to find a way to organise and structure things to make them tidier and easier to understand. Functions are a very powerful way to do this. They give us the ability to give a name to a bunch of code. Let’s take a look.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Defining functions</span></p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">define :foo do
+  play 50
+  sleep 1
+  play 55
+  sleep 2
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Here, we’ve define a new function called <code style="font-size:15px; color:deeppink; background-color:white">foo</code>. We do this with our old friend the do/end block and the magic code <code style="font-size:15px; color:deeppink; background-color:white">define</code> followed by the name we which to give our function. We didn’t have to call it <code style="font-size:15px; color:deeppink; background-color:white">foo</code> we could have called it anything we want such as <code style="font-size:15px; color:deeppink; background-color:white">bar</code>, <code style="font-size:15px; color:deeppink; background-color:white">baz</code> or ideally something meaningful to you like <code style="font-size:15px; color:deeppink; background-color:white">main_section</code> or <code style="font-size:15px; color:deeppink; background-color:white">lead_riff</code>. </p>
+
+<p style="font-size:15px;color:#5e5e5e;">Remember to add a colon <code style="font-size:15px; color:deeppink; background-color:white">:</code> to the name of your function when you define it.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Calling functions</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Once we have defined our function we can call it by just writing its name:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">define :foo do
+  play 50
+  sleep 1
+  play 55
+  sleep 0.5
+end
+
+foo
+
+sleep 1
+
+2.times do
+  foo
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">We can even use <code style="font-size:15px; color:deeppink; background-color:white">foo</code> inside iteration blocks or anywhere we may have written <code style="font-size:15px; color:deeppink; background-color:white">play</code> or <code style="font-size:15px; color:deeppink; background-color:white">sample</code>. This gives us a great way to express ourselves and to create new meaningful words to use in our compositions.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Functions are remembered across runs</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">So far, every time you’ve pressed the run button, Sonic Pi has started from a completely blank slate. It knows nothing except for what is in the workspace. You can’t reference code in another workspace or another thread. However, functions change that. When you define a function, Sonic Pi <em style="font-size:15px;color:darkorange;">remembers</em> it. Let’s try it. Delete all the code in your workspace and replace it with:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">foo
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Press the run button - and hear your function play. Where did the code go? How did Sonic Pi know what to play? Sonic Pi just remembered your function - so even after you deleted it from the workspace, it remembered what you had typed. This behaviour only works with functions starting with the letters <code style="font-size:15px; color:deeppink; background-color:white">def...</code> such as <code style="font-size:15px; color:deeppink; background-color:white">defonce</code>.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Parameterised functions</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">For those of you that would like to see a more advanced feature of functions you might be interested in knowing that just like you can pass min and max values to <code style="font-size:15px; color:deeppink; background-color:white">rrand</code> you can teach your functions to accept arguments. Let’s take a look:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">define :my_player do |n|
+  play n
+end
+
+my_player 80
+sleep 0.5
+my_player 90
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">This isn’t very exciting but it illustrates the point. We’ve created our own version of <code style="font-size:15px; color:deeppink; background-color:white">play</code> called <code style="font-size:15px; color:deeppink; background-color:white">my_player</code> which is parameterised.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">The parameters need to go after the <code style="font-size:15px; color:deeppink; background-color:white">do</code> of the <code style="font-size:15px; color:deeppink; background-color:white">define</code> do/end block,  surrounded by vertical goalposts <code style="font-size:15px; color:deeppink; background-color:white">|</code>. and separated by commas <code style="font-size:15px; color:deeppink; background-color:white">,</code>. You may use any words you want for the parameter names. </p>
+
+<p style="font-size:15px;color:#5e5e5e;">The magic happens inside the <code style="font-size:15px; color:deeppink; background-color:white">define</code> do/end block. You may use the parameter names as if they were real values. In this example I’m playing note <code style="font-size:15px; color:deeppink; background-color:white">n</code>.  You can consider the parameters as a kind of promise that when the code runs, they will be replaced with actual values. You do this by passing a parameter to the function when you call it. I do this with <code style="font-size:15px; color:deeppink; background-color:white">my_player 80</code> to play note 80. Inside the function definition, <code style="font-size:15px; color:deeppink; background-color:white">n</code> is now replaced with 80, so <code style="font-size:15px; color:deeppink; background-color:white">play n</code> turns into <code style="font-size:15px; color:deeppink; background-color:white">play 80</code>. When I call it again with <code style="font-size:15px; color:deeppink; background-color:white">my_player 90</code>, <code style="font-size:15px; color:deeppink; background-color:white">n</code> is now replaced with 90, so <code style="font-size:15px; color:deeppink; background-color:white">play n</code> turns into <code style="font-size:15px; color:deeppink; background-color:white">play 90</code>.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Let’s see a more interesting example:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">define :chord_player do |root, repeats| 
+  repeats.times do
+    play chord(root, :minor), release: 0.3
+    sleep 0.5
+  end
+end
+
+chord_player :e3, 2
+sleep 0.5
+chord_player :a3, 3
+chord_player :g3, 4
+sleep 0.5
+chord_player :e3, 3
+
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Here I used <code style="font-size:15px; color:deeppink; background-color:white">repeats</code> as if it was a number in the line <code style="font-size:15px; color:deeppink; background-color:white">repeats.times do</code>. I also used <code style="font-size:15px; color:deeppink; background-color:white">root</code> as if it was a note name in my call to <code style="font-size:15px; color:deeppink; background-color:white">play</code>. </p>
+
+<p style="font-size:15px;color:#5e5e5e;">See how we’re able to write something very expressive and easy to read by moving a lot of our logic into a function!</p>
+</font>

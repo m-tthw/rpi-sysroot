@@ -1,0 +1,233 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Trigger sample</font></span></p>
+<h1><font color="#3c3c3c"><pre>sample<pre></font></h1>
+<h2><pre>[name_or_path <font color="deeppink">(symbol_or_string)</font>]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+This is the main method for playing back recorded sound files (samples). Sonic Pi comes with lots of great samples included (see the section under help) but you can also load and play wav|wave|aif|aiff files from anywhere on your computer too. The 'rate' parameter affects both the speed and the pitch of the playback. See the examples for details. Check out the use_sample_pack and use_sample_pack_as methods for details on making it easy to work with a whole folder of your own sample files. Note, that on the first trigger of a sample, Sonic Pi has to load the sample which takes some time and may cause timing issues. To preload the samples you wish to work with consider load_sample and load_samples.
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Introduced in v2.0.0
+</p>
+<table cellpadding="2">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+
+sample :perc_bell
+
+
+
+</pre></td>
+   <td><pre>
+ 
+ # plays one of Sonic Pi's built in samples
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#FFE4E1"><h3><pre>Example 1 </pre></h3></td>
+   <td><pre>
+
+sample '/home/yourname/path/to/a/sample.wav'
+
+
+
+</pre></td>
+   <td><pre>
+ 
+ # plays a wav|wave|aif|aiff file from your local filesystem
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#FFF0F5"><h3><pre>Example 2 </pre></h3></td>
+   <td><pre>
+
+# Lets play with the rate parameter
+# play one of the included samples
+sample :loop_amen
+sleep sample_duration(:loop_amen)
+
+# Setting a rate of 0.5 will cause the sample to
+#   a) play half as fast
+#   b) play an octave down in pitch
+#
+# Listen:
+sample :loop_amen, rate: 0.5
+sleep sample_duration(:loop_amen, rate: 0.5)
+
+# Setting a really low number means the sample takes
+# a very long time to finish! Also it sounds very
+# different to the original sound
+sample :loop_amen, rate: 0.05
+sleep sample_duration(:loop_amen, rate: 0.05)
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+ 
+ 
+ # this sleeps for exactly the length of the sample
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#FFE4E1"><h3><pre>Example 3 </pre></h3></td>
+   <td><pre>
+
+# Setting a really negative number can be lots of fun
+# It plays the sample backwards!
+sample :loop_amen, rate: -1
+sleep sample_duration(:loop_amen, rate: 1) 
+
+                                            
+                                            
+sample :loop_amen, rate: -0.5
+sleep sample_duration(:loop_amen, rate: 0.5)
+
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+ 
+ 
+ # there's no need to give sample_duration a negative number though
+ 
+ # Using a rate of -0.5 is just like using the positive 0.5
+ # (lower in pitch and slower) except backwards
+ 
+ # there's no need to give sample_duration a negative number though
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#FFF0F5"><h3><pre>Example 4 </pre></h3></td>
+   <td><pre>
+
+# BE CAREFUL
+# Don't set the rate to 0 though because it will get stuck
+# and won't make any sound at all!
+# We can see that the following would take Infinity seconds to finish
+puts sample_duration(:loop_amen, rate: 0)
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#FFE4E1"><h3><pre>Example 5 </pre></h3></td>
+   <td><pre>
+
+# Just like the play method, we can assign our sample player
+# to a variable and control the rate parameter whilst it's playing.
+#
+# The following example sounds a bit like a vinyl speeding up
+s = sample :loop_amen_full, rate: 0.05
+sleep 1
+control(s, rate: 0.2)
+sleep 1
+control(s, rate: 0.4)
+sleep 1
+control(s, rate: 0.6)
+sleep 1
+control(s, rate: 0.8)
+sleep 1
+control(s, rate: 1)
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#FFF0F5"><h3><pre>Example 6 </pre></h3></td>
+   <td><pre>
+
+# Using the :start and :finish parameters you can play a section of the sample.
+# The default start is 0 and the default finish is 1
+sample :loop_amen, start: 0.5, finish: 1
+
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+ 
+ # play the last half of a sample
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#FFE4E1"><h3><pre>Example 7 </pre></h3></td>
+   <td><pre>
+
+# You can also play part of any sample backwards by using a start value that's
+# higher than the finish
+sample :loop_amen, start: 1, finish: 0.5
+
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+ 
+ # play the last half backwards
+
+
+
+</pre></td></tr>
+</table>

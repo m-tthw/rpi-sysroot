@@ -30,7 +30,7 @@ BeginPackage["PacletManager`"]
 
 (*********************  Try to locate the PacletManager.mx file  *********************)
 
-`Package`$pmDir = DirectoryName[FindFile[$Input]]
+`Package`$pmDir = DirectoryName[$InputFileName]
 (* $pmDir is captured in mx file so we need to restore its value after loading the mx. Store a copy. *)
 System`Private`savedPMDir = `Package`$pmDir
 
@@ -67,8 +67,8 @@ If[SyntaxQ["@mathematicaVersionNumber@"] && ToExpression["@mathematicaVersionNum
 *)
 `Information`$VersionNumber = If[SyntaxQ["2.2"], ToExpression["2.2"], 0.0]
 `Information`$ReleaseNumber = If[SyntaxQ["0"], ToExpression["0"], 0]
-`Information`$CreationID = If[SyntaxQ["20140121182320"], ToExpression["20140121182320"], 0]
-`Information`$CreationDate = If[SyntaxQ["{2014,01,21,18,23,20}"], ToExpression["{2014,01,21,18,23,20}"], {0,0,0,0,0,0}]
+`Information`$CreationID = If[SyntaxQ["20140804181430"], ToExpression["20140804181430"], 0]
+`Information`$CreationDate = If[SyntaxQ["{2014,08,04,18,14,30}"], ToExpression["{2014,08,04,18,14,30}"], {0,0,0,0,0,0}]
 `Information`$Version = "PacletManager Version 2.2.0"
 
 

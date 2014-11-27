@@ -24,16 +24,16 @@ import sys
 from . import _gobject
 
 from .constants import \
-     TYPE_NONE, TYPE_INTERFACE, TYPE_CHAR, TYPE_UCHAR, \
-     TYPE_BOOLEAN, TYPE_INT, TYPE_UINT, TYPE_LONG, \
-     TYPE_ULONG, TYPE_INT64, TYPE_UINT64, TYPE_ENUM, \
-     TYPE_FLAGS, TYPE_FLOAT, TYPE_DOUBLE, TYPE_STRING, \
-     TYPE_POINTER, TYPE_BOXED, TYPE_PARAM, TYPE_OBJECT, \
-     TYPE_PYOBJECT
-from .constants import \
-     G_MINFLOAT, G_MAXFLOAT, G_MINDOUBLE, G_MAXDOUBLE, \
-     G_MININT, G_MAXINT, G_MAXUINT, G_MINLONG, G_MAXLONG, \
-     G_MAXULONG
+    TYPE_NONE, TYPE_INTERFACE, TYPE_CHAR, TYPE_UCHAR, \
+    TYPE_BOOLEAN, TYPE_INT, TYPE_UINT, TYPE_LONG, \
+    TYPE_ULONG, TYPE_INT64, TYPE_UINT64, TYPE_ENUM, TYPE_FLAGS, \
+    TYPE_FLOAT, TYPE_DOUBLE, TYPE_STRING, \
+    TYPE_POINTER, TYPE_BOXED, TYPE_PARAM, TYPE_OBJECT, \
+    TYPE_PYOBJECT, TYPE_GTYPE, TYPE_STRV, TYPE_VARIANT
+from ._gobject import \
+    G_MAXFLOAT, G_MAXDOUBLE, \
+    G_MININT, G_MAXINT, G_MAXUINT, G_MINLONG, G_MAXLONG, \
+    G_MAXULONG
 
 if sys.version_info >= (3, 0):
     _basestring = str
@@ -41,6 +41,7 @@ if sys.version_info >= (3, 0):
 else:
     _basestring = basestring
     _long = long
+
 
 class Property(object):
     """
@@ -73,6 +74,50 @@ class Property(object):
         def propInt(self, value):
             ...
     """
+    _type_from_pytype_lookup = {
+        # Put long_ first in case long_ and int are the same so int clobbers long_
+        _long: TYPE_LONG,
+        int: TYPE_INT,
+        bool: TYPE_BOOLEAN,
+        float: TYPE_DOUBLE,
+        str: TYPE_STRING,
+        object: TYPE_PYOBJECT,
+    }
+
+    _min_value_lookup = {
+        TYPE_UINT: 0,
+        TYPE_ULONG: 0,
+        TYPE_UINT64: 0,
+        # Remember that G_MINFLOAT and G_MINDOUBLE are something different.
+        TYPE_FLOAT: -G_MAXFLOAT,
+        TYPE_DOUBLE: -G_MAXDOUBLE,
+        TYPE_INT: G_MININT,
+        TYPE_LONG: G_MINLONG,
+        TYPE_INT64: -2 ** 63,
+    }
+
+    _max_value_lookup = {
+        TYPE_UINT: G_MAXUINT,
+        TYPE_ULONG: G_MAXULONG,
+        TYPE_INT64: 2 ** 63 - 1,
+        TYPE_UINT64: 2 ** 64 - 1,
+        TYPE_FLOAT: G_MAXFLOAT,
+        TYPE_DOUBLE: G_MAXDOUBLE,
+        TYPE_INT: G_MAXINT,
+        TYPE_LONG: G_MAXLONG,
+    }
+
+    _default_lookup = {
+        TYPE_INT: 0,
+        TYPE_UINT: 0,
+        TYPE_LONG: 0,
+        TYPE_ULONG: 0,
+        TYPE_INT64: 0,
+        TYPE_UINT64: 0,
+        TYPE_STRING: '',
+        TYPE_FLOAT: 0.0,
+        TYPE_DOUBLE: 0.0,
+    }
 
     class __metaclass__(type):
         def __repr__(self):
@@ -104,6 +149,8 @@ class Property(object):
         @keyword maximum:  maximum allowed value (int, float, long only)
         """
 
+        self.name = None
+
         if type is None:
             type = object
         self.type = self._type_from_python(type)
@@ -117,9 +164,10 @@ class Property(object):
         if not isinstance(blurb, _basestring):
             raise TypeError("blurb must be a string")
         self.blurb = blurb
-
-        if flags < 0 or flags > 32:
-            raise TypeError("invalid flag value: %r" % (flags,))
+        # Always clobber __doc__ with blurb even if blurb is empty because
+        # we don't want the lengthy Property class documentation showing up
+        # on instances.
+        self.__doc__ = blurb
         self.flags = flags
 
         # Call after setting blurb for potential __doc__ usage.
@@ -131,7 +179,9 @@ class Property(object):
             getter = self._default_getter
             setter = self._default_setter
         self.getter(getter)
-        self.setter(setter)
+        # do not call self.setter() here, as this defines the property name
+        # already
+        self.fset = setter
 
         if minimum is not None:
             if minimum < self._get_minimum():
@@ -149,8 +199,6 @@ class Property(object):
         else:
             maximum = self._get_maximum()
         self.maximum = maximum
-
-        self.name = None
 
         self._exc = None
 
@@ -189,60 +237,46 @@ class Property(object):
 
     def getter(self, fget):
         """Set the getter function to fget. For use as a decorator."""
-        if self.__doc__ is None:
-            self.__doc__ = fget.__doc__
-        if not self.blurb and fget.__doc__:
+        if fget.__doc__:
+            # Always clobber docstring and blurb with the getter docstring.
             self.blurb = fget.__doc__
+            self.__doc__ = fget.__doc__
         self.fget = fget
         return self
 
     def setter(self, fset):
         """Set the setter function to fset. For use as a decorator."""
         self.fset = fset
+        # with a setter decorator, we must ignore the name of the method in
+        # install_properties, as this does not need to be a valid property name
+        # and does not define the property name. So set the name here.
+        if not self.name:
+            self.name = self.fget.__name__
         return self
 
     def _type_from_python(self, type_):
-        if type_ == _long:
-            return TYPE_LONG
-        elif type_ == int:
-            return TYPE_INT
-        elif type_ == bool:
-            return TYPE_BOOLEAN
-        elif type_ == float:
-            return TYPE_DOUBLE
-        elif type_ == str:
-            return TYPE_STRING
-        elif type_ == object:
-            return TYPE_PYOBJECT
+        if type_ in self._type_from_pytype_lookup:
+            return self._type_from_pytype_lookup[type_]
         elif (isinstance(type_, type) and
               issubclass(type_, (_gobject.GObject,
                                  _gobject.GEnum,
+                                 _gobject.GFlags,
                                  _gobject.GBoxed))):
             return type_.__gtype__
-        elif type_ in [TYPE_NONE, TYPE_INTERFACE, TYPE_CHAR, TYPE_UCHAR,
+        elif type_ in (TYPE_NONE, TYPE_INTERFACE, TYPE_CHAR, TYPE_UCHAR,
                        TYPE_INT, TYPE_UINT, TYPE_BOOLEAN, TYPE_LONG,
                        TYPE_ULONG, TYPE_INT64, TYPE_UINT64,
                        TYPE_FLOAT, TYPE_DOUBLE, TYPE_POINTER,
                        TYPE_BOXED, TYPE_PARAM, TYPE_OBJECT, TYPE_STRING,
-                       TYPE_PYOBJECT]:
+                       TYPE_PYOBJECT, TYPE_GTYPE, TYPE_STRV, TYPE_VARIANT):
             return type_
         else:
             raise TypeError("Unsupported type: %r" % (type_,))
 
     def _get_default(self, default):
-        ptype = self.type
         if default is not None:
             return default
-
-        if ptype in [TYPE_INT, TYPE_UINT, TYPE_LONG, TYPE_ULONG,
-                     TYPE_INT64, TYPE_UINT64]:
-            return 0
-        elif ptype == TYPE_STRING:
-            return ''
-        elif ptype == TYPE_FLOAT or ptype == TYPE_DOUBLE:
-            return 0.0
-        else:
-            return None
+        return self._default_lookup.get(self.type, None)
 
     def _check_default(self):
         ptype = self.type
@@ -253,61 +287,45 @@ class Property(object):
         elif ptype == TYPE_PYOBJECT:
             if default is not None:
                 raise TypeError("object types does not have default values")
+        elif ptype == TYPE_GTYPE:
+            if default is not None:
+                raise TypeError("GType types does not have default values")
         elif _gobject.type_is_a(ptype, TYPE_ENUM):
             if default is None:
                 raise TypeError("enum properties needs a default value")
             elif not _gobject.type_is_a(default, ptype):
                 raise TypeError("enum value %s must be an instance of %r" %
                                 (default, ptype))
+        elif _gobject.type_is_a(ptype, TYPE_FLAGS):
+            if not _gobject.type_is_a(default, ptype):
+                raise TypeError("flags value %s must be an instance of %r" %
+                                (default, ptype))
+        elif _gobject.type_is_a(ptype, TYPE_STRV) and default is not None:
+            if not isinstance(default, list):
+                raise TypeError("Strv value %s must be a list" % repr(default))
+            for val in default:
+                if type(val) not in (str, bytes):
+                    raise TypeError("Strv value %s must contain only strings" % str(default))
+        elif _gobject.type_is_a(ptype, TYPE_VARIANT) and default is not None:
+            if not hasattr(default, '__gtype__') or not _gobject.type_is_a(default, TYPE_VARIANT):
+                raise TypeError("variant value %s must be an instance of %r" %
+                                (default, ptype))
 
     def _get_minimum(self):
-        ptype = self.type
-        if ptype in [TYPE_UINT, TYPE_ULONG, TYPE_UINT64]:
-            return 0
-        # Remember that G_MINFLOAT and G_MINDOUBLE are something different.
-        elif ptype == TYPE_FLOAT:
-            return -G_MAXFLOAT
-        elif ptype == TYPE_DOUBLE:
-            return -G_MAXDOUBLE
-        elif ptype == TYPE_INT:
-            return G_MININT
-        elif ptype == TYPE_LONG:
-            return G_MINLONG
-        elif ptype == TYPE_INT64:
-            return -2 ** 62 - 1
-
-        return None
+        return self._min_value_lookup.get(self.type, None)
 
     def _get_maximum(self):
-        ptype = self.type
-        if ptype == TYPE_UINT:
-            return G_MAXUINT
-        elif ptype == TYPE_ULONG:
-            return G_MAXULONG
-        elif ptype == TYPE_INT64:
-            return 2 ** 62 - 1
-        elif ptype == TYPE_UINT64:
-            return 2 ** 63 - 1
-        elif ptype == TYPE_FLOAT:
-            return G_MAXFLOAT
-        elif ptype == TYPE_DOUBLE:
-            return G_MAXDOUBLE
-        elif ptype == TYPE_INT:
-            return G_MAXINT
-        elif ptype == TYPE_LONG:
-            return G_MAXLONG
-
-        return None
+        return self._max_value_lookup.get(self.type, None)
 
     #
     # Getter and Setter
     #
 
     def _default_setter(self, instance, value):
-        setattr(instance, '_property_helper_'+self.name, value)
+        setattr(instance, '_property_helper_' + self.name, value)
 
     def _default_getter(self, instance):
-        return getattr(instance, '_property_helper_'+self.name, self.default)
+        return getattr(instance, '_property_helper_' + self.name, self.default)
 
     def _readonly_setter(self, instance, value):
         self._exc = TypeError("%s property of %s is read-only" % (
@@ -323,13 +341,14 @@ class Property(object):
 
     def get_pspec_args(self):
         ptype = self.type
-        if ptype in [TYPE_INT, TYPE_UINT, TYPE_LONG, TYPE_ULONG,
-                     TYPE_INT64, TYPE_UINT64, TYPE_FLOAT, TYPE_DOUBLE]:
+        if ptype in (TYPE_INT, TYPE_UINT, TYPE_LONG, TYPE_ULONG,
+                     TYPE_INT64, TYPE_UINT64, TYPE_FLOAT, TYPE_DOUBLE):
             args = self.minimum, self.maximum, self.default
         elif (ptype == TYPE_STRING or ptype == TYPE_BOOLEAN or
-              ptype.is_a(TYPE_ENUM)):
+              ptype.is_a(TYPE_ENUM) or ptype.is_a(TYPE_FLAGS) or
+              ptype.is_a(TYPE_VARIANT)):
             args = (self.default,)
-        elif ptype == TYPE_PYOBJECT:
+        elif ptype in (TYPE_PYOBJECT, TYPE_GTYPE):
             args = ()
         elif ptype.is_a(TYPE_OBJECT) or ptype.is_a(TYPE_BOXED):
             args = ()
@@ -337,3 +356,56 @@ class Property(object):
             raise NotImplementedError(ptype)
 
         return (self.type, self.nick, self.blurb) + args + (self.flags,)
+
+
+def install_properties(cls):
+    """
+    Scans the given class for instances of Property and merges them
+    into the classes __gproperties__ dict if it exists or adds it if not.
+    """
+    gproperties = cls.__dict__.get('__gproperties__', {})
+
+    props = []
+    for name, prop in cls.__dict__.items():
+        if isinstance(prop, Property):  # not same as the built-in
+            # if a property was defined with a decorator, it may already have
+            # a name; if it was defined with an assignment (prop = Property(...))
+            # we set the property's name to the member name
+            if not prop.name:
+                prop.name = name
+            # we will encounter the same property multiple times in case of
+            # custom setter methods
+            if prop.name in gproperties:
+                if gproperties[prop.name] == prop.get_pspec_args():
+                    continue
+                raise ValueError('Property %s was already found in __gproperties__' % prop.name)
+            gproperties[prop.name] = prop.get_pspec_args()
+            props.append(prop)
+
+    if not props:
+        return
+
+    cls.__gproperties__ = gproperties
+
+    if 'do_get_property' in cls.__dict__ or 'do_set_property' in cls.__dict__:
+        for prop in props:
+            if prop.fget != prop._default_getter or prop.fset != prop._default_setter:
+                raise TypeError(
+                    "GObject subclass %r defines do_get/set_property"
+                    " and it also uses a property with a custom setter"
+                    " or getter. This is not allowed" % (
+                    cls.__name__,))
+
+    def obj_get_property(self, pspec):
+        name = pspec.name.replace('-', '_')
+        prop = getattr(cls, name, None)
+        if prop:
+            return prop.fget(self)
+    cls.do_get_property = obj_get_property
+
+    def obj_set_property(self, pspec, value):
+        name = pspec.name.replace('-', '_')
+        prop = getattr(cls, name, None)
+        if prop:
+            prop.fset(self, value)
+    cls.do_set_property = obj_set_property

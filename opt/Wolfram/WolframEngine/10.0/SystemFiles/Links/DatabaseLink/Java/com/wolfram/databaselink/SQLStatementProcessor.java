@@ -69,8 +69,9 @@ public class SQLStatementProcessor
     if(maxFieldSize > 0)
         ps.setMaxFieldSize(maxFieldSize);
     
-    if(escapeProcessing > 0)
-        ps.setEscapeProcessing(escapeProcessing == 1 ? true:false);
+    if(escapeProcessing >= 0)
+        // Setting this to false appears to be pointless for prepared statements
+        ps.setEscapeProcessing((escapeProcessing == 1) ? true:false);
 
     // Mem use implications of this loop?
     for(int h = 1; h <= params.length(); h++)
@@ -244,6 +245,7 @@ public class SQLStatementProcessor
         {
           if(success && (h % batchSize == 0))
           {
+            // executeBatch() returns an array of update counts
             for(int i:ps.executeBatch())
               res.add(i);
           }
@@ -335,8 +337,7 @@ public class SQLStatementProcessor
       s = connection.createStatement(resultSetType, resultSetConcurrency);
 
       boolean k = false;
-      ArrayList<Integer> res = new ArrayList<Integer>();
-      boolean success = true;     // for batch adds
+      //ArrayList<Integer> res = new ArrayList<Integer>();
 
       if(maxrows > 0)
           s.setMaxRows(maxrows);
@@ -353,18 +354,21 @@ public class SQLStatementProcessor
       if(maxFieldSize > 0)
           s.setMaxFieldSize(maxFieldSize);
           
-      if(escapeProcessing > 0)
-          s.setEscapeProcessing(escapeProcessing == 1 ? true:false);
+      if(escapeProcessing >= 0)
+          s.setEscapeProcessing((escapeProcessing == 1) ? true:false);
 
-      k = s.execute(sql, returnGeneratedKeys ? Statement.RETURN_GENERATED_KEYS:Statement.NO_GENERATED_KEYS);
-      if(!k)
-          res.add(s.getUpdateCount());
+      // Accommodate SQLite supported interface
+      //k = s.execute(sql, returnGeneratedKeys ? Statement.RETURN_GENERATED_KEYS:Statement.NO_GENERATED_KEYS);
+      if(returnGeneratedKeys)
+          k = s.execute(sql, Statement.RETURN_GENERATED_KEYS);
+      else
+          k = s.execute(sql);
 
       ResultSet rs = null;
       /* Generated Keys */
       if(returnGeneratedKeys) 
       {
-          rs =  s.getGeneratedKeys();
+          rs = s.getGeneratedKeys();
           if(returnResultSet)
               return new ResultSet[] { rs };
           Object[] results = getAllResultData(rs, getAsStrings, showColumnHeadings);

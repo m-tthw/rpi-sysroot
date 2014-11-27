@@ -10,7 +10,7 @@
    and possible other techniques
  *)
 
-(* :Package Version: 3.0 ($Id: Evaluate.m,v 1.35 2010/04/27 16:17:06 maeder Exp $) *)
+(* :Package Version: 3.0 ($Id: Evaluate.m,v 1.36 2014/05/05 14:16:44 maeder Exp $) *)
 
 (* :Mathematica Version: 7 *)
 
@@ -42,7 +42,7 @@ Options[Parallelize] = {
 Begin["`Private`"] (*****************************************************)
 
 `$PackageVersion = 2.0;
-`$CVSRevision = StringReplace["$Revision: 1.35 $", {"$"->"", " "->"", "Revision:"->""}]
+`$CVSRevision = StringReplace["$Revision: 1.36 $", {"$"->"", " "->"", "Revision:"->""}]
 
 Needs["Parallel`Parallel`"]
 
@@ -252,10 +252,11 @@ tryCombine[h_Symbol[arg_], opts___]/; MemberQ[Attributes[h], Listable] :=
 
 (* if argument is not a list, let the catchall at the end produce the nopar1 messages *)
 
-(* associative operations; do not evaluate the arguments *)
+(* associative operations; do not evaluate the arguments, but there should be at least 3 *)
+(* Union and Intersection may have options; so, let it use the default combiner *)
 
-tryCombine[expr:(h_Symbol[___]), opts___]/; MemberQ[Attributes[h], Flat] :=
-	ParallelCombine[Identity, Unevaluated[expr], h, opts]
+tryCombine[expr:(h_Symbol[_,_,_,___,OptionsPattern[]]), opts___]/; MemberQ[Attributes[h], Flat] :=
+	ParallelCombine[Identity, Unevaluated[expr], opts]
 
 
 Protect[Evaluate[$protected]] (* restore protection *)

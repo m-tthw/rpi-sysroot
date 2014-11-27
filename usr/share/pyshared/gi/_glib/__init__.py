@@ -1,6 +1,6 @@
 # -*- Mode: Python; py-indent-offset: 4 -*-
 # pygobject - Python bindings for the GObject library
-# Copyright (C) 2006-2008 Johan Dahlin
+# Copyright (C) 2006-2012 Johan Dahlin
 #
 #   glib/__init__.py: initialisation file for glib module
 #
@@ -19,8 +19,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301
 # USA
 
-from ._glib import *
+from . import _glib
 
+# Internal API
 _PyGLib_API = _glib._PyGLib_API
-
-del _glib

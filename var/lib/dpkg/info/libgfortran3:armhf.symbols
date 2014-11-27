@@ -5,6 +5,7 @@ libgfortran.so.3 libgfortran3 #MINVER#
  GFORTRAN_1.2@GFORTRAN_1.2 4.4.0
  GFORTRAN_1.3@GFORTRAN_1.3 4.6
  GFORTRAN_1.4@GFORTRAN_1.4 4.6
+ GFORTRAN_1.5@GFORTRAN_1.5 4.8
  GFORTRAN_C99_1.0@GFORTRAN_C99_1.0 4.3
  GFORTRAN_C99_1.1@GFORTRAN_C99_1.1 4.5
  __iso_c_binding_c_f_pointer@GFORTRAN_1.0 4.3
@@ -44,6 +45,7 @@ libgfortran.so.3 libgfortran3 #MINVER#
  _gfortran_arandom_r4@GFORTRAN_1.0 4.3
  _gfortran_arandom_r8@GFORTRAN_1.0 4.3
  _gfortran_associated@GFORTRAN_1.0 4.3
+ _gfortran_backtrace@GFORTRAN_1.5 4.8
  _gfortran_bessel_jn_r4@GFORTRAN_1.4 4.6
  _gfortran_bessel_jn_r8@GFORTRAN_1.4 4.6
  _gfortran_bessel_yn_r4@GFORTRAN_1.4 4.6
@@ -210,6 +212,7 @@ libgfortran.so.3 libgfortran3 #MINVER#
  _gfortran_fstat_i4_sub@GFORTRAN_1.0 4.3
  _gfortran_fstat_i8@GFORTRAN_1.0 4.3
  _gfortran_fstat_i8_sub@GFORTRAN_1.0 4.3
+ _gfortran_ftell2@GFORTRAN_1.5 4.8
  _gfortran_ftell@GFORTRAN_1.0 4.3
  _gfortran_ftell_i1_sub@GFORTRAN_1.0 4.3
  _gfortran_ftell_i2_sub@GFORTRAN_1.0 4.3

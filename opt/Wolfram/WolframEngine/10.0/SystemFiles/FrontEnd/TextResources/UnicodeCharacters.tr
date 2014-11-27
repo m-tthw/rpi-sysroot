@@ -428,6 +428,70 @@
 0xF831		\[FormalCapitalX]		($$X$)		Letter
 0xF832		\[FormalCapitalY]		($$Y$)		Letter
 0xF833		\[FormalCapitalZ]		($$Z$)		Letter
+0xF834		\[FormalCapitalAlpha]		($$CapitalAlpha$)		Letter
+0xF835		\[FormalCapitalBeta]		($$CapitalBeta$)		Letter
+0xF836		\[FormalCapitalGamma]		($$CapitalGamma$)		Letter
+0xF837		\[FormalCapitalDelta]		($$CapitalDelta$)		Letter
+0xF838		\[FormalCapitalEpsilon]		($$CapitalEpsilon$)		Letter
+0xF839		\[FormalCapitalZeta]		($$CapitalZeta$)		Letter
+0xF83A		\[FormalCapitalEta]		($$CapitalEta$)		Letter
+0xF83B		\[FormalCapitalTheta]		($$CapitalTheta$)		Letter
+0xF83C		\[FormalCapitalIota]		($$CapitalIota$)		Letter
+0xF83D		\[FormalCapitalKappa]		($$CapitalKappa$)		Letter
+0xF83E		\[FormalCapitalLambda]		($$CapitalLambda$)		Letter
+0xF83F		\[FormalCapitalMu]		($$CapitalMu$)		Letter
+0xF840		\[FormalCapitalNu]		($$CapitalNu$)		Letter
+0xF841		\[FormalCapitalXi]		($$CapitalXi$)		Letter
+0xF842		\[FormalCapitalOmicron]		($$CapitalOmicron$)		Letter
+0xF843		\[FormalCapitalPi]		($$CapitalPi$)		Letter
+0xF844		\[FormalCapitalRho]		($$CapitalRho$)		Letter
+0xF846		\[FormalCapitalSigma]		($$CapitalSigma$)		Letter
+0xF847		\[FormalCapitalTau]		($$CapitalTau$)		Letter
+0xF848		\[FormalCapitalUpsilon]		($$CapitalUpsilon$)		Letter
+0xF849		\[FormalCapitalPhi]		($$CapitalPhi$)		Letter
+0xF84A		\[FormalCapitalChi]		($$CapitalChi$)		Letter
+0xF84B		\[FormalCapitalPsi]		($$CapitalPsi$)		Letter
+0xF84C		\[FormalCapitalOmega]		($$CapitalOmega$)		Letter
+0xF854		\[FormalAlpha]		($$Alpha$)		Letter
+0xF855		\[FormalBeta]		($$Beta$)		Letter
+0xF856		\[FormalGamma]		($$Gamma$)		Letter
+0xF857		\[FormalDelta]		($$Delta$)		Letter
+0xF858		\[FormalCurlyEpsilon]		($$CurlyEpsilon$)		Letter
+0xF859		\[FormalZeta]		($$Zeta$)		Letter
+0xF85A		\[FormalEta]		($$Eta$)		Letter
+0xF85B		\[FormalTheta]		($$Theta$)		Letter
+0xF85C		\[FormalIota]		($$Iota$)		Letter
+0xF85D		\[FormalKappa]		($$Kappa$)		Letter
+0xF85E		\[FormalLambda]		($$Lambda$)		Letter
+0xF85F		\[FormalMu]		($$Mu$)		Letter
+0xF860		\[FormalNu]		($$Nu$)		Letter
+0xF861		\[FormalXi]		($$Xi$)		Letter
+0xF862		\[FormalOmicron]		($$Omicron$)		Letter
+0xF863		\[FormalPi]		($$Pi$)		Letter
+0xF864		\[FormalRho]		($$Rho$)		Letter
+0xF865		\[FormalFinalSigma]		($$FinalSigma$)		Letter
+0xF866		\[FormalSigma]		($$Sigma$)		Letter
+0xF867		\[FormalTau]		($$Tau$)		Letter
+0xF868		\[FormalUpsilon]		($$Upsilon$)		Letter
+0xF869		\[FormalCurlyPhi]		($$CurlyPhi$)		Letter
+0xF86A		\[FormalChi]		($$Chi$)		Letter
+0xF86B		\[FormalPsi]		($$Psi$)		Letter
+0xF86C		\[FormalOmega]		($$Omega$)		Letter
+0xF874		\[FormalCurlyTheta]		($$CurlyTheta$)		Letter
+0xF875		\[FormalCurlyCapitalUpsilon]		($$CurlyCapitalUpsilon$)		Letter
+0xF878		\[FormalPhi]		($$Phi$)		Letter
+0xF879		\[FormalCurlyPi]		($$CurlyPi$)		Letter
+0xF87D		\[FormalCapitalStigma]		($$CapitalStigma$)		Letter
+0xF87E		\[FormalStigma]		($$Stigma$)		Letter
+0xF87F		\[FormalCapitalDigamma]		($$CapitalDigamma$)		Letter
+0xF880		\[FormalDigamma]		($$Digamma$)		Letter
+0xF881		\[FormalCapitalKoppa]		($$CapitalKoppa$)		Letter
+0xF882		\[FormalKoppa]		($$Koppa$)		Letter
+0xF883		\[FormalCapitalSampi]		($$CapitalSampi$)		Letter
+0xF884		\[FormalSampi]		($$Sampi$)		Letter
+0xF885		\[FormalCurlyKappa]		($$CurlyKappa$)		Letter
+0xF886		\[FormalCurlyRho]		($$CurlyRho$)		Letter
+0xF88A		\[FormalEpsilon]		($$Epsilon$)		Letter
 0x2118		\[WeierstrassP]		($wp$   $&wp;$   $\wp$)		Letter
 0x2135		\[Aleph]		($al$   $&aleph;$   $\aleph$)		Letter
 0x2136		\[Bet]		($be$   $&beth;$   $\beth$)		Letter
@@ -644,6 +708,7 @@
 0xF3D8		\[Curl]		($ccurl$)		Prefix		601		None		0		2
 0xF3DC		\[ProbabilityPr]		($prob$)		Prefix		455		None		0		0
 0xF3DD		\[ExpectationE]		($expect$)		Prefix		455		None		0		0
+0xF11D		\[Shah]		($sha$)		Letter
 0x2216		\[Backslash]		($\$   $&Backslash;$   $\setminus$)		Infix		580		None		3		3
 0x2322		\[Cap]		($&frown;$   $\frown$)		Infix		470		None		3		3
 0x2323		\[Cup]		($&smile;$   $\smile$)		Infix		460		None		3		3
@@ -691,6 +756,7 @@
 0xF526		\[ShortLeftArrow]		($&ShortLeftArrow;$)		Infix		380		None		5		5
 0xF52A		\[ShortUpArrow]		($&ShortUpArrow;$)		Infix		650		None		2		2
 0xF52B		\[ShortDownArrow]		($&ShortDownArrow;$)		Infix		650		None		2		2
+0xF51E		\[InlinePart]		($@>$)		Infix		763		None		5		5
 0xF51F		\[RuleDelayed]		($:>$   $&RuleDelayed;$)		Infix		250		Right		5		5
 0xF522		\[Rule]		($->$)		Infix		250		Right		5		5
 0x21D2		\[DoubleRightArrow]		($ =>$   $&DoubleRightArrow;$   $\Rightarrow$)		Infix		380		None		5		5
@@ -813,6 +879,8 @@
 0x266E		\[Natural]		($&natural;$   $\natural$)		Letter
 0x266F		\[Sharp]		($&sharp;$   $\sharp$)		Letter
 0xF720		\[Wolf]		($wolf$   $wf$   $wolfram$   $howl$   $tungsten$   $lupine$   $werewolf$)		Letter
+0xF11E		\[WolframLanguageLogo]		()		Letter
+0xF11F		\[WolframLanguageLogoCircle]		()		Letter
 0xF727		\[Villa]		()		Letter
 0xF728		\[Akuz]		()		Letter
 0xF729		\[Andy]		()		Letter
@@ -962,18 +1030,18 @@
 0x26E2		\[Uranus]		()		Letter
 0x2646		\[Neptune]		()		Letter
 0x2647		\[Pluto]		()		Letter
-0x2648		\[AriesSign]		()		Letter
-0x2649		\[TaurusSign]		()		Letter
-0x264A		\[GeminiSign]		()		Letter
-0x264B		\[CancerSign]		()		Letter
-0x264C		\[LeoSign]		()		Letter
-0x264D		\[VirgoSign]		()		Letter
-0x264E		\[LibraSign]		()		Letter
-0x264F		\[ScorpioSign]		()		Letter
-0x2650		\[SagittariusSign]		()		Letter
-0x2651		\[CapricornSign]		()		Letter
-0x2652		\[AquariusSign]		()		Letter
-0x2653		\[PiscesSign]		()		Letter
+0x2648		\[AriesSign]		($aries$)		Letter
+0x2649		\[TaurusSign]		($taur$)		Letter
+0x264A		\[GeminiSign]		($gem$)		Letter
+0x264B		\[CancerSign]		($cancer$)		Letter
+0x264C		\[LeoSign]		($leo$)		Letter
+0x264D		\[VirgoSign]		($virgo$)		Letter
+0x264E		\[LibraSign]		($libra$)		Letter
+0x264F		\[ScorpioSign]		($scorp$)		Letter
+0x2650		\[SagittariusSign]		($sag$)		Letter
+0x2651		\[CapricornSign]		($capri$)		Letter
+0x2652		\[AquariusSign]		($aqua$)		Letter
+0x2653		\[PiscesSign]		($pisc$)		Letter
 0xF7FA		\[FirstPage]		()		Letter
 0xF7FB		\[LastPage]		()		Letter
 0x2669		\[QuarterNote]		()		Letter

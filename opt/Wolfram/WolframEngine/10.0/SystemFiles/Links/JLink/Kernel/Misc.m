@@ -5,7 +5,7 @@
         tgayley@wolfram.com
 *)
 
-(* :Package Version: 4.7 *)
+(* :Package Version: 4.8 *)
 
 (* :Mathematica Version: 4.0 *)
 
@@ -49,13 +49,13 @@ PeekObjects::usage =
 "PeekObjects is deprecated. It has been replaced by LoadedJavaObjects."
 
 LoadedJavaObjects::usage =
-"LoadedJavaObjects[] returns a list of the Java objects that have been sent to Mathematica (and not yet released with ReleaseJavaObject). It is intended to be used only as a debugging aid."
+"LoadedJavaObjects[] returns a list of the Java objects that have been sent to the Wolfram Language (and not yet released with ReleaseJavaObject). It is intended to be used only as a debugging aid."
 
 PeekClasses::usage =
 "PeekClasses is deprecated. It has been replaced by LoadedJavaClasses."
 
 LoadedJavaClasses::usage =
-"LoadedJavaClasses[] returns a list of the classes currently loaded into Java by Mathematica. It is intended to be used only as a debugging aid."
+"LoadedJavaClasses[] returns a list of the classes currently loaded into Java by the Wolfram Language. It is intended to be used only as a debugging aid."
 
 SetInternetProxy::usage =
 "SetInternetProxy[\"host\", port] sets proxy information in your Java session for accessing the Internet. If you use a proxy for accessing the Internet, you may need to call this function to enable Java code to use the Internet. Consult your network administrator for proxy settings. A typical example would look like SetInternetProxy[\"proxy.mycompany.com\", 8080]."
@@ -70,7 +70,7 @@ SameObjectQ::usage =
 "SameObjectQ[javaobject1, javaobject2] returns True if and only if the JavaObject expressions javaobject1 and javaobject2 refer to the same Java object. In other words, it behaves like the Java language's == operator as applied to object references."
 
 JavaThrow::usage =
-"JavaThrow[\"exceptionClassName\", \"detailMsg\"] causes the specified exception to be thrown in the Java thread that called the Mathematica program in which JavaThrow occurred. You can also call JavaThrow with an Exception object created by a call to JavaNew, instead of a string giving the name of the exception class. If you use the string form, the second argument is an optional detail message for the exception. It is up to the user to ensure that the exception being created has an appropriate constructor. JavaThrow is a specialized function that few programmers will have any use for."
+"JavaThrow[\"exceptionClassName\", \"detailMsg\"] causes the specified exception to be thrown in the Java thread that called the Wolfram Language program in which JavaThrow occurred. You can also call JavaThrow with an Exception object created by a call to JavaNew, instead of a string giving the name of the exception class. If you use the string form, the second argument is an optional detail message for the exception. It is up to the user to ensure that the exception being created has an appropriate constructor. JavaThrow is a specialized function that few programmers will have any use for."
 
 GetClassPath::usage =
 "GetClassPath[] is deprecated. Use JavaClassPath[] instead."
@@ -85,10 +85,10 @@ $ExtraClassPath::usage =
 "$ExtraClassPath is deprecated. Use the function AddToClassPath instead."
 
 SetComplexClass::usage =
-"SetComplexClass[\"classname\"] specifies the Java class to use for complex numbers sent from, and returned to, Mathematica."
+"SetComplexClass[\"classname\"] specifies the Java class to use for complex numbers sent from, and returned to, the Wolfram Language."
 
 GetComplexClass::usage =
-"GetComplexClass[] returns the Java class used for complex numbers sent from, and returned to, Mathematica."
+"GetComplexClass[] returns the Java class used for complex numbers sent from, and returned to, the Wolfram Language."
 
 ParentClass::usage =
 "ParentClass[javaclass] returns the JavaClass expression representing the parent class of javaclass. You can also specify an object of a class, as in ParentClass[javaobject]."
@@ -100,7 +100,7 @@ GetClass::usage =
 "GetClass[javaobject] returns the JavaClass that identifies the object's class."
 
 ImplementJavaInterface::usage =
-"ImplementJavaInterface[interfaces, handlerMappings] uses the Dynamic Proxy facility of Java to create a new Java class and return an object of that class that implements the named interface or list of interfaces by calling back into Mathematica. In short, it lets you create a Java object that implements a given Java interface entirely in Mathematica code. The handlerMappings argument is a list of rules that specify the name of the Java method and the name of the method that will be called in Mathematica to implement the body of that method, as in \"intfMeth1\"->\"mathHandlerMethod1\". The arguments passed to the Mathematica method will be exactly the arguments originally passed to the Java method."
+"ImplementJavaInterface[interfaces, handlerMappings] uses the Dynamic Proxy facility of Java to create a new Java class and return an object of that class that implements the named interface or list of interfaces by calling back into the Wolfram Language. In short, it lets you create a Java object that implements a given Java interface entirely in Mathematica code. The handlerMappings argument is a list of rules that specify the name of the Java method and the name of the method that will be called in Mathematica to implement the body of that method, as in \"intfMeth1\"->\"mathHandlerMethod1\". The arguments passed to the Mathematica method will be exactly the arguments originally passed to the Java method."
 
 JavaWindowToFront::usage =
 "JavaWindowToFront is an internal symbol."

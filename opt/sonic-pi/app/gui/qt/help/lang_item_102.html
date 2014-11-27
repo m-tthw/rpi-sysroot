@@ -1,0 +1,36 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Use_random_seed</font></span></p>
+<h1><font color="#3c3c3c"><pre>use_random_seed<pre></font></h1>
+<h2><pre>[seed <font color="deeppink">(number)</font>]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Resets the random number generator to the specified seed. All subsequently generated random numbers will use this new generator and the current generator is discarded. Use this to change the sequence of random numbers in your piece in a way that can be reproduced
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Introduced in v2.0.0
+</p>
+<table cellpadding="2">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+
+use_random_seed 1
+puts rand
+use_random_seed 1
+puts rand 
+
+
+
+</pre></td>
+   <td><pre>
+ 
+ # reset random seed to 1
+ # =&gt; 0.417022004702574
+ # reset random seed back to 1
+ #=&gt; 0.417022004702574
+
+
+
+</pre></td></tr>
+</table>

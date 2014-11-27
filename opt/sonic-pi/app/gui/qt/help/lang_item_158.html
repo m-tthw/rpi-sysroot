@@ -1,0 +1,32 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Get note info</font></span></p>
+<h1><font color="#3c3c3c"><pre>note_info<pre></font></h1>
+<h2><pre>[note <font color="deeppink">(symbol_or_number)</font>]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Returns an instance of SonicPi::Note. Please note - :octave param is overridden if octave is specified in a symbol i.e. :c3
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Introduced in v2.0.0
+</p>
+<table cellpadding="2">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+
+puts note_info(:C, octave: 2)
+# returns
+
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+ #&lt;SonicPi::Note:0x0000010206bf78 @pitch_class=&quot;C&quot;, @octave=2, @interval=0, @midi_note=36, @midi_string=&quot;C0&quot;&gt;
+
+
+
+</pre></td></tr>
+</table>

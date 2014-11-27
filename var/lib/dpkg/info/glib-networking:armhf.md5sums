@@ -1,7 +1,7 @@
-56aef96d51ea531f296604557f5c1cb6  usr/lib/arm-linux-gnueabihf/gio/modules/libgiognomeproxy.so
-96f220bf0c5763f42a56ca19ecd0c900  usr/lib/arm-linux-gnueabihf/gio/modules/libgiognutls.so
-04231258e291b06309d2c36042e30a68  usr/lib/arm-linux-gnueabihf/gio/modules/libgiolibproxy.so
-361116e0fe781641c45de6e5959e8de8  usr/share/doc/glib-networking/NEWS.gz
+8017a761049e166ae1d0931ca3c7dc3d  usr/lib/arm-linux-gnueabihf/gio/modules/libgiognomeproxy.so
+03100f05e1fba6f6e8661647c4b2c5b2  usr/lib/arm-linux-gnueabihf/gio/modules/libgiognutls.so
+9209be701d2a60cf8812696274902d4e  usr/lib/arm-linux-gnueabihf/gio/modules/libgiolibproxy.so
+123f238f1c9a3b6bced892756cb8c0e4  usr/share/doc/glib-networking/NEWS.gz
 bfab1e096b685273438d3d57eb775dae  usr/share/doc/glib-networking/README
-3f0ed20142484f7d1c2d6aef9251307d  usr/share/doc/glib-networking/changelog.Debian.gz
+0747ee22b074759ceb6f1e8059399f23  usr/share/doc/glib-networking/changelog.Debian.gz
 0d9b553e7b8276d4ed4ec69c3c97594b  usr/share/doc/glib-networking/copyright

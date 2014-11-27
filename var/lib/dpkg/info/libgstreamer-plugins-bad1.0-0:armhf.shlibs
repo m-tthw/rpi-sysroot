@@ -1,0 +1,7 @@
+libgstinsertbin-1.0 0 libgstreamer-plugins-bad1.0-0 (>= 1.2.1), libgstreamer-plugins-bad1.0-0 (<< 1.2.2)
+libgstmpegts-1.0 0 libgstreamer-plugins-bad1.0-0 (>= 1.2.1), libgstreamer-plugins-bad1.0-0 (<< 1.2.2)
+libgstphotography-1.0 0 libgstreamer-plugins-bad1.0-0 (>= 1.2.1), libgstreamer-plugins-bad1.0-0 (<< 1.2.2)
+libgstegl-1.0 0 libgstreamer-plugins-bad1.0-0 (>= 1.2.1), libgstreamer-plugins-bad1.0-0 (<< 1.2.2)
+libgstbasecamerabinsrc-1.0 0 libgstreamer-plugins-bad1.0-0 (>= 1.2.1), libgstreamer-plugins-bad1.0-0 (<< 1.2.2)
+libgstcodecparsers-1.0 0 libgstreamer-plugins-bad1.0-0 (>= 1.2.1), libgstreamer-plugins-bad1.0-0 (<< 1.2.2)
+libgsturidownloader-1.0 0 libgstreamer-plugins-bad1.0-0 (>= 1.2.1), libgstreamer-plugins-bad1.0-0 (<< 1.2.2)

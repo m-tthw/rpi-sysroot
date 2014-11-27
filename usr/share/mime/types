@@ -129,6 +129,10 @@ application/vnd.symbian.install
 application/vnd.tcpdump.pcap
 application/vnd.visio
 application/vnd.wolfram.cdf
+application/vnd.wolfram.mathematica.package
+application/vnd.wolfram.nb
+application/vnd.wolfram.player
+application/vnd.wolfram.wl
 application/vnd.wordperfect
 application/x-7z-compressed
 application/x-abiword

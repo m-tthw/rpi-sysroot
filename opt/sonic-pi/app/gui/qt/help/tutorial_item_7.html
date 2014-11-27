@@ -1,0 +1,130 @@
+<font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Thread Synchronisation</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Once you have become sufficiently advanced live coding with a number of functions and threads simultaneously, you’ve probably noticed that it’s pretty easy to make a mistake in one of the threads which kills it. That’s no big deal, because you can easily restart the thread by hitting run. However, when you restart the thread it is now <em style="font-size:15px;color:darkorange;">out of time</em> with the original threads.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Inherited Time</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">As we discussed earlier, new threads created with <code style="font-size:15px; color:deeppink; background-color:white">in_thread</code> inherit all of the settings from the parent thread. This includes the current time. This means that threads are always in time with each other when started simultaneously.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">However, when you start a thread on its own it starts with its own time which is unlikely to be in synchronisation with any of the other currently running threads.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Cue and Sync</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Sonic Pi provides a solution to this problem with the functions <code style="font-size:15px; color:deeppink; background-color:white">cue</code> and <code style="font-size:15px; color:deeppink; background-color:white">sync</code>.</p>
+
+<p style="font-size:15px;color:#5e5e5e;"><code style="font-size:15px; color:deeppink; background-color:white">cue</code> allows us to send heartbeat messages out to all other threads. By default the other threads aren’t interested and ignore these heartbeat messages. However, you can easily register interest with the <code style="font-size:15px; color:deeppink; background-color:white">sync</code> function.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">The important thing to be aware of is that <code style="font-size:15px; color:deeppink; background-color:white">sync</code> is similar to <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> in that it stops the current thread from doing anything for a period time. However, with <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> you specify how long you want to wait for and with <code style="font-size:15px; color:deeppink; background-color:white">sync</code> you don’t know how long you will wait for - as you’ll wait for the next <code style="font-size:15px; color:deeppink; background-color:white">cue</code> from another thread which may be soon or a long time away. </p>
+
+<p style="font-size:15px;color:#5e5e5e;">Let’s explore this in a little more detail.</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">in_thread do
+  loop do
+    cue :tick
+    sleep 1
+  end
+end  
+
+in_thread do
+  loop do
+    sync :tick
+    sample :drum_heavy_kick
+  end
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Here we have two threads - one acting like a metronome not playing any sounds but sending out <code style="font-size:15px; color:deeppink; background-color:white">:tick</code> heartbeat messages every second. The second thread is synchronising on <code style="font-size:15px; color:deeppink; background-color:white">tick</code> messages and when it receives one it inherits the time of the <code style="font-size:15px; color:deeppink; background-color:white">cue</code> thread and continues running. </p>
+
+<p style="font-size:15px;color:#5e5e5e;">We can see that the synchronisation is really happening by inserting a naughty <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> between threads. Typically this would make the second thread out of phase with the first. However, as we’re using <code style="font-size:15px; color:deeppink; background-color:white">cue</code> and <code style="font-size:15px; color:deeppink; background-color:white">sync</code> we automatically sync the threads bypassing any accidental timing offsets:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">in_thread do
+  loop do
+    cue :tick
+    sleep 1
+  end
+end  
+
+sleep 0.3
+
+in_thread do
+  loop do
+    sync :tick
+    sample :drum_heavy_kick
+  end
+end
+</code></pre>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Cue Names</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">You are free to use whatever name you’d like for your <code style="font-size:15px; color:deeppink; background-color:white">cue</code> messages - not much <code style="font-size:15px; color:deeppink; background-color:white">:tick</code>. You just need to ensure that any other threads are <code style="font-size:15px; color:deeppink; background-color:white">sync</code>ing on the correct name - otherwise they’ll be waiting for every (or at least until you press the stop button).</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Let’s play with a few <code style="font-size:15px; color:deeppink; background-color:white">cue</code> names:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">in_thread do
+  loop do 
+    cue [:foo, :bar, :baz].choose
+    sleep 0.5
+  end
+end
+
+in_thread do
+  loop do 
+    sync :foo 
+    sample :elec_beep
+  end
+end
+
+in_thread do
+  loop do            
+    sync :bar        
+    sample :elec_flip
+  end
+end
+
+in_thread do
+  loop do            
+    sync :baz        
+    sample :elec_blup
+  end
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Here we have a main <code style="font-size:15px; color:deeppink; background-color:white">cue</code> loop which is randomly sending one of the heartbeat names <code style="font-size:15px; color:deeppink; background-color:white">:foo</code>, <code style="font-size:15px; color:deeppink; background-color:white">:bar</code>, or <code style="font-size:15px; color:deeppink; background-color:white">:baz</code>. We then also have three loop threads syncing on each of those names independently and then playing a different sample. The net effect is that we hear a sound every 0.6 seconds as each of the <code style="font-size:15px; color:deeppink; background-color:white">sync</code> threads is randomly synced with the <code style="font-size:15px; color:deeppink; background-color:white">cue</code> thread and plays its sample.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">This of course also works if you order the threads in reverse as the <code style="font-size:15px; color:deeppink; background-color:white">sync</code> threads will simply sit and wait for the next <code style="font-size:15px; color:deeppink; background-color:white">cue</code>.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Live Coding with Cue and Sync</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Let’s take a quick look at how you might live code with <code style="font-size:15px; color:deeppink; background-color:white">cue</code> and <code style="font-size:15px; color:deeppink; background-color:white">sync</code>. Here’s one of the examples modified to use a <code style="font-size:15px; color:deeppink; background-color:white">cue</code> metronome:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">define :metro do
+  cue :tick
+  sleep 0.5
+end
+
+define :drums do
+  sync :tick
+  sample :drum_heavy_kick, rate: 0.75
+  sleep 0.5
+  sample :drum_heavy_kick
+end
+
+define :synths do
+  sync :tick
+  use_synth :mod_pulse
+  use_synth_defaults amp: 1, mod_range: 15, cutoff: 80, pulse_width: 0.2, attack: 0.03, release: 0.6,   mod_phase: 0.25
+  play 30
+  sleep 0.25
+  play 38
+end
+
+in_thread(name: :drums){loop{drums}}
+in_thread(name: :synths){loop{synths}}
+in_thread(name: :metro){loop{metro}}
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">If you play this, you’ll hear everything in sync. Now, whilst it’s still playing go ahead and break the code. Change <code style="font-size:15px; color:deeppink; background-color:white">:drum_heavy_kick</code> to <code style="font-size:15px; color:deeppink; background-color:white">drum_sdlfkjsd</code>. Boom! The drums stop, and an exception is thrown telling you that something has gone wrong. Now, whilst it is still playing undo your change and switch the code back to <code style="font-size:15px; color:deeppink; background-color:white">:drum_heavy_kick</code> and press run again. Wooh! The drums have returned and are completely back in sync. The jamming can continue…</p>
+
+</font>

@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       145,          7]
-NotebookDataLength[     18902,        617]
-NotebookOptionsPosition[     13934,        490]
-NotebookOutlinePosition[     14462,        512]
-CellTagsIndexPosition[     14419,        509]
+NotebookDataLength[     19154,        626]
+NotebookOptionsPosition[     14113,        498]
+NotebookOutlinePosition[     14641,        520]
+CellTagsIndexPosition[     14598,        517]
 MenuPosition->0
 WindowFrame->Normal*)
 
@@ -154,6 +154,14 @@ Cell[StyleData["Notes", StyleDefinitions -> None],
  FontSize->12,
  FontWeight->"Plain"],
 
+Cell[StyleData["FunctionEssay"],
+ Editable->False,
+ ShowCellBracket->Automatic,
+ CellMargins->{{40, 24}, {9, 7}},
+ ParagraphSpacing->0.5,
+ FontFamily->"Verdana",
+ FontSize->12],
+
 Cell[StyleData["TableText"],
  DefaultInlineFormatType->"DefaultInputInlineFormatType",
  StyleMenuListing->None,
@@ -187,7 +195,7 @@ Cell[StyleData["History"],
  FontFamily->"Verdana",
  FontSize->11,
  FontColor->GrayLevel[0.6]]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -198,7 +206,7 @@ Cell[CellGroupData[{
 Cell[StyleData["GuideText"],
  Editable->False,
  ShowCellBracket->Automatic,
- CellMargins->{{24, 24}, {6, 1}},
+ CellMargins->{{26, 24}, {6, 1}},
  ParagraphSpacing->{0.7000000000000001, 0},
  StyleMenuListing->None,
  FontFamily->"Verdana",
@@ -540,84 +548,85 @@ Cell[2820, 109, 1200, 31, 46, 50, 0, "StyleData", "Usage", "All",
 Cell[4023, 142, 399, 12, 41, 50, 0, "StyleData", "Notes", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"],
-Cell[4425, 156, 150, 4, 35, 28, 0, "StyleData", "TableText", "All",
+Cell[4425, 156, 176, 6, 44, 32, 0, "StyleData", "FunctionEssay", "All"],
+Cell[4604, 164, 150, 4, 35, 28, 0, "StyleData", "TableText", "All",
  StyleMenuListing->None],
-Cell[4578, 162, 138, 3, 31, 72, 0, "StyleData", "MoreAbout", "All",
+Cell[4757, 170, 138, 3, 31, 72, 0, "StyleData", "MoreAbout", "All",
  MenuSortingValue->None,
  MenuCommandKey->"12"],
-Cell[4719, 167, 225, 8, 48, 30, 0, "StyleData", "ExampleText", "All",
+Cell[4898, 175, 225, 8, 48, 30, 0, "StyleData", "ExampleText", "All",
  MenuSortingValue->None,
  MenuCommandKey->"7"],
-Cell[4947, 177, 349, 11, 57, 26, 0, "StyleData", "History", "All",
+Cell[5126, 185, 349, 11, 57, 26, 0, "StyleData", "History", "All",
  StyleMenuListing->None]
-}, Closed]],
+}, Open  ]],
 Cell[CellGroupData[{
-Cell[5333, 193, 36, 0, 35, "Section"],
+Cell[5512, 201, 36, 0, 51, "Section"],
 Cell[CellGroupData[{
-Cell[5394, 197, 250, 8, 35, 28, 0, "StyleData", "GuideText", "All",
+Cell[5573, 205, 250, 8, 35, 28, 0, "StyleData", "GuideText", "All",
  StyleMenuListing->None],
-Cell[5647, 207, 59, 1, 61, 44, 0, "StyleData", "GuideText", "Presentation"],
-Cell[5709, 210, 159, 4, 61, 40, 0, "StyleData", "GuideText", "Printout"]
+Cell[5826, 215, 59, 1, 61, 44, 0, "StyleData", "GuideText", "Presentation"],
+Cell[5888, 218, 159, 4, 61, 40, 0, "StyleData", "GuideText", "Printout"]
 }, Closed]],
-Cell[5883, 217, 3194, 66, 37, 39, 0, "StyleData", "FeaturedExamplesGrid", \
+Cell[6062, 225, 3194, 66, 37, 39, 0, "StyleData", "FeaturedExamplesGrid", \
 "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[9114, 288, 39, 0, 35, "Section"],
-Cell[9156, 290, 303, 10, 46, 56, 0, "StyleData", "MathCaption", "All",
+Cell[9293, 296, 39, 0, 35, "Section"],
+Cell[9335, 298, 303, 10, 46, 56, 0, "StyleData", "MathCaption", "All",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[9496, 305, 37, 0, 35, "Section"],
-Cell[9536, 307, 730, 21, 62, 30, 0, "StyleData", "FormatUsage", "All",
+Cell[9675, 313, 37, 0, 35, "Section"],
+Cell[9715, 315, 730, 21, 62, 30, 0, "StyleData", "FormatUsage", "All",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[10303, 333, 65, 1, 35, "Section",
+Cell[10482, 341, 65, 1, 35, "Section",
  CellID->1492764801],
-Cell[10371, 336, 592, 19, 64, 33, 0, "StyleData", "LegacyInputV10", "All",
+Cell[10550, 344, 592, 19, 64, 33, 0, "StyleData", "LegacyInputV10", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[11000, 360, 39, 0, 35, "Section"],
-Cell[11042, 362, 224, 7, 42, 34, 0, "StyleData", "SearchCountCell", "All",
+Cell[11179, 368, 39, 0, 35, "Section"],
+Cell[11221, 370, 224, 7, 42, 34, 0, "StyleData", "SearchCountCell", "All",
  CounterIncrements->"SearchCountCell"],
 Cell[CellGroupData[{
-Cell[11291, 373, 267, 8, 58, 40, 0, "StyleData", "SearchSuggestionsCell", \
+Cell[11470, 381, 267, 8, 58, 40, 0, "StyleData", "SearchSuggestionsCell", \
 "All",
  CounterIncrements->"SearchSuggestionsCell"],
-Cell[11561, 383, 71, 1, 61, 56, 0, "StyleData", "SearchSuggestionsCell", \
+Cell[11740, 391, 71, 1, 61, 56, 0, "StyleData", "SearchSuggestionsCell", \
 "Presentation"],
-Cell[11635, 386, 142, 4, 61, 52, 0, "StyleData", "SearchSuggestionsCell", \
+Cell[11814, 394, 142, 4, 61, 52, 0, "StyleData", "SearchSuggestionsCell", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[11814, 395, 195, 6, 42, 33, 0, "StyleData", "SearchAllSites", "All",
+Cell[11993, 403, 195, 6, 42, 33, 0, "StyleData", "SearchAllSites", "All",
  CounterIncrements->"SearchCountCell"],
-Cell[12012, 403, 64, 1, 61, 49, 0, "StyleData", "SearchAllSites", \
+Cell[12191, 411, 64, 1, 61, 49, 0, "StyleData", "SearchAllSites", \
 "Presentation"],
-Cell[12079, 406, 135, 4, 61, 45, 0, "StyleData", "SearchAllSites", "Printout"]
+Cell[12258, 414, 135, 4, 61, 45, 0, "StyleData", "SearchAllSites", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[12251, 415, 187, 6, 42, 29, 0, "StyleData", "DidYouMean", "All",
+Cell[12430, 423, 187, 6, 42, 29, 0, "StyleData", "DidYouMean", "All",
  CounterIncrements->"DidYouMean"],
-Cell[12441, 423, 60, 1, 61, 45, 0, "StyleData", "DidYouMean", "Presentation"],
-Cell[12504, 426, 131, 4, 61, 41, 0, "StyleData", "DidYouMean", "Printout"]
+Cell[12620, 431, 60, 1, 61, 45, 0, "StyleData", "DidYouMean", "Presentation"],
+Cell[12683, 434, 131, 4, 61, 41, 0, "StyleData", "DidYouMean", "Printout"]
 }, Closed]],
-Cell[12650, 433, 207, 6, 51, 40, 0, "StyleData", "SearchResultPageLinks", \
+Cell[12829, 441, 207, 6, 51, 40, 0, "StyleData", "SearchResultPageLinks", \
 "All",
  CounterIncrements->"SearchResultPageLinks"],
-Cell[12860, 441, 304, 10, 43, 35, 0, "StyleData", "SearchResultCell", "All",
+Cell[13039, 449, 304, 10, 43, 35, 0, "StyleData", "SearchResultCell", "All",
  CounterIncrements->"SearchResultCell"],
-Cell[13167, 453, 124, 4, 35, 38, 0, "StyleData", "SearchResultSummary", "All"],
-Cell[13294, 459, 122, 4, 36, 36, 0, "StyleData", "SearchResultTitle", "All"],
-Cell[13419, 465, 204, 6, 36, 35, 0, "StyleData", "SearchResultType", "All"]
+Cell[13346, 461, 124, 4, 35, 38, 0, "StyleData", "SearchResultSummary", "All"],
+Cell[13473, 467, 122, 4, 36, 36, 0, "StyleData", "SearchResultTitle", "All"],
+Cell[13598, 473, 204, 6, 36, 35, 0, "StyleData", "SearchResultType", "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[13660, 476, 36, 0, 35, "Section"],
-Cell[13699, 478, 120, 4, 36, 27, 0, "StyleData", "MenuName", "All"],
-Cell[13822, 484, 96, 3, 36, 36, 0, "StyleData", "DialogElementName", "All"]
+Cell[13839, 484, 36, 0, 35, "Section"],
+Cell[13878, 486, 120, 4, 36, 27, 0, "StyleData", "MenuName", "All"],
+Cell[14001, 492, 96, 3, 36, 36, 0, "StyleData", "DialogElementName", "All"]
 }, Closed]]
 }
 ]

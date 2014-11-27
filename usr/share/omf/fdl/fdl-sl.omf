@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<omf>
+  <resource>
+    <creator>(Free Software Foundation)</creator>
+    <maintainer>(Projekt dokumentacije GNOME)</maintainer>
+    <title>Dovoljenje za prosto dokumentacijo GNU</title>
+    <date>03-2000</date>
+    <version identifier="1.1" date="03-2000"/>
+    <subject category="General|Licenses"/>
+    <description>Namen dovoljenja je omogočiti, da priročnik, učbenik, ali kak drug pisani dokument, postane prost v pomenski obliki prostosti: zagotoviti vsakomur učinkovito prostost, da besedilo prepisuje in razširja, s spremembami ali brez njih, komercialno ali nekomercialno. Dovoljenje ohranja avtorske in založniške zasluge, vendar brez prenesene odgovornosti za spremembe, ki so jih naredili drugi.</description>
+    <type>license</type>
+    <format mime="text/xml" dtd="-//OASIS//DTD DocBook XML V4.1.2//EN"/>
+    <identifier url="file:///usr/share/gnome/help/fdl/sl/fdl.xml"/>
+    <language code="sl"/>
+    <relation seriesid="7779aa86-7013-11db-8a91-dd831755a7ef"/>
+    <rights holder="Free Software Foundation"/>
+  </resource>
+</omf>

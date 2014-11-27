@@ -255,6 +255,8 @@ Forward and Backward
 "Hypergeometric2F1" -> "Hypergeometric2F1",
 "Hypergeometric2F1Regularized" -> "Hypergeometric2F1Regularized",
 "HypergeometricU" -> "HypergeometricU",
+"Indexed" -> "Indexed",
+"IndexedDefault" -> "Indexed",
 "Inverse" -> "Inverse",
 "InverseBetaRegularized" -> "InverseBetaRegularized",
 "InverseBetaRegularized4" -> "InverseBetaRegularized",

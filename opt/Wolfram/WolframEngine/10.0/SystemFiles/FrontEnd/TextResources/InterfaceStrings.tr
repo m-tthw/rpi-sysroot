@@ -67,6 +67,20 @@
 	"Advanced" -> "Advanced"
 }
 @|
+@@resource LCHColorValueSelectorStrings
+{
+	"cancelButtonText"->FEPrivate`FrontEndResourceString["cancelButtonText"],
+	"okButtonText"->FEPrivate`FrontEndResourceString["okButtonText"],
+	"Lightness"->"Lightness",
+	"C"->"C",
+	"H"->"H",
+	"Opacity"->"Opacity",
+	"Color Chooser"->"Color Chooser",
+	"Color Swatch"->"Color Swatch",
+	"Basic" -> "Basic",
+	"Advanced" -> "Advanced"
+}
+@|
 @@resource LUVColorValueSelectorStrings
 {
 	"cancelButtonText"->FEPrivate`FrontEndResourceString["cancelButtonText"],

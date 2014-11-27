@@ -1,0 +1,49 @@
+<font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Triggering Samples</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Playing beeps is only the beginning. Something that’s a lot of fun is triggering pre-recorded samples. Try it:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :ambi_lunar_land
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Sonic Pi includes many samples for you to play with. You can use them just like you use the <code style="font-size:15px; color:deeppink; background-color:white">play</code> command. To play multiple samples and notes just write them one after another:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 36
+play 48
+sample :ambi_lunar_land
+sample :ambi_drone
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">If you want to space them out in time, use the <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> command:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :ambi_lunar_land
+sleep 1
+play 48
+sleep 0.5
+play 36
+sample :ambi_drone
+sleep 1
+play 36
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Notice how Sonic Pi doesn’t wait for a sound to finish before starting the next sound. The <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> command only describes the separation of the <em style="font-size:15px;color:darkorange;">triggering</em> of the sounds. This allows you to easily layer sounds together creating interesting overlap effects. Later in this tutorial we’ll take a look at controlling the <em style="font-size:15px;color:darkorange;">duration</em> of sounds with envelopes.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Discovering Samples</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">There are two ways to discover the range of samples provided in Sonic Pi. First, you can use this help system. Click on Samples in the far left vertical menu, choose your category and then you’ll see a list of available sounds.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Alternatively you can use the <em style="font-size:15px;color:darkorange;">auto-completion system</em>. Simply type the start of a sample group such as: <code style="font-size:15px; color:deeppink; background-color:white">sample :ambi_</code> and you’ll see a drop-down of sample names appear for you to select. Try the following category prefixes: </p>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li><code style="font-size:15px; color:deeppink; background-color:white">:ambi_</code> </li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">:bass_</code></li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">:elec_</code></li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">:perc_</code></li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">:guit_</code></li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">:drum_</code></li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">:misc_</code></li>
+</ul>
+
+<p style="font-size:15px;color:#5e5e5e;">Now start mixing samples into your compositions!</p>
+</font>

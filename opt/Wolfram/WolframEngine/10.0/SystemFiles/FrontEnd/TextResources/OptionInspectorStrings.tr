@@ -215,8 +215,8 @@ AutoStyleOptions:{...}
 @@resource CodeAssistOptionsCategory
 CodeAssistOptions:{...}
 @|
-@@resource PredictiveInterfaceOptionsCategory
-PredictiveInterfaceOptions:{...}
+@@resource UndoOptionsCategory
+UndoOptions:{...}
 @|
 @@resource FormattingOptionsCategory
 Formatting Options
@@ -247,6 +247,9 @@ SpellingOptions:{...}
 @|
 @@resource SpellingDictionariesCategory
 SpellingDictionaries:{...}
+@|
+@@resource WolframCloudSettingsCategory
+WolframCloudSettings:{...}
 @|
 @@resource ExpressionFormattingCategory
 Expression Formatting
@@ -1048,6 +1051,16 @@ Delimiter,
 "ResizeToFit",
 "ShrinkToFit",
 "Scrollable"
+}
+@|
+@|
+@@resource linebreakSemicolonWeightStringTable
+{
+"\"Normal\"",
+"\"PreferentiallyBreak\"",
+"\"AlwaysBreak\"",
+Delimiter,
+{"Weighting", None}
 }
 @|
 @|
@@ -1888,7 +1901,7 @@ Delimiter,
 {
 "\"NaturalLanguage\"",
 "\"Formula\"",
-"\"Mathematica\"",
+"\"Input\"",
 "\"Output\"",
 "None"
 }
@@ -2135,9 +2148,7 @@ Delimiter,
 	"\"Accelerated3D\"",	
 	"\"GDI\"", 
 	"\"GDI+\"", 
-	"\"QuickDraw\"", 
 	"\"Quartz\"", 
-	"\"X\"", 
 	"\"OpenGL\"", 
 	"\"Direct3D\"",
 	"\"Mesa\"",
@@ -2254,5 +2265,15 @@ Delimiter,
 	"\"Binary\"",
 	"\"Linear\""
 }
+@|
+@|
+@@resource codeAssistIncludedCompletionsStringTable
+{
+	"\"Undocumented\"", 
+	"\"Obsolete\"", 
+	"\"Blacklisted\""
+}
+
+
 
 

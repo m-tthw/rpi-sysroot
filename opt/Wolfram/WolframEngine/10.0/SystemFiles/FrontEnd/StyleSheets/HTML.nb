@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       145,          7]
-NotebookDataLength[     43494,       1413]
-NotebookOptionsPosition[     29633,       1091]
-NotebookOutlinePosition[     30012,       1108]
-CellTagsIndexPosition[     29969,       1105]
+NotebookDataLength[     36673,       1252]
+NotebookOptionsPosition[     22864,        930]
+NotebookOutlinePosition[     23243,        947]
+CellTagsIndexPosition[     23200,        944]
 MenuPosition->0
 WindowFrame->Normal*)
 
@@ -107,29 +107,6 @@ Cell[StyleData["H1"],
   "HTML" -> {{"<span class='H1'>", "</span>"}, {"<h1 class='H1'>", "</h1>"}}},
  
  PageBreakBelow->False,
- InputAutoReplacements->{"TeX" -> StyleBox[
-     RowBox[{"T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "LaTeX" -> StyleBox[
-     RowBox[{"L", 
-       StyleBox[
-        AdjustmentBox[
-        "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, BoxBaselineShift -> -0.2],
-         FontSize -> Smaller], "T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "mma" -> "Mathematica", "Mma" -> "Mathematica", "MMA" -> 
-   "Mathematica", "gridMathematica" -> FormBox[
-     RowBox[{"grid", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], "webMathematica" -> 
-   FormBox[
-     RowBox[{"web", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], Inherited},
  LineSpacing->{1, 13},
  CounterIncrements->"H1",
  CounterAssignments->{{"H2", 0}, {"H3", 0}, {"Equation", 0}, {"Figure", 0}, {
@@ -163,29 +140,6 @@ Cell[StyleData["H2"],
   "HTML" -> {{"<span class='H2'>", "</span>"}, {"<h2 class='H2'>", "</h2>"}}},
  
  PageBreakBelow->False,
- InputAutoReplacements->{"TeX" -> StyleBox[
-     RowBox[{"T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "LaTeX" -> StyleBox[
-     RowBox[{"L", 
-       StyleBox[
-        AdjustmentBox[
-        "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, BoxBaselineShift -> -0.2],
-         FontSize -> Smaller], "T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "mma" -> "Mathematica", "Mma" -> "Mathematica", "MMA" -> 
-   "Mathematica", "gridMathematica" -> FormBox[
-     RowBox[{"grid", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], "webMathematica" -> 
-   FormBox[
-     RowBox[{"web", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], Inherited},
  CounterIncrements->"H2",
  CounterAssignments->{{"H3", 0}, {"H4", 0}, {"Equation", 0}, {"Figure", 0}, {
    "H5", 0}, {"H6", 0}},
@@ -217,29 +171,6 @@ Cell[StyleData["H3"],
   "HTML" -> {{"<span class='H3'>", "</span>"}, {"<h3 class='H3'>", "</h3>"}}},
  
  PageBreakBelow->False,
- InputAutoReplacements->{"TeX" -> StyleBox[
-     RowBox[{"T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "LaTeX" -> StyleBox[
-     RowBox[{"L", 
-       StyleBox[
-        AdjustmentBox[
-        "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, BoxBaselineShift -> -0.2],
-         FontSize -> Smaller], "T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "mma" -> "Mathematica", "Mma" -> "Mathematica", "MMA" -> 
-   "Mathematica", "gridMathematica" -> FormBox[
-     RowBox[{"grid", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], "webMathematica" -> 
-   FormBox[
-     RowBox[{"web", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], Inherited},
  CounterIncrements->"H3",
  CounterAssignments->{{"H4", 0}, {"H5", 0}, {"Equation", 0}, {"Figure", 0}, {
    "H6", 0}},
@@ -271,29 +202,6 @@ Cell[StyleData["H4"],
   "HTML" -> {{"<span class='H4'>", "</span>"}, {"<h4 class='H4'>", "</h4>"}}},
  
  PageBreakBelow->False,
- InputAutoReplacements->{"TeX" -> StyleBox[
-     RowBox[{"T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "LaTeX" -> StyleBox[
-     RowBox[{"L", 
-       StyleBox[
-        AdjustmentBox[
-        "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, BoxBaselineShift -> -0.2],
-         FontSize -> Smaller], "T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "mma" -> "Mathematica", "Mma" -> "Mathematica", "MMA" -> 
-   "Mathematica", "gridMathematica" -> FormBox[
-     RowBox[{"grid", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], "webMathematica" -> 
-   FormBox[
-     RowBox[{"web", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], Inherited},
  CounterIncrements->"H4",
  CounterAssignments->{{"H5", 0}, {"H6", 0}, {"Equation", 0}, {"Figure", 0}},
  FontSize->14,
@@ -324,29 +232,6 @@ Cell[StyleData["H5"],
   "HTML" -> {{"<span class='H5'>", "</span>"}, {"<h5 class='H5'>", "</h5>"}}},
  
  PageBreakBelow->False,
- InputAutoReplacements->{"TeX" -> StyleBox[
-     RowBox[{"T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "LaTeX" -> StyleBox[
-     RowBox[{"L", 
-       StyleBox[
-        AdjustmentBox[
-        "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, BoxBaselineShift -> -0.2],
-         FontSize -> Smaller], "T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "mma" -> "Mathematica", "Mma" -> "Mathematica", "MMA" -> 
-   "Mathematica", "gridMathematica" -> FormBox[
-     RowBox[{"grid", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], "webMathematica" -> 
-   FormBox[
-     RowBox[{"web", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], Inherited},
  CounterIncrements->"H5",
  CounterAssignments->{{"H6", 0}},
  FontWeight->"Bold"],
@@ -373,29 +258,6 @@ Cell[StyleData["H6"],
   "HTML" -> {{"<span class='H6'>", "</span>"}, {"<h6 class='H6'>", "</h6>"}}},
  
  PageBreakBelow->False,
- InputAutoReplacements->{"TeX" -> StyleBox[
-     RowBox[{"T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "LaTeX" -> StyleBox[
-     RowBox[{"L", 
-       StyleBox[
-        AdjustmentBox[
-        "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, BoxBaselineShift -> -0.2],
-         FontSize -> Smaller], "T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "mma" -> "Mathematica", "Mma" -> "Mathematica", "MMA" -> 
-   "Mathematica", "gridMathematica" -> FormBox[
-     RowBox[{"grid", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], "webMathematica" -> 
-   FormBox[
-     RowBox[{"web", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], Inherited},
  CounterIncrements->"H6",
  FontSize->10,
  FontWeight->"Bold"],
@@ -426,29 +288,6 @@ Cell[CellGroupData[{
 
 Cell[StyleData["Body"],
  CellMargins->{{14, 10}, {7, 7}},
- InputAutoReplacements->{"TeX" -> StyleBox[
-     RowBox[{"T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "LaTeX" -> StyleBox[
-     RowBox[{"L", 
-       StyleBox[
-        AdjustmentBox[
-        "A", BoxMargins -> {{-0.36, -0.1}, {0, 0}}, BoxBaselineShift -> -0.2],
-         FontSize -> Smaller], "T", 
-       AdjustmentBox[
-       "E", BoxMargins -> {{-0.075, -0.085}, {0, 0}}, BoxBaselineShift -> 
-        0.5], "X"}]], "mma" -> "Mathematica", "Mma" -> "Mathematica", "MMA" -> 
-   "Mathematica", "gridMathematica" -> FormBox[
-     RowBox[{"grid", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], "webMathematica" -> 
-   FormBox[
-     RowBox[{"web", 
-       AdjustmentBox[
-        StyleBox["Mathematica", FontSlant -> "Italic"], 
-        BoxMargins -> {{-0.175, 0}, {0, 0}}]}], TextForm], Inherited},
  LineSpacing->{1, 3},
  CounterIncrements->"Body"],
 
@@ -1092,8 +931,8 @@ Cell[StyleData["CopyEvaluateCell"],
 WindowSize->{500, 500},
 WindowMargins->{{Automatic, 249}, {Automatic, 0}},
 MenuSortingValue->None,
-FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (August 29, \
-2012)",
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 13, \
+2014)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -1108,10 +947,10 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[583, 23, 34, 0, 76, "Title"],
-Cell[620, 25, 193, 4, 56, "Text"],
+Cell[583, 23, 34, 0, 92, "Title"],
+Cell[620, 25, 193, 4, 68, "Text"],
 Cell[CellGroupData[{
-Cell[838, 33, 42, 0, 67, "Section"],
+Cell[838, 33, 42, 0, 80, "Section"],
 Cell[883, 35, 99, 3, 70, 31, 0, "StyleData", "All", "Working"],
 Cell[985, 40, 104, 3, 70, 36, 0, "StyleData", "All", "Presentation"],
 Cell[1092, 45, 142, 5, 70, 33, 0, "StyleData", "All", "SansSerif"],
@@ -1119,298 +958,298 @@ Cell[1237, 52, 160, 5, 70, 32, 0, "StyleData", "All", "Printout"],
 Cell[1400, 59, 194, 6, 70, 41, 0, "StyleData", "All", "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[1631, 70, 35, 0, 37, "Section"],
+Cell[1631, 70, 35, 0, 50, "Section"],
 Cell[1669, 72, 99, 2, 70, "Text"],
 Cell[1771, 76, 457, 17, 70, 27, 0, "StyleData", "Notebook", "All",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[2265, 98, 38, 0, 37, "Section"],
+Cell[2265, 98, 38, 0, 50, "Section"],
 Cell[CellGroupData[{
-Cell[2328, 102, 1397, 35, 70, 21, 0, "StyleData", "H1", "All",
+Cell[2328, 102, 430, 12, 112, 21, 0, "StyleData", "H1", "All",
  CounterIncrements->"H1",
  CounterAssignments->{{"H2", 0}, {"H3", 0}, {"Equation", 0}, {"Figure", 0}, {
    "H4", 0}, {"H5", 0}, {"H6", 0}}],
-Cell[3728, 139, 88, 2, 70, 37, 0, "StyleData", "H1", "Presentation"],
-Cell[3819, 143, 70, 2, 70, 34, 0, "StyleData", "H1", "SansSerif"],
-Cell[3892, 147, 83, 2, 70, 33, 0, "StyleData", "H1", "Printout"],
-Cell[3978, 151, 92, 2, 70, 42, 0, "StyleData", "H1", "SansSerifPrintout"]
+Cell[2761, 116, 88, 2, 70, 37, 0, "StyleData", "H1", "Presentation"],
+Cell[2852, 120, 70, 2, 70, 34, 0, "StyleData", "H1", "SansSerif"],
+Cell[2925, 124, 83, 2, 70, 33, 0, "StyleData", "H1", "Printout"],
+Cell[3011, 128, 92, 2, 70, 42, 0, "StyleData", "H1", "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[4107, 158, 1364, 34, 70, 21, 0, "StyleData", "H2", "All",
+Cell[3140, 135, 397, 11, 54, 21, 0, "StyleData", "H2", "All",
  CounterIncrements->"H2",
  CounterAssignments->{{"H3", 0}, {"H4", 0}, {"Equation", 0}, {"Figure", 0}, {
    "H5", 0}, {"H6", 0}}],
-Cell[5474, 194, 88, 2, 70, 37, 0, "StyleData", "H2", "Presentation"],
-Cell[5565, 198, 49, 1, 70, 34, 0, "StyleData", "H2", "SansSerif"],
-Cell[5617, 201, 83, 2, 70, 33, 0, "StyleData", "H2", "Printout"],
-Cell[5703, 205, 92, 2, 70, 42, 0, "StyleData", "H2", "SansSerifPrintout"]
+Cell[3540, 148, 88, 2, 70, 37, 0, "StyleData", "H2", "Presentation"],
+Cell[3631, 152, 49, 1, 70, 34, 0, "StyleData", "H2", "SansSerif"],
+Cell[3683, 155, 83, 2, 70, 33, 0, "StyleData", "H2", "Printout"],
+Cell[3769, 159, 92, 2, 70, 42, 0, "StyleData", "H2", "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[5832, 212, 1353, 34, 70, 21, 0, "StyleData", "H3", "All",
+Cell[3898, 166, 386, 11, 48, 21, 0, "StyleData", "H3", "All",
  CounterIncrements->"H3",
  CounterAssignments->{{"H4", 0}, {"H5", 0}, {"Equation", 0}, {"Figure", 0}, {
    "H6", 0}}],
-Cell[7188, 248, 88, 2, 70, 37, 0, "StyleData", "H3", "Presentation"],
-Cell[7279, 252, 49, 1, 70, 34, 0, "StyleData", "H3", "SansSerif"],
-Cell[7331, 255, 82, 2, 70, 33, 0, "StyleData", "H3", "Printout"],
-Cell[7416, 259, 91, 2, 70, 42, 0, "StyleData", "H3", "SansSerifPrintout"]
+Cell[4287, 179, 88, 2, 70, 37, 0, "StyleData", "H3", "Presentation"],
+Cell[4378, 183, 49, 1, 70, 34, 0, "StyleData", "H3", "SansSerif"],
+Cell[4430, 186, 82, 2, 70, 33, 0, "StyleData", "H3", "Printout"],
+Cell[4515, 190, 91, 2, 70, 42, 0, "StyleData", "H3", "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[7544, 266, 1340, 33, 70, 21, 0, "StyleData", "H4", "All",
+Cell[4643, 197, 373, 10, 44, 21, 0, "StyleData", "H4", "All",
  CounterIncrements->"H4",
  CounterAssignments->{{"H5", 0}, {"H6", 0}, {"Equation", 0}, {"Figure", 0}}],
-Cell[8887, 301, 88, 2, 70, 37, 0, "StyleData", "H4", "Presentation"],
-Cell[8978, 305, 49, 1, 70, 34, 0, "StyleData", "H4", "SansSerif"],
-Cell[9030, 308, 82, 2, 70, 33, 0, "StyleData", "H4", "Printout"],
-Cell[9115, 312, 91, 2, 70, 42, 0, "StyleData", "H4", "SansSerifPrintout"]
+Cell[5019, 209, 88, 2, 70, 37, 0, "StyleData", "H4", "Presentation"],
+Cell[5110, 213, 49, 1, 70, 34, 0, "StyleData", "H4", "SansSerif"],
+Cell[5162, 216, 82, 2, 70, 33, 0, "StyleData", "H4", "Printout"],
+Cell[5247, 220, 91, 2, 70, 42, 0, "StyleData", "H4", "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[9243, 319, 1282, 32, 70, 21, 0, "StyleData", "H5", "All",
+Cell[5375, 227, 315, 9, 42, 21, 0, "StyleData", "H5", "All",
  CounterIncrements->"H5",
  CounterAssignments->{{"H6", 0}}],
-Cell[10528, 353, 88, 2, 70, 37, 0, "StyleData", "H5", "Presentation"],
-Cell[10619, 357, 34, 0, 70, 34, 0, "StyleData", "H5", "SansSerif"],
-Cell[10656, 359, 67, 1, 70, 33, 0, "StyleData", "H5", "Printout"],
-Cell[10726, 362, 76, 1, 70, 42, 0, "StyleData", "H5", "SansSerifPrintout"]
+Cell[5693, 238, 88, 2, 70, 37, 0, "StyleData", "H5", "Presentation"],
+Cell[5784, 242, 34, 0, 70, 34, 0, "StyleData", "H5", "SansSerif"],
+Cell[5821, 244, 67, 1, 70, 33, 0, "StyleData", "H5", "Printout"],
+Cell[5891, 247, 76, 1, 70, 42, 0, "StyleData", "H5", "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[10839, 368, 1263, 32, 70, 21, 0, "StyleData", "H6", "All",
+Cell[6004, 253, 296, 9, 40, 21, 0, "StyleData", "H6", "All",
  CounterIncrements->"H6"],
-Cell[12105, 402, 88, 2, 70, 37, 0, "StyleData", "H6", "Presentation"],
-Cell[12196, 406, 75, 2, 70, 34, 0, "StyleData", "H6", "SansSerif"],
-Cell[12274, 410, 83, 2, 70, 33, 0, "StyleData", "H6", "Printout"],
-Cell[12360, 414, 92, 2, 70, 42, 0, "StyleData", "H6", "SansSerifPrintout"]
+Cell[6303, 264, 88, 2, 70, 37, 0, "StyleData", "H6", "Presentation"],
+Cell[6394, 268, 75, 2, 70, 34, 0, "StyleData", "H6", "SansSerif"],
+Cell[6472, 272, 83, 2, 70, 33, 0, "StyleData", "H6", "Printout"],
+Cell[6558, 276, 92, 2, 70, 42, 0, "StyleData", "H6", "SansSerifPrintout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[12501, 422, 39, 0, 37, "Section"],
+Cell[6699, 284, 39, 0, 50, "Section"],
 Cell[CellGroupData[{
-Cell[12565, 426, 1074, 26, 70, 23, 0, "StyleData", "Body", "All",
+Cell[6763, 288, 107, 3, 42, 23, 0, "StyleData", "Body", "All",
  CounterIncrements->"Body"],
-Cell[13642, 454, 90, 2, 70, 39, 0, "StyleData", "Body", "Presentation"],
-Cell[13735, 458, 36, 0, 70, 36, 0, "StyleData", "Body", "SansSerif"],
-Cell[13774, 460, 67, 1, 70, 35, 0, "StyleData", "Body", "Printout"],
-Cell[13844, 463, 76, 1, 70, 44, 0, "StyleData", "Body", "SansSerifPrintout"]
+Cell[6873, 293, 90, 2, 70, 39, 0, "StyleData", "Body", "Presentation"],
+Cell[6966, 297, 36, 0, 70, 36, 0, "StyleData", "Body", "SansSerif"],
+Cell[7005, 299, 67, 1, 70, 35, 0, "StyleData", "Body", "Printout"],
+Cell[7075, 302, 76, 1, 70, 44, 0, "StyleData", "Body", "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[13957, 469, 266, 7, 70, 21, 0, "StyleData", "LI", "All",
+Cell[7188, 308, 266, 7, 39, 21, 0, "StyleData", "LI", "All",
  CounterIncrements->"LI"],
-Cell[14226, 478, 88, 2, 70, 37, 0, "StyleData", "LI", "Presentation"],
-Cell[14317, 482, 68, 1, 70, 34, 0, "StyleData", "LI", "SansSerif"],
-Cell[14388, 485, 66, 1, 70, 33, 0, "StyleData", "LI", "Printout"],
-Cell[14457, 488, 75, 1, 70, 42, 0, "StyleData", "LI", "SansSerifPrintout"]
+Cell[7457, 317, 88, 2, 70, 37, 0, "StyleData", "LI", "Presentation"],
+Cell[7548, 321, 68, 1, 70, 34, 0, "StyleData", "LI", "SansSerif"],
+Cell[7619, 324, 66, 1, 70, 33, 0, "StyleData", "LI", "Printout"],
+Cell[7688, 327, 75, 1, 70, 42, 0, "StyleData", "LI", "SansSerifPrintout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[14581, 495, 42, 0, 37, "Section"],
-Cell[14626, 497, 246, 4, 56, "Text"],
+Cell[7812, 334, 42, 0, 50, "Section"],
+Cell[7857, 336, 246, 4, 56, "Text"],
 Cell[CellGroupData[{
-Cell[14897, 505, 616, 18, 40, 24, 0, "StyleData", "Input", "All",
+Cell[8128, 344, 616, 18, 40, 24, 0, "StyleData", "Input", "All",
  CounterIncrements->"Input"],
-Cell[15516, 525, 90, 2, 70, 40, 0, "StyleData", "Input", "Presentation"],
-Cell[15609, 529, 52, 1, 70, 37, 0, "StyleData", "Input", "SansSerif"],
-Cell[15664, 532, 127, 3, 70, 36, 0, "StyleData", "Input", "Printout"],
-Cell[15794, 537, 92, 2, 70, 45, 0, "StyleData", "Input", "SansSerifPrintout"]
+Cell[8747, 364, 90, 2, 70, 40, 0, "StyleData", "Input", "Presentation"],
+Cell[8840, 368, 52, 1, 70, 37, 0, "StyleData", "Input", "SansSerif"],
+Cell[8895, 371, 127, 3, 70, 36, 0, "StyleData", "Input", "Printout"],
+Cell[9025, 376, 92, 2, 70, 45, 0, "StyleData", "Input", "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[15923, 544, 537, 15, 39, 25, 0, "StyleData", "Output", "All",
+Cell[9154, 383, 537, 15, 39, 25, 0, "StyleData", "Output", "All",
  CounterIncrements->"Output"],
-Cell[16463, 561, 91, 2, 70, 41, 0, "StyleData", "Output", "Presentation"],
-Cell[16557, 565, 53, 1, 70, 38, 0, "StyleData", "Output", "SansSerif"],
-Cell[16613, 568, 84, 2, 70, 37, 0, "StyleData", "Output", "Printout"],
-Cell[16700, 572, 93, 2, 70, 46, 0, "StyleData", "Output", \
-"SansSerifPrintout"]
+Cell[9694, 400, 91, 2, 70, 41, 0, "StyleData", "Output", "Presentation"],
+Cell[9788, 404, 53, 1, 70, 38, 0, "StyleData", "Output", "SansSerif"],
+Cell[9844, 407, 84, 2, 70, 37, 0, "StyleData", "Output", "Printout"],
+Cell[9931, 411, 93, 2, 70, 46, 0, "StyleData", "Output", "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[16830, 579, 600, 16, 36, 26, 0, "StyleData", "Message", "All",
+Cell[10061, 418, 600, 16, 36, 26, 0, "StyleData", "Message", "All",
  CounterIncrements->"Message",
  StyleMenuListing->None],
-Cell[17433, 597, 91, 2, 46, 42, 0, "StyleData", "Message", "Presentation"],
-Cell[17527, 601, 54, 1, 36, 39, 0, "StyleData", "Message", "SansSerif"],
-Cell[17584, 604, 135, 3, 32, 38, 0, "StyleData", "Message", "Printout"],
-Cell[17722, 609, 144, 3, 32, 47, 0, "StyleData", "Message", \
+Cell[10664, 436, 91, 2, 46, 42, 0, "StyleData", "Message", "Presentation"],
+Cell[10758, 440, 54, 1, 36, 39, 0, "StyleData", "Message", "SansSerif"],
+Cell[10815, 443, 135, 3, 32, 38, 0, "StyleData", "Message", "Printout"],
+Cell[10953, 448, 144, 3, 32, 47, 0, "StyleData", "Message", \
 "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[17903, 617, 550, 15, 36, 24, 0, "StyleData", "Print", "All",
+Cell[11134, 456, 550, 15, 36, 24, 0, "StyleData", "Print", "All",
  CounterIncrements->"Print",
  StyleMenuListing->None],
-Cell[18456, 634, 89, 2, 70, 40, 0, "StyleData", "Print", "Presentation"],
-Cell[18548, 638, 52, 1, 70, 37, 0, "StyleData", "Print", "SansSerif"],
-Cell[18603, 641, 107, 2, 70, 36, 0, "StyleData", "Print", "Printout"],
-Cell[18713, 645, 116, 2, 70, 45, 0, "StyleData", "Print", \
+Cell[11687, 473, 89, 2, 70, 40, 0, "StyleData", "Print", "Presentation"],
+Cell[11779, 477, 52, 1, 70, 37, 0, "StyleData", "Print", "SansSerif"],
+Cell[11834, 480, 107, 2, 70, 36, 0, "StyleData", "Print", "Printout"],
+Cell[11944, 484, 116, 2, 70, 45, 0, "StyleData", "Print", \
 "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[18866, 652, 428, 12, 36, 27, 0, "StyleData", "Graphics", "All",
+Cell[12097, 491, 428, 12, 36, 27, 0, "StyleData", "Graphics", "All",
  CounterIncrements->"Graphics",
  StyleMenuListing->None],
-Cell[19297, 666, 92, 2, 70, 43, 0, "StyleData", "Graphics", "Presentation"],
-Cell[19392, 670, 55, 1, 70, 40, 0, "StyleData", "Graphics", "SansSerif"],
-Cell[19450, 673, 134, 3, 70, 39, 0, "StyleData", "Graphics", "Printout"],
-Cell[19587, 678, 143, 3, 70, 48, 0, "StyleData", "Graphics", \
+Cell[12528, 505, 92, 2, 70, 43, 0, "StyleData", "Graphics", "Presentation"],
+Cell[12623, 509, 55, 1, 70, 40, 0, "StyleData", "Graphics", "SansSerif"],
+Cell[12681, 512, 134, 3, 70, 39, 0, "StyleData", "Graphics", "Printout"],
+Cell[12818, 517, 143, 3, 70, 48, 0, "StyleData", "Graphics", \
 "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[19767, 686, 124, 4, 34, 28, 0, "StyleData", "CellLabel", "All",
+Cell[12998, 525, 124, 4, 34, 28, 0, "StyleData", "CellLabel", "All",
  StyleMenuListing->None],
-Cell[19894, 692, 59, 1, 70, 44, 0, "StyleData", "CellLabel", "Presentation"],
-Cell[19956, 695, 41, 0, 70, 41, 0, "StyleData", "CellLabel", "SansSerif"],
-Cell[20000, 697, 126, 4, 70, 40, 0, "StyleData", "CellLabel", "Printout"],
-Cell[20129, 703, 89, 2, 70, 49, 0, "StyleData", "CellLabel", \
+Cell[13125, 531, 59, 1, 70, 44, 0, "StyleData", "CellLabel", "Presentation"],
+Cell[13187, 534, 41, 0, 70, 41, 0, "StyleData", "CellLabel", "SansSerif"],
+Cell[13231, 536, 126, 4, 70, 40, 0, "StyleData", "CellLabel", "Printout"],
+Cell[13360, 542, 89, 2, 70, 49, 0, "StyleData", "CellLabel", \
 "SansSerifPrintout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[20267, 711, 36, 0, 37, "Section"],
-Cell[20306, 713, 121, 3, 41, "Text"],
-Cell[20430, 718, 89, 3, 36, 21, 0, "StyleData", "RM", "All",
+Cell[13498, 550, 36, 0, 50, "Section"],
+Cell[13537, 552, 121, 3, 41, "Text"],
+Cell[13661, 557, 89, 3, 36, 21, 0, "StyleData", "RM", "All",
  StyleMenuListing->None],
-Cell[20522, 723, 67, 2, 36, 21, 0, "StyleData", "BF", "All",
+Cell[13753, 562, 67, 2, 36, 21, 0, "StyleData", "BF", "All",
  StyleMenuListing->None],
-Cell[20592, 727, 68, 2, 36, 21, 0, "StyleData", "IT", "All",
+Cell[13823, 566, 68, 2, 36, 21, 0, "StyleData", "IT", "All",
  StyleMenuListing->None],
-Cell[20663, 731, 111, 4, 36, 21, 0, "StyleData", "TR", "All",
+Cell[13894, 570, 111, 4, 36, 21, 0, "StyleData", "TR", "All",
  StyleMenuListing->None],
-Cell[20777, 737, 112, 4, 36, 21, 0, "StyleData", "TI", "All",
+Cell[14008, 576, 112, 4, 36, 21, 0, "StyleData", "TI", "All",
  StyleMenuListing->None],
-Cell[20892, 743, 110, 4, 36, 21, 0, "StyleData", "TB", "All",
+Cell[14123, 582, 110, 4, 36, 21, 0, "StyleData", "TB", "All",
  StyleMenuListing->None],
-Cell[21005, 749, 112, 4, 36, 22, 0, "StyleData", "TBI", "All",
+Cell[14236, 588, 112, 4, 36, 22, 0, "StyleData", "TBI", "All",
  StyleMenuListing->None],
-Cell[21120, 755, 179, 5, 36, 21, 0, "StyleData", "MR", "All",
+Cell[14351, 594, 179, 5, 36, 21, 0, "StyleData", "MR", "All",
  StyleMenuListing->None],
-Cell[21302, 762, 180, 5, 36, 21, 0, "StyleData", "MO", "All",
+Cell[14533, 601, 180, 5, 36, 21, 0, "StyleData", "MO", "All",
  StyleMenuListing->None],
-Cell[21485, 769, 178, 5, 36, 21, 0, "StyleData", "MB", "All",
+Cell[14716, 608, 178, 5, 36, 21, 0, "StyleData", "MB", "All",
  StyleMenuListing->None],
-Cell[21666, 776, 180, 5, 36, 22, 0, "StyleData", "MBO", "All",
+Cell[14897, 615, 180, 5, 36, 22, 0, "StyleData", "MBO", "All",
  StyleMenuListing->None],
-Cell[21849, 783, 115, 4, 36, 21, 0, "StyleData", "SR", "All",
+Cell[15080, 622, 115, 4, 36, 21, 0, "StyleData", "SR", "All",
  StyleMenuListing->None],
-Cell[21967, 789, 116, 4, 36, 21, 0, "StyleData", "SO", "All",
+Cell[15198, 628, 116, 4, 36, 21, 0, "StyleData", "SO", "All",
  StyleMenuListing->None],
-Cell[22086, 795, 114, 4, 36, 21, 0, "StyleData", "SB", "All",
+Cell[15317, 634, 114, 4, 36, 21, 0, "StyleData", "SB", "All",
  StyleMenuListing->None],
-Cell[22203, 801, 116, 4, 36, 22, 0, "StyleData", "SBO", "All",
+Cell[15434, 640, 116, 4, 36, 22, 0, "StyleData", "SBO", "All",
  StyleMenuListing->None],
 Cell[CellGroupData[{
-Cell[22344, 809, 133, 5, 35, 23, 0, "StyleData", "SO10", "All",
+Cell[15575, 648, 133, 5, 35, 23, 0, "StyleData", "SO10", "All",
  StyleMenuListing->None],
-Cell[22480, 816, 144, 5, 70, 35, 0, "StyleData", "SO10", "Printout",
+Cell[15711, 655, 144, 5, 70, 35, 0, "StyleData", "SO10", "Printout",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[22661, 826, 132, 3, 52, 24, 0, "StyleData", "Inert", "All",
+Cell[15892, 665, 132, 3, 52, 24, 0, "StyleData", "Inert", "All",
  StyleMenuListing->None],
-Cell[22796, 831, 88, 2, 70, 36, 0, "StyleData", "Inert", "Printout",
+Cell[16027, 670, 88, 2, 70, 36, 0, "StyleData", "Inert", "Printout",
  StyleMenuListing->None]
 }, Closed]],
-Cell[22899, 836, 63, 2, 34, 24, 0, "StyleData", "Small", "All",
+Cell[16130, 675, 63, 2, 34, 24, 0, "StyleData", "Small", "All",
  StyleMenuListing->None],
-Cell[22965, 840, 65, 2, 36, 25, 0, "StyleData", "Medium", "All",
+Cell[16196, 679, 65, 2, 36, 25, 0, "StyleData", "Medium", "All",
  StyleMenuListing->None],
-Cell[23033, 844, 64, 2, 48, 24, 0, "StyleData", "Large", "All",
+Cell[16264, 683, 64, 2, 48, 24, 0, "StyleData", "Large", "All",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[23134, 851, 35, 0, 37, "Section"],
-Cell[23172, 853, 184, 4, 70, "Text"],
+Cell[16365, 690, 35, 0, 50, "Section"],
+Cell[16403, 692, 184, 4, 70, "Text"],
 Cell[CellGroupData[{
-Cell[23381, 861, 254, 7, 70, 28, 0, "StyleData", "Hyperlink", "All",
+Cell[16612, 700, 254, 7, 70, 28, 0, "StyleData", "Hyperlink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[23638, 870, 41, 0, 70, 41, 0, "StyleData", "Hyperlink", "SansSerif"],
-Cell[23682, 872, 66, 1, 70, 40, 0, "StyleData", "Hyperlink", "Printout"],
-Cell[23751, 875, 75, 1, 70, 49, 0, "StyleData", "Hyperlink", \
+Cell[16869, 709, 41, 0, 70, 41, 0, "StyleData", "Hyperlink", "SansSerif"],
+Cell[16913, 711, 66, 1, 70, 40, 0, "StyleData", "Hyperlink", "Printout"],
+Cell[16982, 714, 75, 1, 70, 49, 0, "StyleData", "Hyperlink", \
 "SansSerifPrintout"]
 }, Closed]],
-Cell[23841, 879, 102, 2, 70, "Text"],
+Cell[17072, 718, 102, 2, 70, "Text"],
 Cell[CellGroupData[{
-Cell[23968, 885, 278, 7, 70, 31, 0, "StyleData", "MainBookLink", "All",
+Cell[17199, 724, 278, 7, 70, 31, 0, "StyleData", "MainBookLink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[24249, 894, 44, 0, 70, 44, 0, "StyleData", "MainBookLink", "SansSerif"],
-Cell[24296, 896, 69, 1, 70, 43, 0, "StyleData", "MainBookLink", "Printout"],
-Cell[24368, 899, 78, 1, 70, 52, 0, "StyleData", "MainBookLink", \
-"SansSerifPrintout"]
-}, Closed]],
-Cell[CellGroupData[{
-Cell[24483, 905, 298, 8, 70, 29, 0, "StyleData", "AddOnsLink", "All",
- StyleMenuListing->None,
- ButtonStyleMenuListing->Automatic],
-Cell[24784, 915, 42, 0, 70, 42, 0, "StyleData", "AddOnsLink", "SansSerif"],
-Cell[24829, 917, 66, 1, 70, 40, 0, "StyleData", "AddOnLink", "Printout"],
-Cell[24898, 920, 75, 1, 70, 49, 0, "StyleData", "AddOnLink", \
+Cell[17480, 733, 44, 0, 70, 44, 0, "StyleData", "MainBookLink", "SansSerif"],
+Cell[17527, 735, 69, 1, 70, 43, 0, "StyleData", "MainBookLink", "Printout"],
+Cell[17599, 738, 78, 1, 70, 52, 0, "StyleData", "MainBookLink", \
 "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[25010, 926, 306, 8, 70, 31, 0, "StyleData", "RefGuideLink", "All",
+Cell[17714, 744, 298, 8, 70, 29, 0, "StyleData", "AddOnsLink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[25319, 936, 44, 0, 70, 44, 0, "StyleData", "RefGuideLink", "SansSerif"],
-Cell[25366, 938, 69, 1, 70, 43, 0, "StyleData", "RefGuideLink", "Printout"],
-Cell[25438, 941, 78, 1, 70, 52, 0, "StyleData", "RefGuideLink", \
+Cell[18015, 754, 42, 0, 70, 42, 0, "StyleData", "AddOnsLink", "SansSerif"],
+Cell[18060, 756, 66, 1, 70, 40, 0, "StyleData", "AddOnLink", "Printout"],
+Cell[18129, 759, 75, 1, 70, 49, 0, "StyleData", "AddOnLink", \
 "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[25553, 947, 290, 7, 70, 37, 0, "StyleData", "GettingStartedLink", "All",
+Cell[18241, 765, 306, 8, 70, 31, 0, "StyleData", "RefGuideLink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[25846, 956, 50, 0, 70, 50, 0, "StyleData", "GettingStartedLink", \
+Cell[18550, 775, 44, 0, 70, 44, 0, "StyleData", "RefGuideLink", "SansSerif"],
+Cell[18597, 777, 69, 1, 70, 43, 0, "StyleData", "RefGuideLink", "Printout"],
+Cell[18669, 780, 78, 1, 70, 52, 0, "StyleData", "RefGuideLink", \
+"SansSerifPrintout"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[18784, 786, 290, 7, 70, 37, 0, "StyleData", "GettingStartedLink", "All",
+ StyleMenuListing->None,
+ ButtonStyleMenuListing->Automatic],
+Cell[19077, 795, 50, 0, 70, 50, 0, "StyleData", "GettingStartedLink", \
 "SansSerif"],
-Cell[25899, 958, 75, 1, 70, 49, 0, "StyleData", "GettingStartedLink", \
+Cell[19130, 797, 75, 1, 70, 49, 0, "StyleData", "GettingStartedLink", \
 "Printout"],
-Cell[25977, 961, 84, 1, 70, 58, 0, "StyleData", "GettingStartedLink", \
+Cell[19208, 800, 84, 1, 70, 58, 0, "StyleData", "GettingStartedLink", \
 "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[26098, 967, 294, 7, 70, 39, 0, "StyleData", "OtherInformationLink", "All",
+Cell[19329, 806, 294, 7, 70, 39, 0, "StyleData", "OtherInformationLink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[26395, 976, 52, 0, 70, 52, 0, "StyleData", "OtherInformationLink", \
+Cell[19626, 815, 52, 0, 70, 52, 0, "StyleData", "OtherInformationLink", \
 "SansSerif"],
-Cell[26450, 978, 77, 1, 70, 51, 0, "StyleData", "OtherInformationLink", \
+Cell[19681, 817, 77, 1, 70, 51, 0, "StyleData", "OtherInformationLink", \
 "Printout"],
-Cell[26530, 981, 86, 1, 70, 60, 0, "StyleData", "OtherInformationLink", \
+Cell[19761, 820, 86, 1, 70, 60, 0, "StyleData", "OtherInformationLink", \
 "SansSerifPrintout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[26653, 987, 272, 7, 70, 28, 0, "StyleData", "DemosLink", "All",
+Cell[19884, 826, 272, 7, 70, 28, 0, "StyleData", "DemosLink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[26928, 996, 66, 1, 70, 40, 0, "StyleData", "DemosLink", "Printout"]
+Cell[20159, 835, 66, 1, 70, 40, 0, "StyleData", "DemosLink", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[27031, 1002, 270, 7, 70, 27, 0, "StyleData", "TourLink", "All",
+Cell[20262, 841, 270, 7, 70, 27, 0, "StyleData", "TourLink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[27304, 1011, 65, 1, 70, 39, 0, "StyleData", "TourLink", "Printout"]
+Cell[20535, 850, 65, 1, 70, 39, 0, "StyleData", "TourLink", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[27406, 1017, 284, 7, 70, 34, 0, "StyleData", "MasterIndexLink", "All",
+Cell[20637, 856, 284, 7, 70, 34, 0, "StyleData", "MasterIndexLink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[27693, 1026, 72, 1, 70, 46, 0, "StyleData", "MasterIndexLink", "Printout"]
+Cell[20924, 865, 72, 1, 70, 46, 0, "StyleData", "MasterIndexLink", \
+"Printout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[27814, 1033, 33, 0, 37, "Section"],
-Cell[27850, 1035, 121, 3, 70, "Text"],
-Cell[27974, 1040, 216, 5, 70, 24, 0, "StyleData", "Paste", "All",
+Cell[21045, 872, 33, 0, 50, "Section"],
+Cell[21081, 874, 121, 3, 70, "Text"],
+Cell[21205, 879, 216, 5, 70, 24, 0, "StyleData", "Paste", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[28193, 1047, 287, 7, 70, 27, 0, "StyleData", "Evaluate", "All",
+Cell[21424, 886, 287, 7, 70, 27, 0, "StyleData", "Evaluate", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[28483, 1056, 376, 9, 70, 31, 0, "StyleData", "EvaluateCell", "All",
+Cell[21714, 895, 376, 9, 70, 31, 0, "StyleData", "EvaluateCell", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[28862, 1067, 363, 9, 70, 31, 0, "StyleData", "CopyEvaluate", "All",
+Cell[22093, 906, 363, 9, 70, 31, 0, "StyleData", "CopyEvaluate", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[29228, 1078, 377, 9, 70, 35, 0, "StyleData", "CopyEvaluateCell", "All",
+Cell[22459, 917, 377, 9, 70, 35, 0, "StyleData", "CopyEvaluateCell", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic]
 }, Closed]]

@@ -1,100 +1,136 @@
 Origin: Raspberry Pi Foundation
 Label: Raspberry Pi Foundation
 Codename: wheezy
-Date: Thu, 19 Jun 2014 19:06:21 UTC
+Date: Mon, 08 Sep 2014 19:30:04 UTC
 Architectures: armel armhf
 Components: main untested
 Description: Packages for the Raspberry Pi
 MD5Sum:
- 10a47ff4c62d640cd1f2496152b231af 26217 main/binary-armel/Packages
- 5a52be29aa294a495dcb4bcb1367fbc6 8029 main/binary-armel/Packages.gz
+ 8db1893cd05307e31ff732cab83a0303 84980 main/binary-armel/Packages
+ 11bd5a28364598f42413f1ed0e8be1e9 23530 main/binary-armel/Packages.gz
  13712189538ad271a99a11b46d78b632 142 main/binary-armel/Release
- 18d17ebac1fbdedea9e6c9f21bf5f6ef 61325 main/binary-armhf/Packages
- 29f26fe345e4a8ddab1dd9a6f17215e3 18003 main/binary-armhf/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e 0 main/debian-installer/binary-armel/Packages
+ 7029066c27ac6f5ef18d660d5741979a 20 main/debian-installer/binary-armel/Packages.gz
+ c92b782ef93304100155d8ce1bf4fac0 443954 main/binary-armhf/Packages
+ 028079920a50573999e9bb59fc6d73f1 99369 main/binary-armhf/Packages.gz
  34abb1f75ea791ddc80bb8c781676e67 142 main/binary-armhf/Release
- 1122fe447037eadeec146ca830246655 11482 main/source/Sources
- def57ff6bc6af11e0845fdf38702f8e4 4103 main/source/Sources.gz
+ 7ac95cd0a6f3af5eeb90f709c2ab37db 9189 main/debian-installer/binary-armhf/Packages
+ 6841c3bd2fafb9a03b2060d26b7a9ae7 3272 main/debian-installer/binary-armhf/Packages.gz
+ 0a45229cdd7d530d1909683deec22067 113474 main/source/Sources
+ 0ebc178439ad4ce82a35a6f1f7a4018c 30893 main/source/Sources.gz
  316bdd5f6565319178cd4b159c55c55d 143 main/source/Release
- 331590ec243ca1cffa15138ad4f11d47 4382 untested/binary-armel/Packages
- 38bad3244ba87a6862e97b82b93b8759 1368 untested/binary-armel/Packages.gz
+ 210edc659260531429ed96a37dac2797 60304 untested/binary-armel/Packages
+ 6b33d70bd25816299af5d08ab379b6c2 16311 untested/binary-armel/Packages.gz
  28d8cdf36cbd67c71a4e2a310e670092 146 untested/binary-armel/Release
- b876b50eaaae02c329d8c8ce20341aab 4382 untested/binary-armhf/Packages
- 6b209c264e49c6e740c0cc221af5aeac 1363 untested/binary-armhf/Packages.gz
+ 35d388bca0d27441a8023c66243397b3 385237 untested/binary-armhf/Packages
+ ae791c0a433d9ef6f70c056a326f1b1b 81339 untested/binary-armhf/Packages.gz
  477966333abe046d03a2a6ab2fa8bdd1 146 untested/binary-armhf/Release
  d41d8cd98f00b204e9800998ecf8427e 0 untested/source/Sources
  7029066c27ac6f5ef18d660d5741979a 20 untested/source/Sources.gz
  789904968b62b197ac0295dc6bba6b58 147 untested/source/Release
- 0602378b8d13725d2c58758affcd5569 351580 main/Contents-armel
- b2165ebad964ef7f4c42419d49fb1604 27578 main/Contents-armel.gz
- df3ad2e188678749072b46f76b3b9c66 132481 untested/Contents-armel
- 65bcfd99e316024c2cd0ba77639870a6 10510 untested/Contents-armel.gz
- a58ece3f3adc08c1fc31819a018597dd 468943 Contents-armel
- 30914ec2857e2109416cf2d336bc8bf1 35906 Contents-armel.gz
- 40ff9c0d6171b1e65e4eff64cb202603 1233659 main/Contents-armhf
- a4b2e8b65e803740ffef426644f4bffb 83138 main/Contents-armhf.gz
- df3ad2e188678749072b46f76b3b9c66 132481 untested/Contents-armhf
- 65bcfd99e316024c2cd0ba77639870a6 10510 untested/Contents-armhf.gz
- 41acc4af2f8ab21c36f1adaee0158ac0 1351022 Contents-armhf
- c1f788217ab357d1ff93527adb55fde4 91082 Contents-armhf.gz
+ 292086a86c9205e270e0b8f5eafe1ff1 3806212 main/Contents-armel
+ 80c389e86624c07ef02c683134987b5f 222650 main/Contents-armel.gz
+ 59126d011291a696716a1be959855977 3577887 untested/Contents-armel
+ ba882d862a9933fd7da417a26cebb292 204576 untested/Contents-armel.gz
+ a6c0877557096ab4b1edeaf1e5f6b28b 4665736 Contents-armel
+ d98296eb0b9cf9fef410c7788824f96b 230988 Contents-armel.gz
+ 27d58e50709d18eb98859c77cca82b90 65 main/sContents-armel
+ 1fd31403618fd8b765b0738230f5a085 36 main/sContents-armel.gz
+ 27d58e50709d18eb98859c77cca82b90 65 uContents-armel
+ 1fd31403618fd8b765b0738230f5a085 36 uContents-armel.gz
+ 376572f5a085ce794664f163fd65170d 5922099 main/Contents-armhf
+ aef8f6085d328a36e0f37a8afa145fe5 379227 main/Contents-armhf.gz
+ a5ba249d6f8826c8fa991ab48786ac4d 4466665 untested/Contents-armhf
+ 360be5ad937b3aa45ca4a3abb3ffbd8c 290122 untested/Contents-armhf.gz
+ c6c978a6be71104ed6e77400ce096ed5 7047865 Contents-armhf
+ e9adb5713af45101531b60ab908d5d9a 394520 Contents-armhf.gz
+ 1243d2bcd05f4f431a7129d18a50602f 20965 main/sContents-armhf
+ 5a2c6324bb9f9c72439c9bad28fd0a2d 1231 main/sContents-armhf.gz
+ 1243d2bcd05f4f431a7129d18a50602f 20965 uContents-armhf
+ 5a2c6324bb9f9c72439c9bad28fd0a2d 1231 uContents-armhf.gz
 SHA1:
- e1cf646347dfcdbf5bae7eeefbc8278f49ee0a3b 26217 main/binary-armel/Packages
- 14e65e883f332ceb16b2fdbf077a4210e8640d4a 8029 main/binary-armel/Packages.gz
+ ddaaebe38fcaf2383e96d873f1a4bfe58325e2a3 84980 main/binary-armel/Packages
+ 30796579e246e86a529fdcb81b5334442f1cee9c 23530 main/binary-armel/Packages.gz
  c20f6f510777367ae1f47754cb7a28808bb7f534 142 main/binary-armel/Release
- f6077894beb4317694cebe75a970ec8fa8e28092 61325 main/binary-armhf/Packages
- 25198fb89646415571fdc3852e50eb2facf287f4 18003 main/binary-armhf/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709 0 main/debian-installer/binary-armel/Packages
+ 46c6643f07aa7f6bfe7118de926b86defc5087c4 20 main/debian-installer/binary-armel/Packages.gz
+ 30c9cf712d1571e12a763d6e431d6f10fdd019ef 443954 main/binary-armhf/Packages
+ 4f32df0cc12c7de4ab4a292e07ee9bd5c67e0530 99369 main/binary-armhf/Packages.gz
  65811c903e69ddd4cb15fd29898e211a611ceb99 142 main/binary-armhf/Release
- 0c7d2475e73bd19c3dbc351deba068f9e19b28ce 11482 main/source/Sources
- 8d1a918e326cc79864708e99b844322c9a7f9039 4103 main/source/Sources.gz
+ dc1f0cbd57a1aae75d661bc154283f795e01a5c5 9189 main/debian-installer/binary-armhf/Packages
+ 81b1719457d81ecbaead7a56ccf1fb54d2bf807b 3272 main/debian-installer/binary-armhf/Packages.gz
+ 6d5db141f8e084aa017c2e2f780496f82b4e34f5 113474 main/source/Sources
+ 306729ff303c9137ac1aad0fd75a09519ebf2797 30893 main/source/Sources.gz
  a2c43f0c86b6d3cc58afd895471d99be9cbea782 143 main/source/Release
- 76751bb09223040f3ae1d4a74a1623b104b4ba4c 4382 untested/binary-armel/Packages
- d8f4ee0f4235494ca997122fdf3dd3f38ec706fb 1368 untested/binary-armel/Packages.gz
+ 95fede6c6f3c927a06e4a261ca4f94d6efbdf64e 60304 untested/binary-armel/Packages
+ 410c5e472850780252d74183ad9821a18be8cd6d 16311 untested/binary-armel/Packages.gz
  5a3033140e34ce6f8311f3065fb97e1dca7475df 146 untested/binary-armel/Release
- dc8203f41211e1ce69f4ad7c1a49b2d0327e8a93 4382 untested/binary-armhf/Packages
- 0fcff2f435b1b451d559e93557296e43526293f5 1363 untested/binary-armhf/Packages.gz
+ f347a91634d9162fb2ee00104b2bef8a093d2e80 385237 untested/binary-armhf/Packages
+ 8be1ab89203695548d7a6d911679db2f56fe1d3e 81339 untested/binary-armhf/Packages.gz
  1603f5bf69f0dd122ad4306d7a45fbb001921e86 146 untested/binary-armhf/Release
  da39a3ee5e6b4b0d3255bfef95601890afd80709 0 untested/source/Sources
  46c6643f07aa7f6bfe7118de926b86defc5087c4 20 untested/source/Sources.gz
  9ba336c6173c003209aeaf4567d485f6f66a4054 147 untested/source/Release
- 04d7ca762f882d4cad61b157a730261df9382d4f 351580 main/Contents-armel
- 21762778521b2f8ade937976f7efd9377d79ebd1 27578 main/Contents-armel.gz
- 545178cdfd983edc3b8365a8d95a8f99c3b8b086 132481 untested/Contents-armel
- a8121c37356b2ba1136dad6fbb4777ef18bd4b47 10510 untested/Contents-armel.gz
- ae42f7b07f0de6a70b07e5490c0e98e7d4ff5f6c 468943 Contents-armel
- 98796f2a48fd5e6138ff44bbcc95c8aa4726e117 35906 Contents-armel.gz
- 02423bf7121f04cd3f26c912dd8669ecd445a5bd 1233659 main/Contents-armhf
- 693f64624a71bf27587e557d34927e2b079e44bc 83138 main/Contents-armhf.gz
- 545178cdfd983edc3b8365a8d95a8f99c3b8b086 132481 untested/Contents-armhf
- a8121c37356b2ba1136dad6fbb4777ef18bd4b47 10510 untested/Contents-armhf.gz
- 4d74c2441af4d6c59a4a23dd77650fb5a09189b1 1351022 Contents-armhf
- 798ecff3121d7857db1668c5f6a62f5e9ad25c32 91082 Contents-armhf.gz
+ 4a454b657cb6352f660127f6a97fe4655e3f58e5 3806212 main/Contents-armel
+ 0a1b641cd2a59baf48356bd42f0e00281380a682 222650 main/Contents-armel.gz
+ 5f4fb1e27cab9c789012ce70c4a619fa41322ddd 3577887 untested/Contents-armel
+ 625bb548b8492d0ccdc7322117658e8c5289e03d 204576 untested/Contents-armel.gz
+ bd16665f3f31ae62d6972959ccfcb3e9e9cccb3f 4665736 Contents-armel
+ 7cea52227d2658a771347654054c7f1d35a24c9a 230988 Contents-armel.gz
+ fae4412e63f2f45c1e651dbd256890008330cf4b 65 main/sContents-armel
+ 971e263d7f444314afabcbf4a73376a4dba3b2e5 36 main/sContents-armel.gz
+ fae4412e63f2f45c1e651dbd256890008330cf4b 65 uContents-armel
+ 971e263d7f444314afabcbf4a73376a4dba3b2e5 36 uContents-armel.gz
+ eec3dc9f457f2894eab621cd6abcd125dc32db32 5922099 main/Contents-armhf
+ 3b41568232a07b8c7569b1ee2f78980bb0d82231 379227 main/Contents-armhf.gz
+ 3b5995d37a733bc6c7f9cc0321c758194b1bfeac 4466665 untested/Contents-armhf
+ 1a34426b813d89cf88ce0aa3bec15ff3aa53f677 290122 untested/Contents-armhf.gz
+ 79b2d6c5cdc2265429a69e25b945d4ac47b2cbe8 7047865 Contents-armhf
+ 86a6b35950ec4841390acbd77eb6489e3df9d92c 394520 Contents-armhf.gz
+ 43d0ca1c8da2652ee9861005a9b1d22f74031d33 20965 main/sContents-armhf
+ 67bfecf4cf959e67d8b2b2b75edf3ae716a1f0c8 1231 main/sContents-armhf.gz
+ 43d0ca1c8da2652ee9861005a9b1d22f74031d33 20965 uContents-armhf
+ 67bfecf4cf959e67d8b2b2b75edf3ae716a1f0c8 1231 uContents-armhf.gz
 SHA256:
- 57b848597990d316369ed11b29af0e9f296e47425f7890e8f766a0b05e2d0876 26217 main/binary-armel/Packages
- 4e88a67ef6ec2a8f12c4d4c6b4b569b206e7c2ed4ce7ff50a28ca2914db84dd7 8029 main/binary-armel/Packages.gz
+ b23a80539ade67746975f7d7cbeb12ee74d9df667463198c3ddb21e3349f6f60 84980 main/binary-armel/Packages
+ a15337552901fac6ff7e4a8001c98928d7cb64eb9fdec3be4ff2a050f6c58da8 23530 main/binary-armel/Packages.gz
  a4f975ad89cc49687e9f41790d89ba926e1d3e406e291d5f529ef24c0e29ed2e 142 main/binary-armel/Release
- 8944451275d153f20d61d5527ff8c7a6ec3e3c014628de74552ea94ea367797c 61325 main/binary-armhf/Packages
- ceb7c6d4ff040c891e4ffa13a8cf444421488cb6dc48cb62211f0ffc81277277 18003 main/binary-armhf/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0 main/debian-installer/binary-armel/Packages
+ 59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2 20 main/debian-installer/binary-armel/Packages.gz
+ 55ff30906d93180e9970d6b27022a0278c9aa15fc623c18f7c75a1568e7ca3de 443954 main/binary-armhf/Packages
+ 9dac45824f359095d14285494d6cfcfbb41e3287cde3742a074cdf93d90f9831 99369 main/binary-armhf/Packages.gz
  d1a3e49e11576419331f94e03ad704d8999ca721ecfa3f530d65007049f08137 142 main/binary-armhf/Release
- b2b5fe270c2cd812fd73f6caeef193ddfcc0f17871e13857f329a78eb9cfeb4b 11482 main/source/Sources
- d9a6fd5c07e8a59a5cb6358217e8a069d904e038f54e1756665887f6989ed317 4103 main/source/Sources.gz
+ 6c751c16ff117bd2c60aa79b43f94da3eb20729904226883dd80282ab84df8cb 9189 main/debian-installer/binary-armhf/Packages
+ f304489540a33995017de9ad649dd661bef7f86acd7ba940e6c64fb50e533d08 3272 main/debian-installer/binary-armhf/Packages.gz
+ 698e2d866c17a5f3da9840966b2a8659df8b75c7436fd296b71e7521d642cd10 113474 main/source/Sources
+ 4eaa4030212328dbc92bc218fb0b26d8cd17ecbe8fa9577a8b0a01a6f0eaa38d 30893 main/source/Sources.gz
  085dff0395dbb7a9429cf6082398994c9a904ff52b4092aff32537152306ae3f 143 main/source/Release
- b10735f65d2be7b1bcc51626fac79825704d0d3ac36edfa6858183fcc588a54e 4382 untested/binary-armel/Packages
- 6a3f95fe60910d101d2281a8bbe33d4ce9e002a97bc95358dd1e0f8903aacb15 1368 untested/binary-armel/Packages.gz
+ 71140b333e67ff064cdcf29d5d2543e8b356b69e80983adc8f6b0870e1349d7c 60304 untested/binary-armel/Packages
+ 675f6b49216174c5e6a1399203f7d9ec7d1e07180c800b852dd5f15a6593fa9e 16311 untested/binary-armel/Packages.gz
  55320a3e3387bf607fec54f6ee0d273b70a195abcc72dede9b451ea92b19249f 146 untested/binary-armel/Release
- a1fa185bf046978c74393856598151394f0f54f6b317047f76cf25c78fe57cfe 4382 untested/binary-armhf/Packages
- b1523614b27a5a1f3cf318caf78fd827e85321c903668c214994346e680b9001 1363 untested/binary-armhf/Packages.gz
+ f93cfadcd8d84f9dcea87e63f75124b472198652cfda79b1ce7a7f1f4c72cd3e 385237 untested/binary-armhf/Packages
+ ba08b635f1554161a9efc9c41fdb27b4cf3baf47782884300cb72d18af64e8cd 81339 untested/binary-armhf/Packages.gz
  be46b2b910f0a2cd358640bd21b953720aeba3075d539210587b79f3205c3c51 146 untested/binary-armhf/Release
  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0 untested/source/Sources
  59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2 20 untested/source/Sources.gz
  930e9fdfcad3945e81b4205e971fdceccba4adaf7175880b47e2209c91b681ac 147 untested/source/Release
- 930af64dacdd8033b26b8dcaa51c6c86f7dcaf64c682a51fc173e4dde68048d2 351580 main/Contents-armel
- 899f03f4af3a191a442e9831100540fdbe7d48b10e495534962cc018a59ae5d3 27578 main/Contents-armel.gz
- 0bde2e27237304dbc42d0324c6464a2bd95526d7680f8057a322bafbf3566f83 132481 untested/Contents-armel
- deafa3a4d0e1ddf586195e43db2cebbddba82c12d9cad17700dda3c416642a44 10510 untested/Contents-armel.gz
- 703058494ba4517abe834e47e044bfdf20c8129c0f73851b30fafdd42c301cdc 468943 Contents-armel
- c7378034709683226d512a83984947db6cb6d77b44c51c3403c57e9482394507 35906 Contents-armel.gz
- 1d68433b26ae89da8eda7584781865ec39c90db4d27b4a14a97b96471197947b 1233659 main/Contents-armhf
- 86d7428fb474de866fa1d5d95bbadf0663dd922976d9c4d21cf57d9c23ecbeff 83138 main/Contents-armhf.gz
- 0bde2e27237304dbc42d0324c6464a2bd95526d7680f8057a322bafbf3566f83 132481 untested/Contents-armhf
- deafa3a4d0e1ddf586195e43db2cebbddba82c12d9cad17700dda3c416642a44 10510 untested/Contents-armhf.gz
- 5b0d5c32eb24623eec688d245d5e314131e64ba0f3f3522bd8fe440de754141b 1351022 Contents-armhf
- 03b3486dd68598eb8e6fe93d8bd9800bb0f6e136969ad647d03b65734e853c54 91082 Contents-armhf.gz
+ 988d9513d864209b4953963f051db08c254a7bd0ad81c87681e3d0fcaffc9555 3806212 main/Contents-armel
+ 1e5b6c9a072910858d916862c0e1753ed3d1fa19dfa837b4792c303de232ef73 222650 main/Contents-armel.gz
+ a2c98014eba7cd66c227693dbe920b85f8717155fa3f5ebfedd50dc4f8b3bc79 3577887 untested/Contents-armel
+ b79d3b357ec689994280ee1446209ec26be6a5cdb8edbbd41d3914f686c5ce72 204576 untested/Contents-armel.gz
+ 14b640b457407a8fc7de5a993df5ad1486a62283c8f1dc4034716ae186d10f92 4665736 Contents-armel
+ 38aea884e760baa519e6143367e263afdd7b3bc15faad83f0aa2315243b3edaf 230988 Contents-armel.gz
+ cf13e85fc3cdf7bc0182ba23034b735b2544edbc0074dcbe617974164ae3be9f 65 main/sContents-armel
+ 44818733e04c03289b19184fc4f4d7cd61e9496fd94bc254744cd5c7d10c2ab6 36 main/sContents-armel.gz
+ cf13e85fc3cdf7bc0182ba23034b735b2544edbc0074dcbe617974164ae3be9f 65 uContents-armel
+ 44818733e04c03289b19184fc4f4d7cd61e9496fd94bc254744cd5c7d10c2ab6 36 uContents-armel.gz
+ a3d3ba1209dcd940d4e567c86b38670a8f087610e36e669379d8906711e6446d 5922099 main/Contents-armhf
+ c48c441caffc9c0f2c24061c46ffd6cc067aa93d5e850de582e2864cc34aed5b 379227 main/Contents-armhf.gz
+ 27b6583d77a3f3301f76fcc94d24b3fdf660dab1c082cc365c4975ba009b8a22 4466665 untested/Contents-armhf
+ 0a1be878c76d3e64ca07c1fed5951b7d850b6e284e71bf573038300aed45dd99 290122 untested/Contents-armhf.gz
+ f2c560d4a0f64f20e0265e16363bea241cfb6329d578c79adc9d2d0f0a1319c3 7047865 Contents-armhf
+ 0e481f4c713736f9b3e7743195881b9bc7767efa86624ab1b63c5df33c6800bd 394520 Contents-armhf.gz
+ 1e1440a52f4cfecb93404c2430d50a932ccea8c5a20aac6eba70182991ce8cab 20965 main/sContents-armhf
+ 4cd8113d30348873e9806805a4d1e9f55195efa1a5430a90b2106a62575fdfdc 1231 main/sContents-armhf.gz
+ 1e1440a52f4cfecb93404c2430d50a932ccea8c5a20aac6eba70182991ce8cab 20965 uContents-armhf
+ 4cd8113d30348873e9806805a4d1e9f55195efa1a5430a90b2106a62575fdfdc 1231 uContents-armhf.gz

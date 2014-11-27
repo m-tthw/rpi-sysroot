@@ -6,7 +6,7 @@
 
 (* :Copyright: © 2006 by Wolfram Research, Inc. *)
 
-(* :Package Version: 1.0 ($Id: LocalKernels.m,v 1.45 2013/10/26 17:29:22 maeder Exp $) *)
+(* :Package Version: 1.0 ($Id: LocalKernels.m,v 1.46 2014/05/06 15:54:38 maeder Exp $) *)
 
 (* :Mathematica Version: 7 *)
 
@@ -51,8 +51,7 @@ LaunchLocal::usage = "LaunchLocal[template, n, opts] launches n kernels on the l
 Options[LaunchLocal] = {
 	LinkProtocol -> Automatic,
 	KernelSpeed -> 1,
-	LowerPriority -> True,
-	CallBackLink :> $CallBackLink
+	LowerPriority -> True
 }
 
 
@@ -70,7 +69,7 @@ localKernelObject[subContext] = Context[]
 Begin["`Private`"]
  
 `$PackageVersion = 0.9;
-`$CVSRevision = StringReplace["$Revision: 1.45 $", {"$"->"", " "->"", "Revision:"->""}]
+`$CVSRevision = StringReplace["$Revision: 1.46 $", {"$"->"", " "->"", "Revision:"->""}]
  
 
 Needs["ResourceLocator`"]
@@ -83,21 +82,18 @@ textFunction = TextResourceLoad[ "SubKernels", $packageRoot]
  		link	associated LinkObject
  		arglist	list of arguments used in constructor, so that it may be relaunched if possible
  		speed	speed setting, mutable
- 		preemptive the preemptive sharing link connected to this kernel, mutable
  *)
  
 SetAttributes[localKernel, HoldAll] (* data type *)
 SetAttributes[`lk, HoldAllComplete] (* the head for the base class data *)
  
-(* private selectors; pattern is localKernel[ lk[link_, arglist_, speed_, preemptive_, ___], ___ ]  *)
+(* private selectors; pattern is localKernel[ lk[link_, arglist_, id_, ___], ___ ]  *)
  
 localKernel/: linkObject[localKernel[lk[link_, ___], ___]] := link
 localKernel/: descr[localKernel[lk[link_, ___], ___]] := "local"
 localKernel/: arglist[localKernel[lk[link_, arglist_, ___], ___]] := arglist
 localKernel/: kernelSpeed[localKernel[lk[link_, arglist_, speed_, ___], ___]] := speed
 localKernel/: setSpeed[localKernel[lk[link_, arglist_, speed_, ___], ___], r_] := (speed = r)
-localKernel/: kernelPreemptive[localKernel[lk[link_, arglist_, speed_, preemptive_, ___], ___]] := preemptive
-localKernel/: setPreemptive[localKernel[lk[link_, arglist_, speed_, preemptive_, ___], ___], r_] := (preemptive = r)
 
 
 (* description language methods *)
@@ -126,8 +122,6 @@ localKernel/:  Description[ kernel_localKernel ] := LocalMachine@@arglist[kernel
 localKernel/:  Abort[ kernel_localKernel ] := kernelAbort[kernel]
 localKernel/:  SubKernelType[ kernel_localKernel ] := localKernelObject
 (* KernelSpeed: use generic implementation *)
-localKernel/:  PreemptiveLink[ kernel_localKernel ] := kernelPreemptive[kernel]
-PreemptiveLink/: (PreemptiveLink[ kernel_localKernel ] = new_) := setPreemptive[kernel, new]
 
 (* kernels should be cloneable; speed setting may have changed after initial launch *)
 
@@ -164,10 +158,6 @@ LaunchLocal[cmd_String, n_Integer?NonNegative, opts:OptionsPattern[]] :=
    		If[ lp, (* lower process priority *)
    			kernelWrite[#, EvaluatePacket[SetSystemOptions["ProcessPriority" -> -1];]]& /@ lnk;
    			(* no need to wait for reply; the PT constructor will flush the queue *)
-   		];
-   		If[OptionValue[CallBackLink], (* set up callback link using LinkCreate on master *)
-   			createCallBackLink[lnk];
-   			(* TODO: remove kernels with failed links *)
    		];
    		lnk
 	]

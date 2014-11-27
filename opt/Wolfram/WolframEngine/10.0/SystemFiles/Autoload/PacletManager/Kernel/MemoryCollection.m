@@ -52,7 +52,7 @@ MCfindForDocResource[collection_, linkBase:(_String | All), context:(_String | A
             Cases[{#, PgetDocResourcePath[#, linkBase, context, expandedResourceName, language]}& /@ collection,
                 {_Paclet, _String}
             ],
-            (systemIDMatches[getPIValue[First[#], "SystemID"]] && kernelVersionMatches[getPIValue[First[#], "MathematicaVersion"]])&
+            (systemIDMatches[getPIValue[First[#], "SystemID"]] && kernelVersionMatches[getPIValue[First[#], "WolframVersion"]])&
         ]
     ]
     

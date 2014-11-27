@@ -1,4 +1,4 @@
-(* $Id: PropertiesDemo.m,v 1.1.2.1 2014/01/17 21:19:05 bakshee Exp $ *)
+(* $Id: PropertiesDemo.m,v 1.4 2014/02/26 20:14:57 bakshee Exp $ *)
 
 (* Implements top-level and native properties. *)
 
@@ -16,11 +16,11 @@ setProp[devHandle_,prop_,rhs_] := nproperties[devHandle][prop] = rhs
 		   
 (*-----------------------------------------------------------------*)  
 
-DeviceAPI`DeviceClassRegister["PropertiesDemo",
+DeviceFramework`DeviceClassRegister["PropertiesDemo",
 	"Properties" -> {"P1" -> "p1", "P2" -> "p2", "X" -> "x"},
 	"NativeProperties" -> {"N1", "N2", "X"},
-	"GetPropertyFunction" -> getProp,
-	"SetPropertyFunction" -> setProp,
+	"GetNativePropertyFunction" -> getProp,
+	"SetNativePropertyFunction" -> setProp,
 	"CloseFunction" -> (Quiet[
 		nproperties[ #[[2]] ]["N1"] =.;
 		nproperties[ #[[2]] ]["N2"] =.;

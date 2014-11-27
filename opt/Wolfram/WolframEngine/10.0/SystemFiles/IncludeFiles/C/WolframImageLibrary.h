@@ -8,7 +8,7 @@ U.S. Copyright Office as an unpublished work, pursuant to Title 17,
 U.S. Code, Section 408.  Unauthorized copying, adaptation, distribution
 or display is prohibited.
 
-$Id: WolframImageLibrary.h,v 1.6 2014/01/17 20:46:39 piotrw Exp $
+$Id: WolframImageLibrary.h,v 1.7 2014/02/05 17:42:43 piotrw Exp $
 
 *************************************************************************/
 
@@ -21,17 +21,9 @@ $Id: WolframImageLibrary.h,v 1.6 2014/01/17 20:46:39 piotrw Exp $
 
 #if !(defined(MATHEMATICA_KERNEL) || defined(MATHEMATICA_RUNTIME))
 
-#ifdef _MSC_VER
-typedef __int8 raw_t_bit;
-typedef unsigned __int8 raw_t_ubit8;
-typedef unsigned __int16 raw_t_ubit16;
-#else
-#include <stdint.h>
 typedef unsigned char raw_t_bit;
 typedef unsigned char raw_t_ubit8;
 typedef unsigned short raw_t_ubit16;
-#endif
-
 typedef float raw_t_real32;
 typedef double raw_t_real64;
 

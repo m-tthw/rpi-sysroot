@@ -6,9 +6,9 @@
 /opt/vc/lib/libGLESv2.so
 /opt/vc/lib/libvcos.so
 /opt/vc/lib/libWFC.so
-/opt/vc/lib/libGLESv1_CM.so
 /opt/vc/lib/libmmal.so
 /opt/vc/lib/libopenmaxil.so
+/opt/vc/lib/libvcsm.so
 /opt/vc/lib/libmmal_core.so
 /opt/vc/lib/libvchiq_arm.so
 /opt/vc/lib/libmmal_vc_client.so
@@ -30,3 +30,4 @@
 /etc
 /etc/ld.so.conf.d
 /etc/ld.so.conf.d/00-vmcs.conf
+/opt/vc/lib/libGLESv1_CM.so

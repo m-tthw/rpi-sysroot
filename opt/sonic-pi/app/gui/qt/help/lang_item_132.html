@@ -1,0 +1,68 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Block-level merge synth defaults </font></span></p>
+<h1><font color="#3c3c3c"><pre>with_merged_synth_defaults<pre></font></h1>
+<h2><pre>[]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Specify synth arg values to be used by any following call to play within the specified do/end block. Merges the specified values with any previous defaults, rather than replacing them. After the do/end block has completed, previous defaults(if any) are restored. 
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Introduced in v2.0.0
+</p>
+<table cellpadding="2">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+
+with_merged_synth_defaults amp: 0.5, pan: 1 do
+  play 50
+end
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+ # =&gt; plays note 50 with amp 0.5 and pan 1
+ 
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#FFE4E1"><h3><pre>Example 1 </pre></h3></td>
+   <td><pre>
+
+play 50
+with_merged_synth_defaults amp: 0.5 do
+  play 50
+
+  with_merged_synth_defaults pan: -1 do
+    with_merged_synth_defaults amp: 0.7 do
+      play 50
+    end
+  end
+  play 50
+end
+
+
+</pre></td>
+   <td><pre>
+ 
+ #=&gt; plays note 50
+ 
+ #=&gt; plays note 50 with amp 0.5
+ 
+ 
+ 
+ #=&gt; plays note 50 with amp 0.7 and pan -1
+ 
+ 
+ #=&gt; plays note 50 with amp 0.5
+ 
+
+
+
+</pre></td></tr>
+</table>

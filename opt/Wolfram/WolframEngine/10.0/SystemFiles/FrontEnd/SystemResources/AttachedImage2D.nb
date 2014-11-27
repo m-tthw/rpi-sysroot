@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    231818,       5194]
-NotebookOptionsPosition[    231372,       5173]
-NotebookOutlinePosition[    231877,       5195]
-CellTagsIndexPosition[    231797,       5190]
+NotebookDataLength[    232876,       5240]
+NotebookOptionsPosition[    232433,       5219]
+NotebookOutlinePosition[    232935,       5241]
+CellTagsIndexPosition[    232855,       5236]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -41,14 +41,14 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageSelectorIcon.png"]],
                    ImageSizeCache->{14., {9., 14.}}], "RibbonTabLabel",
                   StripOnInput->False], True->
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageSelectorIconHighlight.png"]],
                    ImageSizeCache->{14., {9., 14.}}], "RibbonTabLabelActive",
                   StripOnInput->False]}, Dynamic[
@@ -107,14 +107,14 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageCropIcon.png"]],
                    ImageSizeCache->{16., {9., 14.}}], "RibbonTabLabel",
                   StripOnInput->False], True->
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageCropIconHighlight.png"]],
                    ImageSizeCache->{16., {9., 14.}}], "RibbonTabLabelActive",
                   StripOnInput->False]}, Dynamic[
@@ -173,14 +173,14 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageTransformIcon.png"]],
                    ImageSizeCache->{23., {9., 14.}}], "RibbonTabLabel",
                   StripOnInput->False], True->
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageTransformIconHighlight.png"]],
                    ImageSizeCache->{23., {9., 14.}}], "RibbonTabLabelActive",
                   StripOnInput->False]}, Dynamic[
@@ -238,14 +238,14 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageCoordinatesIcon.png"]],
                    ImageSizeCache->{22., {9., 14.}}], "RibbonTabLabel",
                   StripOnInput->False], True->
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageCoordinatesIconHighlight.png"]],
                    ImageSizeCache->{22., {9., 14.}}], "RibbonTabLabelActive",
                   StripOnInput->False]}, Dynamic[
@@ -299,14 +299,14 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageMaskIcon.png"]],
                    ImageSizeCache->{18., {9., 14.}}], "RibbonTabLabel",
                   StripOnInput->False], True->
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageMaskIconHighlight.png"]],
                    ImageSizeCache->{18., {9., 14.}}], "RibbonTabLabelActive",
                   StripOnInput->False]}, Dynamic[
@@ -361,14 +361,14 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageInformationIcon.png"]],
                    ImageSizeCache->{17., {9., 14.}}], "RibbonTabLabel",
                   StripOnInput->False], True->
                  StyleBox[
                   DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageInformationIconHighlight.png"]],
                    ImageSizeCache->{17., {9., 14.}}], "RibbonTabLabelActive",
                   StripOnInput->False]}, Dynamic[
@@ -429,14 +429,14 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                   DynamicBox[FEPrivate`FrontEndResource[
                    "ImageEditModeMenu", "MoreTab"],
                    BaseStyle->{"TextStyling"},
-                   ImageSizeCache->{37., {0., 6.}}], "RibbonTabLabel",
+                   ImageSizeCache->{37., {1., 6.}}], "RibbonTabLabel",
                   StripOnInput->False], True->
                  StyleBox[
                   
                   DynamicBox[FEPrivate`FrontEndResource[
                    "ImageEditModeMenu", "MoreTab"],
                    BaseStyle->{"TextStyling"},
-                   ImageSizeCache->{37., {0., 6.}}], "RibbonTabLabelActive",
+                   ImageSizeCache->{37., {1., 6.}}], "RibbonTabLabelActive",
                   StripOnInput->False]}, Dynamic[
                   FEPrivate`Or[
                    FEPrivate`SameQ[Ribbon`Private`page$$, "More"], 
@@ -564,12 +564,11 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                     ButtonBox[
                     PaneSelectorBox[{False->
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
-                    "Close.png"]]], True->
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, "Close.png"]]],
+                     True->
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "Close-Hover.png"]]]}, Dynamic[
                     CurrentValue["MouseOver"]],
                     FrameMargins->0,
@@ -627,24 +626,24 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "RectangleSelectionIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -674,24 +673,24 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "DiskSelectionIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -720,24 +719,24 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "LassoSelectionIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -767,24 +766,24 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageEditEraser.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -805,7 +804,6 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                     DynamicBox[FEPrivate`FrontEndResource[
                     "ImageEditModeMenu", "ClearMarkers"],
                     BaseStyle->{"TextStyling"}],
-                    
                     Appearance:>FEPrivate`FrontEndResource[
                     "FEExpressions", "GrayNinePatchAppearance"],
                     BaseStyle->{"RibbonBold"},
@@ -841,7 +839,7 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                     FontWeight->Bold], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "TooltipOptionsUpArrow.png"]]]}
                     },
                     AutoDelete->False,
@@ -876,7 +874,7 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                     GraphicsBox[{RasterBox[Dynamic[
                     Reverse[ImageData[ImageTake[ToExpression[
                     FE`Evaluate[FEPrivate`ImportImage[
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageEditingTooltipPreview.png"]]]], {
                     20 - IntegerPart[CurrentValue[$FrontEnd, 
                     "RasterExploreViewRange"]/2], 20 + 
@@ -905,8 +903,8 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                     Rectangle[{
                     IntegerPart[
                     CurrentValue[$FrontEnd, "RasterExploreViewRange"]/2], 
-                    IntegerPart[
-                    CurrentValue[$FrontEnd, "RasterExploreViewRange"]/2]}, {
+                    IntegerPart[CurrentValue[$FrontEnd, 
+                    "RasterExploreViewRange"]/2]}, {
                     IntegerPart[CurrentValue[$FrontEnd, 
                     "RasterExploreViewRange"]/2] + 1, 
                     IntegerPart[CurrentValue[$FrontEnd, 
@@ -994,7 +992,7 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                     FontWeight->Bold], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "TooltipOptionsDownArrow.png"]]]}
                     },
                     AutoDelete->False,
@@ -1076,7 +1074,7 @@ $CellContext`maskTool$$ = "GetRectangleImageMask", $CellContext`maskFill$$ =
                     DynamicBox[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "OrangeButtonDownPointer.png"]]], 
                     BaselinePosition -> (Scaled[0.3] -> Axis)]}}, 
                     GridBoxAlignment -> {"Rows" -> {{Baseline}}}, AutoDelete -> 
@@ -1099,8 +1097,12 @@ $CellContext`alpha}, $CellContext`obj = MathLink`CallFrontEnd[
                     FrontEnd`Value[
                     
                     FEPrivate`GetEnclosingImageMarkersIndices[$CellContext`\
-obj]]]; If[$CellContext`range =!= Null, $CellContext`imgSel = 
-                    MathLink`CallFrontEnd[
+obj]]]; If[
+                    MatchQ[$CellContext`range, {{
+                    Blank[], 
+                    Blank[]}, {
+                    Blank[], 
+                    Blank[]}}], $CellContext`imgSel = MathLink`CallFrontEnd[
                     FrontEnd`Value[
                     
                     FEPrivate`GetEnclosingImageMarkerGraphics[$CellContext`\
@@ -1108,11 +1110,18 @@ obj]]]; $CellContext`imgTake = ImageTake[
                     $CellContext`image$$[], 
                     Part[$CellContext`range, 1], 
                     Part[$CellContext`range, 2]]; $CellContext`alpha = 
-                    ToExpression[$CellContext`imgSel]; $CellContext`result = 
-                    ImageAdd[$CellContext`imgTake, 
-                    ColorNegate[$CellContext`alpha]]; CopyToClipboard[
-                    ExpressionCell[$CellContext`result, "Input"]]]], 
-                    DynamicBox[
+                    ToExpression[$CellContext`imgSel]; $CellContext`result = (
+                    If[
+                    Or[ImageColorSpace[#] === Automatic, 
+                    And[
+                    ImageMeasurements[#, "Transparency"], ImageMeasurements[
+                    AlphaChannel[#], "Min"] < 1]], 
+                    ImageApply[1& , #, Masking -> ColorNegate[#2]], 
+                    
+                    SetAlphaChannel[#, #2]]& )[$CellContext`imgTake, \
+$CellContext`alpha], $CellContext`result = $CellContext`image$$[]]; 
+                    CopyToClipboard[
+                    ExpressionCell[$CellContext`result, "Input"]]], DynamicBox[
                     FEPrivate`FrontEndResource[
                     "ImageEditModeMenu", "ImageList"], 
                     BaseStyle -> {"TextStyling"}] :> 
@@ -1122,9 +1131,15 @@ $CellContext`alpha}, $CellContext`obj = MathLink`CallFrontEnd[
                     FrontEnd`AttachedCellParent[]]; $CellContext`range = 
                     MathLink`CallFrontEnd[
                     FrontEnd`Value[
-                    
-                    FEPrivate`GetlImageMarkersIndicesList[$CellContext`obj]]]; \
-$CellContext`imgSel = MathLink`CallFrontEnd[
+                    FEPrivate`GetlImageMarkersIndicesList[$CellContext`obj]]]; 
+                    If[
+                    MatchQ[$CellContext`range, {
+                    Repeated[{{
+                    Blank[], 
+                    Blank[]}, {
+                    Blank[], 
+                    Blank[]}}]}], $CellContext`imgSel = 
+                    MathLink`CallFrontEnd[
                     FrontEnd`Value[
                     
                     FEPrivate`GetImageMarkerGraphicsList[$CellContext`obj]]]; \
@@ -1133,10 +1148,16 @@ $CellContext`imgTake = Map[ImageTake[
                     Part[#, 1], 
                     Part[#, 2]]& , $CellContext`range]; $CellContext`alpha = 
                     Map[ToExpression, $CellContext`imgSel]; \
-$CellContext`result = MapThread[ImageAdd[#, 
+$CellContext`result = MapThread[If[
+                    Or[ImageColorSpace[#] === Automatic, 
+                    And[
+                    ImageMeasurements[#, "Transparency"], ImageMeasurements[
+                    AlphaChannel[#], "Min"] < 1]], 
+                    ImageApply[1& , #, Masking -> ColorNegate[#2]], 
                     
-                    ColorNegate[#2]]& , {$CellContext`imgTake, \
-$CellContext`alpha}]; CopyToClipboard[
+                    SetAlphaChannel[#, #2]]& , {$CellContext`imgTake, \
+$CellContext`alpha}], $CellContext`result = {
+                    $CellContext`image$$[]}]; CopyToClipboard[
                     ExpressionCell[$CellContext`result, "Input"]]]}, Method -> 
                     "Queued", Appearance -> None, MenuStyle -> "RibbonText"]},
                     
@@ -1229,12 +1250,11 @@ $CellContext`alpha}]; CopyToClipboard[
                     ButtonBox[
                     PaneSelectorBox[{False->
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
-                    "Close.png"]]], True->
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, "Close.png"]]],
+                     True->
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "Close-Hover.png"]]]}, Dynamic[
                     CurrentValue["MouseOver"]],
                     FrameMargins->0,
@@ -1373,7 +1393,6 @@ $CellContext`t}}]]]],
                     TagBox[GridBox[{
                     {
                     StyleBox[
-                    
                     DynamicBox[FEPrivate`FrontEndResource[
                     "ImageEditModeMenu", "ViewOptions"],
                     BaseStyle->{"TextStyling"}],
@@ -1381,7 +1400,7 @@ $CellContext`t}}]]]],
                     FontWeight->Bold], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "TooltipOptionsUpArrow.png"]]]}
                     },
                     AutoDelete->False,
@@ -1416,7 +1435,7 @@ $CellContext`t}}]]]],
                     GraphicsBox[{RasterBox[Dynamic[
                     Reverse[ImageData[ImageTake[ToExpression[
                     FE`Evaluate[FEPrivate`ImportImage[
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageEditingTooltipPreview.png"]]]], {
                     20 - IntegerPart[CurrentValue[$FrontEnd, 
                     "RasterExploreViewRange"]/2], 20 + 
@@ -1518,7 +1537,6 @@ $CellContext`t}}]]]],
                     
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
-                    
                     GridBoxSpacings->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{0.1}}}],
                     "Column"], False->
@@ -1533,7 +1551,8 @@ $CellContext`t}}]]]],
                     StripOnInput->False,
                     FontWeight->Bold], 
                     DynamicBox[FEPrivate`ImportImage[
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "TooltipOptionsDownArrow.png"]]]}
                     },
                     AutoDelete->False,
@@ -1719,12 +1738,10 @@ $CellContext`range = MathLink`CallFrontEnd[
                     ButtonBox[
                     PaneSelectorBox[{False->
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
-                    "Close.png"]]], True->
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, "Close.png"]]],
+                     True->
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "Close-Hover.png"]]]}, Dynamic[
                     CurrentValue["MouseOver"]],
                     FrameMargins->0,
@@ -1767,7 +1784,7 @@ $CellContext`range = MathLink`CallFrontEnd[
                     ButtonBox[
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MirrorHorizontal.png"]]],
                     
                     Appearance:>FEPrivate`FrontEndResource[
@@ -1797,7 +1814,7 @@ $CellContext`range = MathLink`CallFrontEnd[
                     ButtonBox[
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MirrorVertical.png"]]],
                     
                     Appearance:>FEPrivate`FrontEndResource[
@@ -1827,9 +1844,8 @@ $CellContext`range = MathLink`CallFrontEnd[
                     ButtonBox[
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "Counterclockwise90.png"]]],
-                    
                     Appearance:>FEPrivate`FrontEndResource[
                     "FEExpressions", "SubtitleButtonNinePatchAppearance"],
                     
@@ -1857,7 +1873,7 @@ $CellContext`range = MathLink`CallFrontEnd[
                     ButtonBox[
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "Clockwise90.png"]]],
                     
                     Appearance:>FEPrivate`FrontEndResource[
@@ -2122,6 +2138,7 @@ $CellContext`range = MathLink`CallFrontEnd[
                     Blank[Integer], 
                     Blank[Integer]}]], 
                     ButtonBox[
+                    
                     DynamicBox[FEPrivate`FrontEndResource[
                     "ImageEditModeMenu", "Pixels"],
                     BaseStyle->{"TextStyling"}],
@@ -2376,11 +2393,11 @@ $CellContext`range = MathLink`CallFrontEnd[
                     ButtonBox[
                     PaneSelectorBox[{False->
                     DynamicBox[FEPrivate`ImportImage[
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
-                    "Close.png"]]], True->
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, "Close.png"]]],
+                     True->
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "Close-Hover.png"]]]}, Dynamic[
                     CurrentValue["MouseOver"]],
                     FrameMargins->0,
@@ -2524,7 +2541,14 @@ $CellContext`size$$ = 4},
                     Blank[], 
                     Blank[], 
                     Blank[], 
-                    Blank[]}}, {"L", "A", "B", "\[Alpha]"}, {"LUV", {
+                    Blank[]}}, {"L", "A", "B", "\[Alpha]"}, {"LCH", {
+                    Blank[], 
+                    Blank[], 
+                    Blank[]}}, {"L", "C", "H"}, {"LCH", {
+                    Blank[], 
+                    Blank[], 
+                    Blank[], 
+                    Blank[]}}, {"L", "C", "H", "\[Alpha]"}, {"LUV", {
                     Blank[], 
                     Blank[], 
                     Blank[]}}, {"L", "U", "V"}, {"LUV", {
@@ -2607,9 +2631,10 @@ $CellContext`size$$ = 4},
                     Round[$CellContext`col], 
                     Item["", Frame -> {{True, True}, {False, False}}], 
                     Apply[Sequence, 
+                    Map[NumberForm[#, 4]& , 
                     Take[$CellContext`values, 
                     Min[5, 
-                    Length[$CellContext`values]]]]}], 
+                    Length[$CellContext`values]]]]]}], 
                     ItemSize -> {{$CellContext`size$$, $CellContext`size$$, 
                     0, $CellContext`size$$, $CellContext`size$$, 
                     0, {$CellContext`size$$}}}, Spacings -> {1, 1}, Alignment -> 
@@ -2617,7 +2642,7 @@ $CellContext`size$$ = 4},
                     ImageSize -> {Automatic, 100}, 
                     Scrollbars -> {False, Automatic}, 
                     AppearanceElements -> {}]], $CellContext`headings$$ = 
-                    "None"; "None selected"]], StandardForm]]}
+                    "None"; Style["None selected", Italic]]], StandardForm]]}
                     },
                     DefaultBaseStyle->"Column",
                     GridBoxAlignment->{"Columns" -> {{Left}}},
@@ -2685,7 +2710,7 @@ $CellContext`size$$ = 4},
                     PaneBox[
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "OrangeButtonDownPointer.png"]]],
                     BaselinePosition->(Scaled[0.3] -> Axis)]}
                     },
@@ -2714,8 +2739,8 @@ $CellContext`size$$ = 4},
                     FEPrivate`CreateMaskBoxesFromImageMarkers[]]]; 
                     CopyToClipboard[
                     ExpressionCell[
-                    Image[
-                    ToExpression[$CellContext`imgSel]], "Input"]]], 
+                    Binarize[
+                    ToExpression[$CellContext`imgSel], 0.5], "Input"]]], 
                     
                     DynamicBox[FEPrivate`FrontEndResource[
                     "ImageEditModeMenu", "CoordinatesCopyCoordinates"],
@@ -2756,6 +2781,7 @@ $CellContext`size$$ = 4},
                     },
                     DefaultBaseStyle->"Column",
                     GridBoxAlignment->{"Columns" -> {{Left}}},
+                    
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                     
@@ -2782,8 +2808,7 @@ $CellContext`size$$ = 4},
                     StripOnInput->False,
                     FontWeight->Bold], 
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "TooltipOptionsUpArrow.png"]]]}
                     },
                     AutoDelete->False,
@@ -2818,7 +2843,7 @@ $CellContext`size$$ = 4},
                     GraphicsBox[{RasterBox[Dynamic[
                     Reverse[ImageData[ImageTake[
                     ToExpression[FE`Evaluate[FEPrivate`ImportImage[
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageEditingTooltipPreview.png"]]]], {
                     20 - IntegerPart[CurrentValue[$FrontEnd, 
                     "RasterExploreViewRange"]/2], 20 + 
@@ -2900,6 +2925,7 @@ $CellContext`size$$ = 4},
                     },
                     AutoDelete->False,
                     GridBoxAlignment->{"Columns" -> {{Left}}},
+                    
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                     GridBoxSpacings->{"Columns" -> {{5}}, "Rows" -> {{1}}}],
@@ -2935,7 +2961,7 @@ $CellContext`size$$ = 4},
                     FontWeight->Bold], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "TooltipOptionsDownArrow.png"]]]}
                     },
                     AutoDelete->False,
@@ -3029,12 +3055,11 @@ $CellContext`size$$ = 4},
                     ButtonBox[
                     PaneSelectorBox[{False->
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
-                    "Close.png"]]], True->
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, "Close.png"]]],
+                     True->
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "Close-Hover.png"]]]}, Dynamic[
                     CurrentValue["MouseOver"]],
                     FrameMargins->0,
@@ -3053,6 +3078,7 @@ $CellContext`size$$ = 4},
                  
                  GridBoxAlignment->{
                   "Columns" -> {Left, Left, Right}, "Rows" -> {{Center}}},
+                 
                  GridBoxItemSize->{
                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
                  GridBoxSpacings->{"Columns" -> {{0}}, "Rows" -> {{0}}}],
@@ -3088,24 +3114,24 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MaskPointIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3135,24 +3161,24 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MaskLineIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3182,24 +3208,24 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MaskLineSegmentsIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3229,24 +3255,24 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MaskFreehandLineIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3277,24 +3303,24 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MaskRectangleIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3324,24 +3350,24 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MaskRectangleIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3373,24 +3399,23 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MaskPolygonIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3422,24 +3447,24 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MaskPolygonIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3471,24 +3496,24 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MaskEllipseIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3505,6 +3530,7 @@ $CellContext`size$$ = 4},
                     BaseStyle -> {"TextStyling"}], "Tooltip"]& ], False->
                     TagBox[
                     TooltipBox[
+                    
                     SetterBox[
                     Dynamic[$CellContext`maskTool$$, ($CellContext`maskTool$$ = \
 #; FrontEndExecute[
@@ -3517,24 +3543,24 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MaskEllipseIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3553,6 +3579,7 @@ $CellContext`size$$ = 4},
                     PaneSelectorBox[{True->
                     TagBox[
                     TooltipBox[
+                    
                     SetterBox[
                     Dynamic[$CellContext`maskTool$$, ($CellContext`maskTool$$ = \
 #; FrontEndExecute[
@@ -3565,24 +3592,24 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MaskFreehandShapeIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3614,24 +3641,24 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "MaskFreehandShapeIcon.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3662,24 +3689,24 @@ $CellContext`size$$ = 4},
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Pressed.png"]]]], 
                     Mouseover[
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Default.png"]]]], 
                     Dynamic[
                     RawBoxes[
                     FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "SmallSquareButton-Highlight.png"]]]]]], StandardForm]], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageEditEraser.png"]]]}, {1, 2}, 1,
                     Alignment->Center],
                     Appearance->None],
@@ -3743,7 +3770,6 @@ $CellContext`size$$ = 4},
                     "GetDiskImageMask"]; FrontEndExecute[
                     FrontEnd`Select2DTool[$CellContext`maskTool$$]])& ],
                     Enabled->Dynamic[
-                    
                     MemberQ[{"GetRectangleImageMask", "GetDiskImageMask", 
                     "GetFrameImageMask", "GetCircleImageMask", 
                     "GetPolygonImageMask", "GetHollowPolygonImageMask", 
@@ -3866,7 +3892,7 @@ $CellContext`size$$ = 4},
                     PaneBox[
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "OrangeButtonDownPointer.png"]]],
                     BaselinePosition->(Scaled[0.3] -> Axis)]}
                     },
@@ -3895,8 +3921,8 @@ $CellContext`size$$ = 4},
                     FEPrivate`CreateMaskBoxesFromImageMarkers[]]]; 
                     CopyToClipboard[
                     ExpressionCell[
-                    Image[
-                    ToExpression[$CellContext`imgSel]], "Input"]]], 
+                    Binarize[
+                    ToExpression[$CellContext`imgSel], 0.5], "Input"]]], 
                     
                     DynamicBox[FEPrivate`FrontEndResource[
                     "ImageEditModeMenu", "InverseMaskToAnImage"],
@@ -3908,8 +3934,8 @@ $CellContext`size$$ = 4},
                     CopyToClipboard[
                     ExpressionCell[
                     ColorNegate[
-                    Image[
-                    ToExpression[$CellContext`imgSel]]], "Input"]]], 
+                    Binarize[
+                    ToExpression[$CellContext`imgSel], 0.5]], "Input"]]], 
                     
                     DynamicBox[FEPrivate`FrontEndResource[
                     "ImageEditModeMenu", "MaskToGraphics"],
@@ -3941,6 +3967,7 @@ $CellContext`size$$ = 4},
                     
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+                    
                     GridBoxSpacings->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{1}}}],
                     "Column"],
@@ -3963,7 +3990,7 @@ $CellContext`size$$ = 4},
                     FontWeight->Bold], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "TooltipOptionsUpArrow.png"]]]}
                     },
                     AutoDelete->False,
@@ -3998,7 +4025,7 @@ $CellContext`size$$ = 4},
                     GraphicsBox[{RasterBox[Dynamic[
                     Reverse[ImageData[ImageTake[
                     ToExpression[FE`Evaluate[FEPrivate`ImportImage[
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageEditingTooltipPreview.png"]]]], {
                     20 - IntegerPart[CurrentValue[$FrontEnd, 
                     "RasterExploreViewRange"]/2], 20 + 
@@ -4116,7 +4143,7 @@ $CellContext`size$$ = 4},
                     FontWeight->Bold], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "TooltipOptionsDownArrow.png"]]]}
                     },
                     AutoDelete->False,
@@ -4198,12 +4225,11 @@ $CellContext`size$$ = 4},
                     ButtonBox[
                     PaneSelectorBox[{False->
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
-                    "Close.png"]]], True->
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, "Close.png"]]],
+                     True->
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "Close-Hover.png"]]]}, Dynamic[
                     CurrentValue["MouseOver"]],
                     FrameMargins->0,
@@ -4285,7 +4311,7 @@ $CellContext`size$$ = 4},
                     BoxForm`localvar$$ = #)& , (BoxForm`localvar$$ = #; 
                     PreIncrement[BoxForm`update$$])& }], {
                     Automatic, Delimiter, "Grayscale", "RGB", "CMYK", "HSB", 
-                    "XYZ", "LAB", "LUV"}, 
+                    "XYZ", "LAB", "LCH", "LUV"}, 
                     Dynamic[
                     ImageColorSpace[
                     $CellContext`image$$[]], SynchronousUpdating -> False, 
@@ -4329,7 +4355,9 @@ $CellContext`size$$ = 4},
                     Dynamic[
                     BoxForm`localvar$$, {(BoxForm`localvar$$ = #)& , (
                     BoxForm`localvar$$ = #)& , (BoxForm`localvar$$ = #; 
-                    PreIncrement[BoxForm`update$$])& }]], StandardForm],
+                    PreIncrement[BoxForm`update$$])& }], Enabled -> 
+                    Dynamic[ImageColorSpace[
+                    $CellContext`image$$[]] =!= Automatic]], StandardForm],
                     CachedValue:>StyleBox[
                     CheckboxBox[False], ShowContents -> False, StripOnInput -> 
                     False],
@@ -4522,7 +4550,8 @@ $CellContext`size$$ = 4},
                     CurrentValue[
                     FrontEnd`AttachedCellParent[], 
                     "GraphicsBoxOptionsImageSize"]]]; PopupMenu[
-                    Dynamic[BoxForm`localvar$$, {(BoxForm`localvar$$ = #)& , (
+                    Dynamic[
+                    BoxForm`localvar$$, {(BoxForm`localvar$$ = #)& , (
                     BoxForm`localvar$$ = #)& , (BoxForm`localvar$$ = #; 
                     PreIncrement[BoxForm`update$$])& }], {Automatic -> Dynamic[
                     RawBoxes[
@@ -4556,7 +4585,6 @@ $CellContext`size$$ = 4},
                     0.7019607843137254, 0.7019607843137254, 
                     0.7019607843137254],
                     GridBoxAlignment->{"Columns" -> {Right, Left}},
-                    
                     GridBoxDividers->{
                     "Columns" -> {{False}}, "Rows" -> {{False}, True, False}},
                     
@@ -4613,7 +4641,7 @@ $CellContext`size$$ = 4},
                     FontWeight->Bold], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "TooltipOptionsUpArrow.png"]]]}
                     },
                     AutoDelete->False,
@@ -4648,7 +4676,7 @@ $CellContext`size$$ = 4},
                     GraphicsBox[{RasterBox[Dynamic[
                     Reverse[ImageData[ImageTake[
                     ToExpression[FE`Evaluate[FEPrivate`ImportImage[
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "ImageEditingTooltipPreview.png"]]]], {
                     20 - IntegerPart[CurrentValue[$FrontEnd, 
                     "RasterExploreViewRange"]/2], 20 + 
@@ -4664,8 +4692,8 @@ $CellContext`size$$ = 4},
                     Rectangle[{
                     IntegerPart[
                     CurrentValue[$FrontEnd, "RasterExploreViewRange"]/2], 
-                    IntegerPart[CurrentValue[$FrontEnd, 
-                    "RasterExploreViewRange"]/2]}, {
+                    IntegerPart[
+                    CurrentValue[$FrontEnd, "RasterExploreViewRange"]/2]}, {
                     IntegerPart[CurrentValue[$FrontEnd, 
                     "RasterExploreViewRange"]/2] + 1, 
                     IntegerPart[CurrentValue[$FrontEnd, 
@@ -4750,7 +4778,6 @@ $CellContext`size$$ = 4},
                     
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
-                    
                     GridBoxSpacings->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{0.1}}}],
                     "Column"], False->
@@ -4766,7 +4793,7 @@ $CellContext`size$$ = 4},
                     FontWeight->Bold], 
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Image"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Image"}, 
                     "TooltipOptionsDownArrow.png"]]]}
                     },
                     AutoDelete->False,
@@ -4869,12 +4896,11 @@ $CellContext`size$$ = 4},
                     ButtonBox[
                     PaneSelectorBox[{False->
                     DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
-                    "Close.png"]]], True->
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, "Close.png"]]],
+                     True->
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{"Bitmaps", "Ribbons", "Common"}, 
+                    FrontEnd`ToFileName[{"Ribbons", "Common"}, 
                     "Close-Hover.png"]]]}, Dynamic[
                     CurrentValue["MouseOver"]],
                     FrameMargins->0,
@@ -5131,12 +5157,31 @@ CellContext`input$]], MenuEvaluator -> Automatic], Delimiter,
      GridBoxSpacings->{"Columns" -> {{0}}, "Rows" -> {{0}}}],
     "Column"],
    DynamicModuleValues:>{},
-   Initialization:>If[
-     ValueQ[FrontEnd`Private`$RibbonDefaultPage], 
-     Ribbon`Private`page$$ = FrontEnd`Private`$RibbonDefaultPage; 
-     ClearAll[FrontEnd`Private`$RibbonDefaultPage]]],
+   Initialization:>(If[
+      ValueQ[FrontEnd`Private`$RibbonDefaultPage], Ribbon`Private`page$$ = 
+      FrontEnd`Private`$RibbonDefaultPage]; 
+    ClearAll[FrontEnd`Private`$RibbonDefaultPage])],
   BaseStyle->{"RibbonText"},
-  DynamicModuleValues:>{},
+  DynamicModuleValues:>{{DownValues[$CellContext`image$$] = {HoldPattern[
+         $CellContext`image$$[]] :> With[{$CellContext`expr$ = ToExpression[
+            MathLink`CallFrontEnd[
+             FrontEnd`NotebookRead[
+              FrontEnd`AttachedCellParent[]]]]}, 
+         If[
+          
+          Image`Image2DQ[$CellContext`expr$], $CellContext`image$$[] = \
+$CellContext`expr$]]}}, {
+    DownValues[$CellContext`imageThumbnail$$] = {HoldPattern[
+         $CellContext`imageThumbnail$$[]] :> If[
+         Image`Image2DQ[
+          $CellContext`image$$[]], $CellContext`imageThumbnail$$[] = Thumbnail[
+            $CellContext`image$$[], Small]; If[
+           Apply[Or, 
+            MapThread[Greater, 
+             Map[ImageDimensions, {
+               $CellContext`imageThumbnail$$[], 
+               $CellContext`image$$[]}]]], $CellContext`imageThumbnail$$[] = \
+$CellContext`image$$[]]; $CellContext`imageThumbnail$$[]]}}},
   Initialization:>(
    CurrentValue[$FrontEnd, "DisplayImagePixels"] = "DetailExploreView"; 
    MathLink`CallFrontEnd[
@@ -5164,6 +5209,7 @@ $CellContext`image$$[]]; $CellContext`imageThumbnail$$[]]; If[
       FrontEnd`Private`$ImageEditorDefaultImage; 
      ClearAll[FrontEnd`Private`$ImageEditorDefaultImage]]; Null),
   SynchronousInitialization->False]],
+ Evaluator->"System",
  Deployed->True,
  CellContext->Cell,
  DynamicUpdating->True,
@@ -5173,8 +5219,8 @@ $CellContext`image$$[]]; $CellContext`imageThumbnail$$[]]; If[
 },
 WindowSize->{808, 911},
 WindowMargins->{{556, Automatic}, {Automatic, 89}},
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (December 5, \
-2013)",
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 11, \
+2014)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -5183,18 +5229,18 @@ StyleDefinitions->"Default.nb"
 (*CellTagsOutline
 CellTagsIndex->{
  "AttachedImage2D"->{
-  Cell[558, 20, 230810, 5151, 60, InheritFromParent,
+  Cell[558, 20, 231871, 5197, 60, InheritFromParent,
    CellTags->"AttachedImage2D"]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"AttachedImage2D", 231687, 5184}
+ {"AttachedImage2D", 232745, 5230}
  }
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 230810, 5151, 60, InheritFromParent,
+Cell[558, 20, 231871, 5197, 60, InheritFromParent,
  CellTags->"AttachedImage2D"]
 }
 ]

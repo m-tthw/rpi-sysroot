@@ -1,0 +1,67 @@
+<font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Conditionals</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">A common thing you’ll likely find yourself wanting to do is to not only play a random note (see the previous section on randomness) but also make a random decision and based on the outcome run some code or some other code. For example, you might want to randomly play a drum or a cymbal. We can achieve this with an <code style="font-size:15px; color:deeppink; background-color:white">if</code> statement.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Flipping a Coin</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">So, let’s flip a coin, if it’s heads, play a drum, if it’s tails play a cymbal. Easy. We can emulate a coin flip with our <code style="font-size:15px; color:deeppink; background-color:white">one_in</code> function (introduced in the section on randomness) specifying a probability of 1 in 2: <code style="font-size:15px; color:deeppink; background-color:white">one_in(2)</code>. We can then use the result of this to decide between two pieces of code, the code to play the drum and the code to play the cymbal:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">loop do
+
+  if one_in(2)
+    sample :drum_heavy_kick
+  else
+    sample :drum_cymbal_closed
+  end
+  
+  sleep 0.5
+  
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Notice that <code style="font-size:15px; color:deeppink; background-color:white">if</code> statements have three parts:</p>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>The question to ask</li>
+  <li>The first choice of code to run (if answer to the question is yes)</li>
+  <li>The second choice of code to run (if the answer to the question is no)</li>
+</ul>
+
+<p style="font-size:15px;color:#5e5e5e;">Typically in programming languages, the notion of yes is represented by the term <code style="font-size:15px; color:deeppink; background-color:white">true</code> and the notion of no is represented by the term <code style="font-size:15px; color:deeppink; background-color:white">false</code>. So we need to find a question that will give us <code style="font-size:15px; color:deeppink; background-color:white">true</code> or <code style="font-size:15px; color:deeppink; background-color:white">false</code> values which is exactly what <code style="font-size:15px; color:deeppink; background-color:white">one_in</code> does. </p>
+
+<p style="font-size:15px;color:#5e5e5e;">Notice how the first choice is wrapped between the <code style="font-size:15px; color:deeppink; background-color:white">if</code> and the <code style="font-size:15px; color:deeppink; background-color:white">else</code> and the second choice is wrapped between the <code style="font-size:15px; color:deeppink; background-color:white">else</code> and the <code style="font-size:15px; color:deeppink; background-color:white">end</code>. Just like do/end blocks you can put multiple lines of code in either place. For example:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">loop do
+
+  if one_in(2)
+    sample :drum_heavy_kick
+    sleep 0.5
+  else
+    sample :drum_cymbal_closed
+    sleep 0.25
+  end
+  
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">This time we’re now sleeping for a different amount of time depending on which choice we make.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Simple if</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Sometimes you want optionally execute just one line of code. This is possible by placing <code style="font-size:15px; color:deeppink; background-color:white">if</code> and then the question at the end. For example:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">use_synth :dsaw
+
+loop do
+  play 50, amp: 0.3, release: 2
+  play 53, amp: 0.3, release: 2 if one_in(2)
+  play 57, amp: 0.3, release: 2 if one_in(3)
+  play 60, amp: 0.3, release: 2 if one_in(4)
+  sleep 1.5
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">This will chords of different numbers with the chance of each note playing having a different probability.</p>
+</font>

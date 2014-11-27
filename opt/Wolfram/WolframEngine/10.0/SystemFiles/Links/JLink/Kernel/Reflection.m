@@ -5,7 +5,7 @@
         tgayley@wolfram.com
 *)
 
-(* :Package Version: 4.7 *)
+(* :Package Version: 4.8 *)
 
 (* :Mathematica Version: 4.0 *)
 		     
@@ -34,7 +34,7 @@ Constructors::usage =
 "Constructors[javaclass] returns a list (in TableForm) of the Java declarations for all constructors of the specified class. You can also specify a class by its name or an object of that class, as in Constructors[\"java.net.URL\"] or Constructors[javaobject]."
 
 Methods::usage =
-"Methods[javaclass] returns a list (in TableForm) of the Java declarations for all methods of the specified class. You can also specify a class by its name or an object of that class, as in Methods[\"java.net.URL\"] or Methods[javaobject]. To make them easier to read, the declarations have had removed some keywords that are not very relevant to their use from Mathematica. These keywords are final, synchronized, and native. The public keyword is also removed, as the methods are always public."
+"Methods[javaclass] returns a list (in TableForm) of the Java declarations for all methods of the specified class. You can also specify a class by its name or an object of that class, as in Methods[\"java.net.URL\"] or Methods[javaobject]. To make them easier to read, the declarations have had removed some keywords that are not very relevant to their use from the Wolfram Language. These keywords are final, synchronized, and native. The public keyword is also removed, as the methods are always public."
 
 Fields::usage =
 "Fields[javaclass] returns a list (in TableForm) of the Java declarations for all fields of the specified class. You can also specify a class by its name or an object of that class, as in Fields[\"java.net.URL\"] or Fields[javaobject]. To make them easier to read, the declarations have had the keywords transient and volatile removed. The public keyword is also removed, as the fields are always public."

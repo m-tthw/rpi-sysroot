@@ -9,6 +9,7 @@
 /opt/vc/bin/vcdbg
 /opt/vc/bin/edidparser
 /opt/vc/bin/tvservice
+/opt/vc/bin/vcsmem
 /opt/vc/bin/mmal_vc_diag
 /opt/vc/bin/vchiq_test
 /opt/vc/sbin

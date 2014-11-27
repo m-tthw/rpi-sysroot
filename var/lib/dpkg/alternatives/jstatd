@@ -3,7 +3,7 @@ auto
 jstatd.1.gz
 /usr/share/man/man1/jstatd.1.gz
 
-/usr/lib/jvm/jdk-7-oracle-armhf/bin/jstatd
-317
-/usr/lib/jvm/jdk-7-oracle-armhf/man/man1/jstatd.1.gz
+/usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt/bin/jstatd
+318
+/usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt/man/man1/jstatd.1.gz
 

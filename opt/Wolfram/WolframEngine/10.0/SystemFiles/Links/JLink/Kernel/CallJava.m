@@ -5,7 +5,7 @@
         tgayley@wolfram.com
 *)
 
-(* :Package Version: 4.7 *)
+(* :Package Version: 4.8 *)
 
 (* :Mathematica Version: 4.0 *)
 
@@ -42,7 +42,7 @@ LoadClass::usage =
 "LoadClass is deprecated. The new name is LoadJavaClass."
 
 LoadJavaClass::usage =
-"LoadJavaClass[\"classname\"] loads the specified class into Java and sets up definitions so that it can be used from Mathematica. You must specify the fully-qualified class name, for example \"java.awt.Frame\". It is safe to call LoadJavaClass multiple times on the same class; it simply returns right away without doing anything."
+"LoadJavaClass[\"classname\"] loads the specified class into Java and sets up definitions so that it can be used from the Wolfram Language. You must specify the fully-qualified class name, for example \"java.awt.Frame\". It is safe to call LoadJavaClass multiple times on the same class; it simply returns right away without doing anything."
 
 JavaNew::usage =
 "JavaNew[javaclass, args] constructs a Java object of the specified JavaClass, passing the args to its constructor. You can also specify the class name instead of a JavaClass: JavaNew[\"classname\", args]. With this second form, the class will be loaded first if necessary."
@@ -63,19 +63,19 @@ AllowShortContext::usage =
 "AllowShortContext is an option to LoadJavaClass (in J/Link) and LoadNETType (in .NET/Link) that specifies whether to create a class-specific context in \"short\" form. If you load a class named \"com.foo.Bar\" containing a static method named baz, with the option AllowShortContext->True you could call the method with Bar`baz[args]. With AllowShortContext->False, you would have to write com`foo`Bar`baz[args]. AllowShortContext->False allows you to avoid conflicts with other contexts in the system. The default is True."
 
 UseTypeChecking::usage =
-"UseTypeChecking is an option to LoadJavaClass that specifies whether to include or omit the type checking performed in Mathematica on arguments to Java calls. The default is UseTypeChecking->True. UseTypeChecking is largely superseded by the flag $RelaxedTypeChecking. If you use UseTypeChecking->False, you must make sure you pass methods exactly the argument types they expect. Also note that J/Link will not be able to correctly differentiate between multiple definitions of the same method that take the same number of arguments. Most users will have no use for this option."
+"UseTypeChecking is an option to LoadJavaClass that specifies whether to include or omit the type checking performed in the Wolfram Language on arguments to Java calls. The default is UseTypeChecking->True. UseTypeChecking is largely superseded by the flag $RelaxedTypeChecking. If you use UseTypeChecking->False, you must make sure you pass methods exactly the argument types they expect. Also note that J/Link will not be able to correctly differentiate between multiple definitions of the same method that take the same number of arguments. Most users will have no use for this option."
 
 Val::usage =
 "Val is deprecated. The new name is JavaObjectToExpression."
 
 JavaObjectToExpression::usage =
-"JavaObjectToExpression[javaobject] converts the specified Java object reference into its value as a \"native\" Mathematica expression. Normally, all Java objects that have a meaningful \"by value\" representation in Mathematica are returned by value to Mathematica automatically. Such objects include strings, arrays (these become lists), and instances of so-called wrapper classes like java.lang.Integer. However, you can get a reference form of one of these types if you explicitly call JavaNew or use the ReturnAsJavaObject function. In such cases, you can use JavaObjectToExpression to retrieve the value. JavaObjectToExpression has no effect on objects that have no meaningful \"value\" representation in Mathematica."
+"JavaObjectToExpression[javaobject] converts the specified Java object reference into its value as a \"native\" Wolfram Language expression. Normally, all Java objects that have a meaningful \"by value\" representation in the Wolfram Language are returned by value to the Wolfram Language automatically. Such objects include strings, arrays (these become lists), and instances of so-called wrapper classes like java.lang.Integer. However, you can get a reference form of one of these types if you explicitly call JavaNew or use the ReturnAsJavaObject function. In such cases, you can use JavaObjectToExpression to retrieve the value. JavaObjectToExpression has no effect on objects that have no meaningful \"value\" representation in the Wolfram Language."
 
 ByRef::usage =
 "ByRef is deprecated. The new name is ReturnAsJavaObject."
 
 ReturnAsJavaObject::usage =
-"ReturnAsJavaObject[expr] causes a Java method call or field access during the evaluation of expr to return its result as an object reference (that is, a JavaObject expression), not a value. Most Java objects are returned as references normally, but those that have a meaningful Mathematica representation are returned \"by value\". Such objects include strings, arrays, and the so-called wrapper classes like java.lang.Integer. ReturnAsJavaObject overrides the normal behavior and forces any object returned to Mathematica to be sent only as a reference. It is typically used to avoid needlessly sending large arrays of numbers back and forth between Java and Mathematica. You can use ReturnAsJavaObject to cause only a reference to be sent, then use the JavaObjectToExpression function at the end if the final value is needed."
+"ReturnAsJavaObject[expr] causes a Java method call or field access during the evaluation of expr to return its result as an object reference (that is, a JavaObject expression), not a value. Most Java objects are returned as references normally, but those that have a meaningful Wolfram Language representation are returned \"by value\". Such objects include strings, arrays, and the so-called wrapper classes like java.lang.Integer. ReturnAsJavaObject overrides the normal behavior and forces any object returned to the Wolfram Language to be sent only as a reference. It is typically used to avoid needlessly sending large arrays of numbers back and forth between Java and the Wolfram Language. You can use ReturnAsJavaObject to cause only a reference to be sent, then use the JavaObjectToExpression function at the end if the final value is needed."
 
 
 Begin["`Package`"]

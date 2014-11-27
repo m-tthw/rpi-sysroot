@@ -3,18 +3,18 @@
 (*** Wolfram Notebook File ***)
 (* http://www.wolfram.com/nb *)
 
-(* CreatedBy='Mathematica 9.0' *)
+(* CreatedBy='Mathematica 10.0' *)
 
 (*CacheID: 234*)
 (* Internal cache information:
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
-NotebookDataPosition[       157,          7]
-NotebookDataLength[     22530,        537]
-NotebookOptionsPosition[     21434,        507]
-NotebookOutlinePosition[     22571,        537]
-CellTagsIndexPosition[     22528,        534]
-WindowTitle->Install Mathematica Item
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     22558,        542]
+NotebookOptionsPosition[     21532,        511]
+NotebookOutlinePosition[     22600,        542]
+CellTagsIndexPosition[     22557,        539]
+WindowTitle->Install Wolfram System Item
 WindowFrame->ModelessDialog*)
 
 (* Beginning of Notebook Content *)
@@ -32,23 +32,23 @@ Cell[BoxData[
             DynamicBox[ToBoxes[
               FEPrivate`FrontEndResource["FEStrings", "installType"], 
               StandardForm],
-             ImageSizeCache->{118., {3., 9.}}], 
+             ImageSizeCache->{109., {2., 8.}}], 
             DynamicBox[ToBoxes[
               PopupMenu[
                Dynamic[$CellContext`type$$], 
                
                Thread[{
                  "Palette", "Stylesheet", "Package", ".mx File", 
-                  "MathLink Program", "Application"} -> 
+                  "WolframLink Program", "Application"} -> 
                 FrontEndResource["FEStrings", "installTypesList"]], ImageSize -> 
                Full, BaseStyle -> "ControlStyle", Alignment -> Left], 
               StandardForm],
-             ImageSizeCache->{154., {8., 18.}}]},
+             ImageSizeCache->{164., {6., 17.}}]},
            {
             DynamicBox[ToBoxes[
               FEPrivate`FrontEndResource["FEStrings", "installSource"], 
               StandardForm],
-             ImageSizeCache->{39., {0., 9.}}], 
+             ImageSizeCache->{36., {1., 8.}}], 
             DynamicBox[ToBoxes[
               ActionMenu[
                Dynamic[$CellContext`label$$], 
@@ -65,6 +65,7 @@ $CellContext`source$$ = #)& ,
                     FEPrivate`GetPopupList[#]]& )[
                     StringJoin[
                     "MenuList", $CellContext`type$$, "Windows"]], {}], {1}], {
+                  
                    Pattern[$CellContext`x, 
                     BlankSequence[]]} :> {$CellContext`x, Delimiter}], 
                 If[
@@ -87,7 +88,7 @@ $CellContext`source$$ = #)& ,
                     Which[
                     
                     MemberQ[{
-                    ".mx File", "MathLink Program", 
+                    ".mx File", "WolframLink Program", 
                     "Application"}, $CellContext`type$$], {"", 
                     FrontEndResource["FEStrings", 
                     StringJoin["install", 
@@ -112,13 +113,13 @@ $CellContext`s$])]},
 $CellContext`s$])]}, {}]], Method -> "Queued", Appearance -> "Popup", 
                ImageSize -> Full, BaseStyle -> "ControlStyle", Alignment -> 
                Left], StandardForm],
-             ImageSizeCache->{153., {9., 18.}},
+             ImageSizeCache->{164., {7., 17.}},
              TrackedSymbols:>{$CellContext`type$$}]},
            {
             DynamicBox[ToBoxes[
               FEPrivate`FrontEndResource["FEStrings", "installName"], 
               StandardForm],
-             ImageSizeCache->{69., {1., 9.}}], 
+             ImageSizeCache->{63., {0., 8.}}], 
             InputFieldBox[Dynamic[$CellContext`name$$], String,
              ContinuousAction->True,
              Enabled->Dynamic[
@@ -157,7 +158,7 @@ $CellContext`s$])]}, {}]], Method -> "Queued", Appearance -> "Popup",
                    
                    DynamicBox[FEPrivate`FrontEndResource[
                     "FEStrings", "installUserBaseDir"],
-                    ImageSizeCache->{163., {3., 12.}}],
+                    ImageSizeCache->{152., {3., 10.}}],
                    DynamicBox[
                     ToBoxes[
                     ToFileName[
@@ -234,7 +235,7 @@ $CellContext`s$])]}, {}]], Method -> "Queued", Appearance -> "Popup",
                    
                    DynamicBox[FEPrivate`FrontEndResource[
                     "FEStrings", "installSystemBaseDir"],
-                    ImageSizeCache->{219., {3., 9.}}],
+                    ImageSizeCache->{202., {2., 8.}}],
                    DynamicBox[
                     ToBoxes[
                     ToFileName[
@@ -340,6 +341,7 @@ $CellContext`s$])]}, {}]], Method -> "Queued", Appearance -> "Popup",
                 FrontEnd`FileName[{
                  FrontEnd`$BaseDirectory, "SystemFiles", "FrontEnd", 
                   "Palettes"}], "Stylesheet", 
+                
                 FrontEnd`FileName[{
                  FrontEnd`$BaseDirectory, "SystemFiles", "FrontEnd", 
                   "Stylesheets"}], 
@@ -361,7 +363,7 @@ $CellContext`s$])]}, {}]], Method -> "Queued", Appearance -> "Popup",
        FrameBox[
         ButtonBox[
          DynamicBox[FEPrivate`FrontEndResource["FEStrings", "installHelp"],
-          ImageSizeCache->{25., {3., 9.}}],
+          ImageSizeCache->{29., {3., 10.}}],
          Appearance->Automatic,
          ButtonFunction:>FrontEndTokenExecute["OpenHelpLink", {
             StringJoin["ref/menuitem/Install", 
@@ -455,7 +457,8 @@ $CellContext`loc$$, $CellContext`name$$]}]]; DialogReturn[]), Appearance ->
              FEPrivate`FrontEndResourceString["cancelButtonText"]], 
             ButtonFunction :> DialogReturn[$Canceled], Appearance -> 
             "CancelButton", Evaluator -> Automatic, Method -> "Preemptive"]}],
-         ImageSizeCache->{192., {19.5, 26.5}}],
+         
+         ImageSizeCache->{155., {20.9169921875, 26.0830078125}}],
         Deployed->True,
         DynamicUpdating->True,
         ButtonBoxOptions->{ImageMargins->{{2, 2}, {10, 10}},
@@ -471,12 +474,13 @@ $CellContext`loc$$, $CellContext`name$$]}]]; DialogReturn[]), Appearance ->
        "ItemsIndexed" -> {{-1, -1} -> {Right, Inherited}}},
      GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
      GridBoxSpacings->{"Columns" -> {{Automatic}}, "Rows" -> {0, 2, 0.5, 1}}],
+    
     "Grid"], If[CurrentValue[
       EvaluationNotebook[], WindowMargins] =!= Automatic, CurrentValue[
       EvaluationNotebook[], WindowMargins] = MapAt[Automatic& , 
       AbsoluteCurrentValue[
        EvaluationNotebook[], WindowMargins], {{1, 2}, {2, 1}}]],
-   ImageSizeCache->{300., {108.5, 115.5}}],
+   ImageSizeCache->{300., {106.4169921875, 111.5830078125}}],
   Deinitialization:>(
    CurrentValue[$FrontEnd, {
       PrivateFrontEndOptions, "DialogSettings", "Install", "Source"}] = 
@@ -505,15 +509,14 @@ $CellContext`loc$$, $CellContext`name$$]}]]; DialogReturn[]), Appearance ->
  FontFamily:>CurrentValue["PanelFontFamily"],
  FontSize:>CurrentValue["PanelFontSize"]]
 },
-NotebookEventActions->{"ReturnKeyDown" :> (FE`Evaluate[
-     FEPrivate`FindAndClickDefaultButton[]]; DialogReturn[$Failed]), {
-   "MenuCommand", "EvaluateCells"} :> (FE`Evaluate[
-     FEPrivate`FindAndClickDefaultButton[]]; DialogReturn[$Failed]), {
-   "MenuCommand", "HandleShiftReturn"} :> (FE`Evaluate[
-     FEPrivate`FindAndClickDefaultButton[]]; DialogReturn[$Failed]), {
-   "MenuCommand", "EvaluateNextCell"} :> (FE`Evaluate[
-     FEPrivate`FindAndClickDefaultButton[]]; DialogReturn[$Failed]), 
-  "EscapeKeyDown" :> (FE`Evaluate[
+NotebookEventActions->{"ReturnKeyDown" :> FE`Evaluate[
+    FEPrivate`FindAndClickDefaultButton[]], {"MenuCommand", "EvaluateCells"} :> 
+  FE`Evaluate[
+    FEPrivate`FindAndClickDefaultButton[]], {
+   "MenuCommand", "HandleShiftReturn"} :> FE`Evaluate[
+    FEPrivate`FindAndClickDefaultButton[]], {
+   "MenuCommand", "EvaluateNextCell"} :> FE`Evaluate[
+    FEPrivate`FindAndClickDefaultButton[]], "EscapeKeyDown" :> (FE`Evaluate[
      FEPrivate`FindAndClickCancelButton[]]; DialogReturn[$Failed]), 
   "WindowClose" :> (FE`Evaluate[
      FEPrivate`FindAndClickCancelButton[]]; DialogReturn[$Failed])},
@@ -522,7 +525,9 @@ WindowMargins->Automatic,
 WindowFrame->"ModelessDialog",
 WindowTitle->Dynamic[
   FEPrivate`FrontEndResource["FEStrings", "installTitle"]],
-FrontEndVersion->"9.0 for Microsoft Windows (32-bit) (August 29, 2012)",
+CellContext->"Global`",
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 17, \
+2014)",
 StyleDefinitions->"SystemDialog.nb"
 ]
 (* End of Notebook Content *)
@@ -536,7 +541,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[603, 21, 20827, 484, 226, InheritFromParent,
+Cell[607, 21, 20921, 488, 220, InheritFromParent,
  PageBreakAbove->True,
  PageBreakWithin->False]
 }

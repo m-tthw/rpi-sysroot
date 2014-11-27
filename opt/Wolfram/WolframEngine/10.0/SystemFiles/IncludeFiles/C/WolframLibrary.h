@@ -8,7 +8,7 @@ U.S. Copyright Office as an unpublished work, pursuant to Title 17,
 U.S. Code, Section 408.  Unauthorized copying, adaptation, distribution
 or display is prohibited.
 
-$Id: WolframLibrary.h,v 1.57 2013/12/13 15:10:51 rknapp Exp $
+$Id: WolframLibrary.h,v 1.62 2014/05/16 19:53:42 kkouptsov Exp $
 
 *************************************************************************/
 
@@ -104,7 +104,7 @@ typedef union {
 #if defined(_WIN32) || defined(_WIN64)
 #define DLLEXPORT __declspec(dllexport)
 #else
-#define DLLEXPORT 
+#define DLLEXPORT
 #endif
 
 #endif
@@ -151,7 +151,7 @@ typedef struct st_WolframIOLibrary_Functions
 
 	mint (*createAsynchronousTaskWithThread)(
 		void (*asyncRunner)(mint asyncTaskID, void* initData),
-		void* initData 
+		void* initData
 	);
 
 	void (*raiseAsyncEvent)(mint asyncTaskID, char* eventType, DataStore);
@@ -174,10 +174,15 @@ typedef struct st_WolframIOLibrary_Functions
 	void (*DataStore_addNamedString)(DataStore, char* name, char*);
 	void (*DataStore_addNamedMTensor)(DataStore, char* name, MTensor);
 	void (*DataStore_addNamedDataStore)(DataStore, char* name, DataStore);
-	
+
 } *WolframIOLibrary_Functions;
 
 typedef struct st_WolframLibraryData* WolframLibraryData;
+
+/* For backward compatibility with name change */
+#define		getMathLink				getWSLINK
+#define		processMathLink			processWSLINK
+#define		getMathLinkEnvironment	getWSLINKEnvironment
 
 struct st_WolframLibraryData
 {
@@ -209,8 +214,8 @@ struct st_WolframLibraryData
 	mcomplex* (*MTensor_getComplexData)( MTensor);
 	void (*Message)(const char *);
 	mint (*AbortQ)(void);
-	MLINK (*getMathLink)(WolframLibraryData);
-	int (*processMathLink)(MLINK);
+	MLINK (*getWSLINK)(WolframLibraryData);
+	int (*processWSLINK)(MLINK);
 	int (*evaluateExpression)(WolframLibraryData, char *, int, mint, void *);
 	struct st_WolframRuntimeData *runtimeData;
 	struct st_WolframCompileLibrary_Functions *compileLibraryFunctions;
@@ -218,9 +223,9 @@ struct st_WolframLibraryData
 
 	/* Added in WolframLibraryVersion 2 */
 	mbool (*registerInputStreamMethod)(
-		const char *name, 
+		const char *name,
 		void  (*ctor)(MInputStream, const char* msgHead, void* optionsIn),
-		mbool (*handlerTest)(void*, char*), 
+		mbool (*handlerTest)(void*, char*),
 		void* methodData,
 		void  (*destroyMethod)(void* methodData)
 	);
@@ -228,9 +233,9 @@ struct st_WolframLibraryData
 	mbool (*unregisterInputStreamMethod)(const char *name);
 
 	mbool (*registerOutputStreamMethod)(
-		const char *name, 
+		const char *name,
 		void  (*ctor)(MOutputStream, const char* msgHead, void* optionsIn, mbool appendMode),
-		mbool (*handlerTest)(void*, char*), 
+		mbool (*handlerTest)(void*, char*),
 		void* methodData,
 		void  (*destroyMethod)(void* methodData)
 	);
@@ -238,7 +243,7 @@ struct st_WolframLibraryData
 	mbool (*unregisterOutputStreamMethod)(const char *name);
 
 	struct st_WolframIOLibrary_Functions* ioLibraryFunctions;
-	MLENV (*getMathLinkEnvironment)(WolframLibraryData);
+	MLENV (*getWSLINKEnvironment)(WolframLibraryData);
 	struct st_WolframSparseLibrary_Functions *sparseLibraryFunctions;
 	struct st_WolframImageLibrary_Functions *imageLibraryFunctions;
 
@@ -250,6 +255,10 @@ struct st_WolframLibraryData
 	int (*unregisterLibraryCallbackManager)(const char *name);
 	int (*callLibraryCallbackFunction)(mint id, mint ArgC, MArgument *Args, MArgument Res);
 	int (*releaseLibraryCallbackFunction)(mint id);
+
+	/* security callback */
+	mbool (*validatePath)(char* path, char type);
+	mbool (*protectedModeQ)(void);
 };
 
 

@@ -1,4 +1,4 @@
-(* $Id: AsynchronousDemo.m,v 1.1.2.4 2013/12/04 22:53:46 bakshee Exp $ *)
+(* $Id: AsynchronousDemo.m,v 1.4 2014/02/26 20:14:57 bakshee Exp $ *)
 
 (* A demo for DeviceExecuteAsynchronous. Also implements properties. *)
 
@@ -30,11 +30,11 @@ async[_,"Save",url_,file_,opts___,efun_] := URLSaveAsynchronous[url,file,efun,op
 		   
 (*-----------------------------------------------------------------*)  
 
-DeviceAPI`DeviceClassRegister["AsynchronousDemo",
+DeviceFramework`DeviceClassRegister["AsynchronousDemo",
 	"ExecuteAsynchronousFunction" -> async,
 	"NativeProperties" -> {"Cookies", "LastAccess"},
-	"GetPropertyFunction" -> getProp,
-	"SetPropertyFunction" -> setProp,
+	"GetNativePropertyFunction" -> getProp,
+	"SetNativePropertyFunction" -> setProp,
 	"CloseFunction" -> (Quiet[
 		properties[ #[[2]] ]["LastAccess"] =.;
 		properties[ #[[2]] ]["Cookies"] =.;

@@ -1,5 +1,5 @@
 @@resource noErrorYet
-The Wolfram Language hasn't beeped yet.
+The Wolfram System hasn't beeped yet.
 @|
 @|
 @@resource maxErrorCountExceeded
@@ -11,7 +11,7 @@ There is not enough memory available to do what you asked. To make more memory a
 @|
 @|
 @@resource cantReadResource
-Cannot find an important resource. You probably have a bad or modified copy of the Wolfram Language and should re-install it.
+Cannot find an important resource. You probably have a bad or modified copy of the Wolfram System and should re-install it.
 @|
 @|
 @@resource omegaSyntaxError
@@ -280,7 +280,7 @@ You tried to reset to its default a Cell Style in the Defaults notebook. This wi
 @|
 @|
 @@resource evaluationDoneAlert
-The Wolfram Language beeped because an evaluation was finished, and the option to beep after each evaluation was set. See EvaluationCompletionAction in the Option Inspector.
+The Wolfram System beeped because an evaluation was finished, and the option to beep after each evaluation was set. See EvaluationCompletionAction in the Option Inspector.
 @|
 @|
 @@resource noMoreInputCellsToEvaluate
@@ -368,6 +368,10 @@ You cannot type when a cell label is selected. To enter text, click inside a cel
 The file "%s" could not be found.
 @|
 @|
+@@resource cantFindItem
+"%s" could not be found.
+@|
+@|
 @@resource cantOpenDefaultsFile
 The Defaults notebook could not be opened. You will not be able to use the Wolfram Language without a good Defaults notebook.
 @|
@@ -414,21 +418,21 @@ The option to save automatically after each result is enabled (NotebookAutoSave-
 @|
 @|
 @@resource mathLinkErrorNotKilled
-There is a problem with the MathLink connection for the kernel named below. In some cases you may have to kill and restart it. 
+There is a problem with the WSTP connection for the kernel named below. In some cases you may have to kill and restart it. 
 Kernel: %s.
-Low-level MathLink error: %s.
+Low-level WSTP error: %s.
 @|
 @|
 @@resource MLOpenFailedError
 A connection could not be established to the kernel.
 Kernel: %s.
-Low-level MathLink error: %s.
+Low-level WSTP error: %s.
 @|
 @|
 @@resource mathLinkErrorKilled
-There is a problem with the MathLink connection for the kernel named below, and the kernel was disconnected. You may have to kill the kernel process manually.
+There is a problem with the WSTP connection for the kernel named below, and the kernel was disconnected. You may have to kill the kernel process manually.
 Kernel: %s.
-Low-level MathLink error: %s.
+Low-level WSTP error: %s.
 @|
 @|
 @@resource cantDontEvaluateActiveCell
@@ -787,6 +791,10 @@ Raster data contains %d value per pixel; 3 or 4 are required with ColorFunction-
 Raster data contains %d value per pixel; 3 or 4 are required with ColorFunction->LABColor.
 @|
 @|
+@@resource GERasterBadDataLCHColorSingular
+Raster data contains %d value per pixel; 3 or 4 are required with ColorFunction->LCHColor.
+@|
+@|
 @@resource GERasterBadDataLUVColorSingular
 Raster data contains %d value per pixel; 3 or 4 are required with ColorFunction->LUVColor.
 @|
@@ -817,6 +825,10 @@ Raster data contains %d values per pixel; 3 or 4 are required with ColorFunction
 @|
 @@resource GERasterBadDataLABColorPlural
 Raster data contains %d values per pixel; 3 or 4 are required with ColorFunction->LABColor.
+@|
+@|
+@@resource GERasterBadDataLCHColorPlural
+Raster data contains %d values per pixel; 3 or 4 are required with ColorFunction->LCHColor.
 @|
 @|
 @@resource GERasterBadDataLUVColorPlural
@@ -863,6 +875,22 @@ Raster3D data contains %d value per voxel; no more than 4 are allowed with Color
 Raster3D data contains %d value per voxel; 4 or 5 are required with ColorFunction->CMYKColor.
 @|
 @|
+@@resource GEBadRaster3DDataXYZColorSingular
+Raster3D data contains %d value per voxel; 3 or 4 are required with ColorFunction->XYZColor.
+@|
+@|
+@@resource GEBadRaster3DDataLUVColorSingular
+Raster3D data contains %d value per voxel; 3 or 4 are required with ColorFunction->LUVColor.
+@|
+@|
+@@resource GEBadRaster3DDataLABColorSingular
+Raster3D data contains %d value per voxel; 3 or 4 are required with ColorFunction->LABColor.
+@|
+@|
+@@resource GEBadRaster3DDataLCHColorSingular
+Raster3D data contains %d value per voxel; 3 or 4 are required with ColorFunction->LCHColor.
+@|
+@|
 @@resource GERaster3DBadDataAutomaticPlural
 Raster3D data contains %d values per voxel; no more than 4 are allowed with ColorFunction->Automatic.
 @|
@@ -881,6 +909,22 @@ Raster3D data contains %d values per voxel; no more than 4 are allowed with Colo
 @|
 @@resource GEBadRaster3DDataCMYKColorPlural
 Raster3D data contains %d values per voxel; 4 or 5 are required with ColorFunction->CMYKColor.
+@|
+@|
+@@resource GEBadRaster3DDataXYZColorPlural
+Raster3D data contains %d values per voxel; 3 or 4 are required with ColorFunction->XYZColor.
+@|
+@|
+@@resource GEBadRaster3DDataLUVColorPlural
+Raster3D data contains %d values per voxel; 3 or 4 are required with ColorFunction->LUVColor.
+@|
+@|
+@@resource GEBadRaster3DDataLABColorPlural
+Raster3D data contains %d values per voxel; 3 or 4 are required with ColorFunction->LABColor.
+@|
+@|
+@@resource GEBadRaster3DDataLCHColorPlural
+Raster3D data contains %d values per voxel; 3 or 4 are required with ColorFunction->LCHColor.
 @|
 @|
 @@resource GEOpenGLShaderCompileError
@@ -1296,7 +1340,7 @@ An error occurred while graphically sizing %s.
 @|
 @|
 @@resource MEMathLinkErrorWhileReadingBox
-A MathLink error occurred while receiving BoxData.
+A WSTP error occurred while receiving BoxData.
 @|
 @|
 @@resource MEUnknownMathEditBox
@@ -1529,7 +1573,7 @@ A possible internal error has been detected. If possible, please report the erro
 @|
 @| \:2010 == \[Hyphen]
 @@resource AssertFailedBoxExpression
-Cell[TextData[{"INTERNAL SELF\:2010TEST ERROR: `assertfileinfo`\[NewLine]", Cell[BoxData[ButtonBox[PaneSelectorBox[{False -> StyleBox[RowBox[{"Click", " ", "here"}], FontFamily :> CurrentValue["PanelFontFamily"]], True -> StyleBox[RowBox[{"Click", " ", "here"}], "HyperlinkActive", FontFamily :> CurrentValue["PanelFontFamily"]]}, Dynamic[CurrentValue["MouseOver"]], BaselinePosition -> Baseline, FrameMargins -> 0, ImageSize -> Automatic], BaseStyle -> "Hyperlink", ButtonData -> {URL["`hyperlink`"], None}, ButtonNote -> "`hyperlink`"]]]," to find out if this problem is known, and to help improve\[NewLine]the Wolfram Language by reporting it to Wolfram Research."}], "Assert", "MSG"]
+Cell[TextData[{"INTERNAL SELF\:2010TEST ERROR: `assertfileinfo`\[NewLine]", Cell[BoxData[ButtonBox[PaneSelectorBox[{False -> StyleBox[RowBox[{"Click", " ", "here"}], FontFamily :> CurrentValue["PanelFontFamily"]], True -> StyleBox[RowBox[{"Click", " ", "here"}], "HyperlinkActive", FontFamily :> CurrentValue["PanelFontFamily"]]}, Dynamic[CurrentValue["MouseOver"]], BaselinePosition -> Baseline, FrameMargins -> 0, ImageSize -> Automatic], BaseStyle -> "Hyperlink", ButtonData -> {URL["`hyperlink`"], None}, ButtonNote -> "`hyperlink`"]]]," to find out if this problem is known, and to help improve\[NewLine]the Wolfram System by reporting it to Wolfram Research."}], "Assert", "MSG"]
 @|
 @|
 @@resource AssertFailedHyperlink
@@ -1537,7 +1581,7 @@ http://support.wolfram.com/error-report/?Version=`version`&SystemID=`systemid`&L
 @|
 @|
 @@resource AssertInformationFailedBoxExpression
-Cell[TextData[{"INTERNAL SELF\:2010TEST ERROR: `assertfileinfo`\[NewLine]Information:`additionalinformation`\[NewLine]", Cell[BoxData[ButtonBox[PaneSelectorBox[{False -> StyleBox[RowBox[{"Click", " ", "here"}], FontFamily :> CurrentValue["PanelFontFamily"]], True -> StyleBox[RowBox[{"Click", " ", "here"}], "HyperlinkActive", FontFamily :> CurrentValue["PanelFontFamily"]]}, Dynamic[CurrentValue["MouseOver"]], BaselinePosition -> Baseline, FrameMargins -> 0, ImageSize -> Automatic], BaseStyle -> "Hyperlink", ButtonData -> {URL["`hyperlink`"], None}, ButtonNote -> "`hyperlink`"]]]," to find out if this problem is known, and to help improve\[NewLine]the Wolfram Language by reporting it to Wolfram Research."}], "Assert", "MSG"]
+Cell[TextData[{"INTERNAL SELF\:2010TEST ERROR: `assertfileinfo`\[NewLine]Information:`additionalinformation`\[NewLine]", Cell[BoxData[ButtonBox[PaneSelectorBox[{False -> StyleBox[RowBox[{"Click", " ", "here"}], FontFamily :> CurrentValue["PanelFontFamily"]], True -> StyleBox[RowBox[{"Click", " ", "here"}], "HyperlinkActive", FontFamily :> CurrentValue["PanelFontFamily"]]}, Dynamic[CurrentValue["MouseOver"]], BaselinePosition -> Baseline, FrameMargins -> 0, ImageSize -> Automatic], BaseStyle -> "Hyperlink", ButtonData -> {URL["`hyperlink`"], None}, ButtonNote -> "`hyperlink`"]]]," to find out if this problem is known, and to help improve\[NewLine]the Wolfram System by reporting it to Wolfram Research."}], "Assert", "MSG"]
 @|
 @|
 @@resource AssertInformationFailedHyperlink
@@ -1569,7 +1613,7 @@ You tried to insert a function template without having an insertion point.
 @|
 @|
 @@resource cantStoreSealBecauseProgramLocked
-Your personalization information could not be saved because you do not have the necessary access permissions. You will have to reenter the information next time you start the Wolfram Language.
+Your personalization information could not be saved because you do not have the necessary access permissions. You will have to reenter the information next time you start the Wolfram System.
 @|
 @| \:2010 == \[Hyphen]
 @@resource illegalOptionHeadIsNotToken	 
@@ -1850,7 +1894,7 @@ Unicode binary resource corrupted.
 @|
 @|
 @@resource cantFindMacResourcesFile
-The default Macintosh resource file, Resources.rsrc, could not be found. This indicates an improperly installed copy of the Wolfram Language, or a disk error.
+The default Macintosh resource file, Resources.rsrc, could not be found. This indicates an improperly installed copy of the Wolfram System, or a disk error.
 @|
 @|
 @@resource HeadOfMenuSetupIsNotMenu
@@ -1916,13 +1960,13 @@ An unknown menu command token (%s) was encountered in the keyboard setup file Ke
 You used a Command or Control key combination that is not defined to do anything.
 @|
 @@resource warningOrErrorBeep
-The Wolfram Language beeped to let you know that a warning or error message was generated by the kernel. You can disable this beep by resetting MessageOptions in the Option Inspector.
+The Wolfram System beeped to let you know that a warning or error message was generated by the kernel. You can disable this beep by resetting MessageOptions in the Option Inspector.
 @|
 @@resource appearanceManagerRequiredError
-The Wolfram Language was unable to locate the Macintosh Appearance Manager control panel, without which it cannot operate. Reinstalling the Wolfram Language should solve this problem.
+The Wolfram System was unable to locate the Macintosh Appearance Manager control panel, without which it cannot operate. Reinstalling the Wolfram System should solve this problem.
 @|
 @@resource openGLNotPresentError
-Could not locate the OpenGL 3D graphic library. Reinstalling the Wolfram Language should solve this problem.
+Could not locate the OpenGL 3D graphic library. Reinstalling the Wolfram System should solve this problem.
 @|
 @|
 @|
@@ -1931,7 +1975,7 @@ Could not locate the OpenGL 3D graphic library. Reinstalling the Wolfram Languag
 @|
 @|
 @| *****************************************************************************************
-@| Following are MathLink error messages: These strings must be kept in the same
+@| Following are WSTP error messages: These strings must be kept in the same
 @| order, or they will not correspond to the expected errors.
 @| *****************************************************************************************
 @|
@@ -2064,7 +2108,7 @@ Unknown error
 @|
 @|
 @@resource MLErrorStringMLEINIT
-The MathLink environment was not initialized
+The WSTP environment was not initialized
 @|
 @|
 @@resource MLErrorStringMLEARGV
@@ -2276,7 +2320,7 @@ Unable to find font with family %s, weight %s, slant %s, and size %d. Substituti
 The file "%s" is not a valid %s file.
 @|
 @@resource cantRenderMetafile
-The metafile cell cannot be rendered. It may be corrupted or this version of the Wolfram Language may not support metafile cells.
+The metafile cell cannot be rendered. It may be corrupted or this version of the Wolfram System may not support metafile cells.
 @|
 @@resource cantDoToMetafileCell
 You tried to do something that cannot be done to a Metafile cell.
@@ -2333,7 +2377,7 @@ Illegal format for BoxData[]: All elements must have the same FormatType.
 The file on disk has been modified outside of the Wolfram System. Unfortunately the notebook you are using is not entirely in memory and cannot be restored. Try to save current notebook?
 @|
 @@resource unrecoverableMathLinkError
-A MathLink communication error has occurred which the Wolfram System is unable to recover from.
+A WSTP communication error has occurred which the Wolfram System is unable to recover from.
 @|
 @@resource fileOnDiskChanged
 The notebook's file %s has changed outside of the Wolfram System. Overwrite?
@@ -2366,13 +2410,13 @@ The pre-3.0 kernel you are using is not able to convert to or from typeset notat
 Unable to find font %s with encoding %s. Using Automatic.
 @|
 @@resource openingNotebookFromFutureVersion
-This notebook was created in a more recent version of the Wolfram Language, and may not function properly with the older front end you are using. Contact Wolfram Research (www.wolfram.com) for upgrade information.
+This notebook was created in a more recent version of the Wolfram System, and may not function properly with the older front end you are using. Contact Wolfram Research (www.wolfram.com) for upgrade information.
 @|
 @@resource openingUnsupportedPackageFile
 This package is encoded, and cannot be opened in the Wolfram Language.
 @|
 @@resource openingNotebookFromFutureVersionDeadly
-This notebook was created in a more recent version of the Wolfram Language and is not compatible with this version. Contact Wolfram Research (www.wolfram.com) for upgrade information.
+This notebook was created in a more recent version of the Wolfram System and is not compatible with this version. Contact Wolfram Research (www.wolfram.com) for upgrade information.
 @|
 @@resource cantFindNativeSystemResources
 The system resources specific to your language could not be loaded from %s. The Wolfram System will continue to run with its built-in English language resources.
@@ -2827,7 +2871,7 @@ The Wolfram System encountered an error processing the current reference databas
 	-306->"The license corresponding to this activation key is no longer active. Please \!\(\*ButtonBox[\"contact Wolfram Research\",BaseStyle->\"ContactActivationLink\"]\).",
 	-307->"Premier Service has expired. Please \!\(\*ButtonBox[\"contact Wolfram Research\",BaseStyle->\"ContactActivationLink\"]\)." (*?*),
 	-308->"No product was found for the activation key \"`actkey`\". Please \!\(\*ButtonBox[\"contact Wolfram Research\",BaseStyle->\"ContactActivationLink\"]\)." (*?*),
-	-309->"Incomplete contact information was found for the activation key \"`actkey`\". Please visit \!\(\*ButtonBox[\"register.wolfram.com\",ButtonData->{URL[\"http://webm-dev1.wolfram.com:8080/LoginSystem/User/ProductRegistration?activationKey=`actkey`&mathid=`mathid`\"],None},BaseStyle->\"Hyperlink\"]\) to complete your registration." (*?*),
+	-309->"Incomplete contact information was found for the activation key \"`actkey`\". Please visit \!\(\*ButtonBox[\"register.wolfram.com\",ButtonData->{URL[\"http://webm-dev1.wolfram.com:8080/LoginSystem/User/ProductRegistration?activationKey=`actkey`&mathid=`mathid`\"],None},BaseStyle->\"HyperlinkBold\"]\) to complete your registration." (*?*),
 	-310->"The Wolfram activation server reported the activation key \"`actkey`\" isn't in a valid format (XXXX-XXXX-XXXXXX). Verify that the activation key was entered correctly, or \!\(\*ButtonBox[\"contact Wolfram Research\",BaseStyle->\"ContactActivationLink\"]\) if the problem persists.",
 	-312->"The Wolfram activation server experienced an error in creating the password. Please \!\(\*ButtonBox[\"contact Wolfram Research\",BaseStyle->\"ContactActivationLink\"]\).",
 	-314->"The Wolfram activation server was unable to create a password. Please \!\(\*ButtonBox[\"contact Wolfram Research\",BaseStyle->\"ContactActivationLink\"]\).",
@@ -2850,8 +2894,18 @@ The Wolfram System encountered an error processing the current reference databas
 	-508->"There was a response error with the product activation server. Please check your internet connection and try again, or \!\(\*ButtonBox[\"contact Wolfram Research\",BaseStyle->\"ContactActivationLink\"]\) if the problem persists.",
 	-509->"There was a runtime error in the product activation component. Please \!\(\*ButtonBox[\"contact Wolfram Research\",BaseStyle->\"ContactActivationLink\"]\)." (*?*),
 	-510->"There was an exception in the product activation component. Please \!\(\*ButtonBox[\"contact Wolfram Research\",BaseStyle->\"ContactActivationLink\"]\)." (*?*),
-	-1000->"There was a MathLink error with the product activation component. Please \!\(\*ButtonBox[\"contact Wolfram Research\",BaseStyle->\"ContactActivationLink\"]\). Error: `mlnum`, `mlstring`",
+	-1000->"There was a WSTP error with the product activation component. Please \!\(\*ButtonBox[\"contact Wolfram Research\",BaseStyle->\"ContactActivationLink\"]\). Error: `mlnum`, `mlstring`",
 	-2000->"There was an HTTP error when contacting the activation server. Error: `httperr` Please check your internet connection and try again, or \!\(\*ButtonBox[\"contact Wolfram Research\",BaseStyle->\"ContactActivationLink\"]\) if the problem persists." (*?*),
 	_->"An unknown error happened during product activation. Error code: `error`"
+}
+@|
+@|
+@@resource WolframCloudLoginErrors
+{
+	401->"The password or Wolfram ID you entered was not correct.",
+	1500->"Your current plan does not include access to the Wolfram Desktop. \!\(\*ButtonBox[\"Upgrade\",BaseStyle->\"DesktopAccessErrorLink\"]\) to get access.",
+	1600->"Cannot connect to the Wolfram Cloud. Please try again later. If this problem persists, \!\(\*ButtonBox[\"contact us\", BaseStyle->\"CloudConnectionErrorLink\"]\).",
+	1601->"Unable to connect to the internet. Please check your internet connection.",
+	1602->"Unable to connect to the internet. Please check your internet connection."
 }
 @|

@@ -8,7 +8,7 @@
    Basic process control for parallel evaluation of Mathematica expressions.
  *)
 
-(* :Package Version: 3.0 ($Id: Kernels.m,v 1.99 2013/10/26 17:29:21 maeder Exp $) *)
+(* :Package Version: 3.0 ($Id: Kernels.m,v 1.100 2014/05/06 15:54:37 maeder Exp $) *)
 
 (* :Mathematica Version: 6+ *)
 
@@ -122,13 +122,6 @@ BeginPackage["Parallel`Protected`"] (* semi-hidden methods, aka protected *)
 `PacketHandler::usage = "PacketHandler[packet, kernel] is called by receive to handle packets other than evaluation results received from a remote kernel."
 SyntaxInformation[PacketHandler] = { "ArgumentsPattern" -> {_, _} }
 
-`KernelPreemptiveLink::usage = "KernelPreemptiveLink[kernel] gives the preemptive sharing LinkObject connected to this kernel."
-SyntaxInformation[KernelPreemptiveLink] = { "ArgumentsPattern" -> {_} }
-
-(* Parallel`Client`$CallBackLink is defined in SubKernels`init *)
-
-`$UseCallBackLinks::usage = "$UseCallBackLinks is True if callback links can be used."
-
 `slaveQ::usage = "slaveQ[kernel] is True, if kernel is available."
 `kernelQ::usage = "kernelQ[kernel] is the kernel type predicate."
 
@@ -199,7 +192,7 @@ Parallel`Client`$ClientLanguageVersion
 Begin["`Private`"]
 
 `$PackageVersion = 3.0;
-`$CVSRevision = StringReplace["$Revision: 1.99 $", {"$"->"", " "->"", "Revision:"->""}]
+`$CVSRevision = StringReplace["$Revision: 1.100 $", {"$"->"", " "->"", "Revision:"->""}]
 
 Needs["SubKernels`"]; Needs["SubKernels`Protected`"]
 
@@ -451,8 +444,6 @@ Module[{new, newid=OptionValue[KernelID], res, fails},
 	(* init code registries *)
 	(kernelSwallow[new]; res = kernelInitialize[#;, new])& /@ $clientCode;
 
-	(* TODO: setup callback links *)
-
 	(* user init code *)
 	If[ValueQ[$InitCode], With[{clientCode=$InitCode}, res = kernelInitialize[ ReleaseHold[clientCode];, new ]]; ];
 
@@ -519,11 +510,6 @@ ConnectMaster[] := Module[{sub, tap, new},
     new
 ]
 ***)
-
-(* callback link setup *)
-
-$UseCallBackLinks = SubKernels`$CallBackLink = False; (* TODO: enable this when ready *)
-
 
 (* general init codes, anything not that urgent that it must go into ConnectKernel[] above *)
 (* note that these codes are resent on ClearKernels[] *)
@@ -755,9 +741,6 @@ kernel/: EvaluationCount[k_kernel] := neval[k]
 kernel/: KernelSpeed[kernel_kernel] := KernelSpeed[subKernel[kernel]]
 KernelSpeed/: (KernelSpeed[kernel_] = new_)/; kernelQ[kernel] && new>0 := KernelSpeed[subKernel[kernel]]=new
 (* kernel/: Description[kernel_kernel?kernelQ] := SubKernels`Description[Kernel[kernel]] (* delegate *) *)
-
-(* Preemptive link: delegate *)
-kernel/: KernelPreemptiveLink[kernel_kernel] := PreemptiveLink[subKernel[kernel]]
 
 (* map IDs to kernels, unknown ones turn into $Failed *)
 

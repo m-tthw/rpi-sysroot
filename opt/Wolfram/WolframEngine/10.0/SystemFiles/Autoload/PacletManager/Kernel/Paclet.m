@@ -17,7 +17,7 @@
 Paclet::usage = "Paclet is an internal symbol."
 
 (* TODO: These messages are weak. Mention that it returns a list of paclets, or $Failed. *)
-CreatePaclet::usage = "CreatePaclet is a utility function to read the contents of a PacletInfo.m file into the appropriate internal Mathematica expression representation."
+CreatePaclet::usage = "CreatePaclet is a utility function to read the contents of a PacletInfo.m file into the appropriate internal Wolfram Language expression representation."
 
 VerifyPaclet::usage = "VerifyPaclet is an internal symbol."
 
@@ -208,7 +208,7 @@ createPacletsFromParentDirs[parentDirs:(_String | {___String}), depth_Integer] :
 
 (* All creation of paclets from PacletInfo.m data goes through this function. It returns
    either a list of one or more Paclet expressions, or $Failed. $Failed is returned if the
-   paclet is not a syntactically correct Mathematica expression, or doesn't have head
+   paclet is not a syntactically correct Wolfram Language expression, or doesn't have head
    Paclet/PacletGroup/PacletSite. Verification of the paclet expression as legal in more subtle ways,
    an essential step, is left to the caller.
    It issues no messages.
@@ -251,7 +251,8 @@ $pacletInfoSymbols = {
     Extensions,
     Resources,
     SystemID,
-    MathematicaVersion,
+    MathematicaVersion,  (* Deprecated; replaced by WolframVersion *)
+    WolframVersion, 
     Qualifier,  (* Replacing old PlatformQualifier name, which is still supported. *)
     Internal,
     Root,
@@ -276,6 +277,7 @@ $pacletInfoSymbols = {
     Prepend,
     Symbols,
     FunctionInformation,
+    HiddenImport,
     Alias
 }
 
@@ -288,7 +290,7 @@ $pacletInfoShortRules = {
     V->"Version",
     B->"BuildNumber",
     PQ->"Qualifier",
-    MV->"MathematicaVersion",
+    MV->"WolframVersion",
     S->"SystemID",
     BC->"BackwardCompatible",
     R->"Root",
@@ -371,11 +373,18 @@ Attributes[Paclet] = {ReadProtected}
 *)
 Format[p_Paclet, OutputForm] := "Paclet[" <> p["Name"] <> ", " <> p["Version"] <> ", <>]" /; StringQ[p["Name"]] && StringQ[p["Version"]]
 Format[p_Paclet, TextForm] := "Paclet[" <> p["Name"] <> ", " <> p["Version"] <> ", <>]" /; StringQ[p["Name"]] && StringQ[p["Version"]]
+
 Paclet /: MakeBoxes[p_Paclet, fmt_] :=
     With[{literalName = "\"\<" <> p["Name"] <> "\>\"", literalVersion = "\"\<" <> p["Version"] <> "\>\""},
         InterpretationBox[RowBox[{"Paclet", "[", literalName, ",", literalVersion, ",", "<>", "]"}], p]
     ] /; StringQ[p["Name"]] && StringQ[p["Version"]]
 
+(*
+Paclet /: MakeBoxes[p_Paclet, fmt_] := BoxForm`ArrangeSummaryBox[Paclet, p, 
+ summaryBoxIcon, {BoxForm`SummaryItem[{"Name: ", p["Name"]}], 
+  BoxForm`SummaryItem[{"Version: ", p["Version"]}]}, {BoxForm`SummaryItem[{"Location: ", 
+    p["Location"]}]}, fmt]
+*)
 (* TODO: I need to consider using this selector notation for non-PI properties like Location (already using),
    MainLink, Key, QualifiedName, Loading, Context, etc. I think that I should do this, and document the full list
    of selectors. Note that this (along with PacletInformation) is the only way for users to programmatically
@@ -409,9 +418,16 @@ getPIValue[paclet_Paclet, fields:{__String}] := fields /. (List @@ paclet) /. $p
 (* Separate rules for "Extensions" because replacing with $piDefaults will go inside Extensions value and replace subitems. *)
 getPIValue[paclet_Paclet, "Extensions"] := "Extensions" /. (List @@ paclet) /. "Extensions" -> {}
 getPIValue[paclet_Paclet, "QualifiedName"] := PgetQualifiedName[paclet]
+(* Special rules to support older paclets that use "MathematicaVersion" instead of "WolframVersion". *)
+getPIValue[paclet_Paclet, fields:{___String, "WolframVersion", ___String}] :=
+    fields /. Replace[List @@ paclet, ("MathematicaVersion" -> v_) :> ("WolframVersion" -> v), {1}] /. $piDefaults /. Thread[fields->Null]
+getPIValue[paclet_Paclet, "WolframVersion"] :=
+    Block[{plist = List @@ paclet, v},
+        v = "MathematicaVersion" /. plist;
+        If[v === "MathematicaVersion", "WolframVersion" /. plist /. $piDefaults, v]
+    ]
 (* Gives the full PacletInfo.m data (note that the lhs of all rules are strings, not symbols as typically written in the PI.m file). *) 
 getPIValue[paclet_Paclet, "PacletInfo"] := List @@ DeleteCases[paclet, "Location" -> _]
-
 
 $linkableExtensions = "Documentation" | "Demonstration"
 
@@ -420,7 +436,7 @@ $linkableExtensions = "Documentation" | "Demonstration"
 $piDefaults = Dispatch[{
     "Extensions" -> {},
     "SystemID" -> All,
-    "MathematicaVersion" -> "8+",
+    "WolframVersion" -> "10+",
     "Qualifier" -> "",
     "Internal" -> False,
     "Root" -> ".",
@@ -462,7 +478,7 @@ PgetLocation[paclet_] := getPIValue[paclet, "Location"]
 PhasContext[paclet_, context_String] :=
     Block[{listedContexts, contextPos},
         listedContexts = ReplaceList["Context", Flatten[Rest /@ 
-                             cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"MathematicaVersion", "SystemID"}]]];
+                             cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"WolframVersion", "SystemID"}]]];
         (* This step handles cases where ctxt was specified as a {ctxt, path} pair. *)
         listedContexts = Flatten[Replace[listedContexts, {ctxt_String, path_String} :> ctxt, {2}]];
         Which[
@@ -479,7 +495,7 @@ PhasContext[paclet_, context_String] :=
 
 PgetContexts[paclet_] :=
     Module[{kernelExt},
-        forEach[kernelExt, cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"MathematicaVersion", "SystemID"}],
+        forEach[kernelExt, cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"WolframVersion", "SystemID"}],
             Replace[EXTgetProperty[kernelExt, "Context", {}], {ctxt_String, path_String} :> ctxt, {1}]
         ] // Flatten
     ]
@@ -489,7 +505,7 @@ PhasLinkBase[paclet_, linkBase_String] :=
     If[getPIValue[paclet, "Name"] == linkBase,
         True,
     (* else *)
-        MemberQ[ReplaceList["LinkBase", Flatten[Rest /@ cullExtensionsFor[PgetExtensions[paclet, $linkableExtensions], {"MathematicaVersion", "SystemID"}]]], linkBase]
+        MemberQ[ReplaceList["LinkBase", Flatten[Rest /@ cullExtensionsFor[PgetExtensions[paclet, $linkableExtensions], {"WolframVersion", "SystemID"}]]], linkBase]
     ]
 
 
@@ -520,7 +536,7 @@ PgetDocResourcePath[paclet_, linkBase_, context_, expandedResourceName_, lang_] 
         Assert[(StringQ[linkBase] || StringQ[context]) && !(StringQ[linkBase] && StringQ[context])];
 
         If[!systemIDMatches[$SystemID, getPIValue[paclet, "SystemID"]] ||
-             !kernelVersionMatches[getKernelVersionStringComplete[], getPIValue[paclet, "MathematicaVersion"]] ||
+             !kernelVersionMatches[getKernelVersionStringComplete[], getPIValue[paclet, "WolframVersion"]] ||
                 !languageMatches[lang, getPIValue[paclet, "Language"]],
            Return[Null]
         ];
@@ -564,7 +580,7 @@ PgetDocResourcePath[paclet_, linkBase_, context_, expandedResourceName_, lang_] 
                     ]
                 ]
             ],
-            cullExtensionsFor[PgetExtensions[paclet, $linkableExtensions], {"MathematicaVersion", "SystemID"}]
+            cullExtensionsFor[PgetExtensions[paclet, $linkableExtensions], {"WolframVersion", "SystemID"}]
         ]  (* Fall through to Scan's return value of Null if no file found. *)
     ]
 
@@ -596,7 +612,7 @@ PgetMainLink[paclet_Paclet] :=
                          Return["paclet:" <> extLinkBase]
                     ]
                 ],
-                cullExtensionsFor[PgetExtensions[paclet, "Documentation"], {"MathematicaVersion", "SystemID"}]
+                cullExtensionsFor[PgetExtensions[paclet, "Documentation"], {"WolframVersion", "SystemID"}]
             ]
         ]
     ]
@@ -618,7 +634,7 @@ PgetLoadingState[paclet_Paclet] :=
 PgetPreloadData[paclet_Paclet] :=
     Block[{kernelExt, ctxt, result},  (* Block for speed only. *)
         result = {};
-        forEach[kernelExt, cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"MathematicaVersion", "SystemID"}],
+        forEach[kernelExt, cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"WolframVersion", "SystemID"}],
             forEach[ctxt, EXTgetProperty[kernelExt, "Context", {}],
                 (* First[Flatten[{ctxt}]] here because ctxt could be "context`", {"context`"}, or {"context`", "path"}. *)
                 If[StringQ[#], AppendTo[result, #]]& @ contextToFileName[paclet, First[Flatten[{ctxt}]]]
@@ -628,9 +644,9 @@ PgetPreloadData[paclet_Paclet] :=
     ]
 
 PgetDeclareLoadData[paclet_Paclet] :=
-    Block[{kernelExt, ctxts, firstCtxt, symbols, result},  (* Block for speed only. *)
+    Block[{kernelExt, ctxts, firstCtxt, symbols, hiddenImport, result},  (* Block for speed only. *)
         result = {};
-        forEach[kernelExt, cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"MathematicaVersion", "SystemID"}],
+        forEach[kernelExt, cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"WolframVersion", "SystemID"}],
             ctxts = Flatten[{EXTgetProperty[kernelExt, "Context", {}]}];
             (* If you want to have a Symbols spec for autoloading, you probably have just one context
                named in the extension. Use separate exts for multiple contexts. If there is more than
@@ -639,13 +655,14 @@ PgetDeclareLoadData[paclet_Paclet] :=
             If[Length[ctxts] > 0,
                 firstCtxt = First[Flatten[ctxts]];
                 symbols = EXTgetProperty[kernelExt, "Symbols", {}];
+                hiddenImport = TrueQ[EXTgetProperty[kernelExt, "HiddenImport"]];
                 If[Length[symbols] > 0,
                     (* The symbols in the list need their context prepended; the list we are appending should look
                        like {"ctxt`", {"ctxt`sym`", "ctxt`sym2",...}}. We don't want the user to need to prepend the context
                        in the PI file (they should be able to write Symbols->{"Foo"}, not Symbols->{"ctxt`Foo"}), so we
                        prepend it here. If the user has a specific context prepended in the PI file, we skip automatic prepending.
                     *)
-                    AppendTo[result, {firstCtxt, If[StringMatchQ[#, "*`*"], #, firstCtxt <> #]& /@ symbols}]
+                    AppendTo[result, {firstCtxt, hiddenImport, If[StringMatchQ[#, "*`*"], #, firstCtxt <> #]& /@ symbols}]
                 ]
             ]
         ];
@@ -659,7 +676,7 @@ PgetDeclareLoadData[paclet_Paclet] :=
 PgetFunctionInformation[paclet_Paclet] :=
     Block[{kernelExt, funcInfoFile, funcInfo, pacletRootPath, kernelRoot, strm, fullPath},  (* Block for speed only. *)
         result = {};
-        forEach[kernelExt, cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"MathematicaVersion", "SystemID"}],
+        forEach[kernelExt, cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"WolframVersion", "SystemID"}],
             funcInfoFile = EXTgetProperty[kernelExt, "FunctionInformation", "FunctionInformation.m"];
             If[StringQ[funcInfoFile],
                 pacletRootPath = PgetPathToRoot[paclet];
@@ -708,7 +725,7 @@ VerifyPaclet::rules = "Invalid PacletInfo.m data: Paclet expression must be a li
 VerifyPaclet::noname = "Invalid PacletInfo.m data: Paclet must have a Name field."
 VerifyPaclet::novers = "Invalid PacletInfo.m data: Paclet must have a Version field."
 VerifyPaclet::badvers = "Invalid PacletInfo.m data: Version number must be one or more blocks of digits separated by periods."
-VerifyPaclet::badpi = "The contents of the PacletInfo.m file either is not a syntactically correct Mathematica expression, it does not have the head Paclet."
+VerifyPaclet::badpi = "The contents of the PacletInfo.m file either is not a syntactically correct Wolfram Language expression, it does not have the head Paclet."
 VerifyPaclet::extlist = "Invalid PacletInfo.m data: The Extensions specification must be a list."
 VerifyPaclet::badext = "Invalid PacletInfo.m data: `1`."
 VerifyPaclet::badextt = "Invalid PacletInfo.m data: An Extensions element of type `1` does not have the correct form. `2`."
@@ -829,6 +846,83 @@ verifyExtension[_, verbose_] :=
         If[verbose, Message[VerifyPaclet::badext, "Each Extensions element must be a list consisting of a string naming the extension type followed by a sequence of rules"]];
         False
     )
+    
+    
+(*****************************  Summary Box Icon  ****************************)
+
+summaryBoxIcon =
+BoxData@GraphicsBox[
+TagBox[RasterBox[CompressedData["
+1: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
+IearskUn+5zsghqVnCAAViz51vEfUy6Pfw==
+"], {{0, 46}, {46, 0}}, {0, 255},
+ColorFunction->RGBColor],
+BoxForm`ImageTag[
+     "Byte", ColorSpace -> "RGB", ImageSize -> Automatic, 
+      Interleaving -> True, Magnification -> Automatic],
+Selectable->False],
+BaseStyle->"ImageGraphics",
+ImageSize->Automatic,
+ImageSizeRaw->{36, 36},
+PlotRange->{{0, 46}, {0, 46}}]
+
         
 End[]
 

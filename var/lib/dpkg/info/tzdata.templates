@@ -218,29 +218,7 @@ Description-th.UTF-8: เขตเวลา:
 
 Template: tzdata/Zones/Antarctica
 Type: select
-Choices: Casey, Davis, DumontDUrville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-ca.UTF-8: Casey, Davis, DumontDUrville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-cs.UTF-8: stanice Casey, stanice Davis, stanice Dumont-d'Urville, Macquarie, stanice Mawson, stanice McMurdo, stanice Palmer, stanice Rothera, stanice Syowa, stanice Vostok
-Choices-da.UTF-8: Casey, Davis, DumontDUrville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-de.UTF-8: Casey, Davis, DumontDUrville, Macquarieinsel, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-en.UTF-8: Casey, Davis, Dumont d'Urville, Macquarie, Mawson, McMurdo (South Pole), Palmer, Rothera, Syowa, Vostok
-Choices-es.UTF-8: Casey, Davis, Dumont d'Urville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-eu.UTF-8: Casey, Davis, DumontDUrville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-fr.UTF-8: Base Casey, Base Davis, Base Dumont-d'Urville, Macquarie, Base Mawson, Base McMurdo, Base Palmer, Base Rothera, Base Syowa, Base Vostok
-Choices-gl.UTF-8: Casey, Davis, Dumont-d'Urville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-gu.UTF-8: કેસે, ડેવીસ, ડુમોન્ટડુર્વિલે, મેક્વારિન, માઉસેન, મેકમુરડો, પાલ્મેર, રોથેરા, સયોવા, વોસ્તોક
-Choices-he.UTF-8: Casey, דייוויס, DumontDUrville, מקוארי, Mawson, McMurdo, Palmer, Rothera, Syowa, ווסטוק
-Choices-hu.UTF-8: Casey, Davis, Dumont-d'Urville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vosztok
-Choices-id.UTF-8: Casey, Davis, Dumont-d'Urville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-it.UTF-8: Casey, Davis, DumontDUrville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-ja.UTF-8: ケーシー, デーヴィス, デュモンデュルヴィル, マッコーリー, モーソン, マクムード, パーマー, ロデラ, 昭和基地, ヴォストーク
-Choices-nl.UTF-8: Casey, Davis, Dumont d'Urville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-pl.UTF-8: Casey, Davis, Dumont d' Urville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Wostok
-Choices-pt.UTF-8: Casey, Davis, DumontDUrville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-pt_BR.UTF-8: Casey, Davis, DumontDUrville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-ru.UTF-8: Кейси, Дейвис, Дюмон-д'Юрвиль, Маккуори, Моусон, Мак-Мердо, Палмер, Ротера, Сёва, Восток
-Choices-sk.UTF-8: Casey, Davis, Dumont d'Urville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
-Choices-sv.UTF-8: Casey, Davis, Dumount d'Urville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Vostok
+Choices: Casey, Davis, DumontDUrville, Macquarie, Mawson, McMurdo, Palmer, Rothera, Syowa, Troll, Vostok
 Description: Time zone:
  Please select the city or region corresponding to your time zone.
 Description-ca.UTF-8: Fus horari:

@@ -102,8 +102,6 @@ Off[ General::obspkgfn]
 
 $CharacterEncoding = $SystemCharacterEncoding;
 
-
-
 SetDirectory[ ToFileName[{$InstallationDirectory, "SystemFiles", "CharacterEncodings"}]];
 
 System`$CharacterEncodings = StringTake[#, {1, -3}] & /@ FileNames[ "*.m"];
@@ -115,10 +113,11 @@ ResetDirectory[];
 
 Internal`AddHandler["MessageTextFilter", Internal`MessageButtonHandler]
 
-(*
- Set $Path
-*)
 
+Unset[Developer`$InactivateExclusions];
+
+
+(* Set $Path *)
 $Path =
 	Which[
  		$LicenseType === "Player",
@@ -129,6 +128,7 @@ $Path =
         ToFileName[ {$InstallationDirectory, "SystemFiles"}, "Autoload"],
         ToFileName[ {$InstallationDirectory, "AddOns"}, "Applications"],
         ToFileName[ {$InstallationDirectory, "AddOns"}, "ExtraPackages"],
+        ToFileName[ {$InstallationDirectory, "SystemFiles"}, "Components"],
         ToFileName[ {$InstallationDirectory, "SystemFiles","Kernel"}, "Packages"],
         ToFileName[ {$InstallationDirectory, "Documentation",$Language}, "System"]
  		},
@@ -178,18 +178,13 @@ If[ FindFile["Parallel`Kernel`sysload`"] =!= $Failed &&
 
 (*
  Set up autoloading, using the new Package`DeclareLoad functionality.
- Don't do this in a player variety.
 *)
 
 If[ $LicenseType =!= "Player Pro" && $LicenseType =!= "Player",
 	Package`DeclareLoad[
-		{System`InstallService, WebServices`$InstalledServices,
-	 	WebServices`$PrintServiceRequest, WebServices`$PrintServiceResponse,
-	 	WebServices`$PrintShortErrorMessages, WebServices`$PrintWSDLDebug,
-	 	WebServices`FromServiceResponse, WebServices`InstallServiceOperation,
-	 	WebServices`InvokeServiceOperation, WebServices`ToServiceRequest
-		}, 
-		"WebServices`", Package`ExportedContexts -> {"WebServices`"}]]
+		{System`InstallService}, 
+		"WebServices`", Package`HiddenImport -> True]
+]
 
 Package`DeclareLoad[
 		{JSONTools`ToJSON,JSONTools`FromJSON}, 
@@ -206,65 +201,38 @@ Developer`RegisterInputStream["HTTP",
 	StringMatchQ[#, RegularExpression["https?://.*"]] &, 
 	Get["HTTPClient`"]; HTTPClient`Private`Initialize[]];
 
-CloudObject`Private`$CloudObjectAutoloads = Hold[
-    System`$CloudBase,
-    System`$CloudConnected,
-    System`$CloudDirectory,
-    System`$CloudRootDirectory,
-    System`$RegisteredUserName,
-    System`$Permissions,
-	System`APIFunction,
-	System`APIFunctionGroup,
-	System`ClearProperties,
-	System`CloudBase,
-    System`CloudConnect,
-    System`CloudDeploy,
-    System`CloudDirectory,
-    System`CloudDisconnect,
-    System`CloudEvaluate,
-    System`CloudExport,
-    System`CloudFunction,
-    System`CloudGet,
-    System`CloudImport,
-    System`CloudObject,
-    System`CloudObjectInformation,
-    System`CloudObjectInformationData,
-    System`CloudPut,
-    System`CloudSave,
-    System`CloudSymbol,
-    System`CreateUUID,
-	System`DefaultParameterType,
-	System`DefaultReturnType,
-	System`DefaultView,
-	System`EmbedCode,
-	System`ExportForm,
-	System`ExternalFunction,
-    System`FormFunction,
-	System`LocalizeDefinitions,
-	System`Permissions,
-	System`SetCloudDirectory,
-	System`SetProperties
-]
 
 Internal`DisableCloudObjectAutoloader[] := Block[{$Path},
-	Quiet[CloudObject[]]
+	Quiet[System`CloudObject[]]
 ]
 
+(* CloudSymbol and $CloudBase don't play nice with autoloading, so these defs need to be present at startup, in case a user
+   assigns to either before CloudObject` has been loaded.
+*)
+System`$CloudBase /: 
+    Set[System`$CloudBase, rhs_] /; (System`$CloudBase; False) := System`Assert["Unreachable"]
+System`CloudSymbol /: 
+    Set[z_System`CloudSymbol, rhs_] /; (System`CloudSymbol; True) := Set[z, rhs] (* immediately delegate to the newly acquired upvalue *)
+
+
+{System`HTTPResponse, System`HTTPRedirect, System`HTTPRequestData, 
+	System`$ImageFormattingWidth, System`$EvaluationCloudObject = None}
+
+
+MUnit`Package`$MUnitAutoloads = ToExpression /@ {
+	"System`VerificationTest",
+	"System`TestReport",
+	"System`TestResultObject",
+	"System`TestReportObject",
+	"System`MemoryConstraint",
+	(*"System`TestFailureAction",*)
+	"System`TestID"
+};
+	
 Package`DeclareLoad[
-	List @@ CloudObject`Private`$CloudObjectAutoloads, 
-	"CloudObjectLoader`",
-	Package`ExportedContexts -> {"CloudObject`"}
-]
-
-MUnit`Package`$MUnitAutoloads = Hold[
-    System`VerificationTest,
-    System`TestResultAnalyze
-]
-
-Package`DeclareLoad[
-	List @@ MUnit`Package`$MUnitAutoloads, 
+	MUnit`Package`$MUnitAutoloads, 
 	"MUnitLoader`",
-	Package`ExportedContexts -> {"MUnit`"}
+	Package`HiddenImport -> True
 ]
 
 
@@ -277,11 +245,11 @@ QuantityUnits`Private`$QuantityUnitsAutoloads = Hold[
 	System`UnitSimplify, System`Quantity,
 	System`KnownUnitQ,Internal`DimensionToBaseUnit,
 	QuantityUnits`Private`ToQuantityBox,QuantityUnits`Private`ToQuantityString,
-	QuantityUnits`Private`quantifyPacletRequest, System`CurrencyConvert,
+	System`CurrencyConvert, System`UnityDimensions,
 	System`QuantityVariable, System`QuantityVariableIdentifier,
 	System`QuantityVariablePhysicalQuantity, System`QuantityVariableDimensions, 
-	System`QuantityVariableCanonicalUnit, System`QuantityVariableCombinations,
-	System`IncludeQuantities
+	System`QuantityVariableCanonicalUnit, System`DimensionalCombinations,
+	System`IncludeQuantities, System`QuantityThread
 ]
 
 Begin["QuantityUnits`Private`"];
@@ -303,6 +271,7 @@ Internal`DisableQuantityUnits[]:=CompoundExpression[
 		],
 		QuantityUnits`Private`$QuantityUnitsAutoloads
 	],
+	ClearAttributes[Quantity,{HoldRest,NHoldRest}],
 	System`QuantityMagnitude=Identity, 
 	True
 ];
@@ -312,35 +281,45 @@ Internal`DisablePredictiveAlphaUtilities[]:=CompoundExpression[
 ];
 End[];
 
+(* Define the Package symbol in the System` context. This could be done in kernel code. This is for the "new package format". *)
+System`Package
+
 Package`DeclareLoad[
 	List @@ QuantityUnits`Private`$QuantityUnitsAutoloads, 
 	"QuantityUnitsLoader`",
-	Package`ExportedContexts -> {"QuantityUnits`"}
+	Package`HiddenImport -> True
 ]
 
-(* just a small sample here for starters *)
-EntityFramework`Private`$EVDataPacletHeads = Hold[System`AdministrativeDivisionData, System`AirportData, 
-System`BridgeData, System`BroadcastStationData, System`BuildingData, 
+EntityFramework`Private`$EVDataPacletHeads = Hold[System`AdministrativeDivisionData, System`AircraftData,
+System`AirportData, 
+System`BridgeData, System`BroadcastStationData, System`BuildingData, System`CometData,
 System`CompanyData, System`ConstellationData, System`DamData, 
 System`DeepSpaceProbeData, System`EarthImpactData, 
-System`FiniteGroupData, System`GeneData, System`HistoricalPeriodData, 
-System`IslandData, System`IsotopeData, System`LakeData, 
+System`ExoplanetData, System`GalaxyData,
+System`GeologicalPeriodData, System`HistoricalPeriodData, 
+System`IslandData, System`LakeData, System`LanguageData,
 System`LaminaData, System`MannedSpaceMissionData, 
-System`MedicalTestData, System`MeteorShowerData, System`MFIDData, 
-System`MineralData, System`MountainData, System`MovieData, 
+System`MedicalTestData, System`MeteorShowerData, 
+System`MineralData, System`MinorPlanetData, System`MountainData, 
+System`MovieData, System`NebulaData,
 System`NeighborhoodData, System`NuclearExplosionData, 
 System`NuclearReactorData, System`OceanData, System`ParkData, 
-System`ParticleAcceleratorData, System`PeriodicTilingData, 
+System`ParticleAcceleratorData, 
 System`PersonData, System`PhysicalSystemData, System`PlaneCurveData, 
-System`PlantData, System`PopularCurveData, System`SatelliteData, 
-System`SNPData, System`SolarSystemFeatureData, System`SpaceCurveData, 
-System`SpeciesData, System`SurfaceData, System`TropicalStormData, 
-System`TunnelData, System`UnderseaFeatureData, System`VolcanoData, 
-System`WaterfallData, System`ZIPCodeData];
+System`PlanetData, System`PlanetaryMoonData, System`PlantData, 
+System`PulsarData, System`SatelliteData, 
+System`SolarSystemFeatureData, System`SolidData, System`SpaceCurveData, 
+System`SpeciesData, System`StarData, System`StarClusterData, System`SupernovaData, 
+System`SurfaceData, System`TropicalStormData, 
+System`TunnelData, System`UnderseaFeatureData, 
+System`UniversityData, System`VolcanoData, 
+System`ZIPCodeData];
 
 EntityFramework`Private`$EntityFrameworkAutoloads = Join[Hold[
-       System`Entity, System`EntityValue, System`EntityProperty, System`EntityProperties,
-       System`CommonName, System`CanonicalName, System`TypeName,
+       System`Entity, System`EntityValue, System`EntityProperty, System`EntityPropertyClass, System`EntityProperties,
+       System`CommonName, System`CanonicalName, System`EntityTypeName, System`EntityClass, 
+       System`EntityList, System`EntityClassList, System`ToEntity, System`FromEntity,
+       System`Utilities`$EntityPropertyRules,
        Experimental`FindEntities, Internal`AddToEntityNameCache, Internal`PreloadEntityNameCache
    ], EntityFramework`Private`$EVDataPacletHeads];
 
@@ -363,7 +342,7 @@ Internal`DisableEntityFramework[]:=CompoundExpression[
 			],
 			HoldFirst
 		],
-		EntityFramework`Private`$EntityFrameworkAutoloads
+		Append[EntityFramework`Private`$EntityFrameworkAutoloads,System`EarthquakeData]
 	],
 	True
 ];
@@ -376,7 +355,9 @@ Package`DeclareLoad[
 
 
 FormulaData`Private`$FormulaDataAutoloads = Hold[
-	System`FormulaData, System`FormulaLookup, System`RequiredPhysicalQuantities, System`ExcludedPhysicalQuantities
+	System`FormulaData, System`FormulaLookup, 
+	System`RequiredPhysicalQuantities, System`ExcludedPhysicalQuantities,
+	System`PlanckRadiationLaw
 ]
 
 
@@ -413,37 +394,78 @@ Package`DeclareLoad[
 	]
 
 Package`DeclareLoad[
-		{System`URLEncode, System`URLDecode, System`URLBuild, System`URLParse, System`URLShorten, System`URLExpand, 
-			System`URLQueryEncode, System`URLQueryDecode, System`URLExistsQ,
-			System`ServiceConnect, System`ServiceDisconnect,System`ServiceObject, System`ServiceExecute,System`SendMessage},
+		{System`ServiceConnect, System`ServiceDisconnect,System`ServiceObject, 
+			System`ServiceExecute,System`SendMessage,System`$Services},
 		"OAuthLoader`",
 		Package`HiddenImport -> True
 	]
- 
+
 Package`DeclareLoad[
-		{System`Classify, System`ClassifierFunction, System`ClassifierMeasurements,
-		 System`Predict,  System`PredictorFunction,  System`PredictorMeasurements
-		},
-       "MachineLearning`"
+		{System`Databin, System`CreateDatabin,System`DatabinAdd, System`Databins},
+		"DataDropClientLoader`",
+		Package`HiddenImport -> True
+	]
+
+Package`DeclareLoad[
+		{
+		    (* PLI *)
+		    System`AllowLooseGrammar,
+		    System`AllowTransliteration
+		    ,
+		    (* Common *)
+		    Semantic`PLIDump`$PLIFailed,
+		    Semantic`PLIDump`appendMessages,
+		    Semantic`PLIDump`callMethod,
+		    Semantic`PLIDump`doCall,
+		    Semantic`PLIDump`extractPliUUID,
+		    Semantic`PLIDump`PLICompress,
+		    Semantic`PLIDump`PLIUncompress,
+		    Semantic`PLIDump`returnError,
+		    Semantic`PLIDump`validateResult
+		    ,
+		    (* GrammarValidation *)
+		    Semantic`PLIDump`ValidateGrammar
+		    ,
+		    (* Grammar *)
+		    System`Grammar,
+		    System`CaseSensitive,
+		    System`FixedOrder,
+		    System`AnyOrder,
+		    System`OptionalElement,
+		    System`GrammarToken
+		    ,
+		    (* Parse *)
+		    System`Parse
+		    ,
+		    (* CloudParse *)
+		    Semantic`PLIDump`receiveAlphaParse,
+		    Semantic`PLIDump`receiveWLParse
+		}, 
+		"PLILoader`",
+		Package`HiddenImport -> True
 	]
 
 Package`DeclareLoad[{
 		System`StartProcess, System`RunProcess, System`KillProcess,
 		System`ProcessConnection, System`ProcessInformation, System`ProcessStatus,
 		System`ProcessObject, System`Processes, System`$SystemShell,
-		System`EndOfBuffer, System`ReadString, System`ReadLine, System`WriteLine},
+		System`EndOfBuffer, System`ReadString, System`ReadLine, System`WriteLine,
+		System`ProcessDirectory, System`ProcessEnvironment},
 		"ProcessLink`"
 ]
 
 Package`DeclareLoad[
-		{System`StringTemplate, System`FileTemplate, System`XMLTemplate, System`NotebookTemplate,
-			System`TemplateApply, System`FileTemplateApply, System`TemplateObject,
-			System`TemplateIf, System`TemplateSequence, System`TemplateSlot, System`TemplateExpression, System`TemplateWith, System`TemplateBlock
-		},
-       "Templating`"
+		{System`GenerateDocument, System`NotebookTemplate, NotebookTemplating`CreateTemplateNotebook, 
+			NotebookTemplating`ClearTemplateNotebook, NotebookTemplating`TemplateNotebookQ},
+		"NotebookTemplating`",
+		Package`HiddenImport -> True
 	]
-
-
+	
+Package`DeclareLoad[{System`SemanticImport, System`SemanticImportString, System`MissingDataRules, System`HeaderLines, System`ExcludedLines, System`ColumnSpans},
+	"SemanticImportLoader`",
+    Package`HiddenImport -> True 
+]
+	
 (*
   Start the PacletManager. 
 *)

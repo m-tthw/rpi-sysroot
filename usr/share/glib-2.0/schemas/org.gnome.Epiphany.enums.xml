@@ -1,0 +1,37 @@
+
+<!-- Generated data (by glib-mkenums) -->
+
+<schemalist>
+  <enum id='org.gnome.Epiphany.EphyPrefsUIToolbarStyle'>
+    <value nick='both' value='0'/>
+    <value nick='both-horiz' value='1'/>
+    <value nick='icons' value='2'/>
+    <value nick='text' value='3'/>
+  </enum>
+  <enum id='org.gnome.Epiphany.EphyPrefsRestoreSessionPolicy'>
+    <value nick='always' value='0'/>
+    <value nick='never' value='1'/>
+    <value nick='crashed' value='2'/>
+  </enum>
+  <enum id='org.gnome.Epiphany.EphyPrefsUITabsBarVisibilityPolicy'>
+    <value nick='always' value='0'/>
+    <value nick='more-than-one' value='1'/>
+    <value nick='never' value='2'/>
+  </enum>
+  <enum id='org.gnome.Epiphany.EphyPrefsWebCookiesPolicy'>
+    <value nick='always' value='0'/>
+    <value nick='no-third-party' value='1'/>
+    <value nick='never' value='2'/>
+  </enum>
+  <enum id='org.gnome.Epiphany.EphyPrefsStateHistoryDateFilter'>
+    <value nick='last-half-hour' value='0'/>
+    <value nick='today' value='1'/>
+    <value nick='last-two-days' value='2'/>
+    <value nick='last-three-days' value='3'/>
+    <value nick='last-ten-days' value='4'/>
+    <value nick='ever' value='5'/>
+  </enum>
+</schemalist>
+
+<!-- Generated data ends here -->
+

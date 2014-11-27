@@ -1,0 +1,32 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Use sample pack</font></span></p>
+<h1><font color="#3c3c3c"><pre>use_sample_pack<pre></font></h1>
+<h2><pre>[pack_path <font color="deeppink">(string)</font>]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Given a path to a folder of samples on your filesystem, this method makes any wav|wave|aif|aiff files in that folder available as samples. Consider using use_sample_pack_as when using multiple sample packs.
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Introduced in v2.0.0
+</p>
+<table cellpadding="2">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+
+use_sample_pack '/home/yourname/path/to/sample/dir'
+sample :foo 
+
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+ #=&gt; plays /home/yourname/path/to/sample/dir/foo.{wav|wave|aif|aiff}
+
+
+
+</pre></td></tr>
+</table>

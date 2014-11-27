@@ -1,0 +1,10 @@
+ce27c57ce884d2969f6f2ba4c4cd8508  usr/share/doc/python-minecraftpi/LICENSE.txt
+bdd268051db9c9ec6dbbdf45cc3da508  usr/share/doc/python-minecraftpi/changelog.Debian.gz
+6c0602f3f45367a18f0c1dfc6bb93d7e  usr/share/pyshared/mcpi-0.1.1.egg-info
+d41d8cd98f00b204e9800998ecf8427e  usr/share/pyshared/mcpi/__init__.py
+a6cef65f728215a07f64d306719c24e1  usr/share/pyshared/mcpi/block.py
+aad5fcdcc7712dee12ba3b35151206a8  usr/share/pyshared/mcpi/connection.py
+5fb209ff14fcadea1cee0dc8f0074cc8  usr/share/pyshared/mcpi/event.py
+a0159cf8388004d4be7238afd8e0fba3  usr/share/pyshared/mcpi/minecraft.py
+fd7d6eb9aa83be6e0524fe4e98620fbc  usr/share/pyshared/mcpi/util.py
+ef0a13c9bb027e8cdf1ec1c8bfcd8bbb  usr/share/pyshared/mcpi/vec3.py

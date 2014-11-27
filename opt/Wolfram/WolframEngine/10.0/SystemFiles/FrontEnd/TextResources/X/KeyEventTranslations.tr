@@ -15,6 +15,7 @@ EventTranslations[{
 	Item[KeyEvent["Enter", Modifiers -> {Shift}], "EvaluateNextCell"], 
 	Item[KeyEvent["Return", Modifiers -> {Shift, Control}], Evaluate[All]],
 	Item[KeyEvent["Return", Modifiers -> {Command}], "SimilarCellBelow"], 
+	Item[KeyEvent[",", Modifiers->{Command}], FrontEnd`EvaluatorInterrupt[Automatic]], 
 	Item[KeyEvent["Escape"], "ShortNameDelimiter"], 
 
 (* Cursor control *)
@@ -148,6 +149,8 @@ EventTranslations[{
 	Item[KeyEvent["Copy"], "Copy"], 
 	Item[KeyEvent["Paste"], Paste[After]], 
 	Item[KeyEvent["Undo"], "Undo"], 
+	Item[KeyEvent["Redo"], "Redo"],
+	Item[KeyEvent["y", Modifiers -> {Control}], "Redo"],
 	Item[KeyEvent["Help"], "SelectionHelpDialog"], 
 	Item[KeyEvent["Insert", Modifiers -> {Shift}], Paste[After]],
 	Item[KeyEvent["Insert", Modifiers -> {Control}], "Copy"],

@@ -20,7 +20,8 @@ ImportAutoReplacements -> {
 	"<=" -> "\[LessEqual]",
 	">=" -> "\[GreaterEqual]",
 	"!=" -> "\[NotEqual]",
-	"==" -> "\[Equal]"
+	"==" -> "\[Equal]",
+	"<->" -> "\[UndirectedEdge]"
 },
 
 ExportAutoReplacements -> {
@@ -48,7 +49,10 @@ ExportAutoReplacements -> {
 	"\[OpenCurlyQuote]" -> "'",
 	"\[CloseCurlyQuote]" -> "'",
 	"\[OpenCurlyDoubleQuote]" -> "\"",
-	"\[CloseCurlyDoubleQuote]" -> "\""
+	"\[CloseCurlyDoubleQuote]" -> "\"",
+	"\[LeftAssociation]" -> "<|",
+	"\[RightAssociation]" -> "|>",
+	"\[UndirectedEdge]" -> "<->"
 },
 
 InputAliases -> {
@@ -90,13 +94,18 @@ WindowMargins,
 WindowSize,
 DockedCells,
 Magnification
-}
+},
+
+"HelpViewerSettings" -> {
+"WindowSize" -> 
+{860, FEPrivate`If[FEPrivate`Less[CurrentValue["ScreenArea"][[1, 2, 2]] - 
+CurrentValue["ScreenArea"][[1, 2, 1]], 780], 720, 750]}}
 
 ];
 
 AddFileBrowserFilterPacket["Open", {
 	Item["All Files", FindOpenFilter,  "", "*"],
-	Item["Mathematica Files (*.nb, *.cdf, *.nbp, *.m, *.ma)", FEPrivate`FrontEndExecute[FrontEndToken["Open", {#, "Notebook"}]]&, "nb", {"*.nb","*.cdf","*.nbp","*.ma","*.m"}, OptionsNotebook->"ImportNotebook.nb"],
+	Item["Wolfram Files (*.nb, *.cdf, *.nbp, *.wl, *.m, *.ma)", FEPrivate`FrontEndExecute[FrontEndToken["Open", {#, "Notebook"}]]&, "nb", {"*.nb","*.cdf","*.nbp","*.wl","*.ma","*.m"}, OptionsNotebook->"ImportNotebook.nb"],
 	Item["Picture Files", FindImportPicturesFilter,  "", PictureFilters],
 	Item["Rich Text Format (*.rtf)", FEPrivate`FrontEndExecute[FrontEndToken["Open", {#, "RichText"}]]&, "rtf", "*.rtf", MacintoshFileTypes->{"RTF "}],
 	Item["Text files", FEPrivate`FrontEndExecute[FrontEndToken["Open", {#, "Text"}]]&, "txt", {"*.txt"}, MacintoshFileTypes->{"TEXT"}, OptionsNotebook->"ImportText.nb"]
@@ -104,7 +113,7 @@ AddFileBrowserFilterPacket["Open", {
 
 AddFileBrowserFilterPacket["Import", {
 	Item["All Files", FindImportFilter,  "", "*"],
-	Item["Mathematica Files (*.nb, *.cdf, *.nbp, *.m, *.ma)", FEPrivate`FrontEndExecute[FrontEndToken[#2, "Import", {#, "Notebook"}]]&, "nb", {"*.nb","*.cdf","*.nbp","*.ma","*.m"}, OptionsNotebook->"ImportNotebook.nb"],
+	Item["Wolfram Files (*.nb, *.cdf, *.nbp, *.wl, *.ma, *.m)", FEPrivate`FrontEndExecute[FrontEndToken[#2, "Import", {#, "Notebook"}]]&, "nb", {"*.nb","*.cdf","*.nbp","*.wl","*.ma","*.m"}, OptionsNotebook->"ImportNotebook.nb"],
 	Item["Picture Files", FindImportPicturesFilter,  "", PictureFilters],
 	Item["Rich Text Format (*.rtf)", FEPrivate`FrontEndExecute[FrontEndToken[#2, "Import", {#, "RichText"}]]&, "rtf", "*.rtf", MacintoshFileTypes->{"RTF "}],
 	Item["Text files", FEPrivate`FrontEndExecute[FrontEndToken["Import", {#, "Text"}]]&, "txt", {"*.txt"}, MacintoshFileTypes->{"TEXT"}, OptionsNotebook->"ImportText.nb"]
@@ -124,9 +133,10 @@ AddFileBrowserFilterPacket["ImportPictures", {
 }];
 
 AddFileBrowserFilterPacket["Save", {
-	Item["Mathematica Notebook (*.nb)", FEPrivate`FrontEndExecute[FrontEndToken[#2, "Save", {#, "Notebook"}]]&, "nb", "*.nb", MacintoshFileTypes->{"TEXT"}],
+	Item["Wolfram Notebook (*.nb)", FEPrivate`FrontEndExecute[FrontEndToken[#2, "Save", {#, "Notebook"}]]&, "nb", "*.nb", MacintoshFileTypes->{"TEXT"}],
 	Item["Computable Document (*.cdf)", FEPrivate`FrontEndExecute[FrontEndToken[#2, "Save", {#, "CDFNotebook"}]]&, "cdf", "*.cdf", MacintoshFileTypes->{"TEXT"}],
-	Item["Mathematica Package (*.m)", FEPrivate`FrontEndExecute[FrontEndToken[#2, "Save", {#, "Package"}]]&, "m", "*.m", MacintoshFileTypes->{"TEXT"}, OptionsNotebook -> "ExportPackage.nb"],
+	Item["Wolfram Language Package (*.wl)", FEPrivate`FrontEndExecute[FrontEndToken[#2, "Save", {#, "Package"}]]&, "wl", "*.wl", MacintoshFileTypes->{"TEXT"}, OptionsNotebook -> "ExportPackage.nb"],
+	Item["Wolfram Mathematica Package (*.m)", FEPrivate`FrontEndExecute[FrontEndToken[#2, "Save", {#, "Package"}]]&, "m", "*.m", MacintoshFileTypes->{"TEXT"}, OptionsNotebook -> "ExportPackage.nb"],
 	Item["Plain Text (*.txt)", FEPrivate`FrontEndExecute[FrontEndToken[#2, "Save", {#, "PlainText"}]]&, "txt", "*.txt", MacintoshFileTypes->{"TEXT"}],
 	Item["LaTeX Document (*.tex)",
 		FrontEnd`SaveAs[#1, #2, "TeX"]&,
@@ -160,19 +170,19 @@ AddFileBrowserFilterPacket["SaveSelection", {
 }];
 
 AddFileBrowserFilterPacket["InstallSource", {
-	Item["Mathematica Notebook (*.nb)", 
+	Item["Wolfram Notebook (*.nb)", 
 		FEPrivate`Set[FEPrivate`Install`sourceFile, #]&, 
 		"nb", "*.nb", MacintoshFileTypes->{"TEXT"}
 	],
-	Item["Mathematica Package (*.m)", 
+	Item["Wolfram Language Package (*.wl, *.m)", 
 		FEPrivate`Set[FEPrivate`Install`sourceFile, #]&, 
-		"m", "*.m", MacintoshFileTypes->{"TEXT"}
+		"wl", {"*wl","*.m"}, MacintoshFileTypes->{"TEXT"}
 	],
 	Item[".mx File (*.mx)", 
 		FEPrivate`Set[FEPrivate`Install`sourceFile, #]&, 
 		"mx", "*.mx"
 	],
-	Item["MathLink Program (*.exe)", 
+	Item["WSTP Program (*.exe)", 
 		FEPrivate`Set[FEPrivate`Install`sourceFile, #]&, 
 		"exe", "*.exe"
 	]
@@ -180,25 +190,25 @@ AddFileBrowserFilterPacket["InstallSource", {
 
 AddFileBrowserFilterPacket["InstallConfirmation", {
 	Item[
-		"Mathematica Notebook (*.nb)", 
+		"Wolfram Notebook (*.nb)", 
 		FEPrivate`FrontEndExecute[
 				FrontEnd`Install[FEPrivate`Install`sourceFile, #] 
 		]&, 
 		"nb", "*.nb", MacintoshFileTypes->{"TEXT"}
 	],
 	Item[
-		"Mathematica Package (*.m)", 
+		"Wolfram Language Package (*.wl, *.m)", 
 		FEPrivate`FrontEndExecute[
 				FrontEnd`Install[FEPrivate`Install`sourceFile, #]
 		]&, 
-		"m", "*.m", MacintoshFileTypes->{"TEXT"}],
+		"wl", {"*.wl","*.m"}, MacintoshFileTypes->{"TEXT"}],
 	Item[
 		".mx File (*.mx)", 
 		FEPrivate`FrontEndExecute[
 				FrontEnd`Install[FEPrivate`Install`sourceFile, #]
 		]&, 
 		"mx", "*.mx"],
-	Item["MathLink Program (*.exe)", 
+	Item["WSTP Program (*.exe)", 
 		FEPrivate`FrontEndExecute[
 				FrontEnd`Install[FEPrivate`Install`sourceFile, #]
 		]&, 

@@ -1,0 +1,330 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Wobble</font></span></p>
+<h2><pre><font color="#3C3C3C">with_fx <font color="DeepPink">:wobble</font> <font color="DarkOrange">do</font><br/>  play <font color="DodgerBlue">50</font><br/><font color="DarkOrange">end</font></pre></font></h2>
+<table cellpadding="2">
+ <tr></tr><tr><td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">amp: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">1</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">amp_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">mix: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">1</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">mix_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">pre_amp: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">1</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">pre_amp_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+</tr><tr><td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">phase: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">0.5</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">phase_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">cutoff_min: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">60</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">cutoff_min_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">cutoff_max: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">120</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">cutoff_max_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+</tr><tr><td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">res: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">0.2</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">res_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">phase_offset: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">0</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">wave: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">pulse_width: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">0.5</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">pulse_width_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+</tr><tr><td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">filter: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">0</font></h4></pre>
+</td>
+</tr></table>
+<p><font size="5", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">  Versatile wobble FX. Will repeatedly modulate a range of filters (rlpf, rhpf) between two cutoff values using a range of control wave forms (saw, pulse, tri, sine). You may alter the phase duration of the wobble, and the resonance of the filter. Combines well with the dsaw synth for crazy dub wobbles. Cutoff value is at cutoff_min at the start of phase</font></p>
+<table cellpadding="10">
+<tr><th></th><th></th></tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> amp:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          The amplitude of the sound. Typically a value between 0 and 1. Higher amplitudes may be used, but won't make the sound louder, it will just reduce the quality of all the sounds currently being played (due to compression.)<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 1<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> amp_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Amount of time (in seconds) for the amplitude (amp) to change. A long slide value means that the amp takes a long time to slide from the previous amplitude to the new amplitude. A slide of 0 means that the amplitude instantly changes to the new amplitude.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> mix:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          The amount (percentage) of FX present in the resulting sound represented as a value between 0 and 1. For example, a mix of 0 means that only the original sound is heard, a mix of 1 means that only the FX is heard (typically the default) and a mix of 0.5 means that half the original and half of the FX is heard. <br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 1<br/>
+          must be a value between 0 and 1 inclusively<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> mix_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Amount of time (in seconds) for the mix value to change. A long slide value means that the mix takes a long time to slide from the previous value to the new value. A slide of 0 means that the mix instantly changes to the new value.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> pre_amp:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Amplification applied to the input signal immediately before it is passed to the FX.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 1<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> pre_amp_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Amount of time (in seconds) for the pre_amp value to change. A long pre_amp_slide value means that the pre_amp takes a long time to slide from the previous value to the new value. A pre_amp_slide of 0 means that the pre_amp instantly changes to the new value.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> phase:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          The phase duration (in seconds) for filter modulation cycles<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0.5<br/>
+          must be greater than zero<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> phase_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          write me<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          Can not be changed once set
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> cutoff_min:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Minimum (MIDI) note filter will move to whilst wobbling. Choose a lower note for a higher range of movement. Full range of movement is the distance between cutoff_max and cutoff_min<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 60<br/>
+          must be zero or greater,must be a value less than 130<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> cutoff_min_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Amount of time (in seconds) for the cutoff_min value to change. A long cutoff_min_slide value means that the cutoff_min takes a long time to slide from the previous value to the new value. A cutoff_min_slide of 0 means that the cutoff_min instantly changes to the new value.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> cutoff_max:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Maximum (MIDI) note filter will move to whilst wobbling. Choose a higher note for a higher range of movement. Full range of movement is the distance between cutoff_max and cutoff_min<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 120<br/>
+          must be zero or greater,must be a value less than 130<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> cutoff_max_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Amount of time (in seconds) for the cutoff_max value to change. A long cutoff_max_slide value means that the cutoff_max takes a long time to slide from the previous value to the new value. A cutoff_max_slide of 0 means that the cutoff_max instantly changes to the new value.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> res:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Filter resonance. Smaller values produce more resonance.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0.2<br/>
+          must be greater than zero<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> res_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Amount of time (in seconds) for the res value to change. A long res_slide value means that the res takes a long time to slide from the previous value to the new value. A res_slide of 0 means that the res instantly changes to the new value.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> phase_offset:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Initial modulation phase offset (a value between 0 and 1).<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be a value between 0 and 1 inclusively<br/>
+          Can not be changed once set
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> wave:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Wave shape of wobble. Use 0 for saw wave, 1 for pulse, 2 for triangle wave and 3 for a sine wave.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be one of the following values: [0, 1, 2, 3]<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> pulse_width:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Only valid if wave is type pulse.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0.5<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> pulse_width_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Time in seconds for pulse width to change. Only valid if wave is type pulse.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> filter:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Filter used for wobble effect. Use 0 for a resonant low pass filter or 1 for a rsonant high pass filter<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be one of the following values: [0, 1]<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  </table>

@@ -115,6 +115,7 @@ Combinatorica`EdgeConnectivity,
 Combinatorica`EdgeLabel,
 Combinatorica`EdgeStyle,
 Combinatorica`EdgeWeight,
+Combinatorica`FindCycle,
 Combinatorica`FromCycles,
 Combinatorica`Graph,
 Combinatorica`GraphCenter,
@@ -273,7 +274,7 @@ ExactRandomGraph,
 ExpandGraph, 
 ExtractCycles, 
 FerrersDiagram, 
-FindCycle,
+Combinatorica`FindCycle,
 FindSet, 
 FiniteGraphs,
 FirstLexicographicTableau, 
@@ -1000,8 +1001,8 @@ ExtractCycles::usage = "ExtractCycles[g] gives a maximal list of edge-disjoint c
 If[Not[ValueQ[FerrersDiagram::usage]],
 FerrersDiagram::usage = "FerrersDiagram[p] draws a Ferrers diagram of integer partition p."
 ];
-If[Not[ValueQ[FindCycle::usage]],
-FindCycle::usage = "FindCycle[g] finds a list of vertices that define a cycle in graph g."
+If[Not[ValueQ[Combinatorica`FindCycle::usage]],
+Combinatorica`FindCycle::usage = "FindCycle[g] finds a list of vertices that define a cycle in graph g."
 ];
 If[Not[ValueQ[FindSet::usage]],
 FindSet::usage = "FindSet[n, s] gives the root of the set containing n in union-find data structure s."
@@ -2081,7 +2082,7 @@ $GraphSemanticOptions = {
     Combinatorica`EdgeWeight -> 1,
     Combinatorica`VertexWeight -> 0
 };
-AcyclicQ[g_Combinatorica`Graph] := SameQ[FindCycle[g],{}]
+AcyclicQ[g_Combinatorica`Graph] := SameQ[Combinatorica`FindCycle[g],{}]
 Combinatorica`AddEdge::obsolete = "Usage of Directed as a second argument to AddEdge is obsolete."
 Combinatorica`AddEdge[g_Combinatorica`Graph, edge:{_Integer,_Integer}, Directed] := (Message[Combinatorica`AddEdge::obsolete]; AddEdges[g, {{edge}}])
 Combinatorica`AddEdge[g_Combinatorica`Graph, edge:{_Integer,_Integer}] := AddEdges[g, {{edge}}]
@@ -2268,7 +2269,7 @@ AugmentingPath[g_Combinatorica`Graph,src_Integer,sink_Integer] :=
 				Select[Range[V[g]],(c[[#,v]] > 0)&]
 			];
 		];
-		FindPath[lab,src,sink]
+		Combinatorica`Private`FindPath[lab,src,sink]
 	]
 Automorphisms[g_Combinatorica`Graph] := Isomorphism[g]
 BFS[g_Combinatorica`Graph, start_Integer] :=
@@ -3501,7 +3502,7 @@ ExpandVertexOptions[Combinatorica`VertexLabel, vl_, vlp_, p_List] :=
         ]
 ExtractCycles[gi_Combinatorica`Graph] := 
 	Module[{g=gi,cycles={},c},
-		While[!SameQ[{}, c=FindCycle[g]],
+		While[!SameQ[{}, c=Combinatorica`FindCycle[g]],
 			PrependTo[cycles,c];
 			g = DeleteCycle[g,c];
 		];
@@ -3563,15 +3564,15 @@ FindBridge[g_Combinatorica`Graph, cycle_List] :=
                    ];
                {b, j}
         ]
-FindCycle::obsolete = "Usage of Directed as a second argument to FindCycle is obsolete."
-FindCycle[g_Combinatorica`Graph, Directed] := (Message[FindCycle::obsolete]; FindCycle[g])
-FindCycle[g_Combinatorica`Graph] := First[Select[Edges[g], #[[1]]==#[[2]]&]] /; SelfLoopsQ[g]
-FindCycle[g_Combinatorica`Graph] :=
+Combinatorica`FindCycle::obsolete = "Usage of Directed as a second argument to FindCycle is obsolete."
+Combinatorica`FindCycle[g_Combinatorica`Graph, Directed] := (Message[Combinatorica`FindCycle::obsolete]; Combinatorica`FindCycle[g])
+Combinatorica`FindCycle[g_Combinatorica`Graph] := First[Select[Edges[g], #[[1]]==#[[2]]&]] /; SelfLoopsQ[g]
+Combinatorica`FindCycle[g_Combinatorica`Graph] :=
      Module[{e = Cases[Split[Sort[Edges[g]]], {x_List, x_List, ___}][[1, 1]]}, 
              Append[e, e[[1]]]
      ] /; (UndirectedQ[g] && MultipleEdgesQ[g])
-FindCycle[g_Combinatorica`Graph] := FindCycle[ToAdjacencyLists[g], UndirectedQ[g]]
-FindCycle[al_List, tag_:True] := 
+Combinatorica`FindCycle[g_Combinatorica`Graph] := Combinatorica`FindCycle[ToAdjacencyLists[g], UndirectedQ[g]]
+Combinatorica`FindCycle[al_List, tag_:True] := 
        Block[{e = al, c, parent = Table[0, {Length[al]}], s=Table[0, {Length[al]}],
               f = Table[0, {Length[al]}], cnt = 1, start, edge, $RecursionLimit = Infinity},
               While[Count[parent, 0] > 0, 
@@ -3585,7 +3586,7 @@ FindCycle[al_List, tag_:True] :=
               ];
               {}
        ]
-FindPath[l_List,v1_Integer,v2_Integer] :=
+Combinatorica`Private`FindPath[l_List,v1_Integer,v2_Integer] :=
 	Block[{x=l[[v2]],y,z=v2,lst={}},
 		If[SameQ[x,0], Return[{}]];
 		While[!SameQ[x, start],
@@ -3932,10 +3933,10 @@ GraphLabels[v_List,l_List] :=
 	]
 GraphOptions[Combinatorica`Graph[e_, v_, opts___?OptionQ]] := {opts}
 GraphOptions[Combinatorica`Graph[e_, v_, opts___?OptionQ], sv_?NumberQ] :=
-        Merge[Rest[v[[sv]]], {opts}]
+        Combinatorica`Private`Merge[Rest[v[[sv]]], {opts}]
 GraphOptions[Combinatorica`Graph[e_, v_, opts___?OptionQ], se_List] :=
         Module[{sse = Sort[se]},
-               Merge[Rest[Select[e, First[#]==sse&][[1]]], {opts}]
+               Combinatorica`Private`Merge[Rest[Select[e, First[#]==sse&][[1]]], {opts}]
         ]
 GraphPolynomial[0, _] := 1
 GraphPolynomial[n_Integer?Positive, x_] :=
@@ -4960,7 +4961,7 @@ MeredithGraph :=
   {{9.140250621399062, 5.404712815574052}}, 
   {{8.552465369106589, 6.213729809948999}}, 
   {{7.964680116814116, 7.022746804323947}}}]
-Merge[igd_List, ild_List] :=
+Combinatorica`Private`Merge[igd_List, ild_List] :=
     Module[{i, j, gd = Flatten[igd], ld = Flatten[ild]},
         Join[Table[If[Position[ld,  Rule[gd[[i]][[1]], _]]=={},
                       gd[[i]],
@@ -4979,7 +4980,7 @@ Merge[igd_List, ild_List] :=
              ]
         ]
     ]
-Merge[rl1_List, rl2_List, rls__] := Merge[Merge[rl1, rl2], rls]
+Combinatorica`Private`Merge[rl1_List, rl2_List, rls__] := Combinatorica`Private`Merge[Combinatorica`Private`Merge[rl1, rl2], rls]
 MinOp[l_List,f_] :=
 	Module[{min=First[l]},
 		Scan[ (If[ Apply[f,{#,min}], min = #])&, l];
@@ -6079,12 +6080,12 @@ RenderEdges[v_List, e_List, aopts_List, eopts_List] :=
                 ne = RenderMultipleEdges[e, Cases[eopts, _[EdgeDirection,_]][[1,2]]]
                },
                Table[({fvp, svp} = v[[First[ ne[[i]] ]]];
-                     ExpandEdgeOptions[Merge[Flatten[Map[selectval[#, i]&, eopts]], Rest[ ne[[i]] ]], i, fvp, svp, aopts]),
+                     ExpandEdgeOptions[Combinatorica`Private`Merge[Flatten[Map[selectval[#, i]&, eopts]], Rest[ ne[[i]] ]], i, fvp, svp, aopts]),
                      {i, Length[ne]}                  
                ]
         ]
 RenderGraph[Combinatorica`Graph[e_, v_, gopts___], PlotRange -> pr_, ropts___] :=
-        Block[{defaults = Merge[Options[ShowGraph], {gopts}],
+        Block[{defaults = Combinatorica`Private`Merge[Options[ShowGraph], {gopts}],
                nv = NormalizeVertices[Map[First[#]&, v]]},
                Graphics[{RenderVertices[nv, defaults],
                          RenderEdges[Map[First[#]&, nv], e, defaults]},
@@ -6105,7 +6106,7 @@ RenderMultipleEdges[e_List, flag_] :=
                               Table[p = Position[#[[i]], EdgeDirection->_];
                                     nf = flag;
                                     If[p != {}, nf = #[[i, p[[1,1]], 2]] ];
-                                    Prepend[Merge[Rest[#[[i]]],
+                                    Prepend[Combinatorica`Private`Merge[Rest[#[[i]]],
                                           {EdgeDirection ->{nf, r[[i]]}}
                                     ], First[#[[i]]]],
                                     {i, Length[#]}
@@ -6119,7 +6120,7 @@ Options[RenderVertices] := Options[ShowGraph,
          {VertexColor, Combinatorica`VertexStyle, VertexNumber, VertexNumberColor,
           VertexNumberPosition, Combinatorica`VertexLabel, VertexLabelColor, VertexLabelPosition}]
 RenderVertices[v_List, opts_List] :=
-        Table[ExpandVertexOptions[Merge[Flatten[Map[selectval[#, i]&, opts]], Rest[v[[i]]]], First[v[[i]]], i],
+        Table[ExpandVertexOptions[Combinatorica`Private`Merge[Flatten[Map[selectval[#, i]&, opts]], Rest[v[[i]]]], First[v[[i]]], i],
               {i, Length[v]}
         ]
 (* distribution of values for list options varies a bit *)
@@ -6388,7 +6389,7 @@ SetGraphOptions[vl_List, ol : {{_Integer.., __?OptionQ}..}] :=
                Table[p = Position[o[[1]], i]; 
                      If[p == {},
                         vl[[i]],
-                        Prepend[Merge[Rest[vl[[i]]], o[[2, p[[1, 1]] ]] ], 
+                        Prepend[Combinatorica`Private`Merge[Rest[vl[[i]]], o[[2, p[[1, 1]] ]] ], 
                                 First[ vl[[i]] ] 
                         ]
                      ],
@@ -6402,7 +6403,7 @@ SetGraphOptions[el_List, ol_List, All] :=
                Table[p = Position[o[[1]], First[ el[[i]] ] ]; 
                      If[p == {}, 
                         el[[i]], 
-                        Prepend[Merge[Rest[el[[i]]], o[[2, p[[1, 1]]  ]]  ], 
+                        Prepend[Combinatorica`Private`Merge[Rest[el[[i]]], o[[2, p[[1, 1]]  ]]  ], 
                                 First[ el[[ i ]] ]
                         ]
                      ], 
@@ -6416,7 +6417,7 @@ SetGraphOptions[el_List, ol_List, One] :=
                Table[p = Position[no[[1]], First[ el[[i]] ] ]; 
                      If[p == {}, 
                         el[[i]], 
-                        e = Prepend[Merge[Rest[el[[i]]], no[[2, p[[1, 1]] ]] ], 
+                        e = Prepend[Combinatorica`Private`Merge[Rest[el[[i]]], no[[2, p[[1, 1]] ]] ], 
                                     First[ el[[i]] ]
                         ];
                         no = MapAt[Infinity &, no, p];
@@ -6449,7 +6450,7 @@ SetGraphOptions[Combinatorica`Graph[e_, v_, dopts___], l_List:{}, flag_Symbol:Al
                  ne = SetGraphOptions[ne, le, All]
               ];
               nv = SetGraphOptions[v, lv];
-              Apply[Combinatorica`Graph, Join[{ne, nv}, Merge[{dopts}, {opts}]]]
+              Apply[Combinatorica`Graph, Join[{ne, nv}, Combinatorica`Private`Merge[{dopts}, {opts}]]]
         ]
 SetLevel[l_List,lvl_,rank_List] :=  
     Module[ {r=rank},
@@ -6572,18 +6573,18 @@ ShowGraph[g_Combinatorica`Graph, lopts_List, opts___?OptionQ] :=
 ShowGraph[g_Combinatorica`Graph, opts___?OptionQ]/;V[g] === 0 :=
     Graphics[{}, FilterRules[{opts}, Options[Graphics]]]
 ShowGraph[g_Combinatorica`Graph, opts___?OptionQ] :=
-        Module[{i, VertexOptions = Merge[Options[RenderVertices],
+        Module[{i, VertexOptions = Combinatorica`Private`Merge[Options[RenderVertices],
                                       SelectOptions[{opts}, RenderVertices],
                                       SelectOptions[Options[g], RenderVertices]
                                 ],
-                EdgeOptions  =  Merge[Options[RenderEdges],
+                EdgeOptions  =  Combinatorica`Private`Merge[Options[RenderEdges],
                                       SelectOptions[{opts}, RenderEdges],
                                       SelectOptions[Options[g], RenderEdges]
                                 ],
-                ArrowOptions =  Merge[SelectOptions[{opts}, Arrow],
+                ArrowOptions =  Combinatorica`Private`Merge[SelectOptions[{opts}, Arrow],
                                       SelectOptions[Options[g], Arrow]
                                 ],
-                PlotOptions =   Merge[FilterRules[Options[ShowGraph],Options[Graphics]],
+                PlotOptions =   Combinatorica`Private`Merge[FilterRules[Options[ShowGraph],Options[Graphics]],
                                       SelectOptions[{opts}, Graphics],
                                       SelectOptions[Options[g], Graphics]
                                 ],
@@ -6640,7 +6641,7 @@ SimplePlanarQ[g_Combinatorica`Graph] :=
   ] /; !(ConnectedQ[g] && BiconnectedQ[g])
 SimplePlanarQ[g_Combinatorica`Graph] := False /;  (M[g] > 3 V[g]-6) && (V[g] > 2)
 SimplePlanarQ[g_Combinatorica`Graph] := True /;   (M[g] < V[g] + 3)
-SimplePlanarQ[g_Combinatorica`Graph] := (PlanarGivenCycleQ[ g, Rest[FindCycle[g]] ])
+SimplePlanarQ[g_Combinatorica`Graph] := (PlanarGivenCycleQ[ g, Rest[Combinatorica`FindCycle[g]] ])
 SimpleQ[g_Combinatorica`Graph] := (!PseudographQ[g]) && (!MultipleEdgesQ[g])
 SingleBridgeQ[b_Combinatorica`Graph, {_}] := PlanarQ[b]
 SingleBridgeQ[b_?PathQ, {_,_}] := True
@@ -7550,7 +7551,7 @@ ExactRandomGraph,
 ExpandGraph, 
 ExtractCycles, 
 FerrersDiagram, 
-FindCycle,
+Combinatorica`FindCycle,
 FindSet, 
 FiniteGraphs,
 FirstLexicographicTableau, 

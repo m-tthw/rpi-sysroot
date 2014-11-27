@@ -8,7 +8,9 @@ Begin["OAuthDialogDump`"] (* Begin Private Context *)
 
 Begin["`Private`"]
 
-  
+(Unprotect[#]; Clear[#])& /@ {OAuthClient`tokenOAuthDialog,OAuthClient`notokenOAuthDialog}
+Unprotect[OAuthClient`defaultServiceConnectIcon];
+
 stretchimage[image_, n_] := Block[{tarray, pos, swath, imagedata},
 	imagedata = ImageData[image, "Byte"];
 	tarray = Transpose[imagedata];
@@ -122,15 +124,16 @@ tokenOAuthDialog[url_, name_,icon_:defaultServiceConnectIcon] :=
 	       		Spacings -> 0, Alignment -> {Left, Center}, 
 	      		Background -> RGBColor[0.9411764705882353`, 0.9411764705882353`, 0.9411764705882353`]]],
 		    Modal -> True, Background -> White, ShowCellBracket -> False, 
-		    StyleDefinitions -> "Dialog.nb", CellMargins -> {{0, 0}, {0, 0}}, 
+			CellMargins -> {{0, 0}, {0, 0}}, 
 		    CellFrameMargins -> 0, CellFrameLabelMargins -> 0, 
-		    CellLabelMargins -> 0, WindowElements -> {}, 
+		    CellLabelMargins -> 0, WindowElements -> {}, Magnification->1,
 		    WindowFrameElements -> {"CloseBox"}, WindowFrame -> "ModalDialog",
 		     System`NotebookEventActions -> {"ReturnKeyDown" :> (value = key; 
 		        done = True), {"MenuCommand", 
 		        "HandleShiftReturn"} :> (value = key; done = True), 
 		      "EscapeKeyDown" :> (value = $Canceled; done = True), 
 		      "WindowClose" :> (value = $Canceled; done = True)}, 
+		      Deployed->True,
 		    WindowSize -> {500, 303}, ShowStringCharacters -> False, 
 		    Evaluator -> CurrentValue["RunningEvaluator"]];
   		WaitUntil[done];
@@ -193,6 +196,60 @@ notokenOAuthDialog[url_, text_] :=
 
 notokenOAuthDialog[___] := $Failed
 
+
+KeyDialog[name_,icon_:defaultServiceConnectIcon] := 
+	Block[{nb, value = Null, done = False, key = "", header, footer,ifield, saveQ=OAuthClient`$SaveConnectionDefault},
+		header = Panel[Grid[
+			{{Spacer[20], If[icon==="","",ImageResize[icon, {Automatic, 32}]], wolframconnector}}], 
+			Appearance -> headerbg, Alignment -> {Left, Center}, ImageSize -> {500, 50}];
+  		footer = Panel[
+  			Grid[{{Spacer[20], 
+	  			ClickPane[Dynamic[If[saveQ, checkboxactive, checkbox]], (saveQ = ! saveQ) &], 
+	  			Style["Save Connection", graytext], 
+	       		Spacer[(*460 - 18 - 102 - 2*80 - 10*) 180], 
+	       		cancelbutton[(value = $Canceled; done = True) &], Spacer[10], 
+	       		donebutton[(value = key; done = True) &]}},Alignment -> {Left, Center},Spacings -> 0], 
+    		Appearance -> footerbg, Alignment -> {Left, Center}, 
+    		ImageSize -> {500, 50}];
+    	ifield = InputField[Dynamic[key, (key = StringReplace[#, RegularExpression["(?ms) "] :> ""]) &], String,
+   			Enabled -> True, ContinuousAction -> True, 
+  			FieldHint -> "Paste your access key here", 
+  			FieldHintStyle -> {Black, FontFamily -> "Helvetica"}, FrameMargins->5,
+  			ImageSize -> {460, 58}];
+  		nb = CreateDocument[DynamicModule[{},
+	     	Column[
+	      		{header,vertspace,
+		       	Row[{Spacer[20], Style["Step 1.", graytext], Spacer[20]}], 
+		        Spacer[{1,10}],
+	       		Row[{Spacer[(* 20 + 42 + 20 *) 82], Style["(you may be asked to authorize the app)", graytext]}],vertspace,
+	       		Row[{Spacer[20], Style["Step 2.", graytext], Spacer[20], 
+	         		Style["Paste your access key into the field below.", Bold, graytext]}],
+		        Spacer[{1,21}],
+	       		Row[{Spacer[20], ifield}],
+	       		vertspace,
+	       		footer
+	       		}, 
+	       		Spacings -> 0, Alignment -> {Left, Center}, 
+	      		Background -> RGBColor[0.9411764705882353`, 0.9411764705882353`, 0.9411764705882353`]]],
+		    Modal -> True, Background -> White, ShowCellBracket -> False, 
+			CellMargins -> {{0, 0}, {0, 0}}, 
+		    CellFrameMargins -> 0, CellFrameLabelMargins -> 0, 
+		    CellLabelMargins -> 0, WindowElements -> {}, 
+		    WindowFrameElements -> {"CloseBox"}, WindowFrame -> "ModalDialog",
+		     System`NotebookEventActions -> {"ReturnKeyDown" :> (value = key; 
+		        done = True), {"MenuCommand", 
+		        "HandleShiftReturn"} :> (value = key; done = True), 
+		      "EscapeKeyDown" :> (value = $Canceled; done = True), 
+		      "WindowClose" :> (value = $Canceled; done = True)}, 
+		      Deployed->True,
+		    WindowSize -> {500, 303}, ShowStringCharacters -> False, 
+		    Evaluator -> CurrentValue["RunningEvaluator"]];
+  		WaitUntil[done];
+  		OAuthClient`$SaveConnection=saveQ;
+  		FrontEndExecute[FrontEnd`NotebookClose[nb, Interactive -> True, "ClosingEvent" -> Null]];
+  		value]
+  		
+  		
 (* Buttons *)
 custombutton[content_, fun_, len_, {unclicked_, clicked_}] := 
 	DynamicModule[{apper = unclicked}, 
@@ -212,7 +269,7 @@ custombutton[content_, fun_, len_, {unclicked_, clicked_}] :=
     			"MouseUp" :> (apper = clicked)}]]
 
 signinbutton[text_, url_] := 
- 	With[{len = Max[150, 10 StringLength[text]]}, 
+ 	With[{len = Max[150, 13 StringLength[text]]}, 
   		Panel[Hyperlink[Style["Sign in to "<>text, FontFamily -> "Arial", FontColor -> White, 
        			FontSize -> 12, FontWeight -> Bold], url], 
    			Alignment -> {Center, Center}, 

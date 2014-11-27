@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<omf>
+  <resource>
+    <creator>(Free Software Foundation)</creator>
+    <maintainer>(Projekt dokumentacije GNOME)</maintainer>
+    <title>Splošno javno dovoljenje GNU</title>
+    <date>junij 1991</date>
+    <version identifier="2" date="junij 1991"/>
+    <subject category="General|Licenses"/>
+    <description>Dovoljenja večine programske opreme so zasnovane tako, da preprečujejo njegovo svobodno razširjanje in spreminjanje. Za razliko od teh pa Splošno Javno Dovoljenje GNU (angl. GNU General Public License, GPL) jamči svobodo pri razširjanju in spreminjanju proste programske opreme ter s tem zagotovilo, da ostane ta prosta za vse njene uporabnike.</description>
+    <type>license</type>
+    <format mime="text/xml" dtd="-//OASIS//DTD DocBook XML V4.1.2//EN"/>
+    <identifier url="file:///usr/share/gnome/help/gpl/sl/gpl.xml"/>
+    <language code="sl"/>
+    <relation seriesid="8cfbd6d6-7013-11db-88b9-f8317a4e5c26"/>
+    <rights holder="Free Software Foundation"/>
+  </resource>
+</omf>

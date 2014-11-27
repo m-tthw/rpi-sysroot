@@ -1,0 +1,64 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Describe note</font></span></p>
+<h1><font color="#3c3c3c"><pre>note<pre></font></h1>
+<h2><pre>[note <font color="deeppink">(symbol_or_number)</font>]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Takes a midi note, a symbol (e.g. :C ) or a string (e.g. 'C' ) and resolves it to a midi note. You can also pass an optional :octave parameter to get the midi note for a given octave. Please note - :octave param is overridden if octave is specified in a symbol i.e. :c3
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Introduced in v2.0.0
+</p>
+<table cellpadding="2">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+
+# These all return 60 which is the midi number for middle C (octave 4)
+puts note(60)
+puts note(:C)
+puts note(:C4)
+puts note('C')
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#FFE4E1"><h3><pre>Example 1 </pre></h3></td>
+   <td><pre>
+
+# returns 60 - octave param has no effect if we pass in a number
+puts note(60, octave: 2)
+
+# These all return 36 which is the midi number for C2 (two octaves below middle C)
+puts note(:C, octave: 2)
+puts note(:C4, octave: 2)
+puts note('C', octave: 2)
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+ 
+ 
+ 
+ 
+ # note the octave param overrides any octaves specified in a symbol
+ 
+
+
+
+</pre></td></tr>
+</table>

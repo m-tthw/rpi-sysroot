@@ -26,7 +26,7 @@ $LibraryLinkLibraryResourcesPath = FileNameJoin[{$LibraryLinkPath, "LibraryResou
 PrependTo[$LibraryPath, $LibraryLinkLibraryResourcesPath];
 
 InitializedQ = False
-$LIBNAME /; $OperatingSystem =!= "Unix" := FindLibrary["LibraryVersionInformation"]
+$LIBNAME := FindLibrary["LibraryVersionInformation"]
 
 
 Initialize[] :=
@@ -34,38 +34,38 @@ Initialize[] :=
 		If[InitializedQ =!= False,
 			Return[InializedQ]
 		];
-		InitializedQ = If[MemberQ[{"Windows", "MacOSX"}, $OperatingSystem],
-			If[$LIBNAME === $Failed,
-				$Failed,
-				Libraryfuns = Quiet /@ 
+		InitializedQ = If[$LIBNAME === $Failed,
+			$Failed,
+			Libraryfuns = Quiet /@ 
+				Join[
 					If[$OperatingSystem === "Windows",
 						{
-							cLibraryGetVersion = LibraryFunctionLoad[$LIBNAME,
-																	"LibraryGetVersion",
-																	{"UTF8String"},
-																	{Integer, 1, Automatic}
-							],
 							cFileGetVersionInformation = LibraryFunctionLoad[$LIBNAME,
 																		     "FileGetVersionInformation",
 																		      {"UTF8String", "UTF8String"},
 																			  "UTF8String"
 							]
-						}, (* else on MacOSX *)
+						},
 						{
-							cLibraryGetVersion = LibraryFunctionLoad[$LIBNAME,
-																	"LibraryGetVersion",
-																	{"UTF8String"},
-																	{Integer, 1, Automatic}
-							]
 						}
-					];
-				If[MemberQ[Libraryfuns, $Failed],
-					$Failed,
-					True
-				] 
-			]
-			,
-			True
+					],
+					{
+						cLibraryGetVersion = LibraryFunctionLoad[$LIBNAME,
+																"LibraryGetVersion",
+																{"UTF8String"},
+																{_Integer, 1, Automatic}
+						],
+						cWolframLibraryVersion = LibraryFunctionLoad[$LIBNAME,
+															"getWolframLibraryVersion",
+															{"UTF8String"},
+															{_Integer}
+						]
+					}
+				];
+			If[MemberQ[Libraryfuns, $Failed],
+				$Failed,
+				True
+			] 
 		]
 	]
 
@@ -126,10 +126,12 @@ RealLibraryPath[pth_String] := Quiet[AbsoluteFileName[pth]]
 
 LibraryVersionString[name_String] :=
 	LibraryVersionString[LibraryVersionInformation[name]]
+LibraryVersionString[verInfo_Association] :=
+	LibraryVersionString[Normal[verInfo]]
 LibraryVersionString[verInfo_List] :=
-	Module[{major = "Major Version" /. verInfo,
-			minor = "Minor Version" /. verInfo,
-			revision = "Revision Number" /. verInfo},
+	Module[{major = "MajorVersion" /. verInfo,
+			minor = "MinorVersion" /. verInfo,
+			revision = "RevisionNumber" /. verInfo},
 		If[MemberQ[{major, minor, revision}, Except[_Real | _Integer]],
 			"",
 			StringJoin[Riffle[ToString /@ {major, minor, revision}, "."]]
@@ -140,7 +142,7 @@ LibraryVersionString[___] := ""
 LibraryVersionInformation[name_String] :=
 	iLibraryVersionInformation[name, ".so"]
 iLibraryVersionInformation[name_String, ext_String] :=
-	Module[{pths, pth, strversion, splitversion},
+	Module[{pths, pth, strversion, splitversion, majorVersion = 0, minorVersion = 0, revionNumber = 0},
 		pths = Catch[RealLibraryPath[#] & /@ FindLibraryAbsolutePath[name]];
 		If[Length[pths] > 0 && pths =!= {$Failed},
 			Quiet[Check[
@@ -153,14 +155,24 @@ iLibraryVersionInformation[name_String, ext_String] :=
 						   							 ShortestMatch[__] ~~ x : ((DigitCharacter ~~ "." ...) ..) ~~ ext -> x}];
 					splitversion = ToExpression /@ StringSplit[strversion, "."];
 					Switch[Length[splitversion],
-						1, {"Name" -> name, "Path" -> pth, "Major Version" -> splitversion[[1]], 
-							"Minor Version" -> 0, "Revision Number" -> 0},
-						2, {"Name" -> name, "Path" -> pth, "Major Version" -> splitversion[[1]], 
-							"Minor Version" -> splitversion[[2]], "RevisionNumber" -> 0},
-						_, {"Name" -> name, "Path" -> pth, "Major Version" -> splitversion[[1]], 
-							"Minor Version" -> splitversion[[2]], 
-							"Revision Number" -> ToExpression @ StringJoin[Riffle[ToString/@splitversion[[3;;If[Length[splitversion] > 4, 4, Length[splitversion]]]], "."]]}
-					],
+						1,
+							majorVersion = splitversion[[1]];,
+						2,
+							majorVersion = splitversion[[1]];
+							minorVersion = splitversion[[2]];, 
+						_,
+							majorVersion = splitversion[[1]];
+							minorVersion = splitversion[[2]];
+							revionNumber = ToExpression @ StringJoin[Riffle[ToString/@splitversion[[3;;If[Length[splitversion] > 4, 4, Length[splitversion]]]], "."]]
+					];
+					Association[{
+						"Name" -> name,
+						"Path" -> pth,
+						"MajorVersion" -> majorVersion, 
+						"MinorVersion" -> minorVersion,
+						"RevisionNumber" -> revionNumber,
+				 		"WolframLibraryVersion" -> getWolframLibraryVersion[pth]
+					}],
 					$Failed (* no version information *)
 				], $Failed
 			]],
@@ -187,6 +199,16 @@ LibraryVersionUsingOtool[pth_String] :=
   		]
  	]
 
+
+getWolframLibraryVersion[libPath_String] :=
+	Module[{wolframLibraryVersion},
+		wolframLibraryVersion = cWolframLibraryVersion[libPath];
+		If[wolframLibraryVersion > 0,
+			wolframLibraryVersion,
+			$Failed
+		]
+	]
+	
 LibraryVersionInformation[name_String] :=
 	Module[{pths, otoolversion, splitversion},
 		If[InitializedQ === $Failed || Initialize[] === $Failed,
@@ -200,9 +222,14 @@ LibraryVersionInformation[name_String] :=
 				cLibraryGetVersion[First@pths]
 			];
 			If[ListQ[splitversion] && splitversion =!= {},
-				{"Name" -> name, "Path" -> First[pths],
-				 "Major Version" -> splitversion[[1]], "Minor Version" -> splitversion[[2]], "Revision Number" -> splitversion[[3]]
-				},
+				Association[{
+				 "Name" -> name,
+				 "Path" -> First[pths],
+				 "MajorVersion" -> splitversion[[1]],
+				 "MinorVersion" -> splitversion[[2]],
+				 "RevisionNumber" -> splitversion[[3]],
+				 "WolframLibraryVersion" -> getWolframLibraryVersion[First@pths]
+				}],
 				iLibraryVersionInformation[name, ".dylib"]
 			]
 			,
@@ -246,9 +273,14 @@ LibraryVersionInformation[name0_String] :=
 DeleteNoneNumeric[str_String] := StringReplace[str, {x : DigitCharacter -> x, "." -> ".", _ -> ""}]
 
 formatVersionInformation[name_, pth_, ver_List] /; $OperatingSystem === "Windows" :=
-	{"Name" -> FileBaseName[name], "Path" -> pth, "Major Version" -> ver[[1]],
-	 "Minor Version" -> If[Length[ver] < 2, 0, ver[[2]]],
-	 "Revision Number" -> If[Length[ver] < 3, 0, ToExpression @ StringJoin[Riffle[ToString/@ver[[3;;If[Length[ver] > 4, 4, Length[ver]]]], "."]]]}
+	Association[{
+	 "Name" -> FileBaseName[name],
+	 "Path" -> pth,
+	 "MajorVersion" -> ver[[1]],
+	 "MinorVersion" -> If[Length[ver] < 2, 0, ver[[2]]],
+	 "RevisionNumber" -> If[Length[ver] < 3, 0, ToExpression @ StringJoin[Riffle[ToString/@ver[[3;;If[Length[ver] > 4, 4, Length[ver]]]], "."]]],
+	 "WolframLibraryVersion" -> getWolframLibraryVersion[pth]
+	}]
 
 FileGetVersionInformation::invquery = "The query `1` is an invalid query."
 FileGetVersionInformation[pth_String, query_String] :=

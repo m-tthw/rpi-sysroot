@@ -848,11 +848,17 @@ typedef wint64 mluint64;
 #define MLEXPORT
 #endif
 
+#if defined(LINUX_MATHLINK)
+#define MLATTR __attribute__ ((visibility("default")))
+#else
+#define MLATTR
+#endif
+
 #define MLAPI_ MLAPI
 
 
 #ifndef MLDEFN
-#define MLDEFN( rtype, name, params) extern rtype MLAPI MLEXPORT name params
+#define MLDEFN( rtype, name, params) extern MLATTR rtype MLAPI MLEXPORT name params
 #endif
 #ifndef MLDECL
 #define MLDECL( rtype, name, params) extern rtype MLAPI name P(params)
@@ -3450,37 +3456,41 @@ typedef dev_mode FAR * dev_modep;
 
 typedef unsigned long dev_options;
 
-#define _DefaultOptions            ((dev_options)0x00000000)
+#define _DefaultOptions              ((dev_options)0x00000000)
 
-#define _NetworkVisibleMask        ((dev_options)0x00000003)
-#define _BrowseMask                ((dev_options)0x00000010)
-#define _NonBlockingMask           ((dev_options)0x00000020)
-#define _InteractMask              ((dev_options)0x00000100)
-#define _YieldMask                 ((dev_options)0x00000200)
-#define _UseIPV6Mask               ((dev_options)0x00010000)
-#define _UseIPV4Mask               ((dev_options)0x00020000)
-#define _VersionMask               ((dev_options)0x0F000000)
-#define _UseNewTCPIPConnectionMask ((dev_options)0x00100000)
-#define _UseOldTCPIPConnectionMask ((dev_options)0x00200000)
+#define _NetworkVisibleMask          ((dev_options)0x00000003)
+#define _BrowseMask                  ((dev_options)0x00000010)
+#define _NonBlockingMask             ((dev_options)0x00000020)
+#define _InteractMask                ((dev_options)0x00000100)
+#define _YieldMask                   ((dev_options)0x00000200)
+#define _UseIPV6Mask                 ((dev_options)0x00010000)
+#define _UseIPV4Mask                 ((dev_options)0x00020000)
+#define _VersionMask                 ((dev_options)0x0F000000)
+#define _UseNewTCPIPConnectionMask   ((dev_options)0x00100000)
+#define _UseOldTCPIPConnectionMask   ((dev_options)0x00200000)
+#define _UseUUIDTCPIPConnectionMask  ((dev_options)0x00000004)
+#define _UseAnyNetworkAddressMask    ((dev_options)0x00000008)
 
-#define _NetworkVisible            ((dev_options)0x00000000)
-#define _LocallyVisible            ((dev_options)0x00000001)
-#define _InternetVisible           ((dev_options)0x00000002)
+#define _NetworkVisible              ((dev_options)0x00000000)
+#define _LocallyVisible              ((dev_options)0x00000001)
+#define _InternetVisible             ((dev_options)0x00000002)
 
-#define _Browse                    ((dev_options)0x00000000)
-#define _DontBrowse                ((dev_options)0x00000010)
+#define _Browse                      ((dev_options)0x00000000)
+#define _DontBrowse                  ((dev_options)0x00000010)
 
-#define _NonBlocking               ((dev_options)0x00000000)
-#define _Blocking                  ((dev_options)0x00000020)
+#define _NonBlocking                 ((dev_options)0x00000000)
+#define _Blocking                    ((dev_options)0x00000020)
 
-#define _Interact                  ((dev_options)0x00000000)
-#define _DontInteract              ((dev_options)0x00000100)
+#define _Interact                    ((dev_options)0x00000000)
+#define _DontInteract                ((dev_options)0x00000100)
 
-#define _ForceYield                ((dev_options)0x00000200)
-#define _UseIPV6                   ((dev_options)0x00010000)
-#define _UseIPV4                   ((dev_options)0x00020000)
-#define _UseNewTCPIPConnection     ((dev_options)0x00100000)
-#define _UseOldTCPIPConnection     ((dev_options)0x00200000)
+#define _ForceYield                  ((dev_options)0x00000200)
+#define _UseIPV6                     ((dev_options)0x00010000)
+#define _UseIPV4                     ((dev_options)0x00020000)
+#define _UseNewTCPIPConnection       ((dev_options)0x00100000)
+#define _UseOldTCPIPConnection       ((dev_options)0x00200000)
+#define _UseUUIDTCPIPConnection      ((dev_options)0x00000004)
+#define _UseAnyNetworkAddress        ((dev_options)0x00000008)
 
 
 #if MLINTERFACE >= 3
@@ -3822,16 +3832,20 @@ typedef MLUserUPP MLUserFunction;
 
 
 /* edit here and in mldevice.h and mathlink.r */
-#define MLNetworkVisibleMask         ((unsigned long)0x00000003)
-#define MLBrowseMask                 ((unsigned long)0x00000010)
-#define MLNonBlockingMask            ((unsigned long)0x00000020)
-#define MLInteractMask               ((unsigned long)0x00000100)
-#define MLYieldMask                  ((unsigned long)0x00000200)
-#define MLUseIPV6Mask                ((unsigned long)0x00010000)
-#define MLUseIPV4Mask                ((unsigned long)0x00020000)
-#define MLVersionMask                ((unsigned long)0x0000F000)
-#define MLUseNewTCPIPConnectionMask  ((unsigned long)0x00100000)
-#define MLUseOldTCPIPConnectionMask  ((unsigned long)0x00200000)
+#define MLNetworkVisibleMask         ((unsigned long)0x00000003)          /* 00000000000000000000011 */
+#define MLBrowseMask                 ((unsigned long)0x00000010)          /* 00000000000000000010000 */
+#define MLNonBlockingMask            ((unsigned long)0x00000020)          /* 00000000000000000110000 */
+#define MLInteractMask               ((unsigned long)0x00000100)          /* 00000000000000100000000 */
+#define MLYieldMask                  ((unsigned long)0x00000200)          /* 00000000000001000000000 */
+#define MLUseIPV6Mask                ((unsigned long)0x00010000)          /* 00000010000000000000000 */
+#define MLUseIPV4Mask                ((unsigned long)0x00020000)          /* 00000100000000000000000 */
+#define MLVersionMask                ((unsigned long)0x0000F000)          /* 00000001111000000000000 */
+#define MLUseNewTCPIPConnectionMask  ((unsigned long)0x00100000)          /* 00100000000000000000000 */
+#define MLUseOldTCPIPConnectionMask  ((unsigned long)0x00200000)          /* 01000000000000000000000 */
+#define MLUseUUIDTCPIPConnectionMask ((unsigned long)0x00000004)          /* 00000000000000000000110 */
+#define MLUseAnyNetworkAddressMask   ((unsigned long)0x00000008)          /* 00000000000000000001000 */
+
+                                                                          /* 01100111111001100111111 */
 
 #define MLDefaultOptions             ((unsigned long)0x00000000)
 #define MLNetworkVisible             ((unsigned long)0x00000000)
@@ -3853,6 +3867,9 @@ typedef MLUserUPP MLUserFunction;
 
 #define MLUseNewTCPIPConnection      ((unsigned long)0x00100000)
 #define MLUseOldTCPIPConnection      ((unsigned long)0x00200000)
+#define MLUseUUIDTCPIPConnection     ((unsigned long)0x00000004)
+
+#define MLUseAnyNetworkAddress       ((unsigned long)0x00000008)
 
 /* Encoding types for use with MLSetEncodingParameter */
 #if MLINTERFACE >= 3
@@ -4205,6 +4222,7 @@ MLDECL( charpp_ct,     MLFilterArgv0,   ( MLEnvironment ep, charpp_ct argv, char
 #endif
 #endif // MLINTERFACE >= 4
 
+
 #if MLINTERFACE >= 3
 MLDECL( long,          MLFeatureString, ( MLINK mlp, char *buf, long buffsize));
 MLDECL( MLINK,         MLOpenArgv,      ( MLEnvironment ep, char **argv, char **argv_end, int *errp));
@@ -4414,8 +4432,57 @@ ML_END_EXTERN_C
 
 
 
+#ifndef MLLINKSERVER_H
+#define MLLINKSERVER_H
+
+
+
+
+
+
+#if MLINTERFACE >= 4
+
+ML_EXTERN_C
+
+typedef void * MLLinkServer;
+
+typedef void (*MLNewLinkCallbackFunction)(MLLinkServer server, MLINK link);
+
+MLDECL(MLLinkServer, MLNewLinkServer, (MLEnvironment env, void *context, int *error));
+
+MLDECL(MLLinkServer, MLNewLinkServerWithPort, (MLEnvironment env, unsigned short port, void *context,
+    int *error));
+
+MLDECL(MLLinkServer, MLNewLinkServerWithPortAndInterface, (MLEnvironment env, unsigned short port, const char *iface,
+    void *context, int *error));
+
+MLDECL(void, MLShutdownLinkServer, (MLLinkServer server));
+
+MLDECL(void, MLRegisterCallbackFunctionWithLinkServer, (MLLinkServer server, MLNewLinkCallbackFunction function));
+
+MLDECL(MLINK, MLWaitForNewLinkFromLinkServer, (MLLinkServer server, int *error));
+
+MLDECL(unsigned short, MLPortFromLinkServer, (MLLinkServer server, int *error));
+
+MLDECL(const char *, MLInterfaceFromLinkServer, (MLLinkServer server, int *error));
+
+MLDECL(void *, MLContextFromLinkServer, (MLLinkServer server, int *error));
+
+MLDECL(void, MLReleaseInterfaceFromLinkServer, (MLLinkServer server, const char *iface));
+
+ML_END_EXTERN_C
+
+#endif /* MLINTERFACE >= 4 */
+
+#endif /* MLLINKSERVER_H */
+
+
+
+
+
 #ifndef MLSERVICEDISCOVERYAPI_H
 #define MLSERVICEDISCOVERYAPI_H
+
 
 
 
@@ -4440,7 +4507,8 @@ typedef void (*MLBrowseCallbackFunction)(MLEnvironment env, MLServiceRef ref, in
 	const char *serviceName, void *context);
 
 MLDECL(int,     MLBrowseForLinkServices, (MLEnvironment env, 
-    MLBrowseCallbackFunction callbackFunction, const char *domain, void *context, MLServiceRef *ref));
+    MLBrowseCallbackFunction callbackFunction, const char *serviceProtocol, 
+    const char *domain, void *context, MLServiceRef *ref));
 
 MLDECL(void, MLStopBrowsingForLinkServices, (MLEnvironment env, MLServiceRef ref));
 
@@ -4448,40 +4516,45 @@ typedef void (*MLResolveCallbackFunction)(MLEnvironment env, MLServiceRef ref, c
 	const char *linkName, const char *protocol, int options, void *context);
 
 MLDECL(int, MLResolveLinkService, (MLEnvironment env,
-    MLResolveCallbackFunction, const char *serviceName, void *context, MLServiceRef *ref));
+    MLResolveCallbackFunction, const char *serviceProtocol, 
+    const char *serviceName, void *context, MLServiceRef *ref));
 
 MLDECL(void, MLStopResolvingLinkService, (MLEnvironment env, MLServiceRef ref));
 
 typedef void (*MLRegisterCallbackFunction)(MLEnvironment env, MLServiceRef ref, int flag, const char *serviceName, 
 	void *context);
 
-MLDECL(MLINK, MLRegisterLinkServiceWithPortAndHostname, (MLEnvironment env, 
+MLDECL(MLINK, MLRegisterLinkServiceWithPortAndHostname, (MLEnvironment env, const char *serviceProtocol,
     const char *serviceName, unsigned short port, const char *hostname, MLRegisterCallbackFunction function,
     const char *domain, void *context, MLServiceRef *ref, int *error));
 
-MLDECL(MLINK, MLRegisterLinkServiceWithHostname, (MLEnvironment env,
+MLDECL(MLINK, MLRegisterLinkServiceWithHostname, (MLEnvironment env, const char *serviceProtocol,
     const char *serviceName, const char *hostname, MLRegisterCallbackFunction function,
     const char *domain, void *context, MLServiceRef *ref, int *error));
 
-MLDECL(MLINK, MLRegisterLinkService, (MLEnvironment env,
+MLDECL(MLINK, MLRegisterLinkService, (MLEnvironment env, const char *serviceProtocol,
     const char *serviceName, MLRegisterCallbackFunction function,
     const char *domain, void *context, MLServiceRef *, int *error));
 
-MLDECL(MLINK, MLRegisterLinkServiceUsingLinkProtocol, (MLEnvironment env, 
+MLDECL(MLINK, MLRegisterLinkServiceUsingLinkProtocol, (MLEnvironment env, const char *serviceProtocol,
 	const char *serviceName, unsigned short port, const char *hostname, const char *protocol, 
 	MLRegisterCallbackFunction function, const char *domain, void *context, MLServiceRef *ref, int *error));
 
-MLDECL(void, MLStopRegisteringLinkService, (MLEnvironment env, MLINK link, MLServiceRef ref));
+MLDECL(void, MLRegisterLinkServiceFromLinkServer, (MLEnvironment env, const char *serviceProtocol,
+    const char *serviceName, MLLinkServer server, MLRegisterCallbackFunction function, const char *domain,
+    void *context, MLServiceRef *ref, int *error));
+
+MLDECL(void, MLStopRegisteringLinkService, (MLEnvironment env, MLServiceRef ref));
+
+MLDECL(void, MLStopRegisteringLinkServiceForLink, (MLEnvironment env, MLINK link, MLServiceRef ref));
+
+MLDECL(const char *, MLServiceProtocolFromReference, (MLEnvironment env, MLServiceRef ref));
 
 ML_END_EXTERN_C
 
 #endif /* MLINTERFACE >= 4 */
 
 #endif /* end of include guard: MLSERVICEDISCOVERYAPI_H */
-
-
-
-
 
 
 
@@ -4842,16 +4915,16 @@ ML_END_EXTERN_C
 #define MLTK__IS_TEXT( tok) ( (tok & 0x00F6) == 0x0022)
 
 
-#define	MLTKSTR     '"'       /* 00100010 */
-#define	MLTKSYM     '\043'    /* # 00100011 */ /* octal here as hash requires a trigraph */
+#define	MLTKSTR     '"'         /* 34 0x22 00100010 */
+#define	MLTKSYM     '\043'      /* 35 0x23 # 00100011 */ /* octal here as hash requires a trigraph */
 
 #if MLINTERFACE >= 4
 #define MLTKOPTSYM  'O'       /* 79 00101010 */
 #define MLTKOPTSTR  'Q'       /* 81 01010001 */
 #endif
 
-#define	MLTKREAL    '*'  /* 00101010 */
-#define	MLTKINT     '+'  /* 00101011 */
+#define	MLTKREAL    '*'         /* 42 0x2A 00101010 */
+#define	MLTKINT     '+'         /* 43 0x2B 00101011 */
 
 
 

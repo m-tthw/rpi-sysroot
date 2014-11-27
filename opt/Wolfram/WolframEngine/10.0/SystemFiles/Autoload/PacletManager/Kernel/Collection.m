@@ -42,7 +42,7 @@ $legacyPacletCollection
 $extraPacletCollection
 
 
-(* Change this when you modify the serialization format of pacletData.pmd2. 
+(* Change this when you modify the serialization format of pacletData.pmd2.
    Change from 1 to 2 corresponded to adding the hash of the Repository dir to the end of the file.
 *)
 $serializationVersion = 3;
@@ -52,11 +52,12 @@ $serializationVersion = 3;
 (* This is intended to only be called once in a "normal" session. It's not an error to call it more than once, but this is
    not a function that gets called to implement something like RebuildPacletData[]. (It _is_ called to implement
    RestartPacletManager[].)
+   Returns True/False to indicate whether the collection data had to be rebuilt.
 *)
 
 PCinitialize[freshStart:(True | False)] :=
     executionProtect @
-    Module[{foundFile, strm, serVersion, pc, oldHash, newHash, oldCreationDate, lockFile},
+    Module[{foundFile, strm, serVersion, pc, oldHash, newHash, oldCreationDate, lockFile, hadToRebuild},
         (***** Try to read from serialized file. *****)
         (* Because the persistent file depends on paclets in the layout, it must distinguish
            between different installation directories.
@@ -73,37 +74,44 @@ PCinitialize[freshStart:(True | False)] :=
                     serVersion = Read[strm, Expression];
                     If[serVersion <= $serializationVersion,
                         (* $legacyPacletCollection and $extraPacletCollection are never serialized. *)
-                        pc = Read[strm, Expression];
-                        If[ListQ[pc], $userPacletCollection = pc];
-                        pc = Read[strm, Expression];
-                        If[ListQ[pc], $layoutPacletCollection = pc];
-                    ];
-                    (* Newer versions of the file have an extra expression at the end: a hash of the paclet names in the
-                       repository. If this is different from the last time it was written, force a rebuild. This
-                       allows us to pick up new paclets that were installed by other instances of Mathematica that
-                       share this repository.
-                    *)
-                    If[serVersion > 1,
-                        oldHash = Read[strm, Expression];
-                        If[IntegerQ[oldHash],
-                            newHash = Hash[FileNames["*", $userRepositoryDir]];
-                            If[newHash =!= oldHash,
+                        (* If we are in the lifetime of a BeginPackage when this is called, PacletManager` would not be visible,
+                           and the symbol Paclet would be created in the current context when these files are read. 
+                           Therefore, make sure that PacletManager` is visible.
+                        *)
+                        Block[{$ContextPath = Prepend[$ContextPath, "PacletManager`"]},
+                            pc = Read[strm, Expression];
+                            If[ListQ[pc], $userPacletCollection = pc];
+                            pc = Read[strm, Expression];
+                            If[ListQ[pc], $layoutPacletCollection = pc]
+                        ];
+                        (* Newer versions of the file have an extra expression at the end: a hash of the paclet names in the
+                           repository. If this is different from the last time it was written, force a rebuild. This
+                           allows us to pick up new paclets that were installed by other instances of Mathematica that
+                           share this repository.
+                        *)
+                        If[serVersion > 1,
+                            oldHash = Read[strm, Expression];
+                            If[IntegerQ[oldHash],
+                                newHash = Hash[FileNames["*", $userRepositoryDir]];
+                                If[newHash =!= oldHash,
+                                    (* Setting this to a non-list value forces a rebuild below. *)
+                                    $userPacletCollection=.
+                                ]
+                            ]
+                        ];
+                        (* The transition from ser=2 to ser=3 brings another new expression at end: the Wolfram Language
+                          $CreationDate. This catches cases where pacletdata is invalid because a paclet has been added
+                          to a development version of M not associated with a change in the version number.
+                        *)
+                        If[serVersion > 2,
+                            oldCreationDate = Read[strm, Expression];
+                            (* Use N@DateList@ here because of a bug/feature in how DateObject is written/read from a stream. *)
+                            If[oldCreationDate =!= N[DateList[$CreationDate]],
                                 (* Setting this to a non-list value forces a rebuild below. *)
                                 $userPacletCollection=.
                             ]
                         ]
-                    ];
-                    (* The transition from ser=2 to ser=3 brings another new expression at end: the Wolfram Language
-                      $CreationDate. This catches cases where pacletdata is invalid because a paclet has been added
-                      to a development version of M not associated with a change in the version number.
-                    *)
-                    If[serVersion > 2,
-                        oldCreationDate = Read[strm, Expression];
-                        If[oldCreationDate =!= $CreationDate,
-                            (* Setting this to a non-list value forces a rebuild below. *)
-                            $userPacletCollection=.
-                        ]
-                    ]                    
+                    ]
                 ];
                 releaseLock[lockFile]
             ]
@@ -111,31 +119,30 @@ PCinitialize[freshStart:(True | False)] :=
 
         (* $extraPacletDirs does not survive a RestartPacletManager[]. *)
         $extraPacletDirs = {};
-
         If[!foundFile || !ListQ[$userPacletCollection] || !ListQ[$layoutPacletCollection],
-            (* Will get here if no file found, or couldn't be opened, or had bad ser version, or had bad data. *)
-             PCrebuild["Collections" -> {"User", "Layout"}];
-             PCwrite[]
+            (* Will get here if fresh start, or no file found, or couldn't be opened, or had bad ser version, or had bad data. *)
+             PCrebuild["Collections" -> If[MemberQ[$CommandLine, "-layoutpaclets"], {"Layout"}, {"User", "Layout"}]];
+             PCwrite[];
+             hadToRebuild = True
         ];
 
         (* legacy and extra collections are always built from PI files. *)
-        PCrebuild["Collections" -> {"Legacy", "Extra"}];
+        PCrebuild["Collections" -> If[MemberQ[$CommandLine, "-layoutpaclets"], {"Extra"}, {"Legacy", "Extra"}]];
 
         initializeLayoutDocsCollection[ToFileName[{$InstallationDirectory, "Documentation"}]];
-        (* Unused:
-        initializeDownloadedDocsCollection[ToFileName[$userRepositoryDir, "SystemDocumentation"]];
-        *)
 
         (* Never get past here without these being meaningful exprs. *)
         Assert[ListQ[$userPacletCollection] && ListQ[$layoutPacletCollection]
                    && ListQ[$legacyPacletCollection] && ListQ[$extraPacletCollection]];
+
+        TrueQ[hadToRebuild]
     ]
 
 
 
 (*********************************  PCwrite  *********************************)
 
-PCwrite[] /; $pmMode =!= "ReadOnly" := 
+PCwrite[] /; $pmMode =!= "ReadOnly" :=
     executionProtect @
     Module[{strm, lockFile, hash},
         lockFile = ToFileName[$userTemporaryDir, FileNameTake[$pacletsPersistentFile] <> ".lock"];
@@ -147,7 +154,8 @@ PCwrite[] /; $pmMode =!= "ReadOnly" :=
                 Write[strm, $userPacletCollection];
                 Write[strm, $layoutPacletCollection];
                 Write[strm, hash];
-                Write[strm, $CreationDate]
+                (* Use N@DateList@ here because of a bug/feature in how DateObject is written/read from a stream. *)
+                Write[strm, N[DateList[$CreationDate]]]
             ];
             releaseLock[lockFile]
         ]
@@ -172,32 +180,32 @@ PCrebuild[OptionsPattern[]] :=
             (* Wait a second to get the lock, but walk away if it can't be acquired. Not that big a deal if we can't write
                the data. If the lock is being held, then some other process is probably writing it anyway.
             *)
-            If[acquireLock[lockFile, 2, False],
-	            (* Use depth 3 to allow paclets like:
-	                   FooPaclet-1.0.0/
-	                       FooPaclet/
-	                           PacletInfo.m
-	               in addition to:
-	                   FooPaclet-1.0.0/
-	                       PacletInfo.m
-	                           FooPaclet/
-	            *)
-	            $userPacletCollection = createPacletsFromParentDirs[{
-	                                             If[userRepositoryDir === Automatic, $userRepositoryDir, userRepositoryDir],
-	                                             If[sharedRepositoryDir === Automatic, $sharedRepositoryDir, sharedRepositoryDir]},
-	                                             3
-	                                      ];
+            If[acquireLock[lockFile, 3, False],
+                (* Use depth 3 to allow paclets like:
+                       FooPaclet-1.0.0/
+                           FooPaclet/
+                               PacletInfo.m
+                   in addition to:
+                       FooPaclet-1.0.0/
+                           PacletInfo.m
+                               FooPaclet/
+                *)
+                $userPacletCollection = createPacletsFromParentDirs[{
+                                                 If[userRepositoryDir === Automatic, $userRepositoryDir, userRepositoryDir],
+                                                 If[sharedRepositoryDir === Automatic, $sharedRepositoryDir, sharedRepositoryDir]},
+                                                 3
+                                          ];
                 releaseLock[lockFile],
             (* else *)
                 (* We can get here in cases where the lockfile still exists (meaning another M process is reading/writing
                    to the repository), or, perhaps more commonly, when $UserBasePacletsDirectory is not visible (e.g.,
                    when the user's home dir is not visible).
                 *)
-	            If[FileInformation[$UserBasePacletsDirectory] === {},
-	                Message[RebuildPacletData::basedir, $UserBasePacletsDirectory],
-	            (* else *)
+                If[FileInformation[$UserBasePacletsDirectory] === {},
+                    Message[RebuildPacletData::basedir, $UserBasePacletsDirectory],
+                (* else *)
                     Message[RebuildPacletData::lock]
-	            ];
+                ];
                 (* Make sure not to leave this function with the collection undefined. *)
                 If[!ListQ[$userPacletCollection], $userPacletCollection = {}];
                 result = False
@@ -231,7 +239,7 @@ PCrebuild[OptionsPattern[]] :=
 *)
 
 Options[PCfindMatching] =
-    {"Name" -> All, "Version" -> All, "Qualifier" -> All, "SystemID" -> Automatic, "MathematicaVersion" -> Automatic,
+    {"Name" -> All, "Version" -> All, "Qualifier" -> All, "SystemID" -> Automatic, "WolframVersion" -> Automatic,
      "Context" -> All, "Extension" -> All, "Location" -> All, "Internal" -> All, "Creator" -> All, "Publisher" -> All,
      "Collections" -> {"User", "Layout", "Legacy", "Extra" (* The other value is "LayoutDocs" *)},
      "Language" -> All, (* Language is weird here, as it is not a top-level field in paclets. But for searches into
@@ -243,7 +251,7 @@ PCfindMatching[OptionsPattern[]] :=
               location, internal, creator, publisher, collections, paclets, result},
         {name, version, qualifier, systemID, mVersion, context, extension,
            location, internal, creator, publisher, collections, paclets} =
-               OptionValue[{"Name", "Version", "Qualifier", "SystemID", "MathematicaVersion", "Context", "Extension",
+               OptionValue[{"Name", "Version", "Qualifier", "SystemID", "WolframVersion", "Context", "Extension",
                               "Location", "Internal", "Creator", "Publisher", "Collections", "Paclets"}];
         selectFunc = Hold[];
         (* Put tests that cull heavily in speed-critical lookups at the start. This is so that short-circuit evaluation
@@ -274,7 +282,7 @@ PCfindMatching[OptionsPattern[]] :=
         ];
         If[mVersion === Automatic, mVersion = getKernelVersionStringComplete[]];
         If[mVersion =!= All,
-            With[{mVersion = mVersion}, selectFunc = Join[selectFunc, Hold[kernelVersionMatches[mVersion, getPIValue[#, "MathematicaVersion"]]]]]
+            With[{mVersion = mVersion}, selectFunc = Join[selectFunc, Hold[kernelVersionMatches[mVersion, getPIValue[#, "WolframVersion"]]]]]
         ];
         If[internal =!= All,
             With[{internal = internal}, selectFunc = Join[selectFunc, Hold[getPIValue[#, "Internal"] === internal]]]
@@ -283,6 +291,13 @@ PCfindMatching[OptionsPattern[]] :=
             With[{location = location}, selectFunc = Join[selectFunc, Hold[PgetLocation[#] === location]]]
         ];
         (* TODO: Other criteria for selection. *)
+        (* It is an important, although undocumented, feature that $extraPacletCollection gets favored in the case of a version number tie.
+           In other words, if PacletFind["Foo"] returns two Foo paclets with version 1.0.0, then the one from $extraPC will be listed first.
+           This is useful during development and during the WRI build system, when develoeprs might modify a paclet but not increment the
+           version number. They typically use PacletDirectoryAdd (which goes to $extraPC) to make these updated paclets available to the
+           system, and we want them to be found in preference. Because of the way paclet sorting happens downstream of this function,
+           being listed last below means they will show up first in the final list. In other words, make sure $extraPC is added last here.
+        *) 
         Which[
             ListQ[paclets],
                 pc = paclets,
@@ -347,9 +362,6 @@ PCfindForDocResource[opts:OptionsPattern[]] :=
         *)
         Join[
             LDCfindForDocResource[linkBase, context, expandedResourceName, language],
-            (* Unused:
-            DDCfindForDocResource[linkBase, context, expandedResourceName, language],
-            *)
             MCfindForDocResource[$layoutPacletCollection, linkBase, context, expandedResourceName, language],
             MCfindForDocResource[$userPacletCollection, linkBase, context, expandedResourceName, language],
             MCfindForDocResource[$legacyPacletCollection, linkBase, context, expandedResourceName, language],

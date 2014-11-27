@@ -1,0 +1,111 @@
+<wolfram:get path="Templates/Default.html">
+  <wolfram:slot id="ExtraHead">
+    <style type="text/css">
+
+    /*
+     * Base structure
+    */
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    .page-title {margin-bottom:30px;}
+    .page-title img {display:inline;}
+    .submit-row {margin-top:30px;}
+
+    /* Extra markup and styles for table-esque vertical and horizontal centering */
+    .site-wrapper {
+      display: table;
+      width: 100%;
+      height: 100%; /* For at least Firefox */
+      min-height: 100%;
+    }
+    .site-wrapper-inner {
+      display: table-cell;
+      vertical-align: top;
+    }
+
+    /* Padding for spacing */
+    .container-main {
+      max-width: 600px;
+    }
+
+    .footer {
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    /*
+     * Affix and center
+     */
+    body,
+    body.body-branded {margin-top:20px;text-align:center;}
+
+    .footer {margin-top: 20px}
+
+
+    @media (min-width: 768px) {
+      /* Pull out the header and footer */
+      body, body.body-branded {
+        margin-top:0px;
+      }
+
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width:100%;
+        margin-top: 0px;
+        margin-bottom: 20px
+      }
+      /* Start the vertical centering */
+      .site-wrapper-inner {
+        vertical-align: middle;
+      }
+      /* Handle the widths */
+
+    }
+
+    </style>
+  </wolfram:slot>  
+
+  <wolfram:slot id="BodyContent">
+
+
+
+    <!-- Begin page content -->
+    <div id="content" class="container container-main">
+
+        <form action="`FormAction`" method='<* Replace[`FormMethod`, Automatic|_Missing|None|Null -> "POST"] *>' class="has-feedback form-function " enctype="multipart/form-data" autocomplete="off"> 
+
+
+          <wolfram:if test="! MatchQ[`PageTitle`, Automatic|_Missing|None|Null]">
+            <h1 class="page-title text-center">
+              <wolfram:slot id="PageTitle"/>
+            </h1>
+          </wolfram:if>
+          <wolfram:if test="! MatchQ[`PageDescription`, Automatic|_Missing|None|Null]">
+            <p class="page-description">
+              <wolfram:slot id="PageDescription"/>
+            </p>
+          </wolfram:if>
+
+          <wolfram:slot/>
+
+          <wolfram:if test="`IsForm` === True">
+            <div class="text-center submit-row">
+                <button type="submit" class="btn btn-primary form-submit" autocomplete="off">
+                  <wolfram:slot id="SubmitLabel">Submit</wolfram:slot>
+                </button>
+            </div>
+          </wolfram:if>
+
+
+        </form>
+
+    </div>
+  </wolfram:slot>
+
+
+</wolfram:get>

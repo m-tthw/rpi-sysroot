@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="application/vnd.wolfram.mathematica.package">
+    <comment>Wolfram Language Package</comment>
+    <magic priority="80">
+    	<match type="string" offset="0:100" value="vnd.wolfram.mathematica.package" />
+    </magic>
+    <glob pattern="*.m"/>
+  </mime-type>
+</mime-info>

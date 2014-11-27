@@ -148,10 +148,8 @@ Documentation`HelpLookupPacletURI[link_String, feData_, language_, opts:OptionsP
                  ];
                  nb,
              True,
-                 (* Failure in async or sync call. This makes the front end display the 
-                    "The file you tried to open was not found or could not be opened" dialog.
-                 *)
-                 NotebookLocate[{"", ""}]
+                 (* Failure in async or sync call. This makes the front end display a dialog. *)
+                 MathLink`CallFrontEnd[FrontEnd`ErrorMessage["ItemNotFound", link]]
          ]
      ]
 
@@ -285,11 +283,10 @@ GetVirtualCellGroup[uri_String] :=
 $specialLinkBases = {"ref", "guide", "tutorial", "note", "howto", "example",
                      "ReferencePages", "Guides", "Tutorials", "Notes", "HowTos", "ExamplePages"}
 
-
 (*
     Accepts:
-        paclet:Guides/Mathematica   (the typical use; default to WolframMathematica LinkBase))
-        paclet://Guides/Mathematica (legacy support for incorrect paclet:// urls)
+        paclet:Guides/WolframRoot   (the typical use; default to WolframMathematica LinkBase))
+        paclet://Guides/WolframRoot (legacy support for incorrect paclet:// urls)
 
         paclet:LinkBase/Guides/SomeGuide   (the typical use)
         paclet://LinkBase/Guides/SomeGuide (legacy support for incorrect paclet:// urls)
@@ -299,8 +296,8 @@ $specialLinkBases = {"ref", "guide", "tutorial", "note", "howto", "example",
                              a poor-man's search: look for any paclet (start with WolframMathematica) that
                              can provide this doc via Symbols, Guides, etc.)
 
-        guide/Mathematica
-        Guides/Mathematica     (/ but no paclet:, simply prepend with paclet:)
+        guide/WolframRoot
+        Guides/WolframRoot     (/ but no paclet:, simply prepend with paclet:)
 
         paclet:SearchResult?query   (special treatment as search)
 
@@ -336,7 +333,10 @@ resolveURL[url_String, language_String, feData_, completionFunc_,
         context = All;
 
         (* First, trim whitespace from start and end *)
-        trimmedURL = StringReplace[url, StartOfString ~~ WhitespaceCharacter ... ~~ Shortest[mid__] ~~ WhitespaceCharacter ... ~~ EndOfString :> mid];
+        trimmedURL = StringReplace[url, StartOfString ~~ WhitespaceCharacter ... ~~ Shortest[mid___] ~~ WhitespaceCharacter ... ~~ EndOfString :> mid];
+
+        (* Treat all requests that are nothing but whitespace chars as a request for the root page. *)
+        If[trimmedURL == "", trimmedURL = "paclet:guide/WolframRoot"];
 
         (* Some links should simply fail if not resolved, and not fall through to a search. In this category
            we put links that have an explicit paclet: prefix, and links that have a / in them (like someone entered
@@ -362,7 +362,7 @@ resolveURL[url_String, language_String, feData_, completionFunc_,
                     trimmedURL,
                 looksLikePacletURI[trimmedURL],
                     (* Treat like a normal paclet: URL except user left out paclet: prefix. *)
-                    url,
+                    trimmedURL,
                 StringMatchQ[trimmedURL, "installedpacletsandaddons" | "installedaddons", IgnoreCase->True],
                     (* Entering InstalledAddOns should bypass a search (don't set wordsOnly in this case). *)
                     "installedpacletsandaddons",
@@ -395,7 +395,8 @@ resolveURL[url_String, language_String, feData_, completionFunc_,
         *)
         searchHeaderData = Null;
         If[wordsOnly && !StringMatchQ[trimmedURL, "* *"],
-            Needs["DocumentationSearch`"];
+            (* Make sure the package has been loaded, but don't dirty the $ContextPath with it afterwards. *)
+            Block[{$ContextPath = {"System`"}}, Needs["DocumentationSearch`"]];
             directHitResult = Symbol["DocumentationSearch`DirectHitSearch"][resource];
             If[MatchQ[directHitResult, {_String, _String}],
                 {searchTextTranslated, directHitURI} = directHitResult;
@@ -512,7 +513,8 @@ generateNotebook[query_String, type_String] :=
         encodedQuery = ExternalService`EncodeString[query];
         Switch[type,
              "Search" | "ForceSearch",
-                  Needs["DocumentationSearch`"];
+                  (* Make sure the package has been loaded, but don't dirty the $ContextPath with it afterwards. *)
+                  Block[{$ContextPath = {"System`"}}, Needs["DocumentationSearch`"]];
                   nb = Symbol["DocumentationSearch`ExportSearchResults"][
                           Symbol["DocumentationSearch`SearchDocumentation"][query], "Notebook"];
                   $searchInitialized = True,
@@ -733,7 +735,7 @@ createKnownGoodMessageURI[linkBase:(_String | All), context:(_String | All), res
             (* else *)
                 expandedResourceName = convertResourceNameToLongForm[resourceName];
                 (* Try each linkable extension and see if a URI made out of its LinkBase will resolve to a file. *)
-                doForEach[ext, cullExtensionsFor[PgetExtensions[paclet, $linkableExtensions], {"MathematicaVersion", "SystemID"}],
+                doForEach[ext, cullExtensionsFor[PgetExtensions[paclet, $linkableExtensions], {"WolframVersion", "SystemID"}],
                     extLinkBase = EXTgetProperty[ext, "LinkBase", paclet["Name"]];
                     If[StringQ[PgetDocResourcePath[paclet, extLinkBase, Null, expandedResourceName, language]],
                         Return["paclet:" <> extLinkBase <> "/" <> resourceName]
@@ -820,6 +822,14 @@ convertResourceNameToLongForm[resourceName_String] :=
                             result = "ReferencePages/Indicators/" <> resourceFromParts[parts, 3],
                         StringMatchQ[subdir, "device", IgnoreCase->True],
                             result = "ReferencePages/Devices/" <> resourceFromParts[parts, 3],
+                        StringMatchQ[subdir, "widget", IgnoreCase->True],
+                            result = "ReferencePages/Widgets/" <> resourceFromParts[parts, 3],
+                        StringMatchQ[subdir, "callback", IgnoreCase->True],
+                            result = "ReferencePages/Callbacks/" <> resourceFromParts[parts, 3],
+                        StringMatchQ[subdir, "interpreter", IgnoreCase->True],
+                            result = "ReferencePages/Interpreters/" <> resourceFromParts[parts, 3],
+                        StringMatchQ[subdir, "embeddingformat", IgnoreCase->True],
+                            result = "ReferencePages/EmbeddingFormats/" <> resourceFromParts[parts, 3],
                         StringLength[subdir] > 0,
                             (* Here we have default handling for other categories (e.g., c, java, etc.)
                                Just convert the first character to upper case and leave the rest unmodified.
@@ -1007,14 +1017,31 @@ loadStateRadioFunction /: Set[loadStateRadioFunction[key_], val_] :=
         val
     ]
 
-loadStateRadioEnabled[key:{pacletQualifiedName_String, pacletLocation_String}] :=
-    Module[{paclet},
+(* This deprecated one-arg def is never used, to my knowledge. *)
+loadStateRadioEnabled[key:{pacletQualifiedName_String, pacletLocation_String}] := loadStateRadioEnabled[key, Null]
+loadStateRadioEnabled[key:{pacletQualifiedName_String, pacletLocation_String}, stateToEnable_] :=
+    Module[{paclet, kernelExts, ext},
         $pacletDataChangeTrigger;
         paclet = getPacletFromKey[key];
-        If[Head[paclet] === Paclet,
-            TrueQ[isEnabled[paclet]],
+        If[Head[paclet] === Paclet && TrueQ[isEnabled[paclet]],
+            (* Decide which of the three buttons to enable ("Manual", Automatic, or "Startup"). At the moment, the only
+               decision is for Automatic, and we enable iff there is a Kernel extension that lists Symbols, as that is required
+               to do auto-loading.
+            *)
+            If[stateToEnable =!= Automatic,
+                True,
+            (* else *)
+                kernelExts = cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"WolframVersion", "SystemID"}];
+                If[Length[kernelExts] > 0,
+                    Or @@ forEach[ext, kernelExts,
+                        Length[EXTgetProperty[ext, "Symbols", {}]] > 0
+                    ],
+                (* else *)
+                    False
+                ]
+            ],
         (* else *)
-            False  (* Shouldn't get here. *)
+            False
         ]
     ]
 
@@ -1023,7 +1050,7 @@ loadStateRadioPresent[key:{pacletQualifiedName_String, pacletLocation_String}] :
         $pacletDataChangeTrigger;
         paclet = getPacletFromKey[key];
         If[Head[paclet] === Paclet,
-            Length[cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"MathematicaVersion", "SystemID"}]] > 0,
+            Length[cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"WolframVersion", "SystemID"}]] > 0,
             (* TODO: Should also include paclets that have FE resources (and perhaps other types) but no code. *)
         (* else *)
             False   (* Should not happen *)
@@ -1068,7 +1095,7 @@ uninstallButtonFunction[key:{pacletQualifiedName_String, pacletLocation_String}]
         If[Head[paclet] === Paclet,
             dialogResult = ChoiceDialog["Are you sure you want to uninstall the paclet named \"" <>
                                     paclet["Name"] <> "\"? This will remove it from your computer.",
-                                    WindowTitle -> "Mathematica"
+                                    WindowTitle -> "Wolfram Engine"
                         ];
             If[dialogResult,
                 PacletUninstall[paclet];
@@ -1175,7 +1202,7 @@ enabledStateRadioEnabled[key:{pacletQualifiedName_String, pacletLocation_String}
         $pacletDataChangeTrigger;
         paclet = getPacletFromKey[key];
         If[Head[paclet] === Paclet,
-            Length[cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"MathematicaVersion", "SystemID"}]] > 0,
+            Length[cullExtensionsFor[PgetExtensions[paclet, "Kernel" | "Application"], {"WolframVersion", "SystemID"}]] > 0,
             (* TODO: Should also include paclets that have FE resources (and perhaps other types) but no code. *)
         (* else *)
             False   (* Should not happen *)

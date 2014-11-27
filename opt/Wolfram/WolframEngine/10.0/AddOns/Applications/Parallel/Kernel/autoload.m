@@ -10,7 +10,7 @@
 
 Parallel`Static`$autoload=True
 
-(* remember path for idagnostic purposes *)
+(* remember path for diagnostic purposes *)
 
 Parallel`Private`autodir = ParentDirectory[ParentDirectory[DirectoryName[$InputFileName]]]
 

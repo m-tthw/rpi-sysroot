@@ -1,4 +1,4 @@
-(* $Id: DelayedRandomSignalDemo.m,v 1.1.2.3 2013/11/23 01:01:55 bakshee Exp $ *)
+(* $Id: DelayedRandomSignalDemo.m,v 1.8 2014/05/08 22:52:40 bakshee Exp $ *)
 
 (* Simulates long measurements. Uses inheritance. *)
 
@@ -8,18 +8,19 @@ Begin["`Private`"];
 $delay = .1;
 
 open[_] := open[Null,0]
-open[_,delay_] := ($delay = delay; Null)
+open[_,delay_] := ($delay = delay; CreateUUID[])
 
-DeviceAPI`DeviceClassRegister["DelayedRandomSignalDemo", "RandomSignalDemo",
+DeviceFramework`DeviceClassRegister["DelayedRandomSignalDemo", "RandomSignalDemo",
 	"ReadFunction" :> (
 		(
 			Pause[$delay];
-			(* call the parent's function *)
-			DeviceAPI`DeviceDriverFunction["RandomSignalDemo", "ReadFunction"][]
+			(* the parent's function *)
+			DeviceFramework`DeviceDriverFunction["RandomSignalDemo", "ReadFunction"][##]
 		)&
 	),
 	"OpenFunction" -> open,
 	"Singleton" -> False,
+	"FindFunction" -> ({}&),
 	"DriverVersion" -> 0.001
 ];
 

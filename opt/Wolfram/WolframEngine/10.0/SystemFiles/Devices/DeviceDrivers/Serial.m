@@ -1,6 +1,6 @@
 (* Mathematica Package *)
 
-(* $Id: Serial.m,v 1.1.2.10 2014/01/21 22:58:16 lambertc Exp $ *)
+(* $Id: Serial.m,v 1.1.2.14.2.1 2014/07/17 22:16:57 lambertc Exp $ *)
 
 (*BeginPackage["SerialPort`", { "SerialLink`"}]*)
 BeginPackage["SerialPort`"]
@@ -12,14 +12,15 @@ Begin["`Private`"] (* Begin Private Context *)
 
 
 (* ::Section:: *) (* API Registration Function *)
-DeviceAPI`DeviceClassRegister[ "Serial",
+DeviceFramework`DeviceClassRegister[ "Serial",
 	"OpenFunction" -> iSerialPortOpen,
 	"CloseFunction" -> iSerialPortClose,
 	"ReadFunction" -> iSerialPortRead,
 	"WriteFunction" -> iSerialPortWrite,
 	"ReadBufferFunction" -> iSerialPortReadBuffer,
 	"WriteBufferFunction" -> iSerialPortWriteBuffer,
-	"ExecuteFunction" -> iSerialPortMethods
+	"ExecuteFunction" -> iSerialPortMethods,
+	"DeviceIconFunction" -> iSerialIconFunction
 ]
 
 DeviceRead::serialargs = "No arguments are expected for DeviceRead on a Serial device.";
@@ -53,7 +54,7 @@ Options[ iSerialPortRead]:= Options[ SerialPortRead]
 
 (* Sync Read a single byte.  ReadTerminator is ignored *)
 iSerialPortRead[{ iHandle_, port_SerialPort}, opts:OptionsPattern[]]:= iSerialPortRead[{ iHandle, port}, "Byte", opts]
-iSerialPortRead[{ iHandle_, port_SerialPort}, "Byte", opts:OptionsPattern[]]:= SerialPortRead[ port, "Byte", 1, opts]
+iSerialPortRead[{ iHandle_, port_SerialPort}, "Byte", opts:OptionsPattern[]]:= Module[{ res}, res = SerialPortRead[ port, "Byte", 1, opts]; If[ res =!= $TimedOut, Return@First@res;, Return@res;];]
 iSerialPortRead[{ iHandle_, port_SerialPort}, "String", opts:OptionsPattern[]]:= SerialPortRead[ port, "String", 1, opts]
 iSerialPortRead[{ iHandle_, port_SerialPort}, args___]:= (
 	Message[ DeviceRead::serialargs];
@@ -63,9 +64,9 @@ iSerialPortRead[{ iHandle_, port_SerialPort}, args___]:= (
 
 (* Sync Read a list of bytes already buffered and available. *)
 
-iSerialPortReadBuffer[{ iHandle_, port_SerialPort}]:= SerialPortRead[ port, "Byte"];
-iSerialPortReadBuffer[{ iHandle_, port_SerialPort}, n_Integer]:= SerialPortRead[ port, "Byte", n]
-iSerialPortReadBuffer[{ iHandle_, port_SerialPort}, "ReadTerminator" -> rt_]:= SerialPortRead[ port, "Byte", "ReadTerminator"->rt]
+iSerialPortReadBuffer[{ iHandle_, port_SerialPort}, buffer_]:= SerialPortRead[ port, "Byte"];
+iSerialPortReadBuffer[{ iHandle_, port_SerialPort}, n_Integer, buffer_]:= SerialPortRead[ port, "Byte", n]
+iSerialPortReadBuffer[{ iHandle_, port_SerialPort}, "ReadTerminator" -> rt_, buffer_]:= SerialPortRead[ port, "Byte", "ReadTerminator"->rt]
 
 iSerialPortReadBuffer[{ iHandle_, port_SerialPort}, args___]:= (
 	Message[ DeviceReadBuffer::serialargs];
@@ -129,7 +130,65 @@ iSerialPortMethods[ port_SerialPort, args___]:= (
 	Return[$Failed];
 )
 
-
+iSerialIconFunction[{ iHandle_, port_SerialPort}, ___ ]:= Graphics[{Thickness[0.038461538461538464], 
+  Style[{FilledCurve[{{{1, 4, 3}, {0, 1, 0}, {1, 3, 3}, {0, 1, 
+        0}, {1, 3, 3}, {0, 1, 0}, {1, 3, 3}, 
+                  {0, 1, 0}}}, {{{25.5, 2.5}, {25.5, 1.395}, {24.605, 
+        0.5}, {23.5, 0.5}, {2.5, 0.5}, {1.395, 0.5}, {0.5, 
+        1.395}, {0.5, 2.5}, {0.5, 23.5}, 
+                  {0.5, 24.605}, {1.395, 25.5}, {2.5, 25.5}, {23.5, 
+        25.5}, {24.605, 25.5}, {25.5, 24.605}, {25.5, 23.5}, {25.5, 
+        2.5}}}]}, 
+          FaceForm[RGBColor[0.941, 0.961, 0.957, 1.]]], 
+        Style[{JoinedCurve[{{{1, 4, 3}, {0, 1, 0}, {1, 3, 3}, {0, 1, 
+        0}, {1, 3, 3}, {0, 1, 0}, {1, 3, 3}, {0, 1, 0}}}, 
+              {{{25.5, 2.5}, {25.5, 1.395}, {24.605, 0.5}, {23.5, 
+        0.5}, {2.5, 0.5}, {1.395, 0.5}, {0.5, 1.395}, {0.5, 
+        2.5}, {0.5, 23.5}, {0.5, 24.605}, 
+                  {1.395, 25.5}, {2.5, 25.5}, {23.5, 25.5}, {24.605, 
+        25.5}, {25.5, 24.605}, {25.5, 23.5}, {25.5, 2.5}}}, 
+     CurveClosed -> {1}]}, 
+          JoinForm[{"Miter", 10.}], RGBColor[0.7, 0.7, 0.7, 1.]], 
+        Style[{FilledCurve[{{{1, 4, 3}, {0, 1, 0}, {1, 3, 3}, {0, 1, 
+        0}, {1, 3, 3}, {0, 1, 0}, {1, 3, 3}, {0, 1, 0}}}, 
+              {{{11.133, 18.727999999999998}, {11.133, 
+        18.451999999999998}, {11.357000000000001, 
+        18.227999999999998}, {11.633, 18.227999999999998}, 
+                  {14.792, 18.227999999999998}, {15.068, 
+        18.227999999999998}, {15.292, 18.451999999999998}, {15.292, 
+        18.727999999999998}, 
+                  {15.292, 20.639000000000003}, {15.292, 
+        20.915}, {15.068, 21.139000000000003}, {14.792, 
+        21.139000000000003}, {11.633, 21.139000000000003}, 
+                  {11.357000000000001, 21.139000000000003}, {11.133, 
+        20.915}, {11.133, 20.639000000000003}, {11.133, 
+        18.727999999999998}}}]}, 
+          FaceForm[RGBColor[0.5423, 0.63104, 0.63597, 1.]]], 
+  Style[{FilledCurve[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}}, 
+              {{{12.357000000000001, 1.}, {14.113000000000001, 
+        1.}, {14.113000000000001, 9.554}, {12.357000000000001, 
+        9.554}}}]}, 
+          FaceForm[RGBColor[0.5, 0.5, 0.5, 1.]]], 
+  Style[{FilledCurve[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
+        0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, 
+                  {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
+        0}}}, {{{15.876000000000001, 19.799}, {8.122, 
+        19.799}, {8.122, 11.516}, {10.573, 11.516}, 
+                  {10.573, 11.493}, {11.982000000000001, 
+        9.171}, {14.539, 9.171}, {15.876000000000001, 
+        11.493}, {15.876000000000001, 11.516}, 
+                  {18.326, 11.516}, {18.326, 
+        19.799}, {15.876000000000001, 19.799}}}], 
+    FilledCurve[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}}, 
+              {{{8.806000000000001, 7.993}, {9.995000000000001, 
+        7.993}, {9.995000000000001, 11.008}, {8.806000000000001, 
+        11.008}}}], 
+            
+    FilledCurve[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{16.5, 
+        7.993}, {17.689, 7.993}, {17.689, 11.008}, {16.5, 11.008}}}]}, 
+          FaceForm[RGBColor[0.624375, 0.695304, 0.691308, 1.]]]}, 
+ ImageSize -> {26., 26.}, PlotRange -> {{0., 26.}, {0., 26.}}, 
+      AspectRatio -> Automatic]
 
 End[] (* End Private Context *)
 

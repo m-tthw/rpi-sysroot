@@ -15,7 +15,7 @@
     PaneSelectorBox[{False -> 
        StyleBox["\"Wolfram Research\"", "Chevron"], 
       True -> StyleBox["\"Wolfram Research\"", "HyperlinkActive"]}, 
-     Dynamic[CurrentValue["MouseOver"]]], BaseStyle -> "Hyperlink", 
+     Dynamic[CurrentValue["MouseOver"]]], BaseStyle -> {"Hyperlink", Bold}, 
     Evaluator -> Automatic, 
     ButtonFunction :> (CurrentValue[
         ButtonNotebook[], {TaggingRules, "ActivationState"}] = 
@@ -25,12 +25,13 @@
        StyleBox["\"online password generator\"", "Chevron"], 
       True -> StyleBox["\"online password generator\"", 
         "HyperlinkActive"]}, Dynamic[CurrentValue["MouseOver"]]], 
-    BaseStyle -> "Hyperlink", Evaluator -> Automatic, 
+    BaseStyle -> {"Hyperlink", Bold}, Evaluator -> Automatic, 
     ButtonFunction :> 
      FE`hyperlinkCoded[
       "http://user.wolfram.com/portal/passwordrequest.html", 
       "mathid=" <> FE`Evaluate[FEPrivate`$MachineID]]], MouseAppearanceTag["LinkHand"]], 
-   "\" in the Wolfram User Portal.\""}]],
+   "\" in the Wolfram User Portal. Note: You will need to provide your activation key and the MathID generated for your machine.\""
+   }]],
 "ManualActivateNote" -> "Note: You will need to provide your activation key and the MathID generated for your machine.",
 "ManualActivateText2" -> "Enter your Activation Key and password below and click the Activate button.",
 "ManualActivateStep1" -> "Step 1:",
@@ -38,10 +39,10 @@
 "ManualActivateSubtitle" -> "Activate manually",
 "MathIDLabel" -> "MathID:",
 "ContactTitle" -> "Contact Wolfram Research to manually activate your product",
-"ContactSubtitle" -> "If you are not able to activate your product online, and cannot access the password generator form in the Wolfram User Portal, please contact us.",
+"ContactSubtitle" -> "If you are not able to activate your product online, and cannot access the password\ngenerator form in the Wolfram User Portal, please contact us.",
 "ContactWithText" -> "You will need to provide:",
-"ContactKeyLabel" -> "\t\[Bullet] Your Activation Key: ",
-"ContactIDLabel" -> "\t\[Bullet] MathID: ",
+"ContactKeyLabel" -> "\[Bullet] Your Activation Key: ",
+"ContactIDLabel" -> "\[Bullet] MathID: ",
 "ContactNameInc" -> "Wolfram Research, Inc.",
 "ContactNameLtd" -> "Wolfram Research Europe Ltd.",
 "ContactAddrInc" -> "1-217-398-0700 or\n1-800-WOLFRAM (965-3726; U.S. and Canada only)\nMonday\[Dash]Friday, 8am\[Dash]5pm\nU.S. Central Time\n\ninfo@wolfram.com\nfax: 1-217-398-0747",
@@ -50,8 +51,8 @@
 "MethodManualLabel" -> "Manual Activation",
 "MethodManualText" -> "Use this method if you are having trouble with online activation.",
 "MethodNetworkLabel" -> "Connect to a network license server",
-"MethodNetworkText" -> "Use this method if you are on a network with \!\(\*StyleBox[\"MathLM\", FontSlant->\"Italic\"]\), \nthe network license server for the Wolfram System.",
-"MethodOnlineLabel" -> RawBoxes[RowBox[{"\"Online Activation \"", StyleBox["\"(Recommended)\"", FontWeight -> Plain]}]],
+"MethodNetworkText" -> "Use this method if you are on a network with \!\(\*StyleBox[\"MathLM\", FontSlant->\"Italic\"]\), the network license server for\nyour product.",
+"MethodOnlineLabel" -> "Online Activation (Recommended)",
 "MethodOnlineText" -> "Your computer needs to be connected to the internet.",
 "MethodSubtitle" -> "Select a method to activate",
 "NameLabel" -> "Name",
@@ -70,31 +71,44 @@
 "WindowTitle" -> "Wolfram Product Activation",
 "ContactActivationLink" -> RawBoxes[ButtonBox[
     "\<\"Contact Wolfram Research \[RightGuillemet]\"\>",
-    BaseStyle -> "ContactActivationLink"]],
+    BaseStyle -> "ContactActivationLinkUnbold"]],
 
 "ExpiredBuyText" -> "I want to buy the Wolfram System",
 "ExpiredContactText" -> "Need more information or assistance? ",
 "ExpiredExtendText" -> "I have a new Activation Key",
 "ExpiredRequestText" -> "I want to request an extended Activation Key",
 "ExpiredSubtitle" -> "Your license has expired",
+"ExpiredBuyButton" -> "How to buy",
+"ExpiredExtendButton" -> "Enter Activation Key",
+"ExpiredRequestButton" -> "Request extension",
 
-"LicenseAgreementSubtitle" -> "Read the Wolfram System License Agreement",
+"LicenseAgreementSubtitle" -> "Read the License Agreement",
 "LicenseAgreementSubtext" -> "To use this product you must read and accept the terms of the following agreement:",
 "LicenseAgreementLabel" -> "I accept the terms of this agreement",
 "LicenseAgreementPrintLabel" -> "Print",
 "LicenseAgreementLoading" -> "Loading translation...",
-"LicenseAgreementWindowTitle" -> "Wolfram System License Agreement",
+"LicenseAgreementWindowTitle" -> "License Agreement",
 
 "RegistrationDownload" -> "Access your\nsoftware downloads",
+"RegistrationNow" -> "Register now",
 "RegistrationLater" -> "Register later",
-"RegistrationManage" -> "Manage your Premier Service\nbenefits",
+"RegistrationManage" -> RawBoxes[RowBox[{"Manage your ", StyleBox["Premier Service", FontSlant->"Italic"], "\nbenefits"}]],
 "RegistrationMore" -> "And more...",
 "RegistrationNever" -> "Don't ask again",
 "RegistrationNotification" -> "Get notifications about\nupgrades and special\ndiscounts",
-"RegistrationSubtitle" -> "Register your copy of the Wolfram System in the Wolfram User Portal to:",
+"RegistrationSubtitle" -> "Register your product in the Wolfram User Portal to:",
 "RegistrationTitle" -> "Get access to your benefits. Register now!",
-"RegistrationView" -> "View your\n product details",
-"RegistrationWindowTitle" -> "Wolfram Product Registration"
+"RegistrationView" -> "View your\nproduct details",
+"RegistrationWindowTitle" -> "Wolfram Product Registration",
+
+"CancelButtonText" -> "Quit",
+"ForgottenPWText" -> "Forgot your password?",
+"RememberMeText" -> "Remember me",
+"SignInTitle" -> "Sign in using your Wolfram ID",
+"SignInButtonText" -> "Sign In",
+"SignInPendingText" -> "In progress\[Ellipsis]",
+"UserIDFieldHint" -> "Wolfram ID",
+"UserPWFieldHint" -> "Password"
 
 }
 @|
@@ -218,6 +232,7 @@ html"], None}], MouseAppearanceTag["LinkHand"]],
 "AutoRescaleText" -> "Automatically re\[Hyphen]fit 3D graphics after rotation",
 "CompletionCaseText" -> "Match case in command completion",
 "FunctionTemplatesText" -> "Enable dynamic highlighting",
+"AutoConvertEnableText" -> "Enable natural language detection",
 "CodeAssistPopupText" -> {"Enable autocompletion with a popup delay of ", " seconds"},
 "PredictiveInterfaceText" -> "Show Suggestions Bar after last output",
 "DefaultStylingText" -> "Ask whether to update default styling when opening notebooks from previous versions",
@@ -369,7 +384,7 @@ html"], None}], MouseAppearanceTag["LinkHand"]],
 "ConnectivityTextMore" -> "More information\[RightGuillemet]",
 "TestConnectivityButtonText" -> "Test Internet Connectivity",
 "TroubleshootButtonText" -> "Troubleshoot",
-"CheckInternetText" -> "Allow the Wolfram Language to access the Internet",
+"CheckInternetText" -> "Allow the Wolfram System to access the Internet",
 "ProxyLabel" -> "Proxy Settings",
 "DirectProxyText" -> "Direct connection to the Internet",
 "BrowserProxyText" -> "Use proxy settings from my system or browser",
@@ -418,7 +433,10 @@ html"], None}], MouseAppearanceTag["LinkHand"]],
 "PathDialogModText" -> "Modify",
 "PathDialogDelText" -> "Remove",
 "PathDialogDirsText" -> "Directories",
-"PathDialogDirText" -> "Directory:"
+"PathDialogDirText" -> "Directory:",
+"ClosingDialogToggleText" -> "Open closing dialog after closing last window",
+"SystemFileAssociationsText" -> "System File Associations:",
+"EditFileAssociationsText" -> "Edit\[Ellipsis]"
 }
 @|
 @@resource ImportDialogs
@@ -433,8 +451,8 @@ html"], None}], MouseAppearanceTag["LinkHand"]],
 "TextOneCellPerTwoBlankLines" -> "Create new cell at two blank lines",
 "TextCharacterEncoding" -> "Character encoding: ",
 "NotebookLabel" -> "Notebook Options",
-"NotebookModern" -> "Wolfram Language files",
-"Notebooks" -> "Wolfram Language notebooks",
+"NotebookModern" -> "Wolfram files",
+"Notebooks" -> "Wolfram notebooks",
 "Packages" -> "Wolfram Language packages",
 "PackagesLine1" -> "Create new cell after ",
 "PackagesLine2" -> " consecutive blank lines",
@@ -863,7 +881,7 @@ over the lazy dogs."
 "NetworkTabLabel" -> "Network",
 "OtherTabLabel" -> "Other",
 "CopyButtonText" -> " Copy ",
-"BenchmarkButtonText" -> RowBox[{"\"Benchmark with \"", StyleBox["MathematicaMark", FontSlant -> Italic], "\[Ellipsis]"}],
+"BenchmarkButtonText" -> RowBox[{"\"Benchmark with \"", StyleBox["WolframMark", FontSlant -> Italic], "\[Ellipsis]"}],
 "OtherKernelsText" -> "Other Kernels\[Ellipsis]",
 "AdvancedText" -> "Advanced",
 "NotebookSecurityText" -> "Notebook Security",
@@ -921,13 +939,21 @@ licensing terms. For more information or assistance, please \"",
 @|
 @@resource WelcomeScreen
 {
+"NewDocumentLabel" -> "New Document",
+"OpenRecent" -> "Open Recent",
+"NotebookLabel" -> "Notebook",
+"SlideShowLabel" -> "Slide Show\[Ellipsis]",
+"TemplateNotebookLabel" -> "Template Notebook",
+"TestingNotebookLabel" -> "Testing Notebook",
 "NewNotebookTooltip" -> "Press \[SystemEnterKey] to open a new notebook",
 "DemonstrationLabel" -> "Demonstration",
 "PackageLabel" -> "Package",
 "StyledNotebookLabel" -> "Styled Notebook\[Ellipsis]",
 "TextFileLabel" -> "Text File",
 "OpenDialogText" -> "Open\[Ellipsis]",
-"WindowTitle" -> "Welcome to the Wolfram System",
+"CloudOpenDialogText" -> "Open from Cloud\[Ellipsis]",
+"WindowTitle" -> "Welcome to Wolfram Mathematica",
+"WindowTitleWD" -> "Welcome to Wolfram Desktop",
 "EnterActKey" -> "Enter Activation Key \[RightGuillemet]",
 "NewsEventsLabel" -> "News & Events:",
 "DisplayAtStartupText" -> "Show at startup",
@@ -941,7 +967,124 @@ licensing terms. For more information or assistance, please \"",
 "ExpiringMessageHome" -> "Your license will expire on: \!\(\*ValueBox[\"$ExpirationString\"]\).",
 "ExpiringMessageEnterprise" -> "Your license will expire on: \!\(\*ValueBox[\"$ExpirationString\"]\).",
 "PrereleaseGuidePageLink" -> FileNameJoin[{$InstallationDirectory, "Documentation", "English", 
-  "System", "Guides", "SummaryOfNewFeaturesIn100.nb"}]
+  "System", "Guides", "SummaryOfNewFeaturesIn100.nb"}],
+"CloudLoginButtonText" -> RowBox[{StyleBox["Sign in", Bold], " to access your Wolfram Cloud file\[Ellipsis]"}],
+"AccountSettings" -> "Account Settings",
+"SignOut" -> "Sign Out",
+"BuyNow" -> "Buy Now",
+"ContactUs" -> "Contact Us",
+"CloudTooltipDisabled" -> "Sign in first to access your Cloud files."
+}
+@|
+@@resource CloudLoginDialog
+{
+"WolframIDLabel1" -> "Wolfram ID",
+"WolframIDLabel2" -> "(your email address)",
+"PasswordLabel" -> FEPrivate`FrontEndResource["ActivationDialog", "PasswordLabel"],
+"ForgotPasswordLabel" -> "Forgot your password?",
+"CloudAccountQuery" -> "Don't have a Wolfram ID?",
+"SignInButtonLabel" -> "Sign In",
+"JoinNowButtonLabel" -> "Create an Account",
+"CancelButtonLabel" -> "Cancel",
+"RemeberMeLabel" -> "Remember Me",
+"WindowTitle" -> "Enter Login Credentials"
+}
+@|
+@@resource CloudDialogs
+{
+"OpenTitle" -> "Open from Wolfram Cloud",
+"SaveTitle" -> "Save to Wolfram Cloud",
+"CloudFiles" -> "Cloud Files",
+"Home" -> "Home",
+"Cancel" -> "Cancel",
+"Open" -> "Open",
+"Save" -> "Save",
+"Replace" -> "Replace",
+"NewFolder" -> "Create New Folder",
+"Create" -> "Create",
+"SaveAsPrompt" -> "Save As: ",
+
+(* tooltips *)
+"Type" -> "Type: ",
+"Size" -> "Size: ",
+"Modified" -> "Last modified: ",
+"Owner" -> "Owner: ",
+"Permissions" -> "Permissions: ",
+"Refresh" -> "Refresh file listing",
+
+(* loading page *)
+"Initializing" -> "Initializing\[Ellipsis]",
+"Loading" -> "Loading\[Ellipsis]",
+"InternetOff" -> "No internet connection found",
+"InternetBlocked" -> "Internet not allowed",
+"NotConnected" -> "Not connected to Wolfram Cloud",
+"NotDirectory" -> "We're sorry. We encountered a problem and could not process your request.",
+"TryAgain" -> "Try again",
+"EmptyDirectory" -> "-empty-",
+
+(* confirmation dialogs *)
+"ReplaceText" -> "The file \"`1`\" already exists. Do you want to replace it?",
+"ReplaceCaption" -> "A file with the same name already exists. Replacing it will overwrite its current contents.",
+
+"NewFolderTitle" -> "New Folder",
+"NewFolderPrompt" -> "New folder name:",
+"NewFolderConflict" -> "This name is already taken.",
+
+(* internet blocked dialog *)
+"InternetBlockedText" -> "Wolfram System is currently not allowed to access the Internet. Change the setting in Internet Connectivity section of the Preferences dialog.",
+"InternetBlockedButton" -> "Open Internet Connectivity",
+"InternetBlockedClose" -> "Close",
+
+(* status messages *)
+"statusContent" -> "Downloading content: ",
+"statusDirectoryInfo" -> "Downloading directory info...",
+"statusSaving" -> "Saving: ",
+"statusStarting" -> "Starting up",
+"statusReading" -> "Reading local file system data",
+"statusConnecting" -> "Connecting to Wolfram Cloud",
+
+(* activity dialog *)
+"ActivityTitle" -> "Wolfram Cloud Activity",
+"ActivityCancelAll" -> "Cancel All",
+"ActivityCancelAllQuit" -> "Cancel All and Quit",
+"ActivityCancelAllSignOut" -> "Cancel All and Sign Out",
+"ActivityNone" -> "No activity",
+"ActivityOpening" -> "Opening",
+"ActivitySaving" -> "Saving",
+"ActivityWaiting" -> "Waiting\[Ellipsis]",
+"ActivityCancelPending" -> "Cancel",
+"ActivityCancelQueued" -> "Remove from queue",
+"ActivityCancelFailed" -> "Cancel",
+
+(* activity errors *)
+"ActivityError409" -> "There is a conflicting version of this file on the Wolfram Cloud. Would you like to replace it?",
+"ActivityError409Cancel" -> "No, Cancel",
+"ActivityError409Replace" -> "Yes, Replace",
+"ActivityError1600Open" -> "File failed to open: Could not connect to the Wolfram Cloud",
+"ActivityError1600Save" -> "File failed to save: Could not connect to the Wolfram Cloud",
+"ActivityError1601Open" -> "File failed to open: Internet not allowed",
+"ActivityError1601Save" -> "File failed to save: Internet not allowed",
+"ActivityError1602Open" -> "File failed to open: No internet connection found",
+"ActivityError1602Save" -> "File failed to save: No internet connection found",
+"ActivityError1700Save" -> "Could not save file to Wolfram Cloud. You have reached your subscription limit.",
+"ActivityGenericOpenError" -> "File failed to open: error ",
+"ActivityGenericSaveError" -> "File failed to save: error ",
+"ActivityErrorAccountSettings" -> "Account settings",
+"ActivityErrorTryAgain" -> "Try Again",
+
+(* notifications: attached cells / toolbars *)
+"notifySaving" -> "Saving to Wolfram Cloud\[Ellipsis]",
+"notifyViewActivity" -> "View Wolfram Cloud Activity",
+"notifyFailed" -> "Could not save file to Wolfram Cloud.",
+"notifyMoreInfo" -> "for more information",
+"notifyOffline" -> "Cannot connect to Wolfram Cloud. Changes cannot be saved."
+
+}
+@|
+@@resource MathematicaClosingDialog
+{
+"NewNotebook" -> "New Notebook",
+"ToggleText" -> "Always exit after closing last window"
 }
 @|
 @|
@@ -952,53 +1095,68 @@ licensing terms. For more information or assistance, please \"",
 @@resource okButtonText
 OK
 @|
+@@resource okButtonTextWithMnemonic
+&OK
+@|
 @@resource cancelButtonText
 Cancel
+@|
+@@resource cancelButtonTextWithMnemonic
+&Cancel
 @|
 @@resource yesButtonText
 Yes
 @|
+@@resource yesButtonTextWithMnemonic
+&Yes
+@|
 @@resource noButtonText
 No
+@|
+@@resource noButtonTextWithMnemonic
+&No
 @|
 @@resource alwaysButtonText
 Always
 @|
+@@resource alwaysButtonTextWithMnemonic
+&Always
+@|
 @@resource neverButtonText
 Never
 @|
-@@resource quitButtonText
-Quit
-@|
-@@resource closeAndQuitText
-Close and Quit
-@|
-@@resource dontQuitButtonText
-Don't Quit
+@@resource neverButtonTextWithMnemonic
+Ne&ver
 @|
 @@resource continueButtonText
 Continue
 @|
+@@resource continueButtonTextWithMnemonic
+Co&ntinue
+@|
 @@resource saveButtonText
 Save
+@|
+@@resource saveButtonTextWithMnemonic
+&Save
 @|
 @@resource dontSaveButtonText
 Don't Save
 @|
-@@resource saveAndQuitButtonText
-Save Changes and Quit
+@@resource dontSaveButtonTextWithMnemonic
+&Don't Save
 @|
-@@resource quitWithoutSavingButtonText
-Discard Changes and Quit
+@@resource quitButtonText
+Quit
+@|
+@@resource quitButtonTextWithMnemonic
+&Quit
 @|
 @@resource reviewButtonText
 Review Unsaved...
 @|
 @@resource dontSaveAnyButtonText
 Don't Save Any
-@|
-@@resource applyToAllText
-Apply to all
 @|
 @@resource recursiveButtonText
 Recursive
@@ -1025,17 +1183,11 @@ Do you want to review your unsaved documents before quitting?
 @@resource reviewUnsavedDocsClosingDialogMainText
 Do you want to review your unsaved documents before closing?
 @|
+@@resource reviewUnsavedDocsLoggingOutDialogMainText
+Do you want to review your unsaved documents before signing out?
+@|
 @@resource reviewUnsavedDocsDialogSubText
 If you don't review your documents, all your changes could be lost.
-@|
-@@resource quitingApplicationWarningDialogText Macintosh
-Closing the last notebook will quit the application. What do you want to do?
-@|
-@@resource quitingApplicationWarningDialogText X
-"Closing the last notebook will quit the application. Would you like to quit now?"
-@|
-@@resource quitingApplicationWarningDialogText Windows
-Closing the last notebook will quit the application. What do you want to do?
 @|
 @@resource quitKernelDialogMainText
 Do you really want to quit the kernel?
@@ -1126,6 +1278,9 @@ There is a large amount of data on the clipboard. Would you like to process it t
 @|
 @@resource askIfConvertToNotebook
 You are attempting to edit a Playable document.  Would you like to convert this into a notebook first, so changes can be made?
+@|
+@@resource askIfAbortCloudTasks
+There is still data being uploaded to the Wolfram Cloud.  Do you wish to continue to wait for the data to be sent?
 @|
 @@resource formattingNotebookContents
 Formatting Notebook Contents

@@ -52,8 +52,8 @@ Individual utilities
 * date: (coreutils)date invocation.             Print/set system date and time.
 * dd: (coreutils)dd invocation.                 Copy and convert a file.
 * df: (coreutils)df invocation.                 Report file system disk usage.
-* diff: (diffutils)Invoking diff.               Compare 2 files line by line.
 * diff3: (diffutils)Invoking diff3.             Compare 3 files line by line.
+* diff: (diffutils)Invoking diff.               Compare 2 files line by line.
 * dir: (coreutils)dir invocation.               List directories briefly.
 * dircolors: (coreutils)dircolors invocation.   Color setup for ls.
 * dirname: (coreutils)dirname invocation.       Strip last file name component.

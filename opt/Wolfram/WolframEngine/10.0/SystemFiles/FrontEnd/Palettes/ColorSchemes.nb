@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    230885,       4623]
-NotebookOptionsPosition[    229562,       4586]
-NotebookOutlinePosition[    230925,       4623]
-CellTagsIndexPosition[    230882,       4620]
+NotebookDataLength[    230635,       4622]
+NotebookOptionsPosition[    229368,       4587]
+NotebookOutlinePosition[    230675,       4622]
+CellTagsIndexPosition[    230632,       4619]
 MenuPosition->1100
 WindowTitle->Color Schemes
 WindowFrame->Palette*)
@@ -246,8 +246,8 @@ Cell[BoxData[
                     TaggingRules, "GradientsSelection"}, 1]], StandardForm, 
                     Graphics],
                     
-                    ImageSizeCache->{{2.5, 151.5}, {-21.499999999999993`, 
-                    3.9700854700854733`}}],
+                    ImageSizeCache->{{3., 151.}, {-23.500000000000007`, 
+                    1.7991452991452928`}}],
                     Frame->True,
                     FrameStyle->GrayLevel[0.9],
                     FrameTicks->{{False, False}, {{{0, 
@@ -706,8 +706,8 @@ nm."}, $CellContext`glen$$ = 3, $CellContext`gropts$$ = {
                     EvaluationNotebook[], {TaggingRules, "PhysicalSelection"},
                      1]], StandardForm, Graphics],
                     
-                    ImageSizeCache->{{10., 141.}, {-20.499999999999996`, 
-                    1.8931623931624004`}}],
+                    ImageSizeCache->{{11., 139.5}, {-21.499999999999993`, 
+                    0.46581196581197}}],
                     Frame->True,
                     FrameStyle->GrayLevel[0.9],
                     FrameTicks->{{None, None}, {{{0, 
@@ -3471,12 +3471,11 @@ green, and blue colors."}, $CellContext`menu$$ = {
                     PanelBox[
                     TemplateBox[{DynamicBox[
                     FEPrivate`FrontEndResource[
-                    "FEStrings", "colorschemesSortLabel"], 
-                    ImageSizeCache -> {19., {1., 8.}}],InterpretationBox[
+                    "FEStrings", "colorschemesSortLabel"]],InterpretationBox[
                     StyleBox[
                     
-                    GraphicsBox[{}, BaselinePosition -> Baseline, 
-                    ImageSize -> {5, 0}], CacheGraphics -> False], 
+                    GraphicsBox[{}, ImageSize -> {5, 0}, BaselinePosition -> 
+                    Baseline], "CacheGraphics" -> False], 
                     Spacer[5]],StyleBox[
                     InterpretationBox[
                     StyleBox[
@@ -3488,7 +3487,7 @@ green, and blue colors."}, $CellContext`menu$$ = {
                     CurrentValue[
                     EvaluationNotebook[], {
                     TaggingRules, "NamedMenu"}, $CellContext`i$$]]], {1}, 
-                    Appearance -> Small, DefaultBaseStyle -> "RadioButtonBar",
+                    DefaultBaseStyle -> "RadioButtonBar", Appearance -> Small,
                      Enabled -> Dynamic[
                     Part[$CellContext`sortQ$$, 
                     CurrentValue[
@@ -3497,19 +3496,12 @@ green, and blue colors."}, $CellContext`menu$$ = {
                     StyleBox[
                     DynamicBox[
                     FEPrivate`FrontEndResource[
-                    "FEStrings", "colorschemesColorLabel"], 
-                    ImageSizeCache -> {22., {1., 8.}}], "RadioButtonBarLabel",
-                     StripOnInput -> False]}}, AutoDelete -> False, 
+                    "FEStrings", "colorschemesColorLabel"]], 
+                    "RadioButtonBarLabel", StripOnInput -> False]}}, 
+                    AutoDelete -> False, 
                     GridBoxItemSize -> {
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
-                    GridBoxSpacings -> {"Columns" -> {
-                    Offset[0.27999999999999997`], {
-                    Offset[0.21]}, 
-                    Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
-                    "Rows" -> {
-                    Offset[0.2], {
-                    Offset[0.4]}, 
-                    Offset[0.2]}, "RowsIndexed" -> {}}], "  ", 
+                    ColumnSpacings -> 0.3], "  ", 
                     GridBox[{{
                     RadioButtonBox[
                     Dynamic[
@@ -3517,7 +3509,7 @@ green, and blue colors."}, $CellContext`menu$$ = {
                     CurrentValue[
                     EvaluationNotebook[], {
                     TaggingRules, "NamedMenu"}, $CellContext`i$$]]], {2}, 
-                    Appearance -> Small, DefaultBaseStyle -> "RadioButtonBar",
+                    DefaultBaseStyle -> "RadioButtonBar", Appearance -> Small,
                      Enabled -> Dynamic[
                     Part[$CellContext`sortQ$$, 
                     CurrentValue[
@@ -3526,19 +3518,12 @@ green, and blue colors."}, $CellContext`menu$$ = {
                     StyleBox[
                     DynamicBox[
                     FEPrivate`FrontEndResource[
-                    "FEStrings", "colorschemesNameLabel"], 
-                    ImageSizeCache -> {25., {1., 6.}}], "RadioButtonBarLabel",
-                     StripOnInput -> False]}}, AutoDelete -> False, 
+                    "FEStrings", "colorschemesNameLabel"]], 
+                    "RadioButtonBarLabel", StripOnInput -> False]}}, 
+                    AutoDelete -> False, 
                     GridBoxItemSize -> {
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
-                    GridBoxSpacings -> {"Columns" -> {
-                    Offset[0.27999999999999997`], {
-                    Offset[0.21]}, 
-                    Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
-                    "Rows" -> {
-                    Offset[0.2], {
-                    Offset[0.4]}, 
-                    Offset[0.2]}, "RowsIndexed" -> {}}]}], "Deploy"], 
+                    ColumnSpacings -> 0.3]}], "Deploy"], 
                     RadioButtonBar[
                     Dynamic[
                     Part[$CellContext`sort$$, 
@@ -3556,9 +3541,8 @@ green, and blue colors."}, $CellContext`menu$$ = {
                     Part[$CellContext`sortQ$$, 
                     CurrentValue[
                     EvaluationNotebook[], {
-                    TaggingRules, "NamedMenu"}, $CellContext`i$$]]]]], 
-                    StripOnInput -> False, FontFamily -> "Helvetica", 
-                    FontSize -> 10]},
+                    TaggingRules, "NamedMenu"}, $CellContext`i$$]]]]], 10, 
+                    FontFamily -> "Helvetica", StripOnInput -> False]},
                     "RowDefault"],
                     Alignment->{Left, Center},
                     FrameMargins->{{7, 7}, {5, 5}},
@@ -3583,12 +3567,11 @@ green, and blue colors."}, $CellContext`menu$$ = {
                     TaggingRules, "NamedMenu"}, $CellContext`i$$]], 2], 
                     Rectangle[]}, Frame -> True, FrameTicks -> False, 
                     ImageSize -> 30, ImagePadding -> 1, PlotRangePadding -> 
-                    0], StandardForm], ImageSizeCache -> {30., {13., 17.}}],
-                    InterpretationBox[
+                    0], StandardForm]],InterpretationBox[
                     StyleBox[
                     
-                    GraphicsBox[{}, BaselinePosition -> Baseline, 
-                    ImageSize -> {5, 0}], CacheGraphics -> False], 
+                    GraphicsBox[{}, ImageSize -> {5, 0}, BaselinePosition -> 
+                    Baseline], "CacheGraphics" -> False], 
                     Spacer[5]],TagBox[
                     GridBox[{{
                     PaneBox[
@@ -3608,10 +3591,9 @@ green, and blue colors."}, $CellContext`menu$$ = {
                     CurrentValue[
                     EvaluationNotebook[], {
                     TaggingRules, "NamedMenu"}, $CellContext`i$$]], 1], 
-                    StandardForm], ImageSizeCache -> {27., {1., 8.}}], 
-                    StripOnInput -> False, FontWeight -> Bold], 
-                    Alignment -> {Left, Center}, ImageSize -> {125, 14}, 
-                    ImageSizeAction -> "ShrinkToFit"]}, {
+                    StandardForm]], Bold, StripOnInput -> False], 
+                    Alignment -> {Left, Center}, ImageSizeAction -> 
+                    "ShrinkToFit", ImageSize -> {125, 14}]}, {
                     PaneBox[
                     DynamicBox[
                     ToBoxes[
@@ -3629,10 +3611,11 @@ green, and blue colors."}, $CellContext`menu$$ = {
                     CurrentValue[
                     EvaluationNotebook[], {
                     TaggingRules, "NamedMenu"}, $CellContext`i$$]], 2]], 
-                    StandardForm], ImageSizeCache -> {88., {2., 8.}}], 
-                    Alignment -> {Left, Center}, ImageSize -> {125, 14}, 
-                    ImageSizeAction -> "ShrinkToFit"]}}, DefaultBaseStyle -> 
-                    "Column", GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                    StandardForm]], Alignment -> {Left, Center}, 
+                    ImageSizeAction -> "ShrinkToFit", 
+                    ImageSize -> {125, 14}]}}, 
+                    GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                    DefaultBaseStyle -> "Column", 
                     GridBoxItemSize -> {
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
                     GridBoxSpacings -> {"Columns" -> {{0}}, "Rows" -> {{0}}}],
@@ -4054,8 +4037,9 @@ green, and blue colors."}, $CellContext`menu$$ = {
         28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 
        45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62,
         63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 
-       80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 
-       96}, $CellContext`glen$$ = 96, $CellContext`grange$$ = {{1, 
+       80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97,
+        98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 
+       112, 113}, $CellContext`glen$$ = 113, $CellContext`grange$$ = {{1, 
          DirectedInfinity[1], 1}, {1, 9, 1}, {1, 10, 1}, {1, 10, 1}, {1, 10, 
         1}, {1, 11, 1}, {1, 11, 1}, {1, 9, 1}, {1, 9, 1}, {1, 11, 1}, {1, 8, 
         1}, {1, 10, 1}, {1, 10, 1}, {1, 10, 1}, {1, 11, 1}, {1, 9, 1}, {1, 10,
@@ -4073,6 +4057,23 @@ green, and blue colors."}, $CellContext`menu$$ = {
         1, 10, 1}, {1, 10, 1}, {1, 10, 1}, {1, 10, 1}, {1, 10, 1}, {1, 10, 
         1}, {1, 10, 1}, {1, 10, 1}, {1, 10, 1}, {1, 10, 1}, {1, 10, 1}, {1, 
         10, 1}, {1, 10, 1}, {1, 10, 1}, {1, 10, 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
+         DirectedInfinity[1], 1}, {1, 
          DirectedInfinity[1], 1}, {1, 
          DirectedInfinity[1], 1}, {1, 
          DirectedInfinity[1], 
@@ -4182,7 +4183,7 @@ green, and blue colors."}, $CellContext`menu$$ = {
                     SliderBox[Dynamic[
                     CurrentValue[
                     EvaluationNotebook[], {TaggingRules, "IndexedScroll"}, 
-                    1]], {92, 1, 1},
+                    1]], {109, 1, 1},
                     Appearance->"Vertical",
                     ImageSize->{18, 125}]},
                     {
@@ -4284,7 +4285,7 @@ green, and blue colors."}, $CellContext`menu$$ = {
                     1], 2], {155. - $CellContext`gap$, 0}]}, 
                     PlotRange -> {{0, 155}, All}, ImageSize -> 155], 
                     FontFamily -> "Times"]], StandardForm],
-                    ImageSizeCache->{155., {3., 8.}}]}
+                    ImageSizeCache->{155., {5., 9.}}]}
                     },
                     DefaultBaseStyle->"Column",
                     GridBoxAlignment->{"Columns" -> {{Left}}},
@@ -4420,11 +4421,11 @@ green, and blue colors."}, $CellContext`menu$$ = {
                     Dynamic[
                     CurrentValue[
                     EvaluationNotebook[], {TaggingRules, "IndexedScroll"}, 
-                    1]], {92, 1, 1}, ImageSize -> {18, 125}], 
+                    1]], {109, 1, 1}, ImageSize -> {18, 125}], 
                    Button[
                     Style["\[FilledUpTriangle]", 12], CurrentValue[
-                    EvaluationNotebook[], {TaggingRules, "IndexedScroll"}, 1] = M\
-ax[1, CurrentValue[
+                    EvaluationNotebook[], {TaggingRules, "IndexedScroll"}, 1]
+                     = Max[1, CurrentValue[
                     EvaluationNotebook[], {TaggingRules, "IndexedScroll"}, 1] - 
                     1], Appearance -> "Frameless", ImageSize -> {18, 14}, 
                     Enabled -> Dynamic[CurrentValue[
@@ -4591,23 +4592,21 @@ WindowTitle->Dynamic[
   FEPrivate`FrontEndResource["FEStrings", "colorschemesTitle"]],
 ScrollingOptions->{"VerticalScrollRange"->Fit},
 TaggingRules->{
- "stringa" -> "This is StringA", "stringb" -> "Stringb", 
-  "count" -> -174 + Inherited, 
-  "DAHPreferences" -> {
-   "DefaultUSERCVSDIR" -> 
-    "/Users/larrya/cvs_checkouts_DAHDefault/Pubs/Internal/larrya", 
-    "DAHEmailOptions" -> {
-     "From" -> "larrya@wolfram.com", "To" -> "q-dpt@wolfram.com", "Subject" -> 
-      "bonk detected: ", "Server" -> "mail.wolfram.com"}}, "GradientsOpener" -> 
-  True, "GradientsScroll" -> 1, "GradientsSelection" -> 1, "PhysicalOpener" -> 
+ "DocuToolsSettingsInternal" -> {
+   "$ApplicationName" -> "Mathematica", "$LinkBase" -> "Mathematica", 
+    "$ApplicationDirectory" -> "/Users/brettc/Source/Head/Mathematica/", 
+    "$DocumentationDirectory" -> 
+    "/Users/brettc/Source/Head/Mathematica/Documentation/English/", 
+    "$UseNewPageDialog" -> "False"}, "GradientsOpener" -> True, 
+  "GradientsScroll" -> 1, "GradientsSelection" -> 1, "PhysicalOpener" -> 
   False, "PhysicalScroll" -> 1, "PhysicalSelection" -> 1, "NamedOpener" -> 
   False, "NamedMenu" -> 1, "IndexedOpener" -> False, "IndexedScroll" -> 1, 
   "IndexedSelection" -> 1},
 CellContext->Notebook,
 DynamicUpdating->True,
 MenuSortingValue->1100,
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 31, \
-2013)",
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (April 6, \
+2014)",
 StyleDefinitions->"SystemPalette.nb",
 ScrollingOptions -> {"PagewiseScrolling" -> False}
 ]
@@ -4622,7 +4621,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[605, 22, 228953, 4562, 440, InheritFromParent,
+Cell[605, 22, 228759, 4563, 442, InheritFromParent,
  PageBreakAbove->True,
  PageBreakWithin->False]
 }

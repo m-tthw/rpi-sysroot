@@ -197,6 +197,17 @@ Protect[FE`UnFoldSelection]
 
 (* End Of Code Folding Routines *)
 
+(* NL Utilities *)
+
+FE`NotebookWriteIntoControlEqual[nb_NotebookObject, str_String] := (
+	Quiet[WolframAlpha[(* trigger autoloading *)]];
+        NotebookWrite[nb, ToBoxes[AlphaIntegration`LinguisticAssistant["", {}, Automatic]], After];
+        FrontEndTokenExecute[nb, "MovePrevious"];
+        NotebookWrite[nb, str]
+);
+
+(* End of NL Utilities *)
+
 (* Keep current evalaution locations up to date *)
 FE`SetEvaluationNotebookFileName[
 		file : FrontEnd`FileName[{dir___}, name_String, opts___]] := (
@@ -273,7 +284,7 @@ If[$VersionNumber >= 3.0,
 	MathLink`CallFrontEnd[ FrontEnd`SetBoxFormNamesPacket[$BoxForms]];
 	(* If FE and kernel FEKernelInit are not synchronized, then
        declared symbols may be out of sync; try to get them from FE *)
-	If[FE`$FrontEndPackageVersion =!= 6.00,
+	If[FE`$FrontEndPackageVersion =!= 10.00,
 		MathLink`CallFrontEnd[ FrontEnd`NeedCurrentFrontEndPackagePacket[$VersionNumber]];
 	   ];
 , (* else *)
@@ -462,29 +473,17 @@ If[FrontEnd`Private`$SyntaxColorQ,
 
 
 (* 
-   Add syntax information to built-in functions.  For 9 and later
-   send the new, compressed FunctionInformation2.m
+   Add syntax information to built-in functions.
  *)
 If[FrontEnd`Private`$SyntaxColorQ,
-	If[$VersionNumber < 9,
-		informationFile = ToFileName[{$InstallationDirectory, "SystemFiles", "Kernel", "TextResources",
-			CurrentValue["Language"]}, "FunctionInformation.m"];
-		If[FileType[informationFile] === None,
-			informationFile = ToFileName[{$InstallationDirectory, "SystemFiles", "Kernel",
-				"TextResources", "English"}, "FunctionInformation.m"]];
-		If[FileType[informationFile]===File,
-			MathLink`CallFrontEnd[
-				FrontEnd`SetFunctionInformation[Get[informationFile], Contexts[]]]],
-
-		informationFile = ToFileName[{$InstallationDirectory, "SystemFiles", "Kernel", "TextResources",
-			CurrentValue["Language"]}, "FunctionInformation2.m"];
-		If[FileType[informationFile] === None,
-			informationFile = ToFileName[{$InstallationDirectory, "SystemFiles", "Kernel",
-					"TextResources", "English"}, "FunctionInformation2.m"]];
-		If[FileType[informationFile]===File,
-			MathLink`CallFrontEnd[
-				FrontEnd`SetFunctionInformation[Uncompress[Get[informationFile]], Contexts[]]]];
-	]
+	informationFile = ToFileName[{$InstallationDirectory, "SystemFiles", "Kernel", "TextResources",
+		CurrentValue["Language"]}, "FunctionInformation.m"];
+	If[FileType[informationFile] === None,
+		informationFile = ToFileName[{$InstallationDirectory, "SystemFiles", "Kernel",
+			"TextResources", "English"}, "FunctionInformation.m"]];
+	If[FileType[informationFile]===File,
+		MathLink`CallFrontEnd[
+			FrontEnd`SetFunctionInformation[Get[informationFile], Contexts[]]]]
 ]
 
 
@@ -1554,7 +1553,7 @@ PutDemonstrationsTemplate[]:=Module[{nb},
 				"DemonstrationsTemplate.nb"]]
 		];
 		NotebookPut[nb]
-	];
+	]
 ]
 
 
@@ -1623,6 +1622,7 @@ FE`hyperlinkCoded[url_String /; StringMatchQ[url, "http*"], cat___] :=
   NotebookLocate[{URL[
     StringJoin[url,
      "?actkey=", FE`Evaluate[FEPrivate`$ActivationKey],
+     "&product_name=", ToLowerCase[FE`Evaluate[FEPrivate`$ProductIDName]],
      "&version=", FE`Evaluate[FEPrivate`$ProductVersion], 
 	 "&os=", FE`Evaluate[FEPrivate`$SystemID],
      "&buildid=", StringCases[
@@ -1904,12 +1904,77 @@ DeployCDFDialog[embed_] := (FrontEnd`Private`$CDFWebDeploy = embed;
 
 
 (* ::Subsection::Closed:: *)
+(*Wolfram Cloud support*)
+
+
+If[FrontEnd`Private`$KernelName === "System",
+
+	CloudCopyFile[nbobj_, filename_, cloudobject_] :=
+	Block[{$MessageList = {}, result},
+		result = CopyFile[filename, cloudobject];
+		If[$MessageList =!= {},
+			MathLink`CallFrontEnd @ FrontEnd`WolframCloud`UploadFailed[nbobj,
+				Switch[$MessageList,
+					{___, HoldForm[MessageName[_, "invhttp"]], ___}, 1600,
+					{___, HoldForm[MessageName[_, "offline"]], ___}, 1601,
+					{___, HoldForm[MessageName[_, "subslimit"]], ___}, 1700,
+					{___, HoldForm[MessageName[_, "notauth"]], ___}, 401,
+					_, 1000 ]]];
+		result
+	];
+
+	CloudNotebookSave[nb_, info_List]:=
+	Module[{filename, cloudobject, filebytecount, lastmodified, overrideverification, cloudObjInfo, errorCode=-1},
+		{filename, cloudobject, filebytecount, lastmodified, overrideverification} = 
+			{"FileName", "CloudObject", "FileByteCount", "LastModified", "OverrideVerification"} /. info;
+		filename = ToFileName[filename];
+		
+		MathLink`CallFrontEnd @ FrontEnd`WolframCloud`UploadInitiated[nb];
+		If[!overrideverification && filebytecount =!= Null && lastmodified =!= Null,
+			cloudObjInfo = First @ CloudObjectInformation[cloudobject];
+			If[filebytecount =!= cloudObjInfo[["FileByteCount"]] || lastmodified =!= cloudObjInfo[["LastModified"]],
+				(* replace with confliction resolution dialog *)
+				MathLink`CallFrontEnd @ FrontEnd`WolframCloud`UploadFailed[nb, 409 (* HTTP error code:409 Conflict" *)];
+				Return[$Failed]
+			]
+		];
+		If[Quiet[CloudCopyFile[nb, filename, cloudobject]] === $Failed, Return[$Failed]];
+		(* otherwise, success *)
+		cloudObjInfo = First @ CloudObjectInformation[cloudobject];
+		MathLink`CallFrontEnd @ FrontEnd`WolframCloud`UploadComplete[nb,
+			cloudObjInfo[["FileByteCount"]], cloudObjInfo[["LastModified"]] ]
+		nb
+	];
+
+	(* we need to store this off to the side so Automatic can restore it back *)
+	FrontEnd`Private`$DefaultCloudBase = $CloudBase;
+		
+]
+
+
+FrontEnd`Private`SaveToWolframCloudDialog[nbObj_NotebookObject, filename_String, ext_String, token_String] := (
+	FrontEnd`Private`$SaveToWolframCloudTaskObject = Null;
+	FrontEnd`Private`$SaveToWolframCloudNotebookObject = nbObj;
+	FrontEnd`Private`$SaveToWolframCloudFileName = filename;
+	FrontEnd`Private`$SaveToWolframCloudFileExtension = ext;
+	FrontEnd`Private`$SaveToWolframCloudContinuationToken = token;
+	FrontEndExecute[{FrontEnd`NotebookOpen[
+		FrontEnd`FindFileOnPath["WolframCloudSaveDialog.nb", "PrivatePathsSystemResources"]]}]
+)
+
+(* ::Subsection::Closed:: *)
 (*Wolfram|Alpha support*)
 
 
 FrontEnd`Private`EvaluationModeEvaluate[boxes_, fmt_, "WolframAlphaShort"] := AlphaIntegration`ExtrusionEvaluate[boxes, fmt]
 
 FrontEnd`Private`EvaluationModeEvaluate[boxes_, fmt_, "WolframAlphaLong"] := AlphaIntegration`AlphaQuery[boxes, fmt]
+
+FrontEnd`Private`PrimeControlEqualPump[] := 
+	Quiet[
+		WolframAlpha[];
+		TimeConstrained[ToBoxes[AlphaIntegration`LinguisticAssistant["priming", {}, Automatic]], 6]];
+
 
 
 (* ::Subsection::Closed:: *)
@@ -1985,7 +2050,7 @@ FrontEnd`GetImageInformation[] := MessageDialog[
    opts2 = FilterRules[opts2, Except[ColorSpace| Interleaving]];
    Grid[{
        {imageText["imageInfoDimsLabel"], ImageDimensions[img]},
-       {imageText["imageInfoColorLabel"], ColorSpace /. opts},
+       {imageText["imageInfoColorLabel"], ImageColorSpace[img]},
        {imageText["imageInfoChannelsLabel"], ImageChannels[img]},
        {imageText["imageInfoInterleaveLabel"], Interleaving /. opts},
        {imageText["imageInfoHistogramLabel"], ImageHistogram[img]},
@@ -2327,7 +2392,7 @@ FrontEnd`Private`Image3DEditingReplaceImage[nbobj_, image_, tab_:False, func_:Nu
 )
 
 
-FrontEnd`Private`Image3DEditingSetOption[nbobj_, Dynamic[image_], {opts__Rule}, tab_:False, func_:Null] :=
+FrontEnd`Private`Image3DEditingSetOption[nbobj_, Dynamic[image_], {opts__Rule}, func_:Null] :=
 (
 	CheckAll[
 		MathLink`CallFrontEnd[FrontEnd`NotebookSuspendScreenUpdates[nbobj]];
@@ -2338,9 +2403,6 @@ FrontEnd`Private`Image3DEditingSetOption[nbobj_, Dynamic[image_], {opts__Rule}, 
 			]]& @@@ {opts};
 			(* and also set the option for the image remembered by this interface *)
 			image[] = Image3D[image[], opts];
-			FrontEnd`Private`$Image3DEditorDefaultImage = image[];
-			If[tab =!= False, FrontEnd`Private`$RibbonDefaultPage = tab];
-			MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`WrapImageWithEditCell[]]];
 			If[ !ImageQ[image[]], SelectionMove[nbobj, After, Word, AutoScroll -> False]];
 		MathLink`CallFrontEnd[FrontEnd`NotebookResumeScreenUpdates[nbobj]];
 		,

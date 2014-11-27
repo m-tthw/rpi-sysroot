@@ -40,11 +40,10 @@ image/x-sigma-x3f:*.x3f
 video/webm:*.webm
 application/vnd.openxmlformats-officedocument.wordprocessingml.document:*.docx
 text/vnd.rn-realtext:*.rt
-application/mathematicaplayer:*.nbp
 application/x-cpio:*.cpio
-video/vnd.rn-realvideo:*.rv
-application/x-mif:*.mif
 audio/midi:*.mid
+application/x-mif:*.mif
+video/vnd.rn-realvideo:*.rv
 application/vnd.google-earth.kml+xml:*.kml
 image/x-3ds:*.3ds
 image/x-photo-cd:*.pcd
@@ -192,6 +191,7 @@ application/pgp-encrypted:*.pgp
 application/x-bzip-compressed-tar:*.tar.bz
 application/x-amipro:*.sam
 application/vnd.google-earth.kmz:*.kmz
+application/vnd.wolfram.wl:*.wl
 image/x-portable-graymap:*.pgm
 application/x-krita:*.kra
 application/x-dar:*.dar
@@ -261,11 +261,11 @@ video/mp2t:*.mpl
 application/vnd.stardivision.draw:*.sda
 application/vnd.stardivision.calc:*.sdc
 text/x-mrml:*.mrml
-application/vnd.stardivision.impress:*.sdd
+audio/x-musepack:*.mpp
 application/x-mps:*.mps
 application/vnd.ms-excel.template.macroEnabled.12:*.xltm
 image/x-gzeps:*.epsf.gz
-audio/x-musepack:*.mpp
+application/vnd.stardivision.impress:*.sdd
 application/x-lrzip:*.lrz
 video/3gpp2:*.3gpp2
 image/jpeg:*.jpeg
@@ -743,12 +743,14 @@ application/vnd.wordperfect:*.wp6
 application/vnd.ms-excel:*.xlt
 application/vnd.ms-excel:*.xlw
 text/x-troff-mm:*.mm
+application/vnd.wolfram.nb:*.nb
 application/mathematica:*.nb
 application/mathematica:*.nb
 application/x-netcdf:*.nc
 video/mp4:*.f4v
 application/x-shockwave-flash:*.swf
-video/mpeg:[0-9][0-9][0-9].vdr
+application/vnd.wolfram.player:*.nbp
+application/mathematicaplayer:*.nbp
 image/vnd.dwg:*.dwg
 text/x-troff-me:*.me
 text/spreadsheet:*.sylk
@@ -797,6 +799,7 @@ text/plain:*.ini
 application/vnd.ms-works:*.wps
 text/plain:*,v
 text/x-tex:*.ins
+video/mpeg:[0-9][0-9][0-9].vdr
 text/x-troff-ms:*.ms
 application/x-tgif:*.obj
 text/x-c++src:*.C
@@ -839,6 +842,7 @@ text/x-chdr:*.h
 text/x-fortran:*.f95
 application/x-nes-rom:*.nes
 application/x-ms-dos-executable:*.exe
+application/vnd.wolfram.mathematica.package:*.m
 text/x-objcsrc:*.m
 text/x-matlab:*.m
 application/mathematica:*.m

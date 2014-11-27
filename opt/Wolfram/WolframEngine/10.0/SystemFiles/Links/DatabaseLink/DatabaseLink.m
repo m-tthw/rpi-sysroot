@@ -3,7 +3,7 @@
 
 BeginPackage[ "DatabaseLink`"]
 
-`Information`$Version = "DatabaseLink Version 3.0.0 (July 2013)";
+`Information`$Version = "DatabaseLink Version 3.0.0 (December 2013)";
 
 `Information`$VersionNumber = 3.0;
 

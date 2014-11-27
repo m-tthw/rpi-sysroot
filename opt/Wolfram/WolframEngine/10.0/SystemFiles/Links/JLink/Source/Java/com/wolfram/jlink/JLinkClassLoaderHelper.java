@@ -31,8 +31,8 @@ import java.net.URLClassLoader;
 
 public class JLinkClassLoaderHelper extends URLClassLoader {
 
-    JLinkClassLoader top = null;
-    JLinkClassLoaderHelper prevLoader = null;
+    private final JLinkClassLoader top;
+    private final JLinkClassLoaderHelper prevLoader;
             
     JLinkClassLoaderHelper(URL[] urls, JLinkClassLoaderHelper prevLoader, ClassLoader parent, JLinkClassLoader top) {
         super(urls, parent);
@@ -40,11 +40,37 @@ public class JLinkClassLoaderHelper extends URLClassLoader {
         this.top = top;
     }
     
+    /**
+     * Returns the object which protects this instance's class loading.
+     * This <em>should</em> be {@link #top}.
+     * After all, {@code top} is used as the universal lock so that no matter which
+     * of the linked {@link JLinkClassLoaderHelper}'s is chosen as the entry point, 
+     * there will be no lock ordering issue.  Unfortunately, this convention is broken by the superclass.
+     * Thus, if the superclass initiates the class loading, then it may obtain the lock on this object
+     * before obtaining the lock on {@code top}, while normal class loading first obtained the lock
+     * on {@code top}, resulting in deadlock.
+     * Barring another way around this, and considering that the explicit locking
+     * in this class is new
+     * (to fix bug 190015), this method is used to enforce lock ordering, at the possible
+     * cost of correctness, by refusing
+     * to lock on {@code top} if the calling thread already has a lock on {@code this}.
+     * In such an unfortunate case, {@code this} is returned; otherwise {@code top} is returned.
+     * (Of course, if the calling thread already owns both locks, it matter which is
+     * returned.)  This should hopefully fix bug 271621 while continuing to minimize the impact of
+     * bug 190015.
+     * 
+     * @return the object on which to lock.
+     * @author jmichelson
+     */
+    private Object lockObject() {
+        return Thread.holdsLock(this) ? this : top;
+    }
+    
     
     // Cannot override findLoadedClass() because it is final, so give it a new name.
     Class findLoadedClassExposed(String name) {
         
-        synchronized (top) {
+        synchronized (lockObject()) {
             // Give the previous loaders a chance to produce a previously-loaded class.
             Class c = null;
             if (prevLoader != null)
@@ -62,7 +88,7 @@ public class JLinkClassLoaderHelper extends URLClassLoader {
 
     protected Class findClass(String name) throws ClassNotFoundException {
         
-        synchronized (top) {
+        synchronized (lockObject()) {
             // Allow the whole chain of helper loaders to look the class up in their previously-loaded
             // sets _before_ calling super.findClass()
             Class c = top.findLoadedClassExposed(name);            
@@ -73,9 +99,9 @@ public class JLinkClassLoaderHelper extends URLClassLoader {
         }
     }
 
-    protected synchronized Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+    protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
         
-        synchronized (top) {
+        synchronized (lockObject()) {
             // First, check if the class has already been loaded
             Class<?> c = top.findLoadedClassExposed(name);
             if (c != null) {

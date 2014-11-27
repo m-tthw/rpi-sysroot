@@ -1,8 +1,5 @@
 /.
 /usr
-/usr/lib
-/usr/lib/arm-linux-gnueabihf
-/usr/lib/arm-linux-gnueabihf/libjpeg.so.8.4.0
 /usr/share
 /usr/share/doc
 /usr/share/doc/libjpeg8
@@ -10,4 +7,7 @@
 /usr/share/doc/libjpeg8/changelog.gz
 /usr/share/doc/libjpeg8/README.gz
 /usr/share/doc/libjpeg8/copyright
+/usr/lib
+/usr/lib/arm-linux-gnueabihf
+/usr/lib/arm-linux-gnueabihf/libjpeg.so.8.4.0
 /usr/lib/arm-linux-gnueabihf/libjpeg.so.8

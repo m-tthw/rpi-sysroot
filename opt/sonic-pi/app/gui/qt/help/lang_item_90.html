@@ -1,0 +1,55 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Define a new function</font></span></p>
+<h1><font color="#3c3c3c"><pre>define<pre></font></h1>
+<h2><pre>[name <font color="deeppink">(symbol)</font>]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Allows you to group a bunch of code and give it your own name for future re-use. Functions are very useful for structuring your code. They are also the gateway into live coding as you may redefine a function whilst a thread is calling it, and the next time the thread calls your function, it will use the latest definition.
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Introduced in v2.0.0
+</p>
+<table cellpadding="2">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+
+# Define a new function called foo
+define :foo do
+  play 50
+  sleep 1
+end
+
+# Call foo on its own
+foo
+
+# You can use foo anywhere you would use normal code.
+# For example, in a block:
+3.times do
+  foo
+end
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+</pre></td></tr>
+</table>

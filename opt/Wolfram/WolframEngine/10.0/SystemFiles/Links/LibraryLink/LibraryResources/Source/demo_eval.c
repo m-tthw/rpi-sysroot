@@ -28,14 +28,14 @@ DLLEXPORT int function1(WolframLibraryData libData, mint Argc, MArgument *Args, 
 	I0 = MArgument_getInteger(Args[0]);
 	I1 = MArgument_getInteger(Args[1]);
 	
-	link = libData->getMathLink(libData);
+	link = libData->getWSLINK(libData);
 	MLPutFunction( link, "EvaluatePacket", 1);
 	MLPutFunction( link, "Message", 2);
 	MLPutFunction( link, "MessageName", 2);
 	MLPutSymbol( link, "MyFunction");
 	MLPutString( link, "info");
 	MLPutString( link, "Message called from within Library function.");
-	libData->processMathLink( link);
+	libData->processWSLINK( link);
 	pkt = MLNextPacket( link);
 	if ( pkt == RETURNPKT) {
 		MLNewPacket(link);

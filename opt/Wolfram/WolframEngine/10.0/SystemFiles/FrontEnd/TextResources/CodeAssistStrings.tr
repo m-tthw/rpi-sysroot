@@ -69,3 +69,30 @@ Build Expression
 @@resource deprecatedSymbolWarningString
 Deprecated
 @|
+@@resource pasteTemplateString
+paste
+@|
+@|
+@@resource codeAssistConvertToMenuString
+Convert to:
+@|
+@|
+@@resource codeAssistFreeFormInputMenuString
+Convert to Free-Form Input
+@|
+@|
+@@resource codeFreeFormLinguisticInputMenuString
+Convert to Free-Form Linguistic Input
+@|
+@|
+@@resource codeConvertToStringMenuString
+Convert to String
+@|
+@|
+@@resource codeAssistConvertToTextCellMenuString
+Convert to Text Cell
+@|
+@|
+@@resource codeAssistConvertToSectionCellMenuString
+Convert to Section Cell
+@|

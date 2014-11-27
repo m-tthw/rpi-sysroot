@@ -1,6 +1,5 @@
 (* 
-This package contains the information about individual OAuth services for which Wolfram provides support 
-The values here use Wolfram's "app" to provide a link between Mathematica and the users account on a service.
+This package loads individual OAuth Services so that they are available is the Service Connection framework. 
 *)
 
 System`Private`NewContextPath[{"OAuthClient`","System`"}];
@@ -8,15 +7,18 @@ System`Private`NewContextPath[{"OAuthClient`","System`"}];
 BeginPackage["OAuthServicesData`"]
 *)
 (* Exported symbols added here with SymbolName::usage *)  
-OAuthClient`$predefinedservicelist;
+OAuthClient`$predefinedOAuthservicelist;
 OAuthClient`OAuthServicesData;
 OAuthClient`oauthcookeddata;
 OAuthClient`oauthsendmessage;
-OAuthClient`addservice;
+OAuthClient`addOAuthservice;
 
-Begin["OAuthServicesDataDump`"] (* Begin Private Context *) 
+Begin["OAuthServicesData`"] (* Begin Private Context *) 
 
-(Unprotect[#]; Clear[#])& /@ {$predefinedservicelist,OAuthServicesData,oauthcookeddata,oauthsendmessage,addservice}
+Begin["`Private`"] (* Begin Private Context *) 
+
+(Unprotect[#]; Clear[#])& /@ {OAuthServicesData,oauthcookeddata,oauthsendmessage,addOAuthservice}
+Unprotect[$predefinedOAuthservicelist];
 
 defaultOAuthParams={
 					(* defaults *)
@@ -39,7 +41,7 @@ defaultOAuthParams={
 defaultOAuthLabels=First/@defaultOAuthParams;		    
 (*************************** OAuthServices *************************************)
 (* A simple function for retrieving data from below *)
-$predefinedservicelist={}
+$predefinedOAuthservicelist={}
 
 OAuthServicesData[args___]:=With[{res=oauthservices[args]},
 	res/;res=!=$Failed&&Head[res]=!=oauthservicedata]
@@ -56,7 +58,6 @@ oauthservices[name_,prop___]:=Module[{data=oauthservicedata[name],availableprope
 		{Alternatives@@availableproperties},
 		prop/.data,
 		_,
-		debugPrint[Hold[oauthservicedata][name,prop]];
 		oauthservicedata[name,prop]		
 	]
 ]
@@ -68,11 +69,11 @@ OAuthServicesData[___]:=$Failed
 
 $packagedirectory=FileNameJoin[{DirectoryName[System`Private`$InputFileName],"Services"}];
 
-addservice[name_, dir_:$packagedirectory]:=Module[{funs},
-	Unprotect[$predefinedservicelist,oauthservicedata,oauthcookeddata,oauthsendmessage];
-	$predefinedservicelist=Union[AppendTo[$predefinedservicelist,name]];
-	funs=Get[FileNameJoin[{dir, name<>"OAuth.m"}]];
-	debugPrint["funs"->funs];
+addOAuthservice[name_, dir_:$packagedirectory]:=Module[{funs},
+	Unprotect[$predefinedOAuthservicelist,oauthservicedata,oauthcookeddata,oauthsendmessage];
+	$predefinedOAuthservicelist=Union[AppendTo[$predefinedOAuthservicelist,name]];
+	ServiceConnections`Private`appendservicelist[name,"OAuth"];
+	funs=Get[FileNameJoin[{dir, "OAuth",name<>"OAuth.m"}]];
 	oauthservicedata[name,args___]:=funs[[1]][args];
 	oauthcookeddata[name,args___]:=funs[[2]][args];
 	oauthsendmessage[name,args___]:=funs[[3]][args];
@@ -80,19 +81,19 @@ addservice[name_, dir_:$packagedirectory]:=Module[{funs},
 		OAuthClient`checkpermissions[name,args___]:=funs[[4]][args];
 		OAuthClient`addpermissions[name,args___]:=funs[[5]][args];
 	];
-	Protect[$predefinedservicelist,oauthservicedata,oauthcookeddata,oauthsendmessage];
+	Protect[$predefinedOAuthservicelist,oauthservicedata,oauthcookeddata,oauthsendmessage];
 ]
 
-addservice["Facebook"]
-addservice["Instagram"]
-addservice["Twitter"]
-addservice["LinkedIn"]
-addservice["Dropbox"]
-addservice["GooglePlus"]
-addservice["Fitbit"]
-addservice["Runkeeper"]
+addOAuthservice["Facebook"]
+addOAuthservice["Instagram"]
+addOAuthservice["Twitter"]
+addOAuthservice["LinkedIn"]
+addOAuthservice["Dropbox"]
+addOAuthservice["GooglePlus"]
+addOAuthservice["Fitbit"]
+addOAuthservice["RunKeeper"]
 (* will be phased out by Jawbone
-addservice["BodyMedia"]
+addOAuthservice["BodyMedia"]
 *)
 
 
@@ -106,11 +107,11 @@ oauthsendmessage[___]:=Throw[$Failed]
 OAuthClient`checkpermissions[___]:=All
 OAuthClient`addpermissions[___]:=Throw[$Failed]
 
-parameterspresentQ[args_, params_]:=And@@(!FreeQ[args,(Rule|RuleDelayed)[#,_]]&/@params)
+SetAttributes[{$predefinedOAuthservicelist,OAuthServicesData,oauthcookeddata,oauthsendmessage,addOAuthservice},{ReadProtected, Protected}];
 
 End[] (* End Private Context *)
+End[] 
 
-SetAttributes[{$predefinedservicelist,OAuthServicesData,oauthcookeddata,oauthsendmessage,addservice},{ReadProtected, Protected}];
 
 System`Private`RestoreContextPath[];
 

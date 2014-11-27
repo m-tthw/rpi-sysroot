@@ -1,0 +1,42 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Level Amplifier</font></span></p>
+<h2><pre><font color="#3C3C3C">with_fx <font color="DeepPink">:level</font> <font color="DarkOrange">do</font><br/>  play <font color="DodgerBlue">50</font><br/><font color="DarkOrange">end</font></pre></font></h2>
+<table cellpadding="2">
+ <tr></tr><tr><td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">amp: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">1</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">amp_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+</tr></table>
+<p><font size="5", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">  Amplitude modifier. All FX have their own amp built in, so it may be the case that you don't specifically need an isolated amp FX. However, it is useful to be able to control the overall amplitude of a number of running synths. All sounds created in the FX block will have their amplitudes multipled by the amp level of this FX. For example, use an amp of 0 to silence all internal synths.</font></p>
+<table cellpadding="10">
+<tr><th></th><th></th></tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> amp:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          The amplitude of the sound. Typically a value between 0 and 1. Higher amplitudes may be used, but won't make the sound louder, it will just reduce the quality of all the sounds currently being played (due to compression.)<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 1<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> amp_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Amount of time (in seconds) for the amplitude (amp) to change. A long slide value means that the amp takes a long time to slide from the previous amplitude to the new amplitude. A slide of 0 means that the amplitude instantly changes to the new amplitude.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  </table>

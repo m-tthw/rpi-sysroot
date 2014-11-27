@@ -31,6 +31,8 @@ PacletInformation::usage = "PacletInformation is an internal symbol."
 
 PacletResource::usage = "PacletResource is an internal symbol."
 
+PacletResources::usage = "PacletResources is an internal symbol."
+
 
 PacletDirectoryAdd::usage = "PacletDirectoryAdd is an internal symbol."
 PacletDirectoryRemove::usage = "PacletDirectoryRemove is an internal symbol."
@@ -62,9 +64,6 @@ preparePacletManager
 
 initializePacletManager
 
-makePaclet
-makePacletInformation
-
 dropDisabledPaclets
 isEnabled
 
@@ -77,6 +76,10 @@ updateManagerData
 
 (* Called by WRI code outside this package, like GetDataPacletResource function, RLink, CUDALink, and probably others. *)
 getPacletWithProgress
+(* Called by WRI code outside this package, like paclet XXXLoader.m files in SystemFiles/Components. *)
+loadWolframLanguageCode
+(* A companion to loadWolframLanguageCode, called by some paclet developers. *)
+pacletBuildMX
 (* Called by WRI code outside this package, like background updating of PredictiveInterface paclet. *)
 downloadPaclet
 (* Shared flag that can be used to determine if a once-per-session PacletSiteUpdate has been called yet. *)
@@ -88,7 +91,6 @@ $isRemoteKernel
 lastUpdatedPacletSite
 lastUsedPacletSite
 numPacletsDownloaded
-
 
 
 resourcesLocate
@@ -133,7 +135,7 @@ End[]  (* `Package` *)
 Begin["`Manager`Private`"]
 
 
-$managerDataSerializationVersion = 1;
+$managerDataSerializationVersion = 2;
 (* This is the data that gets serialized in the managerData_xxx.pmd2 file. The following values
    establish the defaults.
 *)
@@ -144,6 +146,7 @@ $defaultManagerData = {
     "LastUpdatedSiteDate" -> Null,
     "LastUsedSite" -> Null,
     "LastUsedSiteDate" -> Null,
+    "LastWolframAutoUpdate" -> Null,
     "NumPacletsDownloaded" -> 0,
     "IsDataAutoUpdate" -> True,
     "IsDocAutoUpdate" -> True,
@@ -170,6 +173,8 @@ $defaultManagerData = {
 
 (***********************  PacletManager  ************************)
 
+PacletManager::rdonly = "Cannot install paclet `1`; installing paclets is disabled in this Wolfram Language session."
+
 (* Quiet when called during startup, but not during RestartPacletManager[]. *)
 preparePacletManager[] := Quiet[initializePacletManager[]]
 
@@ -184,8 +189,12 @@ If[!ValueQ[$pacletDataChangeTrigger], $pacletDataChangeTrigger = 0]
 initializePacletManager[] :=
     executionProtect @
     Module[{foundManagerPersistentFile, foundCurrentManagerPersistentFile, needsCacheRebuild, cachesValid, managerData, lockFile, freshStart,
-             declareLoadData, preloadData, functionInformation, totalFunctionInformation = {}, filePrefix, feLang},
-        $pmMode = If[MemberQ[$CommandLine, "-nopaclet"], "ReadOnly", "Normal"];
+             declareLoadData, preloadData, functionInformation, totalFunctionInformation = {}, filePrefix, feLang, pcWasRebuilt, didUpdateManagerData},
+        $pmMode = If[MemberQ[$CommandLine, "-nopaclet"] || MemberQ[$CommandLine, "-layoutpaclets"], "ReadOnly", "Normal"];
+        (* The -layoutpaclets flag mmeans "ignore paclets outside the M layout (but include PacletDirectoryAdd)". Always force a paclet data rebuild in this case.
+           But we are also in read-only mode, so no worries about writing out this truncated data.
+        *)
+        If[MemberQ[$CommandLine, "-layoutpaclets"], freshStart = True];
         (* Define the dirs the paclet manager uses for data and paclets.
            These might be used by Calculate or other internal webM apps, so don't change without consulting.
         *)
@@ -238,7 +247,7 @@ initializePacletManager[] :=
         initializeSites[$pmMode === "ReadOnly"];
 
         (* Restore collection information from serialized file. *)
-        PCinitialize[TrueQ[freshStart]];
+        pcWasRebuilt = PCinitialize[TrueQ[freshStart]];
 
         $managerData = $defaultManagerData;
         (* Restore manager data (disabled/loading state of paclets, allow internet, etc.) *)
@@ -290,7 +299,7 @@ initializePacletManager[] :=
                         ({"PreloadData", "DeclareLoadData", "FunctionInformation"} /. $managerData) /.
                             $SystemID -> {}
         ];
-        If[needsCacheRebuild,
+        If[needsCacheRebuild || TrueQ[pcWasRebuilt],
             (* Must rebuild loading data from scratch. Read the load data
                from paclets based on their specified loading state.
             *)
@@ -299,7 +308,7 @@ initializePacletManager[] :=
             If[MatchQ[preloadData, {___String}],
                 updateManagerData["PreloadData" -> preloadData]
             ];
-            If[MatchQ[declareLoadData, {{__String}...}],
+            If[MatchQ[declareLoadData, {{_String, _:False, {___String}}...}],
                 updateManagerData["DeclareLoadData" -> declareLoadData]
             ];
             If[MatchQ[functionInformation, {{_String, {_List...}}...}],
@@ -307,16 +316,12 @@ initializePacletManager[] :=
                 updateManagerData["FunctionInformation" -> functionInformation]
             ];
             (* Really should do this only if all the above three types of data were ok. *)
-            updateManagerData["CachesValid" -> DeleteDuplicates[cachesValid ~Append~ $SystemID]]
+            updateManagerData["CachesValid" -> DeleteDuplicates[cachesValid ~Append~ $SystemID]];
+            didUpdateManagerData = True
         ];
         (* Examined in StartUp/Documentation.m. *)
         PacletManagerEnabled[] = True;
 
-        (* Skip everything else if in ReadOnly mode. This decision is arguable, but ReadOnly isn't
-           really a perfect name for this mode. It's more like "ultra-low footprint".
-        *)
-        If[$pmMode === "ReadOnly", Return[]];
-        
         (* Set the kernel's $Language to be the same as the FE's stored language preference value. The FE will do this,
            but only much later, when its kernel init code is executed. But that deprives paclets and other early
            kernel startup code from knowing the correct setting for $Language. Therefore we ask the FE what its value
@@ -328,18 +333,23 @@ initializePacletManager[] :=
                 If[StringQ[feLang] && feLang =!= $Language, $Language = feLang]
             ]
         ];
-        
+
         If[MatchQ[preloadData, {__String}],
             Quiet[Get /@ preloadData]
         ];
-        If[MatchQ[declareLoadData, {{_String, _List}..}],
+        If[MatchQ[declareLoadData, {{_String, _:False, _List}..}],
             doDeclareLoad[declareLoadData]
         ];
-        If[!foundCurrentManagerPersistentFile,
+
+        If[!foundCurrentManagerPersistentFile || TrueQ[didUpdateManagerData],
             writeManagerData[]
         ];
-        initSearchCache[$userTemporaryDir];
         resetFEData[];
+
+        If[hasFrontEnd[],
+            (* For now, restrict the WolframAutoUpdate paclet to cases where a front end is in use. *)
+            doWolframAutoUpdate[]
+        ];
 
         If[MathLink`NotebookFrontEndLinkQ[$ParentLink] && MatchQ[totalFunctionInformation, {{_String, {_List...}}...}],
             (* Because the FE crashes if we execute this during startup, we do it later.
@@ -360,6 +370,10 @@ initializePacletManager[] :=
             ]
         ];
 
+        (* Skip everything else if in ReadOnly mode. *)
+        If[$pmMode === "ReadOnly", Return[]];
+
+        initSearchCache[$userTemporaryDir];
         (* Schedule a task that purges partially-deleted paclets from the Repository, but don't run this
            in parallel subkernels.
         *)
@@ -401,6 +415,7 @@ systemPacletDirs[] :=
     {
         ToFileName[{$InstallationDirectory, "SystemFiles", "Links"}],
         ToFileName[{$InstallationDirectory, "SystemFiles", "Autoload"}],
+        ToFileName[{$InstallationDirectory, "SystemFiles", "Components"}],
         (* GUIKit is the only "true" paclet in the Packages dir. As an optimization, ignore the other ones. *)
         ToFileName[{$InstallationDirectory, "AddOns", "Packages", "GUIKit"}]
     }
@@ -499,10 +514,10 @@ resetLanguage[newLanguage_String] :=
 
 
 (* Here is where the PM communicates to the FE what the paths are for paclet FE resources like Palettes and Stylesheets. *)
-resetFEData[] /; $pmMode =!= "ReadOnly" :=
+resetFEData[] :=
     Module[{paclets, p, pacletRootPath, exts, extPaths, ext, prependFEData, appendFEData, feData, initFile,
-               newPalettePath, newStylePath, newTextPath, newSysPath, strm,
-                   needsComma, needsPaletteWrite, needsStyleWrite, needsTextWrite, needsSysWrite, lockFile},
+               newPalettePath, newStylePath, newTextPath, newSysPath, newBitmapPath, newAutoCompletionPath, strm, needsComma,
+                  needsPaletteWrite, needsStyleWrite, needsTextWrite, needsSysWrite, needsBitmapWrite, needsAutoCompletionWrite, lockFile},
         If[hasFrontEnd[],
             paclets =
                 takeLatestEnabledVersionOfEachPaclet[
@@ -511,7 +526,7 @@ resetFEData[] /; $pmMode =!= "ReadOnly" :=
             feData =
                 forEach[p, paclets,
                     pacletRootPath = PgetPathToRoot[p];
-                    exts = cullExtensionsFor[PgetExtensions[p, "FrontEnd"], {"MathematicaVersion", "SystemID", "Language"}];
+                    exts = cullExtensionsFor[PgetExtensions[p, "FrontEnd"], {"WolframVersion", "SystemID", "Language"}];
                     extPaths =
                         forEach[ext, exts,
                             {ExpandFileName[ToFileName[pacletRootPath, EXTgetProperty[ext, "Root"]]], EXTgetProperty[ext, "Prepend", False]}
@@ -525,10 +540,16 @@ resetFEData[] /; $pmMode =!= "ReadOnly" :=
             newStylePath = setFrontEndPaths["StyleSheetPath", "StyleSheets", prependFEData, appendFEData];
             newTextPath = setFrontEndPaths[{"PrivatePaths", "TextResources"}, "TextResources", prependFEData, appendFEData];
             newSysPath = setFrontEndPaths[{"PrivatePaths", "SystemResources"}, "SystemResources", prependFEData, appendFEData];
-            If[First[newPalettePath] =!= Null || First[newStylePath] =!= Null || First[newTextPath] =!= Null || First[newSysPath] =!= Null,
+            newBitmapPath = setFrontEndPaths[{"PrivatePaths", "Bitmaps"}, {"SystemResources", "Bitmaps"}, prependFEData, appendFEData];
+            newAutoCompletionPath = setFrontEndPaths[{"PrivatePaths", "AutocompletionData"}, {"SystemResources", "AutocompletionData"}, prependFEData, appendFEData];
+            If[First[newPalettePath] =!= Null || First[newStylePath] =!= Null || First[newTextPath] =!= Null ||
+                     First[newSysPath] =!= Null ||  First[newBitmapPath] =!= Null ||  First[newAutoCompletionPath] =!= Null,
                 (* If anything is different from the current FE state, force new settings to take effect right away. *)
                 FrontEndExecute[FrontEnd`ResetMenusPacket[{Automatic, Automatic}]]
             ];
+
+            (* The rest is concerned with writing an init file, which we don't do in ReadOnly mode. *)
+            If[$pmMode === "ReadOnly", Return[]];
 
             (* The code in this block concerns writing the PM's FE init file. That won't work in
                the plugin, so catch and swallow the exception that will be thrown if that's our environment.
@@ -543,7 +564,9 @@ resetFEData[] /; $pmMode =!= "ReadOnly" :=
                 needsStyleWrite = Or @@ (FileExistsQ[ToFileName[First[#], "StyleSheets"]]& /@ feData);
                 needsTextWrite = Or @@ (FileExistsQ[ToFileName[First[#], "TextResources"]]& /@ feData);
                 needsSysWrite = Or @@ (FileExistsQ[ToFileName[First[#], "SystemResources"]]& /@ feData);
-                If[needsPaletteWrite || needsStyleWrite || needsTextWrite || needsSysWrite,
+                needsBitmapWrite = Or @@ (FileExistsQ[ToFileName[{First[#], "SystemResources"}, "Bitmaps"]]& /@ feData);
+                needsAutoCompletionWrite = Or @@ (FileExistsQ[ToFileName[{First[#], "SystemResources"}, "AutocompletionData"]]& /@ feData);
+                If[needsPaletteWrite || needsStyleWrite || needsTextWrite || needsSysWrite || needsBitmapWrite || needsAutoCompletionWrite,
                     Quiet@executionProtect[
                         initFile = ToFileName[$frontEndInitDir, "init_" <> getKernelVersionString[] <> ".m"];
                         lockFile = ToFileName[$userTemporaryDir, "fe" <> FileNameTake[initFile] <> ".lock"];
@@ -560,10 +583,12 @@ resetFEData[] /; $pmMode =!= "ReadOnly" :=
                                 Write[strm, System`StyleSheetPath->Join[newStylePath[[2]], {System`ParentList}, newStylePath[[3]]]];
                                 needsComma = True
                             ];
-                            If[needsTextWrite || needsSysWrite,
+                            If[needsTextWrite || needsSysWrite || needsBitmapWrite || needsAutoCompletionWrite,
                                 If[needsComma, WriteString[strm, ",\n"]];
                                 Write[strm, System`PrivatePaths->{
                                     "SystemResources"->Join[newSysPath[[2]], {System`ParentList}, newSysPath[[3]]],
+                                    "Bitmaps"->Join[newBitmapPath[[2]], {System`ParentList}, newBitmapPath[[3]]],
+                                    "AutocompletionData"->Join[newAutoCompletionPath[[2]], {System`ParentList}, newAutoCompletionPath[[3]]],
                                     "TextResources"->Join[newTextPath[[2]], {System`ParentList}, newTextPath[[3]]]}]
                             ];
                             WriteString[strm, "]"];
@@ -583,10 +608,10 @@ setFrontEndPaths[resType_, resDir_, prependFEData_, appendFEData_] :=
         (* Because these paths will be compared to ones from Options[$FrontEndSession] (which came out of the PM's init.m file),
            we need to call restoreUserBase on them to put them into the same form.
         *)
-        newPmPrependPaths = restoreUserBase[Select[prependFEData, FileExistsQ[ToFileName[#, resDir]]&] /.
-                                 s_String :> FrontEnd`FileName[{s, resDir}, "PacletManager"->True, "Prepend"->True]];
-        newPmAppendPaths = restoreUserBase[Select[appendFEData, FileExistsQ[ToFileName[#, resDir]]&] /.
-                                 s_String :> FrontEnd`FileName[{s, resDir}, "PacletManager"->True]];
+        newPmPrependPaths = restoreUserBase[Select[prependFEData, FileExistsQ[ToFileName[Flatten[{#, resDir}]]]&] /.
+                                 s_String :> FrontEnd`FileName[Evaluate@Flatten@{s, resDir}, "PacletManager"->True, "Prepend"->True]];
+        newPmAppendPaths = restoreUserBase[Select[appendFEData, FileExistsQ[ToFileName[Flatten[{#, resDir}]]]&] /.
+                                 s_String :> FrontEnd`FileName[Evaluate@Flatten@{s, resDir}, "PacletManager"->True]];
         (* Use Options instead of CurrentValue here because Options gives a result with explicit ParentList,
            instead of fully resolved, like CurrentValue does.
         *)
@@ -669,8 +694,8 @@ purgePartiallyDeletedPaclets[] :=
 PacletSetLoading::notfound = "Paclet named `1` not found or not enabled."
 PacletSetLoading::vnotfound = "Paclet with name `1` and version `2` not found or not enabled."
 PacletSetLoading::loadstate = "Invalid value for load state: `1`. Must be one of Automatic, Manual, or \"Startup\"."
-PacletSetLoading::noload = "Paclet named `1` at location `2` does not specify any Mathematica code to load. Its loading state cannot be set."
-PacletSetLoading::nostartup = "\"Startup\" loading status is not meaningful for the paclet named `1` at location `2` because this paclet was added to Mathematica using PacletDirectoryAdd. All such paclet locations are not automatically visible in subsequent Mathematica sessions."
+PacletSetLoading::noload = "Paclet named `1` at location `2` does not specify any Wolfram Language code to load. Its loading state cannot be set."
+PacletSetLoading::nostartup = "\"Startup\" loading status is not meaningful for the paclet named `1` at location `2` because this paclet was added using PacletDirectoryAdd. All such paclet locations are not automatically visible in subsequent Wolfram Language sessions."
 
 
 PacletSetLoading[name_String, loading_] := PacletSetLoading[{name, All}, loading]
@@ -755,7 +780,7 @@ PacletSetLoading[p_Paclet, loading_] :=
                 "automatic",
                     If[origLoadingState =!= Automatic,
                         updateManagerData["LoadingAutomatic" -> DeleteDuplicates[Append[currentAuto, key]]];
-                        If[MatchQ[declareLoadData, {{_String, _List}..}],
+                        If[MatchQ[declareLoadData, {{_String, _:False, _List}..}],
                             doDeclareLoad[declareLoadData];
                             (* Add the declareLoadData from this paclet, first eliminating existing data that has the same context. *)
                             updateManagerData["DeclareLoadData" ->
@@ -886,12 +911,32 @@ doPreload[filesToLoad:{__String}] := Get /@ filesToLoad
 doDeclareLoad[paclet_Paclet] := doDeclareLoad[ getLoadData[paclet][[3]] ]
 
 (* Use this form when you have already extracted the relevant info from the paclet. *)
-doDeclareLoad[loadData:{{_String, _List}..}] :=
-    Function[{ctxt, syms},
-        If[!MemberQ[$Packages, ctxt],
-            Quiet[Package`DeclareLoad[syms, ctxt, Package`ExportedContexts -> {ctxt}]]
-        ]
-    ] @@@ loadData
+doDeclareLoad[loadData:{{_String, _:False, _List}..}] :=
+    Module[{ctxt, hiddenImport, syms},
+        Function[{declData},
+            ctxt = First[declData];
+            syms = Last[declData];
+            (* This test for the presence of the hiddenImport True/False field is only to support older pre-release M10 versions. *)
+            hiddenImport = If[Length[declData] == 3, declData[[2]], False];
+            (* We don't want to call Package`DeclareLoad on symbols if the paclet's code has already been loaded. One way to test for
+               this is to see if the context is on $Packages. But some paclets have a "Loader" context that doesn't map to an actual
+               package, so it won't shoe up in $Packages after the paclet has been loaded. A more sophisticated test is preferable here,
+               but for now we depend on the idiom that FooLoader` is the loader context that loads Foo`.
+            *)
+            If[!MemberQ[$Packages, ctxt] && !(StringMatchQ[ctxt, "*Loader`"] && MemberQ[$Packages, StringDrop[ctxt, {-7,-2}]]),
+                (* Two separate ways to call DeclareLoad here. One, somewhat rare, type of paclet will use a .m file to define values
+                   for only System` symbols (these would be WRI-internal paclets). They would have a Kernel extension that has Symbols->
+                   {"System`Foo", "System`Bar"}. Such a paclet does not want to put the context that maps to its implementation .m file on
+                   $ContextPath because that context has no public symbols. This is what we are testing for in the first branch of the If.
+                *)
+                If[hiddenImport || (And @@ (StringMatchQ[#, "System`*"]& /@ syms)),
+                    Quiet[Package`DeclareLoad[syms, ctxt, Package`ExportedContexts -> {}, Package`HiddenImport -> True]],
+                (* else *)
+                    Quiet[Package`DeclareLoad[syms, ctxt, Package`ExportedContexts -> {ctxt}]]
+                ]
+            ]
+        ] /@ loadData
+    ]
 
 
 
@@ -903,7 +948,7 @@ undoDeclareLoad[paclet_Paclet] :=
                is a shortcut to avoid looking at symbols that definitely aren't set up with DeclareLoad)
                and have OwnValues that contain Package`ActivateLoad. We cull these out and clear them in a few programming steps.
             *)
-            symbolsNeedingClearing = ToHeldExpression /@ Flatten[Rest /@ Select[declareLoadData, MemberQ[$Packages, First[#]]&]];
+            symbolsNeedingClearing = ToHeldExpression /@ Flatten[Last /@ Select[declareLoadData, MemberQ[$Packages, First[#]]&]];
             symbolsNeedingClearing = Select[symbolsNeedingClearing, !FreeQ[OwnValues @@ #, Package`ActivateLoad]&];
             Function[sym, ClearAttributes[sym, {Protected,ReadProtected}]; Clear[sym], HoldFirst] @@@ symbolsNeedingClearing;
             (* Remove the contexts from $Packages, but only if the context hasn't been loaded. *)
@@ -918,7 +963,6 @@ undoDeclareLoad[paclet_Paclet] :=
 
 doFunctionInformation[funcInfo:{{_String, {_List...}}..}] :=
     If[hasFrontEnd[],
- (* Print["calling SetFunctionInformation: ", funcInfo];*)
         MathLink`CallFrontEnd[FrontEnd`SetFunctionInformation[funcInfo]]
     ]
 
@@ -1019,7 +1063,7 @@ contextToFileName[paclet_, ctxt_String] :=
         ];
         pacletRootPath = PgetPathToRoot[p];
         (* Loop over all contexts in all Kernel extensions until we find a match. *)
-        doForEach[kernelExt, cullExtensionsFor[PgetExtensions[p, "Kernel" | "Application"], {"MathematicaVersion", "SystemID"}],
+        doForEach[kernelExt, cullExtensionsFor[PgetExtensions[p, "Kernel" | "Application"], {"WolframVersion", "SystemID"}],
             fullPathToKernelRoot = ToFileName[pacletRootPath, EXTgetProperty[kernelExt, "Root", $defaultKernelRoot]];
             fullPathToFile =
                 Scan[
@@ -1167,7 +1211,7 @@ findLibrary[paclet_, libWithExt_String] :=
                             If[FileExistsQ[#], Return[#]]& @ ToFileName[fullPathToLibRootWithSystemID, libWithExt];
                             If[FileExistsQ[#], Return[#]]& @ ToFileName[fullPathToLibRoot, libWithExt]
                         ],
-                        cullExtensionsFor[PgetExtensions[p, "LibraryLink"], {"MathematicaVersion", "SystemID"}]
+                        cullExtensionsFor[PgetExtensions[p, "LibraryLink"], {"WolframVersion", "SystemID"}]
                     ];
                 (* If the inner Scan that just finished (searching over extensions of one paclet) found a file,
                    it returned it. If that happened, we want to immediately return it from the outer Scan (searching
@@ -1204,7 +1248,7 @@ findJava[paclet:(_Paclet | Null)] :=
             Function[{p},
                 pacletRootPath = PgetPathToRoot[p];
                 ToFileName[pacletRootPath, EXTgetProperty[#, "Root", $defaultJLinkRoot]]& /@
-                      cullExtensionsFor[PgetExtensions[p, "JLink"], {"MathematicaVersion", "SystemID"}]
+                      cullExtensionsFor[PgetExtensions[p, "JLink"], {"WolframVersion", "SystemID"}]
             ] /@ paclets;
         ExpandFileName /@ Select[Flatten[javaLocations], FileExistsQ]
     ]
@@ -1217,16 +1261,97 @@ findJava[paclet:(_Paclet | Null)] :=
    created the first time it is needed, regenerated during a session as necessary, and discarded when you quit.
 *)
 getContextMap[] := If[ListQ[$contextMap], $contextMap, makeContextMap[]]
-    
+
 makeContextMap[] :=
     Module[{paclets, p, map},
         paclets = takeLatestEnabledVersionOfEachPaclet[
                      PCfindMatching["Collections"->{"User", "Layout", "Legacy", "Extra"}]
                   ];
         map = forEach[p, paclets, {p, PgetContexts[p]}];
-	    $contextMap = Cases[map, {_Paclet, {__String}}]
+        $contextMap = Cases[map, {_Paclet, {__String}}]
     ]
-    
+
+
+(*****************************  PacletResources  ******************************)
+
+(* PacletResources is a low-level function that finds extensions of a given type among all paclets.
+   The extensions are culled so that they are only appropriate for the current SystemID, WL Version, and Language.
+   This function can be used to implement a lookup scheme for Wolfram or third-party extension types that
+   do not have built-in support. In other words, some paclet resources, like .m files and WolframLibrary libs, already
+   have high-level lookup capabilities built in (FindFile["Context`"] in the case of .m files, and FindLibrary for
+   lobraries, which call into low-level PM functions). But if someone wants to create
+   a new extension type like, say, "Drivers", then they can use PacletResources["Drivers"] to locate
+   these Drivers extensions across all paclets in the system. Most of the other PM functions provide for "vertical"
+   operations: give them a paclet and they tell you soemthing about it or do something with it. PacletFindExtensions
+   provides a "horizontal" view of the system: look across all paclets and find resources of a specific type.
+
+   This is very similar to the ResourceLocator package's ResourcesLocate[] functionality. The PM still participates
+   in ResourcesLocate[] lookups (via the `Package`resourcesLocate function defined later), but the ResourceLocator
+   has some limitations in that it: doesn't support versioning; doesn't support dependencies on SystemID- or WL version;
+   and finds any subdirectory with a matching name, so it is vulnerable to picking up directories that just coincidentally
+   have names matching what is being looked up. It is felt that the PM should have its own locator functionality that
+   does not suffer from these limitations. PacletResources makes ResourcesLocate a legacy function that is
+   deprecated as we move into an all-paclet world.
+
+   It returns a list:  {{_Paclet, {"/full/path/to/resource", ...}}, ...}
+
+   The paths in the output are as follows:
+
+        PacletResources["extensionType"]              ----> paths to extension roots, known to exist
+        PacletResources["extensionType", "resname"]   ----> paths to named resource files, known to exist
+*)
+
+Options[PacletResources] =  {"Collections"->All, "Internal"->All}
+
+(* This is the typical call. *)
+PacletResources[extensionType_String, resName:(_String | All):All, opts:OptionsPattern[]] :=
+    Module[{paclets},
+        paclets =
+            takeLatestEnabledVersionOfEachPaclet[
+                PCfindMatching["Extension" -> extensionType, "Internal" -> OptionValue["Internal"],
+                                  "Collections" -> (OptionValue["Collections"] /. All -> {"User", "Layout", "Legacy", "Extra"})]
+            ];
+        PacletResources[paclets, extensionType, resName, opts]
+    ]
+
+PacletResources[p_Paclet, args__] := PacletResources[{p}, args]
+
+PacletResources[paclets:{___Paclet}, extensionType_String, resName:(_String | All):All, OptionsPattern[]] :=
+    Module[{p, pacletRootPath, ext, exts, extPath, resSpec, fullPathList, resPaths},
+        forEach[p, paclets,
+            pacletRootPath = PgetPathToRoot[p];
+            exts = cullExtensionsFor[PgetExtensions[p, extensionType], {"WolframVersion", "SystemID", "Language"}];
+            fullPathList =
+                forEach[ext, exts,
+                    extPath = ExpandFileName[ToFileName[pacletRootPath, EXTgetProperty[ext, "Root"]]];
+                    resSpec = EXTgetProperty[ext, "Resources"];
+                    resPaths =
+                        If[StringQ[resName],
+                            Switch[resSpec,
+                                resName,
+                                    {resSpec},
+                                _List,
+                                    {FirstCase[resSpec, r:(resName | {resName} | {resName, _}) :> Last[Flatten[{r}]]]},
+                                _,
+                                    {}
+                            ],
+                        (* else *)
+                            Which[
+                                StringQ[resSpec],
+                                    {resSpec},
+                                ListQ[resSpec],
+                                    Replace[resSpec, {namePathPair_List :> Last[namePathPair]}, {1}],
+                                True,
+                                    (* If there is no Resources spec, then just return the path to the extension root. *)
+                                    {"."}
+                            ]
+                        ];
+                    ExpandFileName[FileNameJoin[{extPath, #}]]& /@ Select[Flatten[resPaths], StringQ]
+                ] // Join // DeleteDuplicates // Flatten;
+            {p, Select[fullPathList, FileExistsQ]}
+        ] // DeleteCases[#, {_Paclet, {}}]&
+    ]
+
 
 (********************************  PacletResource  **********************************)
 
@@ -1256,7 +1381,7 @@ PacletResource[{pacletName_String, pacletVersion_String}, resource_String] :=
 PacletResource[p_Paclet, resource_String] :=
     Module[{resExt, pacletRootPath, resPath, fullPath},
         pacletRootPath = PgetPathToRoot[p];
-        doForEach[resExt, cullExtensionsFor[PgetExtensions[p, "Resource"], {"SystemID", "MathematicaVersion", "Language"}],
+        doForEach[resExt, cullExtensionsFor[PgetExtensions[p, "Resource"], {"SystemID", "WolframVersion", "Language"}],
             resPath = EXTgetNamedResourcePath[resExt, resource];
             If[StringQ[resPath],
                 fullPath = ToFileName[{pacletRootPath, EXTgetProperty[resExt, "Root", "."]}, resPath];
@@ -1277,7 +1402,7 @@ PacletResource[p_Paclet, resource_String] :=
    The list that is returned is sorted, with latest version number first.
 *)
 
-Options[PacletFind] = {"Location"->All, "Qualifier"->All, "SystemID"->Automatic, "MathematicaVersion"->Automatic,
+Options[PacletFind] = {"Location"->All, "Qualifier"->All, "SystemID"->Automatic, "WolframVersion"->Automatic,
                             "Enabled"->True, "Extension"->All, "Creator"->All, "Publisher"->All,
                                "Context"->All, "Loading"->All, "IncludeDocPaclets"->False, "Internal"->False}
 
@@ -1313,7 +1438,7 @@ PacletFind[{pacletName:(_String | All):All, pacletVersion:(_String | All):All}, 
 
 (********************************  Installing  ********************************)
 
-PacletInstall::offline = "Mathematica cannot install paclet `1` because it is currently configured not to use the Internet for paclet downloads. To allow internet access, use Help > Internet Connectivity...."
+PacletInstall::offline = "The Wolfram System cannot install paclet `1` because it is currently configured not to use the Internet for paclet downloads. To allow internet access, use Help > Internet Connectivity...."
 PacletInstall::notavail = "No paclet named `1` is available for download from any currently enabled paclet sites."
 PacletInstall::vnotavail = "No paclet named `1` with version number `2` is available for download from any currently enabled paclet sites."
 PacletInstall::fnotfound = "Paclet file `1` not found."
@@ -1323,12 +1448,12 @@ PacletInstall::instl = "An error occurred installing paclet from file `1`: `2`. 
 PacletInstall::inst = "An error occurred installing paclet from file `1`."
 PacletInstall::samevers = "A paclet named `1` with the same version number (`2`) is already installed. Use PacletUninstall to remove the existing version first, or call PacletInstall with IgnoreVersion->True."
 PacletInstall::newervers = "A paclet named `1` with a newer version number (`2`) is already installed. If you wish to install an older version, use PacletUninstall to remove the existing version first, or call PacletInstall with IgnoreVersion->True."
-PacletInstall::lock = "The paclet installation cannot proceed at this time because another paclet operation is being performed by a different instance of Mathematica. Try the operation again."
+PacletInstall::lock = "The paclet installation cannot proceed at this time because another paclet operation is being performed by a different instance of the Wolfram Language. Try the operation again."
 PacletInstall::readonly = "The PacletManager application is running in \"read-only\" mode; paclets cannot be installed or uninstalled."
 
 
-Options[PacletInstall] = Options[PacletInstallQueued] = {"IgnoreVersion"->False, "DeletePacletFile"->False,
-                                                          "Site"->Automatic, "UpdateSites" -> Automatic}
+Options[PacletInstall] = {"IgnoreVersion"->False, "DeletePacletFile"->False, "Site"->Automatic, "UpdateSites" -> Automatic, "Asynchronous" -> False, "CompletionFunction" -> None}
+Options[PacletInstallQueued] = {"IgnoreVersion"->False, "DeletePacletFile"->False, "Site"->Automatic, "UpdateSites" -> Automatic, "Asynchronous" -> False, "CompletionFunction" -> None}
 
 (*
     PacletInstall returns:
@@ -1338,6 +1463,7 @@ Options[PacletInstall] = Options[PacletInstallQueued] = {"IgnoreVersion"->False,
         - $Failed if the argument is a filename and a newer version is already installed. In other words,
              in the case of a .paclet file as the argument, if we don't install we return $Failed, never an
              existing Paclet expression as in the first bullet above
+        - an AsynchronousTaskObject, in the undocumented case of using Asynchronous->True. The install will finish on its own.
 
       The IgnoreVersion option controls whether the install should be allowed if an identical or newer version
       of the same paclet is already installed. The default is False, meaning that
@@ -1359,7 +1485,7 @@ PacletInstall[p_Paclet, opts:OptionsPattern[]] := PacletInstall[{p["Name"], p["V
 
 PacletInstall[{pacletName_String, pacletVersion_String}, opts:OptionsPattern[]] :=
     Module[{q},
-        q = PacletInstallQueued[{pacletName, pacletVersion}, opts];
+        q = PacletInstallQueued[{pacletName, pacletVersion}, FilterRules[Flatten[{opts}], Options[PacletInstallQueued]]];
         (* q is either a Paclet expr (the paclet was already installed), or an AsynchronousTaskObject, or $Failed. *)
         If[Head[q] === Paclet || q === $Failed,
             q,
@@ -1370,25 +1496,39 @@ PacletInstall[{pacletName_String, pacletVersion_String}, opts:OptionsPattern[]] 
     ]
 
 PacletInstall[downloadTask_AsynchronousTaskObject, opts:OptionsPattern[]] :=
-    Module[{pacletQualifiedName, pacletFile, pacletSite, statusCode, errorString, msgLines},
-        {pacletQualifiedName, pacletFile, pacletSite} = getTaskData[downloadTask][[1;;3]];
-        If[!StringQ[pacletFile],
-            (* TODO: Message here, or some better handling of errors. *)
-            Return[$Failed]
-        ];
-        CheckAbort[
-            While[MemberQ[AsynchronousTasks[], downloadTask] &&
-                     getTaskData[downloadTask][[5]] === 0 && getTaskData[downloadTask][[6]] == "",
-                Quiet @ WaitAsynchronousTask[downloadTask, "Timeout" -> 0.2]
-            ],
-            (* On abort: *)
-            Quiet[
-                StopAsynchronousTask[downloadTask];
-                RemoveAsynchronousTask[downloadTask]
+    Module[{pacletQualifiedName, pacletFile, pacletSite},
+        If[TrueQ[OptionValue["Asynchronous"]],
+            (* For async, the install will finish entirely on its own. Do nothing here. *)
+            downloadTask,
+        (* else *)
+            {pacletQualifiedName, pacletFile, pacletSite} = getTaskData[downloadTask][[1;;3]];
+            If[!StringQ[pacletFile],
+                (* TODO: Message here, or some better handling of errors. *)
+                Return[$Failed]
             ];
-            Abort[]
-        ];
-        {statusCode, errorString} = getTaskData[downloadTask][[5;;6]];
+            CheckAbort[
+                While[MemberQ[AsynchronousTasks[], downloadTask] &&
+                         getTaskData[downloadTask][[6]] === 0 && getTaskData[downloadTask][[7]] == "",
+                    Quiet @ WaitAsynchronousTask[downloadTask, "Timeout" -> .1];
+                ],
+                (* On abort: *)
+                Quiet[
+                    StopAsynchronousTask[downloadTask];
+                    RemoveAsynchronousTask[downloadTask]
+                ];
+                Abort[]
+            ];
+            finishInstall[downloadTask]
+        ]
+    ]
+
+
+(* All paclet downloads end by calling this, which does the unpacking and installing. For an
+   asynchronous paclet download, this is called from an AsynchronousTask.
+*)
+finishInstall[downloadTask_AsynchronousTaskObject] :=
+    Module[{pacletQualifiedName, pacletFile, pacletSite, statusCode, errorString, msgLines},
+        {pacletQualifiedName, pacletFile, pacletSite, statusCode, errorString} = getTaskData[downloadTask][[{1,2,3,6,7}]];
         freeTaskData[downloadTask];
         If[statusCode == 200,
             (* This will issue messages if paclet is bad. *)
@@ -1406,11 +1546,8 @@ PacletInstall[downloadTask_AsynchronousTaskObject, opts:OptionsPattern[]] :=
     ]
 
 
-
 (* Can return a Paclet[] expression, $Failed, or an installer object. Always call PacletInstall on the installer object
     to properly finish the installation sequence.
-
-    Callers can get a download progress percentage by calling ReleaseHold[Options[task, "UserData"]].
 *)
 
 PacletInstallQueued[pacletName_String, opts:OptionsPattern[]] := PacletInstallQueued[{pacletName, ""}, opts]
@@ -1418,8 +1555,8 @@ PacletInstallQueued[pacletName_String, opts:OptionsPattern[]] := PacletInstallQu
 PacletInstallQueued[p_Paclet, opts:OptionsPattern[]] := PacletInstallQueued[{p["Name"], p["Version"]}, opts]
 
 PacletInstallQueued[{pacletName_String, pacletVersion_String}, opts:OptionsPattern[]] :=
-    Module[{existing, newestExisting, existingVers, availablePaclets, result, 
-              remotePaclet, downloadTask, site, isNewSite, updateSites},
+    Module[{existing, newestExisting, existingVers, availablePaclets, result,
+              remotePaclet, downloadTask, site, isNewSite, updateSites, completionFunc},
         (* Look for existing installed paclets of the same name. *)
         existing = PacletFind[{pacletName, ""}, "Enabled"->All, "Internal"->All,
                                 "IncludeDocPaclets"->StringMatchQ[pacletName, "SystemDocs_*"]];
@@ -1468,13 +1605,13 @@ PacletInstallQueued[{pacletName_String, pacletVersion_String}, opts:OptionsPatte
                 isNewSite = !MemberQ[PacletSites[], PacletSite[site, __]];
                 PacletSiteAdd[site];
                 PacletSiteUpdate[site];
-                result = PacletInstallQueued[{pacletName, pacletVersion}, FilterRules[{opts}, {"IgnoreVersion", "DeletePacletFile"}]],
+                result = PacletInstallQueued[{pacletName, pacletVersion}, FilterRules[{opts}, {"IgnoreVersion", "DeletePacletFile", "Asynchronous"}]],
             (* finally *)
                 If[isNewSite, PacletSiteRemove[site]]
             ];
             Return[result]
         ];
-        (* If UpdatesSites->True, force an update; if Automatic, only do an update if not found in local server cache. *) 
+        (* If UpdatesSites->True, force an update; if Automatic, only do an update if not found in local server cache. *)
         updateSites = OptionValue["UpdateSites"];
         If[TrueQ[updateSites],
             Quiet[PacletSiteUpdate /@ PacletSites[]]
@@ -1495,7 +1632,22 @@ PacletInstallQueued[{pacletName_String, pacletVersion_String}, opts:OptionsPatte
             (* Paclet is believed to be available from one or more servers. *)
             remotePaclet = First[availablePaclets];
             If[$AllowInternet,
-                downloadTask = downloadPaclet[remotePaclet];
+                (* completionFunc is what gets run automatically at the end of the asynctask that does the download.
+                   It is only used for calls with Asynschronous->True. The default is to call finishInstall, but callers
+                   can specify another function that gets called on the result of finishInstall, if they have other
+                   operations to perform. This feature is not for users; it exists to support asynchronous PacletUpdate,
+                   where we need to perform more operations after finishInstall.
+                *)
+                completionFunc =
+                    If[TrueQ[OptionValue["Asynchronous"]],
+                        If[OptionValue["CompletionFunction"] =!= None,
+                            Composition[OptionValue["CompletionFunction"], finishInstall],
+                        (* else *)
+                            finishInstall
+                        ],
+                        None
+                    ];
+                downloadTask = downloadPaclet[remotePaclet, "CompletionFunction" -> completionFunc];
                 (* TODO: Deal with $Failed, etc. here. *)
                 result = downloadTask,
             (* else *)
@@ -1597,9 +1749,10 @@ installPacletFromFileOrURL[pacletFileOrURL_String, ignoreVersion_, deletePacletF
     ]
 
 
+Options[downloadPaclet] = {"CompletionFunction" -> None}
 
 (* For async, returns task or $Failed. For sync, returns filename, $Failed, or anything URLSave can return. *)
-downloadPaclet[remotePaclet_Paclet, async:(True | False):True] :=
+downloadPaclet[remotePaclet_Paclet, async:(True | False):True, OptionsPattern[]] :=
     Module[{loc, downloadTask, pacletFileName, downloadedFileName},
         loc = PgetLocation[remotePaclet];
         pacletFileName = PgetQualifiedName[remotePaclet] <> ".paclet";
@@ -1611,11 +1764,11 @@ downloadPaclet[remotePaclet_Paclet, async:(True | False):True] :=
         If[StringMatchQ[loc, "http:*", IgnoreCase->True] || StringMatchQ[loc, "file:*", IgnoreCase->True],
             If[async,
                 PreemptProtect[
-                    (* Use PreemptProtect to ensure that setTaskData[] gets called before downloadCallback can fire. *)
+                    (* Use PreemptProtect to ensure that setTaskData[] gets called before pacletDownloadCallback can fire. *)
                     downloadTask = URLSaveAsynchronous[
                                   loc <> "/Paclets/" <> ExternalService`EncodeString[pacletFileName],
                                   downloadedFileName,
-                                  downloadCallback,
+                                  pacletDownloadCallback,
                                   "Headers" -> {"Mathematica-systemID" -> $SystemID,
                                                   "Mathematica-license" -> ToString[$LicenseID],
                                                     "Mathematica-mathID" -> ToString[$MachineID],
@@ -1623,7 +1776,8 @@ downloadPaclet[remotePaclet_Paclet, async:(True | False):True] :=
                                                         "Mathematica-activationKey" -> ToString[$ActivationKey]},
                                   "UserAgent" -> $userAgent, BinaryFormat -> True, "Progress" -> True
                                ];
-                    setTaskData[downloadTask, {PgetQualifiedName[remotePaclet], downloadedFileName, loc, "Running", 0, "", "Unknown"}]
+                    setTaskData[downloadTask, {PgetQualifiedName[remotePaclet], downloadedFileName, loc,
+                                                 "Running", OptionValue["CompletionFunction"], 0, "", "Unknown"}]
                 ];
                 downloadTask,
             (* else *)
@@ -1639,151 +1793,24 @@ downloadPaclet[remotePaclet_Paclet, async:(True | False):True] :=
     ]
 
 
-(* taskData values are either a list:
-    {"qualifiedName", "downloadFileName", "pacletSite", "Running" | "Done", statuscode | 0, errorString | "", progressPercentage}
-      or
-    {None, None, None, None, 0, "", 0}.
-
-    DataPaclets/Common.m relies on the structure of this expr to some degree.
+(* taskData values are a list:
+    {"qualifiedName", "downloadFileName", "pacletSite", "Running" | "Done", completionFunc, statuscode | 0, errorString | "", progressPercentage}
 *)
-downloadCallback[task_, "statuscode", data_] := setTaskData[task, ReplacePart[getTaskData[task], 5->First[data]]]
-downloadCallback[task_, "error", data_] := setTaskData[task, ReplacePart[getTaskData[task], 6->First[data]]]
+(* The two ways a download can end are in a status code or an error. *)
+pacletDownloadCallback[task_, type:("statuscode" | "error"), {statusCodeOrErrorString_}] :=
+    Module[{completionFunc},
+        setTaskData[task, ReplacePart[getTaskData[task], If[type == "statuscode", 6, 7]->statusCodeOrErrorString]];
+        completionFunc = getTaskData[task][[5]];
+        If[completionFunc =!= None,
+            (* For async, we will never need to know the return value of finishInstall, so we can call it
+               here; it's an "auto-finish".
+            *)
+            Quiet @ completionFunc[task]
+        ]
+    ]
 (* Do nothing if the download size is not known (progress percentage will remain at 0 during download). *)
-downloadCallback[task_, "progress", {_, 0., _, _}] = Null
-downloadCallback[task_, "progress", {a_Real, b_Real, __}] := setTaskData[task, ReplacePart[getTaskData[task], 7->a/b]]
-
-
-(***************************  WRI-Internal utility download/install functions  **************************)
-
-(* This Package-context function is called by the DataPaclets subsystem, RLink, and CUDALink, and perhaps others.
-   It encapsulates the functionality of applications that need to download "sub-paclets" during their normal operations,
-   and require that progress text is displayed to the user, so that they know what is going on and possibly causing a
-   significant delay. Also, messages can be targeted to the application, thus hiding the involvement of the PacletManager
-   from users. These apps thus need slightly specialized behavior compated to simply calling, say, PacletUpdate.
-   This code was formerly in the PacletTools package, and in the DataPaclets code.
-   The pacletName argument is the name of the paclet you want to download and install (the same as you would pass to
-   PacletUpdate). The pacletDisplayName is the name you want displayed in messages and possibly other text (e.g., a
-   paclet might be actually named GraphData_Index, but you want the user to see just GraphData).
-*)
-Options[getPacletWithProgress] = {"IsDataPaclet" -> False, "AllowUpdate" -> True, "UpdateSites" -> Automatic}
-
-getPacletWithProgress[pacletName_String, pacletDisplayName_String, OptionsPattern[]] :=
-    Module[{p, downloadTask, progressText, availablePaclets, locals, temp, isDataPaclet, allowUpdate, updateSites},
-        {isDataPaclet, allowUpdate, updateSites} = OptionValue[{"IsDataPaclet", "AllowUpdate", "UpdateSites"}];
-        (* Once-per-session update of site data. *)
-        If[TrueQ[updateSites] || updateSites === Automatic && !TrueQ[$checkedForUpdates],
-            Quiet[temp = PacletSiteUpdate /@ PacletSites[]];
-            $checkedForUpdates = True
-        ];
-
-        locals = Quiet[PacletFind[pacletName]];
-        p = If[Length[locals] > 0, First[locals], Null];
-
-        Which[
-            Head[p] =!= Paclet,
-                (* No paclet of the desired type is currently installed. *)
-                downloadTask = Quiet[PacletInstallQueued[pacletName]];
-                (* PacletInstallQueued can return a Paclet expression, $Failed, or an AsynchronousTaskObject.
-                   We know it won't return a Paclet expression because PacletFind already told us one doesn't
-                   exist locally. If it returns an AsynchronousTaskObject then we wait for it to finish.
-                   If it returns $Failed we want to issue the most appropriate message.
-                *)
-                If[Head[downloadTask] == AsynchronousTaskObject,
-                    progressText =
-                        If[hasFrontEnd[],
-                            If[isDataPaclet, General::datainstx, "Loading from Wolfram Research server (`1`%)"],
-                        (* else *)
-                            If[isDataPaclet, General::datainst, "Loading from Wolfram Research server ..."]
-                        ];
-                    p = downloadAndInstallWithProgress[downloadTask, progressText],
-                (* else *)
-                    If[!TrueQ[$AllowInternet],
-                        If[isDataPaclet,
-                            Message[Evaluate[MessageName[Evaluate[ToExpression[pacletDisplayName]], "dloff"]], pacletDisplayName],
-                        (* else *)
-                            Message[PacletManager::dloff, pacletDisplayName]
-                        ];
-                        (* Return here, as we don't want to fall through to the dlfail message at end. *)
-                        Return[$Failed]
-                    ]
-                ],
-            TrueQ[allowUpdate],
-                (* A paclet of the desired type exists locally. See if we can download an update. *)
-                (* Calling PacletCheckUpdate does not hit the Internet--it just looks in the local server index file. *)
-                availablePaclets = Quiet[PacletCheckUpdate[pacletName]];
-                If[Length[availablePaclets] > 0,
-                    downloadTask = Quiet[PacletInstallQueued[First[availablePaclets]]];
-                    (* PacletInstallQueued can return a Paclet expression, $Failed (e.g., AllowInternet is false),
-                       or an AsynchronousTaskObject object. If it returns an AsynchronousTaskObject then we can start it up.
-                       On any other return value we do nothing--a currently-installed paclet can do the job.
-                    *)
-                    If[Head[downloadTask] == AsynchronousTaskObject,
-                        progressText =
-                            If[hasFrontEnd[],
-                                If[isDataPaclet, General::dataupdx, "Updating from Wolfram Research server (`1`%)"],
-                            (* else *)
-                                If[isDataPaclet, General::datainst, "Updating from Wolfram Research server ..."]
-                            ];
-                        p = downloadAndInstallWithProgress[downloadTask, progressText];
-                        If[Head[p] === Paclet,
-                            (* Install was a success, so delete the old paclets *)
-                            Quiet[PacletUninstall /@ locals]
-                        ]
-                    ]
-                ],
-            True,
-                (* If we get here, an appropriate paclet was already installed and allowUpdate
-                   was False so we will not attempt to update. Do nothing.
-                *)
-                Null
-        ];
-        If[Head[p] === Paclet,
-            p,
-        (* else *)
-            If[isDataPaclet,
-                Message[Evaluate[MessageName[Evaluate[ToExpression[pacletDisplayName]], "dlfail"]], pacletDisplayName],
-           (* else *)
-                Message[PacletManager::dlfail, pacletDisplayName]
-            ];
-            $Failed
-        ]
-    ]
-
-(* Downloads and installs paclets with progress display. Returns either a Paclet expression
-   representing the newly-installed paclet or $Failed on any error.
-*)
-downloadAndInstallWithProgress[downloadTask_, progressText_String] :=
-    Module[{nb, text, paclet, usingFE},
-        paclet = $Failed;
-        usingFE = hasFrontEnd[];
-        If[usingFE,
-            text = StringForm[progressText,
-                Dynamic[Refresh[Max[Round[100 * (Last[getTaskData[downloadTask]] /. Except[_?NumericQ] -> 0)], 0], UpdateInterval -> 0.5]]
-            ];
-            nb = DisplayTemporary[
-                Framed[
-                    Style[text,
-                        FontFamily -> "Verdana", FontSize -> 11,
-                    FontColor -> RGBColor[0.2, 0.4, 0.6]],
-                    FrameMargins -> {{24, 24}, {8, 8}},
-                    FrameStyle -> RGBColor[0.2, 0.4, 0.6],
-                    Background -> RGBColor[0.96, 0.98, 1.]
-                ]
-            ],
-        (* else *)
-            Print[progressText]
-        ];
-        try[
-            paclet = PacletInstall[downloadTask],
-        (* finally *)
-           If[usingFE, NotebookDelete[nb]];
-        ];
-        If[Head[paclet] === Paclet,
-            paclet,
-        (* else *)
-            $Failed
-        ]
-    ]
+pacletDownloadCallback[task_, "progress", {_, 0., _, _}] = Null
+pacletDownloadCallback[task_, "progress", {a_Real, b_Real, __}] := setTaskData[task, ReplacePart[getTaskData[task], 8->a/b]]
 
 
 (*****************************  PacletUpdate  *******************************)
@@ -1802,7 +1829,7 @@ PacletUpdate::fail = "Could not uninstall paclet named `1` at location `2`. Reas
 PacletUpdate::notvalid = "`1` does not refer to a valid paclet in the current session."
 PacletUpdate::uptodate = "No newer version of the paclet named `1` could be found on any available paclet servers."
 
-Options[PacletUpdate] = {"KeepExisting" -> Automatic, "Site" -> Automatic, "UpdateSites" -> Automatic}
+Options[PacletUpdate] = {"KeepExisting" -> Automatic, "Site" -> Automatic, "UpdateSites" -> Automatic, "Asynchronous" -> False}
 
 
 PacletUpdate[pacletName_String, opts:OptionsPattern[]] :=
@@ -1827,7 +1854,7 @@ PacletUpdate[paclet_Paclet, opts:OptionsPattern[]] :=
                 isNewSite = !MemberQ[PacletSites[], PacletSite[site, __]];
                 PacletSiteAdd[site];
                 PacletSiteUpdate[site];
-                result = PacletUpdate[paclet, "KeepExisting" -> OptionValue["KeepExisting"]],
+                result = PacletUpdate[paclet, "KeepExisting" -> OptionValue["KeepExisting"], "Asynchronous" -> OptionValue["Asynchronous"]],
             (* finally *)
                 If[isNewSite, PacletSiteRemove[site]]
             ];
@@ -1835,13 +1862,13 @@ PacletUpdate[paclet_Paclet, opts:OptionsPattern[]] :=
         ];
         (* If UpdatesSites->True, force an update; if Automatic, only do an update if not found, or no newer version
            appears to be available.
-        *) 
+        *)
         updateSites = OptionValue["UpdateSites"];
         If[TrueQ[updateSites],
             Quiet[PacletSiteUpdate /@ PacletSites[]]
         ];
         remote = PacletFindRemote[paclet["Name"], "UpdateSites" -> False];
-        If[updateSites === Automatic && 
+        If[updateSites === Automatic &&
               (Length[remote] == 0 || !PacletNewerQ[First[remote]["Version"], paclet["Version"]]),
             Quiet[PacletSiteUpdate /@ PacletSites[]];
             remote = PacletFindRemote[paclet["Name"], "UpdateSites" -> False]
@@ -1849,28 +1876,39 @@ PacletUpdate[paclet_Paclet, opts:OptionsPattern[]] :=
         If[Length[remote] > 0,
             bestRemote = First[remote];
             If[PacletNewerQ[bestRemote["Version"], paclet["Version"]],
-                result = PacletInstall[bestRemote, FilterRules[{opts}, Options[PacletInstall]]];
+                result = PacletInstall[bestRemote, FilterRules[Flatten[{opts}], Options[PacletInstall]] ~Join~
+                                 {"CompletionFunction" -> With[{keep = OptionValue["KeepExisting"]}, finishUpdate[#, paclet, keep]&]}];
                 If[Head[result] === Paclet,
-                    (* Restore the load state of the updated version. *)
-                    PacletSetLoading[result, getLoadingState[paclet]];
-                    Switch[OptionValue["KeepExisting"],
-                        False,
-                            PacletUninstall[paclet],
-                        Automatic,
-                            (* Automatic means "only uninstall old one if it is not in the layout".
-                               Paclet locations are already in canonical form.
-                            *)
-                            If[!StringMatchQ[PgetLocation[paclet], $InstallationDirectory <> "*"],
-                                PacletUninstall[paclet]
-                            ]
-                    ]
+                    finishUpdate[result, paclet, OptionValue["KeepExisting"]]
                 ]
+                (* Head[result] could also be an AsynchronousTaskObject, which occurs if you call PacletUpdate with Asynchronous->True.
+                   In that case, though, finishUpdate will be called directly fromthe task as it finishes. We do nothing here.
+                *)
             ],
         (* else *)
             Message[PacletUpdate::uptodate, paclet["Name"]]
         ];
         result
     ]
+
+
+(* All paclet updates end by calling this. For an asynchronous paclet update, this is called from an AsynchronousTask. *)
+finishUpdate[newPaclet_Paclet, oldPaclet_Paclet, keepExisting_] :=
+    (
+        (* Restore the load state of the updated version. *)
+        PacletSetLoading[newPaclet, getLoadingState[oldPaclet]];
+        Switch[keepExisting,
+            False,
+                PacletUninstall[oldPaclet],
+            Automatic,
+                (* Automatic means "only uninstall old one if it is not in the layout".
+                   Paclet locations are already in canonical form.
+                *)
+                If[!StringMatchQ[PgetLocation[oldPaclet], $InstallationDirectory <> "*"],
+                    PacletUninstall[oldPaclet]
+                ]
+        ]
+    )
 
 
 
@@ -1892,12 +1930,12 @@ PacletCheckUpdate[name_String, OptionsPattern[]] :=
 
 
 
-PacletUninstall::open = "Some files could not be deleted from paclet named `1` at location `2`, probably because they are open in the current session. The deletion will automatically complete the next time the Mathematica kernel is started."
+PacletUninstall::open = "Some files could not be deleted from paclet named `1` at location `2`, probably because they are open in the current session. The deletion will automatically complete the next time the Wolfram Language kernel is started."
 PacletUninstall::notinstalled = "The paclet named `1` at location `2` cannot be uninstalled because it is not installed."
 PacletUninstall::nodelete = "The paclet named `1` at location `2` cannot be uninstalled because it does not reside in the standard paclet repository. You will have to delete the paclet's files manually, such as by using DeleteDirectory with DeleteContents->True."
 PacletUninstall::notfound = "Paclet `1` not found."
 PacletUninstall::vnotfound = "Paclet with name `1` and version `2` not found."
-PacletUninstall::lock = "The paclet uninstall cannot proceed at this time because another paclet operation is being performed by a different instance of Mathematica. Try the operation again."
+PacletUninstall::lock = "The paclet uninstall cannot proceed at this time because another paclet operation is being performed by a different instance of the Wolfram System. Try the operation again."
 PacletUninstall::readonly = PacletInstall::readonly
 
 (*
@@ -1974,7 +2012,6 @@ PacletUninstall[{pacletName_String, pacletVersion:(_String | All)}] :=
 PacletUninstall[paclets:{__Paclet}] := PacletUninstall /@ paclets
 
 
-
 (****************************  PacletEnable/PacletDisable  ****************************)
 
 (*
@@ -1996,7 +2033,7 @@ PacletUninstall[paclets:{__Paclet}] := PacletUninstall /@ paclets
 
 PacletEnable::notfound = "Paclet `1` not found."
 PacletEnable::vnotfound = "Paclet with name `1` and version `2` not found."
-PacletEnable::notsup = PacletDisable::notsup = "PacletEnable and PacletDisable are not supported in this version of Mathematica."
+PacletEnable::notsup = PacletDisable::notsup = "PacletEnable and PacletDisable are not supported in this version of the Wolfram Language."
 
 
 PacletEnable[name_String] := PacletEnable[{name, ""}]
@@ -2026,7 +2063,6 @@ PacletEnable[paclet_Paclet] :=
         pm@setEnabled[#["Object"], False]& /@ PacletFind[pacletObj@getName[], "Internal"->All];
         pm@setEnabled[pacletObj, True];
         doPacletGainingStuff[pacletObj];
-        makePaclet[pacletObj]
         *)
     ]
 
@@ -2043,7 +2079,6 @@ PacletDisable[paclet_Paclet] :=
         (*
         getPacletManager[]@setEnabled[pacletObj, False];
         doPacletLosingStuff[pacletObj];
-        makePaclet[pacletObj]
         *)
     )
 
@@ -2127,7 +2162,7 @@ $pacletInformationPIFields = {
     "Version",
     "BuildNumber",
     "Qualifier",
-    "MathematicaVersion",
+    "WolframVersion",
     "SystemID",
     "Description",
     "Category",
@@ -2200,7 +2235,7 @@ resourcesLocate[type_String] :=
                separately for this case.
             *)
             If[extensionType == "Documentation",
-                exts = cullExtensionsFor[PgetExtensions[p, "Documentation"], {"MathematicaVersion", "SystemID"}];
+                exts = cullExtensionsFor[PgetExtensions[p, "Documentation"], {"WolframVersion", "SystemID"}];
                 (* Note the default is English here--we don't want a language-unspecified doc extension (which
                    always means English) to look like it might be referring to, say, Japanese.
                 *)
@@ -2216,7 +2251,7 @@ resourcesLocate[type_String] :=
                         ExpandFileName[ToFileName[{pacletRootPath, EXTgetProperty[ext, "Root"], lang}, docIndexType]]
                     ] // Union,
             (* else *)
-                exts = cullExtensionsFor[PgetExtensions[p, extensionType], {"MathematicaVersion", "SystemID", "Language"}];
+                exts = cullExtensionsFor[PgetExtensions[p, extensionType], {"WolframVersion", "SystemID", "Language"}];
                 extPaths =
                     forEach[ext, exts,
                         ExpandFileName[ToFileName[pacletRootPath, EXTgetProperty[ext, "Root"]]]
@@ -2247,7 +2282,7 @@ RebuildPacletData[OptionsPattern[]] :=
 
         (* TODO: remove if not used. A no-op for now: *)
         clearMessageLinkCache[];
-        
+
         makeContextMap[];
 
         (* First pass: remove all paclets that don't exist or are disabled from
@@ -2272,7 +2307,7 @@ RebuildPacletData[OptionsPattern[]] :=
                         ],
                     Automatic,
                         AppendTo[newAuto, PgetKey[p]];
-                        If[MatchQ[declareLoadData, {{_String, _List}..}],
+                        If[MatchQ[declareLoadData, {{_String, _:False, _List}..}],
                             newDeclareLoadData = Join[newDeclareLoadData, declareLoadData]
                         ]
                 ];
@@ -2325,8 +2360,8 @@ RebuildPacletData[OptionsPattern[]] :=
 
 (* Next two functions encapsulate all the external things that need to be done when a paclet
    is either gained (via install or enable) or lost (via uninstall or disable). Some paclet
-   functionality does not require anything done in advance (for example, finding of paclet files via Get
-   or PacletResource is always a run-time lookup, and this will succeed merely by virtue of the paclet
+   functionality does not require anything done in advance (for example, finding of paclet files via
+   PacletResource is always a run-time lookup, and this will succeed merely by virtue of the paclet
    being present in the collection). Other things, though, need side-effects performed in advance, like
    adding a dir to the J/Link classpath, or setting up DeclareLoad definitions. These are the things
    that must be done/undone in the attach/detach operations. For speed purposes, we do not call attach
@@ -2378,7 +2413,7 @@ attachPaclet[paclet_Paclet] :=
                     updateManagerData["PreloadData" -> DeleteDuplicates[Join[currentPreloadData, preloadData]]];
                     didModifyManagerData = True
                 ];
-                If[MatchQ[declareLoadData, {{__String}..}],
+                If[MatchQ[declareLoadData, {{_String, _:False, {___String}}...}],
                     updateManagerData["DeclareLoadData" -> Join[Select[currentDeclareLoadData, !MemberQ[declareLoadData[[All,1]], First[#]]&], declareLoadData]];
                     didModifyManagerData = True
                 ];
@@ -2448,7 +2483,7 @@ detachPaclet[paclet_Paclet] :=
            specified (although I don't think it is ever different from $Language). Thus we do the language-culling
            separately for this case.
         *)
-        exts = cullExtensionsFor[PgetExtensions[paclet, "Documentation"], {"MathematicaVersion", "SystemID"}];
+        exts = cullExtensionsFor[PgetExtensions[paclet, "Documentation"], {"WolframVersion", "SystemID"}];
         (* Note the default is English here--we don't want a language-unspecified doc extension (which
            always means English) to look like it might be referring to, say, Japanese.
         *)
@@ -2494,7 +2529,7 @@ detachPaclet[paclet_Paclet] :=
                     updateManagerData["PreloadData" -> Complement[currentPreloadData, preloadData]];
                     didModifyManagerData = True
                 ];
-                If[MatchQ[declareLoadData, {{__String}..}],
+                If[MatchQ[declareLoadData, {{_String, _:False, {___String}}...}],
                     updateManagerData["DeclareLoadData" -> Select[currentDeclareLoadData, !MemberQ[declareLoadData[[All,1]], First[#]]&]];
                     didModifyManagerData = True
                 ];
@@ -2546,6 +2581,343 @@ detachPaclet[paclet_Paclet] :=
         (* Cannot remove from J/Link classpath. *)
 
         $pacletDataChangeTrigger++;
+    ]
+
+
+(***************************  WRI-Internal utility functions  **************************)
+
+(* This Package-context function is called by the DataPaclets subsystem, RLink, and CUDALink, and others.
+   It encapsulates the functionality of applications that need to download "sub-paclets", or updated versions of themselves,
+   during their normal operations, and require that progress text is displayed to the user, so that they know what is going
+   on and possibly causing a significant delay. Also, messages can be targeted to the application, thus hiding the involvement
+   of the PacletManager from users. These apps thus need slightly specialized behavior compated to simply calling, say, PacletUpdate.
+   This code was formerly in the PacletTools package, and in the DataPaclets code.
+   The pacletName argument is the name of the paclet you want to download and install (the same as you would pass to
+   PacletUpdate). The pacletDisplayName is the name you want displayed in messages and possibly other text (e.g., a
+   paclet might be actually named GraphData_Index, but you want the user to see just GraphData). For a data paclet, this name should be a
+   symbol provided by the paclet, as it will have ToExpression called on it to become the symbol associated with the message.
+
+   Returns either a Paclet expression of a previously- or just-installed paclet, or $Failed.
+*)
+Options[getPacletWithProgress] = {"IsDataPaclet" -> False, "AllowUpdate" -> Automatic, "UpdateSites" -> False}
+
+getPacletWithProgress[pacletName_String, pacletDisplayName:(_String | Automatic):Automatic, OptionsPattern[]] :=
+    Module[{p, downloadTask, progressText, availablePaclets, locals, temp, isDataPaclet, allowUpdate, updateSites, displayName},
+        {isDataPaclet, allowUpdate, updateSites} = OptionValue[{"IsDataPaclet", "AllowUpdate", "UpdateSites"}];
+        displayName = If[StringQ[pacletDisplayName], pacletDisplayName, pacletName];
+        (* Once-per-session update of site data. *)
+        If[TrueQ[updateSites] || updateSites === Automatic && !TrueQ[$checkedForUpdates],
+            Quiet[temp = PacletSiteUpdate /@ PacletSites[]];
+            $checkedForUpdates = True
+        ];
+
+        locals = Quiet[PacletFind[pacletName]];
+        p = If[Length[locals] > 0, First[locals], Null];
+
+        Which[
+            Head[p] =!= Paclet,
+                (* No paclet of the desired type is currently installed. *)
+                downloadTask = Quiet[Check[PacletInstallQueued[pacletName], notavail, {PacletInstall::notavail}]];
+                (* PacletInstallQueued can return a Paclet expression, $Failed, or an AsynchronousTaskObject, and the Check
+                   adds the case of notavail if there is no paclet of that name to download.
+                   We know it won't return a Paclet expression because PacletFind already told us one doesn't
+                   exist locally. If it returns an AsynchronousTaskObject then we wait for it to finish.
+                   If it returns $Failed we want to issue the most appropriate message.
+                *)
+                Which[
+                    Head[downloadTask] === AsynchronousTaskObject,
+                        progressText =
+                            If[hasFrontEnd[],
+                                If[isDataPaclet, General::datainstx, "Loading from Wolfram Research server (`1`%)"],
+                            (* else *)
+                                If[isDataPaclet, General::datainst, "Loading from Wolfram Research server ..."]
+                            ];
+                        p = downloadAndInstallWithProgress[downloadTask, progressText],
+                    downloadTask === notavail,
+                        (* No paclet of this name is available on the server. Do nothing (we are just avoiding the possibility of a ::dloff message). *)
+                        Null,
+                    True,
+                        (* PacletInstallQueued failed for some other reason. If $AllowInternet is False, report that. *)
+                        If[!TrueQ[$AllowInternet],
+                            If[isDataPaclet,
+                                Message[Evaluate[MessageName[Evaluate[ToExpression[displayName]], "dloff"]], displayName],
+                            (* else *)
+                                Message[PacletManager::dloff, displayName]
+                            ];
+                            (* Return here, as we don't want to fall through to the dlfail message at end. *)
+                            Return[$Failed]
+                        ]
+                ],
+            TrueQ[$AllowInternet] && (TrueQ[allowUpdate] || allowUpdate === Automatic && TrueQ[$AllowDataUpdates]),
+                (* A paclet of the desired type exists locally. See if we can download an update. *)
+                (* Calling PacletCheckUpdate does not hit the Internet--it just looks in the local server index file. *)
+                availablePaclets = Quiet[PacletCheckUpdate[pacletName]];
+                If[Length[availablePaclets] > 0,
+                    downloadTask = Quiet[PacletInstallQueued[First[availablePaclets]]];
+                    (* PacletInstallQueued can return a Paclet expression, $Failed (e.g., AllowInternet is false),
+                       or an AsynchronousTaskObject object. If it returns an AsynchronousTaskObject then we can start it up.
+                       On any other return value we do nothing--a currently-installed paclet can do the job.
+                    *)
+                    If[Head[downloadTask] == AsynchronousTaskObject,
+                        progressText =
+                            If[hasFrontEnd[],
+                                If[isDataPaclet, General::dataupdx, "Updating from Wolfram Research server (`1`%)"],
+                            (* else *)
+                                If[isDataPaclet, General::datainst, "Updating from Wolfram Research server ..."]
+                            ];
+                        p = downloadAndInstallWithProgress[downloadTask, progressText];
+                        If[Head[p] === Paclet,
+                            (* Install was a success, so delete the old paclets *)
+                            Quiet[PacletUninstall /@ locals]
+                        ]
+                    ]
+                ],
+            True,
+                (* If we get here, an appropriate paclet was already installed and allowUpdate
+                   was False so we will not attempt to update. Do nothing.
+                *)
+                Null
+        ];
+        If[Head[p] === Paclet,
+            p,
+        (* else *)
+            Which[
+                $pmMode === "ReadOnly",
+                    Message[PacletManager::rdonly, displayName],
+                isDataPaclet,
+                    Message[Evaluate[MessageName[Evaluate[ToExpression[displayName]], "dlfail"]], displayName],
+                True,
+                    Message[PacletManager::dlfail, displayName]
+            ];
+            $Failed
+        ]
+    ]
+
+(* Downloads and installs paclets with progress display. Returns either a Paclet expression
+   representing the newly-installed paclet or $Failed on any error.
+*)
+downloadAndInstallWithProgress[downloadTask_, progressText_String] :=
+    Module[{nb, text, paclet, usingFE},
+        paclet = $Failed;
+        usingFE = hasFrontEnd[];
+        If[usingFE,
+            text = StringForm[progressText,
+                Dynamic[Refresh[Round[Which[!NumericQ[#] || # < 0, 0, 0 <= # <= 1, 100 #, True, 100]& @ Last[getTaskData[downloadTask]]], UpdateInterval -> 0.5]]
+            ];
+            nb = DisplayTemporary[
+                Framed[
+                    Style[text,
+                        FontFamily -> "Verdana", FontSize -> 11,
+                    FontColor -> RGBColor[0.2, 0.4, 0.6]],
+                    FrameMargins -> {{24, 24}, {8, 8}},
+                    FrameStyle -> RGBColor[0.2, 0.4, 0.6],
+                    Background -> RGBColor[0.96, 0.98, 1.]
+                ]
+            ],
+        (* else *)
+            Print[progressText]
+        ];
+        try[
+            paclet = PacletInstall[downloadTask],
+        (* finally *)
+           If[usingFE, NotebookDelete[nb]];
+        ];
+        If[Head[paclet] === Paclet,
+            paclet,
+        (* else *)
+            $Failed
+        ]
+    ]
+
+
+(* loadWolframLanguageCode is a utility function intended to be called from certain WRI paclets to load their
+   Wolfram Language code. It is primarily intended to support paclets that are shipped in .mx form, and whose
+   symbols are Protected, ReadProtected, and Locked, although it is also of more general use.
+
+   This function will switch between loading .m files and a .mx file, preferring the .m files if present, which is
+   useful during development and at the time the .mx file is being created. The .mx file is expected to be in
+   a Kernel/32(64)Bit directory, and be named like the paclet with a .mx extension. This function can optionally auto-update
+   the paclet before it is loaded.
+
+   Arguments:
+       pacletName and pacletContext are obvious
+       fullPathToPacletDir is the full path to the dir that contains the PacletInfo.m file.
+       topWLFile is the name of the file that should be loaded to cause loading of all the .m code. It is _not_ the
+           XXXLoader.m file or any file that would cause that file to be loaded, as that would call this function recursively.
+           For so-called "new Package format" files, this is any one of the package files, as loading one causes them all to load.
+
+   Options:
+       "AutoUpdate" -> True|False           Whether to auto-update the paclet before it loads
+       "AutoloadSymbols" -> {___String}     String names of the System` symbols that should trigger autoloading.
+                                                This should agree with the Symbols list from the PacletInfo.m file.
+       "SymbolsToProtect" -> {___String} | Automatic
+                                            String names of the symbols to Protect/Lock. This can be a list of strings, or code
+                                                wrapped in Hold that evaluates to a list of strings. Automatic applies default logic
+                                                to determine this set. See the code below.
+       "HiddenImports" -> {___String}       The contexts that are loaded by the package as hidden imports (Needs calls within the package).
+       "PublicImports" -> {___String}       The contexts that are loaded by the package as public imports (2nd argument of the BeginPackage).
+       "Lock" -> True|False|Automatic       Whether to apply Locked in addition to Protected/ReadProtected. Automatic means "yes, if
+                                                building an mx file". This option is not relevant in the normal "user" path, which is to
+                                                load the .mx file, as the attributes of the symbols come from the .mx file in that case.
+                                                Specify False to build an .mx file without Locked symbols, or True to lock symbols when loading
+                                                the .m files, simulating the user .mx environment during development.
+       "ForceMX" -> True|False              Whether to prefer loading the .mx file over the .m files. Defaults to False.
+       "Attributes" -> Automatic|{___Symbol}  The attributes to apply to the symbols. The default is {Protected, ReadProtected, Locked}.
+                                                This is a more flexible alternative to the older "Lock" option.
+*)
+
+Options[loadWolframLanguageCode] = {"AutoUpdate" -> False, "AutoloadSymbols" -> {}, "SymbolsToProtect" -> Automatic,
+                                     "HiddenImports" -> {}, "PublicImports" -> {}, "Lock" -> Automatic, "Attributes" -> Automatic, "ForceMX" -> False}
+
+loadWolframLanguageCode[pacletName_String, pacletContext_String, fullPathToPacletDir_String, topWLFile:(_String | None), OptionsPattern[]] :=
+    Module[{autoUpdate, autoloadSymbols, symsToProtect, hiddenImports, publicImports, doLock, attrs, shadowQuietingFunc, forceMX},
+        {autoUpdate, autoloadSymbols, symsToProtect, hiddenImports, publicImports, doLock, forceMX, attrs} =
+                OptionValue[{"AutoUpdate", "AutoloadSymbols", "SymbolsToProtect", "HiddenImports", "PublicImports", "Lock", "ForceMX", "Attributes"}];
+        If[autoUpdate && !TrueQ[System`Private`$buildingMX],
+            PacletManager`Package`getPacletWithProgress[pacletName]
+        ];
+        (* The Automatic setting means: Protect all symbols in the main context and the `PackageScope` subcontext, if they have at least
+           one downvalue or subvalue, and also all the System` symbols set up to trigger autoloading of this package. Note that the
+           computation of these names is wrapped in Hold, because evaluating it right now is likely to return an empty list since the
+           context has probably not been loaded yet.
+        *)
+        If[symsToProtect === Automatic,
+            symsToProtect = Hold[
+                Select[Names[pacletContext] ~Join~ Names[pacletContext <> "PackageScope`*"],
+                      ToExpression[#, InputForm, Function[{sym}, Length[DownValues[sym]] > 0 || Length[SubValues[sym]] > 0, HoldFirst]] &
+                ] ~Join~ autoloadSymbols
+            ]
+        ];
+        (* If .m files are present, always load them. Otherwise, fall back to .mx file. This lets developers work out
+           of a layout of .m files, and is also the branch taken by the build system during the generation of the .mx file.
+           The topWLFile argument is the .m file that, when loaded with Get, will trigger loading
+           of all the package files. It is _not_ the XXXLoader.m file or any file that would cause that file to be loaded, as that
+           would call this function recursively.
+        *)
+        If[(!TrueQ[forceMX] || TrueQ[System`Private`$buildingMX]) && StringQ[topWLFile] && FileExistsQ[FileNameJoin[{fullPathToPacletDir, topWLFile}]],
+            (* Wipe any existing defs, and in particular any autoload defs. Evaluating symsToProtect here will return no package
+               symbols if the package hasn't been loaded yet, but then of course there is no need to unprotect/clear them.
+            *)
+            (Unprotect[#]; ClearAll[#])& /@ ReleaseHold[symsToProtect];
+            Get[FileNameJoin[{fullPathToPacletDir, topWLFile}]];
+            (* Protect the appropriate exported symbols. *)
+            If[attrs === Automatic,
+                attrs = {Protected, ReadProtected};
+                If[TrueQ[doLock] || (doLock === Automatic && TrueQ[System`Private`$buildingMX]),
+                    AppendTo[attrs, Locked]
+                ]
+            ];
+            ToExpression[#, InputForm, Function[sym, SetAttributes[sym, attrs], HoldFirst]]& /@ ReleaseHold[symsToProtect],
+        (* else *)
+            (* Load via .mx file. This branch is the normal "user" path, and must be fast. *)
+
+            (* We need special treatment for dependent packages, to ensure they get loaded in the current session.
+               Needs statements for non-hidden imports of the package go here. You probably shouldn't have any.
+            *)
+            Needs /@ publicImports;
+           
+            (* If the paclet context is not going to end up on $ContextPath, then we want to Quiet any shadow warnings
+               because they are not relevant. They get issued when the package code loads and there is a conflict between a
+               package symbol and a Global` symbol, even though in the end the package context is not going to be visible.
+               When this package is being loaded via Get, it will end up on $ContextPath, so shadow warnings are relevant,
+               whereas if it is loaded via an autoload on one of its System` symbols, it won't remain on $ContextPath and shadow
+               warnings are irrelevant. A proper test for whether to Quiet these warnings is whether the context is currently
+               on the $ContextPath, because paclets using this function typically have already called BeginPackage/EndPackage
+               on their context when they are being loaded via Get["context`"], whereas they have not done this when being
+               loaded via autoload. See bug 266812.
+            *)
+            shadowQuietingFunc = If[!MemberQ[$ContextPath, pacletContext], Function[{code}, Quiet[code, General::shdw], {HoldFirst}], Identity];
+
+            Block[{$ContextPath = {"System`"}},
+                (* Clear the autoload defs from the autoload symbols. *)
+                (Unprotect[#]; ClearAll[#])& /@ autoloadSymbols;
+                (* Needs statements for hidden imports of the package happen within the $ContextPath block. *)
+                Needs /@ hiddenImports;
+                (* Load the .mx file. The Protected/Locked attributes of the symbols were set at the time the .mx was created. *)
+                Get[FileNameJoin[{fullPathToPacletDir, "Kernel", ToString[$SystemWordLength]<>"Bit", pacletName <> ".mx"}]]
+            ] // shadowQuietingFunc
+        ];
+    ]
+
+
+(* A companion function to loadWolframLanguageCode, used for building mx files in ARG-style paclets. The paclet.mx task defined in
+   ARG/scripts/ARG_common.xml will eventually get changed to call this function, perhaps with modifications.
+*)
+pacletBuildMX[pacletName_String] :=
+    Module[{mxDir, mxFile, pacletDir, paclet, autoloadSymbols},
+        paclet = First @ PacletFind[pacletName];
+        pacletDir = paclet["Location"];
+        Print["Building MX for paclet ", paclet, " in ", pacletDir];
+
+        If[!StringMatchQ[paclet["Location"], pacletDir ~~ ___], Return[$Failed]];
+
+        autoloadSymbols = Lookup[paclet["Extensions"][[1,2;;]], "Symbols"];
+
+        If[MatchQ[autoloadSymbols, {__String}],
+            ToExpression[#, InputForm, Function[sym, ClearAttributes[sym, {Protected,ReadProtected}]; Clear[sym], HoldFirst]]& /@ autoloadSymbols,
+        (* else *)
+            autoloadSymbols = {}
+        ];
+
+        Block[{System`Private`$buildingMX = True},
+            Get[pacletName<>"`"]
+        ];
+        
+        mxDir = FileNameJoin[{pacletDir, "Kernel", ToString[$SystemWordLength] <> "Bit"}];
+        If[!DirectoryQ[mxDir], CreateDirectory[mxDir]];
+        mxFile = FileNameJoin[{mxDir, pacletName<>".mx"}];
+        (* SymbolAttributes->False prevents the .mx file from capturing attributes for symbols not in the dump list (i.e., external
+           symbols referenced from the package code). The If test is because atm only the very newest V10 kernel builds have this option.
+        *)
+        DumpSave[mxFile, Evaluate[{pacletName<>"`"} ~Join~ autoloadSymbols],
+                    Evaluate[If[MemberQ[First /@ Options[DumpSave], "SymbolAttributes"], "SymbolAttributes"->False, Sequence @@ {}]]
+        ];
+        mxFile
+    ]
+
+
+(**********************  WolframAutoUpdate paclet  ************************)
+
+(* The WolframAutoUpdate paclet contains a list of other paclets to update at startup. Many system paclets
+   perform their own auto-updating upon first use in a session, and that is a good system for paclets that supply
+   Wolfram Language code. But for other types of paclets, we need an auto-update mechanism. Examples would be paclets
+   that provide system docs, or ones that provide front end resources.
+   The WolframAutoUpdate paclet contains an update.txt file named in a Resource extension. This file is just a series
+   of paclet names, one per line. These paclets will be udpated.
+   This is called at startup time, when aborts, async tasks, and such won't work, so we use Asynchronous->True in
+   all paclet download operations. This lets us start them now but have them finish on their own after startup completes.
+   Note also that we trigger the PacletUpdate calls from a scheduledtask. This would appear to be an extra, unnecessary,
+   level of asynchronicity, but we do it because otherwise URLSaveAsynchronous triggers some Throw::uncaught warnings,
+   probably because at the time it fires we haven't yet left the startup state.
+*)
+
+doWolframAutoUpdate[] :=
+    Quiet @
+    Module[{previousDate, p, updateFile, pacletsToUpdate, pacletName},
+        previousDate = "LastWolframAutoUpdate" /. $managerData;
+        If[!ListQ[previousDate] || differenceInDays[previousDate, Date[]] >= 5,
+            p = PacletFind["WolframAutoUpdate", "Internal"->All];
+            If[Length[p] > 0,
+                p = First[p];
+                updateFile = PacletResource[p, "update"];
+                If[FileExistsQ[updateFile],
+                    pacletsToUpdate = ReadList[updateFile, Record];
+                    doForEach[pacletName, pacletsToUpdate,
+                        (* Use RunScheduledTask to avoid Throw::uncaught errors at startup; see comment above. *)
+                        With[{name = pacletName}, RunScheduledTask[Quiet @ PacletUpdate[name, "UpdateSites" -> False, "Asynchronous" -> True], {Random[Real, {1, 3}]}]]
+                    ]
+                ]
+            ];
+            If[Length[PacletCheckUpdate["WolframAutoUpdate"]] > 0,
+                (* Use RunScheduledTask to avoid Throw::uncaught errors at startup; see comment above. *)
+                RunScheduledTask[PacletUpdate["WolframAutoUpdate", "UpdateSites" -> False, "Asynchronous" -> True], {3}],
+            (* else *)
+                (* Only reset the LastWolframAutoUpdate time if there isn't a new WolframAutoUpdate. This ensures
+                   that the next time we restart we will immediately act on the new contents.
+                *)
+                updateManagerData["LastWolframAutoUpdate" -> Date[], "Write" -> True]
+            ]
+        ]
     ]
 
 

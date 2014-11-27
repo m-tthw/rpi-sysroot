@@ -53,6 +53,8 @@ isSubKernel
 
 catchSystemException
 
+differenceInDays
+
 using
 executionProtect
 try
@@ -109,10 +111,10 @@ cullExtensionsFor[exts_List, properties:{__String}] :=
     Module[{checkSystemID, checkLanguage, checkMVersion},
         checkSystemID = MemberQ[properties, "SystemID"];
         checkLanguage = MemberQ[properties, "Language"];
-        checkMVersion = MemberQ[properties, "MathematicaVersion"];
-        Select[exts, (!checkSystemID || EXTgetProperty[#, "SystemID", $SystemID] === $SystemID) &&
+        checkMVersion = MemberQ[properties, "WolframVersion"];
+        Select[exts, (!checkSystemID || MemberQ[Flatten[{EXTgetProperty[#, "SystemID", $SystemID]}], $SystemID]) &&
                      (!checkLanguage || languageMatches[EXTgetProperty[#, "Language", $Language]]) &&
-                     (!checkMVersion || kernelVersionMatches[EXTgetProperty[#, "MathematicaVersion", "*"]]) &]
+                     (!checkMVersion || kernelVersionMatches[EXTgetProperty[#, "WolframVersion", "*"]]) &]
     ]
     
 
@@ -550,7 +552,7 @@ releaseLock[lockFile_String] := Quiet @ executionProtect @ DeleteFile[lockFile]
    of URLSaveAsynchronous. Unfortunately, this won't work since I need the data to be queryable even after
    the async task is finished. I might want to change this scheme in the future, so I encapsulate it here.
    
-   These functions are also called outside this package, in DataPaclets/Common.m.
+   task[[2]] is the task id.
 *)
 
 (*
@@ -558,11 +560,11 @@ getTaskData[task_] := ReleaseHold[Options[task, "UserData"]]
 
 setTaskData[task_, data_] := Function[{sym}, sym = data, HoldFirst] @@ Options[task, "UserData"]
 *)
-getTaskData[task_] := $taskData[task]
+getTaskData[task_] := $taskData[task[[2]]]
 
-setTaskData[task_, data_] := $taskData[task] = data
+setTaskData[task_, data_] := $taskData[task[[2]]] = data
 
-freeTaskData[task_] := $taskData[task] =.
+freeTaskData[task_] := $taskData[task[[2]]] =.
 
 
 (********************************  Utilities  **********************************)
@@ -592,7 +594,13 @@ catchSystemException[expr_] :=
         $Failed&
     ]
     
-    
+ 
+(* In case you are wondering why this function isn't just DateDifference (which it was in M9 and earlier), it is because a
+   backward-incompatible change is being contemplated in that function, so I want to avoid using it.
+*)
+differenceInDays[d1_List, d2_List] := (AbsoluteTime[d2] - AbsoluteTime[d1])/86400
+
+
 (********************************  using  **********************************)
 
 (* using is a utility that emulates the using keyword in C# and similar features in other languages.
@@ -674,14 +682,15 @@ executionProtect[e_] := AbortProtect[PreemptProtect[e]]
 SetAttributes[forEach, HoldAll]
 SetAttributes[doForEach, HoldAll]
 
-(* Using With prevents expr from being evaulated twice. *)
+(* Using With prevents expr from being evaulated twice. The Function @@ Hold[sym, f] instead of just Function[sym, f] is to
+   avoid problems that occur when using SetSystemOptions["StrictLexicalScoping" -> False].
+*)
 
-forEach[sym_Symbol, expr_, f_] := With[{e = expr}, Function[sym, f] /@ If[AtomQ[e], {e}, e]]
+forEach[sym_Symbol, expr_, f_] := With[{e = expr}, (Function @@ Hold[sym, f]) /@ If[AtomQ[e], {e}, e]]
 
 (* doForEach allows use of Return[] in f, because it uses Scan instead of Map. *)
 
-doForEach[sym_Symbol, expr_, f_] := With[{e = expr}, Function[sym, f] ~Scan~ If[AtomQ[e], {e}, e]]
-
+doForEach[sym_Symbol, expr_, f_] := With[{e = expr}, (Function @@ Hold[sym, f]) ~Scan~ If[AtomQ[e], {e}, e]]
 
 
 End[]

@@ -123,6 +123,7 @@ application/x-toutdoux:x-office-document
 application/x-compress:package-x-generic
 application/vnd.sun.xml.calc.template:x-office-spreadsheet
 application/x-lrzip-compressed-tar:package-x-generic
+application/vnd.wolfram.nb:application-mathematica
 application/vnd.ms-powerpoint.slideshow.macroEnabled.12:x-office-presentation
 application/x-pef-executable:application-x-executable
 application/x-ica:text-x-generic

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<omf>
+  <resource>
+    <creator>(自由软件基金会)</creator>
+    <maintainer>(GNOME 文档项目)</maintainer>
+    <title>GNU 自由文档许可证</title>
+    <date>2000-03</date>
+    <version identifier="1.1" date="2000-03"/>
+    <subject category="General|Licenses"/>
+    <description>本许可证的目的在于使手册、教科书或其它文字文档具有自由的属性：确保每个人都具有复制和重新发布它的有效自由，而不论是否作出修改，也不论其是否具有商业行为。其次，本许可证保留了作者及发布者由他们的工作而获得名誉的途径，同时也不认为他们应该对其他人所作出的修改而担负责任。</description>
+    <type>license</type>
+    <format mime="text/xml" dtd="-//OASIS//DTD DocBook XML V4.1.2//EN"/>
+    <identifier url="file:///usr/share/gnome/help/fdl/zh_CN/fdl.xml"/>
+    <language code="zh_CN"/>
+    <relation seriesid="7779aa86-7013-11db-8a91-dd831755a7ef"/>
+    <rights holder="Free Software Foundation"/>
+  </resource>
+</omf>

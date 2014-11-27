@@ -1,0 +1,9 @@
+/* Facebook uses all the available horizontal space and stretches media
+ * to fit in it. The final effect is really ugly on a big screen, so we
+ * make the viewport centered and not too large to look more like it would
+ * look on an actual mobile screen. */
+#viewport {
+    max-width: 640px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}

@@ -25,7 +25,9 @@
     <name xml:lang="fa">پس‌زمینه پیش‌فرض</name>
     <name xml:lang="fi">Oletustausta</name>
     <name xml:lang="fr">Fond d'écran par défaut</name>
+    <name xml:lang="fur">Sfont di Default</name>
     <name xml:lang="fy">Standert eftergrûn</name>
+    <name xml:lang="ga">Cúlra Réamhshocraithe</name>
     <name xml:lang="gl">Fondo de escritorio predeterminado</name>
     <name xml:lang="gu">મૂળભૂત પાશ્ર્વભાગ</name>
     <name xml:lang="he">רקע בררת המחדל</name>
@@ -38,8 +40,9 @@
     <name xml:lang="kn">ಪೂರ್ವನಿಯೋಜಿತ ಹಿನ್ನಲೆ</name>
     <name xml:lang="ko">기본 배경</name>
     <name xml:lang="lt">Numatytasis fonas</name>
-    <name xml:lang="lv">Noklusētais fons</name>
+    <name xml:lang="lv">Noklusējuma fons</name>
     <name xml:lang="ml">സാധാരണ പശ്ചാത്തലം</name>
+    <name xml:lang="mr">पूर्वनिर्धारित पार्श्वभूमी</name>
     <name xml:lang="nb">Forvalgt bakgrunn</name>
     <name xml:lang="nl">Standaardachtergrond</name>
     <name xml:lang="or">ପୂର୍ବନିର୍ଦ୍ଧାରିତ ପୃଷ୍ଠଭୂମି</name>
@@ -56,6 +59,7 @@
     <name xml:lang="sv">Standardbakgrund</name>
     <name xml:lang="ta">முன்னிருப்பு பின்னணி</name>
     <name xml:lang="te">అప్రమేయ నేపథ్యం</name>
+    <name xml:lang="tg">Пасзаминаи пешфарз</name>
     <name xml:lang="th">ภาพพื้นหลังปริยาย</name>
     <name xml:lang="tr">Öntanımlı Ardalan</name>
     <name xml:lang="ug">كۆڭۈلدىكى تەگلىك</name>
@@ -69,5 +73,6 @@
     <options>zoom</options>
     <shade_type>solid</shade_type>
     <pcolor>#3465a4</pcolor>
+    <scolor>#000000</scolor>
   </wallpaper>
 </wallpapers>

@@ -224,7 +224,7 @@ docHashFunc[old_Integer, char_Integer] := Mod[BitShiftLeft[old, 5] + old + char,
 $systemDocDirs = {"System/ReferencePages", "System/Guides", "System/Tutorials", "System/HowTos", "System/ExamplePages"};
 $packagesDocDirs = {"Packages"};
 (* The default version number of every doc paclet. Ideally, based on CVS revision numbers as in the past. *)
-$pacletVersion = "9.0.0";
+$pacletVersion = "10.0.0";
 
 (* Not a run-time function; used only during build process, to create the PacletDB.m file.
 
@@ -270,7 +270,6 @@ BuildDocDBFile[destDir_String, layoutTopLevelDir_String, language_String] :=
             Select[Flatten[FileNames["*.nb", #, Infinity] & /@ $packagesDocDirs],
                 StringMatchQ[#, __~~$PathnameSeparator~~language~~$PathnameSeparator~~__]&
             ];     
-            
         linkBasesAndResNameLists = Join[systemLinkBasesAndResNames, packagesLinkBasesAndResNames];
                
         (* Quick check for duplicate hashes. Duplicates would mean that when looking up doc X you would end up at doc Y. *)

@@ -1,6 +1,6 @@
 # -*- Mode: Python; py-indent-offset: 4 -*-
 # pygobject - Python bindings for the GObject library
-# Copyright (C) 2006  Johan Dahlin
+# Copyright (C) 2006-2012  Johan Dahlin
 #
 #   gobject/__init__.py: initialisation file for gobject module
 #
@@ -27,84 +27,23 @@ import sys
 if 'gobject' in sys.modules:
     raise ImportError('When using gi.repository you must not import static modules like "gobject". Please change all occurrences of "import gobject" to "from gi.repository import GObject".')
 
-from .._glib import spawn_async, idle_add, timeout_add, timeout_add_seconds, \
-     io_add_watch, source_remove, child_watch_add, markup_escape_text, \
-     get_current_time, filename_display_name, filename_display_basename, \
-     filename_from_utf8, get_application_name, set_application_name, \
-     get_prgname, set_prgname, main_depth, Pid, GError, glib_version, \
-     MainLoop, MainContext, main_context_default, IOChannel, Source, Idle, \
-     Timeout, PollFD, OptionGroup, OptionContext, option, uri_list_extract_uris
-from .._glib import SPAWN_LEAVE_DESCRIPTORS_OPEN, SPAWN_DO_NOT_REAP_CHILD, \
-     SPAWN_SEARCH_PATH, SPAWN_STDOUT_TO_DEV_NULL, SPAWN_STDERR_TO_DEV_NULL, \
-     SPAWN_CHILD_INHERITS_STDIN, SPAWN_FILE_AND_ARGV_ZERO, PRIORITY_HIGH, \
-     PRIORITY_DEFAULT, PRIORITY_HIGH_IDLE, PRIORITY_DEFAULT_IDLE, \
-     PRIORITY_LOW, IO_IN, IO_OUT, IO_PRI, IO_ERR, IO_HUP, IO_NVAL, \
-     IO_STATUS_ERROR, IO_STATUS_NORMAL, IO_STATUS_EOF, IO_STATUS_AGAIN, \
-     IO_FLAG_APPEND, IO_FLAG_NONBLOCK, IO_FLAG_IS_READABLE, \
-     IO_FLAG_IS_WRITEABLE, IO_FLAG_IS_SEEKABLE, IO_FLAG_MASK, \
-     IO_FLAG_GET_MASK, IO_FLAG_SET_MASK, OPTION_FLAG_HIDDEN, \
-     OPTION_FLAG_IN_MAIN, OPTION_FLAG_REVERSE, OPTION_FLAG_NO_ARG, \
-     OPTION_FLAG_FILENAME, OPTION_FLAG_OPTIONAL_ARG, OPTION_FLAG_NOALIAS, \
-     OPTION_ERROR_UNKNOWN_OPTION, OPTION_ERROR_BAD_VALUE, \
-     OPTION_ERROR_FAILED, OPTION_REMAINING, OPTION_ERROR
+from . import _gobject
+from . import propertyhelper
+from . import signalhelper
 
-from .constants import *
-from ._gobject import *
-
+GObject = _gobject.GObject
+GType = _gobject.GType
 _PyGObject_API = _gobject._PyGObject_API
+pygobject_version = _gobject.pygobject_version
 
-from .propertyhelper import Property
-
-sys.modules['gi._gobject.option'] = option
 
 class GObjectMeta(type):
     "Metaclass for automatically registering GObject classes"
     def __init__(cls, name, bases, dict_):
         type.__init__(cls, name, bases, dict_)
-        cls._install_properties()
+        propertyhelper.install_properties(cls)
+        signalhelper.install_signals(cls)
         cls._type_register(cls.__dict__)
-
-    def _install_properties(cls):
-        gproperties = getattr(cls, '__gproperties__', {})
-
-        props = []
-        for name, prop in cls.__dict__.items():
-            if isinstance(prop, Property): # not same as the built-in
-                if name in gproperties:
-                    raise ValueError
-                prop.name = name
-                gproperties[name] = prop.get_pspec_args()
-                props.append(prop)
-
-        if not props:
-            return
-
-        cls.__gproperties__ = gproperties
-
-        if ('do_get_property' in cls.__dict__ or
-            'do_set_property' in cls.__dict__):
-            for prop in props:
-                if (prop.fget != prop._default_getter or
-                    prop.fset != prop._default_setter):
-                    raise TypeError(
-                        "GObject subclass %r defines do_get/set_property"
-                        " and it also uses a property with a custom setter"
-                        " or getter. This is not allowed" % (
-                        cls.__name__,))
-
-        def obj_get_property(self, pspec):
-            name = pspec.name.replace('-', '_')
-            prop = getattr(cls, name, None)
-            if prop:
-                return prop.fget(self)
-        cls.do_get_property = obj_get_property
-
-        def obj_set_property(self, pspec, value):
-            name = pspec.name.replace('-', '_')
-            prop = getattr(cls, name, None)
-            if prop:
-                prop.fset(self, value)
-        cls.do_set_property = obj_set_property
 
     def _type_register(cls, namespace):
         ## don't register the class if already registered
@@ -116,9 +55,6 @@ class GObjectMeta(type):
         if cls.__module__.startswith('gi.overrides.'):
             return
 
-        type_register(cls, namespace.get('__gtype_name__'))
+        _gobject.type_register(cls, namespace.get('__gtype_name__'))
 
 _gobject._install_metaclass(GObjectMeta)
-
-# Deprecated naming still available for backwards compatibility.
-property = Property

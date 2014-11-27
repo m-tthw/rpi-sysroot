@@ -114,6 +114,30 @@ PiImageEncoder
     :private-members:
 
 
+PiRawMixin
+==========
+
+.. autoclass:: PiRawMixin
+    :members:
+    :private-members:
+
+
+PiCookedVideoEncoder
+====================
+
+.. autoclass:: PiCookedVideoEncoder
+    :members:
+    :private-members:
+
+
+PiRawVideoEncoder
+=================
+
+.. autoclass:: PiRawVideoEncoder
+    :members:
+    :private-members:
+
+
 PiOneImageEncoder
 =================
 
@@ -130,10 +154,10 @@ PiMultiImageEncoder
     :private-members:
 
 
-PiRawEncoderMixin
-=================
+PiRawImageMixin
+===============
 
-.. autoclass:: PiRawEncoderMixin
+.. autoclass:: PiRawImageMixin
     :members:
     :private-members:
 
@@ -168,6 +192,34 @@ PiRawMultiImageEncoder
 .. autoclass:: PiRawMultiImageEncoder
     :members:
     :private-members:
+
+
+PiRenderer
+==========
+
+.. autoclass:: PiRenderer
+    :members:
+
+
+PiOverlayRenderer
+=================
+
+.. autoclass:: PiOverlayRenderer
+    :members:
+
+
+PiPreviewRenderer
+=================
+
+.. autoclass:: PiPreviewRenderer
+    :members:
+
+
+PiNullSink
+==========
+
+.. autoclass:: PiNullSink
+    :members:
 
 
 Exceptions
@@ -221,13 +273,22 @@ from picamera.encoders import (
     PiEncoder,
     PiVideoEncoder,
     PiImageEncoder,
+    PiRawMixin,
+    PiCookedVideoEncoder,
+    PiRawVideoEncoder,
     PiOneImageEncoder,
     PiMultiImageEncoder,
-    PiRawEncoderMixin,
+    PiRawImageMixin,
     PiCookedOneImageEncoder,
     PiRawOneImageEncoder,
     PiCookedMultiImageEncoder,
     PiRawMultiImageEncoder,
+    )
+from picamera.renderers import (
+    PiRenderer,
+    PiOverlayRenderer,
+    PiPreviewRenderer,
+    PiNullSink,
     )
 from picamera.streams import PiCameraCircularIO, CircularIO
 

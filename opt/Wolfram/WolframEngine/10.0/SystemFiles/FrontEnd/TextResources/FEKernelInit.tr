@@ -416,7 +416,7 @@ FE`makeRPCutil[FE`sym_] :=
 FE`DefineFrontEndSymbols[FE`list_] := Map[FE`makeSymbol, FE`list];
 FE`DefineFrontEndGlobals[FE`list_] := Map[FE`makeRPC, FE`list];
 
-FE`$FrontEndPackageVersion = 6.00;
+FE`$FrontEndPackageVersion = 10.00;
 
 End[];
 

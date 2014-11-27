@@ -1,0 +1,78 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Pre-load samples</font></span></p>
+<h1><font color="#3c3c3c"><pre>load_samples<pre></font></h1>
+<h2><pre>[paths <font color="deeppink">(list)</font>]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Given an array of paths to wav|wave|aif|aiff files, loads them all into memory so that they may be played with via sample with no delay. See load_sample.
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Introduced in v2.0.0
+</p>
+<table cellpadding="2">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+
+sample :ambi_choir
+                  
+
+load_samples [:elec_plip, :elec_blip]
+sample :elec_plip                    
+                                     
+
+
+
+</pre></td>
+   <td><pre>
+ 
+ # This has to first load the sample before it can play it which may
+ # cause unwanted delay.
+ 
+ # Let's load some samples in advance of using them
+ # When we play :elec_plip, there is no extra delay
+ # as it has already been loaded.
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#FFE4E1"><h3><pre>Example 1 </pre></h3></td>
+   <td><pre>
+
+load_samples :elec_plip, :elec_blip
+                                   
+sample :elec_blip                  
+
+
+
+</pre></td>
+   <td><pre>
+ 
+ # You may omit the square brackets, and
+ # simply list all samples you wish to load
+ # Before playing them.
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#FFF0F5"><h3><pre>Example 2 </pre></h3></td>
+   <td><pre>
+
+load_samples [&quot;/home/pi/samples/foo.wav&quot;]
+sample &quot;/home/pi/sample/foo.wav&quot;         
+
+
+
+</pre></td>
+   <td><pre>
+ 
+ # You may also load full paths to samples.
+ # And then trigger them with no more loading.
+
+
+
+</pre></td></tr>
+</table>

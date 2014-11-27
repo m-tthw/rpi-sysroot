@@ -19,11 +19,12 @@
 # USA
 
 from ..overrides import override
-from ..importer import modules
+from ..module import get_introspection_module
 
-Pango = modules['Pango']._introspection_module
+Pango = get_introspection_module('Pango')
 
 __all__ = []
+
 
 class Context(Pango.Context):
 
@@ -38,12 +39,13 @@ class FontDescription(Pango.FontDescription):
 
     def __new__(cls, string=None):
         if string is not None:
-            return Pango.font_description_from_string (string)
+            return Pango.font_description_from_string(string)
         else:
             return Pango.FontDescription.__new__(cls)
 
 FontDescription = override(FontDescription)
 __all__.append('FontDescription')
+
 
 class Layout(Pango.Layout):
 
@@ -60,4 +62,3 @@ class Layout(Pango.Layout):
 
 Layout = override(Layout)
 __all__.append('Layout')
-

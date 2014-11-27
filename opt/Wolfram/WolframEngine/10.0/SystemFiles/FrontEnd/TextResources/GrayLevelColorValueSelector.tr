@@ -66,10 +66,9 @@ uOsZBg2x5wUGDbHnJQYNsec1Bg2x5w0GDbHnHQYNsecDBg0AoCnTWg==
                     StyleBox[
                     TemplateBox[{DynamicBox[
                     FEPrivate`FrontEndResource[
-                    "GrayLevelValueSelectorStrings", "Gray"], 
-                    ImageSizeCache -> {24., {2., 8.}}],StyleBox[
-                    "\"lg\"", StripOnInput -> False, ShowContents -> 
-                    False]},
+                    "GrayLevelValueSelectorStrings", "Gray"]],
+                    StyleBox["\"lg\"", ShowContents -> False, 
+                    StripOnInput -> False]},
                     "RowDefault"],
                     StripOnInput->False,
                     FontSize->11],
@@ -99,10 +98,10 @@ $CellContext`colorUpdate$$[$CellContext`colorVal$$, 1, #, 0, 1])& ],
                     GraphicsBox[
                     {Opacity[0], RectangleBox[{0, 0}], InsetBox[
                     DynamicBox[FEPrivate`ImportImage[
-                    FrontEnd`ToFileName[{
-                    "Bitmaps", "Choosers", "Color"}, 
+                    
+                    FrontEnd`ToFileName[{"Choosers", "Color"}, 
                     "GradientSliderThumb.png"]],
-                    ImageSizeCache->{20., {0., 21.}}], 
+                    ImageSizeCache->{33., {1., 8.}}], 
                     Dynamic[$CellContext`colorValToPos$$[$CellContext`\
 colorVal$$, 1, 0, 1]]]},
                     AspectRatio->Full,
@@ -235,9 +234,9 @@ $CellContext`colorValToPos$$[$CellContext`colorVal$$, 1, 0, 1])],
                     StyleBox[
                     TemplateBox[{DynamicBox[
                     FEPrivate`FrontEndResource[
-                    "GrayLevelValueSelectorStrings", "Opacity"], 
-                    ImageSizeCache -> {40., {2., 8.}}],StyleBox[
-                    "\"lg\"", StripOnInput -> False, ShowContents -> 
+                    "GrayLevelValueSelectorStrings", "Opacity"]],
+                    StyleBox[
+                    "\"lg\"", ShowContents -> False, StripOnInput -> 
                     False]},
                     "RowDefault"],
                     StripOnInput->False,
@@ -274,10 +273,9 @@ $CellContext`posToAlphaVal$$[#, 0, 1])& ],
                     {Opacity[0], RectangleBox[{0, 0}], InsetBox[
                     DynamicBox[FEPrivate`ImportImage[
                     
-                    FrontEnd`ToFileName[{
-                    "Bitmaps", "Choosers", "Color"}, 
+                    FrontEnd`ToFileName[{"Choosers", "Color"}, 
                     "OpacityThumb.png"]],
-                    ImageSizeCache->{18., {0., 18.}}], 
+                    ImageSizeCache->{33., {1., 8.}}], 
                     Dynamic[$CellContext`alphaValToPos$$[$CellContext`\
 alpha$$, 0, 1]]]},
                     AspectRatio->Full,
@@ -378,11 +376,9 @@ $CellContext`alpha$$}]},
           FrameBox[
            TagBox[GridBox[{
               {
-               TagBox[GridBox[{
-                  {
-                   FrameBox[
-                    FrameBox[
-                    GraphicsBox[{InsetBox[
+               FrameBox[
+                FrameBox[
+                 GraphicsBox[{InsetBox[
                     FormBox[
                     GraphicsBox[
                     TagBox[RasterBox[CompressedData["
@@ -470,48 +466,19 @@ $CellContext`alpha$$],
                     Rectangle[]}], TraditionalForm],
                     ImageSizeCache->{180., {0., 180.}}], {
                     Center, Center}]},
-                    FrameLabel->{None, None},
-                    FrameTicks->{{None, None}, {None, None}},
-                    ImageMargins->0,
-                    ImagePadding->None,
-                    ImageSize->{25.2, 25.2},
-                    PlotRangeClipping->True,
-                    PlotRangePadding->0],
-                    FrameMargins->0,
-                    FrameStyle->GrayLevel[1],
-                    StripOnInput->False],
-                    FrameMargins->0,
-                    FrameStyle->RGBColor[0.8, 0.8, 0.8],
-                    StripOnInput->False], 
-                   ButtonBox[
-                    PaneBox[
-                    DynamicBox[FEPrivate`ImportImage[
-                    
-                    FrontEnd`ToFileName[{
-                    "Bitmaps", "Choosers", "Color"}, 
-                    "EyeDropper.png"]],
-                    ImageSizeCache->{15., {5., 10.}}],
-                    Alignment->{Center, Center},
-                    ImageSize->{Full, Full}],
-                    
-                    Appearance->FEPrivate`FrontEndResource[
-                    "FEExpressions", "GrayButtonNinePatchAppearance"],
-                    
-                    ButtonFunction:>Null,
-                    Evaluator->Automatic,
-                    ImageSize->{26, 26},
-                    Method->"Preemptive"]}
-                 },
-                 AutoDelete->False,
-                 GridBoxAlignment->{
-                  "Columns" -> {Left, Right}, "Rows" -> {{Center}}},
-                 
-                 GridBoxItemSize->{
-                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
-                 
-                 GridBoxSpacings->{
-                  "Columns" -> {{0.7}}, "Rows" -> {{Automatic}}}],
-                "Grid"], 
+                  FrameLabel->{None, None},
+                  FrameTicks->{{None, None}, {None, None}},
+                  ImageMargins->0,
+                  ImagePadding->None,
+                  ImageSize->{25.2, 25.2},
+                  PlotRangeClipping->True,
+                  PlotRangePadding->0],
+                 FrameMargins->0,
+                 FrameStyle->GrayLevel[1],
+                 StripOnInput->False],
+                FrameMargins->0,
+                FrameStyle->RGBColor[0.8, 0.8, 0.8],
+                StripOnInput->False], 
                FrameBox[
                 TagBox[GridBox[{
                    {

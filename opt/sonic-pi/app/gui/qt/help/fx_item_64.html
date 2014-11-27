@@ -1,0 +1,195 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Echo</font></span></p>
+<h2><pre><font color="#3C3C3C">with_fx <font color="DeepPink">:echo</font> <font color="DarkOrange">do</font><br/>  play <font color="DodgerBlue">50</font><br/><font color="DarkOrange">end</font></pre></font></h2>
+<table cellpadding="2">
+ <tr></tr><tr><td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">amp: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">1</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">amp_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">mix: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">1</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">mix_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">pre_amp: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">1</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">pre_amp_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+</tr><tr><td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">phase: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">0.25</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">phase_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">decay: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">2</font></h4></pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">decay_slide: </font></h4</pre>
+</td>
+<td bgcolor="#E8E8E8">
+  <pre><h4><font color="#5e5e5e">0</font></h4></pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">max_phase: </font></h4</pre>
+</td>
+<td bgcolor="#5e5e5e">
+  <pre><h4><font color="white">2</font></h4></pre>
+</td>
+</tr></table>
+<p><font size="5", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">  Standard echo with variable phase duration (time between echoes) and decay (length of echo fade out). If you wish to have a phase duration longer than 2s, you need to specifiy the longest phase duration you'd like with the arg max_phase. Be warned, echo FX with very long phases can consume a lot of memory and take longer to initialise.</font></p>
+<table cellpadding="10">
+<tr><th></th><th></th></tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> amp:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          The amplitude of the sound. Typically a value between 0 and 1. Higher amplitudes may be used, but won't make the sound louder, it will just reduce the quality of all the sounds currently being played (due to compression.)<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 1<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> amp_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Amount of time (in seconds) for the amplitude (amp) to change. A long slide value means that the amp takes a long time to slide from the previous amplitude to the new amplitude. A slide of 0 means that the amplitude instantly changes to the new amplitude.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> mix:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          The amount (percentage) of FX present in the resulting sound represented as a value between 0 and 1. For example, a mix of 0 means that only the original sound is heard, a mix of 1 means that only the FX is heard (typically the default) and a mix of 0.5 means that half the original and half of the FX is heard. <br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 1<br/>
+          must be a value between 0 and 1 inclusively<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> mix_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Amount of time (in seconds) for the mix value to change. A long slide value means that the mix takes a long time to slide from the previous value to the new value. A slide of 0 means that the mix instantly changes to the new value.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> pre_amp:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Amplification applied to the input signal immediately before it is passed to the FX.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 1<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> pre_amp_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Amount of time (in seconds) for the pre_amp value to change. A long pre_amp_slide value means that the pre_amp takes a long time to slide from the previous value to the new value. A pre_amp_slide of 0 means that the pre_amp instantly changes to the new value.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> phase:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          The time between echoes in seconds.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0.25<br/>
+          must be greater than zero<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> phase_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Slide time in seconds between phase values<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> decay:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          The time it takes for the echoes to fade away in seconds.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 2<br/>
+          must be greater than zero<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#F8F8F8">
+    <td bgcolor="#FFF0F5"><h3><pre> decay_slide:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          Slide time in seconds between decay times<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 0<br/>
+          must be zero or greater<br/>
+          May be changed whilst playing
+       </font>
+     </td>
+ </tr>
+  <tr bgcolor="#E8E8E8">
+    <td bgcolor="#FFE4E1"><h3><pre> max_phase:</pre></h3></td>
+      <td>
+        <font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+          The maximum phase duration in seconds.<br/></font>
+          <font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Default: 2<br/>
+          must be greater than zero<br/>
+          Can not be changed once set
+       </font>
+     </td>
+ </tr>
+  </table>

@@ -1,0 +1,4 @@
+?package(minecraft-pi):needs="X11" section="Games"\
+ title="Minecraft Pi" command="/usr/bin/minecraft-pi"\
+ longtitle="Fun with blocks"\
+ icon="/usr/share/pixmaps/minecraft-pi.png"

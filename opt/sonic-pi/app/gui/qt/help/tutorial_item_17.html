@@ -1,0 +1,117 @@
+<font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Iteration and Loops</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">So far we’ve spent a lot of time looking at the different sounds you can make with <code style="font-size:15px; color:deeppink; background-color:white">play</code>, <code style="font-size:15px; color:deeppink; background-color:white">sample</code> and <code style="font-size:15px; color:deeppink; background-color:white">with_fx</code> blocks. We’ve also learned how to trigger these things through time using <code style="font-size:15px; color:deeppink; background-color:white">sleep</code>.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">As you’ve probably found out, there’s a <em style="font-size:15px;color:darkorange;">lot</em> of fun you can have with these basic building blocks. However, a whole new dimension of fun opens up when you start using the power of code to structure your music and compositions. In the next few sections we’ll explore some of this powerful new tools. First up is iteration and loops.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Repetition</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Have you written some code you’d like to repeat a few times. For example, you might have something like this:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 50
+sleep 0.5
+sample :elec_blup
+sleep 0.5
+play 62
+sleep 0.25
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">What if we wished to repeat this 3 times? Well we could do something simple and just copy and paste it three times:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 50
+sleep 0.5
+sample :elec_blup
+sleep 0.5
+play 62
+sleep 0.25
+play 50
+sleep 0.5
+sample :elec_blup
+sleep 0.5
+play 62
+sleep 0.25
+play 50
+sleep 0.5
+sample :elec_blup
+sleep 0.5
+play 62
+sleep 0.25
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now that’s a lot of code! What happens if you want to change sample to <code style="font-size:15px; color:deeppink; background-color:white">:elec_plip</code>? You’re going to have to find all the places with the original <code style="font-size:15px; color:deeppink; background-color:white">:elec_blup</code> and switch them over. More importantly, what if you wanted to repeat the original piece of code 50 times or 1000? Now that would be a lot of code and a lot of lines of code to alter to make if you wanted to make a change.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Iteration</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">What repeating the code as as easy as saying <em style="font-size:15px;color:darkorange;">do this three times</em>. Well, it pretty much is. Remember our old friend the code block that we met in the previous section on FX? We can use it to mark the start and of the code we’d like to repeat three times. We then use the special code <code style="font-size:15px; color:deeppink; background-color:white">3.times</code>. So, instead of writing do this three times, we write <code style="font-size:15px; color:deeppink; background-color:white">3.times do</code> - that’s not too hard. Just remember to write <code style="font-size:15px; color:deeppink; background-color:white">end</code> and the end of the code you’d like to repeat:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">3.times do
+  play 50
+  sleep 0.5
+  sample :elec_blup
+  sleep 0.5
+  play 62
+  sleep 0.25
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now isn’t that much neater than cutting and pasting! We can use this to create lots of nice repeating structures:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">4.times do
+  play 50
+  sleep 0.5
+end
+
+8.times do
+  play 55, release: 0.2
+  sleep 0.25
+end
+
+4.times do
+  play 50
+  sleep 0.5
+end
+</code></pre>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Nesting Iterations</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Just like nesting FX, we can put iterations inside other iterations to create interesting patterns. For example:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">4.times do
+  sample :drum_heavy_kick
+  2.times do
+    sample :elec_blip2, rate: 2
+    sleep 0.25
+  end
+  sample :elec_snare
+  4.times do
+    sample :drum_tom_mid_soft
+    sleep 0.125
+  end
+end
+</code></pre>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Looping</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">If you want something to repeat a lot of times, you might find yourself using really large numbers such as <code style="font-size:15px; color:deeppink; background-color:white">1000.times do</code>. In this case, you’re probably better off asking Sonic Pi to repeat forever (at least until you press the stop button!). Let’s loop the amen break forever:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">loop do
+  sample :loop_amen
+  sleep sample_duration :loop_amen
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">The important thing to know about loops is that they act like black holes for code. Once the code enters a loop it can never leave until you press stop - it will just go round and round the loop forever. This means if you have code after the loop you will <em style="font-size:15px;color:darkorange;">never</em> hear it. For example, the cymbal will never play:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">loop do
+  play 50
+  sleep 1
+end
+
+sample :drum_cymbal_open
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now, get structuring your code with iteration and loops!</p>
+
+</font>

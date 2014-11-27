@@ -2,7 +2,7 @@ ef3cced5a739f35a3434ab80b8045d75  lib/arm-linux-gnueabihf/ld-2.13.so
 448c3bf174ec744bf29256aaf5d60264  lib/arm-linux-gnueabihf/libBrokenLocale-2.13.so
 8dc5b7bd7e51cc0fbecff98eddbcccc8  lib/arm-linux-gnueabihf/libSegFault.so
 8a854cd8fd4a02fa4e56b7da44b6d108  lib/arm-linux-gnueabihf/libanl-2.13.so
-e7b00de109524282c3b296a98e22ae10  lib/arm-linux-gnueabihf/libc-2.13.so
+519d01605371bd858f3290652f005ff8  lib/arm-linux-gnueabihf/libc-2.13.so
 b7653374dc9ad67d4578678358cb4d86  lib/arm-linux-gnueabihf/libcidn-2.13.so
 2b8e9d132523b2f350660a6bc3177085  lib/arm-linux-gnueabihf/libcrypt-2.13.so
 de21f758f7993b2865391194d339ba71  lib/arm-linux-gnueabihf/libdl-2.13.so
@@ -276,8 +276,8 @@ f57aa2c9523f6f6698c3b3de8d261c29  usr/share/doc/libc6/NEWS.Debian.gz
 1a44a89207a407e41232cbecdf919abe  usr/share/doc/libc6/NEWS.gz
 72966aec8beae088b25d0d16d848f886  usr/share/doc/libc6/README.Debian.gz
 085c305fdce1731c5eb5684e6d3263a9  usr/share/doc/libc6/README.hesiod.gz
-a4084b60ccb5b11bb68a6f34610d641e  usr/share/doc/libc6/changelog.Debian.gz
+602bbd545afed27e1fc74f949982a8be  usr/share/doc/libc6/changelog.Debian.gz
 85a219f31bac5c3da91cac1e72f6f54f  usr/share/doc/libc6/changelog.gz
 b0176d5b6f341a59ddbd437f800cc3a4  usr/share/doc/libc6/copyright
-5e363843d758aa4a041701193c1297fa  usr/share/doc/libc6/test-results-arm-linux-gnueabihf-libc
+d1f3d6a94e4511d678b3fb5f4ab93731  usr/share/doc/libc6/test-results-arm-linux-gnueabihf-libc
 6ab9e21bd6914dcfb352e1c9a390ce83  usr/share/lintian/overrides/libc6

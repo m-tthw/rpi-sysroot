@@ -1,0 +1,11 @@
+/.
+/usr
+/usr/share
+/usr/share/doc
+/usr/share/doc/libcgroup1
+/usr/share/doc/libcgroup1/NEWS.Debian.gz
+/usr/share/doc/libcgroup1/changelog.Debian.gz
+/usr/share/doc/libcgroup1/copyright
+/lib
+/lib/libcgroup.so.1.0.38
+/lib/libcgroup.so.1

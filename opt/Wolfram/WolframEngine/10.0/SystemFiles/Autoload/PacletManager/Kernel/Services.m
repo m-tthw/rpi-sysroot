@@ -30,13 +30,13 @@ PacletSiteRemove::usage = "PacletSiteRemove is an internal symbol."
 PacletFindRemote::usage = "PacletFindRemote is an internal symbol."
 
 
-$AllowInternet::usage = "$AllowInternet specifies whether Mathematica should attempt to use the Internet for certain operations. Set it to False to prevent Internet use."
-$AllowDocumentationUpdates::usage = "$AllowDocumentationUpdates specifies whether Mathematica should automatically update documentation notebooks from the Internet as newer ones become available. Set it to False to prevent Mathematica from attempting to download newer notebooks as you browse the documentation."
-$AllowDataUpdates::usage = "$AllowDataUpdates specifies whether Mathematica should automatically update data collections (like CountryData, ElementData, etc.) as newer data become available. Set it to False to prevent Mathematica from attempting to download updates."
+$AllowInternet::usage = "$AllowInternet specifies whether the Wolfram Language should attempt to use the Internet for certain operations. Set it to False to prevent Internet use."
+$AllowDocumentationUpdates::usage = "$AllowDocumentationUpdates specifies whether the Wolfram Language should automatically update documentation notebooks from the Internet as newer ones become available. Set it to False to prevent the Wolfram Language from attempting to download newer notebooks as you browse the documentation."
+$AllowDataUpdates::usage = "$AllowDataUpdates specifies whether the Wolfram Language should automatically update data collections (like CountryData, ElementData, etc.) as newer data become available. Set it to False to prevent the Wolfram Language from attempting to download updates."
 
-$InternetProxyRules::usage = "$InternetProxyRules is a list of rules that control how Mathematica accesses the Internet. Unless the first rule is UseProxy->True, the other rules, which specify protocol-specific proxies, are not used. Instead of modifying $InternetProxyRules directly, use the UseInternetProxy and SetInternetProxy functions, or the Help > Internet Connectivity dialog in the front end."
-PacletManager`SetInternetProxy::usage = "SetInternetProxy[\"protocol\", {\"proxyHost\", port}] causes Mathematica to use the specified proxy host and port when accessing URLs of the specified protocol (\"http\", for example). You can also use the Help > Internet Connectivity dialog in the front end to configure proxy settings."
-UseInternetProxy::usage = "UseInternetProxy controls whether Mathematica should use a proxy server when accessing the Internet. UseInternetProxy[Automatic] causes Mathematica to attempt to use the proxy settings from your system or browser. UseInternetProxy[False] causes Mathematica to connect directly to the Internet, bypassing a proxy server. UseInternetProxy[True] causes Mathematica to use the proxy settings specified in $InternetProxyRules. You can also use the Help > Internet Connectivity dialog in the front end to configure proxy settings."
+$InternetProxyRules::usage = "$InternetProxyRules is a list of rules that control how the Wolfram Language accesses the Internet. Unless the first rule is UseProxy->True, the other rules, which specify protocol-specific proxies, are not used. Instead of modifying $InternetProxyRules directly, use the UseInternetProxy and SetInternetProxy functions, or the Help > Internet Connectivity dialog in the front end."
+PacletManager`SetInternetProxy::usage = "SetInternetProxy[\"protocol\", {\"proxyHost\", port}] causes the Wolfram Language to use the specified proxy host and port when accessing URLs of the specified protocol (\"http\", for example). You can also use the Help > Internet Connectivity dialog in the front end to configure proxy settings."
+UseInternetProxy::usage = "UseInternetProxy controls whether the Wolfram Language should use a proxy server when accessing the Internet. UseInternetProxy[Automatic] causes the Wolfram Language to attempt to use the proxy settings from your system or browser. UseInternetProxy[False] causes the Wolfram Language to connect directly to the Internet, bypassing a proxy server. UseInternetProxy[True] causes the Wolfram Language to use the proxy settings specified in $InternetProxyRules. You can also use the Help > Internet Connectivity dialog in the front end to configure proxy settings."
 
 
 Begin["`Package`"]
@@ -340,7 +340,7 @@ Options[PacletSiteAdd] = {"Local" -> False, Prepend -> False}
 
 PacletSiteAdd::badurl = "URL `1` is not a properly formed http or file URL."
 General::nosite = "Site `1` is not an existing Paclet site."
-General::offline = "Mathematica is currently configured not to use the Internet. To allow Internet use, check the \"Allow Mathematica to use the Internet\" box in the Help \[FilledRightTriangle] Internet Connectivity dialog."
+General::offline = "The Wolfram Language is currently configured not to use the Internet. To allow Internet use, check the \"Allow the Wolfram Language to use the Internet\" box in the Help \[FilledRightTriangle] Internet Connectivity dialog."
 
 
 (* Returns PacletSite xpression, or $Failed iff is obviously a bogus URL (e.g., htp:/foo). *)
@@ -421,6 +421,8 @@ PacletSiteUpdate::err = "An error occurred attempting to update paclet informati
 
 
 Options[PacletSiteUpdate] = Options[startPacletSiteUpdate] = {"Interactive"->False, Asynchronous->False, "Force"->True}
+
+Attributes[PacletSiteUpdate] = {Listable}
 
 PacletSiteUpdate[site_PacletSite, opts:OptionsPattern[]] := PacletSiteUpdate[First[site], opts]
 
@@ -641,7 +643,7 @@ doWeeklyUpdate[] :=
     Quiet @ 
     Module[{dates},
         dates = Cases[getPacletSiteData[], {$PacletSite, _, _, _, lastSuccessfulUpdate_, _} :> lastSuccessfulUpdate];
-        If[Length[dates] == 0 || First[dates] === {} || DateDifference[First[dates], Date[]] > 7,
+        If[Length[dates] == 0 || First[dates] === {} || differenceInDays[First[dates], Date[]] > 5,
             PacletSiteUpdate[$PacletSite, Asynchronous->True, "Force"->False]
         ]
     ]
@@ -679,13 +681,13 @@ errorDialog[statusCode_Integer] := errorDialog[errorStringFromHTTPStatusCode[sta
 errorDialog[line1_String] := errorDialog[{line1, ""}]
 
 errorDialog[lines:{__}] :=
-    If[$allowDialogs, MessageDialog[Column[lines], WindowTitle -> "Mathematica Paclet Manager"]]
+    If[$allowDialogs, MessageDialog[Column[lines], WindowTitle -> "Wolfram Paclet Manager"]]
 
 
 
 (*************************************  PacletFindRemote  ****************************************)
 
-Options[PacletFindRemote] = {"Location"->All, "SystemID"->Automatic, "MathematicaVersion"->Automatic,
+Options[PacletFindRemote] = {"Location"->All, "SystemID"->Automatic, "WolframVersion"->Automatic,
                                 "Extension"->All, "Creator"->All, "Publisher"->All, "Context"->All, "UpdateSites"->False}
 
 PacletFindRemote[pacletName:(_String | All):All, opts:OptionsPattern[]] :=

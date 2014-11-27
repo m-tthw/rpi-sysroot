@@ -1,0 +1,22 @@
+libchromaprint.so.0 libchromaprint0 #MINVER#
+| libchromaprint-private
+ _ZNSt6vectorIcSaIcEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPcS1_EERKc@Base 0.6 1
+ _ZNSt6vectorIdSaIdEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPdS1_EEjRKd@Base 0.6 1
+ _ZNSt6vectorIdSaIdEEaSERKS1_@Base 0.6 1
+ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEidEvT_T0_S8_T1_@Base 0.6 1
+ _ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_S7_@Base 0.6 1
+ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_@Base 0.6 1
+ _ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEiEvT_S7_T0_@Base 0.6 1
+ _ZSt19__move_median_firstIN9__gnu_cxx17__normal_iteratorIPdSt6vectorIdSaIdEEEEEvT_S7_S7_@Base 0.6 1
+ _ZSt8_DestroyIPSt6vectorIdSaIdEEEvT_S4_@Base 0.6 1
+ chromaprint_dealloc@Base 0.2
+ chromaprint_decode_fingerprint@Base 0.2
+ chromaprint_encode_fingerprint@Base 0.2
+ chromaprint_feed@Base 0.2
+ chromaprint_finish@Base 0.2
+ chromaprint_free@Base 0.2
+ chromaprint_get_fingerprint@Base 0.2
+ chromaprint_get_raw_fingerprint@Base 0.2
+ chromaprint_get_version@Base 0.2
+ chromaprint_new@Base 0.2
+ chromaprint_start@Base 0.2

@@ -1,4 +1,4 @@
-(* Mathematica HTTPClient Package *)
+(* Wolfram HTTPClient Package *)
 
 BeginPackage["HTTPClient`"]
 
@@ -287,10 +287,12 @@ validOptionsQ[opts_, func_] :=
 			Message[General::optx, First[#], InString[$Line]] & /@ FilterRules[opts, Except[Options[func]]];
 			Return[False];	
 		];
-		
-		If[!StringQ[("Method" /. opts) || ("Method" /. opts) === ""],
-			Message[General::erropts, "Method" /. opts, "Method"];
-			Return[False];
+
+		If[!StringQ[(Method /. opts)] || (Method /. opts) === "",
+			If[!StringQ[("Method" /. opts)] || StringMatchQ[( "Method"/. opts), "Method"] || ("Method" /. opts) === "",
+				Message[General::erropts, (Method /. opts /. Method -> "Method" ) /. opts, "Method"];
+				Return[False];
+			];
 		];
 		
 		If[!MatchQ[("Headers" /. opts), List[Rule[_String, _String]...]],
@@ -338,8 +340,10 @@ validOptionsQ[opts_, func_] :=
 			Return[False];
 		];
 		
-		If[("MultipartData" /. opts) =!= {} && 
-			!MatchQ[("MultipartData" /. opts), {{_String, _String, {__Integer}}..}],
+		If[("MultipartData" /. opts) =!= {} && (
+			!MatchQ[("MultipartData" /. opts), {{_String, _String, {__Integer}}..}] &&
+			!MatchQ[("MultipartData" /. opts), {Rule[{_String, _String}, {__Integer}]..}] && 
+			!MatchQ[("MultipartData" /. opts), {Rule[{_String, _String}, _String]..}]),
 			Message[General::erropts, "MultipartData" /. opts, "MultipartData"];
 			Return[False];
 		];
@@ -605,8 +609,7 @@ HTTPData[handle_CURLHandle, "Content"] /; errorQ[handle] :=
 		]
 	]
 
-(*Convert HTTP header charset names (in uppercase) to Mathematica \
-CharacterEncoding names.*)
+(*Convert HTTP header charset names (in uppercase) to Wolfram Language CharacterEncoding names.*)
 charsetToMCharset["US-ASCII"] = "ASCII"
 charsetToMCharset["ISO-8859-1"] = "ISO8859-1"
 charsetToMCharset["UTF-8"] = "UTF8"
@@ -721,7 +724,7 @@ setOutput[handle_CURLHandle, "WriteFunction", func_String] :=
 setStandardOptions[handle_CURLHandle, url_String, opts:OptionsPattern[]] := 
 	Module[{finalURL = url, method = ToUpperCase[OptionValue["Method"]], baseURL}, 
 		If[OptionValue["UserAgent"] === Automatic,
-			CURLOption[handle, "CURLOPT_USERAGENT", "Mathematica HTTPClient " <> ToString[$VersionNumber]],	
+			CURLOption[handle, "CURLOPT_USERAGENT", "Wolfram HTTPClient " <> ToString[$VersionNumber]],	
 			CURLOption[handle, "CURLOPT_USERAGENT", OptionValue["UserAgent"]];
 		];
 			
@@ -732,7 +735,7 @@ setStandardOptions[handle_CURLHandle, url_String, opts:OptionsPattern[]] :=
 		CURLOption[handle, "CURLOPT_TIMEOUT", OptionValue["ReadTimeout"]];
 		CURLOption[handle, "CURLOPT_CONNECTTIMEOUT", OptionValue["ConnectTimeout"]];
 		(* Always ensure that a Method is set intially, at Top Level. *)
-		If[StringMatchQ[method, ""],
+		If[StringQ[method] && StringMatchQ[method, ""],
 			CURLOption[handle, "CURLOPT_CUSTOMREQUEST", "GET"],
 			CURLOption[handle, "CURLOPT_CUSTOMREQUEST", method]
 		];
@@ -775,16 +778,37 @@ setStandardOptions[handle_CURLHandle, url_String, opts:OptionsPattern[]] :=
 		];
 		
 		CURLCredentialsProvider[handle, ToString[OptionValue["CredentialsProvider"]]];
-		
-		If[MatchQ[OptionValue["MultipartData"], {{_String, _String, {__Integer}}..}], 
-				CURLForm[handle, 
+
+		(*Handles the old List cases of Multipart Requests*)
+		If[MatchQ[OptionValue["MultipartData"], {{_String, _String, {__Integer}}..}],
+			CURLForm[handle, 
 					#[[1]], 
 					#[[2]], 
 					#[[3]], 
 					Length[#[[3]]],
 					""
 			] & /@ OptionValue["MultipartData"]
+		];	
+
+		(*Handles a List of Rules of MutipartData*)
+		Which[MatchQ[OptionValue["MultipartData"], {Rule[{_String, String_}, _String]..}], 
+				CURLForm[handle, 
+					#[[1]][[1]], 
+					#[[1]][[2]], 
+					#[[2]], 
+					Length[#[[2]]],
+					""
+			] & /@ ((Rule[#[[1]],ToCharacterCode[#[[2]]]])& /@ OptionValue["MultipartData"]),
+			MatchQ[OptionValue["MultipartData"], {Rule[{_String, _String}, {__Integer}]..}],
+				CURLForm[handle, 
+					#[[1]][[1]], 
+					#[[1]][[2]], 
+					#[[2]], 
+					Length[#[[2]]],
+					""
+			] & /@ OptionValue["MultipartData"]
 		];
+
 		(* If the Parmeters are set then, we don't want to set the body. *)
 		If[MatchQ[OptionValue["BodyData"], {__Integer}|{}]&& ( OptionValue["Parameters"] ==={}) ,
 			CURLOption[handle, "CURLOPT_POSTFIELDSIZE", Length[OptionValue["BodyData"]]];
@@ -926,7 +950,7 @@ proxyCredentials[handle_CURLHandle, url_String] :=
 		]
 	]
 	
-(* Old default Mathematica password dialog *)
+(* Old default Wolfram System password dialog *)
 If[!ValueQ[$allowDialogs], $allowDialogs = True]
 hasFrontEnd[] := ToString[Head[$FrontEnd]] === "FrontEndObject"
 $pwdDlgResult;
@@ -975,12 +999,12 @@ coreDialog[url_String, prompt2_String] :=
                 Null,
             hasFrontEnd[],
                 (* Use FE dialog box *)
-                prompt1 = Row[{Style["Mathematica", Italic], " is attempting to read from the URL: \n", Hyperlink[url, BaseStyle -> "ControlStyle"]}];
-                prompt3 = Row[{"(These values are kept for this ", Style["Mathematica", Italic], " session only.) "}];
+                prompt1 = Row[{"You are attempting to read from the URL:\n", Hyperlink[url, BaseStyle -> "ControlStyle"]}];
+                prompt3 = "(These values are kept for this session only.)";
                 passwordDialogFE[title, prompt1, prompt2, prompt3],
             True,
-                prompt1 = "Mathematica is attempting to read from the URL: \n" <> url;
-                prompt3 = "(These values are kept for this Mathematica session only.)";
+                prompt1 = "You are attempting to read from the URL:\n" <> url;
+                prompt3 = "(These values are kept for this session only.)";
                 passwordDialogStandalone[prompt1, prompt2, prompt3]
         ]
 	]

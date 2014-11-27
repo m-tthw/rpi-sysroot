@@ -39,6 +39,9 @@ href="mailto:databaselink@wolfram.com">databaselink@wolfram.com</a>.
 <h3>Revision History</h3>
 <table border=1 cellpadding=5 cellspacing=0 summary="">
 <tr>
+<td>3.0.0</td><td>1/14</td><td>Numerous bugfixes and gui revisions, added support for H2, Derby, SQLite, and Firebird.</td>
+</tr>
+<tr>
 <td>2.0.0</td><td>3/06</td><td>Added connection pool feature, added additional configuration options, added additional information functions, added support for generated keys, upgraded drivers, and fixed some bugs.</td>
 </tr>
 <tr>
@@ -56,6 +59,30 @@ href="mailto:databaselink@wolfram.com">databaselink@wolfram.com</a>.
 </table>
 <P>
 <br>
+
+<h3>Changes in version 3.0.0 </h3>
+<p> Upgraded all drivers.</p>
+<p> Added drivers/support for H2, Derby, Firebird, and SQLite.</p>
+<p> Added "Mode" -> "MySQLStreaming" for streaming result sets in MySQL.</p>
+<p> SQLArgument now supports lists.</p>
+<p> Configurations set to Password -> $Prompt no longer leak password value.</p> 
+<p> SQLConnectionOpenQ and SQLConnectionUsableQ added for ascertaining connection status.</p>
+<p> Warning added for attempted non-paramterized multirow insert with Access and Excel.</p>
+<p> Fixed setLong bug affecting large integer inserts in Access and Excel. </p>
+<p> HSQL databases now automatically shut down when the last connection is closed, releasing lock files. </p>
+<p> Special (URL) characters now allowed in server names. </p>
+<p> Option lists now supported for all DatabaseLink functions. </p>
+<p> Added Index option to SQLCreateTable. </p>
+<p> Added Default and PrimaryKey options to SQLColumn. </p>
+<p> Added support for column aliases. </p>
+<p> Fixed cases where SQLDateTime was adding the current time to its argument. </p>
+<p> Fixed units bug in Timeout. </p>
+<p> Added BatchSize, JavaBatching options to permit finer control over memory use and performance on large inserts. </p>
+<p> Revisions to Data Source Wizard and DatabaseExplorer guis. </p>
+<p> Data Source Wizard no longer corrupts IP hostnames. </p>
+<p> Fixed bug in assignments to $SQLTimeout. </p>
+<p> Fixed bug in FetchSize option of SQLResultSetOpen. </p>
+
 
 <h3>Changes in version 2.0.0 </h3>
 <p>Upgraded to MySQL 3.1.12 driver.</p>

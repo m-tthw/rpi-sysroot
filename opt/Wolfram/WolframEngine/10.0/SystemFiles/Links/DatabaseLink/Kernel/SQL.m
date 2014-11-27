@@ -13,12 +13,7 @@ $SQLTimeout = Automatic;
 
 $SQLUseConnectionPool = False;
 
-(* Used to identify sqlite class names, for purposes of special-casing option values. *)
-$sqliteClassPatterns = {"org.sqlite.*"};
-(* Used to identify MySQL drivers that use the special code path for enabling streaming result sets. *)
-$streamingMySQLClassPatterns = {"com.mysql.jdbc.*"};
-(* Used to identify ODBC drivers that use setInt instead of setLong. *)
-$odbcClassPatterns = {"sun.jdbc.odbc.JdbcOdbc*"};
+Spew[args___] := If[TrueQ[$Debug], Print[args]];
 
 (*===================================================================*)
 (*=================== Error Messages ================================*)
@@ -149,7 +144,7 @@ Options[ SQLExecute ] =
       "ShowColumnHeadings" -> False,
       "Timeout" :> $SQLTimeout,
       "BatchSize" -> 1000,
-      "JavaBatching" -> False
+      "JavaBatching" -> True
     }
 
 Options[ SQLResultSetRead ] = 
@@ -297,7 +292,7 @@ OpenSQLConnection[ JDBC[driver_String, url_String],
     Module[ {result, useOpts, name, username, password, useConnectionPool, location, relativePath, timeout,
              properties, readOnly, transactionIsolationLevel, catalog,
              u = url, d = driver, drivers, jdbc, protocol, props,
-             connectionPool = Null, basicDataSource, to, id, connection, conn},
+             connectionPool = Null, basicDataSource, to, id, connection, conn, fromPool = False},
 
       Block[{$JavaExceptionHandler = ThrowException},
         result = Catch[
@@ -327,8 +322,8 @@ OpenSQLConnection[ JDBC[driver_String, url_String],
           Switch[relativePath, 
             False, Null, 
             True, 
-              If[StringQ[location], 
-                u = ToFileName[DirectoryName[location], u],
+              If[StringQ[location],
+              	u = FileNameJoin[{If[DirectoryQ[location], location, DirectoryName[location]], u}],
                 Message[OpenSQLConnection::location, location];
                 Return[$Failed]
               ],  
@@ -368,12 +363,15 @@ OpenSQLConnection[ JDBC[driver_String, url_String],
           ];
 
           (* Initialize Java and Java classes *)
+          Spew@"butt 1";
           InstallJava[];
           LoadJavaClass["com.wolfram.jlink.JLinkClassLoader"];
           LoadJavaClass["com.wolfram.databaselink.JDBCConnectionManager"];
 
           (* Initialize the JDBC driver.  This is required per JDBC. *)
+          Spew@d;
           JLinkClassLoader`classFromName[d]@newInstance[];
+          Spew@"butt 2";
 
 		  (* Set useConnectionPool to the global default if invalid. *)
 		  If[useConnectionPool === Automatic, useConnectionPool = $SQLUseConnectionPool];
@@ -400,9 +398,9 @@ OpenSQLConnection[ JDBC[driver_String, url_String],
             (* 
              * PasswordDialog uses DialogInput and will hang the FE if OpenSQLConnection has been called from within
              * another DialogInput. If calling from another DialogInput, intercept the password check
-             * and use NestedPasswordDialog. See DataSourceWizard.m for an example of this technique.
+             * and use NestablePasswordDialog. See DataSourceWizard.m for an example of this technique.
              *)
-            {username, password} = DatabaseLink`UI`Private`PasswordDialog[{username, Null}];
+            {username, password} = DatabaseLink`UI`Private`PasswordDialog[{username, None}];
           ];
 
           (*
@@ -473,6 +471,7 @@ OpenSQLConnection[ JDBC[driver_String, url_String],
                   Sequence@@DeleteCases[useOpts, "Timeout" -> _]
                 ];
               AppendTo[$connectionPools, connectionPool];
+              AppendTo[$poolToConnections, $poolIndex -> {}];
               KeepJavaObject[basicDataSource];
               , 
               basicDataSource = First[connectionPool];
@@ -485,12 +484,18 @@ OpenSQLConnection[ JDBC[driver_String, url_String],
             to = basicDataSource@getMaxWait[];
             basicDataSource@setMaxWait[timeout*1000];
             connection = basicDataSource@getConnection[];
+            fromPool = True;
             basicDataSource@setMaxWait[to];
             ,
             (* else *)
             (* Make connection without using connection pool. *)
+            Spew@"butt 3";
+            Spew[u, props, timeout];
             connection = JDBCConnectionManager`getConnection[u, props, timeout];
+            Spew@"butt 3.3";
           ];
+
+          Spew@"butt 4";
           
           (* Setup SQLConnection expression *)
           id = ++$connectionIndex;
@@ -513,6 +518,9 @@ OpenSQLConnection[ JDBC[driver_String, url_String],
           
           (* Add SQLConnection to the list of open connections. *)
           AppendTo[$sqlConnections, conn];
+          If[TrueQ@fromPool, 
+            AppendTo[$poolToConnections[$poolIndex], conn];
+          ];
           conn
         ];
         If[result === $Failed && TrueQ[useConnectionPool] && connectionPool =!= Null, 
@@ -679,25 +687,29 @@ SQLConnectionOpenQ[_] = False;
  * the connection object.
  *)
 $usabilityTests = {
-	StartOfString ~~ "oracle.jdbc.driver." ~~ __ ~~ EndOfString -> {"SELECT 1 FROM DUAL", {{1.}}}
-	, StartOfString ~~ "org.hsqldb.jdbc." ~~ __ ~~ EndOfString -> {"SELECT 1 FROM INFORMATION_SCHEMA.SYSTEM_USERS", {{1}}}
-    , StartOfString ~~ "org.firebirdsql.jdbc." ~~ __ ~~ EndOfString -> {"SELECT 1 FROM RDB$RELATIONS WHERE 1=0", {}}
-    , StartOfString ~~ "sun.jdbc.odbc." ~~ __ ~~ EndOfString -> {"SELECT 1", {{1}}}
-    , StartOfString ~~ "net.sourceforge.jtds.jdbc." ~~ __ ~~ EndOfString -> {"SELECT 1", {{1}}}
-    , StartOfString ~~ "com.mysql.jdbc." ~~ __ ~~ EndOfString -> {"SELECT 1", {{1}}}
-    , StartOfString ~~ "org.postgresql." ~~ __ ~~ EndOfString -> {"SELECT 1", {{1}}}
-    , StartOfString ~~ "org.sqlite." ~~ __ ~~ EndOfString -> {"SELECT 1", {{1}}}
-    , StartOfString ~~ "org.h2." ~~ __ ~~ EndOfString -> {"SELECT 1", {{1}}}
-    , StartOfString ~~ "org.apache.derby." ~~ __ ~~ EndOfString -> {"VALUES 1", {{1}}}
+	StartOfString ~~ "Oracle" ~~ ___ ~~ EndOfString -> {"SELECT 1 FROM DUAL", {{1.}}}
+	, StartOfString ~~ "HSQL Database Engine" ~~ ___ ~~ EndOfString -> {"SELECT 1 FROM INFORMATION_SCHEMA.SYSTEM_USERS", {{1}}}
+    , StartOfString ~~ "Firebird" ~~ ___ ~~ EndOfString -> {"SELECT 1 FROM RDB$RELATIONS WHERE 1=0", {}}
+    , StartOfString ~~ "ACCESS" ~~ ___ ~~ EndOfString -> {"SELECT 1", {{1}}}
+    , StartOfString ~~ "EXCEL" ~~ ___ ~~ EndOfString -> {"SELECT 1", {{1}}}
+    , StartOfString ~~ "Microsoft SQL Server" ~~ ___ ~~ EndOfString -> {"SELECT 1", {{1}}}
+    , StartOfString ~~ "MySQL" ~~ ___ ~~ EndOfString -> {"SELECT 1", {{1}}}
+    , StartOfString ~~ "PostgreSQL" ~~ ___ ~~ EndOfString -> {"SELECT 1", {{1}}}
+    , StartOfString ~~ "SQLite" ~~ ___ ~~ EndOfString -> {"SELECT 1", {{1}}}
+    , StartOfString ~~ "H2" ~~ ___ ~~ EndOfString -> {"SELECT 1", {{1}}}
+    , StartOfString ~~ "Apache Derby" ~~ ___ ~~ EndOfString -> {"VALUES 1", {{1}}}
 	(*, StartOfString ~~ __ ~~ EndOfString -> {"SELECT 1", {{1}}}*)
 };
 
 SQLConnectionUsableQ[conn_SQLConnection] := 
-    SQLConnectionUsableQ[conn, StringCases[conn[[2]]@getClass[]@getName[], $usabilityTests]] /;
+    SQLConnectionUsableQ[conn, StringCases[getRDBMS[conn], $usabilityTests]] /;
     SQLConnectionOpenQ[conn];
     
-SQLConnectionUsableQ[conn_SQLConnection, {}] := 
-    Message[SQLConnectionUsableQ::notest, conn[[2]]@getClass[]@getName[]];
+SQLConnectionUsableQ[conn_SQLConnection, {}] := (
+    Message[SQLConnectionUsableQ::notest, getRDBMS[conn]];
+    (* Fall through to SELECT 1 *)
+    SQLConnectionUsableQ[conn, {"SELECT 1", {{1}}}]
+)
     
 SQLConnectionUsableQ[conn_SQLConnection, {{testSQL_String, res_}}] := 
     SQLConnectionUsableQ[conn, {testSQL, res}];
@@ -707,6 +719,17 @@ SQLConnectionUsableQ[conn_SQLConnection, {testSQL_String, res_}] := (
 )
 
 SQLConnectionUsableQ[_] = False;
+
+(*
+ * Given an SQLConnection returns the RDBMS as a verboseish string.
+ * This is the basic unit of reliability in doing dialect switches.
+ * This works for connections pulled from a pool, or not.
+ *)
+getRDBMS[SQLConnection[_JDBC, conn_?JavaObjectQ, _Integer, ___Rule]] := 
+    getRDBMS[conn];
+
+getRDBMS[conn_?JavaObjectQ] := 
+    conn@getMetaData[]@getDatabaseProductName[];
 
 
 SQLConnectionInformation[SQLConnection[
@@ -812,6 +835,14 @@ $connectionPools = {};
 
 If[!ListQ[$connectionPools], 
   $connectionPools = {};
+];
+
+(*
+ * Maintain mapping of which connections are associated with which pools, so that
+ * we can close connections on pool closure.
+ *)
+If[!MatchQ[$poolToConnections, _Association], 
+  $poolToConnections = Association[];
 ];
 
 SQLConnectionPools[] := $connectionPools;
@@ -976,10 +1007,20 @@ SQLConnectionPoolClose[ SQLConnectionPool[
                       javaObject_?JavaObjectQ,
                       jdbc_JDBC,
                       id_Integer,
-                      options:OptionsPattern[]]] :=  
-
-  Block[{$JavaExceptionHandler = ThrowException},                    
+                      options:OptionsPattern[]]] :=
+  Block[{$JavaExceptionHandler = ThrowException},
     Catch[
+      (* This will close all connections checked out from the pool. The documented Java behavior
+       * is to leave connections "checked out to clients" unaffected by the pool closure; however,
+       * if you try to close one of these connections after the pool is gone you get a
+       * "pool not open" exception. So force closure of all pool connections on pool close.
+       *)
+      If[KeyExistsQ[$poolToConnections, id],
+          (* Lots of Association stuff currently broken ... *)
+          CloseSQLConnection[#] & /@ $poolToConnections[id];
+          (*$poolToConnections = KeyDrop[$poolToConnections, id];*)
+          $poolToConnections = Association[DeleteCases[Normal@$poolToConnections, id -> _]];
+      ];
       javaObject@close[];
       ReleaseJavaObject[javaObject];
       $inTransaction = False;
@@ -987,8 +1028,8 @@ SQLConnectionPoolClose[ SQLConnectionPool[
                                       SQLConnectionPool[
                                       _, 
                                       _,
-                                      id,                                     
-                                      ___Rule]];      
+                                      id,
+                                      ___Rule]];
     ]
   ];
 
@@ -1100,9 +1141,9 @@ Options[ SQLColumn ] =
     { 
       "DataTypeName" -> None, 
       "DataLength" -> None,
-      "Nullable" -> None,
-      "PrimaryKey" -> False,
-      "Default" -> None
+      "Default" -> None,
+      "Nullable" -> False,
+      "PrimaryKey" -> False
     }
 
 Options[ SQLColumns ] = 
@@ -1470,7 +1511,8 @@ SQLColumnInformation[conn_SQLConnection, SQLColumn[{table_String, col_String},__
   SQLColumnInformation[conn, {table, col}, opts]
 
 SQLColumns[conn_SQLConnection, {table_String | table:Null, column_String | column:Null}, opts:OptionsPattern[]] := 
-  Module[ { data, tableIndex, columnIndex, typeIndex, nullableIndex, lengthIndex, useOpts}, 
+  Module[ { data, tableIndex, columnIndex, typeIndex, nullableIndex, lengthIndex, useOpts, catalog, schema,
+  	defIndex}, 
 
     useOpts = canonicalOptions[Flatten[{opts}]];
     catalog = "Catalog" /. useOpts /. Options[ SQLTableInformation ];
@@ -1481,14 +1523,17 @@ SQLColumns[conn_SQLConnection, {table_String | table:Null, column_String | colum
                                                         "ShowColumnHeadings"->True];
     If[data === $Failed, Return[$Failed]];
     
-    {tableIndex, columnIndex, typeIndex, nullableIndex, lengthIndex} =
+    {tableIndex, columnIndex, typeIndex, nullableIndex, lengthIndex, defIndex} =
        Flatten[Position[ToUpperCase /@ data[[1]], #] & /@ 
-         {"TABLE_NAME", "COLUMN_NAME", "TYPE_NAME", "NULLABLE", "COLUMN_SIZE"}];
+         {"TABLE_NAME", "COLUMN_NAME", "TYPE_NAME", "NULLABLE", "COLUMN_SIZE", "COLUMN_DEF"}];
        
     data = SQLColumn[{#[[tableIndex]], #[[columnIndex]]}, 
              "DataTypeName" -> #[[typeIndex]],
-             "Nullable" -> #[[nullableIndex]],
-             "DataLength" -> #[[lengthIndex]]] & /@ Drop[data, 1]       
+             "DataLength" -> #[[lengthIndex]],
+             "Default" -> #[[defIndex]],
+             "Nullable" -> #[[nullableIndex]]
+             
+] & /@ Drop[data, 1]
   ]
 
 SQLColumns[conn_SQLConnection, opts:OptionsPattern[]] := 
@@ -1571,13 +1616,13 @@ SQLColumnPrivileges[conn_SQLConnection, opts:OptionsPattern[]] :=
 SQLColumnPrivileges[conn_SQLConnection, table_String, opts:OptionsPattern[]] := 
   SQLColumnPrivileges[conn, {table, Null}, opts]
 
-SQLColumnPrivileges[conn_SQLConnection, SQLTable[table_String ,___Rule], opts:OptionsPattern[]] := 
+SQLColumnPrivileges[conn_SQLConnection, SQLTable[table_String, ___Rule], opts:OptionsPattern[]] := 
   SQLColumnPrivileges[conn, {table, Null}, opts]
 
-SQLColumnPrivileges[conn_SQLConnection, SQLColumn[col_String,___Rule ], opts:OptionsPattern[]] := 
+SQLColumnPrivileges[conn_SQLConnection, SQLColumn[col_String, ___Rule], opts:OptionsPattern[]] := 
   SQLColumnPrivileges[conn, {Null, col}, opts]
 
-SQLColumnPrivileges[conn_SQLConnection, SQLColumn[{table_String, col_String},___Rule ], opts:OptionsPattern[]] := 
+SQLColumnPrivileges[conn_SQLConnection, SQLColumn[{table_String, col_String}, ___Rule], opts:OptionsPattern[]] := 
   SQLColumnPrivileges[conn, {table, col}, opts]
 
 
@@ -1713,12 +1758,12 @@ Options[ SQLSelect ] =
     { 
       "SortingColumns" -> None, 
       "ColumnSymbols" -> None, 
-      "Distinct"->False,
-      "EscapeProcessing"->True,
-      "FetchDirection"->"Forward",
-      "FetchSize"->Automatic, 
+      "Distinct" -> False,
+      "EscapeProcessing" -> True,
+      "FetchDirection" -> "Forward",
+      "FetchSize" -> Automatic, 
       "GetAsStrings" -> False, 
-      "MaxFieldSize"->Automatic,
+      "MaxFieldSize" -> Automatic,
       "MaxRows" -> Automatic, 
       "ShowColumnHeadings" -> False,
       "Timeout" :> $SQLTimeout,
@@ -1764,7 +1809,7 @@ SQLCreateTable[conn_SQLConnection,
       SQLBeginTransaction[conn];
       res = SQLExecute[conn, "CREATE TABLE `1` ( " <> cols <> ")", {tbl}, "Timeout" -> timeout];
       If[index =!= {None},
-        SQLExecute[conn, "CREATE INDEX " <> First@index <> "_idx" <> " ON `1` (" <>  StringJoin @@ Riffle[index, ","] <> ")", 
+        SQLExecute[conn, "CREATE INDEX " <> (tbl /. SQLTable[t_] :> t) <> First@index <> "_idx" <> " ON `1` (" <>  StringJoin @@ Riffle[index, ","] <> ")", 
         	{tbl}, 
         	"Timeout" -> timeout
         ]
@@ -2083,7 +2128,134 @@ SQLUpdate[ conn_SQLConnection,
 (*================== FORMATTING AND CONVERSION ======================*)
 (*===================================================================*)
 
-Format[ SQLResultSet[ i_Integer, rs_?JavaObjectQ ] ] := 
+summaryBoxIcon = Graphics[{Thickness[0.0625], 
+  Style[{FilledCurve[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, 
+      {0, 1, 0}}}, {{{15.236999999999998, 15.07}, {11.078, 17.829}, {11.078, 
+      15.975000000000001}, {1.625, 15.975000000000001}, {1.625, 14.165000000000001}, 
+      {11.078, 14.165000000000001}, {11.078, 12.31}, {15.236999999999998, 15.07}}}], 
+    FilledCurve[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 
+      1, 0}}}, {{{0., 9.792}, {4.159, 7.033}, {4.159, 8.887}, {13.612, 8.887}, {13.612, 
+      10.697}, {4.159, 10.697}, {4.159, 12.551}, {0., 9.792}}}], 
+    FilledCurve[{{{1, 4, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {0, 
+      1, 0}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {0, 1, 0}, 
+      {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {0, 1, 0}, {1, 3, 
+      3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {0, 1, 0}}}, 
+     {{{2.4789999999999996, 1.508}, {2.504, 1.327}, {2.554, 1.1920000000000002}, {2.63, 
+      1.103}, {2.7670000000000003, 0.9390000000000001}, {3.002, 0.8580000000000001}, 
+      {3.3339999999999996, 0.8580000000000001}, {3.533, 0.8580000000000001}, {3.695, 
+      0.88}, {3.82, 0.923}, {4.055, 1.005}, {4.1739999999999995, 1.1580000000000001}, 
+      {4.1739999999999995, 1.3820000000000001}, {4.1739999999999995, 1.513}, 
+      {4.114999999999999, 1.613}, {4., 1.6860000000000002}, {3.885, 1.755}, {3.701, 
+      1.817}, {3.4499999999999997, 1.87}, {3.022, 1.9649999999999999}, {2.601, 2.058}, 
+      {2.3109999999999995, 2.159}, {2.154, 2.269}, {1.887, 2.4499999999999997}, {1.754, 
+      2.7359999999999998}, {1.754, 3.125}, {1.754, 3.4789999999999996}, 
+      {1.8840000000000001, 3.773}, {2.145, 4.009}, {2.4059999999999997, 4.243}, {2.789, 
+      4.359999999999999}, {3.295, 4.359999999999999}, {3.718, 4.359999999999999}, {4.077, 
+      4.25}, {4.376, 4.028}, {4.6739999999999995, 3.808}, {4.83, 3.4859999999999998}, 
+      {4.843999999999999, 3.065}, {4.05, 3.065}, {4.035, 3.304}, {3.928, 3.473}, {3.73, 
+      3.573}, {3.598, 3.64}, {3.4339999999999997, 3.673}, {3.238, 3.673}, 
+      {3.0189999999999997, 3.673}, {2.8449999999999998, 3.63}, {2.715, 3.544}, {2.584, 
+      3.4579999999999997}, {2.5189999999999997, 3.3379999999999996}, {2.5189999999999997, 
+      3.184}, {2.5189999999999997, 3.042}, {2.583, 2.9359999999999995}, 
+      {2.7119999999999997, 2.867}, {2.794, 2.82}, {2.969, 2.766}, {3.238, 
+      2.7030000000000003}, {3.9319999999999995, 2.5389999999999997}, {4.237, 2.468}, 
+      {4.465, 2.3719999999999994}, {4.616999999999999, 2.252}, {4.853, 2.065}, 
+      {4.971000000000001, 1.796}, {4.971000000000001, 1.4429999999999998}, 
+      {4.971000000000001, 1.082}, {4.831, 0.7809999999999999}, {4.552, 0.543}, {4.272, 
+      0.304}, {3.877, 0.185}, {3.367, 0.185}, {2.8449999999999998, 0.185}, 
+      {2.4359999999999995, 0.302}, {2.137, 0.537}, {1.839, 0.772}, {1.689, 1.097}, 
+      {1.689, 1.508}, {2.4789999999999996, 1.508}}}], 
+    FilledCurve[{{{1, 4, 3}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {1, 3, 3}, {1, 3, 3}, {1, 
+      3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}, {{1, 4, 
+      3}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, 
+      {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}, {1, 3, 3}}}, 
+     {{{8.173, 0.912}, {8.220999999999998, 0.925}, {8.283, 0.9470000000000001}, 
+      {8.359000000000002, 0.979}, {7.958, 1.36}, {8.383000000000001, 1.804}, {8.785, 
+      1.4249999999999998}, {8.847999999999999, 1.554}, {8.892000000000001, 1.667}, 
+      {8.917, 1.764}, {8.956000000000001, 1.908}, {8.976, 2.077}, {8.976, 2.27}, {8.976, 
+      2.715}, {8.885000000000002, 3.0589999999999997}, {8.703, 3.3009999999999997}, 
+      {8.522, 3.543}, {8.256, 3.665}, {7.907, 3.665}, {7.579000000000001, 3.665}, {7.318, 
+      3.548}, {7.122999999999999, 3.3149999999999995}, {6.927, 3.083}, {6.83, 2.734}, 
+      {6.83, 2.27}, {6.83, 1.728}, {6.970000000000001, 1.34}, {7.2490000000000006, 
+      1.105}, {7.430000000000001, 0.9530000000000001}, {7.646999999999999, 
+      0.8770000000000001}, {7.899, 0.8770000000000001}, {7.994, 0.8770000000000001}, 
+      {8.086, 0.889}, {8.173, 0.912}}, {{9.674, 1.4429999999999998}, {9.604, 
+      1.2169999999999999}, {9.502, 1.028}, {9.366000000000001, 0.8780000000000001}, 
+      {9.821, 0.45}, {9.389000000000001, 0.}, {8.914, 0.451}, {8.769, 0.363}, 
+      {8.642999999999999, 0.301}, {8.537999999999998, 0.265}, {8.360000000000001, 
+      0.20600000000000002}, {8.147999999999998, 0.17600000000000002}, {7.901000000000001, 
+      0.17600000000000002}, {7.385, 0.17600000000000002}, {6.958, 0.32999999999999996}, 
+      {6.6209999999999996, 0.638}, {6.213, 1.009}, {6.009, 1.553}, {6.009, 2.27}, {6.009, 
+      2.9939999999999998}, {6.218, 3.541}, {6.636, 3.9109999999999996}, 
+      {6.979000000000001, 4.2139999999999995}, {7.404, 4.364999999999999}, {7.912, 
+      4.364999999999999}, {8.425, 4.364999999999999}, {8.854000000000001, 4.205}, 
+      {9.200999999999999, 3.885}, {9.602, 3.5149999999999997}, {9.803, 
+      2.9959999999999996}, {9.803, 2.3299999999999996}, {9.803, 1.978}, {9.76, 
+      1.6820000000000002}, {9.674, 1.4429999999999998}}}]}, 
+   FaceForm[RGBColor[0.5, 0.5, 0.5, 1.]]], 
+  Style[{FilledCurve[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
+      0}}}, {{{11.039, 4.245}, {11.866000000000001, 4.245}, {11.866000000000001, 0.998}, 
+      {13.842, 0.998}, {13.842, 0.28600000000000003}, {11.039, 0.28600000000000003}, 
+      {11.039, 4.245}}}]}, FaceForm[RGBColor[0.5, 0.5, 0.5, 1.]]]}, 
+ PlotRangePadding -> 4, Background -> GrayLevel[0.93], Axes -> False, AspectRatio -> 1, 
+ ImageSize -> {Automatic, Dynamic[3.5*(CurrentValue["FontCapHeight"]/
+      AbsoluteCurrentValue[Magnification])]}, Frame -> True, FrameTicks -> None, 
+ FrameStyle -> Directive[Thickness[Tiny], GrayLevel[0.7 ]]];
+
+SQLResultSet /: MakeBoxes[
+    SQLResultSet[
+        id_Integer,
+        rs_Symbol,
+        opts___?BoxForm`HeldOptionQ
+    ],
+    StandardForm] := Module[
+    
+    {icon = summaryBoxIcon, mode = "", fd = "", fs = "", sometimesOpts, 
+    	o = canonicalOptions[Join[Flatten[{opts}], Options[SQLResultSet]]], oPrime},
+
+    If[JavaObjectQ[rs] && rs =!= Null,
+        (* fs = ... *)
+        mode = Quiet@Switch[rs@getType[],
+            1003, "ForwardOnly",
+            1004, "ScrollInsensitive",
+            1005, "ScrollSensitive",
+            _, Style["Unknown Mode", {Italic, GrayLevel[0.55]}]
+        ];
+        fd = Quiet@Switch[rs@getFetchDirection[],
+        	1000, "Forward",
+        	1001, "Reverse",
+        	1002, "Unknown",
+            _, ""
+        ];
+        fs = With[{i = Quiet[rs@getFetchSize[]]}, If[IntegerQ[i], i, ""]];,
+        (* else *)
+        mode = Style["Closed", {Italic, GrayLevel[0.55]}]
+    ];
+
+    sometimesOpts = Sort[
+        DeleteCases[Options[SQLResultSet][[All, 1]], Alternatives @@ {
+            "FetchDirection"
+        }]
+    ];
+
+    oPrime = FilterRules[Join[{"FetchSize" -> fs}, o], Options[SQLResultSet]];
+    
+    BoxForm`ArrangeSummaryBox[SQLResultSet, 
+        SQLResultSet[id, rs, opts],
+        icon,
+        (* Always *)
+        {
+            {BoxForm`SummaryItem[{"Mode: ", mode}], BoxForm`SummaryItem[{"ID: ", id}]},
+            {BoxForm`SummaryItem[{"FetchDirection: ", fd}], ""}
+        },
+        (* Sometimes *)
+        BoxForm`SummaryItem[{# <> ": ", # /. oPrime /. {Null -> "", None -> ""}}] & /@ sometimesOpts,
+
+        StandardForm
+    ]
+]
+
+(*Format[ SQLResultSet[ i_Integer, rs_?JavaObjectQ ] ] := 
   Module[{}, 
     Switch[rs@getType[], 
       1003, 
@@ -2095,9 +2267,65 @@ Format[ SQLResultSet[ i_Integer, rs_?JavaObjectQ ] ] :=
       _, 
         SQLResultSet[ i, "<>", "Unknown Mode"]
     ]
-  ]
+  ]*)
 
-Format[ SQLConnection[ _JDBC, conn_, id_Integer, opts:OptionsPattern[]]] := 
+SQLConnection /: MakeBoxes[
+	SQLConnection[
+		j:JDBC[_String, _String],
+		conn_Symbol,
+		id_Integer,
+		opts___?BoxForm`HeldOptionQ
+	],
+	StandardForm] := Module[
+	
+	{name, icon = summaryBoxIcon, til = "", status = Style["Closed", {Italic, GrayLevel[0.55]}], 
+		catalog = "", ro = "", sometimesOpts, o = canonicalOptions[Flatten[{opts}]], oPrime},
+
+    name = "Name" /. o /. Options[SQLConnection]; 
+
+    If[JavaObjectQ[conn] && conn =!= Null && !conn@isClosed[],
+		status = Style["Open", {Black, Bold}];
+		catalog = With[{c = conn@getCatalog[]}, If[StringQ[c], c, ""]];
+        ro = conn@isReadOnly[];
+        (* Not all drivers implement this method, so Quiet here *)
+        til = Quiet@Switch[conn@getTransactionIsolation[],
+            2, "ReadCommitted",
+            4, "RepeatableRead",
+            8, "Serializable",
+            _, Null
+        ],
+        (* else *)
+        Null
+    ];
+
+    sometimesOpts = Sort[
+		DeleteCases[Options[SQLConnection][[All, 1]], Alternatives @@ {
+	    	"Catalog",
+	    	"Name",
+	    	"Username",
+	    	"Password",
+	    	"Properties"
+        }]
+    ];
+
+    oPrime = FilterRules[Join[{"ReadOnly" -> ro, "TransactionIsolationLevel" -> til}, o], Options[SQLConnection]];
+    
+    BoxForm`ArrangeSummaryBox[SQLConnection, 
+    	SQLConnection[j, conn, id, opts],
+    	icon,
+    	(* Always *)
+    	{
+    		{BoxForm`SummaryItem[{"Name: ", name}], BoxForm`SummaryItem[{"ID: ", id}]},
+            {BoxForm`SummaryItem[{"Status: ", status}], BoxForm`SummaryItem[{"Catalog: ", catalog}]}
+    	},
+    	(* Sometimes *)
+    	BoxForm`SummaryItem[{# <> ": ", # /. oPrime /. {Null -> "", None -> ""}}] & /@ sometimesOpts,
+
+        StandardForm
+    ]
+]
+
+(*Format[ SQLConnection[ _JDBC, conn_, id_Integer, opts:OptionsPattern[]]] := 
   Module[{name}, 
     name = "Name" /. canonicalOptions[Flatten[{opts}]] /. Options[ SQLConnection ]; 
     If[JavaObjectQ[conn], 
@@ -2116,9 +2344,56 @@ Format[ SQLConnection[ _JDBC, conn_, id_Integer, opts:OptionsPattern[]]] :=
       ],
       SQLConnection[ name, id, "Closed", "<>" ]
     ]
-  ]
+  ]*)
 
-Format[ SQLServer[ server_, id_Integer, opts:OptionsPattern[]]] := 
+SQLServer /: MakeBoxes[
+    SQLServer[
+        server_Symbol,
+        id_Integer,
+        opts___?BoxForm`HeldOptionQ
+    ],
+    StandardForm] := Module[
+    
+    {name, addr = "", port = "", icon = summaryBoxIcon, status = Style["Unavailable", {Italic, GrayLevel[0.55]}],
+        sometimesOpts, o = canonicalOptions[Join[Flatten[{opts}], Options[SQLServer]]], oPrime},
+    
+    name = "Name" /. o;
+    
+    If[JavaObjectQ[server] && server =!= Null,
+        status = server@getStateDescriptor[] /. {
+            "ONLINE" -> Style["Online", {Black, Bold}],
+            "SHUTDOWN" -> Style["Shutdown", {Black, Bold}]
+        };
+        addr = server@getAddress[];
+        port = server@getPort[],
+        (* else *)
+        Null
+    ];
+
+    sometimesOpts = Sort[
+        DeleteCases[Options[SQLServer][[All, 1]], Alternatives @@ {
+        	"Name"
+        }]
+    ];
+
+    oPrime = FilterRules[Join[{"Address" -> addr, "Port" -> port}, o], Options[SQLServer]];
+    
+    BoxForm`ArrangeSummaryBox[SQLServer, 
+        SQLServer[server, id, opts],
+        icon,
+        (* Always *)
+        {
+            {BoxForm`SummaryItem[{"Name: ", name}], BoxForm`SummaryItem[{"ID: ", id}]},
+            {BoxForm`SummaryItem[{"Status: ", status}], ""}
+        },
+        (* Sometimes *)
+        BoxForm`SummaryItem[{# <> ": ", # /. oPrime /. {Null -> "", None -> ""}}] & /@ sometimesOpts,
+
+        StandardForm
+    ]
+]
+
+(*Format[ SQLServer[ server_, id_Integer, opts:OptionsPattern[]]] := 
   Module[{name}, 
     name = "Name" /. canonicalOptions[Flatten[{opts}]] /. Options[ SQLServer ]; 
     If[JavaObjectQ[server], 
@@ -2128,13 +2403,54 @@ Format[ SQLServer[ server_, id_Integer, opts:OptionsPattern[]]] :=
       ],
       SQLConnection[ name, id, "Unavailable", "<>" ]
     ]
-  ]  
+  ]*)
 
-Format[ SQLSavepoint[_, opts:OptionsPattern[]]] := 
+SQLSavepoint /: MakeBoxes[
+    SQLSavepoint[
+        sp_Symbol,
+        opts___?BoxForm`HeldOptionQ
+    ],
+    StandardForm] := Module[
+    
+    {name, id = "", icon = summaryBoxIcon, sometimesOpts, 
+    	o = canonicalOptions[Join[Flatten[{opts}], Options[SQLSavepoint]]], oPrime},
+    
+    name = "Name" /. o; 
+    
+    If[JavaObjectQ[sp] && sp =!= Null,
+        id = Quiet[sp@getSavepointId[]] /. $Failed -> "",
+        (* else *)
+        Null
+    ];
+
+    sometimesOpts = Sort[
+        DeleteCases[Options[SQLSavepoint][[All, 1]], Alternatives @@ {
+            "Name"
+        }]
+    ];
+
+    oPrime = FilterRules[Join[{}, o], Options[SQLSavepoint]];
+    
+    BoxForm`ArrangeSummaryBox[SQLSavepoint,
+        SQLSavepoint[sp, opts],
+        icon,
+        (* Always *)
+        {
+            {BoxForm`SummaryItem[{"Name: ", name}], BoxForm`SummaryItem[{"ID: ", id}]}
+            (*,{BoxForm`SummaryItem[{"Status: ", status}], ""}*)
+        }
+        (* Sometimes *)
+        , BoxForm`SummaryItem[{# <> ": ", # /. oPrime /. {Null -> "", None -> ""}}] & /@ sometimesOpts
+
+        , StandardForm
+    ]
+]
+
+(*Format[ SQLSavepoint[_, opts:OptionsPattern[]]] := 
   Module[{name}, 
     name = "Name" /. canonicalOptions[Flatten[{opts}]] /. Options[ SQLSavepoint ]; 
     SQLSavepoint[ name, "<>" ]
-  ]  
+  ]*)
 
 (*===================================================================*)
 (*================= SQLExecute ======================================*)
@@ -2158,7 +2474,7 @@ SQLExecute[ SQLConnection[ JDBC[driver_, ___], connection_, _Integer, ___Rule], 
     Module[{sql = ps, params, useOpts, maxrows, 
             timeout, gas, sch, rrs, rrsBool, rsc = 1007, rst = 1003,
             mfs, fs, fd, ep, rgk, result, cols, cs, results, bs, jb,
-            args = argsArg /. None -> {}, useLongs},
+            args = argsArg /. None -> {}, useLongs, rdbms = getRDBMS[connection]},
             
       Block[{$JavaExceptionHandler = ThrowException},
         Catch[
@@ -2257,7 +2573,7 @@ SQLExecute[ SQLConnection[ JDBC[driver_, ___], connection_, _Integer, ___Rule], 
           (* Thin databases like SQLite don't support all options.
            * Clobber the unimplemented ones before handing off to Java.
            *)
-          If[StringMatchQ[connection@getClass[]@getName[], Alternatives @@ $sqliteClassPatterns],
+          If[StringMatchQ[rdbms, "SQLite*"],
               ep = -1;
               fd = -1;
           ];
@@ -2266,14 +2582,14 @@ SQLExecute[ SQLConnection[ JDBC[driver_, ___], connection_, _Integer, ___Rule], 
            * so attempts to insert Mathematica integers fail.  Tell Java to fall back on setInt().
            *)
           useLongs = "UseLongs" /. useOpts /. Options[SQLExecute] /. {
-              "UseLongs" :> False /; StringMatchQ[connection@getClass[]@getName[], Alternatives @@ $odbcClassPatterns],
+              "UseLongs" :> False /; StringMatchQ[rdbms, Alternatives @@ {"Microsoft Access*", "Microsoft Excel*"}],
               "UseLongs" -> True
           };
           
           (* The ODBC Microsoft Access driver and ODBC Excel driver don't support inline multirow inserts;
            * issue a message if detected.
            *)
-          If[params === {{}} && StringMatchQ[connection@getClass[]@getName[], Alternatives @@ $odbcClassPatterns]
+          If[params === {{}} && StringMatchQ[rdbms, Alternatives @@ {"Microsoft Access*", "Microsoft Excel*"}]
               && StringMatchQ[sql, RegularExpression["^(?i)INSERT\\s.*VALUES\\s+(\\(.+\\),\\s*)+\\(.+\\)$"]],
               Message[SQLExecute::multirowodbc];
           ];
@@ -2283,11 +2599,11 @@ SQLExecute[ SQLConnection[ JDBC[driver_, ___], connection_, _Integer, ___Rule], 
           LoadJavaClass["com.wolfram.databaselink.SQLStatementProcessor"];
           
           (* You can enable streaming result sets on many drivers by setting the appropriate options
-           * (e.g. TYPE_FORWARD_ONLY for Oracle).
+           * (e.g. "ForwardOnly"/TYPE_FORWARD_ONLY for Oracle).
            * However MySQL requires some weird settings and a special unprepared statement code path.
            *)
           If[rrs === {"MySQLStreaming"} && params === {{}} && 
-            StringMatchQ[connection@getClass[]@getName[], Alternatives @@ $streamingMySQLClassPatterns],
+            StringMatchQ[rdbms, "MySQL*"],
               (* rst set above *)
               rsc = 1007; (* present default, hard-coded in SQLExecute *)
               fs = -2^31; (* Integer.MIN_VALUE, required by driver, note Java has to handle values < 0 *)
@@ -2295,7 +2611,7 @@ SQLExecute[ SQLConnection[ JDBC[driver_, ___], connection_, _Integer, ___Rule], 
                 connection, sql, TrueQ[gas], TrueQ[sch], TrueQ[rrsBool], TrueQ[rgk], maxrows, timeout, rst, rsc, ep, fd, fs, mfs];,
 
               (* else *)
-	          (* Batching the inserts on the Mathematica side to reduce JLink memory usage.
+	          (* Batch the inserts on the Mathematica side to reduce JLink memory usage.
 	           * This could potentially cause problems if someone asks for a result set on an insert operation,
 	           * but the Java side can't deal with that anyway.
 	           * 
@@ -2313,10 +2629,17 @@ SQLExecute[ SQLConnection[ JDBC[driver_, ___], connection_, _Integer, ___Rule], 
 	              ], 1],
 	
 	              (* else *)
-	              result = SQLStatementProcessor`processSQLStatement[
-	                  connection, sql, params, TrueQ[gas], TrueQ[sch], TrueQ[rrsBool], TrueQ[rgk], TrueQ[useLongs],
-	                  maxrows, timeout, rst, rsc, ep, fd, fs, mfs, bs
-	              ];
+	              (* Escape processing can be set to false only for unprepared statements *)
+	              If[ep != 1 && params == {{}},
+                      result = SQLStatementProcessor`processUnpreparedSQLStatement[
+                          connection, sql, TrueQ[gas], TrueQ[sch], TrueQ[rrsBool], TrueQ[rgk], 
+                          maxrows, timeout, rst, rsc, ep, fd, fs, mfs
+                      ],
+                      result = SQLStatementProcessor`processSQLStatement[
+                          connection, sql, params, TrueQ[gas], TrueQ[sch], TrueQ[rrsBool], TrueQ[rgk], TrueQ[useLongs],
+                          maxrows, timeout, rst, rsc, ep, fd, fs, mfs, bs
+                      ]
+	              ]
 	          ];
           ];
 
@@ -2367,7 +2690,7 @@ SQLExecute[queryName_String] :=
  * by e.g. DatabaseExplorer to programmatically construct queries that
  * will work without an active connection. --dillont
  *)
-SQLExecute[SQLSelect[connName_String,
+SQLExecute[SQLSelect[connName:(_String|_JDBC),
                      table:(_SQLTable | {__SQLTable} | _String | {__String}),
                      columns:(_SQLColumn | {__SQLColumn}),
                      condition_,
@@ -2379,7 +2702,7 @@ SQLExecute[SQLSelect[connName_String,
   ]
 
 SQLExecute[conn_SQLConnection, 
-           SQLSelect[connName_String,
+           SQLSelect[connName:(_String|_JDBC),
                      table:(_SQLTable | {__SQLTable} | _String | {__String}),
                      columns:(_SQLColumn | {__SQLColumn}),
                      condition_,
@@ -3142,5 +3465,6 @@ SQLServerInformation[ SQLServer[
                       ___Rule]] := 
   {{"ADDRESS", "PORT", "PRODUCT_NAME", "PRODUCT_VERSION", "PROTOCOL", "SECURE_SOCKETS", "STATE"}, 
    {server@getAddress[], server@getPort[], server@getProductName[], server@getProductVersion[], server@getProtocol[], server@isTls[], server@getStateDescriptor[]}}
+
 
 End[] (* `SQL`Private` *)

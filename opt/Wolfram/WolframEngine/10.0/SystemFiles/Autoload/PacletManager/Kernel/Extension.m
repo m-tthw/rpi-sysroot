@@ -32,9 +32,10 @@
         Context -> _String | {(_String | {_String, _String})..},  [opt, but useless without]
         Root -> _String,                                          [opt: defaults to ".". I like Kernel better, but that
                                                                    has compatibility issues with legacy ($Path-based) apps]
-        MathematicaVersion -> _String,                            [opt: defaults to All]
+        WolframVersion -> _String,                            [opt: defaults to All]
         SystemID -> _String | {__String},                         [opt: defaults to All]
         Symbols -> _String | Symbol | {(_String | Symbol)..}      [opt, but required for autoloading]
+        HiddenImport -> True | False                              [opt; defaults to False; rarely used]
     }
 
     {"LibraryLink",
@@ -42,13 +43,13 @@
           .. I don't think I will require, or even support, the listing of library names.
              Seems sensible to not require it, but then why support it at all? I still need to
              search FileExistsQ for everything.
-        MathematicaVersion -> _String,            [opt: defaults to All]
+        WolframVersion -> _String,            [opt: defaults to All]
         SystemID -> _String | {__String}          [opt: defaults to All]
     }
 
     {"JLink",
         Root -> _String                      [opt: defaults to Java]
-        MathematicaVersion -> _String,       [opt: defaults to All]
+        WolframVersion -> _String,       [opt: defaults to All]
         SystemID -> _String | {__String}     [opt: defaults to All]
     }
 
@@ -95,7 +96,13 @@ EXTgetProperty[ext:{"JLink", ___}, "Root"] := "Root" /. Rest[ext] /. "Root" -> $
 EXTgetProperty[ext:{"LibraryLink", ___}, "Root"] := "Root" /. Rest[ext] /. "Root" -> $defaultLibraryRoot
 EXTgetProperty[ext:{"FrontEnd", ___}, "Root"] := "Root" /. Rest[ext] /. "Root" -> $defaultFrontEndRoot
 EXTgetProperty[ext_, "Root"] := "Root" /. Rest[ext] /. "Root" -> "."
-
+(* Special rule to support older paclets that use "MathematicaVersion" instead of "WolframVersion". *)
+EXTgetProperty[ext_, "WolframVersion", default_] := 
+    (
+        If[# =!= "MathematicaVersion", Return[#]]& ["MathematicaVersion" /. Rest[ext]];
+        If[# =!= "WolframVersion", Return[#]]& ["WolframVersion" /. Rest[ext]];
+        default
+    )
 
 (****  WORKING (to my knowledge), but UNUSED
 EXThasNamedDocResource[ext:{"Documentation", ___}, requestedResourceName_String, ignoreCase:(True | False)] :=

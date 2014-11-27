@@ -1,4 +1,4 @@
-(* Mathematica HTTPClient Package *)
+(* Wolfram HTTPClient Package *)
 
 
 BeginPackage["HTTPClient`OAuth`"]
@@ -159,7 +159,8 @@ loadLibOAuth[___] := $Failed
 
 == ========================================================================= *)
 
-urlEscape[s_String] :=
+urlEscape[s_String]:=System`URLEncode[s]
+(*urlEscape[s_String] :=
     StringReplace[s,
         {
             " "->"+",
@@ -167,7 +168,7 @@ urlEscape[s_String] :=
                 "%" <> ToUpperCase[IntegerString[ToCharacterCode["$0"][[1]],16]]
         }
     ]
-
+*)
 urlEscape[x_List] := urlEscape[StringJoin @@ (ToString /@ x)]
 
 urlEncode[s_String] := urlEscape[s]

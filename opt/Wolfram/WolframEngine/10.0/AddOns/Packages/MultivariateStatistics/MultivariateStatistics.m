@@ -28,7 +28,10 @@ vector-valued or multivariate observations.
 
 (* :Mathematica Version: 8.0 *)
 
-
+(* force the MV variant of Ellipsoid usage to be ignored *)
+MessageName[Ellipsoid, "usage"];
+MessageName[MultivariateStatistics`Ellipsoid, "usage"];
+Remove["MultivariateStatistics`Ellipsoid"];
 
 BeginPackage["MultivariateStatistics`",
 	{(* needed for ConvexHull *)
@@ -46,7 +49,8 @@ MultinomialDistribution;
 
 If[FileType[ToFileName[{System`Private`$MessagesDir,$Language},"Usage.m"]]===File,
 Select[FindList[ToFileName[{System`Private`$MessagesDir,$Language},"Usage.m"],"MultivariateStatistics`"],
-StringMatchQ[#,StartOfString~~"MultivariateStatistics`*"]&]//ToExpression;
+(StringMatchQ[#,StartOfString~~"MultivariateStatistics`*"] &&
+!StringMatchQ[#,"MultivariateStatistics`Ellipsoid:*"])&]//ToExpression;
 ];
 
 Get[ToFileName["MultivariateStatistics","MultiDescriptiveStatistics.m"]]
@@ -56,3 +60,4 @@ Get[ToFileName["MultivariateStatistics","MultinormalDistribution.m"]]
 Get[ToFileName["MultivariateStatistics","MultiDiscreteDistributions.m"]]
 
 EndPackage[]
+

@@ -1,6 +1,6 @@
-72c00f8ec40ba10ab73c440de39f535b  usr/lib/python3/dist-packages/RPi.GPIO-0.5.5.egg-info
-2371857de0093345db60ae63a7e3620e  usr/lib/python3/dist-packages/RPi/GPIO.cpython-32mu.so
+ebfe9e098c8b284591cee4692dd447fc  usr/lib/python3/dist-packages/RPi.GPIO-0.5.6.egg-info
+600cb0951c9d84ca6cab52729754a0bd  usr/lib/python3/dist-packages/RPi/GPIO.cpython-32mu.so
 d41d8cd98f00b204e9800998ecf8427e  usr/lib/python3/dist-packages/RPi/__init__.py
-82807f61c11dcf6be2c7a76bfdac5c43  usr/share/doc/python3-rpi.gpio/changelog.Debian.gz
-5c79a6c161057d8b383fe44ffc96350d  usr/share/doc/python3-rpi.gpio/changelog.gz
+18578006f4345a1a1c2b616c17d35322  usr/share/doc/python3-rpi.gpio/changelog.Debian.gz
+af5307d860aa2184bf1d6c98d77b16d8  usr/share/doc/python3-rpi.gpio/changelog.gz
 c25436591b03e5d7d6ac454c4d531d49  usr/share/doc/python3-rpi.gpio/copyright

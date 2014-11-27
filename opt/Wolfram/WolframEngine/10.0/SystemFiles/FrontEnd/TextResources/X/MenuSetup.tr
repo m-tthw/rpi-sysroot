@@ -2,38 +2,39 @@ Menu["Menu for the X Front End",
 {
 	Menu["&File", 
 	{
-		Menu["New",
+		Menu["&New",
 		{
 			MenuItem["&Notebook (.nb)", "New", MenuKey["n", Modifiers->{"Control"}]],
 			MenuItem["&Slide Show...", FrontEndExecute[{FrontEnd`NotebookOpen[FrontEnd`FindFileOnPath["SlideShowChooser.nb", "PalettePath"]]}]],
+			MenuItem["Te&mplate Notebook", KernelExecute[NotebookTemplating`CreateTemplateNotebook[]], MenuEvaluator->"System", Method -> "Queued"],
+			MenuItem["Testing Notebook", KernelExecute[Block[{$ContextPath}, Needs["MUnit`"]; MUnit`PaletteNewTestNotebook[]]], MenuEvaluator->"System"],
 			MenuItem["&Demonstration", KernelExecute[FrontEnd`Private`PutDemonstrationsTemplate[]], MenuEvaluator -> "System"],
 			Delimiter,
 			MenuItem["St&yled Notebook...", FrontEndExecute[{FrontEnd`NotebookOpen[FrontEnd`FindFileOnPath["StylesheetChooser.nb", "PalettePath"]]}]],
 			Delimiter,
-			MenuItem["&Package (.m)", "NewPackage"],
+			MenuItem["&Package (.wl)", "NewPackage"],
 			MenuItem["&Text File (.txt)", "NewText"]
 		}],
-		MenuItem["&Open...", "Open", MenuKey["o", Modifiers->{"Control"}]],
+		MenuItem["Open", "MenuListOpenItems", MenuAnchor->True],
 		MenuItem["&Close", "Close", MenuKey["w", Modifiers->{"Control"}]],
-		MenuItem["&Save", "Save", MenuKey["s", Modifiers->{"Control"}]],
-		MenuItem["Save &As...", "SaveRename", MenuKey["S", Modifiers->{"Control", "Shift"}]],
-		MenuItem["Save Selection As...", "SelectionSaveSpecial"],
+		MenuItem["Save", "MenuListSaveItems", MenuAnchor->True],
+		MenuItem["Save Se&lection As...", "SelectionSaveSpecial", RemoveMask->{"NoLocalFileAccess"}],
 		MenuItem["Re&vert...", "Revert"],
 		Delimiter,
 		Menu["CD&F Preview",
 		{
 			MenuItem["Preview", "MenuListCDFPreview", MenuAnchor->True]
-		}],
+		}, RemoveMask->{"NoLocalFileAccess"}],
 		Menu["C&DF Export",
 		{
 			MenuItem["&Web Embeddable...", "DeployEmbedded"],
 			MenuItem["&Standalone...", "DeployStandalone"]
-		}],
+		}, RemoveMask->{"NoLocalFileAccess"}],
 		Delimiter,
-		MenuItem["Install...", FrontEndExecute[{FrontEnd`NotebookOpen[
-			FrontEnd`FindFileOnPath["InstallDialog.nb", "PrivatePathsSystemResources"]]}]],
+		MenuItem["&Install...", FrontEndExecute[{FrontEnd`NotebookOpen[
+			FrontEnd`FindFileOnPath["InstallDialog.nb", "PrivatePathsSystemResources"]]}], RemoveMask->{"NoLocalFileAccess"}],
 		Delimiter,
-		Menu["Printing Settings",
+		Menu["Printin&g Settings",
 		{
 			MenuItem["Page &Setup...", "SystemPrintOptionsDialog"],
 			MenuItem["Printing &Options...", "PrintOptionsDialog"],
@@ -47,7 +48,7 @@ Menu["Menu for the X Front End",
 		}],
 		MenuItem["&Print...", "PrintDialog", MenuKey["p", Modifiers->{"Control"}]],
 		MenuItem["Print Previe&w...", "PrintPreviewDialog"],
-		MenuItem["Print Se&lection...", "PrintSelectionDialog", MenuKey["P", Modifiers->{"Control", "Shift"}]],
+		MenuItem["P&rint Selection...", "PrintSelectionDialog", MenuKey["P", Modifiers->{"Control", "Shift"}]],
 		Delimiter,
 		MenuItem["First Favorite File", "MenuListNotebooksMenu", MenuAnchor->True],
 		Delimiter,
@@ -56,6 +57,7 @@ Menu["Menu for the X Front End",
 	Menu["&Edit", 
 	{
 		MenuItem["&Undo", "Undo", MenuKey["z", Modifiers->{"Control"}]],
+		MenuItem["Re&do", "Redo", MenuKey["z", Modifiers->{"Control", "Shift"}]],
 		Delimiter,
 		MenuItem["Cu&t", "Cut", MenuKey["x", Modifiers->{"Control"}]],
 		MenuItem["&Copy", "Copy", MenuKey["c", Modifiers->{"Control"}]],
@@ -67,7 +69,7 @@ Menu["Menu for the X Front End",
 			MenuItem["&Input Text", FrontEnd`CopySpecial["InputText"]],
 			MenuItem["&LaTeX",
 				KernelExecute[ToExpression["FrontEnd`CopyAsTeX[]"]],
-				MenuEvaluator -> "System"],			
+				MenuEvaluator -> "System"],
 			MenuItem["M&athML", 
 				KernelExecute[ToExpression["FrontEnd`CopyAsMathML[]"]],
 				MenuEvaluator -> "System"],
@@ -100,14 +102,14 @@ Menu["Menu for the X Front End",
 		MenuItem["&Input from Above", FrontEnd`DuplicatePreviousInput[After], MenuKey["l", Modifiers->{"Control"}]],
 		MenuItem["&Output from Above", FrontEnd`DuplicatePreviousOutput[After], MenuKey["L", Modifiers->{"Control", "Shift"}]],
 		Delimiter,
-		MenuItem["Cell with Same Style", "SimilarCellBelow",  MenuKey["Return", Modifiers->{"Command"}]],
+		MenuItem["Cell with Same St&yle", "SimilarCellBelow",  MenuKey["Return", Modifiers->{"Command"}]],
 		Delimiter,
 		MenuItem["Inline Free-form Input",
 			KernelExecute[AlphaIntegration`LinguisticAssistant[InputNotebook[]]], 
 			MenuKey["=", Modifiers->{"Control"}], MenuEvaluator -> "Local"],
 		Delimiter,
-		MenuItem["Special Character...", FrontEndExecute[{FrontEnd`NotebookOpen["SpecialCharacters.nb"]}]],
-		MenuItem["Color...", "ColorSelectorDialog"],
+		MenuItem["&Special Character...", FrontEndExecute[{FrontEnd`NotebookOpen["SpecialCharacters.nb"]}]],
+		MenuItem["&Color...", "ColorSelectorDialog"],
 		Menu["Citatio&n",
 		{
 			MenuItem["Bibliographical &Note...", "InsertBibNote"],
@@ -117,7 +119,7 @@ Menu["Menu for the X Front End",
 			MenuItem["Set / Change Note S&tyle...", "SetBibNoteStyle"],
 			MenuItem["Re&build Notes", "RebuildBibAndNotes"]
 		}],
-		Menu["Typesetting", 
+		Menu["&Typesetting", 
 		{
 			MenuItem["&End Subexpression", "MoveExpressionEnd", MenuKey[" ", Modifiers->{"Control"}]],
 			Delimiter,
@@ -140,15 +142,15 @@ Menu["Menu for the X Front End",
 				FrontEnd`NotebookApply[FrontEnd`InputNotebook[],
 						BoxData[FrameBox["\[SelectionPlaceholder]"]]]}]],
 			Delimiter,
-			MenuItem["&Nudge Left\tAlt+Left", "NudgeLeft"],
-			MenuItem["Nudge Rig&ht\tAlt+Right", "NudgeRight"],
-			MenuItem["Nud&ge Down", "NudgeDown", MenuKey["Down", Modifiers->{"Command"}]],
+			MenuItem["Nudge &Left\tAlt+Left", "NudgeLeft"],
+			MenuItem["Nudge Ri&ght\tAlt+Right", "NudgeRight"],
+			MenuItem["Nudge &Down", "NudgeDown", MenuKey["Down", Modifiers->{"Command"}]],
 			MenuItem["Nudge &Up", "NudgeUp", MenuKey["Up", Modifiers->{"Command"}]],
-			MenuItem["Remove Adjustments", "RemoveAdjustments"]
+			MenuItem["Remove Ad&justments", "RemoveAdjustments"]
 		}],
 		Menu["Table/Matrix",
 		{
-			MenuItem["New...", "CreateGridBoxDialog"],
+			MenuItem["&New...", "CreateGridBoxDialog"],
 			Delimiter,
 			MenuItem["Add &Row", "NewRow", MenuKey["Return", Modifiers->{"Control"}]],
 			MenuItem["Add &Column", "NewColumn", MenuKey[",", Modifiers->{"Control"}]],
@@ -156,7 +158,7 @@ Menu["Menu for the X Front End",
 			MenuItem["&Make Spanning", "MakeSelectionSpan"],
 			MenuItem["&Split Spanning", "MakeSelectionNotSpan"]
 		}],
-		Menu["Horizontal Line",
+		Menu["Ho&rizontal Line",
 		{
 			MenuItem["N&one", CellFrame->Inherited, Scope->SelectionCell],
 			Delimiter,
@@ -209,19 +211,19 @@ Menu["Menu for the X Front End",
 							CellFrameColor->RGBColor[0, 0, 1]], After]
 				}]]
 		}],
-		MenuItem["&File Path...", "FileNameDialog"],
+		MenuItem["&File Path...", "FileNameDialog", RemoveMask->{"NoLocalFileAccess"}],
 		Delimiter,
-		Menu["Picture",
+		Menu["&Picture",
 		{
-			MenuItem["From File...", "ImportPictures"],
-			MenuItem["New Graphic", "InsertNewGraphic", MenuKey["1", Modifiers->{"Control"}]]
+			MenuItem["From &File...", "ImportPictures"],
+			MenuItem["New &Graphic", "InsertNewGraphic", MenuKey["1", Modifiers->{"Control"}]]
 		}],
-		MenuItem["File...", "Import"],
+		MenuItem["Fi&le...", "Import", RemoveMask->{"NoLocalFileAccess"}],
 		Delimiter,
 		MenuItem["&Hyperlink...", "CreateHyperlinkDialog", MenuKey["H", Modifiers->{"Control", "Shift"}]],
-		MenuItem["Automatic Numbering...", "CreateCounterBoxDialog"],
+		MenuItem["&Automatic Numbering...", "CreateCounterBoxDialog"],
 		Delimiter,
-     		MenuItem["Page Break", "InsertSplitBreak"]
+     		MenuItem["Page &Break", "InsertSplitBreak"]
 	}],
 	Menu["Fo&rmat",
 	{
@@ -233,7 +235,7 @@ Menu["Menu for the X Front End",
 			Delimiter,
 			MenuItem["&Other...", "StyleOther", MenuKey["0", Modifiers->{"Command"}]]
 		}],
-		MenuItem["Clear Formatting", "ClearCellOptions", MenuKey[" ", Modifiers->{"Control", "Shift"}]],
+		MenuItem["Clear Fo&rmatting", "ClearCellOptions", MenuKey[" ", Modifiers->{"Control", "Shift"}]],
 		Delimiter,
 		Menu["St&ylesheet", 
 		{
@@ -278,7 +280,7 @@ Menu["Menu for the X Front End",
 			Delimiter,
 			MenuItem["&Other...", "FontSizeDialog"]
 		}],
-		Menu["Text Color", 
+		Menu["Te&xt Color", 
 		{
 			MenuItem["Palette...", "FontColorDialog"],
 			Delimiter,
@@ -299,7 +301,7 @@ Menu["Menu for the X Front End",
 				MenuItem["Yellow",	FontColor->RGBColor[1, 1, 0]]
 			}]
 		}],
-		Menu["Background Color", 
+		Menu["Back&ground Color", 
 		{
 			MenuItem["Palette...", "BackgroundDialog"],
 			Delimiter,
@@ -327,7 +329,7 @@ Menu["Menu for the X Front End",
 				MenuItem["Yellow",		Background->RGBColor[1, 1, 0]]
 			}]
 		}],
-		Menu["Cell Dingbat",
+		Menu["Cell &Dingbat",
 		{
 			LinkedItems[{
 				MenuItem["None", CellDingbat->None, Scope->SelectionCell],
@@ -402,7 +404,7 @@ Menu["Menu for the X Front End",
 		Menu["&Convert To",
 		{
 			MenuItem["&InputForm", "SelectionConvert"->InputForm, MenuKey["I", Modifiers->{"Control", "Shift"}]],
-			MenuItem["Raw InputForm", "SelectionConvert"->RawInputForm, MenuKey["R", Modifiers->{"Control", "Shift"}]],
+			MenuItem["&Raw InputForm", "SelectionConvert"->RawInputForm, MenuKey["R", Modifiers->{"Control", "Shift"}]],
 			MenuItem["&OutputForm", "SelectionConvert"->OutputForm],
 			MenuItem["First Convert to BoxForm", "MenuListConvertFormatTypes", MenuAnchor->True],
 			Delimiter,
@@ -413,7 +415,7 @@ Menu["Menu for the X Front End",
 			MenuItem["First Display As BoxForm", "MenuListDisplayAsFormatTypes", MenuAnchor->True]
 		}],
 		Delimiter,
-		Menu["Cell P&roperties",
+		Menu["Cell &Properties",
 		{
 			ToggleMenuItem["&Open", CellOpen->Toggle, Scope->SelectionCell],
 			ToggleMenuItem["&Editable", Editable->Toggle, Scope->SelectionCell],
@@ -423,7 +425,7 @@ Menu["Menu for the X Front End",
 			ToggleMenuItem["&Initialization Cell", InitializationCell->Toggle, Scope->SelectionCell],
 			ToggleMenuItem["Initialization Group", FrontEnd`InitializationGroup->Toggle, Scope->SelectionCell]
 		}],
-		Menu["Cell Tags",
+		Menu["Cell &Tags",
 		{
 			MenuItem["&Add/Remove Cell Tags...", "CellTagsEditDialog", MenuKey["j", Modifiers->{"Control"}]],
 			Menu["&Find Cell Tag",
@@ -445,14 +447,14 @@ Menu["Menu for the X Front End",
 			Delimiter,
 			MenuItem["&Open All Subgroups", "SelectionOpenAllGroups", MenuKey["{", Modifiers->{"Control"}]],
 			MenuItem["&Close All Subgroups", "SelectionCloseAllGroups", MenuKey["}", Modifiers->{"Control"}]],
-			MenuItem["Close Unselected Cells", "SelectionCloseUnselectedCells"],
-			MenuItem["Open/Close Group", "OpenCloseGroup", MenuKey["'", Modifiers->{"Control"}]]
+			MenuItem["Close U&nselected Cells", "SelectionCloseUnselectedCells"],
+			MenuItem["O&pen/Close Group", "OpenCloseGroup", MenuKey["'", Modifiers->{"Control"}]]
 		}],
 		Delimiter,
 		MenuItem["Di&vide Cell", "CellSplit", MenuKey["D", Modifiers->{"Control", "Shift"}]],
 		MenuItem["&Merge Cells", "CellMerge", MenuKey["M", Modifiers->{"Control", "Shift"}]],
 		Delimiter,
-		MenuItem["Notebook History...",
+		MenuItem["&Notebook History...",
 				FrontEndExecute[{FrontEnd`NotebookOpen[
 					FrontEnd`FindFileOnPath["HistoryOverview.nb", "PrivatePathsSystemResources"]]}]],
 		Delimiter,
@@ -462,20 +464,13 @@ Menu["Menu for the X Front End",
 	}],
 	Menu["&Graphics",
 	{
-		MenuItem["New Graphic", "InsertNewGraphic", MenuKey["1", Modifiers->{"Control"}]],
-		MenuItem["Drawing Tools",
+		MenuItem["&New Graphic", "InsertNewGraphic", MenuKey["1", Modifiers->{"Control"}]],
+		MenuItem["&Drawing Tools",
 				FrontEndExecute[{FrontEnd`NotebookOpen[
 					FrontEnd`FindFileOnPath["DrawingTools.nb", "PrivatePathsSystemResources"]]}],
 				MenuKey["d", Modifiers->{"Control"}]],
 		Delimiter,
-		MenuItem["Alignment Guides Enabled", "ToggleAlignmentGuides"],
-		Delimiter,
-		Menu["Rendering",
-		{
-			MenuItem["&Align Selected Graphics...", "GraphicsAlign"],
-			MenuItem["&Make Standard Size", "GraphicsOriginalSize"],
-			MenuItem["&Rerender Graphics", FrontEndExecute[{FrontEndToken["GraphicsRender"], FrontEndToken["GenerateImageCaches"]}]]
-		}],
+		MenuItem["Alignment &Guides Enabled", AlignmentGuidesEnabled->Toggle, Scope->GlobalPreferences],
 		Delimiter,
 		MenuItem["Group", "Group"],
 		MenuItem["Ungroup", "Ungroup"],
@@ -507,13 +502,13 @@ Menu["Menu for the X Front End",
 	{
 		MenuItem["&Evaluate Cells", "HandleShiftReturn", MenuKey["Return", Modifiers->{"Shift"}]],
 		MenuItem["Evaluate in &Place", FrontEnd`Evaluate[All], MenuKey["Return", Modifiers->{"Control", "Shift"}]],
-		MenuItem["Evaluate in &Subsession", "SubsessionEvaluateCells", MenuKey["F7", Modifiers->{}]],
+		MenuItem["E&valuate in Subsession", "SubsessionEvaluateCells", MenuKey["F7", Modifiers->{}]],
 		Delimiter,
 		MenuItem["Evaluate N&otebook", "EvaluateNotebook"],
 		MenuItem["Evaluate Initiali&zation Cells", "EvaluateInitialization"],
 		Delimiter,
-		MenuItem["Dynamic Updating Enabled", "ToggleDynamicUpdating"],
-		MenuItem["Convert Dynamic to Literal", 
+		MenuItem["Dynamic &Updating Enabled", "ToggleDynamicUpdating"],
+		MenuItem["Convert Dynamic to &Literal", 
 			FrontEndExecute[{FrontEnd`NotebookDynamicToLiteral[
 				FrontEnd`NotebookSelection[FrontEnd`InputNotebook[]]]}]],
 		Delimiter,
@@ -525,7 +520,7 @@ Menu["Menu for the X Front End",
 			MenuItem["&Step", "DebuggerStep", MenuKey["F10", Modifiers->{}]],
 			MenuItem["Step &In", "DebuggerStepIn", MenuKey["F11", Modifiers->{}]],
 			MenuItem["Step &Out", "DebuggerStepOut", MenuKey["F11", Modifiers->{"Shift"}]],
-			MenuItem["Finish", "DebuggerFinish", MenuKey["F", Modifiers->{"Control", "Shift"}]],
+			MenuItem["&Finish", "DebuggerFinish", MenuKey["F", Modifiers->{"Control", "Shift"}]],
 			Delimiter,
 			MenuItem["Toggle &Breakpoint", "DebuggerToggleBreakpoint", MenuKey["F9", Modifiers->{}]],
 			Delimiter,
@@ -534,12 +529,11 @@ Menu["Menu for the X Front End",
 			MenuItem["Show Breakpoi&nts Window", FrontEnd`DebuggerSettingsShowBreakpoints->Toggle, Scope->GlobalPreferences]
 		}],
 		Delimiter,
-		MenuItem["&Interrupt Evaluation...", FrontEnd`EvaluatorInterrupt[Automatic], MenuKey[",", Modifiers->{"Command"}]],
 		MenuItem["&Abort Evaluation", FrontEnd`EvaluatorAbort[Automatic], MenuKey[".", Modifiers->{"Command"}]],
 		MenuItem["&Remove from Evaluation Queue", "RemoveFromEvaluationQueue", MenuKey[".", Modifiers->{"Command", "Shift"}]],
 		MenuItem["Find Currentl&y Evaluating Cell", "FindEvaluatingCell"],
 		Delimiter,
-		MenuItem["Kernel Con&figuration Options...", "ModifyEvaluatorNames"],
+		MenuItem["Kernel Con&figuration Options...", "ModifyEvaluatorNames", RemoveMask->{"NoLocalFileAccess"}],
 		MenuItem["Parallel Kernel Confi&guration...", FrontEndExecute[{
 			FrontEnd`SetOptions[FrontEnd`$FrontEnd, FrontEnd`PreferencesSettings -> {"Page" -> "Parallel"}], 
 			FrontEnd`FrontEndToken["PreferencesDialog"]}]],
@@ -548,18 +542,18 @@ Menu["Menu for the X Front End",
 		Menu["Defaul&t Kernel",
 		{
 			MenuItem["First Default Kernel", "MenuListGlobalEvaluators", MenuAnchor->True]
-		}],
+		}, RemoveMask->{"NoLocalFileAccess"}],
 		Menu["&Notebook's Kernel",
 		{
 			MenuItem["First Notebook's Kernel", "MenuListNotebookEvaluators", MenuAnchor->True]
-		}],
-		Menu["Notebook's Default Context", 
+		}, RemoveMask->{"NoLocalFileAccess"}],
+		Menu["Notebook's Default &Context", 
 		{
-			MenuItem["Global`", CellContext->"Global`", Scope->NotebookDefault],
-			MenuItem["Other...", "CellContextDialog"],
+			MenuItem["&Global`", CellContext->"Global`", Scope->NotebookDefault],
+			MenuItem["&Other...", "CellContextDialog"],
 			Delimiter,
-			MenuItem["Unique to This Notebook", CellContext->Notebook, Scope->NotebookDefault],
-			MenuItem["Unique to Each Cell Group", CellContext->CellGroup, Scope->NotebookDefault]
+			MenuItem["Unique to This &Notebook", CellContext->Notebook, Scope->NotebookDefault],
+			MenuItem["Unique to Each &Cell Group", CellContext->CellGroup, Scope->NotebookDefault]
 		}],
 		Delimiter,
 		Menu["&Start Kernel", 
@@ -587,8 +581,15 @@ Menu["Menu for the X Front End",
 			MenuItem["200&%", Magnification->2.00, Scope->NotebookDefault],
 			MenuItem["&300%", Magnification->3.00, Scope->NotebookDefault]
 		}],
-		ToggleMenuItem["Show &Ruler", ToggleOptionListElement[{"WindowToolbars", "RulerBar"}], Scope->NotebookDefault],
-		ToggleMenuItem["Show &Toolbar", ToggleOptionListElement[{"WindowToolbars", "EditBar"}], Scope->NotebookDefault],
+		Menu["&Toolbar", 
+		{
+			MenuItem["&Ruler", ToggleOptionListElement[{"WindowToolbars", "RulerBar"}], Scope->NotebookDefault],
+			MenuItem["F&ormatting", ToggleOptionListElement[{"WindowToolbars", "EditBar"}], Scope->NotebookDefault],
+			MenuItem["T&emplating", KernelExecute[NotebookTemplating`CreateTemplateNotebook[InputNotebook[]]], MenuEvaluator -> "System"],
+			MenuItem["Test&ing", KernelExecute[Block[{$ContextPath}, Needs["MUnit`"]; MUnit`addDockedCellConvertNotebook[]]], MenuEvaluator -> "System"]
+		}],
+		Delimiter,
+		MenuItem["Wolfram Cloud Activity Monitor", "WolframCloudActivityMonitor"],
 		Delimiter,
 		MenuItem["&Full Screen", 
 			FrontEndExecute[FrontEnd`Value[FEPrivate`NotebookToggleFullScreen[]]],
@@ -598,14 +599,15 @@ Menu["Menu for the X Front End",
 	}],
 	Menu["&Help", 
 	{
-		MenuItem["Documentation &Center", "OpenHelpLink"],
-		MenuItem["Function Navigator", KernelExecute[TreeBrowse`DocsNavigatorLookup[True]], MenuEvaluator -> "System"],
-		MenuItem["Virtual Book", KernelExecute[TreeBrowse`DocsNavigatorLookup[False]], MenuEvaluator -> "System"],
+		MenuItem["Wolfram &Documentation", "OpenHelpLink"],
 		MenuItem["&Find Selected Function", FrontEnd`SelectionHelpDialog[True], MenuKey["F1", Modifiers->{}]],
+		Delimiter,
+		MenuItem["Wolfram Account Settings...", "WolframCloudAccountSettings"],
+		MenuItem["Wolfram Cloud Account Management", "MenuListWolframCloudAccountMenu", MenuAnchor->True],
 		Delimiter,
 		MenuItem["&Wolfram Website...", KernelExecute[
 			FE`hyperlinkCoded["http://www.wolfram.com", "source=menubar"]], MenuEvaluator -> "System"],
-		MenuItem["&Demonstrations...", FrontEndExecute[{
+		MenuItem["De&monstrations...", FrontEndExecute[{
 			FrontEnd`NotebookLocate[{URL["http://demonstrations.wolfram.com"], None}]}]],
 		Delimiter,
 		MenuItem["&Internet Connectivity...", FrontEndExecute[{
@@ -613,7 +615,7 @@ Menu["Menu for the X Front End",
 			FrontEnd`FrontEndToken["PreferencesDialog"]}]],
 		MenuItem["&Give Feedback...", KernelExecute[
 			FE`hyperlinkCoded["http://www.wolfram.com/support/contact/email", "source=menubar", "topic=feedback"]], MenuEvaluator -> "System"],
-		MenuItem["&Register this Mathematica...", KernelExecute[
+		MenuItem["&Register Software...", KernelExecute[
 			FE`hyperlinkCoded["https://user.wolfram.com/portal/ProductRegistration", "source=menubar", "topic=register"]], MenuEvaluator -> "System"],
 		MenuItem["&Enter Activation Key...", KernelExecute[SetOptions[
 		    FrontEnd`DialogOpen["ActivationDialog.nb"], TaggingRules -> {

@@ -22,15 +22,17 @@ done
 
 # Create link to Oracle JVM
 if [ ! -e "/opt/Wolfram/WolframEngine/10.0/SystemFiles/Java/Linux-ARM" ]; then
-	if [ -d /usr/lib/jvm/jdk-7-oracle-armhf/jre/ ]; then
-		ln -s /usr/lib/jvm/jdk-7-oracle-armhf/jre/ "/opt/Wolfram/WolframEngine/10.0/SystemFiles/Java/Linux-ARM"
-	fi
+   if [ -d /usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt/jre/ ]; then
+       ln -s /usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt/jre/ "/opt/Wolfram/WolframEngine/10.0/SystemFiles/Java/Linux-ARM"
+   elif [ -d /usr/lib/jvm/jdk-7-oracle-armhf/jre/ ]; then
+       ln -s /usr/lib/jvm/jdk-7-oracle-armhf/jre/ "/opt/Wolfram/WolframEngine/10.0/SystemFiles/Java/Linux-ARM"
+   fi
 fi
 
 # Put the icons in the default pi theme
 if [ -d /usr/share/icons/nuoveXT2 ]; then
 	for size in 32 64 128; do
-		for icon in mathematica mathematicaplayer vnd.wolfram.cdf; do
+		for icon in mathematica mathematicaplayer vnd.wolfram.cdf vnd.wolfram.nb vnd.wolfram.nbp vnd.wolfram.wl vnd.wolfram.mathematica.package; do
 			if [ -e /usr/share/icons/hicolor/${size}x${size}/mimetypes/application-${icon}.png ]; then
 				ln -s /usr/share/icons/hicolor/${size}x${size}/mimetypes/application-${icon}.png \
 					/usr/share/icons/nuoveXT2/${size}x${size}/mimetypes/application-${icon}.png

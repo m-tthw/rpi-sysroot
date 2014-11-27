@@ -6,7 +6,7 @@
 
 (* :Copyright: © 2008 by Wolfram Research, Inc. *)
 
-(* :Package Version: 2.0 ($Id: init.m,v 1.41 2013/10/26 17:29:22 maeder Exp $) *)
+(* :Package Version: 2.0 ($Id: init.m,v 1.42 2014/05/06 15:54:38 maeder Exp $) *)
 
 (* :History:
    1.0 first released version.
@@ -64,15 +64,6 @@ SubKernelType::usage = "SubKernelType[kernel] is the type (class object) of a su
 
 KernelCount::usage = "KernelCount[descr] gives the number of kernels that are expected to be launched from descr."
 
-(* preemptive link related *)
-
-CallBackLink::usage = "CallBackLink->True|False is an option of subkernel constructors to specify whether to create callback links.
-	The default value is $CallBackLink."
-$CallBackLink::usage = "$CallBackLink is the default value of the CallBackLink option."
-
-establishCallBackLink::usage = "establishCallBackLink[kernel|{kernels..}] establishes a callback (preemptive) link between master and subkernel."
-PreemptiveLink::usage = "PreemptiveLink[kernel] gives the subkernel's preemptive LinkObject (on the master)."
-Parallel`Client`$CallBackLink::usage = "Parallel`Client`$CallBackLink is the callback LinkObject on the subkernel side."
 
 (* semi-hidden methods *)
 
@@ -112,13 +103,6 @@ getConfig::usage = "CONFIG[getConfig] gives an external representation suitable 
 useConfig::usage = "CONFIG[useConfig] gives the list of kernel descriptions of the current configuration."
 tabConfig::usage = "CONFIG[tabConfig] is a user interface for editing configurations."
 nameConfig::usage = "CONFIG[nameConfig] is the name of this configuration (the subkernel implementation name)."
-
-(* preemptive link related *)
-
-createCallBackLink::usage = "createCallBackLink[kernel] create the callback link on the master, then connect from subkernel."
-connectCallBackLink::usage = "connectCallBackLink[kernel] create the callback link on the subkernel, then connect from master."
-initPreemptive::usage = "initPreemptive[link] initialize link as preemptive on the master kernel."
-mangleMasterLinkName::usage = "mangleMasterLinkName[kernel, link] convert the name of the link created on the master into something connectable on subkernel."
 
 (* aux stuff *)
 
@@ -161,7 +145,7 @@ SubKernels::noclone = "Kernel `1` is not cloneable."
 Begin["`Private`"]
 
 `$PackageVersion = 1.0;
-`$CVSRevision = StringReplace["$Revision: 1.41 $", {"$"->"", " "->"", "Revision:"->""}]
+`$CVSRevision = StringReplace["$Revision: 1.42 $", {"$"->"", " "->"", "Revision:"->""}]
 
 With[{msg="Abort[kernel] aborts a running evaluation on a parallel kernel."},
 	If[ValueQ[Abort::usage], Abort::usage = Abort::usage <> " " <> msg,
@@ -311,14 +295,6 @@ kernelInit[kernel_?subQ] :=
 
 kernelClose[kernel_?subQ, doClose_:False] :=
 Module[{},
-    (* close callback link *)
-    If[ PreemptiveLink[kernel] =!= $Failed,
- 	    Parallel`Debug`Private`trace[Parallel`Debug`MathLink, "Closing sharing link `1`.", PreemptiveLink[kernel]];
-    	MathLink`RemoveSharingLink[PreemptiveLink[kernel]];
-    	LinkClose[PreemptiveLink[kernel]];
-    	PreemptiveLink[kernel] = $Failed;
-    ];
-    (* close main link *)
 	If[ doClose,
  	   Parallel`Debug`Private`trace[Parallel`Debug`MathLink, "Closing link `1`.", LinkObject[kernel]];
  	   TimeConstrained[
@@ -330,64 +306,6 @@ Module[{},
     (* all done *)
     kernel
 ]
-
-
-(* preemptive callback link generics and aux functions *)
-
-(* if an implementation does not override this one, callback links will not be used *)
-
-establishCallBackLink[kernels_List] := establishCallBackLink /@ kernels
-establishCallBackLink[kernel_] := $Failed
-
-(* whether to use it at all *)
-
-If[!ValueQ[$CallBackLink],  $CallBackLink = False]
-
-(* setting the preemptive link should be done with
- *   PreemptiveLink[kernel] = link
- * this may or may not be overridden in an implementation; it should work either way
- * therefore, PreemptiveLink must not be protected
- *)
-
-PreemptiveLink[kernel_] := $Failed
-
-(* be default we use the unmodified link name *)
-
-mangleMasterLinkName[kernel_?subQ, link_LinkObject] := link[[1]]
-
-(* in case this is used on the master, instead of the subkernel *)
-
-Parallel`Client`$CallBackLink = $Failed
-
-(* sequential for now *)
-
-createCallBackLink[kernels_List] := createCallBackLink /@ kernels
-
-createCallBackLink[kernel_?subQ] := Module[{link},
-	link = LinkCreate[]; If[link===$Failed, Return[$Failed]];
-	With[{name = mangleMasterLinkName[kernel, link]},
-		(* send commands, do not wait for result *)
-		kernelWrite[kernel, EvaluatePacket[
-				Parallel`Client`$CallBackLink = LinkConnect[name];
-				(* TODO: check for failure *)
-				MathLink`LinkSetPrintFullSymbols[Parallel`Client`$CallBackLink, True];
-				Null
-			]];
-		(* TODO: check for failure *)
-	];
-	initPreemptive[kernel, link]
-]
-
-(* maybe use MathLink`LinkSwitchPre -> linkSwitchPre, MathLink`LinkSwitchPost -> linkSwitchPost for diag *)
-
-initPreemptive[kernel_?subQ, link_LinkObject] := (
-	MathLink`LinkSetPrintFullSymbols[ link, True ];
-	MathLink`AddSharingLink[ link, MathLink`AllowPreemptive->True ];
-	PreemptiveLink[kernel] = link; (* set the link; maybe this is overridden, maybe not; it doesn't matter *)
-	link
-)
-
-
 
 (* heuristic for recognizing short forms of kernel descriptions; is used if no upvalue for New[] fires
    may return a kernel or list of kernels (in multi-argument form) *)

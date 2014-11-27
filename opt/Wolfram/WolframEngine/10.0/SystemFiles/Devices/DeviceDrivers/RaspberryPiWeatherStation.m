@@ -8,7 +8,7 @@ Begin["`Private`"] (* Begin Private Context *)
 
 (* ::Section:: *) (* API Registration Function *)
 If[ $SystemID === "Linux-ARM",
-	DeviceAPI`DeviceClassRegister[ "RaspberryPiWeatherStation", 
+	DeviceFramework`DeviceClassRegister[ "RaspberryPiWeatherStation", 
 		"FindFunction" -> ({{}}&),
 		"ReadFunction" -> iRPiWeatherRead
 	]

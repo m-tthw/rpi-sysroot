@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #  Mathematica 10.0 Front End command file
-#  Copyright 1988-2013 Wolfram Research, Inc.
+#  Copyright 1988-2014 Wolfram Research, Inc.
 
 #  Make certain that ${PATH} includes /usr/bin and /bin
 PATH="/usr/bin:/bin:${PATH}"
@@ -188,7 +188,7 @@ export LD_LIBRARY_PATH
 QT_PLUGIN_PATH="${M_LIBRARY_PATH}/Qt-Plugins"
 export QT_PLUGIN_PATH
 
-# Handle -singleLaunch before we bother making a fontconfig file...
+# Handle -singleLaunch 
 singlelaunch=`echo "$@" | tr ' ' '\n' | egrep '(^-single[lL]aunch|^--single[lL]aunch)$'`
 simplesl=`echo "$@" | tr ' ' '\n' | grep '^-[sS][lL]$'`
 if [ "${singlelaunch}" ] || [ "${simplesl}" ]; then
@@ -203,37 +203,10 @@ if [ "${singlelaunch}" ] || [ "${simplesl}" ]; then
 	fi
 fi
 
-#  Append Mathematica font directories to system font directory list
-ORIG_FONTCONFIG_FILE="/etc/fonts/fonts.conf"
-if [ -f "${ORIG_FONTCONFIG_FILE}" ]; then
-    
-    TMP_FONTCONFIG_FILE=`mktemp -p /tmp fontsXXXXXXX` 
-    
-    sed '
-    /<fontconfig>/ a\
-    <!-- \
-    \ Mathematica font directories \
-    --> \
-    \       <dir>'"${TopDirectory}"'\/SystemFiles\/Fonts\/TrueType<\/dir> \
-    \       <dir>'"${TopDirectory}"'\/SystemFiles\/Fonts\/Type1<\/dir> \
-    \
-	\       <match target="pattern"> \
-    \    		<edit name="prefer_bitmap"> \
-	\				<bool>false</bool> \
-	\			</edit> \
-  	\		</match> \
-    \
-    ' ${ORIG_FONTCONFIG_FILE} > ${TMP_FONTCONFIG_FILE}
-    
-    FONTCONFIG_FILE="${TMP_FONTCONFIG_FILE}"
-    export FONTCONFIG_FILE
-    
-fi
-
 #  set espeak data directory
 ESPEAK_DATA="${TopDirectory}/SystemFiles/FrontEnd/SystemResources/X/espeak-data"
 export ESPEAK_DATA
 
 "${MathematicaFE}" -topDirectory "${TopDirectory}" "$@"
 
-rm -rf "${TMP_FONTCONFIG_FILE}"
+

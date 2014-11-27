@@ -6,7 +6,7 @@
         tgayley@wolfram.com
 *)
 
-(* :Package Version: 4.7 *)
+(* :Package Version: 4.8 *)
 
 (* :Mathematica Version: 4.0 *)
 
@@ -31,13 +31,13 @@
 
 
 InstallJava::usage =
-"InstallJava[] launches the Java runtime and prepares it to be used from Mathematica. Only one Java runtime is ever launched; subsequent calls to InstallJava after the first have no effect."
+"InstallJava[] launches the Java runtime and prepares it to be used from the Wolfram Language. Only one Java runtime is ever launched; subsequent calls to InstallJava after the first have no effect."
 
 StartJava::usage =
 "StartJava is deprecated. Use InstallJava instead."
 
 UninstallJava::usage =
-"UninstallJava[] shuts down the Java runtime that was started by InstallJava. It is provided mainly for developers who are actively recompiling Java classes for use in Mathematica and therefore need to shut down and restart the Java runtime to reload the modified classes. Users generally have no reason to call UninstallJava. The Java runtime is a shared resource used by potentially many Mathematica programs. You should leave it running unless you are absolutely sure you need to shut it down."
+"UninstallJava[] shuts down the Java runtime that was started by InstallJava. It is provided mainly for developers who are actively recompiling Java classes for use in the Wolfram Language and therefore need to shut down and restart the Java runtime to reload the modified classes. Users generally have no reason to call UninstallJava. The Java runtime is a shared resource used by potentially many Wolfram Language programs. You should leave it running unless you are absolutely sure you need to shut it down."
 
 QuitJava::usage =
 "QuitJava is deprecated. Use UninstallJava instead."
@@ -52,7 +52,7 @@ JavaLink::usage =
 "JavaLink[] returns the MathLink LinkObject that is used to communicate with the J/Link Java runtime. It will return Null if Java is not running."
 
 JavaUILink::usage =
-"JavaUILink[] returns the MathLink LinkObject used by calls to Mathematica that originate from Java user-interface actions, or Null if no such link is present."
+"JavaUILink[] returns the MathLink LinkObject used by calls to the Wolfram Language that originate from Java user-interface actions, or Null if no such link is present."
 
 ClassPath::usage =
 "ClassPath is an option to InstallJava that controls whether the Java runtime should include the contents of the CLASSPATH environment variable in its class search path. The default is ClassPath->Automatic, which means to include CLASSPATH. If you specify ClassPath->None, CLASSPATH will be ignored. You can also specify a string giving a classpath specification in the standard platform-specific notation. Users considering specifying a string as the value for the ClassPath option should probably use the more flexible AddToClassPath function instead. The main use for the ClassPath option is to set it to None, in case you want to specifically prevent J/Link from including the contents of the CLASSPATH variable in its search path."
@@ -115,7 +115,7 @@ InstallJava::fail = "A link to the Java runtime could not be established."
 InstallJava::uifail = "The separate Java user-interface link could not be established."
 
 InstallJava::path =
-"The J/Link package appears to be improperly installed. The package file is not in an appropriate location in relation to Mathematica's $Path."
+"The J/Link package appears to be improperly installed. The package file is not in an appropriate location in relation to $Path."
 
 InstallJava::opt = "Warning: unrecognized option in InstallJava."
 InstallJava::reinst = "Java is already running. If you need to specify non-standard options to control how Java is launched, use ReinstallJava instead."

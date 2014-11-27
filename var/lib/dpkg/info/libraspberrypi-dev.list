@@ -4,6 +4,7 @@
 /opt/vc/lib
 /opt/vc/lib/libvchostif.a
 /opt/vc/lib/libkhrn_client.a
+/opt/vc/lib/libvcilcs.a
 /opt/vc/lib/libGLESv2_static.a
 /opt/vc/lib/libkhrn_static.a
 /opt/vc/lib/libEGL_static.a

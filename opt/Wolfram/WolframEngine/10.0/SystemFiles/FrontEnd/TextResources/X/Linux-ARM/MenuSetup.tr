@@ -38,10 +38,10 @@ Menu["Menu for the X Front End",
 		MenuItem["Select &All", "SelectAll", MenuKey["a", Modifiers->{"Control"}]],
 		MenuItem["Check &Balance", "Balance", MenuKey["B", Modifiers->{"Control", "Shift"}]],
 		MenuItem["Un/C&omment Selection", KernelExecute[FE`toggleComment[]], MenuKey["/", Modifiers->{"Command"}], MenuEvaluator -> "System", Method -> "Queued"],
-		Delimiter,
+(*		Delimiter, 
 		MenuItem["Complete Se&lection", FrontEnd`CompleteSelection[True], MenuKey["k", Modifiers->{"Control"}]],
 		MenuItem["&Make Template", "TemplateSelection", MenuKey["K", Modifiers->{"Control", "Shift"}]],
-(*		MenuItem["Chec&k Spelling...", "FindNextMisspelling", MenuKey[";", Modifiers->{"Command"}]], *)
+		MenuItem["Chec&k Spelling...", "FindNextMisspelling", MenuKey[";", Modifiers->{"Command"}]], *)
 		Delimiter,
 		MenuItem["&Find...", KernelExecute[If[CurrentValue["PluginEnabled"], FrontEndTokenExecute[InputNotebook[], "FindExpression"], FrontEndTokenExecute["SelectionSetFindEx"];FrontEnd`DialogOpen["Find.nb", True]]], MenuEvaluator -> "System", MenuKey["f", Modifiers->{"Control"}]],
 		MenuItem["&Enter Selection", "SelectionSetFind", MenuKey["e", Modifiers->{"Control"}]],

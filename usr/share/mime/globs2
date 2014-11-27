@@ -40,11 +40,10 @@
 50:video/webm:*.webm
 50:application/vnd.openxmlformats-officedocument.wordprocessingml.document:*.docx
 50:text/vnd.rn-realtext:*.rt
-50:application/mathematicaplayer:*.nbp
 50:application/x-cpio:*.cpio
-50:video/vnd.rn-realvideo:*.rv
-50:application/x-mif:*.mif
 50:audio/midi:*.mid
+50:application/x-mif:*.mif
+50:video/vnd.rn-realvideo:*.rv
 50:application/vnd.google-earth.kml+xml:*.kml
 50:image/x-3ds:*.3ds
 50:image/x-photo-cd:*.pcd
@@ -192,6 +191,7 @@
 50:application/x-bzip-compressed-tar:*.tar.bz
 50:application/x-amipro:*.sam
 50:application/vnd.google-earth.kmz:*.kmz
+50:application/vnd.wolfram.wl:*.wl
 50:image/x-portable-graymap:*.pgm
 50:application/x-krita:*.kra
 50:application/x-dar:*.dar
@@ -261,11 +261,11 @@
 50:application/vnd.stardivision.draw:*.sda
 50:application/vnd.stardivision.calc:*.sdc
 50:text/x-mrml:*.mrml
-50:application/vnd.stardivision.impress:*.sdd
+50:audio/x-musepack:*.mpp
 50:application/x-mps:*.mps
 50:application/vnd.ms-excel.template.macroEnabled.12:*.xltm
 50:image/x-gzeps:*.epsf.gz
-50:audio/x-musepack:*.mpp
+50:application/vnd.stardivision.impress:*.sdd
 50:application/x-lrzip:*.lrz
 50:video/3gpp2:*.3gpp2
 50:image/jpeg:*.jpeg
@@ -744,12 +744,14 @@
 50:application/vnd.ms-excel:*.xlt
 50:application/vnd.ms-excel:*.xlw
 50:text/x-troff-mm:*.mm
+50:application/vnd.wolfram.nb:*.nb
 50:application/mathematica:*.nb
 50:application/mathematica:*.nb
 50:application/x-netcdf:*.nc
 50:video/mp4:*.f4v
 50:application/x-shockwave-flash:*.swf
-50:video/mpeg:[0-9][0-9][0-9].vdr
+50:application/vnd.wolfram.player:*.nbp
+50:application/mathematicaplayer:*.nbp
 50:image/vnd.dwg:*.dwg
 50:text/x-troff-me:*.me
 50:text/spreadsheet:*.sylk
@@ -798,6 +800,7 @@
 50:application/vnd.ms-works:*.wps
 50:text/plain:*,v
 50:text/x-tex:*.ins
+50:video/mpeg:[0-9][0-9][0-9].vdr
 50:text/x-troff-ms:*.ms
 50:application/x-tgif:*.obj
 50:text/x-c++src:*.C:cs
@@ -842,6 +845,7 @@
 50:text/x-fortran:*.f95
 50:application/x-nes-rom:*.nes
 50:application/x-ms-dos-executable:*.exe
+50:application/vnd.wolfram.mathematica.package:*.m
 50:text/x-objcsrc:*.m
 50:text/x-matlab:*.m
 50:application/mathematica:*.m

@@ -46,6 +46,10 @@ import warnings
 
 _lib = ct.CDLL('libmmal.so')
 
+# vcos_platform.h ############################################################
+
+VCOS_UNSIGNED = ct.c_uint32
+
 # vcos_types.h ###############################################################
 
 def VCOS_ALIGN_UP(value, round_to):
@@ -300,6 +304,7 @@ MMAL_BUFFER_HEADER_FLAG_CODECSIDEINFO          = (1<<7)
 MMAL_BUFFER_HEADER_FLAGS_SNAPSHOT              = (1<<8)
 MMAL_BUFFER_HEADER_FLAG_CORRUPTED              = (1<<9)
 MMAL_BUFFER_HEADER_FLAG_TRANSMISSION_FAILED    = (1<<10)
+MMAL_BUFFER_HEADER_FLAG_DECODEONLY             = (1<<11)
 
 MMAL_BUFFER_HEADER_VIDEO_FLAG_INTERLACED       = (1<<0)
 MMAL_BUFFER_HEADER_VIDEO_FLAG_TOP_FIELD_FIRST  = (1<<2)
@@ -342,6 +347,87 @@ mmal_buffer_header_mem_unlock = _lib.mmal_buffer_header_mem_unlock
 mmal_buffer_header_mem_unlock.argtypes = [ct.POINTER(MMAL_BUFFER_HEADER_T)]
 mmal_buffer_header_mem_unlock.restype = None
 
+# mmal_clock.h ###############################################################
+
+MMAL_CLOCK_EVENT_MAGIC              = MMAL_FOURCC('CKLM')
+MMAL_CLOCK_EVENT_REFERENCE          = MMAL_FOURCC('CREF')
+MMAL_CLOCK_EVENT_ACTIVE             = MMAL_FOURCC('CACT')
+MMAL_CLOCK_EVENT_SCALE              = MMAL_FOURCC('CSCA')
+MMAL_CLOCK_EVENT_TIME               = MMAL_FOURCC('CTIM')
+MMAL_CLOCK_EVENT_UPDATE_THRESHOLD   = MMAL_FOURCC('CUTH')
+MMAL_CLOCK_EVENT_DISCONT_THRESHOLD  = MMAL_FOURCC('CDTH')
+MMAL_CLOCK_EVENT_REQUEST_THRESHOLD  = MMAL_FOURCC('CRTH')
+MMAL_CLOCK_EVENT_INPUT_BUFFER_INFO  = MMAL_FOURCC('CIBI')
+MMAL_CLOCK_EVENT_OUTPUT_BUFFER_INFO = MMAL_FOURCC('COBI')
+MMAL_CLOCK_EVENT_LATENCY            = MMAL_FOURCC('CLAT')
+MMAL_CLOCK_EVENT_INVALID            = 0
+
+class MMAL_CLOCK_UPDATE_THRESHOLD_T(ct.Structure):
+    _fields_ = [
+        ('threshold_lower', ct.c_int64),
+        ('threshold_upper', ct.c_int64),
+        ]
+
+class MMAL_CLOCK_DISCONT_THRESHOLD_T(ct.Structure):
+    _fields_ = [
+        ('threshold', ct.c_int64),
+        ('duration',  ct.c_int64),
+        ]
+
+class MMAL_CLOCK_REQUEST_THRESHOLD_T(ct.Structure):
+    _fields_ = [
+        ('threshold',        ct.c_int64),
+        ('threshold_enable', MMAL_BOOL_T),
+        ]
+
+class MMAL_CLOCK_BUFFER_INFO_T(ct.Structure):
+    _fields_ = [
+        ('time_stamp',   ct.c_int64),
+        ('arrival_time', ct.c_uint32),
+        ]
+
+class MMAL_CLOCK_LATENCY_T(ct.Structure):
+    _fields_ = [
+        ('target',        ct.c_int64),
+        ('attack_period', ct.c_int64),
+        ('attack_rate',   ct.c_int64),
+        ]
+
+class _MMAL_CLOCK_EVENT_DATA(ct.Union):
+    _fields_ = [
+        ('enable',            MMAL_BOOL_T),
+        ('scale',             MMAL_RATIONAL_T),
+        ('media_time',        ct.c_int64),
+        ('update_threshold',  MMAL_CLOCK_UPDATE_THRESHOLD_T),
+        ('discont_threshold', MMAL_CLOCK_DISCONT_THRESHOLD_T),
+        ('request_threshold', MMAL_CLOCK_REQUEST_THRESHOLD_T),
+        ('buffer',            MMAL_CLOCK_BUFFER_INFO_T),
+        ('latency',           MMAL_CLOCK_LATENCY_T),
+        ]
+
+class MMAL_CLOCK_EVENT_T(ct.Structure):
+    _fields_ = [
+        ('id',        ct.c_uint32),
+        ('magic',     ct.c_uint32),
+        ('buffer',    ct.POINTER(MMAL_BUFFER_HEADER_T)),
+        ('padding0',  ct.c_uint32),
+        ('data',      _MMAL_CLOCK_EVENT_DATA),
+        ('padding1',  ct.c_uint64),
+        ]
+
+# Ensure MMAL_CLOCK_EVENT_T preserves 64-bit alignment
+assert not ct.sizeof(MMAL_CLOCK_EVENT_T) & 0x07
+
+def MMAL_CLOCK_EVENT_INIT(i):
+    return MMAL_CLOCK_EVENT_T(
+        id=i,
+        magic=MMAL_CLOCK_EVENT_MAGIC,
+        buffer=None,
+        padding0=0,
+        data=_MMAL_CLOCK_EVENT_DATA(enable=MMAL_FALSE),
+        padding1=0,
+        )
+
 # mmal_parameters_common.h ###################################################
 
 MMAL_PARAMETER_GROUP_COMMON   = (0<<16)
@@ -367,7 +453,8 @@ MMAL_PARAMETER_GROUP_MIRACAST = (5<<16)
     MMAL_PARAMETER_LOGGING,
     MMAL_PARAMETER_SYSTEM_TIME,
     MMAL_PARAMETER_NO_IMAGE_PADDING,
-) = range(MMAL_PARAMETER_GROUP_COMMON, MMAL_PARAMETER_GROUP_COMMON + 15)
+    MMAL_PARAMETER_LOCKSTEP_ENABLE,
+) = range(MMAL_PARAMETER_GROUP_COMMON, MMAL_PARAMETER_GROUP_COMMON + 16)
 
 class MMAL_PARAMETER_HEADER_T(ct.Structure):
     _fields_ = [
@@ -515,7 +602,13 @@ class MMAL_PARAMETER_LOGGING_T(ct.Structure):
     MMAL_PARAMETER_SW_SATURATION_DISABLE,
     MMAL_PARAMETER_SHUTTER_SPEED,
     MMAL_PARAMETER_CUSTOM_AWB_GAINS,
-) = range(MMAL_PARAMETER_GROUP_CAMERA, MMAL_PARAMETER_GROUP_CAMERA + 69)
+    MMAL_PARAMETER_CAMERA_SETTINGS,
+    MMAL_PARAMETER_PRIVACY_INDICATOR,
+    MMAL_PARAMETER_VIDEO_DENOISE,
+    MMAL_PARAMETER_STILLS_DENOISE,
+    MMAL_PARAMETER_ANNOTATE,
+    MMAL_PARAMETER_STEREOSCOPIC_MODE,
+) = range(MMAL_PARAMETER_GROUP_CAMERA, MMAL_PARAMETER_GROUP_CAMERA + 75)
 
 class MMAL_PARAMETER_THUMBNAIL_CONFIG_T(ct.Structure):
     _fields_ = [
@@ -620,7 +713,10 @@ MMAL_PARAM_IMAGEFX_T = ct.c_uint32 # enum
     MMAL_PARAM_IMAGEFX_COLOURPOINT,
     MMAL_PARAM_IMAGEFX_COLOURBALANCE,
     MMAL_PARAM_IMAGEFX_CARTOON,
-) = range(23)
+    MMAL_PARAM_IMAGEFX_DEINTERLACE_DOUBLE,
+    MMAL_PARAM_IMAGEFX_DEINTERLACE_ADV,
+    MMAL_PARAM_IMAGEFX_DEINTERLACE_FAST,
+) = range(26)
 MMAL_PARAM_IMAGEFX_MAX = 0x7fffffff
 
 class MMAL_PARAMETER_IMAGEFX_T(ct.Structure):
@@ -629,7 +725,7 @@ class MMAL_PARAMETER_IMAGEFX_T(ct.Structure):
         ('value', MMAL_PARAM_IMAGEFX_T),
         ]
 
-MMAL_MAX_IMAGEFX_PARAMETERS = 5
+MMAL_MAX_IMAGEFX_PARAMETERS = 6
 
 class MMAL_PARAMETER_IMAGEFX_PARAMETERS_T(ct.Structure):
     _fields_ = [
@@ -999,6 +1095,77 @@ class MMAL_PARAMETER_AWB_GAINS_T(ct.Structure):
         ('b_gain', MMAL_RATIONAL_T),
         ]
 
+class MMAL_PARAMETER_CAMERA_SETTINGS_T(ct.Structure):
+    _fields_ = [
+        ('hdr',            MMAL_PARAMETER_HEADER_T),
+        ('exposure',       ct.c_uint32),
+        ('analog_gain',    MMAL_RATIONAL_T),
+        ('digital_gain',   MMAL_RATIONAL_T),
+        ('awb_red_gain',   MMAL_RATIONAL_T),
+        ('awb_blue_gain',  MMAL_RATIONAL_T),
+        ('focus_position', ct.c_uint32),
+        ]
+
+MMAL_PARAM_PRIVACY_INDICATOR_T = ct.c_uint32 # enum
+(
+    MMAL_PARAMETER_PRIVACY_INDICATOR_OFF,
+    MMAL_PARAMETER_PRIVACY_INDICATOR_ON,
+    MMAL_PARAMETER_PRIVACY_INDICATOR_FORCE_ON,
+) = range(3)
+MMAL_PARAMETER_PRIVACY_INDICATOR_MAX = 0x7fffffff
+
+class MMAL_PARAMETER_PRIVACY_INDICATOR_T(ct.Structure):
+    _fields_ = [
+        ('hdr',           MMAL_PARAMETER_HEADER_T),
+        ('mode',          MMAL_PARAM_PRIVACY_INDICATOR_T),
+        ]
+
+MMAL_CAMERA_ANNOTATE_MAX_TEXT_LEN = 32
+
+class MMAL_PARAMETER_CAMERA_ANNOTATE_T(ct.Structure):
+    _fields_ = [
+        ('hdr',              MMAL_PARAMETER_HEADER_T),
+        ('enable',           MMAL_BOOL_T),
+        ('text',             ct.c_char * MMAL_CAMERA_ANNOTATE_MAX_TEXT_LEN),
+        ('show_shutter',     MMAL_BOOL_T),
+        ('show_analog_gain', MMAL_BOOL_T),
+        ('show_lens',        MMAL_BOOL_T),
+        ('show_caf',         MMAL_BOOL_T),
+        ('show_motion',      MMAL_BOOL_T),
+        ]
+
+MMAL_CAMERA_ANNOTATE_MAX_TEXT_LEN_V2 = 256
+
+class MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(ct.Structure):
+    _fields_ = [
+        ('hdr',                   MMAL_PARAMETER_HEADER_T),
+        ('enable',                MMAL_BOOL_T),
+        ('show_shutter',          MMAL_BOOL_T),
+        ('show_analog_gain',      MMAL_BOOL_T),
+        ('show_lens',             MMAL_BOOL_T),
+        ('show_caf',              MMAL_BOOL_T),
+        ('show_motion',           MMAL_BOOL_T),
+        ('show_frame_num',        MMAL_BOOL_T),
+        ('black_text_background', MMAL_BOOL_T),
+        ('text',                  ct.c_char * MMAL_CAMERA_ANNOTATE_MAX_TEXT_LEN_V2),
+        ]
+
+MMAL_STEREOSCOPIC_MODE_T = ct.c_uint32 # enum
+(
+    MMAL_STEREOSCOPIC_MODE_NONE,
+    MMAL_STEREOSCOPIC_MODE_SIDE_BY_SIDE,
+    MMAL_STEREOSCOPIC_MODE_BOTTOM,
+) = range(3)
+MMAL_STEREOSCOPIC_MODE_MAX = 0x7fffffff
+
+class MMAL_PARAMETER_STEREOSCOPIC_MODE_T(ct.Structure):
+    _fields_ = [
+        ('hdr',        MMAL_PARAMETER_HEADER_T),
+        ('mode',       MMAL_STEREOSCOPIC_MODE_T),
+        ('decimate',   MMAL_BOOL_T),
+        ('swap_eyes',  MMAL_BOOL_T),
+        ]
+
 # mmal_parameters_video.h ####################################################
 
 (
@@ -1047,7 +1214,9 @@ class MMAL_PARAMETER_AWB_GAINS_T(ct.Structure):
    MMAL_PARAMETER_VIDEO_ENCODE_INLINE_HEADER,
    MMAL_PARAMETER_VIDEO_ENCODE_SEI_ENABLE,
    MMAL_PARAMETER_VIDEO_ENCODE_INLINE_VECTORS,
-) = range(MMAL_PARAMETER_GROUP_VIDEO, MMAL_PARAMETER_GROUP_VIDEO + 45)
+   MMAL_PARAMETER_VIDEO_RENDER_STATS,
+   MMAL_PARAMETER_VIDEO_INTERLACE_TYPE,
+) = range(MMAL_PARAMETER_GROUP_VIDEO, MMAL_PARAMETER_GROUP_VIDEO + 47)
 
 MMAL_DISPLAYTRANSFORM_T  = ct.c_uint32 # enum
 MMAL_DISPLAY_ROT0 = 0
@@ -1306,13 +1475,47 @@ class MMAL_PARAMETER_VIDEO_DRM_PROTECT_BUFFER_T(ct.Structure):
         ('phys_addr',   ct.c_void_p),
         ]
 
+class MMAL_PARAMETER_VIDEO_RENDER_STATS_T(ct.Structure):
+    _fields_ = [
+        ('hdr',                 MMAL_PARAMETER_HEADER_T),
+        ('valid',               MMAL_BOOL_T),
+        ('match',               ct.c_uint32),
+        ('period',              ct.c_uint32),
+        ('phase',               ct.c_uint32),
+        ('pixel_clock_nominal', ct.c_uint32),
+        ('pixel_clock',         ct.c_uint32),
+        ('hvs_status',          ct.c_uint32),
+        ('dummy',               ct.c_uint32 * 2),
+        ]
+
+MMAL_INTERLACE_TYPE_T = ct.c_uint32 # enum
+(
+    MMAL_InterlaceProgressive,
+    MMAL_InterlaceFieldSingleUpperFirst,
+    MMAL_InterlaceFieldSingleLowerFirst,
+    MMAL_InterlaceFieldsInterleavedUpperFirst,
+    MMAL_InterlaceFieldsInterleavedLowerFirst,
+    MMAL_InterlaceMixed,
+) = range(6)
+MMAL_InterlaceKhronosExtensions = 0x6F000000
+MMAL_InterlaceVendorStartUnused = 0x7F000000
+MMAL_InterlaceMax = 0x7FFFFFFF
+
+class MMAL_PARAMETER_VIDEO_INTERLACE_TYPE_T(ct.Structure):
+    _fields_ = [
+        ('hdr',               MMAL_PARAMETER_HEADER_T),
+        ('eMode',             MMAL_INTERLACE_TYPE_T),
+        ('bRepeatFirstField', MMAL_BOOL_T),
+        ]
+
 # mmal_parameters_audio.h ####################################################
 
 (
    MMAL_PARAMETER_AUDIO_DESTINATION,
    MMAL_PARAMETER_AUDIO_LATENCY_TARGET,
-   MMAL_PARAMETER_AUDIO_SOURCE
-) = range(MMAL_PARAMETER_GROUP_AUDIO, MMAL_PARAMETER_GROUP_AUDIO + 3)
+   MMAL_PARAMETER_AUDIO_SOURCE,
+   MMAL_PARAMETER_AUDIO_PASSTHROUGH,
+) = range(MMAL_PARAMETER_GROUP_AUDIO, MMAL_PARAMETER_GROUP_AUDIO + 4)
 
 class MMAL_PARAMETER_AUDIO_LATENCY_TARGET_T(ct.Structure):
     _fields_ = [
@@ -1333,31 +1536,36 @@ class MMAL_PARAMETER_AUDIO_LATENCY_TARGET_T(ct.Structure):
    MMAL_PARAMETER_CLOCK_ACTIVE,
    MMAL_PARAMETER_CLOCK_SCALE,
    MMAL_PARAMETER_CLOCK_TIME,
-   MMAL_PARAMETER_CLOCK_TIME_OFFSET,
    MMAL_PARAMETER_CLOCK_UPDATE_THRESHOLD,
    MMAL_PARAMETER_CLOCK_DISCONT_THRESHOLD,
    MMAL_PARAMETER_CLOCK_REQUEST_THRESHOLD,
-) = range(MMAL_PARAMETER_GROUP_CLOCK, MMAL_PARAMETER_GROUP_CLOCK + 8)
+   MMAL_PARAMETER_CLOCK_ENABLE_BUFFER_INFO,
+   MMAL_PARAMETER_CLOCK_FRAME_RATE,
+   MMAL_PARAMETER_CLOCK_LATENCY,
+) = range(MMAL_PARAMETER_GROUP_CLOCK, MMAL_PARAMETER_GROUP_CLOCK + 10)
 
 class MMAL_PARAMETER_CLOCK_UPDATE_THRESHOLD_T(ct.Structure):
     _fields_ = [
-        ('hdr',             MMAL_PARAMETER_HEADER_T),
-        ('threshold_lower', ct.c_int64),
-        ('threshold_upper', ct.c_int64),
+        ('hdr',    MMAL_PARAMETER_HEADER_T),
+        ('value',  MMAL_CLOCK_UPDATE_THRESHOLD_T),
         ]
 
 class MMAL_PARAMETER_CLOCK_DISCONT_THRESHOLD_T(ct.Structure):
     _fields_ = [
-        ('hdr',       MMAL_PARAMETER_HEADER_T),
-        ('threshold', ct.c_int64),
-        ('duration',  ct.c_int64),
+        ('hdr',    MMAL_PARAMETER_HEADER_T),
+        ('value',  MMAL_CLOCK_DISCONT_THRESHOLD_T),
         ]
 
 class MMAL_PARAMETER_CLOCK_REQUEST_THRESHOLD_T(ct.Structure):
     _fields_ = [
-        ('hdr',              MMAL_PARAMETER_HEADER_T),
-        ('threshold',        ct.c_int64),
-        ('threshold_enable', MMAL_BOOL_T),
+        ('hdr',    MMAL_PARAMETER_HEADER_T),
+        ('value',  MMAL_CLOCK_REQUEST_THRESHOLD_T),
+        ]
+
+class MMAL_PARAMETER_CLOCK_LATENCY_T(ct.Structure):
+    _fields_ = [
+        ('hdr',    MMAL_PARAMETER_HEADER_T),
+        ('value',  MMAL_CLOCK_LATENCY_T),
         ]
 
 # mmal_parameters.h ##########################################################
@@ -1644,7 +1852,7 @@ class MMAL_QUEUE_T(ct.Structure):
     _fields_ = []
 
 mmal_queue_create = _lib.mmal_queue_create
-mmal_queue_create.argtypes = [ct.POINTER(MMAL_QUEUE_T), ct.POINTER(MMAL_BUFFER_HEADER_T)]
+mmal_queue_create.argtypes = []
 mmal_queue_create.restype = ct.POINTER(MMAL_QUEUE_T)
 
 mmal_queue_put = _lib.mmal_queue_put
@@ -1662,6 +1870,16 @@ mmal_queue_get.restype = ct.POINTER(MMAL_BUFFER_HEADER_T)
 mmal_queue_wait = _lib.mmal_queue_wait
 mmal_queue_wait.argtypes = [ct.POINTER(MMAL_QUEUE_T)]
 mmal_queue_wait.restype = ct.POINTER(MMAL_BUFFER_HEADER_T)
+
+try:
+    mmal_queue_timedwait = _lib.mmal_queue_timedwait
+except AttributeError:
+    # mmal_queue_timedwait doesn't exist in older firmwares. We don't use it
+    # anyway, so ignore it if we don't find it
+    pass
+else:
+    mmal_queue_timedwait.argtypes = [ct.POINTER(MMAL_QUEUE_T), VCOS_UNSIGNED]
+    mmal_queue_timedwait.restype = ct.POINTER(MMAL_BUFFER_HEADER_T)
 
 mmal_queue_length = _lib.mmal_queue_length
 mmal_queue_length.argtypes = [ct.POINTER(MMAL_QUEUE_T)]
@@ -1752,10 +1970,6 @@ mmal_event_format_changed_get = _lib.mmal_event_format_changed_get
 mmal_event_format_changed_get.argtypes = [ct.POINTER(MMAL_BUFFER_HEADER_T)]
 mmal_event_format_changed_get.restype = ct.POINTER(MMAL_EVENT_FORMAT_CHANGED_T)
 
-mmal_event_error_send = _lib.mmal_event_error_send
-mmal_event_error_send.argtypes = [ct.POINTER(MMAL_COMPONENT_T), MMAL_STATUS_T]
-mmal_event_error_send.restype = MMAL_STATUS_T
-
 # mmal_encodings.h ###########################################################
 
 MMAL_ENCODING_H264            = MMAL_FOURCC('H264')
@@ -1828,6 +2042,7 @@ MMAL_ENCODING_WMA1            = MMAL_FOURCC('WMA1')
 MMAL_ENCODING_WMA2            = MMAL_FOURCC('WMA2')
 MMAL_ENCODING_WMAP            = MMAL_FOURCC('WMAP')
 MMAL_ENCODING_WMAL            = MMAL_FOURCC('WMAL')
+MMAL_ENCODING_WMAV            = MMAL_FOURCC('WMAV')
 MMAL_ENCODING_AMRNB           = MMAL_FOURCC('AMRN')
 MMAL_ENCODING_AMRWB           = MMAL_FOURCC('AMRW')
 MMAL_ENCODING_AMRWBP          = MMAL_FOURCC('AMRP')
@@ -1879,6 +2094,7 @@ MMAL_COMPONENT_DEFAULT_VIDEO_SPLITTER  = b"vc.ril.video_splitter"
 MMAL_COMPONENT_DEFAULT_AUDIO_DECODER   = b"none"
 MMAL_COMPONENT_DEFAULT_AUDIO_RENDERER  = b"vc.ril.audio_render"
 MMAL_COMPONENT_DEFAULT_MIRACAST        = b"vc.miracast"
+MMAL_COMPONENT_DEFAULT_CLOCk           = b"vc.clock"
 # The following two components aren't in the MMAL headers, but do exist
 MMAL_COMPONENT_DEFAULT_NULL_SINK       = b"vc.null_sink"
 MMAL_COMPONENT_DEFAULT_RESIZER         = b"vc.ril.resize"
@@ -1962,6 +2178,8 @@ mmal_util_get_core_port_stats.restype = MMAL_STATUS_T
 MMAL_CONNECTION_FLAG_TUNNELLING = 0x1
 MMAL_CONNECTION_FLAG_ALLOCATION_ON_INPUT = 0x2
 MMAL_CONNECTION_FLAG_ALLOCATION_ON_OUTPUT = 0x4
+MMAL_CONNECTION_FLAG_KEEP_BUFFER_REQUIREMENTS = 0x8
+MMAL_CONNECTION_FLAG_DIRECT = 0x10
 
 class MMAL_CONNECTION_T(ct.Structure):
     # Forward type declaration

@@ -44,7 +44,7 @@ defineDevMessages[]:=(
 	SerialPortFlush::usage = "Flush data queued for writing.  Triggers a \"flush\" event via the event function.";
 	SerialPortReadyQ::usage = "Check to see if data is available on the FIFO byte buffer.  Returns True|False.";*)
 	General::baudrate="Value of option BaudRate -> `1` is not 110, 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 56000, 57600, 115200, 128000, 256000.";
-	General::parity="Value of option Parity -> `1` is not None, Odd or Even.";
+	General::parity="Value of option Parity -> `1` is not None, Odd, or Even.";
 	General::stopbits="Value of option StopBits -> `1` is not None, 0, 1, 1.5 or 2.";
 	General::databits="Value of option DataBits -> `1` is not 5, 6, 7 or 8.";
 	General::handshake="Value of option Handshake -> `1` is not None, RTS or XOnXOff.";
@@ -52,7 +52,7 @@ defineDevMessages[]:=(
 	General::readterminator = "Value of option ReadTerminator ->`1` is not an interger (0-255), or a character with character code between 0 and 255.";
 	General::writeterminator = "Value of option WriteTerminator ->`1` is not a valid string or a list of intgers, ranging from 0-255.";
 	General::chtype = "First argument `1` is not a valid port.";
-	SerialPortOpen::nopen= "Could not open the port `1`."; 
+	SerialPortOpen::nopen= "Could not open the port `1`.`2`"; 
 	(* SerialPortOpen::nopen= "Could not open the port \"`1`\"."; *)
 	General::serialport = "SerialPort port object specified is not valid.  It may have been closed."; (* TODO add `1` for port string *)
 	(* General::serialport = "SerialPort port object `1` specified is not valid.  It may have been closed."; *)
@@ -136,7 +136,8 @@ validateStopBit[stopbit_]:=Module[
 validateParity[parity_]:=Module[
 	{res},
 	defineDevMessages[];
-	res = parity/.{None->0,"Odd"->1,"Even"->2};
+	If[$OperatingSystem === "Windows",res = parity/.{None->0,"Odd"->1,"Even"->2,"Mark"->3,"Space"->4},res = parity/.{None->0,"Odd"->1,"Even"->2}];
+	(*res = parity/.{None->0,"Odd"->1,"Even"->2};*)
 	Return@res;
 	]
 
@@ -181,14 +182,14 @@ validBytesListPattern =  List[Repeated[_Integer?((# >= 0 && # <= 255) &), Infini
 validReadTerminator = _Integer?(# >= 0 && # <= 255 &) | _Symbol?(# ===Automatic &) | _String?(MatchQ[ToCharacterCode[#][[1]],validReadTerminator] && StringLength[#] == 1 &)
 validWriteTerminator  =_Symbol?(# === None &) | _String?(# === "" &) | _List?(# === {} &) | validBytesListPattern | _String?(MatchQ[ToCharacterCode[#][[1]], validReadTerminator] &)
 validNumBytes = _Integer?(# > 0 && # <= 102400 &) | _Symbol?(# === Automatic &)
-
+$ValidBaudRates ={110,300,600,1200,2400,4800,9600,14400,19200,28800,38400,56000,57600,115200,128000,256000};
 Options[validateOptions]:=Join[
 	Options[SerialPortOpen],
 	Options[SerialPortRead],
 	Options[CreateSerialPortReadAsynchronousTask],
 	Options[CreateSerialPortWriteAsynchronousTask],
 	Options[SerialPortWrite]];(*{"IgnoreBreak"->True,"BreakDelimiter"->"MultiByte","WriteTerminator"->None,"Timeout"->0,"BaudRate"->115200,"Parity"->None,"Handshake"->None,"StopBits"->None,"DataBits"->8,
-	"BufferSize"->4096,"ErrorHandler"->None,"ReadTerminator"->Automatic,"WriteHandler"->None,"ReadHandler"->None,"ReadCompleteHandler"->None,"BreakHandler"->None,"FlushHandler"->None}*)
+	"ReadBufferSize"->4096,"ErrorHandler"->None,"ReadTerminator"->Automatic,"WriteHandler"->None,"ReadHandler"->None,"ReadCompleteHandler"->None,"BreakHandler"->None,"FlushHandler"->None}*)
 
 
 validateOptions[f_,opts:OptionsPattern[]]:=Module[
@@ -208,10 +209,10 @@ validateOptions[f_,opts:OptionsPattern[]]:=Module[
 	validBreakDelimiterQ = MemberQ[{"MultiByte","SingleByte"},OptionValue@"BreakDelimiter"];
 	If[!validBreakDelimiterQ ===True,Message[f::breakDelimiter,OptionValue@"BreakDelimiter"];validBreakDelimiterQ=False];
 	
-	validBufferSizeQ = IntegerQ[OptionValue@"BufferSize"];
-	If[!validBufferSizeQ===True,Message[f::buffersize,OptionValue@"BufferSize"];validBufferSizeQ=False;];
+	validBufferSizeQ = IntegerQ[OptionValue@"ReadBufferSize"];
+	If[!validBufferSizeQ===True,Message[f::buffersize,OptionValue@"ReadBufferSize"];validBufferSizeQ=False;];
 	
-	validParityQ = MemberQ[{None,"Odd","Even"},OptionValue@"Parity"];
+	validParityQ = ($OperatingSystem==="Windows" && MemberQ[{None,"Odd","Even","Mark","Space"},OptionValue@"Parity"])||(MemberQ[{None,"Odd","Even"},OptionValue@"Parity"]);
 	If[!validParityQ===True,Message[f::parity,OptionValue@"Parity"];validParityQ=False;];
 	
 	validIgnoreBreakQ = MemberQ[{True,False},OptionValue@"IgnoreBreak"];
@@ -220,7 +221,7 @@ validateOptions[f_,opts:OptionsPattern[]]:=Module[
 	validStopBitQ = MemberQ[{None,0,1,1.5,2},OptionValue@"StopBits"];
 	If[!validStopBitQ===True,Message[f::stopbits,OptionValue@"StopBits"];validStopBitQ=False;];
 	
-	validBaudRateQ = MemberQ[{110,300,600,1200,2400,4800,9600,14400,19200,28800,38400,56000,57600,115200,128000,256000},OptionValue@"BaudRate"];
+	validBaudRateQ = MemberQ[$ValidBaudRates,OptionValue@"BaudRate"];
 	If[!validBaudRateQ===True,Message[f::baudrate,OptionValue@"BaudRate"];validBaudRateQ=False;];
 	
 	validReadTerminatorQ = MatchQ[OptionValue@"ReadTerminator",validReadTerminator];
@@ -283,10 +284,10 @@ validOptionsQ[f_,opts___]:=Module[
 	validOptionQ=If[invalidOptionNames==={},Return@True,Message[f::optx,invalidOption,f];Return@False];
 ]
 
-Options[SerialPortOpen]:={"BaudRate"->115200,"Parity"->None,"Handshake"->None,"StopBits"->None,"DataBits"->8,"BufferSize"->4096,"ErrorHandler"->None,"IgnoreBreak"->True,"WriteTerminator"->None,"BreakDelimiter"->"SingleByte"}
+Options[SerialPortOpen]:={"BaudRate"->9600,"Parity"->None,"Handshake"->None,"StopBits"->None,"DataBits"->8,"ReadBufferSize"->4096,"ErrorHandler"->None,"IgnoreBreak"->True,"WriteTerminator"->None,"BreakDelimiter"->"SingleByte"}
 
 SerialPortOpen[portName_/;Quiet@vldArgs[SerialPortOpen,"portname",portName],opts:OptionsPattern[]]/;(If[validOptionsQ[SerialPortOpen,opts]===True,validateOptions[SerialPortOpen,opts],False]):=Module[
-	{breakDelimiter,portOpenQ,baudRate,dataBits,stopBit,parity,handshake,err,bufferSize,serialPortObject,comport,devID,callback2,asyncObj,ignoreBreakStatus}, 
+	{portNameLocal,breakDelimiter,portOpenQ,baudRate,dataBits,stopBit,parity,handshake,err,bufferSize,serialPortObject,comport,devID,callback2,asyncObj,ignoreBreakStatus}, 
 	loadAdapter[];
 	defineDevMessages[];
 	callback2  			= OptionValue@"ErrorHandler";
@@ -301,7 +302,7 @@ SerialPortOpen[portName_/;Quiet@vldArgs[SerialPortOpen,"portname",portName],opts
 	
 	handshake  			= validateHandshake[OptionValue@"Handshake"];
 	
-	bufferSize 			= validateBufferSize[OptionValue@"BufferSize"];
+	bufferSize 			= validateBufferSize[OptionValue@"ReadBufferSize"];
 	
 	ignoreBreakStatus 	= validateIgnoreBreak[OptionValue@"IgnoreBreak"];
 	
@@ -314,10 +315,10 @@ SerialPortOpen[portName_/;Quiet@vldArgs[SerialPortOpen,"portname",portName],opts
 		];
 	
 	iConnectDevice[$PortID];
+	If[$OperatingSystem==="Windows",portNameLocal=FromCharacterCode[{ 92, 46, 92}]<>portName,portNameLocal=portName];(*fahimc: bug#:278087*)
+	err = open[$PortID,portNameLocal, baudRate, dataBits,stopBit,parity,handshake,bufferSize,ignoreBreakStatus,breakDelimiter]; 
 	
-	err = open[$PortID,portName, baudRate, dataBits,stopBit,parity,handshake,bufferSize,ignoreBreakStatus,breakDelimiter]; 
-	
-	If[err===$Failed,$PortIDs=Delete[$PortIDs,-1];iDisconnectDevice[$PortID--];Message[SerialPortOpen::nopen,portName];Return@$Failed];(*decrease port id exactly here and not in Close!!!*)
+	If[err===$Failed,$PortIDs=Delete[$PortIDs,-1];iDisconnectDevice[$PortID--];If[$OperatingSystem==="Linux",Message[SerialPortOpen::nopen,portName," Check that the port is available and that you have the necessary access permissions"],Message[SerialPortOpen::nopen,portName,""]];Return@$Failed];(*decrease port id exactly here and not in Close!!!*)(*decrease port id exactly here and not in Close!!!*)
 	serialPortObject =  SerialPort[portName,{OptionValue@"BaudRate",OptionValue@"DataBits",OptionValue@"StopBits",OptionValue@"Parity",OptionValue@"Handshake"}];
 	
 	AppendTo[$listOfOpenedSerialPorts,serialPortObject];
@@ -330,7 +331,7 @@ SerialPortOpen[portName_/;Quiet@vldArgs[SerialPortOpen,"portname",portName],opts
 	(*Populate port data-struct*)
 	
 	MapThread[update,{Table[serialPortObject,{9}],
-		{"Name","BaudRate","StopBits","Parity","Handshake","BufferSize","IgnoreBreak","WriteTerminator","ErrorHandler"},Flatten@{portName,Thread[OptionValue[SerialPortOpen,{"BaudRate","StopBits","Parity","Handshake","BufferSize","IgnoreBreak","WriteTerminator"}]],asyncObj}}];
+		{"Name","BaudRate","StopBits","Parity","Handshake","ReadBufferSize","IgnoreBreak","WriteTerminator","ErrorHandler"},Flatten@{portName,Thread[OptionValue[SerialPortOpen,{"BaudRate","StopBits","Parity","Handshake","ReadBufferSize","IgnoreBreak","WriteTerminator"}]],asyncObj}}];
 	
 	update[serialPortObject,"BaudRate",9600];
 	Return@ serialPortObject;
