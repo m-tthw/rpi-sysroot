@@ -20,19 +20,22 @@
 # THE SOFTWARE.
 #
 
-# Usage: NOT intended to be used manually (if you insist then try: rake travis)
-desc 'Create a new sysroot from Raspbian image'
-task :sysroot do
+task default: %w[sysroot_update]
+
+# Usage: NOT intended to be used manually
+desc 'Update Raspbian sysroot in the master branch'
+task :sysroot_update do
+  exit 1 if `bash -c 'mem=($(free -m |head -2 |tail -1)); echo ${mem[6]}'` == 0     # Terminate prematurely when this task is run inside a bad Travis CI VM
+  system 'sudo apt-get update -q -y && sudo apt-get install -q -y --no-install-recommends kpartx qemu binfmt-support qemu-user-static' or abort 'Failed to install dependencies'
   system 'wget http://downloads.raspberrypi.org/raspbian_latest -O raspbian.zip' or abort 'Failed to download latest Raspbian image'
-  system 'unzip raspbian.zip' or abort 'Failed to unzip Raspbian image'
+  system 'echo Unzipping... && unzip -qq raspbian.zip' or abort 'Failed to unzip Raspbian image'
   system 'sudo kpartx -a -v *.img && sudo mount -o loop /dev/mapper/loop0p2 /mnt' or abort 'Failed to create and mount loop device'
   system 'git clone --depth=1 https://github.com/urho3d/rpi-sysroot.git' or abort 'Failed to clone existing sysroot'
-  system 'mv rpi-sysroot/README.md /tmp && mv rpi-sysroot/.git /tmp' or abort 'Failed to temporarily move the extra files before rsync'
-  system 'sudo rsync -a --delete /mnt/ rpi-sysroot && sudo chown -R $USER: rpi-sysroot && cp /usr/bin/qemu-arm-static rpi-sysroot/usr/bin && ruby -i -pe "gsub(/^/, %q{#})" rpi-sysroot/etc/ld.so.preload' or abort 'Failed to rsync new sysroot'
-  system 'mv /tmp/README.md rpi-sysroot && mv /tmp/.git rpi-sysroot' or abort 'Failed to move the extra files back after rsync'
+  system 'echo Syncing... && sudo rsync -a --delete -q --exclude .git --exclude README.md /mnt/ rpi-sysroot && sudo chown -R $USER: rpi-sysroot && cp /usr/bin/qemu-arm-static rpi-sysroot/usr/bin && ruby -i -pe "gsub(/^/, %q{#})" rpi-sysroot/etc/ld.so.preload' or abort 'Failed to rsync new sysroot'
   system "bash -c 'basename {*,}.img' |tr -d '\n' |ruby -i -le 'version = STDIN.read; puts ARGF.read.gsub(/\\(.*?\\)/m, %Q{(\#{version})})' rpi-sysroot/README.md" or abort 'Failed to update image version'
   system 'for f in dev proc sys; do sudo mount --bind /$f rpi-sysroot/$f; done && sudo chroot rpi-sysroot /bin/bash -c "apt-get install libraspberrypi0 libraspberrypi-dev libasound2-dev libudev-dev" && for f in dev proc sys; do sudo umount rpi-sysroot/$f; done' or abort 'Failed to install prerequisite software packages in new sysroot'
   system 'sudo umount /mnt && sudo kpartx -d *.img' or abort 'Failed to unmount loop device'
   system 'ln -snf ../../../lib/arm-linux-gnueabihf/libdl.so.2 rpi-sysroot/usr/lib/arm-linux-gnueabihf/libdl.so' or abort 'Failed to fix symbolic link for dl library'
-  system "cd rpi-sysroot && git config user.name '#{ENV['GIT_NAME']}' && git config user.email '#{ENV['GIT_EMAIL']}' && git remote set-url --push origin https://#{ENV['GH_TOKEN']}@github.com/urho3d/rpi-sysroot.git && git add -A . && ( git commit -q -m \"Travis CI: Raspberry Pi sysroot update at #{Time.now.utc}.\" || true) && git push -q >/dev/null 2>&1" or abort 'Failed to push new sysroot'
+  system "echo Committing... && cd rpi-sysroot && git config user.name '#{ENV['GIT_NAME']}' && git config user.email '#{ENV['GIT_EMAIL']}' && git remote set-url --push origin https://#{ENV['GH_TOKEN']}@github.com/urho3d/rpi-sysroot.git && git add -Af . && ( git commit -q -m \"Travis CI: Raspberry Pi sysroot update at #{Time.now.utc}.\" || true) && git push -q >/dev/null 2>&1" or abort 'Failed to push new sysroot'
+  system "echo Stripping... && bash -c 'cd rpi-sysroot && git checkout -b strip && git rm -rf . && git checkout -- usr/include usr/lib && ( git commit -q -m \"Travis CI: strip Raspberry-Pi sysroot.\" || true) && git push -qf -u origin strip >/dev/null 2>&1'" or abort 'Failed to strip Raspberry-Pi sysroot'
 end
