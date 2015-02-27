@@ -5,3 +5,4 @@ At the moment the trigger cannot be run on Travis CI server because it does not 
 ## History:
 - 2014-08-27 - trigger sysroot update for Raspbian Debian Wheezy 2014-06-20
 - 2014-11-26 - trigger sysroot update for Raspbian Debian Wheezy 2014-09-09
+- 2015-02-27 - trigger sysroot update for Raspbian Debian Wheezy 2015-02-16
