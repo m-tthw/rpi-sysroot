@@ -3098,14 +3098,20 @@ Cell[BoxData[
 
 
 "PackageToolbar" -> Cell[BoxData[
- DynamicModuleBox[{FrontEnd`Private`functionlabel$$, 
-  FrontEnd`Private`sectionlabel$$, FrontEnd`Private`space$$, 
-  FrontEnd`Private`selectcell$$, FrontEnd`Private`getMenuContents$$, 
-  FrontEnd`Private`flattenCellGroups$$, 
-  FrontEnd`Private`menuContents$$, FrontEnd`Private`fEnabled$$, 
-  FrontEnd`Private`sEnabled$$}, 
+ DynamicModuleBox[{PackageToolbar`Private`functionlabel$$, 
+  PackageToolbar`Private`sectionlabel$$, 
+  PackageToolbar`Private`space$$, PackageToolbar`Private`selectcell$$,
+   PackageToolbar`Private`getMenuContents$$, 
+  PackageToolbar`Private`flattenCellGroups$$, 
+  PackageToolbar`Private`menuContents$$, 
+  PackageToolbar`Private`fEnabled$$ = True, 
+  PackageToolbar`Private`sEnabled$$ = True}, 
   DynamicBox[GridBox[{{
-      RowBox[{
+      TemplateBox[{
+        StyleBox[
+         
+         GraphicsBox[{}, ImageSize -> {3, 0}, BaselinePosition -> 
+          Baseline], "CacheGraphics" -> False], 
         DynamicBox[
          ToBoxes[
           Row[{
@@ -3114,87 +3120,80 @@ Cell[BoxData[
               FEPrivate`FrontEndResource[
               "PackageToolbarText", "ButtonFunctions"]], 
              Map[
-             FrontEnd`Private`functionlabel$$[#] :> 
-              FrontEnd`Private`selectcell$$[
+             PackageToolbar`Private`functionlabel$$[#] :> 
+              PackageToolbar`Private`selectcell$$[
                 EvaluationNotebook[], 
                 Part[#, 2]]& , 
               If[
-               MatchQ[FrontEnd`Private`menuContents$$, {
+               MatchQ[PackageToolbar`Private`menuContents$$, {
                  Blank[List], 
                  Blank[]}], 
-               First[FrontEnd`Private`menuContents$$], {}]], 
+               First[PackageToolbar`Private`menuContents$$], {}]], 
              BaselinePosition -> (Center -> Center), Enabled :> 
              FEPrivate`SameQ[
-               Dynamic[FrontEnd`Private`fEnabled$$], True], 
+               Dynamic[PackageToolbar`Private`fEnabled$$], True], 
              MenuAppearance -> "Dropdown"], 
             ActionMenu[
              Dynamic[
               FEPrivate`FrontEndResource[
               "PackageToolbarText", "ButtonSections"]], 
              Map[
-             FrontEnd`Private`sectionlabel$$[#] :> (
-               FrontEnd`Private`selectcell$$[
+             PackageToolbar`Private`sectionlabel$$[#] :> (
+               PackageToolbar`Private`selectcell$$[
                  EvaluationNotebook[], 
                  Part[#, 2]]; FrontEndTokenExecute[
                  EvaluationNotebook[], "SelectionOpenAllGroups"])& , 
               If[
-               MatchQ[FrontEnd`Private`menuContents$$, {
+               MatchQ[PackageToolbar`Private`menuContents$$, {
                  Blank[], 
                  Blank[List]}], 
-               Last[FrontEnd`Private`menuContents$$], {}]], 
+               Last[PackageToolbar`Private`menuContents$$], {}]], 
              BaselinePosition -> (Center -> Center), Enabled :> 
              FEPrivate`SameQ[
-               Dynamic[FrontEnd`Private`sEnabled$$], True], 
+               Dynamic[PackageToolbar`Private`sEnabled$$], True], 
              MenuAppearance -> "Dropdown"]}], StandardForm]], 
+        TooltipBox[
+         ButtonBox[
+          TemplateBox[{"  ", "\"  \"", 
+            PaneBox[
+             DynamicBox[
+              FEPrivate`ImportImage[
+               
+               FrontEnd`FileName[{"Toolbars", "Package"}, 
+                "UpdateIcon.png"]]], BaselinePosition -> Scaled[0.1]], 
+            DynamicBox[
+             ToBoxes[
+              FEPrivate`FrontEndResource[
+              "PackageToolbarText", "ButtonUpdate"], StandardForm]]}, 
+           "RowWithSeparators"], 
+          ButtonFunction :> (PackageToolbar`Private`menuContents$$ = 
+           PackageToolbar`Private`getMenuContents$$[
+             EvaluationNotebook[]]), Evaluator -> Automatic, Method -> 
+          "Queued", BaselinePosition -> (Center -> Center), 
+          Appearance -> "Palette", 
+          FrameMargins -> {{5, 5}, {Inherited, Inherited}}], 
+         DynamicBox[
+          ToBoxes[
+           FEPrivate`FrontEndResource[
+           "PackageToolbarText", "TooltipUpdate"], StandardForm]]]}, 
+       "RowWithSeparator"], 
+      TemplateBox[{
         StyleBox[
          
          GraphicsBox[{}, ImageSize -> {3, 0}, BaselinePosition -> 
           Baseline], "CacheGraphics" -> False], 
-        TooltipBox[
-         ButtonBox[
-          RowBox[{
-            StyleBox[
-             GraphicsBox[
-              RasterBox[CompressedData["
-1:eJxTTMoPSmVmYGDgAWJuIGZigIEP9gwogHj+p0u+SQIRF+1h4uj8WTNBAMGn
-1D5K3Udv/YT4XjxM2u1iQ8d8SuMTPTzR3YduPiH1lPqHUvcT4tPbfYT41A6/
-we5fQvEz0OkJ3X5S0xel+ZHa5TOt08NgN3+g8wOh8pPa7gMAhswbkg==
-             
-                 "]], ImageSize -> {11, 12}, 
-              PlotRange -> {{0, 11}, {0, 12}}], CacheGraphics -> 
-             False], "\[InvisibleSpace]", 
-            DynamicBox[
-             ToBoxes[
-              FEPrivate`FrontEndResource[
-              "PackageToolbarText", "ButtonUpdate"], StandardForm]]}],
-           ButtonFunction :> (FrontEnd`Private`menuContents$$ = 
-           FrontEnd`Private`getMenuContents$$[
-             EvaluationNotebook[]]), Evaluator -> Automatic, Method -> 
-          "Queued", BaselinePosition -> (Center -> Center), 
-          Appearance -> "Palette"], 
-         DynamicBox[
-          ToBoxes[
-           FEPrivate`FrontEndResource[
-           "PackageToolbarText", "TooltipUpdate"], StandardForm]]]}], 
-      
-      RowBox[{
         StyleBox[
-         RowBox[{
+         TemplateBox[{
            CheckboxBox[
             Dynamic[
              
              CurrentValue[$FrontEnd, {
-              DebuggerSettings, "DebuggerEnabled"}]]], 
-           "\[InvisibleSpace]", 
+              "DebuggerSettings", "DebuggerEnabled"}]]], 
            DynamicBox[
             ToBoxes[
              FEPrivate`FrontEndResource[
-             "PackageToolbarText", "LabelDebug"], StandardForm]]}], 
-         "ControlStyle"], 
-        StyleBox[
-         
-         GraphicsBox[{}, ImageSize -> {3, 0}, BaselinePosition -> 
-          Baseline], "CacheGraphics" -> False], 
+             "PackageToolbarText", "LabelDebug"], StandardForm]]}, 
+          "RowDefault"], "ControlStyle"], 
         TooltipBox[
          ButtonBox[
           DynamicBox[
@@ -3211,83 +3210,91 @@ we5fQvEz0OkJ3X5S0xel+ZHa5TOt08NgN3+g8wOh8pPa7gMAhswbkg==
           ToBoxes[
            FEPrivate`FrontEndResource[
            "PackageToolbarText", "TooltipRunPackage"], 
-           StandardForm]]]}]}}, 
+           StandardForm]]]}, "RowWithSeparator"]}}, 
     GridBoxAlignment -> {
      "Columns" -> {Left, Right}, "Rows" -> {{Baseline}}}, AutoDelete -> 
     False, GridBoxItemSize -> {"Columns" -> {{
          Scaled[0.5]}}, "Rows" -> {{Automatic}}}],
-   ImageSizeCache->{688., {10.84375, 16.15625}}],
+   ImageSizeCache->{756., {10.8544921875, 16.1455078125}}],
   DynamicModuleValues:>{},
-  Initialization:>(FrontEnd`Private`functionlabel$$[{
-       Pattern[FrontEnd`Private`boxes, 
+  Initialization:>(PackageToolbar`Private`functionlabel$$[{
+       Pattern[PackageToolbar`Private`boxes, 
         Blank[]], 
-       Pattern[FrontEnd`Private`k, 
-        Blank[]]}] := RawBoxes[FrontEnd`Private`boxes]; 
-   FrontEnd`Private`sectionlabel$$[{
+       Pattern[PackageToolbar`Private`k, 
+        Blank[]]}] := RawBoxes[PackageToolbar`Private`boxes]; 
+   PackageToolbar`Private`sectionlabel$$[{
        Cell[
-        Pattern[FrontEnd`Private`str$, 
+        Pattern[PackageToolbar`Private`str$, 
          Blank[]], 
-        Pattern[FrontEnd`Private`sty$, 
+        Pattern[PackageToolbar`Private`sty$, 
          Blank[]], 
-        Pattern[FrontEnd`Private`args$, 
+        Pattern[PackageToolbar`Private`args$, 
          BlankNullSequence[]]], 
-       Pattern[FrontEnd`Private`k$, 
+       Pattern[PackageToolbar`Private`k$, 
         Blank[]]}] := ToString[
-      StringForm["`2` `1`", FrontEnd`Private`str$, 
-       FrontEnd`Private`space$$[FrontEnd`Private`sty$]]]; 
-   FrontEnd`Private`space$$["Title"] = ""; 
-   FrontEnd`Private`space$$["Chapter"] = ""; 
-   FrontEnd`Private`space$$["Section"] = "  "; 
-   FrontEnd`Private`space$$["Subsection"] = "    "; 
-   FrontEnd`Private`space$$["Subsubsection"] = "      "; 
-   FrontEnd`Private`space$$[
-      Blank[]] := ""; FrontEnd`Private`selectcell$$[
-      Pattern[FrontEnd`Private`nb, 
+      StringForm["`2` `1`", PackageToolbar`Private`str$, 
+       PackageToolbar`Private`space$$[PackageToolbar`Private`sty$]]]; 
+   PackageToolbar`Private`space$$["Title"] = ""; 
+   PackageToolbar`Private`space$$["Chapter"] = ""; 
+   PackageToolbar`Private`space$$["Section"] = "  "; 
+   PackageToolbar`Private`space$$["Subsection"] = "    "; 
+   PackageToolbar`Private`space$$["Subsubsection"] = "      "; 
+   PackageToolbar`Private`space$$[
+      Blank[]] := ""; PackageToolbar`Private`selectcell$$[
+      Pattern[PackageToolbar`Private`nb, 
        Blank[]], 
-      Pattern[FrontEnd`Private`k, 
+      Pattern[PackageToolbar`Private`k, 
        Blank[]]] := FrontEndExecute[{
        FrontEnd`SelectionMove[
-       FrontEnd`Private`nb, Before, Notebook, AutoScroll -> False], 
+       PackageToolbar`Private`nb, Before, Notebook, AutoScroll -> 
+        False], 
        FrontEnd`SelectionMove[
-       FrontEnd`Private`nb, Next, Cell, FrontEnd`Private`k, 
-        AutoScroll -> False], 
+       PackageToolbar`Private`nb, Next, Cell, 
+        PackageToolbar`Private`k, AutoScroll -> False], 
        FrontEnd`FrontEndToken[
-       FrontEnd`Private`nb, "OpenSelectionParents"]}]; 
-   FrontEnd`Private`flattenCellGroups$$[
-      Pattern[FrontEnd`Private`nb$, 
-       Blank[NotebookObject]]] := FrontEnd`Private`flattenCellGroups$$[
-      NotebookGet[FrontEnd`Private`nb$]]; 
-   FrontEnd`Private`flattenCellGroups$$[
+       PackageToolbar`Private`nb, "OpenSelectionParents"]}]; 
+   PackageToolbar`Private`flattenCellGroups$$[
+      Pattern[PackageToolbar`Private`nb$, 
+       Blank[NotebookObject]]] := 
+    PackageToolbar`Private`flattenCellGroups$$[
+      NotebookGet[PackageToolbar`Private`nb$]]; 
+   PackageToolbar`Private`flattenCellGroups$$[
       Notebook[
-       Pattern[FrontEnd`Private`cells$, 
+       Pattern[PackageToolbar`Private`cells$, 
         Blank[]], 
-       Pattern[FrontEnd`Private`opts$, 
+       Pattern[PackageToolbar`Private`opts$, 
         BlankNullSequence[]]]] := Notebook[
-      FrontEnd`Private`flattenCellGroups$$[FrontEnd`Private`cells$], 
-      FrontEnd`Private`opts$]; FrontEnd`Private`flattenCellGroups$$[{
-       Pattern[FrontEnd`Private`c$, 
+      PackageToolbar`Private`flattenCellGroups$$[
+      PackageToolbar`Private`cells$], PackageToolbar`Private`opts$]; 
+   PackageToolbar`Private`flattenCellGroups$$[{
+       Pattern[PackageToolbar`Private`c$, 
         BlankSequence[Cell]]}] := Flatten[
       Map[
-      FrontEnd`Private`flattenCellGroups$$, {FrontEnd`Private`c$}]]; 
-   FrontEnd`Private`flattenCellGroups$$[
+      PackageToolbar`Private`flattenCellGroups$$, {
+       PackageToolbar`Private`c$}]]; 
+   PackageToolbar`Private`flattenCellGroups$$[
       Cell[
        CellGroupData[{
-         Pattern[FrontEnd`Private`c$, 
+         Pattern[PackageToolbar`Private`c$, 
           BlankSequence[Cell]]}, 
         BlankNullSequence[]], 
        BlankNullSequence[]]] := 
-    Map[FrontEnd`Private`flattenCellGroups$$, {FrontEnd`Private`c$}]; 
-   FrontEnd`Private`flattenCellGroups$$[
-      Pattern[FrontEnd`Private`c, 
-       Blank[]]] := FrontEnd`Private`c; 
-   FrontEnd`Private`getMenuContents$$[
-      Pattern[FrontEnd`Private`nb$, 
+    Map[PackageToolbar`Private`flattenCellGroups$$, {
+      PackageToolbar`Private`c$}]; 
+   PackageToolbar`Private`flattenCellGroups$$[
+      Pattern[PackageToolbar`Private`c, 
+       Blank[]]] := PackageToolbar`Private`c; 
+   PackageToolbar`Private`getMenuContents$$[
+      Pattern[PackageToolbar`Private`nb$, 
        Blank[]]] := 
-    Module[{FrontEnd`Private`cellList$, FrontEnd`Private`fPos$, 
-       FrontEnd`Private`sPos$, FrontEnd`Private`funcs$, 
-       FrontEnd`Private`secs$}, FrontEnd`Private`cellList$ = First[
-         FrontEnd`Private`flattenCellGroups$$[FrontEnd`Private`nb$]]; 
-      FrontEnd`Private`fPos$ = Position[FrontEnd`Private`cellList$, 
+    Module[{PackageToolbar`Private`cellList$, 
+       PackageToolbar`Private`fPos$, PackageToolbar`Private`sPos$, 
+       PackageToolbar`Private`funcs$, PackageToolbar`Private`secs$}, 
+      PackageToolbar`Private`cellList$ = First[
+         PackageToolbar`Private`flattenCellGroups$$[
+         PackageToolbar`Private`nb$]]; 
+      PackageToolbar`Private`fPos$ = 
+       Position[PackageToolbar`Private`cellList$, 
          Alternatives[
           RowBox[{
             Except[
@@ -3304,14 +3311,16 @@ we5fQvEz0OkJ3X5S0xel+ZHa5TOt08NgN3+g8wOh8pPa7gMAhswbkg==
               RowBox[{
                 Blank[], "[", 
                 Condition[
-                 Pattern[FrontEnd`Private`s, 
+                 Pattern[PackageToolbar`Private`s, 
                   Blank[String]], 
-                 StringMatchQ[FrontEnd`Private`s, Whitespace]], 
+                 StringMatchQ[PackageToolbar`Private`s, Whitespace]], 
+                
                 Blank[], 
                 Condition[
-                 Pattern[FrontEnd`Private`s, 
+                 Pattern[PackageToolbar`Private`s, 
                   Blank[String]], 
-                 StringMatchQ[FrontEnd`Private`s, Whitespace]], "]"}], 
+                 StringMatchQ[PackageToolbar`Private`s, Whitespace]], 
+                "]"}], 
               RowBox[{
                 RowBox[{
                   Blank[], "[", 
@@ -3332,30 +3341,34 @@ we5fQvEz0OkJ3X5S0xel+ZHa5TOt08NgN3+g8wOh8pPa7gMAhswbkg==
             RowBox[{
               Alternatives["Function", "Compile"], 
               BlankNullSequence[]}]}]]]; 
-      FrontEnd`Private`sPos$ = Position[FrontEnd`Private`cellList$, 
+      PackageToolbar`Private`sPos$ = 
+       Position[PackageToolbar`Private`cellList$, 
          Cell[
           Blank[], 
           Alternatives[
           "Title", "Chapter", "Section", "Subsection", 
            "Subsubsection"], 
           BlankNullSequence[]]]; 
-      FrontEnd`Private`funcs$ = Map[First, 
+      PackageToolbar`Private`funcs$ = Map[First, 
          Split[
           Sort[
            Apply[{
-             Part[FrontEnd`Private`cellList$, 
-              SlotSequence[1], 1, 1], #}& , FrontEnd`Private`fPos$, {
-            1}]]]]; FrontEnd`Private`secs$ = Apply[{
-          Part[FrontEnd`Private`cellList$, 
-           SlotSequence[1]], #}& , FrontEnd`Private`sPos$, {1}]; 
-      FrontEnd`Private`fEnabled$$ = FrontEnd`Private`funcs$ =!= {}; 
-      FrontEnd`Private`sEnabled$$ = FrontEnd`Private`secs$ =!= {}; {
-       FrontEnd`Private`funcs$, FrontEnd`Private`secs$}]; 
-   FrontEnd`Private`menuContents$$ = 
-    FrontEnd`Private`getMenuContents$$[
+             Part[PackageToolbar`Private`cellList$, 
+              SlotSequence[1], 1, 1], #}& , 
+            PackageToolbar`Private`fPos$, {1}]]]]; 
+      PackageToolbar`Private`secs$ = Apply[{
+          Part[PackageToolbar`Private`cellList$, 
+           SlotSequence[1]], #}& , PackageToolbar`Private`sPos$, {1}]; 
+      PackageToolbar`Private`fEnabled$$ = 
+       PackageToolbar`Private`funcs$ =!= {}; 
+      PackageToolbar`Private`sEnabled$$ = 
+       PackageToolbar`Private`secs$ =!= {}; {
+       PackageToolbar`Private`funcs$, PackageToolbar`Private`secs$}]; 
+   PackageToolbar`Private`menuContents$$ = 
+    PackageToolbar`Private`getMenuContents$$[
       EvaluationNotebook[]]),
-  SynchronousInitialization->True,
-  UnsavedVariables:>{FrontEnd`Private`menuContents$$}]], "SystemDockedCell"],
+  UnsavedVariables:>{
+   PackageToolbar`Private`menuContents$$}]], "SystemDockedCell"],
 
 
 
@@ -3572,7 +3585,7 @@ Cell[BoxData[
         Appearance->None,
         BaseStyle->{},
         BaselinePosition->Baseline,
-        ButtonFunction:>FEPrivate`ShowWolframCloudAcitvityMonitor[],
+        ButtonFunction:>FEPrivate`ShowWolframCloudActivityMonitor[],
         Evaluator->None,
         Method->"Preemptive"]}
      },
@@ -3606,7 +3619,7 @@ Cell[BoxData[
         Appearance->None,
         BaseStyle->{},
         BaselinePosition->Baseline,
-        ButtonFunction:>FEPrivate`ShowWolframCloudAcitvityMonitor[],
+        ButtonFunction:>FEPrivate`ShowWolframCloudActivityMonitor[],
         Evaluator->None,
         Method->"Preemptive"], 
        DynamicBox[ToBoxes[
@@ -3662,7 +3675,7 @@ Cell[BoxData[
             Appearance->None,
             BaseStyle->{},
             BaselinePosition->Baseline,
-            ButtonFunction:>FEPrivate`ShowWolframCloudAcitvityMonitor[],
+            ButtonFunction:>FEPrivate`ShowWolframCloudActivityMonitor[],
             Evaluator->None,
             Method->"Preemptive"], 
            DynamicBox[ToBoxes[

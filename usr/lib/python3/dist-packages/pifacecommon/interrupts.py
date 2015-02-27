@@ -2,6 +2,7 @@ import threading
 import multiprocessing
 import select
 import time
+import errno
 from .core import get_bit_num
 import pifacecommon.mcp23s17
 
@@ -14,7 +15,7 @@ IODIR_BOTH = None
 # IN_EVENT_DIR_BOTH = INPUT_DIRECTION_BOTH = None
 
 GPIO_INTERRUPT_PIN = 25
-GPIO_INTERRUPT_DEVICE = "/sys/devices/virtual/gpio/gpio%d" % GPIO_INTERRUPT_PIN
+GPIO_INTERRUPT_DEVICE = "/sys/class/gpio/gpio%d" % GPIO_INTERRUPT_PIN
 GPIO_INTERRUPT_DEVICE_EDGE = '%s/edge' % GPIO_INTERRUPT_DEVICE
 GPIO_INTERRUPT_DEVICE_VALUE = '%s/value' % GPIO_INTERRUPT_DEVICE
 GPIO_EXPORT_FILE = "/sys/class/gpio/export"
@@ -184,6 +185,25 @@ class PortEventListener(object):
         """
         self.pin_function_maps.append(
             PinFunctionMap(pin_num, direction, callback, settle_time))
+
+    def deregister(self, pin_num=None, direction=None):
+        """De-registers callback functions
+
+        :param pin_num: The pin number. If None then all functions are de-registered
+        :type pin_num: int
+        :param direction: The event direction. If None then all functions for the
+                          given pin are de-registered
+        :type direction:int
+        """
+        to_delete = []
+        for i, function_map in enumerate(self.pin_function_maps):
+            if ( pin_num == None
+                 or ( function_map.pin_num == pin_num
+                      and ( direction == None
+                            or function_map.direction == direction ) ) ):
+                to_delete.append(i)
+        for i in reversed(to_delete):
+            del self.pin_function_maps[i]
 
     def activate(self):
         """When activated the :class:`PortEventListener` will run callbacks

@@ -1,14 +1,30 @@
-<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Get all sample groups</font></span></p>
-<h1><font color="#3c3c3c"><pre>sample_groups<pre></font></h1>
-<h2><pre>[]</pre></h2>
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Pre-load sample</font></span></p>
+<h1><font color="#3c3c3c"><pre>load_sample<pre></font></h1>
+<h2><pre>[path <font color="deeppink">(string)</font>]</pre></h2>
 <p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
-Return a list of all the sample groups available
+Given a path to a wav|wave|aif|aiff file, this loads the file and makes it available as a sample. See load_samples for loading multiple samples in one go.
 </p>
 <p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
-Introduced in v2.0.0
-</p>
-<table cellpadding="2">
+<span style="color:white;background-color:darkorange;">Introduced in v2.0
+</span></p>
+<table cellpadding="8">
  <tr>
    <th></th><th></th><th></th>
  </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#74ACFF"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+load_sample :elec_blip
+sample :elec_blip
+
+
+
+</pre></td>
+   <td><pre>
+# :elec_blip is now loaded and ready to play as a sample
+# No delay takes place when attempting to trigger it
+
+
+
+</pre></td></tr>
 </table>

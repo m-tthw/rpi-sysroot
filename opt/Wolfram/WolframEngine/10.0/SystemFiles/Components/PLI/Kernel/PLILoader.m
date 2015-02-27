@@ -1,3 +1,3 @@
-PacletManager`Package`getPacletWithProgress["PLI", "Parse" (* MessageHead *)]
+PacletManager`Package`getPacletWithProgress["PLI", "GrammarApply" (* MessageHead *)]
 
 Get["PLI`"]

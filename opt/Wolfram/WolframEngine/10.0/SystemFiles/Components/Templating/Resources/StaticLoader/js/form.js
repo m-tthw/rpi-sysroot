@@ -47,7 +47,6 @@
 
 // Color object
 var Color = function(val) {
-    
     this.value = {
         h: 0,
         s: 0,
@@ -2090,11 +2089,7 @@ Color.prototype = {
  * color picker plugin made by riccardod@wolfram.com
  */
 
-
-
-
 !function($) {
-
 
     function ColorSetter(original, options) {
         this.options   = $.extend({}, this.defaults, options);
@@ -2103,8 +2098,6 @@ Color.prototype = {
         this.buildData();
         this.buildPicker();
     };
-
-
 
     ColorSetter.prototype = {
         constructor: ColorSetter,
@@ -2427,7 +2420,6 @@ Color.prototype = {
                         parseFloat(color.attr("step"))
                         )
                     
-
                     color.val(value)
                 })
             }
@@ -2441,28 +2433,40 @@ Color.prototype = {
         this.options   = $.extend({}, this.defaults, options);
         this.$original = $(original);
 
-
-
         this.buildContainer();
         this.buildInput();
         this.buildDropdown();
         this.buildAddon();
-
+        this.buildModal();
         this.buildData();
 
         this.updateControl(false, true, true);
 
+        this.$isMobile = true
+
+
+
     };
-
-
 
     ColorControl.prototype = {
         constructor: ColorControl,
         defaults: {
+            mobileWidth: 600,
             templates: {
                 container: '<div class="color-setter-control"/>',
                 addon: '<div class="color-setter-addon" data-toggle="dropdown"><div class="color-setter-color update-current"/></div>',
-                dropdown: '<div class="dropdown-menu"/>'
+                dropdown: '<div class="dropdown-menu"/>',
+                modal: '<div class="modal fade">\
+                    <div class="modal-dialog modal-sm">\
+                        <div class="modal-content">\
+                            <div class="modal-header">\
+                                <strong>Pick a color</strong>\
+                            </div>\
+                            <div class="modal-body">\
+                            </div>\
+                        </div>\
+                    </div>\
+                    </div>'
             }
         },
         buildData: function() {
@@ -2505,8 +2509,25 @@ Color.prototype = {
         },
         buildAddon: function() {
             this.$addon = $(this.options.templates.addon)
-                .off("keydown.bs.dropdown.data-api");
+                .off("keydown.bs.dropdown.data-api")
+                .on("click", $.proxy(this.route, this));
             this.$original.after(this.$addon)
+        },
+        route: function() {
+
+            this.$isMobile = this.options.mobileWidth && $(window).width() <= this.options.mobileWidth;
+
+            if (this.$isMobile) {
+                this.buildSetter()
+                this.$modal.modal()
+                this.$addon.attr("data-toggle", "modal")
+            } else {
+                this.$addon.attr("data-toggle", "dropdown")
+            }
+        },
+        buildModal: function() {
+            this.$modal = $(this.options.templates.modal)
+            this.$original.after(this.$modal)
         },
         buildDropdown: function() {
             this.$dropdown = $(this.options.templates.dropdown)
@@ -2517,14 +2538,7 @@ Color.prototype = {
             this.$original.after(this.$dropdown)
 
             this.$container
-                .on('show.bs.dropdown', $.proxy(function() {
-
-                    
-                    this.buildSetter();
-                    this.$setterAPI.$previous.css({backgroundColor: this.$color.toString()});
-                    this.$setterAPI.$cancel.attr("data-color", this.$original.val());
-
-                }, this));
+                .on('show.bs.dropdown', $.proxy(this.buildSetter, this));
 
         },
         buildSetter:function() {
@@ -2534,25 +2548,37 @@ Color.prototype = {
             }
 
             this.$setter = COLOR_FIELD_SETTER;
-            this.$dropdown.append(this.$setter)
             this.$setterAPI = COLOR_FIELD_SETTER.data("colorsetter");
             this.$setterAPI.$color = this.$color;
+
+            this.$setterAPI.$previous.css({backgroundColor: this.$color.toString()});
+            this.$setterAPI.$cancel.attr("data-color", this.$original.val());
+
             this.$setterAPI.options.change = $.proxy(function(color) {
                 this.$color = color;
                 this.updateControl(true);
             }, this)
 
             this.$setterAPI.options.ok = $.proxy(function() {
-                if (this.$container.hasClass("open")) this.$addon.trigger("click.bs.dropdown");
+                if (this.$modal.hasClass("in")) {
+                    this.$modal.modal("hide")
+                }
+                if (this.$container.hasClass("open")) {
+                    this.$addon.trigger("click.bs.dropdown")
+                };
             }, this)
 
-            this.$setterAPI.options.cancel = $.proxy(function() {
-                if (this.$container.hasClass("open")) this.$addon.trigger("click.bs.dropdown");
-            }, this)
-
-
+            this.$setterAPI.options.cancel = this.$setterAPI.options.ok
             this.$setterAPI.updateControl(false, true, true);
 
+            if (! this.$isMobile) {
+                // route the modal to dropdown on web
+                this.$addon.attr("data-toggle", "dropdown")
+                this.$dropdown.append(this.$setter)
+            } else {
+                this.$addon.attr("data-toggle", "modal")
+                this.$modal.find(".modal-body").append(this.$setter)
+            }
         },
         updateControl:function(updateinput) {
 
@@ -2566,8 +2592,8 @@ Color.prototype = {
             
             this.$addon.children().css({backgroundColor: rgba});
             
-            if (updateinput && this.$color.input)   this.$original.val(this.$color.input);
-            if (updateinput && ! this.$color.input)   this.$original.val(rgba);
+            if (updateinput &&   this.$color.input) this.$original.val(this.$color.input);
+            if (updateinput && ! this.$color.input) this.$original.val(rgba);
             if (updateinput && ! this.$color.value.valid && ! this.$color.input) this.$original.val("");
 
         }

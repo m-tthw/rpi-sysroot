@@ -8,7 +8,7 @@ U.S. Copyright Office as an unpublished work, pursuant to Title 17,
 U.S. Code, Section 408.  Unauthorized copying, adaptation, distribution
 or display is prohibited.
 
-$Id: WolframLibrary.h,v 1.62 2014/05/16 19:53:42 kkouptsov Exp $
+$Id: WolframLibrary.h,v 1.62.2.1 2014/11/07 16:19:16 marks Exp $
 
 *************************************************************************/
 
@@ -18,6 +18,28 @@ $Id: WolframLibrary.h,v 1.62 2014/05/16 19:53:42 kkouptsov Exp $
 #include "setjmp.h"
 
 #define WolframLibraryVersion 3
+
+#if defined(__linux)
+
+#if defined(MRTL_DYNAMIC_EXPORT)
+#define DLLEXPORT __attribute__((__visibility__("default")))
+#else
+#define DLLEXPORT
+#endif
+
+#elif (defined(_WIN32) || defined(_WIN64))
+
+#if defined(MRTL_STANDALONE) || !(defined(MATHEMATICA_KERNEL) || defined(MATHEMATICA_RUNTIME))
+#define DLLEXPORT __declspec(dllexport)
+#else
+#define DLLEXPORT
+#endif
+
+#else
+
+#define DLLEXPORT
+
+#endif
 
 #if !(defined(MATHEMATICA_KERNEL) || defined(MATHEMATICA_RUNTIME))
 
@@ -99,13 +121,6 @@ typedef union {
 #define MArgument_setMSparseArray(marg, v)		((*MArgument_getMSparseArrayAddress(marg)) = (v))
 #define MArgument_setMImage(marg, v)			((*MArgument_getMImageAddress(marg)) = (v))
 #define MArgument_setUTF8String(marg, v)		((*MArgument_getUTF8StringAddress(marg)) = (v))
-
-
-#if defined(_WIN32) || defined(_WIN64)
-#define DLLEXPORT __declspec(dllexport)
-#else
-#define DLLEXPORT
-#endif
 
 #endif
 

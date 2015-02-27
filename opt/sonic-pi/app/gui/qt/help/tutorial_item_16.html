@@ -1,76 +1,59 @@
 <font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
 
-<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Partial Samples</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">This section will conclude our exploration of Sonic Pi’s sample player. Let’s do a quick recap. So far we’ve looked how we can trigger samples:</p>
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">External Samples</span></p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen
+<p style="font-size:15px;color:#5e5e5e;">Whilst the built-in samples can get you up and started quickly, you
+might wish to experiment with other recorded sounds in your music. Sonic
+Pi totally supports this. First though, let’s have a quick discussion on
+the portability of your piece.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Portability</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">When you compose your piece purely with built-in synths and samples, the
+code is all you need to faithfully reproduce your music. Think about
+that for a moment - that’s amazing! A simple piece of text you can email
+around or stick in a <a style="text-decoration: none; color:dodgerblue;" href="https://gist.github.com">Gist</a> represents
+everything you need to reproduce your sounds. That makes it <em style="font-size:15px;color:darkorange;">really easy
+to share</em> with your friends as they just need to get hold of the code.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">However, if you start using your own pre-recorded samples, you lose this
+portability. This is because to reproduce your music other people not
+only need your code, they need your samples too. This limits the ability
+for others to manipulate, mash-up and experiment with your work. Of
+course this shouldn’t stop you from using your own samples, it’s just
+something to consider.</p>
+
+<!-- ## Freesound Support -->
+
+<!-- One way to get the ability to experiment with new sounds whilst keeping -->
+<!-- code portability is to use the [Freesound](http:freesound.org) -->
+<!-- support. http://freesound.org is a website which allows people to upload -->
+<!-- and share their samples. Each sample uploaded gets a special number -->
+<!-- (kind of like a phone number) which you can use to dial up that sample -->
+<!-- from Sonic Pi. The only drawback is that you need to have internet -->
+<!-- access for it to work. -->
+
+<!-- If you currently have internet access, try it for yourself: -->
+
+<!-- ~~~~ -->
+<!-- freesound 24787 -->
+<!-- ~~~~ -->
+
+<!-- The first time you do this you'll hear a standard `:elec_beep` as a -->
+<!-- placeholder for the sound. Y -->
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Local Samples</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">So how do you play any arbitrary WAV or AIFF file on your computer?
+All you need to do is pass the path of that file to <code style="font-size:15px; color:deeppink; background-color:white">sample</code>:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample "/Users/sam/Desktop/my-sound.wav"
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">We then looked at how we can change the rate of samples such as playing it at half speed:</p>
+<p style="font-size:15px;color:#5e5e5e;">Sonic Pi will automatically load and play the sample. You can also pass
+all the standard params you’re used to passing <code style="font-size:15px; color:deeppink; background-color:white">sample</code>:</p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, rate: 0.5
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample "/Users/sam/Desktop/my-sound.wav", rate: 0.5, amp: 0.3
 </code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Next, we looked at how we could fade a sample in (let’s do it half speed):</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, rate: 0.5, attack: 1
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">We also looked at how we could just use the start of a sample percussively by giving <code style="font-size:15px; color:deeppink; background-color:white">sustain:</code> an explicit value and setting both the attack and release to be short values:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, rate: 2, attack: 0.01, sustain: 0, release: 0.35
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">However, wouldn’t it be nice if we didn’t have to always start at the beginning of the sample? Wouldn’t it also be nice if we didn’t have to always finish at the end of the sample?</p>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Choosing a starting point</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">It is possible to choose an arbitrary starting point in the sample as a value between 0 and 1 where 0 is the start of the sample, 1 is the end and 0.5 is half way through the sample. Let’s try playing only the last half of the amen break:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, start: 0.5
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">How about the last quarter of the sample:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, start: 0.75
-</code></pre>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Choosing a finish point</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">Similarly, it is possible to choose an arbitrary finish point in the sample as a value between 0 and 1. Let’s finish the amen break half way through:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, finish: 0.5
-</code></pre>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Specifying start and finish</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">Of course, we can combine these two to play arbitrary segments of the audio file. How about only a small section in the middle:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, start: 0.4, finish: 0.6
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">What happens if we choose a start position after the finish position?</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, start: 0.6, finish: 0.4
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Cool! It plays it backwards!</p>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Combining with rate</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">We can combine this new ability to play arbitrary segments of audio with our friend <code style="font-size:15px; color:deeppink; background-color:white">rate:</code>. For example, we can play a very small section of the middle of the amen break very slowly:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, start: 0.5, finish: 0.7, rate: 0.2
-</code></pre>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Combining with envelopes</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">Finally, we can combine all of this with our ADSR envelopes to produce interesting results:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, start: 0.5, finish: 0.8, rate: -0.2, attack: 0.3, release: 1
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Now go and have a play with mashing up samples with all of this fun stuff…</p>
-
 </font>

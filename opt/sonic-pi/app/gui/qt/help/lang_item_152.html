@@ -1,27 +1,42 @@
-<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Get sample information</font></span></p>
-<h1><font color="#3c3c3c"><pre>sample_info<pre></font></h1>
-<h2><pre>[path <font color="deeppink">(string)</font>]</pre></h2>
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Get current volume</font></span></p>
+<h1><font color="#3c3c3c"><pre>current_volume<pre></font></h1>
+<h2><pre>[]</pre></h2>
 <p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
-Alias for the load_sample method. Loads sample if necessary and returns sample information.
+Returns the current volume.
 </p>
 <p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
-Introduced in v2.0.0
-</p>
-<table cellpadding="2">
+<span style="color:white;background-color:darkorange;">Introduced in v2.0
+</span></p>
+<table cellpadding="8">
  <tr>
    <th></th><th></th><th></th>
  </tr>
  <tr bgcolor="#F8F8F8">
-  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+  <td bgcolor="#74ACFF"><h3><pre>Example 0 </pre></h3></td>
    <td><pre>
+puts current_volume
 
-see load_sample
+
+
+</pre></td>
+   <td><pre>
+# Print out the current volume
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#B2D1FF"><h3><pre>Example 1 </pre></h3></td>
+   <td><pre>
+set_volume! 2
+puts current_volume
+
 
 
 </pre></td>
    <td><pre>
  
- 
+#=&gt; 2
 
 
 

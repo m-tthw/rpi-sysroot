@@ -17,6 +17,12 @@ GenericProgressIndicator[Except[_?NumericQ], width_, height_] := GenericProgress
 
 getProgress[batches_,progress_] := If[progress<=Length[batches],batches[[progress]],Last[batches]]
 
+loadingPanel[text_] := Panel[Style[text, "Button", GrayLevel[.5]], 
+ Appearance -> $PaneBackground,
+ Alignment -> {Center, Center},
+ FrameMargins -> {{12, 12}, {8, 12}}
+]
+
 (*for EntityValue[type,"Entities"]*)
 interruptableEntityDownloadManager[class:(_String|_Entity|_EntityClass), batches_List, type_:"Entities"] := 
  Block[{elements = Length[batches], list = {{{}}}}, 

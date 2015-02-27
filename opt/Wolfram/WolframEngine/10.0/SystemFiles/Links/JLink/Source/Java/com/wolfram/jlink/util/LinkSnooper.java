@@ -226,7 +226,8 @@ public class LinkSnooper extends Thread {
             MathLink ml = ((WrappedKernelLink) feMain).getMathLink();
             if (ml instanceof NativeLink) {
                 String linkedEnvId = ((NativeLink) ml).getLinkedEnvID();
-                NativeLink.setEnvID(linkedEnvId);
+                if (linkedEnvId != null)
+                    NativeLink.setEnvID(linkedEnvId);
             }
         }
 

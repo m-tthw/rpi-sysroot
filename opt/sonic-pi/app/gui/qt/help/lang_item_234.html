@@ -1,0 +1,48 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Block-level use new synth defaults</font></span></p>
+<h1><font color="#3c3c3c"><pre>with_synth_defaults<pre></font></h1>
+<h2><pre>[]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Specify new default values to be used by all calls to play within the do/end block. After the do/end block has completed the previous synth defaults (if any) are restored.
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+<span style="color:white;background-color:darkorange;">Introduced in v2.0
+</span></p>
+<table cellpadding="8">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#74ACFF"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+play 50
+
+use_synth_defaults amp: 0.5, pan: -1
+
+play 50
+
+with_synth_defaults amp: 0.6, cutoff: 80
+  play 50
+end
+
+play 60
+
+
+
+</pre></td>
+   <td><pre>
+# plays note 50 with default arguments
+ 
+ 
+ 
+# plays note 50 with an amp of 0.5, pan of -1 and defaults for rest of args
+ 
+ 
+# plays note 50 with an amp of 0.5, cutoff of 80 and defaults for rest of args (including pan)
+ 
+ 
+# plays note 60 with an amp of 0.5, pan of -1 and defaults for rest of args
+
+
+
+</pre></td></tr>
+</table>

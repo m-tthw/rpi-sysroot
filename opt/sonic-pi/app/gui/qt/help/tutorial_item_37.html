@@ -1,0 +1,97 @@
+<font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+
+
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Rings</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">An interesting spin on standard lists are rings. If you know some
+programming, you might have come across ring buffers or ring
+arrays. Here, we’ll just go for ring - it’s short and simple.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">In the previous section on lists we saw how we could fetch elements out
+of them by using the indexing mechanism:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">puts [52, 55, 59][1]
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now, what happens if you want index <code style="font-size:15px; color:deeppink; background-color:white">100</code>? Well, there’s clearly no
+element at index 100 as the list has only three elements in it. So Sonic
+Pi will return you <code style="font-size:15px; color:deeppink; background-color:white">nil</code> which means nothing.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">However, consider you have a counter such as the current beat which
+continually increases. Let’s create our counter and our list:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">counter = 0
+notes = [52, 55, 59]
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">We can now use our counter to access a note in our list:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">puts notes[counter]
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Great, we got <code style="font-size:15px; color:deeppink; background-color:white">52</code>. Now, let’s increment our counter and get another
+note:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">counter = (inc counter)
+puts notes[counter]
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Super, we now get <code style="font-size:15px; color:deeppink; background-color:white">55</code> and if we do it again we get <code style="font-size:15px; color:deeppink; background-color:white">59</code>. However, if we
+do it again, we’ll run out of numbers in our list and get <code style="font-size:15px; color:deeppink; background-color:white">nil</code>. What if
+we wanted to just loop back round and start at the beginning of the list
+again? This is what rings are for.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Creating Rings</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">We can create rings one of two ways. Either we use the <code style="font-size:15px; color:deeppink; background-color:white">ring</code> function
+with the elements of the ring as parameters:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">(ring 52, 55, 59)
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Or we can take a normal list and convert it to a ring by sending it the
+<code style="font-size:15px; color:deeppink; background-color:white">.ring</code> message:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">[52, 55, 59].ring
+</code></pre>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Indexing Rings</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Once we have a ring, you can use it in exactly the same way you would
+use a normal list with the exception that you can use indexes that are
+negative or larger than the size of the ring and they’ll wrap round to
+always point at one of the ring’s elements:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">(ring 52, 55, 59)[0] #=&gt; 52
+(ring 52, 55, 59)[1] #=&gt; 55
+(ring 52, 55, 59)[2] #=&gt; 59
+(ring 52, 55, 59)[3] #=&gt; 52
+(ring 52, 55, 59)[-1] #=&gt; 59
+</code></pre>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Using Rings</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Let’s say we’re using a variable to represent the current beat
+number. We can use this as an index into our ring to fetch notes to
+play, or release times or anything useful we’ve stored in our ring
+regardless of the beat number we’re currently on.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Scales and Chords are Rings</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">A useful thing to know is that the lists returned by <code style="font-size:15px; color:deeppink; background-color:white">scale</code> and <code style="font-size:15px; color:deeppink; background-color:white">chord</code>
+are also rings and allow you to access them with arbitrary indexes.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Ring Constructors</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">In addition to <code style="font-size:15px; color:deeppink; background-color:white">ring</code> there are a number of other functions which will
+construct a ring for us.</p>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li><code style="font-size:15px; color:deeppink; background-color:white">range</code> invites you specify a starting point, end point and step size.</li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">bools</code> allows you to use <code style="font-size:15px; color:deeppink; background-color:white">1</code>s and <code style="font-size:15px; color:deeppink; background-color:white">0</code>s to succinctly represent booleans.</li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">knit</code> allows you to knit a sequence of repeated values.</li>
+</ul>
+
+<p style="font-size:15px;color:#5e5e5e;">Take a look at their respective documentation for more information.</p>
+
+</font>

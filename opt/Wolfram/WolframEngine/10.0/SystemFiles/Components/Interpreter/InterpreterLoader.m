@@ -35,5 +35,11 @@ PacletManager`Package`loadWolframLanguageCode[
     "ForceMX" -> False, 
     "Lock" -> False,
     "AutoloadSymbols" -> Interpreter`Private`autoloadSymbols, 
-    "SymbolsToProtect" -> Interpreter`Private`symsToProtect
+    "SymbolsToProtect" -> Interpreter`Private`symsToProtect,
+    "HiddenImports" -> {
+        (* "DataDropClient`", uncomment this when datadrop type will be inside interpreter *)
+        "Security`", 
+        "URLUtilities`", 
+        "JLink`"
+    }
 ]

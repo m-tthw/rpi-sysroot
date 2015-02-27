@@ -1,0 +1,64 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Merge synth defaults</font></span></p>
+<h1><font color="#3c3c3c"><pre>use_merged_synth_defaults<pre></font></h1>
+<h2><pre>[]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Specify synth arg values to be used by any following call to play. Merges the specified values with any previous defaults, rather than replacing them.
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+<span style="color:white;background-color:darkorange;">Introduced in v2.0
+</span></p>
+<table cellpadding="8">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#74ACFF"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+play 50
+
+use_merged_synth_defaults amp: 0.5
+play 50
+
+use_merged_synth_defaults cutoff: 80
+play 50
+
+use_merged_synth_defaults amp: 0.7
+play 50
+
+
+
+</pre></td>
+   <td><pre>
+#=&gt; Plays note 50
+ 
+ 
+#=&gt; Plays note 50 with amp 0.5
+ 
+ 
+#=&gt; Plays note 50 with amp 0.5 and cutoff 80
+ 
+ 
+#=&gt; Plays note 50 with amp 0.7 and cutoff 80
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#B2D1FF"><h3><pre>Example 1 </pre></h3></td>
+   <td><pre>
+use_synth_defaults amp: 0.5, cutoff: 80, pan: -1
+use_merged_synth_defaults amp: 0.7
+play 50
+
+
+
+</pre></td>
+   <td><pre>
+ 
+ 
+#=&gt; Plays note 50 with amp 0.8, cutoff 80 and pan -1
+
+
+
+</pre></td></tr>
+</table>

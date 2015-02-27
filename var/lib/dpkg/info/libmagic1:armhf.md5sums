@@ -1,7 +1,7 @@
-2eb572c636a50d67c3ecc1899c4c6ce1  usr/lib/arm-linux-gnueabihf/libmagic.so.1.0.0
+d1e9032d8b322f2c6299465efeaf3e3d  usr/lib/arm-linux-gnueabihf/libmagic.so.1.0.0
 8ef93f51cd6f0f15b49d64a0f0f8d551  usr/share/bug/libmagic1/control
 891e25bc611b3f3bee6570261856a49f  usr/share/bug/libmagic1/presubj
-73afa34cfdb0197e4aa80e7535f4a68c  usr/share/doc/libmagic1/changelog.Debian.gz
+a2dd0229352ebecdc6057710c0351f39  usr/share/doc/libmagic1/changelog.Debian.gz
 8c611bf10a0fd5824072f0f9ae9c17a9  usr/share/doc/libmagic1/changelog.gz
 d7bf3745ef7f37111b15c74b2b182484  usr/share/doc/libmagic1/copyright
 e0f053731b902cfbf69d1f16f76e1f06  usr/share/file/magic.mgc

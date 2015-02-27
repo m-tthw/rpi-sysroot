@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    348774,      11691]
-NotebookOptionsPosition[    243490,       9070]
-NotebookOutlinePosition[    244230,       9096]
-CellTagsIndexPosition[    244187,       9093]
+NotebookDataLength[    350017,      11728]
+NotebookOptionsPosition[    244148,       9094]
+NotebookOutlinePosition[    244896,       9120]
+CellTagsIndexPosition[    244853,       9117]
 MenuPosition->0
 WindowFrame->Normal*)
 
@@ -1740,7 +1740,7 @@ Cell[CellGroupData[{
 Cell[StyleData["ObjectNameAlt"],
  Editable->False,
  ShowCellBracket->Automatic,
- CellMargins->{{24, 22}, {6, 7}},
+ CellMargins->{{24, 22}, {18, 7}},
  CellElementSpacings->{"ClosedGroupTopMargin"->62},
  CellGroupingRules->{"SectionGrouping", 50},
  StyleMenuListing->None,
@@ -3241,6 +3241,26 @@ Cell[StyleData["AwaitingFutureDesignReviewFlag", "Printout"],
 
 Cell[CellGroupData[{
 
+Cell["ILD Function Page Styles", "Section"],
+
+Cell[StyleData["AlternativeNamesSection", StyleDefinitions -> StyleData[
+ "SeeAlsoSection"]],
+ Editable->False],
+
+Cell[StyleData["AlternativeNames", StyleDefinitions -> StyleData["Tutorials"]],
+ Editable->False],
+
+Cell[StyleData["DesignJustificationSection", StyleDefinitions -> StyleData[
+ "SeeAlsoSection"]],
+ Editable->False],
+
+Cell[StyleData["DesignJustification", StyleDefinitions -> StyleData[
+ "FunctionEssay"]],
+ Editable->False]
+}, Closed]],
+
+Cell[CellGroupData[{
+
 Cell["Guide Page Styles", "Section"],
 
 Cell[StyleData["GuideColorBar"],
@@ -4073,7 +4093,9 @@ Cell[StyleData["FeaturedExamplesGrid"],
  TemplateBoxOptions->{
  DisplayFunction->(
   DynamicModuleBox[{$CellContext`MakeMouseoverOutline$$, \
-$CellContext`CreateFeaturedExampleGrid$$}, 
+$CellContext`CreateFeaturedExampleGrid$$, $CellContext`crop, \
+$CellContext`dim, $CellContext`ellipflag, $CellContext`img, \
+$CellContext`links, $CellContext`newlinks}, 
    DynamicModuleBox[{$CellContext`pos$$}, 
     DynamicBox[$CellContext`pos$$ = 4 (CurrentValue[
            EvaluationNotebook[], {TaggingRules, "ExampleCounter"}] - 1) + 1; 
@@ -5932,23 +5954,22 @@ Cell[CellGroupData[{
 
 Cell["Format Page Styles", "Section"],
 
+Cell[StyleData["FormatBackground", StyleDefinitions -> StyleData[
+ "FunctionEssaySection"]],
+ CellMargins->{{0, 0}, {0, 12}}],
+
 Cell[CellGroupData[{
 
 Cell[StyleData["FormatUsage"],
  Editable->False,
- CellFrame->{{0, 0}, {0.5, 0.5}},
  ShowCellBracket->False,
- CellMargins->{{0, 0}, {10, 8}},
- CellGroupingRules->{"SectionGrouping", 40},
- CellFrameMargins->{{24, 24}, {7, 7}},
- CellFrameColor->GrayLevel[0.752941],
+ CellMargins->{{40, 24}, {24, 18}},
  Hyphenation->False,
- ParagraphSpacing->{0.3, 0},
+ LineSpacing->{1, 5},
  StyleMenuListing->None,
- FontFamily->"Arial",
+ FontFamily->"Verdana",
  FontSize->11,
- Background->GrayLevel[0.929412],
- GridBoxOptions->{BaseStyle->{FontFamily -> "Arial"},
+ GridBoxOptions->{BaseStyle->{FontFamily -> "Verdana"},
  GridBoxAlignment->{
   "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
    "RowsIndexed" -> {}},
@@ -5977,6 +5998,9 @@ Cell[StyleData["FormatUsage", "Printout"],
  FontWeight->"Plain"]
 }, Closed]],
 
+Cell[StyleData["FormatUsageSeparator"],
+ FontColor->GrayLevel[0.6]],
+
 Cell[CellGroupData[{
 
 Cell[StyleData["FormatNotes"],
@@ -5985,12 +6009,12 @@ Cell[StyleData["FormatNotes"],
   "\[FilledSmallSquare]", FontColor -> 
    RGBColor[0.6000000000000001, 0.6000000000000001, 0.6000000000000001]],
  ShowCellBracket->Automatic,
- CellMargins->{{40, 24}, {7, 5}},
+ CellMargins->{{40, 24}, {10, 2}},
  CellFrameMargins->4,
  MenuSortingValue->None,
  MenuCommandKey->"8",
- FontFamily->"Arial",
- FontSize->12],
+ FontFamily->"Verdana",
+ FontSize->11],
 
 Cell[StyleData["FormatNotes", "Presentation"],
  FontSize->18],
@@ -9074,13 +9098,13 @@ WindowMargins->{{154, Automatic}, {Automatic, 23}},
 WindowFrame->"Normal",
 TrackCellChangeTimes->False,
 MenuSortingValue->None,
-FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (June 9, 2014)",
+FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (October 20, 2014)",
 StyleDefinitions->Notebook[{
    Cell[
     StyleData[StyleDefinitions -> "StylesheetFormatting.nb"]], 
    Cell[
     StyleData["Item", "Printout"]]}, Visible -> False, FrontEndVersion -> 
-  "10.0 for Microsoft Windows (64-bit) (June 9, 2014)", StyleDefinitions -> 
+  "10.0 for Microsoft Windows (64-bit) (October 20, 2014)", StyleDefinitions -> 
   "Default.nb"],
 PrivateNotebookOptions -> {"NotebookAuthor" -> ""}
 ]
@@ -9559,2139 +9583,2152 @@ Cell[45836, 1731, 146, 3, 70, 46, 0, "StyleData", "ObjectNameSmall", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[46019, 1739, 597, 17, 60, 32, 0, "StyleData", "ObjectNameAlt", "All",
+Cell[46019, 1739, 598, 17, 72, 32, 0, "StyleData", "ObjectNameAlt", "All",
  StyleMenuListing->None],
-Cell[46619, 1758, 63, 1, 70, 48, 0, "StyleData", "ObjectNameAlt", \
+Cell[46620, 1758, 63, 1, 70, 48, 0, "StyleData", "ObjectNameAlt", \
 "Presentation"],
-Cell[46685, 1761, 261, 7, 70, 45, 0, "StyleData", "ObjectNameAlt", "SlideShow",
+Cell[46686, 1761, 261, 7, 70, 45, 0, "StyleData", "ObjectNameAlt", "SlideShow",
  StyleMenuListing->None],
-Cell[46949, 1770, 144, 3, 70, 44, 0, "StyleData", "ObjectNameAlt", \
+Cell[46950, 1770, 144, 3, 70, 44, 0, "StyleData", "ObjectNameAlt", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[47130, 1778, 684, 20, 60, 33, 0, "StyleData", "ObjectNameGrid", "All",
+Cell[47131, 1778, 684, 20, 60, 33, 0, "StyleData", "ObjectNameGrid", "All",
  StyleMenuListing->None],
-Cell[47817, 1800, 64, 1, 52, 49, 0, "StyleData", "ObjectNameGrid", \
+Cell[47818, 1800, 64, 1, 52, 49, 0, "StyleData", "ObjectNameGrid", \
 "Presentation"],
-Cell[47884, 1803, 262, 7, 48, 46, 0, "StyleData", "ObjectNameGrid", \
+Cell[47885, 1803, 262, 7, 48, 46, 0, "StyleData", "ObjectNameGrid", \
 "SlideShow",
  StyleMenuListing->None],
-Cell[48149, 1812, 145, 3, 49, 45, 0, "StyleData", "ObjectNameGrid", "Printout"]
+Cell[48150, 1812, 145, 3, 49, 45, 0, "StyleData", "ObjectNameGrid", "Printout"]
 }, Closed]],
-Cell[48309, 1818, 73, 2, 50, 36, 0, "StyleData", "OperatorCharacter", "All"],
-Cell[48385, 1822, 167, 5, 38, 30, 0, "StyleData", "FullListing", "All",
+Cell[48310, 1818, 73, 2, 50, 36, 0, "StyleData", "OperatorCharacter", "All"],
+Cell[48386, 1822, 167, 5, 38, 30, 0, "StyleData", "FullListing", "All",
  StyleMenuListing->None],
 Cell[CellGroupData[{
-Cell[48577, 1831, 374, 12, 63, 35, 0, "StyleData", "ObsolescenceNote", "All",
+Cell[48578, 1831, 374, 12, 63, 35, 0, "StyleData", "ObsolescenceNote", "All",
  StyleMenuListing->None],
-Cell[48954, 1845, 66, 1, 70, 51, 0, "StyleData", "ObsolescenceNote", \
+Cell[48955, 1845, 66, 1, 70, 51, 0, "StyleData", "ObsolescenceNote", \
 "Presentation"],
-Cell[49023, 1848, 247, 6, 70, 47, 0, "StyleData", "ObsolescenceNote", \
+Cell[49024, 1848, 247, 6, 70, 47, 0, "StyleData", "ObsolescenceNote", \
 "Printout",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[49307, 1859, 90, 1, 61, 90, 1, "StyleData", "AwaitingReviewNote", \
+Cell[49308, 1859, 90, 1, 61, 90, 1, "StyleData", "AwaitingReviewNote", \
 "All"],
-Cell[49400, 1862, 68, 1, 70, 53, 0, "StyleData", "AwaitingReviewNote", \
+Cell[49401, 1862, 68, 1, 70, 53, 0, "StyleData", "AwaitingReviewNote", \
 "Presentation"],
-Cell[49471, 1865, 249, 6, 70, 49, 0, "StyleData", "AwaitingReviewNote", \
+Cell[49472, 1865, 249, 6, 70, 49, 0, "StyleData", "AwaitingReviewNote", \
 "Printout",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[49757, 1876, 394, 13, 70, 30, 0, "StyleData", "Elucidation", "All",
+Cell[49758, 1876, 394, 13, 70, 30, 0, "StyleData", "Elucidation", "All",
  StyleMenuListing->None],
-Cell[50154, 1891, 330, 10, 70, 42, 0, "StyleData", "Elucidation", "Printout",
+Cell[50155, 1891, 330, 10, 70, 42, 0, "StyleData", "Elucidation", "Printout",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[50521, 1906, 1200, 31, 46, 50, 0, "StyleData", "Usage", "All",
+Cell[50522, 1906, 1200, 31, 46, 50, 0, "StyleData", "Usage", "All",
  StyleMenuListing->None],
-Cell[51724, 1939, 75, 2, 70, 40, 0, "StyleData", "Usage", "Presentation",
+Cell[51725, 1939, 75, 2, 70, 40, 0, "StyleData", "Usage", "Presentation",
  CellID->156648827],
-Cell[51802, 1943, 254, 7, 70, 37, 0, "StyleData", "Usage", "SlideShow",
+Cell[51803, 1943, 254, 7, 70, 37, 0, "StyleData", "Usage", "SlideShow",
  StyleMenuListing->None,
  CellID->289035286],
-Cell[52059, 1952, 1007, 27, 70, 36, 0, "StyleData", "Usage", "Printout",
+Cell[52060, 1952, 1007, 27, 70, 36, 0, "StyleData", "Usage", "Printout",
  StyleMenuListing->None,
  CellID->235401525]
 }, Closed]],
-Cell[53081, 1982, 170, 6, 40, 27, 0, "StyleData", "UsageTab", "All",
+Cell[53082, 1982, 170, 6, 40, 27, 0, "StyleData", "UsageTab", "All",
  CellID->619032943],
 Cell[CellGroupData[{
-Cell[53276, 1992, 199, 8, 20, 26, 0, "StyleData", "ModInfo", "All",
+Cell[53277, 1992, 199, 8, 20, 26, 0, "StyleData", "ModInfo", "All",
  StyleMenuListing->None],
-Cell[53478, 2002, 157, 4, 70, 38, 0, "StyleData", "ModInfo", "Printout"]
+Cell[53479, 2002, 157, 4, 70, 38, 0, "StyleData", "ModInfo", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[53672, 2011, 186, 7, 20, 31, 0, "StyleData", "TableRowIcon", "All",
+Cell[53673, 2011, 186, 7, 20, 31, 0, "StyleData", "TableRowIcon", "All",
  StyleMenuListing->None],
-Cell[53861, 2020, 63, 1, 70, 43, 0, "StyleData", "TableRowIcon", "Printout"]
+Cell[53862, 2020, 63, 1, 70, 43, 0, "StyleData", "TableRowIcon", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[53961, 2026, 135, 2, 56, 42, 0, "StyleData", "SyntaxTemplateExclusion", \
+Cell[53962, 2026, 135, 2, 56, 42, 0, "StyleData", "SyntaxTemplateExclusion", \
 "All",
  StyleMenuListing->None],
-Cell[54099, 2030, 73, 1, 70, 54, 0, "StyleData", "SyntaxTemplateExclusion", \
+Cell[54100, 2030, 73, 1, 70, 54, 0, "StyleData", "SyntaxTemplateExclusion", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[54209, 2036, 384, 13, 57, 33, 0, "StyleData", "TextAnnotation", "All"],
-Cell[54596, 2051, 45, 0, 70, 45, 0, "StyleData", "TextAnnotation", \
+Cell[54210, 2036, 384, 13, 57, 33, 0, "StyleData", "TextAnnotation", "All"],
+Cell[54597, 2051, 45, 0, 70, 45, 0, "StyleData", "TextAnnotation", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[54678, 2056, 134, 4, 37, 39, 0, "StyleData", "TextAnnotationButton", \
+Cell[54679, 2056, 134, 4, 37, 39, 0, "StyleData", "TextAnnotationButton", \
 "All"],
-Cell[54815, 2062, 51, 0, 70, 51, 0, "StyleData", "TextAnnotationButton", \
+Cell[54816, 2062, 51, 0, 70, 51, 0, "StyleData", "TextAnnotationButton", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[54903, 2067, 399, 12, 43, 50, 0, "StyleData", "Notes", "All",
+Cell[54904, 2067, 399, 12, 43, 50, 0, "StyleData", "Notes", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"],
-Cell[55305, 2081, 55, 1, 70, 40, 0, "StyleData", "Notes", "Presentation"],
-Cell[55363, 2084, 219, 6, 70, 37, 0, "StyleData", "Notes", "SlideShow",
+Cell[55306, 2081, 55, 1, 70, 40, 0, "StyleData", "Notes", "Presentation"],
+Cell[55364, 2084, 219, 6, 70, 37, 0, "StyleData", "Notes", "SlideShow",
  StyleMenuListing->None],
-Cell[55585, 2092, 155, 4, 70, 36, 0, "StyleData", "Notes", "Printout"]
+Cell[55586, 2092, 155, 4, 70, 36, 0, "StyleData", "Notes", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[55777, 2101, 634, 16, 42, 31, 0, "StyleData", "1ColumnTable", "All",
+Cell[55778, 2101, 634, 16, 42, 31, 0, "StyleData", "1ColumnTable", "All",
  StyleMenuListing->None],
-Cell[56414, 2119, 62, 1, 70, 47, 0, "StyleData", "1ColumnTable", \
+Cell[56415, 2119, 62, 1, 70, 47, 0, "StyleData", "1ColumnTable", \
 "Presentation"],
-Cell[56479, 2122, 89, 2, 70, 43, 0, "StyleData", "1ColumnTable", "Printout"]
+Cell[56480, 2122, 89, 2, 70, 43, 0, "StyleData", "1ColumnTable", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[56605, 2129, 670, 17, 42, 34, 0, "StyleData", "1ColumnTableMod", "All",
+Cell[56606, 2129, 670, 17, 42, 34, 0, "StyleData", "1ColumnTableMod", "All",
  StyleMenuListing->None],
-Cell[57278, 2148, 65, 1, 70, 50, 0, "StyleData", "1ColumnTableMod", \
+Cell[57279, 2148, 65, 1, 70, 50, 0, "StyleData", "1ColumnTableMod", \
 "Presentation"],
-Cell[57346, 2151, 95, 2, 70, 46, 0, "StyleData", "1ColumnTableMod", "Printout"]
+Cell[57347, 2151, 95, 2, 70, 46, 0, "StyleData", "1ColumnTableMod", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[57478, 2158, 618, 16, 42, 31, 0, "StyleData", "2ColumnTable", "All",
+Cell[57479, 2158, 618, 16, 42, 31, 0, "StyleData", "2ColumnTable", "All",
  StyleMenuListing->None],
-Cell[58099, 2176, 62, 1, 70, 47, 0, "StyleData", "2ColumnTable", \
+Cell[58100, 2176, 62, 1, 70, 47, 0, "StyleData", "2ColumnTable", \
 "Presentation"],
-Cell[58164, 2179, 89, 2, 70, 43, 0, "StyleData", "2ColumnTable", "Printout"]
+Cell[58165, 2179, 89, 2, 70, 43, 0, "StyleData", "2ColumnTable", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[58290, 2186, 658, 17, 42, 34, 0, "StyleData", "2ColumnTableMod", "All",
+Cell[58291, 2186, 658, 17, 42, 34, 0, "StyleData", "2ColumnTableMod", "All",
  StyleMenuListing->None],
-Cell[58951, 2205, 65, 1, 70, 50, 0, "StyleData", "2ColumnTableMod", \
+Cell[58952, 2205, 65, 1, 70, 50, 0, "StyleData", "2ColumnTableMod", \
 "Presentation"],
-Cell[59019, 2208, 95, 2, 70, 46, 0, "StyleData", "2ColumnTableMod", "Printout"]
+Cell[59020, 2208, 95, 2, 70, 46, 0, "StyleData", "2ColumnTableMod", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[59151, 2215, 702, 18, 42, 31, 0, "StyleData", "3ColumnTable", "All",
+Cell[59152, 2215, 702, 18, 42, 31, 0, "StyleData", "3ColumnTable", "All",
  StyleMenuListing->None],
-Cell[59856, 2235, 62, 1, 70, 47, 0, "StyleData", "3ColumnTable", \
+Cell[59857, 2235, 62, 1, 70, 47, 0, "StyleData", "3ColumnTable", \
 "Presentation"],
-Cell[59921, 2238, 89, 2, 70, 43, 0, "StyleData", "3ColumnTable", "Printout"]
+Cell[59922, 2238, 89, 2, 70, 43, 0, "StyleData", "3ColumnTable", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[60047, 2245, 743, 19, 42, 34, 0, "StyleData", "3ColumnTableMod", "All",
+Cell[60048, 2245, 743, 19, 42, 34, 0, "StyleData", "3ColumnTableMod", "All",
  StyleMenuListing->None],
-Cell[60793, 2266, 65, 1, 70, 50, 0, "StyleData", "3ColumnTableMod", \
+Cell[60794, 2266, 65, 1, 70, 50, 0, "StyleData", "3ColumnTableMod", \
 "Presentation"],
-Cell[60861, 2269, 95, 2, 70, 46, 0, "StyleData", "3ColumnTableMod", "Printout"]
+Cell[60862, 2269, 95, 2, 70, 46, 0, "StyleData", "3ColumnTableMod", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[60993, 2276, 176, 4, 38, 28, 0, "StyleData", "TableText", "All",
+Cell[60994, 2276, 176, 4, 38, 28, 0, "StyleData", "TableText", "All",
  StyleMenuListing->None],
-Cell[61172, 2282, 59, 1, 70, 44, 0, "StyleData", "TableText", \
+Cell[61173, 2282, 59, 1, 70, 44, 0, "StyleData", "TableText", \
 "Presentation"],
-Cell[61234, 2285, 223, 6, 70, 41, 0, "StyleData", "TableText", "SlideShow",
+Cell[61235, 2285, 223, 6, 70, 41, 0, "StyleData", "TableText", "SlideShow",
  StyleMenuListing->None],
-Cell[61460, 2293, 172, 4, 70, 40, 0, "StyleData", "TableText", "Printout"]
+Cell[61461, 2293, 172, 4, 70, 40, 0, "StyleData", "TableText", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[61669, 2302, 539, 15, 41, 32, 0, "StyleData", "InlineFormula", "All",
+Cell[61670, 2302, 539, 15, 41, 32, 0, "StyleData", "InlineFormula", "All",
  StyleMenuListing->None],
-Cell[62211, 2319, 91, 2, 70, 44, 0, "StyleData", "InlineFormula", "Printout"]
+Cell[62212, 2319, 91, 2, 70, 44, 0, "StyleData", "InlineFormula", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[62339, 2326, 296, 8, 37, 57, 0, "StyleData", "InlineOutput", "All",
+Cell[62340, 2326, 296, 8, 37, 57, 0, "StyleData", "InlineOutput", "All",
  StyleMenuListing->None],
-Cell[62638, 2336, 91, 2, 70, 43, 0, "StyleData", "InlineOutput", "Printout"]
+Cell[62639, 2336, 91, 2, 70, 43, 0, "StyleData", "InlineOutput", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[62766, 2343, 615, 18, 40, 29, 0, "StyleData", "InlineMath", "All",
+Cell[62767, 2343, 615, 18, 40, 29, 0, "StyleData", "InlineMath", "All",
  StyleMenuListing->None],
-Cell[63384, 2363, 88, 2, 70, 41, 0, "StyleData", "InlineMath", "Printout"]
+Cell[63385, 2363, 88, 2, 70, 41, 0, "StyleData", "InlineMath", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[63509, 2370, 959, 28, 47, 41, 0, "StyleData", "PrimaryExamplesSection", \
+Cell[63510, 2370, 959, 28, 47, 41, 0, "StyleData", "PrimaryExamplesSection", \
 "All",
  StyleMenuListing->None],
-Cell[64471, 2400, 72, 1, 70, 57, 0, "StyleData", "PrimaryExamplesSection", \
+Cell[64472, 2400, 72, 1, 70, 57, 0, "StyleData", "PrimaryExamplesSection", \
 "Presentation"],
-Cell[64546, 2403, 288, 8, 70, 53, 0, "StyleData", "PrimaryExamplesSection", \
+Cell[64547, 2403, 288, 8, 70, 53, 0, "StyleData", "PrimaryExamplesSection", \
 "Printout"]
 }, Closed]],
-Cell[64849, 2414, 272, 9, 40, 44, 0, "StyleData", \
+Cell[64850, 2414, 272, 9, 40, 44, 0, "StyleData", \
 "ExamplesUnderConstruction", "All",
  StyleMenuListing->None],
 Cell[CellGroupData[{
-Cell[65146, 2427, 884, 26, 62, 38, 0, "StyleData", "UsageDetailsSection", \
+Cell[65147, 2427, 884, 26, 62, 38, 0, "StyleData", "UsageDetailsSection", \
 "All",
  StyleMenuListing->None],
-Cell[66033, 2455, 69, 1, 70, 54, 0, "StyleData", "UsageDetailsSection", \
+Cell[66034, 2455, 69, 1, 70, 54, 0, "StyleData", "UsageDetailsSection", \
 "Presentation"],
-Cell[66105, 2458, 285, 8, 70, 50, 0, "StyleData", "UsageDetailsSection", \
+Cell[66106, 2458, 285, 8, 70, 50, 0, "StyleData", "UsageDetailsSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[66427, 2471, 324, 10, 39, 39, 0, "StyleData", "ExtendedExamplesLink", \
+Cell[66428, 2471, 324, 10, 39, 39, 0, "StyleData", "ExtendedExamplesLink", \
 "All",
  StyleMenuListing->None],
-Cell[66754, 2483, 70, 1, 70, 55, 0, "StyleData", "ExtendedExamplesLink", \
+Cell[66755, 2483, 70, 1, 70, 55, 0, "StyleData", "ExtendedExamplesLink", \
 "Presentation"],
-Cell[66827, 2486, 170, 4, 70, 51, 0, "StyleData", "ExtendedExamplesLink", \
+Cell[66828, 2486, 170, 4, 70, 51, 0, "StyleData", "ExtendedExamplesLink", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[67034, 2495, 376, 13, 34, 42, 0, "StyleData", "ExtendedExamplesSection", \
+Cell[67035, 2495, 376, 13, 34, 42, 0, "StyleData", "ExtendedExamplesSection", \
 "All",
  StyleMenuListing->None],
-Cell[67413, 2510, 73, 1, 70, 58, 0, "StyleData", "ExtendedExamplesSection", \
+Cell[67414, 2510, 73, 1, 70, 58, 0, "StyleData", "ExtendedExamplesSection", \
 "Presentation"],
-Cell[67489, 2513, 203, 5, 70, 54, 0, "StyleData", "ExtendedExamplesSection", \
+Cell[67490, 2513, 203, 5, 70, 54, 0, "StyleData", "ExtendedExamplesSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[67729, 2523, 442, 15, 24, 35, 0, "StyleData", "ExampleDelimiter", "All",
+Cell[67730, 2523, 442, 15, 24, 35, 0, "StyleData", "ExampleDelimiter", "All",
  StyleMenuListing->None],
-Cell[68174, 2540, 115, 3, 70, 47, 0, "StyleData", "ExampleDelimiter", \
+Cell[68175, 2540, 115, 3, 70, 47, 0, "StyleData", "ExampleDelimiter", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[68326, 2548, 225, 8, 40, 30, 0, "StyleData", "ExampleText", "All",
+Cell[68327, 2548, 225, 8, 40, 30, 0, "StyleData", "ExampleText", "All",
  MenuSortingValue->None,
  MenuCommandKey->"7"],
-Cell[68554, 2558, 61, 1, 70, 46, 0, "StyleData", "ExampleText", \
+Cell[68555, 2558, 61, 1, 70, 46, 0, "StyleData", "ExampleText", \
 "Presentation"],
-Cell[68618, 2561, 212, 6, 70, 42, 0, "StyleData", "ExampleText", "Printout"]
+Cell[68619, 2561, 212, 6, 70, 42, 0, "StyleData", "ExampleText", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[68867, 2572, 538, 18, 36, 33, 0, "StyleData", "ExampleSection", "All",
+Cell[68868, 2572, 538, 18, 36, 33, 0, "StyleData", "ExampleSection", "All",
  StyleMenuListing->None],
-Cell[69408, 2592, 64, 1, 70, 49, 0, "StyleData", "ExampleSection", \
+Cell[69409, 2592, 64, 1, 70, 49, 0, "StyleData", "ExampleSection", \
 "Presentation"],
-Cell[69475, 2595, 194, 5, 70, 45, 0, "StyleData", "ExampleSection", "Printout"]
+Cell[69476, 2595, 194, 5, 70, 45, 0, "StyleData", "ExampleSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[69706, 2605, 369, 13, 38, 36, 0, "StyleData", "ExampleSubsection", "All",
+Cell[69707, 2605, 369, 13, 38, 36, 0, "StyleData", "ExampleSubsection", "All",
  
  StyleMenuListing->None],
-Cell[70078, 2620, 67, 1, 70, 52, 0, "StyleData", "ExampleSubsection", \
+Cell[70079, 2620, 67, 1, 70, 52, 0, "StyleData", "ExampleSubsection", \
 "Presentation"],
-Cell[70148, 2623, 197, 5, 70, 48, 0, "StyleData", "ExampleSubsection", \
+Cell[70149, 2623, 197, 5, 70, 48, 0, "StyleData", "ExampleSubsection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[70382, 2633, 372, 13, 37, 39, 0, "StyleData", "ExampleSubsubsection", \
+Cell[70383, 2633, 372, 13, 37, 39, 0, "StyleData", "ExampleSubsubsection", \
 "All",
  StyleMenuListing->None],
-Cell[70757, 2648, 70, 1, 70, 55, 0, "StyleData", "ExampleSubsubsection", \
+Cell[70758, 2648, 70, 1, 70, 55, 0, "StyleData", "ExampleSubsubsection", \
 "Presentation"],
-Cell[70830, 2651, 200, 5, 70, 51, 0, "StyleData", "ExampleSubsubsection", \
+Cell[70831, 2651, 200, 5, 70, 51, 0, "StyleData", "ExampleSubsubsection", \
 "Printout"]
 }, Closed]],
-Cell[71045, 2659, 119, 3, 40, 34, 0, "StyleData", "InputDeemphasis", "All"],
+Cell[71046, 2659, 119, 3, 40, 34, 0, "StyleData", "InputDeemphasis", "All"],
 Cell[CellGroupData[{
-Cell[71189, 2666, 476, 14, 38, 30, 0, "StyleData", "ExampleLink", "All",
+Cell[71190, 2666, 476, 14, 38, 30, 0, "StyleData", "ExampleLink", "All",
  StyleMenuListing->None],
-Cell[71668, 2682, 61, 1, 70, 46, 0, "StyleData", "ExampleLink", \
+Cell[71669, 2682, 61, 1, 70, 46, 0, "StyleData", "ExampleLink", \
 "Presentation"],
-Cell[71732, 2685, 211, 6, 70, 42, 0, "StyleData", "ExampleLink", "Printout"]
+Cell[71733, 2685, 211, 6, 70, 42, 0, "StyleData", "ExampleLink", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[71980, 2696, 377, 11, 38, 34, 0, "StyleData", "ExampleBacklink", "All",
+Cell[71981, 2696, 377, 11, 38, 34, 0, "StyleData", "ExampleBacklink", "All",
  StyleMenuListing->None],
-Cell[72360, 2709, 65, 1, 70, 50, 0, "StyleData", "ExampleBacklink", \
+Cell[72361, 2709, 65, 1, 70, 50, 0, "StyleData", "ExampleBacklink", \
 "Presentation"],
-Cell[72428, 2712, 215, 6, 70, 46, 0, "StyleData", "ExampleBacklink", \
+Cell[72429, 2712, 215, 6, 70, 46, 0, "StyleData", "ExampleBacklink", \
 "Printout"]
 }, Closed]],
-Cell[72658, 2721, 136, 4, 27, 25, 0, "StyleData", "LinkID", "All",
+Cell[72659, 2721, 136, 4, 27, 25, 0, "StyleData", "LinkID", "All",
  StyleMenuListing->None],
 Cell[CellGroupData[{
-Cell[72819, 2729, 678, 21, 47, 33, 0, "StyleData", "SeeAlsoSection", "All",
+Cell[72820, 2729, 678, 21, 47, 33, 0, "StyleData", "SeeAlsoSection", "All",
  StyleMenuListing->None],
-Cell[73500, 2752, 64, 1, 70, 49, 0, "StyleData", "SeeAlsoSection", \
+Cell[73501, 2752, 64, 1, 70, 49, 0, "StyleData", "SeeAlsoSection", \
 "Presentation"],
-Cell[73567, 2755, 280, 8, 70, 45, 0, "StyleData", "SeeAlsoSection", "Printout"]
+Cell[73568, 2755, 280, 8, 70, 45, 0, "StyleData", "SeeAlsoSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[73884, 2768, 294, 10, 61, 26, 0, "StyleData", "SeeAlso", "All",
+Cell[73885, 2768, 294, 10, 61, 26, 0, "StyleData", "SeeAlso", "All",
  MenuSortingValue->None,
  MenuCommandKey->"1"],
-Cell[74181, 2780, 57, 1, 70, 42, 0, "StyleData", "SeeAlso", "Presentation"],
-Cell[74241, 2783, 157, 4, 70, 38, 0, "StyleData", "SeeAlso", "Printout"]
+Cell[74182, 2780, 57, 1, 70, 42, 0, "StyleData", "SeeAlso", "Presentation"],
+Cell[74242, 2783, 157, 4, 70, 38, 0, "StyleData", "SeeAlso", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[74435, 2792, 104, 2, 47, 86, 1, "StyleData", "TutorialsSection", "All"],
-Cell[74542, 2796, 66, 1, 70, 51, 0, "StyleData", "TutorialsSection", \
+Cell[74436, 2792, 104, 2, 47, 86, 1, "StyleData", "TutorialsSection", "All"],
+Cell[74543, 2796, 66, 1, 70, 51, 0, "StyleData", "TutorialsSection", \
 "Presentation"],
-Cell[74611, 2799, 252, 7, 70, 47, 0, "StyleData", "TutorialsSection", \
+Cell[74612, 2799, 252, 7, 70, 47, 0, "StyleData", "TutorialsSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[74900, 2811, 273, 8, 34, 28, 0, "StyleData", "Tutorials", "All",
+Cell[74901, 2811, 273, 8, 34, 28, 0, "StyleData", "Tutorials", "All",
  MenuSortingValue->None,
  MenuCommandKey->"2"],
-Cell[75176, 2821, 59, 1, 70, 44, 0, "StyleData", "Tutorials", \
+Cell[75177, 2821, 59, 1, 70, 44, 0, "StyleData", "Tutorials", \
 "Presentation"],
-Cell[75238, 2824, 159, 4, 70, 40, 0, "StyleData", "Tutorials", "Printout"]
+Cell[75239, 2824, 159, 4, 70, 40, 0, "StyleData", "Tutorials", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[75434, 2833, 113, 2, 47, 95, 1, "StyleData", \
+Cell[75435, 2833, 113, 2, 47, 95, 1, "StyleData", \
 "TutorialCollectionSection", "All"],
-Cell[75550, 2837, 75, 1, 70, 60, 0, "StyleData", "TutorialCollectionSection", \
+Cell[75551, 2837, 75, 1, 70, 60, 0, "StyleData", "TutorialCollectionSection", \
 "Presentation"],
-Cell[75628, 2840, 261, 7, 70, 56, 0, "StyleData", \
+Cell[75629, 2840, 261, 7, 70, 56, 0, "StyleData", \
 "TutorialCollectionSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[75926, 2852, 83, 1, 34, 83, 1, "StyleData", "TutorialCollection", \
+Cell[75927, 2852, 83, 1, 34, 83, 1, "StyleData", "TutorialCollection", \
 "All"],
-Cell[76012, 2855, 68, 1, 70, 53, 0, "StyleData", "TutorialCollection", \
+Cell[76013, 2855, 68, 1, 70, 53, 0, "StyleData", "TutorialCollection", \
 "Presentation"],
-Cell[76083, 2858, 168, 4, 70, 49, 0, "StyleData", "TutorialCollection", \
+Cell[76084, 2858, 168, 4, 70, 49, 0, "StyleData", "TutorialCollection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[76288, 2867, 107, 2, 47, 89, 1, "StyleData", "RelatedLinksSection", \
+Cell[76289, 2867, 107, 2, 47, 89, 1, "StyleData", "RelatedLinksSection", \
 "All"],
-Cell[76398, 2871, 69, 1, 70, 54, 0, "StyleData", "RelatedLinksSection", \
+Cell[76399, 2871, 69, 1, 70, 54, 0, "StyleData", "RelatedLinksSection", \
 "Presentation"],
-Cell[76470, 2874, 285, 8, 70, 50, 0, "StyleData", "RelatedLinksSection", \
+Cell[76471, 2874, 285, 8, 70, 50, 0, "StyleData", "RelatedLinksSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[76792, 2887, 140, 3, 34, 75, 0, "StyleData", "RelatedLinks", "All",
+Cell[76793, 2887, 140, 3, 34, 75, 0, "StyleData", "RelatedLinks", "All",
  MenuSortingValue->None,
  MenuCommandKey->"3"],
-Cell[76935, 2892, 62, 1, 70, 47, 0, "StyleData", "RelatedLinks", \
+Cell[76936, 2892, 62, 1, 70, 47, 0, "StyleData", "RelatedLinks", \
 "Presentation"],
-Cell[77000, 2895, 162, 4, 70, 43, 0, "StyleData", "RelatedLinks", "Printout"]
+Cell[77001, 2895, 162, 4, 70, 43, 0, "StyleData", "RelatedLinks", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[77199, 2904, 109, 2, 47, 91, 1, "StyleData", "LegacyMaterialSection", \
+Cell[77200, 2904, 109, 2, 47, 91, 1, "StyleData", "LegacyMaterialSection", \
 "All"],
-Cell[77311, 2908, 71, 1, 70, 56, 0, "StyleData", "LegacyMaterialSection", \
+Cell[77312, 2908, 71, 1, 70, 56, 0, "StyleData", "LegacyMaterialSection", \
 "Presentation"],
-Cell[77385, 2911, 287, 8, 70, 52, 0, "StyleData", "LegacyMaterialSection", \
+Cell[77386, 2911, 287, 8, 70, 52, 0, "StyleData", "LegacyMaterialSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[77709, 2924, 95, 1, 34, 77, 0, "StyleData", "LegacyMaterial", "All"],
-Cell[77807, 2927, 64, 1, 70, 49, 0, "StyleData", "LegacyMaterial", \
+Cell[77710, 2924, 95, 1, 34, 77, 0, "StyleData", "LegacyMaterial", "All"],
+Cell[77808, 2927, 64, 1, 70, 49, 0, "StyleData", "LegacyMaterial", \
 "Presentation"],
-Cell[77874, 2930, 164, 4, 70, 45, 0, "StyleData", "LegacyMaterial", "Printout"]
+Cell[77875, 2930, 164, 4, 70, 45, 0, "StyleData", "LegacyMaterial", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[78075, 2939, 111, 2, 47, 93, 1, "StyleData", "ApplicationNotesSection", \
+Cell[78076, 2939, 111, 2, 47, 93, 1, "StyleData", "ApplicationNotesSection", \
 "All"],
-Cell[78189, 2943, 73, 1, 70, 58, 0, "StyleData", "ApplicationNotesSection", \
+Cell[78190, 2943, 73, 1, 70, 58, 0, "StyleData", "ApplicationNotesSection", \
 "Presentation"],
-Cell[78265, 2946, 289, 8, 70, 54, 0, "StyleData", "ApplicationNotesSection", \
+Cell[78266, 2946, 289, 8, 70, 54, 0, "StyleData", "ApplicationNotesSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[78591, 2959, 97, 1, 34, 79, 0, "StyleData", "ApplicationNotes", "All"],
-Cell[78691, 2962, 66, 1, 70, 51, 0, "StyleData", "ApplicationNotes", \
+Cell[78592, 2959, 97, 1, 34, 79, 0, "StyleData", "ApplicationNotes", "All"],
+Cell[78692, 2962, 66, 1, 70, 51, 0, "StyleData", "ApplicationNotes", \
 "Presentation"],
-Cell[78760, 2965, 166, 4, 70, 47, 0, "StyleData", "ApplicationNotes", \
+Cell[78761, 2965, 166, 4, 70, 47, 0, "StyleData", "ApplicationNotes", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[78963, 2974, 111, 2, 47, 93, 1, "StyleData", "DesignDiscussionSection", \
+Cell[78964, 2974, 111, 2, 47, 93, 1, "StyleData", "DesignDiscussionSection", \
 "All"],
-Cell[79077, 2978, 73, 1, 70, 58, 0, "StyleData", "DesignDiscussionSection", \
+Cell[79078, 2978, 73, 1, 70, 58, 0, "StyleData", "DesignDiscussionSection", \
 "Presentation"],
-Cell[79153, 2981, 289, 8, 70, 54, 0, "StyleData", "DesignDiscussionSection", \
+Cell[79154, 2981, 289, 8, 70, 54, 0, "StyleData", "DesignDiscussionSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[79479, 2994, 97, 1, 34, 79, 0, "StyleData", "DesignDiscussion", "All"],
-Cell[79579, 2997, 66, 1, 70, 51, 0, "StyleData", "DesignDiscussion", \
+Cell[79480, 2994, 97, 1, 34, 79, 0, "StyleData", "DesignDiscussion", "All"],
+Cell[79580, 2997, 66, 1, 70, 51, 0, "StyleData", "DesignDiscussion", \
 "Presentation"],
-Cell[79648, 3000, 166, 4, 70, 47, 0, "StyleData", "DesignDiscussion", \
+Cell[79649, 3000, 166, 4, 70, 47, 0, "StyleData", "DesignDiscussion", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[79851, 3009, 105, 2, 47, 87, 1, "StyleData", "ExtensionsSection", \
+Cell[79852, 3009, 105, 2, 47, 87, 1, "StyleData", "ExtensionsSection", \
 "All"],
-Cell[79959, 3013, 67, 1, 70, 52, 0, "StyleData", "ExtensionsSection", \
+Cell[79960, 3013, 67, 1, 70, 52, 0, "StyleData", "ExtensionsSection", \
 "Presentation"],
-Cell[80029, 3016, 283, 8, 70, 48, 0, "StyleData", "ExtensionsSection", \
+Cell[80030, 3016, 283, 8, 70, 48, 0, "StyleData", "ExtensionsSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[80349, 3029, 138, 3, 34, 73, 0, "StyleData", "Extensions", "All",
+Cell[80350, 3029, 138, 3, 34, 73, 0, "StyleData", "Extensions", "All",
  MenuSortingValue->None,
  MenuCommandKey->"9"],
-Cell[80490, 3034, 60, 1, 70, 45, 0, "StyleData", "Extensions", "Presentation"],
-Cell[80553, 3037, 160, 4, 70, 41, 0, "StyleData", "Extensions", "Printout"]
+Cell[80491, 3034, 60, 1, 70, 45, 0, "StyleData", "Extensions", "Presentation"],
+Cell[80554, 3037, 160, 4, 70, 41, 0, "StyleData", "Extensions", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[80750, 3046, 104, 2, 47, 86, 1, "StyleData", "MoreAboutSection", "All"],
-Cell[80857, 3050, 66, 1, 70, 51, 0, "StyleData", "MoreAboutSection", \
+Cell[80751, 3046, 104, 2, 47, 86, 1, "StyleData", "MoreAboutSection", "All"],
+Cell[80858, 3050, 66, 1, 70, 51, 0, "StyleData", "MoreAboutSection", \
 "Presentation"],
-Cell[80926, 3053, 282, 8, 70, 47, 0, "StyleData", "MoreAboutSection", \
+Cell[80927, 3053, 282, 8, 70, 47, 0, "StyleData", "MoreAboutSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[81245, 3066, 137, 3, 34, 72, 0, "StyleData", "MoreAbout", "All",
+Cell[81246, 3066, 137, 3, 34, 72, 0, "StyleData", "MoreAbout", "All",
  MenuSortingValue->None,
  MenuCommandKey->"9"],
-Cell[81385, 3071, 59, 1, 70, 44, 0, "StyleData", "MoreAbout", \
+Cell[81386, 3071, 59, 1, 70, 44, 0, "StyleData", "MoreAbout", \
 "Presentation"],
-Cell[81447, 3074, 159, 4, 70, 40, 0, "StyleData", "MoreAbout", "Printout"]
+Cell[81448, 3074, 159, 4, 70, 40, 0, "StyleData", "MoreAbout", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[81643, 3083, 116, 2, 47, 98, 1, "StyleData", \
+Cell[81644, 3083, 116, 2, 47, 98, 1, "StyleData", \
 "RelatedDemonstrationsSection", "All"],
-Cell[81762, 3087, 78, 1, 70, 63, 0, "StyleData", \
+Cell[81763, 3087, 78, 1, 70, 63, 0, "StyleData", \
 "RelatedDemonstrationsSection", "Presentation"],
-Cell[81843, 3090, 294, 8, 70, 59, 0, "StyleData", \
+Cell[81844, 3090, 294, 8, 70, 59, 0, "StyleData", \
 "RelatedDemonstrationsSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[82174, 3103, 104, 2, 34, 86, 1, "StyleData", "RelatedDemonstrations", \
+Cell[82175, 3103, 104, 2, 34, 86, 1, "StyleData", "RelatedDemonstrations", \
 "All"],
-Cell[82281, 3107, 71, 1, 70, 56, 0, "StyleData", "RelatedDemonstrations", \
+Cell[82282, 3107, 71, 1, 70, 56, 0, "StyleData", "RelatedDemonstrations", \
 "Presentation"],
-Cell[82355, 3110, 171, 4, 70, 52, 0, "StyleData", "RelatedDemonstrations", \
+Cell[82356, 3110, 171, 4, 70, 52, 0, "StyleData", "RelatedDemonstrations", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[82563, 3119, 443, 13, 46, 32, 0, "StyleData", "PackageHeader", "All",
+Cell[82564, 3119, 443, 13, 46, 32, 0, "StyleData", "PackageHeader", "All",
  StyleMenuListing->None],
-Cell[83009, 3134, 58, 1, 70, 44, 0, "StyleData", "PackageHeader", "Printout"]
+Cell[83010, 3134, 58, 1, 70, 44, 0, "StyleData", "PackageHeader", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[83104, 3140, 295, 9, 46, 31, 0, "StyleData", "InternalFlag", "All",
+Cell[83105, 3140, 295, 9, 46, 31, 0, "StyleData", "InternalFlag", "All",
  StyleMenuListing->None],
-Cell[83402, 3151, 57, 1, 70, 43, 0, "StyleData", "InternalFlag", "Printout"]
+Cell[83403, 3151, 57, 1, 70, 43, 0, "StyleData", "InternalFlag", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[83496, 3157, 293, 9, 46, 29, 0, "StyleData", "FutureFlag", "All",
+Cell[83497, 3157, 293, 9, 46, 29, 0, "StyleData", "FutureFlag", "All",
  StyleMenuListing->None],
-Cell[83792, 3168, 55, 1, 70, 41, 0, "StyleData", "FutureFlag", "Printout"]
+Cell[83793, 3168, 55, 1, 70, 41, 0, "StyleData", "FutureFlag", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[83884, 3174, 296, 9, 46, 32, 0, "StyleData", "TemporaryFlag", "All",
+Cell[83885, 3174, 296, 9, 46, 32, 0, "StyleData", "TemporaryFlag", "All",
  StyleMenuListing->None],
-Cell[84183, 3185, 58, 1, 70, 44, 0, "StyleData", "TemporaryFlag", "Printout"]
+Cell[84184, 3185, 58, 1, 70, 44, 0, "StyleData", "TemporaryFlag", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[84278, 3191, 295, 9, 46, 31, 0, "StyleData", "ObsoleteFlag", "All",
+Cell[84279, 3191, 295, 9, 46, 31, 0, "StyleData", "ObsoleteFlag", "All",
  StyleMenuListing->None],
-Cell[84576, 3202, 57, 1, 70, 43, 0, "StyleData", "ObsoleteFlag", "Printout"]
+Cell[84577, 3202, 57, 1, 70, 43, 0, "StyleData", "ObsoleteFlag", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[84670, 3208, 294, 9, 46, 30, 0, "StyleData", "ExcisedFlag", "All",
+Cell[84671, 3208, 294, 9, 46, 30, 0, "StyleData", "ExcisedFlag", "All",
  StyleMenuListing->None],
-Cell[84967, 3219, 56, 1, 70, 42, 0, "StyleData", "ExcisedFlag", "Printout"]
+Cell[84968, 3219, 56, 1, 70, 42, 0, "StyleData", "ExcisedFlag", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[85060, 3225, 313, 9, 46, 49, 0, "StyleData", \
+Cell[85061, 3225, 313, 9, 46, 49, 0, "StyleData", \
 "AwaitingFutureDesignReviewFlag", "All",
  StyleMenuListing->None],
-Cell[85376, 3236, 75, 1, 70, 61, 0, "StyleData", \
+Cell[85377, 3236, 75, 1, 70, 61, 0, "StyleData", \
 "AwaitingFutureDesignReviewFlag", "Printout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[85500, 3243, 36, 0, 35, "Section"],
-Cell[85539, 3245, 334, 11, 24, 32, 0, "StyleData", "GuideColorBar", "All",
+Cell[85501, 3243, 43, 0, 35, "Section"],
+Cell[85547, 3245, 111, 2, 47, 93, 1, "StyleData", "AlternativeNamesSection", \
+"All"],
+Cell[85661, 3249, 97, 1, 34, 79, 0, "StyleData", "AlternativeNames", "All"],
+Cell[85761, 3252, 114, 2, 47, 96, 1, "StyleData", \
+"DesignJustificationSection", "All"],
+Cell[85878, 3256, 106, 2, 43, 88, 1, "StyleData", "DesignJustification", "All"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[86021, 3263, 36, 0, 35, "Section"],
+Cell[86060, 3265, 334, 11, 24, 32, 0, "StyleData", "GuideColorBar", "All",
  StyleMenuListing->None],
 Cell[CellGroupData[{
-Cell[85898, 3260, 519, 14, 36, 38, 0, "StyleData", "AlphabeticalListing", \
+Cell[86419, 3280, 519, 14, 36, 38, 0, "StyleData", "AlphabeticalListing", \
 "All",
  StyleMenuListing->None],
-Cell[86420, 3276, 69, 1, 70, 54, 0, "StyleData", "AlphabeticalListing", \
+Cell[86941, 3296, 69, 1, 70, 54, 0, "StyleData", "AlphabeticalListing", \
 "Presentation"],
-Cell[86492, 3279, 169, 4, 70, 50, 0, "StyleData", "AlphabeticalListing", \
+Cell[87013, 3299, 169, 4, 70, 50, 0, "StyleData", "AlphabeticalListing", \
 "Printout"]
 }, Closed]],
-Cell[86676, 3286, 463, 14, 64, 44, 0, "StyleData", \
+Cell[87197, 3306, 463, 14, 64, 44, 0, "StyleData", \
 "AlphabeticalListingAnchor", "All",
  StyleMenuListing->None],
 Cell[CellGroupData[{
-Cell[87164, 3304, 311, 10, 42, 28, 0, "StyleData", "GuideIcon", "All",
+Cell[87685, 3324, 311, 10, 42, 28, 0, "StyleData", "GuideIcon", "All",
  StyleMenuListing->None],
-Cell[87478, 3316, 59, 1, 70, 44, 0, "StyleData", "GuideIcon", \
+Cell[87999, 3336, 59, 1, 70, 44, 0, "StyleData", "GuideIcon", \
 "Presentation"],
-Cell[87540, 3319, 159, 4, 70, 40, 0, "StyleData", "GuideIcon", "Printout"]
+Cell[88061, 3339, 159, 4, 70, 40, 0, "StyleData", "GuideIcon", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[87736, 3328, 597, 17, 64, 29, 0, "StyleData", "GuideTitle", "All",
+Cell[88257, 3348, 597, 17, 64, 29, 0, "StyleData", "GuideTitle", "All",
  StyleMenuListing->None],
-Cell[88336, 3347, 60, 1, 70, 45, 0, "StyleData", "GuideTitle", "Presentation"],
-Cell[88399, 3350, 141, 3, 70, 41, 0, "StyleData", "GuideTitle", "Printout"]
+Cell[88857, 3367, 60, 1, 70, 45, 0, "StyleData", "GuideTitle", "Presentation"],
+Cell[88920, 3370, 141, 3, 70, 41, 0, "StyleData", "GuideTitle", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[88577, 3358, 600, 17, 64, 32, 0, "StyleData", "GuideTOCTitle", "All",
+Cell[89098, 3378, 600, 17, 64, 32, 0, "StyleData", "GuideTOCTitle", "All",
  StyleMenuListing->None],
-Cell[89180, 3377, 63, 1, 70, 48, 0, "StyleData", "GuideTOCTitle", \
+Cell[89701, 3397, 63, 1, 70, 48, 0, "StyleData", "GuideTOCTitle", \
 "Presentation"],
-Cell[89246, 3380, 144, 3, 70, 44, 0, "StyleData", "GuideTOCTitle", \
+Cell[89767, 3400, 144, 3, 70, 44, 0, "StyleData", "GuideTOCTitle", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[89427, 3388, 600, 17, 64, 33, 0, "StyleData", "GuideTitleGrid", "All",
+Cell[89948, 3408, 600, 17, 64, 33, 0, "StyleData", "GuideTitleGrid", "All",
  StyleMenuListing->None],
-Cell[90030, 3407, 64, 1, 70, 49, 0, "StyleData", "GuideTitleGrid", \
+Cell[90551, 3427, 64, 1, 70, 49, 0, "StyleData", "GuideTitleGrid", \
 "Presentation"],
-Cell[90097, 3410, 145, 3, 70, 45, 0, "StyleData", "GuideTitleGrid", "Printout"]
+Cell[90618, 3430, 145, 3, 70, 45, 0, "StyleData", "GuideTitleGrid", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[90279, 3418, 604, 17, 64, 36, 0, "StyleData", "GuideTOCTitleGrid", "All",
+Cell[90800, 3438, 604, 17, 64, 36, 0, "StyleData", "GuideTOCTitleGrid", "All",
  
  StyleMenuListing->None],
-Cell[90886, 3437, 67, 1, 70, 52, 0, "StyleData", "GuideTOCTitleGrid", \
+Cell[91407, 3457, 67, 1, 70, 52, 0, "StyleData", "GuideTOCTitleGrid", \
 "Presentation"],
-Cell[90956, 3440, 148, 3, 70, 48, 0, "StyleData", "GuideTOCTitleGrid", \
+Cell[91477, 3460, 148, 3, 70, 48, 0, "StyleData", "GuideTOCTitleGrid", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[91141, 3448, 371, 12, 65, 32, 0, "StyleData", "GuideAbstract", "All",
+Cell[91662, 3468, 371, 12, 65, 32, 0, "StyleData", "GuideAbstract", "All",
  StyleMenuListing->None],
-Cell[91515, 3462, 63, 1, 70, 48, 0, "StyleData", "GuideAbstract", \
+Cell[92036, 3482, 63, 1, 70, 48, 0, "StyleData", "GuideAbstract", \
 "Presentation"],
-Cell[91581, 3465, 162, 4, 70, 44, 0, "StyleData", "GuideAbstract", \
+Cell[92102, 3485, 162, 4, 70, 44, 0, "StyleData", "GuideAbstract", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[91780, 3474, 331, 11, 67, 35, 0, "StyleData", "GuideTOCAbstract", "All",
+Cell[92301, 3494, 331, 11, 67, 35, 0, "StyleData", "GuideTOCAbstract", "All",
  StyleMenuListing->None],
-Cell[92114, 3487, 66, 1, 70, 51, 0, "StyleData", "GuideTOCAbstract", \
+Cell[92635, 3507, 66, 1, 70, 51, 0, "StyleData", "GuideTOCAbstract", \
 "Presentation"],
-Cell[92183, 3490, 165, 4, 70, 47, 0, "StyleData", "GuideTOCAbstract", \
+Cell[92704, 3510, 165, 4, 70, 47, 0, "StyleData", "GuideTOCAbstract", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[92385, 3499, 292, 9, 47, 31, 0, "StyleData", "GuideTOCLink", "All",
+Cell[92906, 3519, 292, 9, 47, 31, 0, "StyleData", "GuideTOCLink", "All",
  StyleMenuListing->None],
-Cell[92680, 3510, 62, 1, 70, 47, 0, "StyleData", "GuideTOCLink", \
+Cell[93201, 3530, 62, 1, 70, 47, 0, "StyleData", "GuideTOCLink", \
 "Presentation"],
-Cell[92745, 3513, 331, 8, 70, 43, 0, "StyleData", "GuideTOCLink", "Printout"]
+Cell[93266, 3533, 331, 8, 70, 43, 0, "StyleData", "GuideTOCLink", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[93113, 3526, 543, 17, 37, 36, 0, "StyleData", "GuideMainTutorial", "All",
+Cell[93634, 3546, 543, 17, 37, 36, 0, "StyleData", "GuideMainTutorial", "All",
  
  StyleMenuListing->None],
-Cell[93659, 3545, 67, 1, 70, 52, 0, "StyleData", "GuideMainTutorial", \
+Cell[94180, 3565, 67, 1, 70, 52, 0, "StyleData", "GuideMainTutorial", \
 "Presentation"],
-Cell[93729, 3548, 194, 5, 70, 48, 0, "StyleData", "GuideMainTutorial", \
+Cell[94250, 3568, 194, 5, 70, 48, 0, "StyleData", "GuideMainTutorial", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[93960, 3558, 538, 17, 36, 33, 0, "StyleData", "GuideTestDrive", "All",
+Cell[94481, 3578, 538, 17, 36, 33, 0, "StyleData", "GuideTestDrive", "All",
  StyleMenuListing->None],
-Cell[94501, 3577, 64, 1, 70, 49, 0, "StyleData", "GuideTestDrive", \
+Cell[95022, 3597, 64, 1, 70, 49, 0, "StyleData", "GuideTestDrive", \
 "Presentation"],
-Cell[94568, 3580, 190, 5, 70, 45, 0, "StyleData", "GuideTestDrive", "Printout"]
+Cell[95089, 3600, 190, 5, 70, 45, 0, "StyleData", "GuideTestDrive", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[94795, 3590, 312, 9, 37, 33, 0, "StyleData", "GuideDelimiter", "All",
+Cell[95316, 3610, 312, 9, 37, 33, 0, "StyleData", "GuideDelimiter", "All",
  StyleMenuListing->None],
-Cell[95110, 3601, 114, 3, 70, 45, 0, "StyleData", "GuideDelimiter", "Printout"]
+Cell[95631, 3621, 114, 3, 70, 45, 0, "StyleData", "GuideDelimiter", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[95261, 3609, 341, 10, 32, 43, 0, "StyleData", \
+Cell[95782, 3629, 341, 10, 32, 43, 0, "StyleData", \
 "GuideDelimiterSubsection", "All",
  StyleMenuListing->None],
-Cell[95605, 3621, 124, 3, 70, 55, 0, "StyleData", "GuideDelimiterSubsection", \
+Cell[96126, 3641, 124, 3, 70, 55, 0, "StyleData", "GuideDelimiterSubsection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[95766, 3629, 91, 1, 47, 91, 1, "StyleData", "GuideFunctionsSection", \
+Cell[96287, 3649, 91, 1, 47, 91, 1, "StyleData", "GuideFunctionsSection", \
 "All"],
-Cell[95860, 3632, 71, 1, 70, 56, 0, "StyleData", "GuideFunctionsSection", \
+Cell[96381, 3652, 71, 1, 70, 56, 0, "StyleData", "GuideFunctionsSection", \
 "Presentation"],
-Cell[95934, 3635, 264, 7, 70, 52, 0, "StyleData", "GuideFunctionsSection", \
+Cell[96455, 3655, 264, 7, 70, 52, 0, "StyleData", "GuideFunctionsSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[96235, 3647, 439, 13, 64, 44, 0, "StyleData", \
+Cell[96756, 3667, 439, 13, 64, 44, 0, "StyleData", \
 "GuideFunctionsSectionIcon", "All",
  StyleMenuListing->None],
-Cell[96677, 3662, 75, 1, 70, 60, 0, "StyleData", "GuideFunctionsSectionIcon", \
+Cell[97198, 3682, 75, 1, 70, 60, 0, "StyleData", "GuideFunctionsSectionIcon", \
 "Presentation"],
-Cell[96755, 3665, 205, 5, 70, 56, 0, "StyleData", \
+Cell[97276, 3685, 205, 5, 70, 56, 0, "StyleData", \
 "GuideFunctionsSectionIcon", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[96997, 3675, 287, 9, 37, 48, 0, "StyleData", \
+Cell[97518, 3695, 287, 9, 37, 48, 0, "StyleData", \
 "GuideFunctionsSectionAbstract", "All",
  StyleMenuListing->None],
-Cell[97287, 3686, 79, 1, 70, 64, 0, "StyleData", \
+Cell[97808, 3706, 79, 1, 70, 64, 0, "StyleData", \
 "GuideFunctionsSectionAbstract", "Presentation"],
-Cell[97369, 3689, 179, 4, 70, 60, 0, "StyleData", \
+Cell[97890, 3709, 179, 4, 70, 60, 0, "StyleData", \
 "GuideFunctionsSectionAbstract", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[97585, 3698, 265, 9, 35, 32, 0, "StyleData", "GuideFunction", "All",
+Cell[98106, 3718, 265, 9, 35, 32, 0, "StyleData", "GuideFunction", "All",
  StyleMenuListing->None],
-Cell[97853, 3709, 63, 1, 70, 48, 0, "StyleData", "GuideFunction", \
+Cell[98374, 3729, 63, 1, 70, 48, 0, "StyleData", "GuideFunction", \
 "Presentation"],
-Cell[97919, 3712, 163, 4, 70, 44, 0, "StyleData", "GuideFunction", \
+Cell[98440, 3732, 163, 4, 70, 44, 0, "StyleData", "GuideFunction", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[98119, 3721, 233, 7, 39, 38, 0, "StyleData", "InlineGuideFunction", "All",
+Cell[98640, 3741, 233, 7, 39, 38, 0, "StyleData", "InlineGuideFunction", "All",
  StyleMenuListing->None],
-Cell[98355, 3730, 69, 1, 70, 54, 0, "StyleData", "InlineGuideFunction", \
+Cell[98876, 3750, 69, 1, 70, 54, 0, "StyleData", "InlineGuideFunction", \
 "Presentation"],
-Cell[98427, 3733, 155, 3, 70, 50, 0, "StyleData", "InlineGuideFunction", \
+Cell[98948, 3753, 155, 3, 70, 50, 0, "StyleData", "InlineGuideFunction", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[98619, 3741, 255, 8, 35, 45, 0, "StyleData", \
+Cell[99140, 3761, 255, 8, 35, 45, 0, "StyleData", \
 "InlineGuideFunctionListing", "All",
  StyleMenuListing->None],
-Cell[98877, 3751, 76, 1, 70, 61, 0, "StyleData", \
+Cell[99398, 3771, 76, 1, 70, 61, 0, "StyleData", \
 "InlineGuideFunctionListing", "Presentation"],
-Cell[98956, 3754, 162, 3, 70, 57, 0, "StyleData", \
+Cell[99477, 3774, 162, 3, 70, 57, 0, "StyleData", \
 "InlineGuideFunctionListing", "Printout"]
 }, Closed]],
-Cell[99133, 3760, 82, 1, 40, 49, 0, "StyleData", \
+Cell[99654, 3780, 82, 1, 40, 49, 0, "StyleData", \
 "InlineGuideFunctionListingGray", "All"],
 Cell[CellGroupData[{
-Cell[99240, 3765, 250, 8, 37, 28, 0, "StyleData", "GuideText", "All",
+Cell[99761, 3785, 250, 8, 37, 28, 0, "StyleData", "GuideText", "All",
  StyleMenuListing->None],
-Cell[99493, 3775, 59, 1, 70, 44, 0, "StyleData", "GuideText", \
-"Presentation"],
-Cell[99555, 3778, 159, 4, 70, 40, 0, "StyleData", "GuideText", "Printout"]
+Cell[100014, 3795, 59, 1, 70, 44, 0, "StyleData", "GuideText", "Presentation"],
+Cell[100076, 3798, 159, 4, 70, 40, 0, "StyleData", "GuideText", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[99751, 3787, 553, 16, 38, 37, 0, "StyleData", "InlineFunctionSans", "All",
- StyleMenuListing->None],
-Cell[100307, 3805, 96, 2, 70, 49, 0, "StyleData", "InlineFunctionSans", \
-"Printout"]
-}, Closed]],
-Cell[CellGroupData[{
-Cell[100440, 3812, 236, 7, 41, 41, 0, "StyleData", "InlineCharacterDisplay", \
+Cell[100272, 3807, 553, 16, 38, 37, 0, "StyleData", "InlineFunctionSans", \
 "All",
  StyleMenuListing->None],
-Cell[100679, 3821, 85, 1, 70, 53, 0, "StyleData", "InlineCharacterDisplay", \
+Cell[100828, 3825, 96, 2, 70, 49, 0, "StyleData", "InlineFunctionSans", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[100801, 3827, 352, 10, 47, 43, 0, "StyleData", \
+Cell[100961, 3832, 236, 7, 41, 41, 0, "StyleData", "InlineCharacterDisplay", \
+"All",
+ StyleMenuListing->None],
+Cell[101200, 3841, 85, 1, 70, 53, 0, "StyleData", "InlineCharacterDisplay", \
+"Printout"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[101322, 3847, 352, 10, 47, 43, 0, "StyleData", \
 "GuideFunctionsSubsection", "All",
  StyleMenuListing->None],
-Cell[101156, 3839, 74, 1, 70, 59, 0, "StyleData", "GuideFunctionsSubsection", \
+Cell[101677, 3859, 74, 1, 70, 59, 0, "StyleData", "GuideFunctionsSubsection", \
 "Presentation"],
-Cell[101233, 3842, 317, 7, 70, 55, 0, "StyleData", \
+Cell[101754, 3862, 317, 7, 70, 55, 0, "StyleData", \
 "GuideFunctionsSubsection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[101587, 3854, 354, 12, 36, 46, 0, "StyleData", \
+Cell[102108, 3874, 354, 12, 36, 46, 0, "StyleData", \
 "GuideFunctionsSubsubsection", "All",
  StyleMenuListing->None],
-Cell[101944, 3868, 77, 1, 70, 62, 0, "StyleData", \
+Cell[102465, 3888, 77, 1, 70, 62, 0, "StyleData", \
 "GuideFunctionsSubsubsection", "Presentation"],
-Cell[102024, 3871, 181, 4, 70, 58, 0, "StyleData", \
+Cell[102545, 3891, 181, 4, 70, 58, 0, "StyleData", \
 "GuideFunctionsSubsubsection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[102242, 3880, 123, 2, 47, 99, 1, "StyleData", \
+Cell[102763, 3900, 123, 2, 47, 99, 1, "StyleData", \
 "GuideLearningResourcesSection", "All"],
-Cell[102368, 3884, 79, 1, 70, 64, 0, "StyleData", \
+Cell[102889, 3904, 79, 1, 70, 64, 0, "StyleData", \
 "GuideLearningResourcesSection", "Presentation"],
-Cell[102450, 3887, 272, 7, 70, 60, 0, "StyleData", \
+Cell[102971, 3907, 272, 7, 70, 60, 0, "StyleData", \
 "GuideLearningResourcesSection", "Printout"]
 }, Closed]],
-Cell[102737, 3897, 451, 12, 66, 45, 0, "StyleData", \
+Cell[103258, 3917, 451, 12, 66, 45, 0, "StyleData", \
 "GuideLearningResourcesGrid", "All"],
 Cell[CellGroupData[{
-Cell[103213, 3913, 198, 6, 38, 40, 0, "StyleData", "GuideTutorialsSection", \
+Cell[103734, 3933, 198, 6, 38, 40, 0, "StyleData", "GuideTutorialsSection", \
 "All"],
-Cell[103414, 3921, 71, 1, 70, 56, 0, "StyleData", "GuideTutorialsSection", \
+Cell[103935, 3941, 71, 1, 70, 56, 0, "StyleData", "GuideTutorialsSection", \
 "Presentation"],
-Cell[103488, 3924, 264, 7, 70, 52, 0, "StyleData", "GuideTutorialsSection", \
+Cell[104009, 3944, 264, 7, 70, 52, 0, "StyleData", "GuideTutorialsSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[103789, 3936, 162, 4, 36, 76, 0, "StyleData", "GuideTutorial", "All"],
-Cell[103954, 3942, 63, 1, 70, 48, 0, "StyleData", "GuideTutorial", \
+Cell[104310, 3956, 162, 4, 36, 76, 0, "StyleData", "GuideTutorial", "All"],
+Cell[104475, 3962, 63, 1, 70, 48, 0, "StyleData", "GuideTutorial", \
 "Presentation"],
-Cell[104020, 3945, 163, 4, 70, 44, 0, "StyleData", "GuideTutorial", "Printout"]
+Cell[104541, 3965, 163, 4, 70, 44, 0, "StyleData", "GuideTutorial", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[104220, 3954, 94, 1, 38, 94, 1, "StyleData", "GuideHowToSection", \
+Cell[104741, 3974, 94, 1, 38, 94, 1, "StyleData", "GuideHowToSection", \
 "All"],
-Cell[104317, 3957, 67, 1, 70, 52, 0, "StyleData", "GuideHowToSection", \
+Cell[104838, 3977, 67, 1, 70, 52, 0, "StyleData", "GuideHowToSection", \
 "Presentation"],
-Cell[104387, 3960, 260, 7, 70, 48, 0, "StyleData", "GuideHowToSection", \
+Cell[104908, 3980, 260, 7, 70, 48, 0, "StyleData", "GuideHowToSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[104684, 3972, 77, 0, 36, 77, 0, "StyleData", "GuideHowTo", "All"],
-Cell[104764, 3974, 60, 1, 70, 45, 0, "StyleData", "GuideHowTo", \
+Cell[105205, 3992, 77, 0, 36, 77, 0, "StyleData", "GuideHowTo", "All"],
+Cell[105285, 3994, 60, 1, 70, 45, 0, "StyleData", "GuideHowTo", \
 "Presentation"],
-Cell[104827, 3977, 160, 4, 70, 41, 0, "StyleData", "GuideHowTo", "Printout"]
+Cell[105348, 3997, 160, 4, 70, 41, 0, "StyleData", "GuideHowTo", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[105024, 3986, 181, 6, 39, 43, 0, "StyleData", \
+Cell[105545, 4006, 181, 6, 39, 43, 0, "StyleData", \
 "GuideWebResourcesSection", "All"],
-Cell[105208, 3994, 74, 1, 70, 59, 0, "StyleData", "GuideWebResourcesSection", \
+Cell[105729, 4014, 74, 1, 70, 59, 0, "StyleData", "GuideWebResourcesSection", \
 "Presentation"],
-Cell[105285, 3997, 267, 7, 70, 55, 0, "StyleData", \
+Cell[105806, 4017, 267, 7, 70, 55, 0, "StyleData", \
 "GuideWebResourcesSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[105589, 4009, 184, 6, 36, 39, 0, "StyleData", "GuideWebResourceText", \
+Cell[106110, 4029, 184, 6, 36, 39, 0, "StyleData", "GuideWebResourceText", \
 "All"],
-Cell[105776, 4017, 70, 1, 70, 55, 0, "StyleData", "GuideWebResourceText", \
+Cell[106297, 4037, 70, 1, 70, 55, 0, "StyleData", "GuideWebResourceText", \
 "Presentation"],
-Cell[105849, 4020, 170, 4, 70, 51, 0, "StyleData", "GuideWebResourceText", \
+Cell[106370, 4040, 170, 4, 70, 51, 0, "StyleData", "GuideWebResourceText", \
 "Printout"]
 }, Closed]],
-Cell[106034, 4027, 256, 6, 40, 35, 0, "StyleData", "GuideWebResource", \
+Cell[106555, 4047, 256, 6, 40, 35, 0, "StyleData", "GuideWebResource", \
 "All"],
 Cell[CellGroupData[{
-Cell[106315, 4037, 492, 12, 42, 98, 1, "StyleData", \
+Cell[106836, 4057, 492, 12, 42, 98, 1, "StyleData", \
 "GuideFeaturedExamplesSection", "All"],
-Cell[106810, 4051, 78, 1, 70, 63, 0, "StyleData", \
+Cell[107331, 4071, 78, 1, 70, 63, 0, "StyleData", \
 "GuideFeaturedExamplesSection", "Presentation"],
-Cell[106891, 4054, 271, 7, 70, 59, 0, "StyleData", \
+Cell[107412, 4074, 271, 7, 70, 59, 0, "StyleData", \
 "GuideFeaturedExamplesSection", "Printout"]
 }, Closed]],
-Cell[107177, 4064, 154, 5, 41, 39, 0, "StyleData", "FeaturedExamplesText", \
+Cell[107698, 4084, 154, 5, 41, 39, 0, "StyleData", "FeaturedExamplesText", \
 "All"],
-Cell[107334, 4071, 3178, 66, 40, 39, 0, "StyleData", "FeaturedExamplesGrid", \
+Cell[107855, 4091, 3304, 68, 40, 39, 0, "StyleData", "FeaturedExamplesGrid", \
 "All"],
-Cell[110515, 4139, 111, 2, 80, 43, 0, "StyleData", \
+Cell[111162, 4161, 111, 2, 80, 43, 0, "StyleData", \
 "FeaturedExamplesGridCell", "All"],
-Cell[110629, 4143, 123, 4, 37, 34, 0, "StyleData", "ExampleControls", "All"],
-Cell[110755, 4149, 99, 1, 40, 38, 0, "StyleData", "ExampleControlsGrid", \
+Cell[111276, 4165, 123, 4, 37, 34, 0, "StyleData", "ExampleControls", "All"],
+Cell[111402, 4171, 99, 1, 40, 38, 0, "StyleData", "ExampleControlsGrid", \
 "All"],
-Cell[110857, 4152, 128, 4, 70, 34, 0, "StyleData", "ExamplePosition", "All"],
-Cell[110988, 4158, 135, 4, 70, 41, 0, "StyleData", "ExamplePositionDivider", \
+Cell[111504, 4174, 128, 4, 37, 34, 0, "StyleData", "ExamplePosition", "All"],
+Cell[111635, 4180, 135, 4, 37, 41, 0, "StyleData", "ExamplePositionDivider", \
 "All"],
 Cell[CellGroupData[{
-Cell[111148, 4166, 115, 2, 70, 91, 1, "StyleData", "GuideReferenceSection", \
+Cell[111795, 4188, 115, 2, 47, 91, 1, "StyleData", "GuideReferenceSection", \
 "All"],
-Cell[111266, 4170, 71, 1, 70, 56, 0, "StyleData", "GuideReferenceSection", \
+Cell[111913, 4192, 71, 1, 70, 56, 0, "StyleData", "GuideReferenceSection", \
 "Presentation"],
-Cell[111340, 4173, 264, 7, 70, 52, 0, "StyleData", "GuideReferenceSection", \
+Cell[111987, 4195, 264, 7, 70, 52, 0, "StyleData", "GuideReferenceSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[111641, 4185, 118, 2, 70, 94, 1, "StyleData", \
+Cell[112288, 4207, 118, 2, 47, 94, 1, "StyleData", \
 "GuideRelatedLinksSection", "All"],
-Cell[111762, 4189, 74, 1, 70, 59, 0, "StyleData", "GuideRelatedLinksSection", \
+Cell[112409, 4211, 74, 1, 70, 59, 0, "StyleData", "GuideRelatedLinksSection", \
 "Presentation"],
-Cell[111839, 4192, 267, 7, 70, 55, 0, "StyleData", \
+Cell[112486, 4214, 267, 7, 70, 55, 0, "StyleData", \
 "GuideRelatedLinksSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[112143, 4204, 107, 2, 70, 82, 1, "StyleData", "GuideRelatedLinks", "All"],
-Cell[112253, 4208, 67, 1, 70, 52, 0, "StyleData", "GuideRelatedLinks", \
+Cell[112790, 4226, 107, 2, 34, 82, 1, "StyleData", "GuideRelatedLinks", "All"],
+Cell[112900, 4230, 67, 1, 70, 52, 0, "StyleData", "GuideRelatedLinks", \
 "Presentation"],
-Cell[112323, 4211, 167, 4, 70, 48, 0, "StyleData", "GuideRelatedLinks", \
+Cell[112970, 4233, 167, 4, 70, 48, 0, "StyleData", "GuideRelatedLinks", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[112527, 4220, 126, 2, 70, 102, 1, "StyleData", \
+Cell[113174, 4242, 126, 2, 47, 102, 1, "StyleData", \
 "GuideTutorialCollectionSection", "All"],
-Cell[112656, 4224, 80, 1, 70, 65, 0, "StyleData", \
+Cell[113303, 4246, 80, 1, 70, 65, 0, "StyleData", \
 "GuideTutorialCollectionSection", "Presentation"],
-Cell[112739, 4227, 273, 7, 70, 61, 0, "StyleData", \
+Cell[113386, 4249, 273, 7, 70, 61, 0, "StyleData", \
 "GuideTutorialCollectionSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[113049, 4239, 113, 2, 70, 88, 1, "StyleData", "GuideTutorialCollection", \
+Cell[113696, 4261, 113, 2, 34, 88, 1, "StyleData", "GuideTutorialCollection", \
 "All"],
-Cell[113165, 4243, 73, 1, 70, 58, 0, "StyleData", "GuideTutorialCollection", \
+Cell[113812, 4265, 73, 1, 70, 58, 0, "StyleData", "GuideTutorialCollection", \
 "Presentation"],
-Cell[113241, 4246, 173, 4, 70, 54, 0, "StyleData", "GuideTutorialCollection", \
+Cell[113888, 4268, 173, 4, 70, 54, 0, "StyleData", "GuideTutorialCollection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[113451, 4255, 117, 2, 70, 93, 1, "StyleData", "GuideMoreAboutSection", \
+Cell[114098, 4277, 117, 2, 47, 93, 1, "StyleData", "GuideMoreAboutSection", \
 "All"],
-Cell[113571, 4259, 71, 1, 70, 56, 0, "StyleData", "GuideMoreAboutSection", \
+Cell[114218, 4281, 71, 1, 70, 56, 0, "StyleData", "GuideMoreAboutSection", \
 "Presentation"],
-Cell[113645, 4262, 264, 7, 70, 52, 0, "StyleData", "GuideMoreAboutSection", \
+Cell[114292, 4284, 264, 7, 70, 52, 0, "StyleData", "GuideMoreAboutSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[113946, 4274, 367, 12, 70, 42, 0, "StyleData", \
+Cell[114593, 4296, 367, 12, 39, 42, 0, "StyleData", \
 "GuideMoreAboutDelimiter", "All",
  StyleMenuListing->None],
-Cell[114316, 4288, 124, 3, 70, 54, 0, "StyleData", "GuideMoreAboutDelimiter", \
+Cell[114963, 4310, 124, 3, 70, 54, 0, "StyleData", "GuideMoreAboutDelimiter", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[114477, 4296, 655, 16, 70, 77, 0, "StyleData", "GuideMoreAbout", "All"],
-Cell[115135, 4314, 64, 1, 70, 49, 0, "StyleData", "GuideMoreAbout", \
+Cell[115124, 4318, 655, 16, 34, 77, 0, "StyleData", "GuideMoreAbout", "All"],
+Cell[115782, 4336, 64, 1, 70, 49, 0, "StyleData", "GuideMoreAbout", \
 "Presentation"],
-Cell[115202, 4317, 190, 5, 70, 45, 0, "StyleData", "GuideMoreAbout", \
+Cell[115849, 4339, 190, 5, 70, 45, 0, "StyleData", "GuideMoreAbout", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[115429, 4327, 660, 17, 70, 82, 1, "StyleData", "GuideMoreAboutSub", \
+Cell[116076, 4349, 660, 17, 34, 82, 1, "StyleData", "GuideMoreAboutSub", \
 "All"],
-Cell[116092, 4346, 67, 1, 70, 52, 0, "StyleData", "GuideMoreAboutSub", \
+Cell[116739, 4368, 67, 1, 70, 52, 0, "StyleData", "GuideMoreAboutSub", \
 "Presentation"],
-Cell[116162, 4349, 167, 4, 70, 48, 0, "StyleData", "GuideMoreAboutSub", \
+Cell[116809, 4371, 167, 4, 70, 48, 0, "StyleData", "GuideMoreAboutSub", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[116366, 4358, 667, 17, 70, 89, 1, "StyleData", \
+Cell[117013, 4380, 667, 17, 34, 89, 1, "StyleData", \
 "GuideMoreAboutSubsection", "All"],
-Cell[117036, 4377, 74, 1, 70, 59, 0, "StyleData", "GuideMoreAboutSubsection", \
+Cell[117683, 4399, 74, 1, 70, 59, 0, "StyleData", "GuideMoreAboutSubsection", \
 "Presentation"],
-Cell[117113, 4380, 204, 5, 70, 55, 0, "StyleData", \
+Cell[117760, 4402, 204, 5, 70, 55, 0, "StyleData", \
 "GuideMoreAboutSubsection", "Printout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[117366, 4391, 41, 0, 35, "Section"],
+Cell[118013, 4413, 41, 0, 35, "Section"],
 Cell[CellGroupData[{
-Cell[117432, 4395, 156, 6, 38, 30, 0, "StyleData", "RootHeading", "All",
+Cell[118079, 4417, 156, 6, 38, 30, 0, "StyleData", "RootHeading", "All",
  CellID->277818071],
-Cell[117591, 4403, 61, 1, 70, 46, 0, "StyleData", "RootHeading", \
+Cell[118238, 4425, 61, 1, 70, 46, 0, "StyleData", "RootHeading", \
 "Presentation"],
-Cell[117655, 4406, 106, 3, 70, 42, 0, "StyleData", "RootHeading", "Printout"]
+Cell[118302, 4428, 106, 3, 70, 42, 0, "StyleData", "RootHeading", "Printout"]
 }, Closed]],
-Cell[117776, 4412, 375, 8, 32, 71, 0, "StyleData", "RootTitle", "All"],
+Cell[118423, 4434, 375, 8, 32, 71, 0, "StyleData", "RootTitle", "All"],
 Cell[CellGroupData[{
-Cell[118176, 4424, 261, 9, 37, 27, 0, "StyleData", "RootText", "All",
+Cell[118823, 4446, 261, 9, 37, 27, 0, "StyleData", "RootText", "All",
  CellID->658870719],
-Cell[118440, 4435, 58, 1, 70, 43, 0, "StyleData", "RootText", \
+Cell[119087, 4457, 58, 1, 70, 43, 0, "StyleData", "RootText", \
 "Presentation"],
-Cell[118501, 4438, 79, 2, 70, 39, 0, "StyleData", "RootText", "Printout"]
+Cell[119148, 4460, 79, 2, 70, 39, 0, "StyleData", "RootText", "Printout"]
 }, Closed]],
-Cell[118595, 4443, 175, 5, 40, 66, 0, "StyleData", "RootLink", "All"],
-Cell[118773, 4450, 109, 1, 40, 74, 0, "StyleData", "RootDarkLink", "All"],
-Cell[118885, 4453, 103, 1, 40, 75, 0, "StyleData", "RootNewInLink", "All"],
-Cell[118991, 4456, 122, 2, 40, 73, 0, "StyleData", "RootHeadingLink", "All"],
+Cell[119242, 4465, 175, 5, 40, 66, 0, "StyleData", "RootLink", "All"],
+Cell[119420, 4472, 109, 1, 40, 74, 0, "StyleData", "RootDarkLink", "All"],
+Cell[119532, 4475, 103, 1, 40, 75, 0, "StyleData", "RootNewInLink", "All"],
+Cell[119638, 4478, 122, 2, 40, 73, 0, "StyleData", "RootHeadingLink", "All"],
 Cell[CellGroupData[{
-Cell[119138, 4462, 164, 6, 37, 30, 0, "StyleData", "RootCaption", "All",
+Cell[119785, 4484, 164, 6, 37, 30, 0, "StyleData", "RootCaption", "All",
  CellID->106424172],
-Cell[119305, 4470, 61, 1, 70, 46, 0, "StyleData", "RootCaption", \
+Cell[119952, 4492, 61, 1, 70, 46, 0, "StyleData", "RootCaption", \
 "Presentation"],
-Cell[119369, 4473, 82, 2, 70, 42, 0, "StyleData", "RootCaption", "Printout"]
+Cell[120016, 4495, 82, 2, 70, 42, 0, "StyleData", "RootCaption", "Printout"]
 }, Closed]],
-Cell[119466, 4478, 814, 18, 46, 67, 0, "StyleData", "RootGrid", "All",
+Cell[120113, 4500, 814, 18, 46, 67, 0, "StyleData", "RootGrid", "All",
  CellID->302883568],
-Cell[120283, 4498, 329, 11, 32, 27, 0, "StyleData", "RootCell", "All"],
-Cell[120615, 4511, 59, 1, 40, 31, 0, "StyleData", "RootCellLeft", "All"],
-Cell[120677, 4514, 60, 1, 40, 32, 0, "StyleData", "RootCellRight", "All"],
-Cell[120740, 4517, 465, 10, 30, 72, 0, "StyleData", "RootSearch", "All"],
-Cell[121208, 4529, 97, 3, 37, 34, 0, "StyleData", "RootSearchLabel", "All"],
-Cell[121308, 4534, 354, 8, 27, 73, 0, "StyleData", "RootSection", "All"],
-Cell[121665, 4544, 140, 3, 42, 36, 0, "StyleData", "RootSectionHolder", "All"],
-Cell[121808, 4549, 27, 0, 40, 27, 0, "StyleData", "RootIcon", "All"],
-Cell[121838, 4551, 334, 8, 42, 39, 0, "StyleData", "RootSectionTitleGrid", \
+Cell[120930, 4520, 329, 11, 32, 27, 0, "StyleData", "RootCell", "All"],
+Cell[121262, 4533, 59, 1, 40, 31, 0, "StyleData", "RootCellLeft", "All"],
+Cell[121324, 4536, 60, 1, 40, 32, 0, "StyleData", "RootCellRight", "All"],
+Cell[121387, 4539, 465, 10, 30, 72, 0, "StyleData", "RootSearch", "All"],
+Cell[121855, 4551, 97, 3, 37, 34, 0, "StyleData", "RootSearchLabel", "All"],
+Cell[121955, 4556, 354, 8, 27, 73, 0, "StyleData", "RootSection", "All"],
+Cell[122312, 4566, 140, 3, 42, 36, 0, "StyleData", "RootSectionHolder", "All"],
+Cell[122455, 4571, 27, 0, 40, 27, 0, "StyleData", "RootIcon", "All"],
+Cell[122485, 4573, 334, 8, 42, 39, 0, "StyleData", "RootSectionTitleGrid", \
 "All"],
-Cell[122175, 4561, 621, 15, 40, 36, 0, "StyleData", "RootSectionButton", \
+Cell[122822, 4583, 621, 15, 40, 36, 0, "StyleData", "RootSectionButton", \
 "All"],
-Cell[122799, 4578, 266, 8, 44, 35, 0, "StyleData", "RootSectionTitle", \
+Cell[123446, 4600, 266, 8, 44, 35, 0, "StyleData", "RootSectionTitle", \
 "All"],
-Cell[123068, 4588, 138, 2, 44, 91, 1, "StyleData", "RootSectionTitleRed", \
+Cell[123715, 4610, 138, 2, 44, 91, 1, "StyleData", "RootSectionTitleRed", \
 "All"],
-Cell[123209, 4592, 149, 5, 37, 37, 0, "StyleData", "RootSectionCaption", \
+Cell[123856, 4614, 149, 5, 37, 37, 0, "StyleData", "RootSectionCaption", \
 "All"],
-Cell[123361, 4599, 211, 4, 27, 71, 0, "StyleData", "RootLinks", "All"],
-Cell[123575, 4605, 538, 14, 91, 32, 0, "StyleData", "RootLinksGrid", "All"],
-Cell[124116, 4621, 102, 3, 39, 31, 0, "StyleData", "RootLinkText", "All"],
-Cell[124221, 4626, 320, 6, 28, 72, 0, "StyleData", "RootHeader", "All"],
-Cell[124544, 4634, 469, 12, 41, 33, 0, "StyleData", "RootHeaderGrid", "All"],
-Cell[125016, 4648, 216, 7, 27, 32, 0, "StyleData", "RootFooterSep", "All"],
-Cell[125235, 4657, 335, 7, 32, 72, 0, "StyleData", "RootFooter", "All"],
-Cell[125573, 4666, 538, 13, 70, 33, 0, "StyleData", "RootFooterGrid", "All"],
-Cell[126114, 4681, 165, 4, 37, 76, 0, "StyleData", "RootFooterLink", "All"],
-Cell[126282, 4687, 83, 1, 40, 36, 0, "StyleData", "RootFooterRedLink", \
+Cell[124008, 4621, 211, 4, 27, 71, 0, "StyleData", "RootLinks", "All"],
+Cell[124222, 4627, 538, 14, 91, 32, 0, "StyleData", "RootLinksGrid", "All"],
+Cell[124763, 4643, 102, 3, 39, 31, 0, "StyleData", "RootLinkText", "All"],
+Cell[124868, 4648, 320, 6, 28, 72, 0, "StyleData", "RootHeader", "All"],
+Cell[125191, 4656, 469, 12, 41, 33, 0, "StyleData", "RootHeaderGrid", "All"],
+Cell[125663, 4670, 216, 7, 27, 32, 0, "StyleData", "RootFooterSep", "All"],
+Cell[125882, 4679, 335, 7, 32, 72, 0, "StyleData", "RootFooter", "All"],
+Cell[126220, 4688, 538, 13, 70, 33, 0, "StyleData", "RootFooterGrid", "All"],
+Cell[126761, 4703, 165, 4, 37, 76, 0, "StyleData", "RootFooterLink", "All"],
+Cell[126929, 4709, 83, 1, 40, 36, 0, "StyleData", "RootFooterRedLink", \
 "All"],
-Cell[126368, 4690, 308, 8, 42, 88, 1, "StyleData", "RootFooterMainLink", \
+Cell[127015, 4712, 308, 8, 42, 88, 1, "StyleData", "RootFooterMainLink", \
 "All"],
-Cell[126679, 4700, 150, 4, 37, 84, 1, "StyleData", "RootFooterHyperlink", \
+Cell[127326, 4722, 150, 4, 37, 84, 1, "StyleData", "RootFooterHyperlink", \
 "All"],
-Cell[126832, 4706, 465, 11, 61, 34, 0, "StyleData", "RootGrid2Column", "All",
+Cell[127479, 4728, 465, 11, 61, 34, 0, "StyleData", "RootGrid2Column", "All",
  CellID->1425196933],
-Cell[127300, 4719, 456, 11, 61, 34, 0, "StyleData", "RootGrid3Column", "All",
+Cell[127947, 4741, 456, 11, 61, 34, 0, "StyleData", "RootGrid3Column", "All",
  CellID->153046862],
-Cell[127759, 4732, 153, 3, 36, 101, 1, "StyleData", "RootMoreAboutDelimiter", \
+Cell[128406, 4754, 153, 3, 36, 101, 1, "StyleData", "RootMoreAboutDelimiter", \
 "All"],
-Cell[127915, 4737, 266, 6, 36, 83, 1, "StyleData", "RootMoreAbout", "All"],
-Cell[128184, 4745, 228, 5, 36, 89, 1, "StyleData", "RootMoreAboutSub", \
+Cell[128562, 4759, 266, 6, 36, 83, 1, "StyleData", "RootMoreAbout", "All"],
+Cell[128831, 4767, 228, 5, 36, 89, 1, "StyleData", "RootMoreAboutSub", \
 "All"],
-Cell[128415, 4752, 283, 7, 70, 94, 1, "StyleData", "RootGuideMainTutorial", \
+Cell[129062, 4774, 283, 7, 70, 94, 1, "StyleData", "RootGuideMainTutorial", \
 "All",
  CellID->1417239123]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[128735, 4764, 39, 0, 35, "Section"],
-Cell[128777, 4766, 357, 11, 24, 35, 0, "StyleData", "TutorialColorBar", "All",
+Cell[129382, 4786, 39, 0, 35, "Section"],
+Cell[129424, 4788, 357, 11, 24, 35, 0, "StyleData", "TutorialColorBar", "All",
  
  StyleMenuListing->None],
-Cell[129137, 4779, 402, 10, 40, 34, 0, "StyleData", "OverviewToolBar", \
+Cell[129784, 4801, 402, 10, 40, 34, 0, "StyleData", "OverviewToolBar", \
 "All"],
-Cell[129542, 4791, 163, 6, 39, 34, 0, "StyleData", "OverviewNavText", "All",
+Cell[130189, 4813, 163, 6, 39, 34, 0, "StyleData", "OverviewNavText", "All",
  StyleMenuListing->None],
 Cell[CellGroupData[{
-Cell[129730, 4801, 268, 9, 48, 35, 0, "StyleData", "TutorialAbstract", "All",
+Cell[130377, 4823, 268, 9, 48, 35, 0, "StyleData", "TutorialAbstract", "All",
  StyleMenuListing->None],
-Cell[130001, 4812, 66, 1, 70, 51, 0, "StyleData", "TutorialAbstract", \
+Cell[130648, 4834, 66, 1, 70, 51, 0, "StyleData", "TutorialAbstract", \
 "Presentation"],
-Cell[130070, 4815, 165, 4, 70, 47, 0, "StyleData", "TutorialAbstract", \
+Cell[130717, 4837, 165, 4, 70, 47, 0, "StyleData", "TutorialAbstract", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[130272, 4824, 475, 16, 63, 27, 0, "StyleData", "TextNote", "All",
+Cell[130919, 4846, 475, 16, 63, 27, 0, "StyleData", "TextNote", "All",
  CounterIncrements->"Text"],
-Cell[130750, 4842, 129, 4, 70, 39, 0, "StyleData", "TextNote", "Printout"]
+Cell[131397, 4864, 129, 4, 70, 39, 0, "StyleData", "TextNote", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[130916, 4851, 460, 15, 63, 35, 0, "StyleData", "TextEmphasisNote", "All",
+Cell[131563, 4873, 460, 15, 63, 35, 0, "StyleData", "TextEmphasisNote", "All",
  
  CounterIncrements->"Text"],
-Cell[131379, 4868, 137, 4, 70, 47, 0, "StyleData", "TextEmphasisNote", \
+Cell[132026, 4890, 137, 4, 70, 47, 0, "StyleData", "TextEmphasisNote", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[131553, 4877, 322, 11, 43, 31, 0, "StyleData", "IndentedText", "All"],
-Cell[131878, 4890, 134, 4, 70, 43, 0, "StyleData", "IndentedText", \
+Cell[132200, 4899, 322, 11, 43, 31, 0, "StyleData", "IndentedText", "All"],
+Cell[132525, 4912, 134, 4, 70, 43, 0, "StyleData", "IndentedText", \
 "Printout"]
 }, Closed]],
-Cell[132027, 4897, 225, 4, 27, "Text",
+Cell[132674, 4919, 225, 4, 27, "Text",
  CellGroupingRules->{GroupTogetherGrouping, 10000.}],
 Cell[CellGroupData[{
-Cell[132277, 4905, 78, 0, 51, 78, 0, "StyleData", "ItemizedText", "All"],
-Cell[132358, 4907, 104, 1, 70, 104, 1, "StyleData", "ItemizedText", "Printout"]
+Cell[132924, 4927, 78, 0, 51, 78, 0, "StyleData", "ItemizedText", "All"],
+Cell[133005, 4929, 104, 1, 70, 104, 1, "StyleData", "ItemizedText", "Printout"]
 }, Closed]],
-Cell[132477, 4911, 184, 4, 27, "Text"],
+Cell[133124, 4933, 184, 4, 27, "Text"],
 Cell[CellGroupData[{
-Cell[132686, 4919, 90, 1, 51, 90, 1, "StyleData", "ItemizedTextParagraph", \
+Cell[133333, 4941, 90, 1, 51, 90, 1, "StyleData", "ItemizedTextParagraph", \
 "All"],
-Cell[132779, 4922, 114, 1, 70, 114, 1, "StyleData", "ItemizedTextParagraph", \
+Cell[133426, 4944, 114, 1, 70, 114, 1, "StyleData", "ItemizedTextParagraph", \
 "Printout"]
 }, Closed]],
-Cell[132908, 4926, 174, 3, 27, "Text"],
+Cell[133555, 4948, 174, 3, 27, "Text"],
 Cell[CellGroupData[{
-Cell[133107, 4933, 82, 1, 51, 82, 1, "StyleData", "ItemizedPicture", "All"],
-Cell[133192, 4936, 106, 1, 70, 106, 1, "StyleData", "ItemizedPicture", \
+Cell[133754, 4955, 82, 1, 51, 82, 1, "StyleData", "ItemizedPicture", "All"],
+Cell[133839, 4958, 106, 1, 70, 106, 1, "StyleData", "ItemizedPicture", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[133335, 4942, 416, 13, 60, 43, 0, "StyleData", \
+Cell[133982, 4964, 416, 13, 60, 43, 0, "StyleData", \
 "TutorialObsolescenceNote", "All",
  StyleMenuListing->None],
-Cell[133754, 4957, 74, 1, 70, 59, 0, "StyleData", "TutorialObsolescenceNote", \
+Cell[134401, 4979, 74, 1, 70, 59, 0, "StyleData", "TutorialObsolescenceNote", \
 "Presentation"],
-Cell[133831, 4960, 255, 6, 70, 55, 0, "StyleData", \
+Cell[134478, 4982, 255, 6, 70, 55, 0, "StyleData", \
 "TutorialObsolescenceNote", "Printout",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[134123, 4971, 302, 10, 48, 33, 0, "StyleData", "ProgramCaption", "All",
+Cell[134770, 4993, 302, 10, 48, 33, 0, "StyleData", "ProgramCaption", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8",
  StyleMenuListing->None],
-Cell[134428, 4983, 91, 2, 70, 45, 0, "StyleData", "ProgramCaption", "Printout"]
+Cell[135075, 5005, 91, 2, 70, 45, 0, "StyleData", "ProgramCaption", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[134556, 4990, 602, 20, 53, 26, 0, "StyleData", "Program", "All",
+Cell[135203, 5012, 602, 20, 53, 26, 0, "StyleData", "Program", "All",
  CounterIncrements->"Code",
  MenuSortingValue->None],
-Cell[135161, 5012, 98, 2, 70, 38, 0, "StyleData", "Program", "Printout"]
+Cell[135808, 5034, 98, 2, 70, 38, 0, "StyleData", "Program", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[135296, 5019, 552, 16, 40, 30, 0, "StyleData", "DisplayMath", "All",
+Cell[135943, 5041, 552, 16, 40, 30, 0, "StyleData", "DisplayMath", "All",
  StyleMenuListing->None],
-Cell[135851, 5037, 109, 3, 70, 42, 0, "StyleData", "DisplayMath", "Printout"]
+Cell[136498, 5059, 109, 3, 70, 42, 0, "StyleData", "DisplayMath", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[135997, 5045, 528, 16, 40, 35, 0, "StyleData", "NumberedEquation", "All",
+Cell[136644, 5067, 528, 16, 40, 35, 0, "StyleData", "NumberedEquation", "All",
  
  CounterIncrements->"NumberedEquation"],
-Cell[136528, 5063, 96, 2, 70, 47, 0, "StyleData", "NumberedEquation", \
+Cell[137175, 5085, 96, 2, 70, 47, 0, "StyleData", "NumberedEquation", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[136661, 5070, 243, 10, 38, 30, 0, "StyleData", "TableHeader", "All",
+Cell[137308, 5092, 243, 10, 38, 30, 0, "StyleData", "TableHeader", "All",
  StyleMenuListing->None,
  CellID->838858614],
-Cell[136907, 5082, 62, 1, 70, 42, 0, "StyleData", "TableHeader", "Printout",
+Cell[137554, 5104, 62, 1, 70, 42, 0, "StyleData", "TableHeader", "Printout",
  CellID->466582943]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[137006, 5088, 209, 5, 36, 34, 0, "StyleData", "TableHeaderLine", "All"],
-Cell[137218, 5095, 46, 0, 70, 46, 0, "StyleData", "TableHeaderLine", \
+Cell[137653, 5110, 209, 5, 36, 34, 0, "StyleData", "TableHeaderLine", "All"],
+Cell[137865, 5117, 46, 0, 70, 46, 0, "StyleData", "TableHeaderLine", \
 "Printout"]
 }, Closed]],
-Cell[137279, 5098, 1108, 33, 52, 34, 0, "StyleData", "TutorialJumpBox", "All"],
-Cell[138390, 5133, 128, 4, 38, 40, 0, "StyleData", "TutorialJumpBoxHeader", \
+Cell[137926, 5120, 1108, 33, 52, 34, 0, "StyleData", "TutorialJumpBox", "All"],
+Cell[139037, 5155, 128, 4, 38, 40, 0, "StyleData", "TutorialJumpBoxHeader", \
 "All"],
-Cell[138521, 5139, 126, 4, 38, 38, 0, "StyleData", "TutorialJumpBoxLink", \
+Cell[139168, 5161, 126, 4, 38, 38, 0, "StyleData", "TutorialJumpBoxLink", \
 "All"],
 Cell[CellGroupData[{
-Cell[138672, 5147, 1294, 37, 73, 32, 0, "StyleData", "DefinitionBox", "All"],
-Cell[139969, 5186, 63, 1, 70, 48, 0, "StyleData", "DefinitionBox", \
+Cell[139319, 5169, 1294, 37, 73, 32, 0, "StyleData", "DefinitionBox", "All"],
+Cell[140616, 5208, 63, 1, 70, 48, 0, "StyleData", "DefinitionBox", \
 "Presentation"],
-Cell[140035, 5189, 91, 2, 70, 44, 0, "StyleData", "DefinitionBox", \
+Cell[140682, 5211, 91, 2, 70, 44, 0, "StyleData", "DefinitionBox", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[140163, 5196, 1285, 37, 69, 36, 0, "StyleData", "DefinitionBox1Col", \
+Cell[140810, 5218, 1285, 37, 69, 36, 0, "StyleData", "DefinitionBox1Col", \
 "All"],
-Cell[141451, 5235, 67, 1, 70, 52, 0, "StyleData", "DefinitionBox1Col", \
+Cell[142098, 5257, 67, 1, 70, 52, 0, "StyleData", "DefinitionBox1Col", \
 "Presentation"],
-Cell[141521, 5238, 95, 2, 70, 48, 0, "StyleData", "DefinitionBox1Col", \
+Cell[142168, 5260, 95, 2, 70, 48, 0, "StyleData", "DefinitionBox1Col", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[141653, 5245, 1320, 38, 70, 36, 0, "StyleData", "DefinitionBox3Col", \
+Cell[142300, 5267, 1320, 38, 70, 36, 0, "StyleData", "DefinitionBox3Col", \
 "All"],
-Cell[142976, 5285, 67, 1, 70, 52, 0, "StyleData", "DefinitionBox3Col", \
+Cell[143623, 5307, 67, 1, 70, 52, 0, "StyleData", "DefinitionBox3Col", \
 "Presentation"],
-Cell[143046, 5288, 95, 2, 70, 48, 0, "StyleData", "DefinitionBox3Col", \
+Cell[143693, 5310, 95, 2, 70, 48, 0, "StyleData", "DefinitionBox3Col", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[143178, 5295, 1389, 39, 70, 36, 0, "StyleData", "DefinitionBox4Col", \
+Cell[143825, 5317, 1389, 39, 70, 36, 0, "StyleData", "DefinitionBox4Col", \
 "All"],
-Cell[144570, 5336, 67, 1, 70, 52, 0, "StyleData", "DefinitionBox4Col", \
+Cell[145217, 5358, 67, 1, 70, 52, 0, "StyleData", "DefinitionBox4Col", \
 "Presentation"],
-Cell[144640, 5339, 95, 2, 70, 48, 0, "StyleData", "DefinitionBox4Col", \
+Cell[145287, 5361, 95, 2, 70, 48, 0, "StyleData", "DefinitionBox4Col", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[144772, 5346, 1338, 39, 70, 34, 0, "StyleData", "PrecedenceTable", "All"],
-Cell[146113, 5387, 65, 1, 70, 50, 0, "StyleData", "PrecedenceTable", \
+Cell[145419, 5368, 1338, 39, 70, 34, 0, "StyleData", "PrecedenceTable", "All"],
+Cell[146760, 5409, 65, 1, 70, 50, 0, "StyleData", "PrecedenceTable", \
 "Presentation"],
-Cell[146181, 5390, 93, 2, 70, 46, 0, "StyleData", "PrecedenceTable", \
+Cell[146828, 5412, 93, 2, 70, 46, 0, "StyleData", "PrecedenceTable", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[146311, 5397, 1264, 36, 70, 36, 0, "StyleData", "DefinitionBox5Col", \
+Cell[146958, 5419, 1264, 36, 70, 36, 0, "StyleData", "DefinitionBox5Col", \
 "All"],
-Cell[147578, 5435, 67, 1, 70, 52, 0, "StyleData", "DefinitionBox5Col", \
+Cell[148225, 5457, 67, 1, 70, 52, 0, "StyleData", "DefinitionBox5Col", \
 "Presentation"],
-Cell[147648, 5438, 95, 2, 70, 48, 0, "StyleData", "DefinitionBox5Col", \
+Cell[148295, 5460, 95, 2, 70, 48, 0, "StyleData", "DefinitionBox5Col", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[147780, 5445, 1397, 41, 69, 36, 0, "StyleData", "DefinitionBox6Col", \
+Cell[148427, 5467, 1397, 41, 69, 36, 0, "StyleData", "DefinitionBox6Col", \
 "All"],
-Cell[149180, 5488, 67, 1, 70, 52, 0, "StyleData", "DefinitionBox6Col", \
+Cell[149827, 5510, 67, 1, 70, 52, 0, "StyleData", "DefinitionBox6Col", \
 "Presentation"],
-Cell[149250, 5491, 95, 2, 70, 48, 0, "StyleData", "DefinitionBox6Col", \
+Cell[149897, 5513, 95, 2, 70, 48, 0, "StyleData", "DefinitionBox6Col", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[149382, 5498, 247, 8, 46, 26, 0, "StyleData", "Caption", "All",
+Cell[150029, 5520, 247, 8, 46, 26, 0, "StyleData", "Caption", "All",
  StyleMenuListing->None],
-Cell[149632, 5508, 57, 1, 70, 42, 0, "StyleData", "Caption", "Presentation"],
-Cell[149692, 5511, 84, 2, 70, 38, 0, "StyleData", "Caption", "Printout"]
+Cell[150279, 5530, 57, 1, 70, 42, 0, "StyleData", "Caption", "Presentation"],
+Cell[150339, 5533, 84, 2, 70, 38, 0, "StyleData", "Caption", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[149813, 5518, 303, 10, 40, 56, 0, "StyleData", "MathCaption", "All",
+Cell[150460, 5540, 303, 10, 40, 56, 0, "StyleData", "MathCaption", "All",
  StyleMenuListing->None],
-Cell[150119, 5530, 61, 1, 70, 46, 0, "StyleData", "MathCaption", \
+Cell[150766, 5552, 61, 1, 70, 46, 0, "StyleData", "MathCaption", \
 "Presentation"],
-Cell[150183, 5533, 136, 4, 70, 42, 0, "StyleData", "MathCaption", "Printout"]
+Cell[150830, 5555, 136, 4, 70, 42, 0, "StyleData", "MathCaption", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[150356, 5542, 93, 1, 45, 93, 1, "StyleData", "RelatedTutorialsSection", \
+Cell[151003, 5564, 93, 1, 45, 93, 1, "StyleData", "RelatedTutorialsSection", \
 "All"],
-Cell[150452, 5545, 73, 1, 70, 58, 0, "StyleData", "RelatedTutorialsSection", \
+Cell[151099, 5567, 73, 1, 70, 58, 0, "StyleData", "RelatedTutorialsSection", \
 "Presentation"],
-Cell[150528, 5548, 259, 7, 70, 54, 0, "StyleData", "RelatedTutorialsSection", \
+Cell[151175, 5570, 259, 7, 70, 54, 0, "StyleData", "RelatedTutorialsSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[150824, 5560, 144, 3, 34, 79, 0, "StyleData", "RelatedTutorials", "All",
+Cell[151471, 5582, 144, 3, 34, 79, 0, "StyleData", "RelatedTutorials", "All",
  MenuSortingValue->None,
  MenuCommandKey->"2"],
-Cell[150971, 5565, 66, 1, 70, 51, 0, "StyleData", "RelatedTutorials", \
+Cell[151618, 5587, 66, 1, 70, 51, 0, "StyleData", "RelatedTutorials", \
 "Presentation"],
-Cell[151040, 5568, 166, 4, 70, 47, 0, "StyleData", "RelatedTutorials", \
+Cell[151687, 5590, 166, 4, 70, 47, 0, "StyleData", "RelatedTutorials", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[151243, 5577, 94, 1, 45, 94, 1, "StyleData", "TutorialMoreAboutSection", \
+Cell[151890, 5599, 94, 1, 45, 94, 1, "StyleData", "TutorialMoreAboutSection", \
 "All"],
-Cell[151340, 5580, 74, 1, 70, 59, 0, "StyleData", "TutorialMoreAboutSection", \
+Cell[151987, 5602, 74, 1, 70, 59, 0, "StyleData", "TutorialMoreAboutSection", \
 "Presentation"],
-Cell[151417, 5583, 260, 7, 70, 55, 0, "StyleData", \
+Cell[152064, 5605, 260, 7, 70, 55, 0, "StyleData", \
 "TutorialMoreAboutSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[151714, 5595, 147, 4, 34, 82, 1, "StyleData", "TutorialMoreAbout", "All",
+Cell[152361, 5617, 147, 4, 34, 82, 1, "StyleData", "TutorialMoreAbout", "All",
  
  MenuSortingValue->None,
  MenuCommandKey->"2"],
-Cell[151864, 5601, 67, 1, 70, 52, 0, "StyleData", "TutorialMoreAbout", \
+Cell[152511, 5623, 67, 1, 70, 52, 0, "StyleData", "TutorialMoreAbout", \
 "Presentation"],
-Cell[151934, 5604, 167, 4, 70, 48, 0, "StyleData", "TutorialMoreAbout", \
+Cell[152581, 5626, 167, 4, 70, 48, 0, "StyleData", "TutorialMoreAbout", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[152138, 5613, 97, 1, 45, 97, 1, "StyleData", \
+Cell[152785, 5635, 97, 1, 45, 97, 1, "StyleData", \
 "TutorialRelatedLinksSection", "All"],
-Cell[152238, 5616, 77, 1, 70, 62, 0, "StyleData", \
+Cell[152885, 5638, 77, 1, 70, 62, 0, "StyleData", \
 "TutorialRelatedLinksSection", "Presentation"],
-Cell[152318, 5619, 263, 7, 70, 58, 0, "StyleData", \
+Cell[152965, 5641, 263, 7, 70, 58, 0, "StyleData", \
 "TutorialRelatedLinksSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[152618, 5631, 150, 4, 34, 85, 1, "StyleData", "TutorialRelatedLinks", \
+Cell[153265, 5653, 150, 4, 34, 85, 1, "StyleData", "TutorialRelatedLinks", \
 "All",
  MenuSortingValue->None,
  MenuCommandKey->"2"],
-Cell[152771, 5637, 70, 1, 70, 55, 0, "StyleData", "TutorialRelatedLinks", \
+Cell[153418, 5659, 70, 1, 70, 55, 0, "StyleData", "TutorialRelatedLinks", \
 "Presentation"],
-Cell[152844, 5640, 170, 4, 70, 51, 0, "StyleData", "TutorialRelatedLinks", \
+Cell[153491, 5662, 170, 4, 70, 51, 0, "StyleData", "TutorialRelatedLinks", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[153051, 5649, 104, 1, 45, 104, 1, "StyleData", \
+Cell[153698, 5671, 104, 1, 45, 104, 1, "StyleData", \
 "TutorialsTutorialCollectionSection", "All"],
-Cell[153158, 5652, 84, 1, 70, 69, 0, "StyleData", \
+Cell[153805, 5674, 84, 1, 70, 69, 0, "StyleData", \
 "TutorialsTutorialCollectionSection", "Presentation"],
-Cell[153245, 5655, 270, 7, 70, 65, 0, "StyleData", \
+Cell[153892, 5677, 270, 7, 70, 65, 0, "StyleData", \
 "TutorialsTutorialCollectionSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[153552, 5667, 186, 6, 37, 31, 0, "StyleData", "SessionLabel", "All",
+Cell[154199, 5689, 186, 6, 37, 31, 0, "StyleData", "SessionLabel", "All",
  StyleMenuListing->None],
-Cell[153741, 5675, 62, 1, 70, 47, 0, "StyleData", "SessionLabel", \
+Cell[154388, 5697, 62, 1, 70, 47, 0, "StyleData", "SessionLabel", \
 "Presentation"],
-Cell[153806, 5678, 91, 2, 70, 43, 0, "StyleData", "SessionLabel", "Printout"]
+Cell[154453, 5700, 91, 2, 70, 43, 0, "StyleData", "SessionLabel", "Printout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[153946, 5686, 35, 0, 35, "Section"],
-Cell[153984, 5688, 89, 1, 70, 74, 0, "StyleData", "DataSourceTitle", "All"],
-Cell[154076, 5691, 75, 0, 70, 75, 0, "StyleData", "DataSourceSummary", \
+Cell[154593, 5708, 35, 0, 35, "Section"],
+Cell[154631, 5710, 89, 1, 70, 74, 0, "StyleData", "DataSourceTitle", "All"],
+Cell[154723, 5713, 75, 0, 70, 75, 0, "StyleData", "DataSourceSummary", \
 "All"],
-Cell[154154, 5693, 97, 1, 70, 75, 0, "StyleData", "DataSourceSection", \
+Cell[154801, 5715, 97, 1, 70, 75, 0, "StyleData", "DataSourceSection", \
 "All"],
-Cell[154254, 5696, 106, 1, 70, 72, 0, "StyleData", "DataSourceText", "All"],
-Cell[154363, 5699, 75, 0, 70, 75, 0, "StyleData", "DataSourceContact", "All"]
+Cell[154901, 5718, 106, 1, 70, 72, 0, "StyleData", "DataSourceText", "All"],
+Cell[155010, 5721, 75, 0, 70, 75, 0, "StyleData", "DataSourceContact", "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[154475, 5704, 38, 0, 35, "Section"],
+Cell[155122, 5726, 38, 0, 35, "Section"],
 Cell[CellGroupData[{
-Cell[154538, 5708, 343, 7, 70, 75, 0, "StyleData", "TOCDocumentTitle", "All",
+Cell[155185, 5730, 343, 7, 70, 75, 0, "StyleData", "TOCDocumentTitle", "All",
  CounterAssignments->{{"TOCChapter", 0}, {"TOCSection", 0}, {
    "TOCSubsection", 0}, {"TOCSubsubsection", 0}}],
-Cell[154884, 5717, 123, 3, 70, 47, 0, "StyleData", "TOCDocumentTitle", \
+Cell[155531, 5739, 123, 3, 70, 47, 0, "StyleData", "TOCDocumentTitle", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[155044, 5725, 481, 13, 70, 26, 0, "StyleData", "TOCPart", "All",
+Cell[155691, 5747, 481, 13, 70, 26, 0, "StyleData", "TOCPart", "All",
  CounterIncrements->"TOCChapter",
  CounterAssignments->{{"TOCSection", 0}, {"TOCSubsection", 0}, {
    "TOCSubsubsection", 0}}],
-Cell[155528, 5740, 87, 2, 70, 38, 0, "StyleData", "TOCPart", "Printout"]
+Cell[156175, 5762, 87, 2, 70, 38, 0, "StyleData", "TOCPart", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[155652, 5747, 634, 18, 70, 29, 0, "StyleData", "TOCChapter", "All",
+Cell[156299, 5769, 634, 18, 70, 29, 0, "StyleData", "TOCChapter", "All",
  CounterIncrements->"TOCChapter",
  CounterAssignments->{{"TOCSection", 0}, {"TOCSubsection", 0}, {
    "TOCSubsubsection", 0}}],
-Cell[156289, 5767, 116, 3, 70, 41, 0, "StyleData", "TOCChapter", "Printout"]
+Cell[156936, 5789, 116, 3, 70, 41, 0, "StyleData", "TOCChapter", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[156442, 5775, 541, 16, 70, 29, 0, "StyleData", "TOCSection", "All",
+Cell[157089, 5797, 541, 16, 70, 29, 0, "StyleData", "TOCSection", "All",
  CounterIncrements->"TOCSection",
  CounterAssignments->{{"TOCSubsection", 0}, {"TOCSubsubsection", 0}}],
-Cell[156986, 5793, 115, 3, 70, 41, 0, "StyleData", "TOCSection", "Printout"]
+Cell[157633, 5815, 115, 3, 70, 41, 0, "StyleData", "TOCSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[157138, 5801, 524, 15, 70, 32, 0, "StyleData", "TOCSubsection", "All",
+Cell[157785, 5823, 524, 15, 70, 32, 0, "StyleData", "TOCSubsection", "All",
  CounterIncrements->"TOCSection",
  CounterAssignments->{{"TOCSubsection", 0}, {"TOCSubsubsection", 0}}],
-Cell[157665, 5818, 117, 3, 70, 44, 0, "StyleData", "TOCSubsection", "Printout"]
+Cell[158312, 5840, 117, 3, 70, 44, 0, "StyleData", "TOCSubsection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[157819, 5826, 527, 15, 70, 35, 0, "StyleData", "TOCSubsubsection", "All",
+Cell[158466, 5848, 527, 15, 70, 35, 0, "StyleData", "TOCSubsubsection", "All",
  
  CounterIncrements->"TOCSection",
  CounterAssignments->{{"TOCSubsection", 0}, {"TOCSubsubsection", 0}}],
-Cell[158349, 5843, 120, 3, 70, 47, 0, "StyleData", "TOCSubsubsection", \
+Cell[158996, 5865, 120, 3, 70, 47, 0, "StyleData", "TOCSubsubsection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[158506, 5851, 501, 14, 70, 38, 0, "StyleData", "TOCSubsubsubsection", \
+Cell[159153, 5873, 501, 14, 70, 38, 0, "StyleData", "TOCSubsubsubsection", \
 "All",
  CounterIncrements->"TOCSection",
  CounterAssignments->{{"TOCSubsection", 0}, {"TOCSubsubsection", 0}}],
-Cell[159010, 5867, 125, 3, 70, 50, 0, "StyleData", "TOCSubsubsubsection", \
+Cell[159657, 5889, 125, 3, 70, 50, 0, "StyleData", "TOCSubsubsubsection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[159172, 5875, 260, 7, 70, 26, 0, "StyleData", "TOCLink", "All",
+Cell[159819, 5897, 260, 7, 70, 26, 0, "StyleData", "TOCLink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[159435, 5884, 64, 1, 70, 38, 0, "StyleData", "TOCLink", "Printout"]
+Cell[160082, 5906, 64, 1, 70, 38, 0, "StyleData", "TOCLink", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[159536, 5890, 238, 6, 70, 33, 0, "StyleData", "TOCPointerLink", "All",
+Cell[160183, 5912, 238, 6, 70, 33, 0, "StyleData", "TOCPointerLink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[159777, 5898, 71, 1, 70, 45, 0, "StyleData", "TOCPointerLink", "Printout"]
+Cell[160424, 5920, 71, 1, 70, 45, 0, "StyleData", "TOCPointerLink", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[159885, 5904, 676, 19, 70, 28, 0, "StyleData", "TOCOpener", "All",
+Cell[160532, 5926, 676, 19, 70, 28, 0, "StyleData", "TOCOpener", "All",
  StyleMenuListing->None],
-Cell[160564, 5925, 66, 1, 70, 40, 0, "StyleData", "TOCOpener", "Printout"]
+Cell[161211, 5947, 66, 1, 70, 40, 0, "StyleData", "TOCOpener", "Printout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[160679, 5932, 37, 0, 35, "Section"],
+Cell[161326, 5954, 37, 0, 35, "Section"],
+Cell[161366, 5956, 125, 2, 59, 92, 1, "StyleData", "FormatBackground", \
+"All"],
 Cell[CellGroupData[{
-Cell[160741, 5936, 730, 21, 70, 30, 0, "StyleData", "FormatUsage", "All",
+Cell[161516, 5962, 540, 16, 58, 30, 0, "StyleData", "FormatUsage", "All",
  StyleMenuListing->None],
-Cell[161474, 5959, 61, 1, 70, 46, 0, "StyleData", "FormatUsage", \
+Cell[162059, 5980, 61, 1, 45, 46, 0, "StyleData", "FormatUsage", \
 "Presentation"],
-Cell[161538, 5962, 259, 7, 70, 43, 0, "StyleData", "FormatUsage", "SlideShow",
+Cell[162123, 5983, 259, 7, 47, 43, 0, "StyleData", "FormatUsage", "SlideShow",
  
  StyleMenuListing->None],
-Cell[161800, 5971, 188, 5, 70, 42, 0, "StyleData", "FormatUsage", "Printout",
+Cell[162385, 5992, 188, 5, 39, 42, 0, "StyleData", "FormatUsage", "Printout",
  StyleMenuListing->None]
 }, Closed]],
+Cell[162588, 6000, 67, 1, 40, 39, 0, "StyleData", "FormatUsageSeparator", \
+"All"],
 Cell[CellGroupData[{
-Cell[162025, 5981, 355, 11, 70, 30, 0, "StyleData", "FormatNotes", "All",
+Cell[162680, 6005, 358, 11, 42, 30, 0, "StyleData", "FormatNotes", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"],
-Cell[162383, 5994, 61, 1, 70, 46, 0, "StyleData", "FormatNotes", \
+Cell[163041, 6018, 61, 1, 45, 46, 0, "StyleData", "FormatNotes", \
 "Presentation"],
-Cell[162447, 5997, 161, 4, 70, 42, 0, "StyleData", "FormatNotes", "Printout"]
+Cell[163105, 6021, 161, 4, 39, 42, 0, "StyleData", "FormatNotes", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[162645, 6006, 165, 3, 70, 89, 1, "StyleData", "ImportExportSection", \
+Cell[163303, 6030, 165, 3, 47, 89, 1, "StyleData", "ImportExportSection", \
 "All"],
-Cell[162813, 6011, 285, 8, 70, 50, 0, "StyleData", "ImportExportSection", \
+Cell[163471, 6035, 285, 8, 70, 50, 0, "StyleData", "ImportExportSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[163135, 6024, 151, 2, 70, 99, 1, "StyleData", \
+Cell[163793, 6048, 151, 2, 47, 99, 1, "StyleData", \
 "NotebookInterfaceSection", "All"],
-Cell[163289, 6028, 290, 8, 70, 55, 0, "StyleData", \
+Cell[163947, 6052, 290, 8, 70, 55, 0, "StyleData", \
 "NotebookInterfaceSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[163616, 6041, 142, 2, 70, 90, 1, "StyleData", "ElementsSection", "All"],
-Cell[163761, 6045, 281, 8, 70, 46, 0, "StyleData", "ElementsSection", \
+Cell[164274, 6065, 142, 2, 47, 90, 1, "StyleData", "ElementsSection", "All"],
+Cell[164419, 6069, 281, 8, 70, 46, 0, "StyleData", "ElementsSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[164079, 6058, 141, 2, 70, 89, 1, "StyleData", "OptionsSection", "All"],
-Cell[164223, 6062, 280, 8, 70, 45, 0, "StyleData", "OptionsSection", \
+Cell[164737, 6082, 141, 2, 47, 89, 1, "StyleData", "OptionsSection", "All"],
+Cell[164881, 6086, 280, 8, 70, 45, 0, "StyleData", "OptionsSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[164540, 6075, 298, 7, 70, 32, 0, "StyleData", "StrongDivider", "All"],
-Cell[164841, 6084, 140, 3, 70, 44, 0, "StyleData", "StrongDivider", "Printout"]
+Cell[165198, 6099, 298, 7, 18, 32, 0, "StyleData", "StrongDivider", "All"],
+Cell[165499, 6108, 140, 3, 70, 44, 0, "StyleData", "StrongDivider", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[165018, 6092, 296, 7, 70, 30, 0, "StyleData", "WeakDivider", "All"],
-Cell[165317, 6101, 140, 3, 70, 42, 0, "StyleData", "WeakDivider", "Printout"]
+Cell[165676, 6116, 296, 7, 17, 30, 0, "StyleData", "WeakDivider", "All"],
+Cell[165975, 6125, 140, 3, 70, 42, 0, "StyleData", "WeakDivider", "Printout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[165506, 6110, 37, 0, 35, "Section"],
-Cell[165546, 6112, 162, 3, 47, 86, 1, "StyleData", "DeviceSubsection", \
+Cell[166164, 6134, 37, 0, 35, "Section"],
+Cell[166204, 6136, 162, 3, 47, 86, 1, "StyleData", "DeviceSubsection", \
 "All"],
-Cell[165711, 6117, 355, 11, 43, 30, 0, "StyleData", "DeviceNotes", "All",
+Cell[166369, 6141, 355, 11, 43, 30, 0, "StyleData", "DeviceNotes", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"],
-Cell[166069, 6130, 118, 2, 45, 83, 1, "StyleData", "DeviceAbstract", "All"],
-Cell[166190, 6134, 76, 0, 64, 76, 0, "StyleData", "DeviceUsage", "All"],
-Cell[166269, 6136, 1399, 34, 46, 62, 0, "StyleData", "DeviceDoubleUsage", \
+Cell[166727, 6154, 118, 2, 45, 83, 1, "StyleData", "DeviceAbstract", "All"],
+Cell[166848, 6158, 76, 0, 64, 76, 0, "StyleData", "DeviceUsage", "All"],
+Cell[166927, 6160, 1399, 34, 46, 62, 0, "StyleData", "DeviceDoubleUsage", \
 "All",
  StyleMenuListing->None],
-Cell[167671, 6172, 485, 15, 46, 33, 0, "StyleData", "DeviceSubtitle", "All",
+Cell[168329, 6196, 485, 15, 46, 33, 0, "StyleData", "DeviceSubtitle", "All",
  StyleMenuListing->None],
-Cell[168159, 6189, 128, 4, 44, 30, 0, "StyleData", "DeviceImage", "All"],
-Cell[168290, 6195, 153, 4, 29, 37, 0, "StyleData", "DeviceImageCaption", \
+Cell[168817, 6213, 128, 4, 44, 30, 0, "StyleData", "DeviceImage", "All"],
+Cell[168948, 6219, 153, 4, 29, 37, 0, "StyleData", "DeviceImageCaption", \
 "All"],
-Cell[168446, 6201, 202, 6, 50, 88, 1, "StyleData", "DeviceExamplePrologue", \
+Cell[169104, 6225, 202, 6, 50, 88, 1, "StyleData", "DeviceExamplePrologue", \
 "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[168685, 6212, 38, 0, 35, "Section"],
-Cell[168726, 6214, 163, 3, 47, 87, 1, "StyleData", "ServiceSubsection", "All"],
-Cell[168892, 6219, 309, 10, 103, 34, 0, "StyleData", "ServiceAbstract", "All"],
-Cell[169204, 6231, 125, 2, 46, 71, 0, "StyleData", "ServiceNotes", "All"]
+Cell[169343, 6236, 38, 0, 35, "Section"],
+Cell[169384, 6238, 163, 3, 47, 87, 1, "StyleData", "ServiceSubsection", "All"],
+Cell[169550, 6243, 309, 10, 103, 34, 0, "StyleData", "ServiceAbstract", "All"],
+Cell[169862, 6255, 125, 2, 46, 71, 0, "StyleData", "ServiceNotes", "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[169366, 6238, 47, 0, 35, "Section"],
-Cell[169416, 6240, 168, 3, 47, 92, 1, "StyleData", "EmbeddingFormatSection", \
+Cell[170024, 6262, 47, 0, 35, "Section"],
+Cell[170074, 6264, 168, 3, 47, 92, 1, "StyleData", "EmbeddingFormatSection", \
 "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[169621, 6248, 47, 0, 35, "Section"],
-Cell[169671, 6250, 87, 1, 107, 87, 1, "StyleData", "InterpreterUsage", \
+Cell[170279, 6272, 47, 0, 35, "Section"],
+Cell[170329, 6274, 87, 1, 107, 87, 1, "StyleData", "InterpreterUsage", \
 "All"],
-Cell[169761, 6253, 83, 1, 44, 83, 1, "StyleData", "InterpreterNotes", "All"],
-Cell[169847, 6256, 164, 3, 47, 88, 1, "StyleData", "InterpreterSection", \
+Cell[170419, 6277, 83, 1, 44, 83, 1, "StyleData", "InterpreterNotes", "All"],
+Cell[170505, 6280, 164, 3, 47, 88, 1, "StyleData", "InterpreterSection", \
 "All"],
-Cell[170014, 6261, 114, 2, 46, 89, 1, "StyleData", "InterpreterSubtitle", \
+Cell[170672, 6285, 114, 2, 46, 89, 1, "StyleData", "InterpreterSubtitle", \
 "All"],
-Cell[170131, 6265, 95, 1, 47, 95, 1, "StyleData", \
+Cell[170789, 6289, 95, 1, 47, 95, 1, "StyleData", \
 "RelatedInterpreterSection", "All"],
-Cell[170229, 6268, 82, 1, 61, 82, 1, "StyleData", "RelatedInterpreters", "All"]
+Cell[170887, 6292, 82, 1, 61, 82, 1, "StyleData", "RelatedInterpreters", "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[170348, 6274, 40, 0, 35, "Section"],
+Cell[171006, 6298, 40, 0, 35, "Section"],
 Cell[CellGroupData[{
-Cell[170413, 6278, 584, 17, 70, 32, 0, "StyleData", "CharacterName", "All",
+Cell[171071, 6302, 584, 17, 70, 32, 0, "StyleData", "CharacterName", "All",
  StyleMenuListing->None],
-Cell[171000, 6297, 145, 3, 70, 44, 0, "StyleData", "CharacterName", "Printout"]
+Cell[171658, 6321, 145, 3, 70, 44, 0, "StyleData", "CharacterName", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[171182, 6305, 758, 21, 70, 33, 0, "StyleData", "CharacterImage", "All",
+Cell[171840, 6329, 758, 21, 70, 33, 0, "StyleData", "CharacterImage", "All",
  StyleMenuListing->None],
-Cell[171943, 6328, 322, 9, 70, 45, 0, "StyleData", "CharacterImage", \
+Cell[172601, 6352, 322, 9, 70, 45, 0, "StyleData", "CharacterImage", \
 "Printout",
  StyleMenuListing->None]
 }, Closed]],
-Cell[172280, 6340, 175, 7, 70, 33, 0, "StyleData", "CharacterNotes", "All",
+Cell[172938, 6364, 175, 7, 70, 33, 0, "StyleData", "CharacterNotes", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"],
-Cell[172458, 6349, 147, 5, 70, 40, 0, "StyleData", "CharacterNotesDingbat", \
+Cell[173116, 6373, 147, 5, 70, 40, 0, "StyleData", "CharacterNotesDingbat", \
 "All"],
 Cell[CellGroupData[{
-Cell[172630, 6358, 143, 5, 70, 31, 0, "StyleData", "TradFormChar", "All"],
-Cell[172776, 6365, 43, 0, 70, 43, 0, "StyleData", "TradFormChar", "Printout"]
+Cell[173288, 6382, 143, 5, 70, 31, 0, "StyleData", "TradFormChar", "All"],
+Cell[173434, 6389, 43, 0, 70, 43, 0, "StyleData", "TradFormChar", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[172856, 6370, 122, 4, 70, 32, 0, "StyleData", "StandFormChar", "All"],
-Cell[172981, 6376, 44, 0, 70, 44, 0, "StyleData", "StandFormChar", \
+Cell[173514, 6394, 122, 4, 70, 32, 0, "StyleData", "StandFormChar", "All"],
+Cell[173639, 6400, 44, 0, 70, 44, 0, "StyleData", "StandFormChar", \
 "Printout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[173074, 6382, 65, 1, 35, "Section",
+Cell[173732, 6406, 65, 1, 35, "Section",
  CellID->1492764801],
 Cell[CellGroupData[{
-Cell[173164, 6387, 452, 13, 51, 31, 0, "StyleData", "UpgradeLabel", "All",
+Cell[173822, 6411, 452, 13, 51, 31, 0, "StyleData", "UpgradeLabel", "All",
  MenuSortingValue->None,
  MenuCommandKey->"1"],
-Cell[173619, 6402, 117, 3, 70, 43, 0, "StyleData", "UpgradeLabel", \
+Cell[174277, 6426, 117, 3, 70, 43, 0, "StyleData", "UpgradeLabel", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[173773, 6410, 249, 9, 50, 36, 0, "StyleData", "UpgradeObjectName", "All",
+Cell[174431, 6434, 249, 9, 50, 36, 0, "StyleData", "UpgradeObjectName", "All",
  
  MenuSortingValue->None,
  MenuCommandKey->"2"],
-Cell[174025, 6421, 122, 3, 70, 48, 0, "StyleData", "UpgradeObjectName", \
+Cell[174683, 6445, 122, 3, 70, 48, 0, "StyleData", "UpgradeObjectName", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[174184, 6429, 484, 15, 66, 33, 0, "StyleData", "UpgradeSummary", "All",
+Cell[174842, 6453, 484, 15, 66, 33, 0, "StyleData", "UpgradeSummary", "All",
  MenuSortingValue->None,
  MenuCommandKey->"3"],
-Cell[174671, 6446, 111, 3, 27, 45, 0, "StyleData", "UpgradeSummary", \
+Cell[175329, 6470, 111, 3, 27, 45, 0, "StyleData", "UpgradeSummary", \
 "Printout",
  CellID->552778906]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[174819, 6454, 1291, 37, 72, 39, 0, "StyleData", "UpgradeDefinitionBox", \
+Cell[175477, 6478, 1291, 37, 72, 39, 0, "StyleData", "UpgradeDefinitionBox", \
 "All"],
-Cell[176113, 6493, 70, 1, 70, 55, 0, "StyleData", "UpgradeDefinitionBox", \
+Cell[176771, 6517, 70, 1, 70, 55, 0, "StyleData", "UpgradeDefinitionBox", \
 "Presentation"],
-Cell[176186, 6496, 98, 2, 70, 51, 0, "StyleData", "UpgradeDefinitionBox", \
+Cell[176844, 6520, 98, 2, 70, 51, 0, "StyleData", "UpgradeDefinitionBox", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[176321, 6503, 257, 8, 42, 33, 0, "StyleData", "UpgradeCaption", "All",
+Cell[176979, 6527, 257, 8, 42, 33, 0, "StyleData", "UpgradeCaption", "All",
  StyleMenuListing->None],
-Cell[176581, 6513, 64, 1, 70, 49, 0, "StyleData", "UpgradeCaption", \
+Cell[177239, 6537, 64, 1, 70, 49, 0, "StyleData", "UpgradeCaption", \
 "Presentation"],
-Cell[176648, 6516, 91, 2, 70, 45, 0, "StyleData", "UpgradeCaption", "Printout"]
+Cell[177306, 6540, 91, 2, 70, 45, 0, "StyleData", "UpgradeCaption", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[176776, 6523, 430, 12, 56, 37, 0, "StyleData", "UpgradeDetailLabel", \
+Cell[177434, 6547, 430, 12, 56, 37, 0, "StyleData", "UpgradeDetailLabel", \
 "All",
  MenuSortingValue->None,
  MenuCommandKey->"4"],
-Cell[177209, 6537, 121, 3, 70, 49, 0, "StyleData", "UpgradeDetailLabel", \
+Cell[177867, 6561, 121, 3, 70, 49, 0, "StyleData", "UpgradeDetailLabel", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[177367, 6545, 222, 8, 38, 32, 0, "StyleData", "UpgradeDetail", "All",
+Cell[178025, 6569, 222, 8, 38, 32, 0, "StyleData", "UpgradeDetail", "All",
  MenuSortingValue->None,
  MenuCommandKey->"5"],
-Cell[177592, 6555, 90, 2, 70, 44, 0, "StyleData", "UpgradeDetail", \
+Cell[178250, 6579, 90, 2, 70, 44, 0, "StyleData", "UpgradeDetail", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[177719, 6562, 588, 19, 59, 30, 0, "StyleData", "LegacyInput", "All",
+Cell[178377, 6586, 588, 19, 59, 30, 0, "StyleData", "LegacyInput", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"],
-Cell[178310, 6583, 42, 0, 70, 42, 0, "StyleData", "LegacyInput", "Printout"]
+Cell[178968, 6607, 42, 0, 70, 42, 0, "StyleData", "LegacyInput", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[178389, 6588, 590, 19, 59, 32, 0, "StyleData", "LegacyInputV7", "All",
+Cell[179047, 6612, 590, 19, 59, 32, 0, "StyleData", "LegacyInputV7", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"],
-Cell[178982, 6609, 44, 0, 70, 44, 0, "StyleData", "LegacyInputV7", \
+Cell[179640, 6633, 44, 0, 70, 44, 0, "StyleData", "LegacyInputV7", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[179063, 6614, 590, 19, 59, 32, 0, "StyleData", "LegacyInputV8", "All",
+Cell[179721, 6638, 590, 19, 59, 32, 0, "StyleData", "LegacyInputV8", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"],
-Cell[179656, 6635, 44, 0, 70, 44, 0, "StyleData", "LegacyInputV8", \
+Cell[180314, 6659, 44, 0, 70, 44, 0, "StyleData", "LegacyInputV8", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[179737, 6640, 590, 19, 59, 32, 0, "StyleData", "LegacyInputV9", "All",
+Cell[180395, 6664, 590, 19, 59, 32, 0, "StyleData", "LegacyInputV9", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"],
-Cell[180330, 6661, 44, 0, 70, 44, 0, "StyleData", "LegacyInputV9", \
+Cell[180988, 6685, 44, 0, 70, 44, 0, "StyleData", "LegacyInputV9", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[180411, 6666, 591, 19, 59, 33, 0, "StyleData", "LegacyInputV10", "All",
+Cell[181069, 6690, 591, 19, 59, 33, 0, "StyleData", "LegacyInputV10", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"],
-Cell[181005, 6687, 45, 0, 70, 45, 0, "StyleData", "LegacyInputV10", "Printout"]
+Cell[181663, 6711, 45, 0, 70, 45, 0, "StyleData", "LegacyInputV10", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[181087, 6692, 629, 20, 59, 32, 0, "StyleData", "LegacyInputWE", "All",
+Cell[181745, 6716, 629, 20, 59, 32, 0, "StyleData", "LegacyInputWE", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"],
-Cell[181719, 6714, 44, 0, 70, 44, 0, "StyleData", "LegacyInputWE", \
+Cell[182377, 6738, 44, 0, 70, 44, 0, "StyleData", "LegacyInputWE", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[181800, 6719, 306, 10, 38, 35, 0, "StyleData", "LegacyInputLabel", "All",
+Cell[182458, 6743, 306, 10, 38, 35, 0, "StyleData", "LegacyInputLabel", "All",
  
  StyleMenuListing->None],
-Cell[182109, 6731, 61, 1, 70, 47, 0, "StyleData", "LegacyInputLabel", \
+Cell[182767, 6755, 61, 1, 70, 47, 0, "StyleData", "LegacyInputLabel", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[182207, 6737, 686, 20, 53, 31, 0, "StyleData", "LegacyOutput", "All"],
-Cell[182896, 6759, 43, 0, 70, 43, 0, "StyleData", "LegacyOutput", "Printout"]
+Cell[182865, 6761, 686, 20, 53, 31, 0, "StyleData", "LegacyOutput", "All"],
+Cell[183554, 6783, 43, 0, 70, 43, 0, "StyleData", "LegacyOutput", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[182976, 6764, 673, 20, 59, 35, 0, "StyleData", "LegacyInputError", "All",
+Cell[183634, 6788, 673, 20, 59, 35, 0, "StyleData", "LegacyInputError", "All",
  
  MenuSortingValue->None,
  MenuCommandKey->"8"],
-Cell[183652, 6786, 47, 0, 70, 47, 0, "StyleData", "LegacyInputError", \
+Cell[184310, 6810, 47, 0, 70, 47, 0, "StyleData", "LegacyInputError", \
 "Printout"]
 }, Closed]],
-Cell[183714, 6789, 675, 20, 59, 37, 0, "StyleData", "LegacyInputErrorV7", \
+Cell[184372, 6813, 675, 20, 59, 37, 0, "StyleData", "LegacyInputErrorV7", \
 "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"],
 Cell[CellGroupData[{
-Cell[184414, 6813, 437, 12, 84, 40, 0, "StyleData", "UpgradePackageSection", \
+Cell[185072, 6837, 437, 12, 84, 40, 0, "StyleData", "UpgradePackageSection", \
 "All",
  MenuSortingValue->None,
  MenuCommandKey->"6"],
-Cell[184854, 6827, 124, 3, 70, 52, 0, "StyleData", "UpgradePackageSection", \
+Cell[185512, 6851, 124, 3, 70, 52, 0, "StyleData", "UpgradePackageSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[185015, 6835, 393, 13, 54, 40, 0, "StyleData", "UpgradePackageListing", \
+Cell[185673, 6859, 393, 13, 54, 40, 0, "StyleData", "UpgradePackageListing", \
 "All",
  MenuSortingValue->None,
  MenuCommandKey->"7",
  CellID->1960000947],
-Cell[185411, 6850, 119, 3, 70, 52, 0, "StyleData", "UpgradePackageListing", \
+Cell[186069, 6874, 119, 3, 70, 52, 0, "StyleData", "UpgradePackageListing", \
 "Printout",
  CellID->1484254896]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[185567, 6858, 399, 10, 36, 37, 0, "StyleData", "UpgradePackageLink", \
+Cell[186225, 6882, 399, 10, 36, 37, 0, "StyleData", "UpgradePackageLink", \
 "All",
  StyleMenuListing->None],
-Cell[185969, 6870, 107, 3, 70, 49, 0, "StyleData", "UpgradePackageLink", \
+Cell[186627, 6894, 107, 3, 70, 49, 0, "StyleData", "UpgradePackageLink", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[186113, 6878, 420, 11, 66, 45, 0, "StyleData", \
+Cell[186771, 6902, 420, 11, 66, 45, 0, "StyleData", \
 "CorrespondenceTableSection", "All",
  StyleMenuListing->None],
-Cell[186536, 6891, 129, 3, 70, 57, 0, "StyleData", \
+Cell[187194, 6915, 129, 3, 70, 57, 0, "StyleData", \
 "CorrespondenceTableSection", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[186702, 6899, 748, 21, 70, 38, 0, "StyleData", "CorrespondenceTable", \
+Cell[187360, 6923, 748, 21, 70, 38, 0, "StyleData", "CorrespondenceTable", \
 "All",
  StyleMenuListing->None],
-Cell[187453, 6922, 96, 2, 70, 50, 0, "StyleData", "CorrespondenceTable", \
+Cell[188111, 6946, 96, 2, 70, 50, 0, "StyleData", "CorrespondenceTable", \
 "Printout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[187598, 6930, 56, 1, 35, "Section",
+Cell[188256, 6954, 56, 1, 35, "Section",
  CellID->590976175],
 Cell[CellGroupData[{
-Cell[187679, 6935, 150, 3, 74, 90, 1, "StyleData", "MoreToExploreSection", \
+Cell[188337, 6959, 150, 3, 74, 90, 1, "StyleData", "MoreToExploreSection", \
 "All"],
-Cell[187832, 6940, 70, 1, 70, 55, 0, "StyleData", "MoreToExploreSection", \
+Cell[188490, 6964, 70, 1, 70, 55, 0, "StyleData", "MoreToExploreSection", \
 "Presentation"],
-Cell[187905, 6943, 263, 7, 70, 51, 0, "StyleData", "MoreToExploreSection", \
+Cell[188563, 6967, 263, 7, 70, 51, 0, "StyleData", "MoreToExploreSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[188205, 6955, 161, 3, 36, 73, 0, "StyleData", "MoreToExplore", "All"],
-Cell[188369, 6960, 63, 1, 70, 48, 0, "StyleData", "MoreToExplore", \
+Cell[188863, 6979, 161, 3, 36, 73, 0, "StyleData", "MoreToExplore", "All"],
+Cell[189027, 6984, 63, 1, 70, 48, 0, "StyleData", "MoreToExplore", \
 "Presentation"],
-Cell[188435, 6963, 163, 4, 70, 44, 0, "StyleData", "MoreToExplore", "Printout"]
+Cell[189093, 6987, 163, 4, 70, 44, 0, "StyleData", "MoreToExplore", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[188635, 6972, 152, 3, 74, 92, 1, "StyleData", "MoreInformationSection", \
+Cell[189293, 6996, 152, 3, 74, 92, 1, "StyleData", "MoreInformationSection", \
 "All"],
-Cell[188790, 6977, 72, 1, 70, 57, 0, "StyleData", "MoreInformationSection", \
+Cell[189448, 7001, 72, 1, 70, 57, 0, "StyleData", "MoreInformationSection", \
 "Presentation"],
-Cell[188865, 6980, 265, 7, 70, 53, 0, "StyleData", "MoreInformationSection", \
+Cell[189523, 7004, 265, 7, 70, 53, 0, "StyleData", "MoreInformationSection", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[189167, 6992, 163, 3, 36, 75, 0, "StyleData", "MoreInformation", "All"],
-Cell[189333, 6997, 65, 1, 70, 50, 0, "StyleData", "MoreInformation", \
+Cell[189825, 7016, 163, 3, 36, 75, 0, "StyleData", "MoreInformation", "All"],
+Cell[189991, 7021, 65, 1, 70, 50, 0, "StyleData", "MoreInformation", \
 "Presentation"],
-Cell[189401, 7000, 165, 4, 70, 46, 0, "StyleData", "MoreInformation", \
+Cell[190059, 7024, 165, 4, 70, 46, 0, "StyleData", "MoreInformation", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[189603, 7009, 242, 8, 34, 32, 0, "StyleData", "ScreencastURI", "All"],
-Cell[189848, 7019, 114, 3, 70, 44, 0, "StyleData", "ScreencastURI", "Printout"]
+Cell[190261, 7033, 242, 8, 34, 32, 0, "StyleData", "ScreencastURI", "All"],
+Cell[190506, 7043, 114, 3, 70, 44, 0, "StyleData", "ScreencastURI", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[189999, 7027, 297, 9, 38, 35, 0, "StyleData", "ScreencastMarker", \
+Cell[190657, 7051, 297, 9, 38, 35, 0, "StyleData", "ScreencastMarker", \
 "All"],
-Cell[190299, 7038, 137, 4, 70, 47, 0, "StyleData", "ScreencastMarker", \
+Cell[190957, 7062, 137, 4, 70, 47, 0, "StyleData", "ScreencastMarker", \
 "Printout"]
 }, Closed]],
-Cell[190451, 7045, 190, 3, 61, 69, 0, "StyleData", "HowToTitle", "All"],
-Cell[190644, 7050, 472, 10, 77, 78, 0, "StyleData", "HowToTitleGrid", "All",
+Cell[191109, 7069, 190, 3, 61, 69, 0, "StyleData", "HowToTitle", "All"],
+Cell[191302, 7074, 472, 10, 77, 78, 0, "StyleData", "HowToTitleGrid", "All",
  StyleMenuListing->None],
-Cell[191119, 7062, 242, 7, 32, 35, 0, "StyleData", "HowToTitlePrefix", \
+Cell[191777, 7086, 242, 7, 32, 35, 0, "StyleData", "HowToTitlePrefix", \
 "All"],
 Cell[CellGroupData[{
-Cell[191386, 7073, 359, 10, 53, 71, 0, "StyleData", "HowToAbstract", "All"],
-Cell[191748, 7085, 134, 4, 70, 44, 0, "StyleData", "HowToAbstract", "Printout"]
+Cell[192044, 7097, 359, 10, 53, 71, 0, "StyleData", "HowToAbstract", "All"],
+Cell[192406, 7109, 134, 4, 70, 44, 0, "StyleData", "HowToAbstract", "Printout"]
 }, Closed]],
-Cell[191897, 7092, 347, 10, 50, 84, 1, "StyleData", "HowToScreencastLink", \
+Cell[192555, 7116, 347, 10, 50, 84, 1, "StyleData", "HowToScreencastLink", \
 "All"],
-Cell[192247, 7104, 230, 7, 37, 87, 1, "StyleData", "HowToScreencastRedLink", \
+Cell[192905, 7128, 230, 7, 37, 87, 1, "StyleData", "HowToScreencastRedLink", \
 "All"],
-Cell[192480, 7113, 135, 2, 55, 67, 0, "StyleData", "HowToText", "All"],
-Cell[192618, 7117, 143, 3, 65, 86, 1, "StyleData", "ScreencastPointerText", \
+Cell[193138, 7137, 135, 2, 55, 67, 0, "StyleData", "HowToText", "All"],
+Cell[193276, 7141, 143, 3, 65, 86, 1, "StyleData", "ScreencastPointerText", \
 "All"],
 Cell[CellGroupData[{
-Cell[192786, 7124, 370, 12, 32, 33, 0, "StyleData", "HowToDelimiter", "All",
+Cell[193444, 7148, 370, 12, 32, 33, 0, "StyleData", "HowToDelimiter", "All",
  MenuSortingValue->800,
  MenuCommandKey->"8"],
-Cell[193159, 7138, 114, 3, 70, 45, 0, "StyleData", "HowToDelimiter", \
+Cell[193817, 7162, 114, 3, 70, 45, 0, "StyleData", "HowToDelimiter", \
 "Printout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[193322, 7147, 61, 1, 35, "Section",
+Cell[193980, 7171, 61, 1, 35, "Section",
  CellID->1244322799],
-Cell[193386, 7150, 98, 1, 70, 98, 1, "StyleData", "IndicatorExampleSection", \
+Cell[194044, 7174, 98, 1, 70, 98, 1, "StyleData", "IndicatorExampleSection", \
 "All"],
-Cell[193487, 7153, 137, 4, 70, 35, 0, "StyleData", "IndicatorExample", \
+Cell[194145, 7177, 137, 4, 70, 35, 0, "StyleData", "IndicatorExample", \
 "All"],
-Cell[193627, 7159, 106, 1, 70, 106, 1, "StyleData", \
+Cell[194285, 7183, 106, 1, 70, 106, 1, "StyleData", \
 "IndicatorDescriptionSection", "All"],
-Cell[193736, 7162, 141, 4, 70, 39, 0, "StyleData", "IndicatorDescription", \
+Cell[194394, 7186, 141, 4, 70, 39, 0, "StyleData", "IndicatorDescription", \
 "All"],
-Cell[193880, 7168, 109, 1, 70, 109, 1, "StyleData", \
+Cell[194538, 7192, 109, 1, 70, 109, 1, "StyleData", \
 "IndicatorCategorizationSection", "All"],
-Cell[193992, 7171, 144, 4, 70, 42, 0, "StyleData", "IndicatorCategorization", \
+Cell[194650, 7195, 144, 4, 70, 42, 0, "StyleData", "IndicatorCategorization", \
 "All"],
-Cell[194139, 7177, 107, 1, 70, 107, 1, "StyleData", \
+Cell[194797, 7201, 107, 1, 70, 107, 1, "StyleData", \
 "IndicatorAbbreviationSection", "All"],
-Cell[194249, 7180, 142, 4, 70, 40, 0, "StyleData", "IndicatorAbbreviation", \
+Cell[194907, 7204, 142, 4, 70, 40, 0, "StyleData", "IndicatorAbbreviation", \
 "All"],
-Cell[194394, 7186, 102, 1, 70, 102, 1, "StyleData", \
+Cell[195052, 7210, 102, 1, 70, 102, 1, "StyleData", \
 "IndicatorFormulaSection", "All"],
-Cell[194499, 7189, 137, 4, 70, 35, 0, "StyleData", "IndicatorFormula", \
+Cell[195157, 7213, 137, 4, 70, 35, 0, "StyleData", "IndicatorFormula", \
 "All"],
-Cell[194639, 7195, 79, 0, 70, 79, 0, "StyleData", "IndicatorUsage", "All"]
+Cell[195297, 7219, 79, 0, 70, 79, 0, "StyleData", "IndicatorUsage", "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[194755, 7200, 67, 1, 35, "Section",
+Cell[195413, 7224, 67, 1, 35, "Section",
  CellID->132362766],
-Cell[194825, 7203, 79, 0, 70, 79, 0, "StyleData", "FeaturedExampleTitle", \
+Cell[195483, 7227, 79, 0, 70, 79, 0, "StyleData", "FeaturedExampleTitle", \
 "All"],
-Cell[194907, 7205, 88, 1, 70, 88, 1, "StyleData", "FeaturedExampleText", \
+Cell[195565, 7229, 88, 1, 70, 88, 1, "StyleData", "FeaturedExampleText", \
 "All"],
-Cell[194998, 7208, 79, 0, 70, 79, 0, "StyleData", "FeaturedExampleDetail", \
+Cell[195656, 7232, 79, 0, 70, 79, 0, "StyleData", "FeaturedExampleDetail", \
 "All"],
-Cell[195080, 7210, 79, 0, 70, 79, 0, "StyleData", "Delimiter", "All"],
-Cell[195162, 7212, 101, 1, 70, 101, 1, "StyleData", \
+Cell[195738, 7234, 79, 0, 70, 79, 0, "StyleData", "Delimiter", "All"],
+Cell[195820, 7236, 101, 1, 70, 101, 1, "StyleData", \
 "FeaturedExampleMoreAboutSection", "All"],
-Cell[195266, 7215, 89, 1, 70, 89, 1, "StyleData", "FeaturedExampleMoreAbout", \
+Cell[195924, 7239, 89, 1, 70, 89, 1, "StyleData", "FeaturedExampleMoreAbout", \
 "All"],
-Cell[195358, 7218, 99, 1, 70, 99, 1, "StyleData", \
+Cell[196016, 7242, 99, 1, 70, 99, 1, "StyleData", \
 "FeaturedExampleSeeAlsoSection", "All"],
-Cell[195460, 7221, 87, 1, 70, 87, 1, "StyleData", "FeaturedExampleSeeAlso", \
+Cell[196118, 7245, 87, 1, 70, 87, 1, "StyleData", "FeaturedExampleSeeAlso", \
 "All"],
-Cell[195550, 7224, 108, 1, 70, 108, 1, "StyleData", \
+Cell[196208, 7248, 108, 1, 70, 108, 1, "StyleData", \
 "FeaturedExampleRelatedFunctionsSection", "All"],
-Cell[195661, 7227, 96, 1, 70, 96, 1, "StyleData", \
+Cell[196319, 7251, 96, 1, 70, 96, 1, "StyleData", \
 "FeaturedExampleRelatedFunctions", "All"],
-Cell[195760, 7230, 104, 1, 70, 104, 1, "StyleData", \
+Cell[196418, 7254, 104, 1, 70, 104, 1, "StyleData", \
 "FeaturedExampleRelatedLinksSection", "All"],
-Cell[195867, 7233, 92, 1, 70, 92, 1, "StyleData", \
+Cell[196525, 7257, 92, 1, 70, 92, 1, "StyleData", \
 "FeaturedExampleRelatedLinks", "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[195996, 7239, 32, 0, 35, "Section"],
-Cell[196031, 7241, 359, 7, 70, 70, 0, "StyleData", "PacletUsage", "All"],
-Cell[196393, 7250, 143, 3, 70, 86, 1, "StyleData", "PacletNotesSection", "All"]
+Cell[196654, 7263, 32, 0, 35, "Section"],
+Cell[196689, 7265, 359, 7, 70, 70, 0, "StyleData", "PacletUsage", "All"],
+Cell[197051, 7274, 143, 3, 70, 86, 1, "StyleData", "PacletNotesSection", "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[196573, 7258, 37, 0, 35, "Section"],
+Cell[197231, 7282, 37, 0, 35, "Section"],
 Cell[CellGroupData[{
-Cell[196635, 7262, 49, 0, 70, "Subsection"],
+Cell[197293, 7286, 49, 0, 70, "Subsection"],
 Cell[CellGroupData[{
-Cell[196709, 7266, 935, 26, 70, 22, 0, "StyleData", "Box", "All",
+Cell[197367, 7290, 935, 26, 70, 22, 0, "StyleData", "Box", "All",
  StyleMenuListing->None],
-Cell[197647, 7294, 53, 1, 70, 38, 0, "StyleData", "Box", "Presentation"],
-Cell[197703, 7297, 139, 4, 70, 34, 0, "StyleData", "Box", "Printout"]
+Cell[198305, 7318, 53, 1, 70, 38, 0, "StyleData", "Box", "Presentation"],
+Cell[198361, 7321, 139, 4, 70, 34, 0, "StyleData", "Box", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[197879, 7306, 1045, 30, 70, 28, 0, "StyleData", "DoubleBox", "All",
+Cell[198537, 7330, 1045, 30, 70, 28, 0, "StyleData", "DoubleBox", "All",
  StyleMenuListing->None],
-Cell[198927, 7338, 59, 1, 70, 44, 0, "StyleData", "DoubleBox", "Presentation"],
-Cell[198989, 7341, 145, 4, 70, 40, 0, "StyleData", "DoubleBox", "Printout"]
+Cell[199585, 7362, 59, 1, 70, 44, 0, "StyleData", "DoubleBox", "Presentation"],
+Cell[199647, 7365, 145, 4, 70, 40, 0, "StyleData", "DoubleBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[199171, 7350, 942, 26, 70, 29, 0, "StyleData", "1ColumnBox", "All",
+Cell[199829, 7374, 942, 26, 70, 29, 0, "StyleData", "1ColumnBox", "All",
  StyleMenuListing->None],
-Cell[200116, 7378, 60, 1, 70, 45, 0, "StyleData", "1ColumnBox", \
+Cell[200774, 7402, 60, 1, 70, 45, 0, "StyleData", "1ColumnBox", \
 "Presentation"],
-Cell[200179, 7381, 146, 4, 70, 41, 0, "StyleData", "1ColumnBox", "Printout"]
+Cell[200837, 7405, 146, 4, 70, 41, 0, "StyleData", "1ColumnBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[200362, 7390, 917, 24, 70, 29, 0, "StyleData", "2ColumnBox", "All",
+Cell[201020, 7414, 917, 24, 70, 29, 0, "StyleData", "2ColumnBox", "All",
  StyleMenuListing->None],
-Cell[201282, 7416, 60, 1, 70, 45, 0, "StyleData", "2ColumnBox", \
+Cell[201940, 7440, 60, 1, 70, 45, 0, "StyleData", "2ColumnBox", \
 "Presentation"],
-Cell[201345, 7419, 146, 4, 70, 41, 0, "StyleData", "2ColumnBox", "Printout"]
+Cell[202003, 7443, 146, 4, 70, 41, 0, "StyleData", "2ColumnBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[201528, 7428, 842, 22, 70, 33, 0, "StyleData", "2ColumnEvenBox", "All",
+Cell[202186, 7452, 842, 22, 70, 33, 0, "StyleData", "2ColumnEvenBox", "All",
  StyleMenuListing->None],
-Cell[202373, 7452, 64, 1, 70, 49, 0, "StyleData", "2ColumnEvenBox", \
+Cell[203031, 7476, 64, 1, 70, 49, 0, "StyleData", "2ColumnEvenBox", \
 "Presentation"],
-Cell[202440, 7455, 150, 4, 70, 45, 0, "StyleData", "2ColumnEvenBox", \
+Cell[203098, 7479, 150, 4, 70, 45, 0, "StyleData", "2ColumnEvenBox", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[202627, 7464, 1203, 33, 70, 34, 0, "StyleData", "2ColumnSmallBox", "All",
+Cell[203285, 7488, 1203, 33, 70, 34, 0, "StyleData", "2ColumnSmallBox", "All",
  
  StyleMenuListing->None],
-Cell[203833, 7499, 65, 1, 70, 50, 0, "StyleData", "2ColumnSmallBox", \
+Cell[204491, 7523, 65, 1, 70, 50, 0, "StyleData", "2ColumnSmallBox", \
 "Presentation"],
-Cell[203901, 7502, 151, 4, 70, 46, 0, "StyleData", "2ColumnSmallBox", \
+Cell[204559, 7526, 151, 4, 70, 46, 0, "StyleData", "2ColumnSmallBox", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[204089, 7511, 854, 22, 70, 29, 0, "StyleData", "3ColumnBox", "All",
+Cell[204747, 7535, 854, 22, 70, 29, 0, "StyleData", "3ColumnBox", "All",
  StyleMenuListing->None],
-Cell[204946, 7535, 60, 1, 70, 45, 0, "StyleData", "3ColumnBox", \
+Cell[205604, 7559, 60, 1, 70, 45, 0, "StyleData", "3ColumnBox", \
 "Presentation"],
-Cell[205009, 7538, 146, 4, 70, 41, 0, "StyleData", "3ColumnBox", "Printout"]
+Cell[205667, 7562, 146, 4, 70, 41, 0, "StyleData", "3ColumnBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[205192, 7547, 1211, 33, 70, 34, 0, "StyleData", "3ColumnSmallBox", "All",
+Cell[205850, 7571, 1211, 33, 70, 34, 0, "StyleData", "3ColumnSmallBox", "All",
  
  StyleMenuListing->None],
-Cell[206406, 7582, 65, 1, 70, 50, 0, "StyleData", "3ColumnSmallBox", \
+Cell[207064, 7606, 65, 1, 70, 50, 0, "StyleData", "3ColumnSmallBox", \
 "Presentation"],
-Cell[206474, 7585, 151, 4, 70, 46, 0, "StyleData", "3ColumnSmallBox", \
+Cell[207132, 7609, 151, 4, 70, 46, 0, "StyleData", "3ColumnSmallBox", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[206662, 7594, 959, 26, 70, 29, 0, "StyleData", "4ColumnBox", "All",
+Cell[207320, 7618, 959, 26, 70, 29, 0, "StyleData", "4ColumnBox", "All",
  StyleMenuListing->None],
-Cell[207624, 7622, 60, 1, 70, 45, 0, "StyleData", "4ColumnBox", \
+Cell[208282, 7646, 60, 1, 70, 45, 0, "StyleData", "4ColumnBox", \
 "Presentation"],
-Cell[207687, 7625, 146, 4, 70, 41, 0, "StyleData", "4ColumnBox", "Printout"]
+Cell[208345, 7649, 146, 4, 70, 41, 0, "StyleData", "4ColumnBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[207870, 7634, 839, 22, 70, 29, 0, "StyleData", "5ColumnBox", "All",
+Cell[208528, 7658, 839, 22, 70, 29, 0, "StyleData", "5ColumnBox", "All",
  StyleMenuListing->None],
-Cell[208712, 7658, 60, 1, 70, 45, 0, "StyleData", "5ColumnBox", \
+Cell[209370, 7682, 60, 1, 70, 45, 0, "StyleData", "5ColumnBox", \
 "Presentation"],
-Cell[208775, 7661, 146, 4, 70, 41, 0, "StyleData", "5ColumnBox", "Printout"]
+Cell[209433, 7685, 146, 4, 70, 41, 0, "StyleData", "5ColumnBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[208958, 7670, 1002, 27, 70, 29, 0, "StyleData", "6ColumnBox", "All",
+Cell[209616, 7694, 1002, 27, 70, 29, 0, "StyleData", "6ColumnBox", "All",
  StyleMenuListing->None],
-Cell[209963, 7699, 60, 1, 70, 45, 0, "StyleData", "6ColumnBox", \
+Cell[210621, 7723, 60, 1, 70, 45, 0, "StyleData", "6ColumnBox", \
 "Presentation"],
-Cell[210026, 7702, 146, 4, 70, 41, 0, "StyleData", "6ColumnBox", "Printout"]
+Cell[210684, 7726, 146, 4, 70, 41, 0, "StyleData", "6ColumnBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[210209, 7711, 1049, 30, 70, 28, 0, "StyleData", "FramedBox", "All"],
-Cell[211261, 7743, 59, 1, 70, 44, 0, "StyleData", "FramedBox", "Presentation"],
-Cell[211323, 7746, 145, 4, 70, 40, 0, "StyleData", "FramedBox", "Printout"]
+Cell[210867, 7735, 1049, 30, 70, 28, 0, "StyleData", "FramedBox", "All"],
+Cell[211919, 7767, 59, 1, 70, 44, 0, "StyleData", "FramedBox", "Presentation"],
+Cell[211981, 7770, 145, 4, 70, 40, 0, "StyleData", "FramedBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[211505, 7755, 1278, 35, 70, 25, 0, "StyleData", "TopBox", "All",
+Cell[212163, 7779, 1278, 35, 70, 25, 0, "StyleData", "TopBox", "All",
  StyleMenuListing->None],
-Cell[212786, 7792, 56, 1, 70, 41, 0, "StyleData", "TopBox", "Presentation"],
-Cell[212845, 7795, 142, 4, 70, 37, 0, "StyleData", "TopBox", "Printout"]
+Cell[213444, 7816, 56, 1, 70, 41, 0, "StyleData", "TopBox", "Presentation"],
+Cell[213503, 7819, 142, 4, 70, 37, 0, "StyleData", "TopBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[213024, 7804, 1304, 36, 70, 28, 0, "StyleData", "MiddleBox", "All",
+Cell[213682, 7828, 1304, 36, 70, 28, 0, "StyleData", "MiddleBox", "All",
  StyleMenuListing->None],
-Cell[214331, 7842, 59, 1, 70, 44, 0, "StyleData", "MiddleBox", "Presentation"],
-Cell[214393, 7845, 145, 4, 70, 40, 0, "StyleData", "MiddleBox", "Printout"]
+Cell[214989, 7866, 59, 1, 70, 44, 0, "StyleData", "MiddleBox", "Presentation"],
+Cell[215051, 7869, 145, 4, 70, 40, 0, "StyleData", "MiddleBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[214575, 7854, 1306, 36, 70, 28, 0, "StyleData", "BottomBox", "All",
+Cell[215233, 7878, 1306, 36, 70, 28, 0, "StyleData", "BottomBox", "All",
  StyleMenuListing->None],
-Cell[215884, 7892, 59, 1, 70, 44, 0, "StyleData", "BottomBox", "Presentation"],
-Cell[215946, 7895, 279, 8, 70, 40, 0, "StyleData", "BottomBox", "Printout"]
+Cell[216542, 7916, 59, 1, 70, 44, 0, "StyleData", "BottomBox", "Presentation"],
+Cell[216604, 7919, 279, 8, 70, 40, 0, "StyleData", "BottomBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[216262, 7908, 1252, 35, 70, 29, 0, "StyleData", "TopSpanBox", "All",
+Cell[216920, 7932, 1252, 35, 70, 29, 0, "StyleData", "TopSpanBox", "All",
  StyleMenuListing->None],
-Cell[217517, 7945, 60, 1, 70, 45, 0, "StyleData", "TopSpanBox", \
+Cell[218175, 7969, 60, 1, 70, 45, 0, "StyleData", "TopSpanBox", \
 "Presentation"],
-Cell[217580, 7948, 147, 4, 70, 41, 0, "StyleData", "TopSpanBox", "Printout"]
+Cell[218238, 7972, 147, 4, 70, 41, 0, "StyleData", "TopSpanBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[217764, 7957, 1276, 36, 70, 32, 0, "StyleData", "MiddleSpanBox", "All",
+Cell[218422, 7981, 1276, 36, 70, 32, 0, "StyleData", "MiddleSpanBox", "All",
  StyleMenuListing->None],
-Cell[219043, 7995, 63, 1, 70, 48, 0, "StyleData", "MiddleSpanBox", \
+Cell[219701, 8019, 63, 1, 70, 48, 0, "StyleData", "MiddleSpanBox", \
 "Presentation"],
-Cell[219109, 7998, 283, 8, 70, 44, 0, "StyleData", "MiddleSpanBox", "Printout"]
+Cell[219767, 8022, 283, 8, 70, 44, 0, "StyleData", "MiddleSpanBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[219429, 8011, 161, 4, 70, 26, 0, "StyleData", "Picture", "All",
+Cell[220087, 8035, 161, 4, 70, 26, 0, "StyleData", "Picture", "All",
  StyleMenuListing->None],
-Cell[219593, 8017, 57, 1, 70, 42, 0, "StyleData", "Picture", "Presentation"],
-Cell[219653, 8020, 114, 2, 70, 38, 0, "StyleData", "Picture", "Printout"]
+Cell[220251, 8041, 57, 1, 70, 42, 0, "StyleData", "Picture", "Presentation"],
+Cell[220311, 8044, 114, 2, 70, 38, 0, "StyleData", "Picture", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[219804, 8027, 224, 5, 70, 43, 0, "StyleData", \
+Cell[220462, 8051, 224, 5, 70, 43, 0, "StyleData", \
 "OpenCloseItemizedPicture", "All",
  StyleMenuListing->None],
-Cell[220031, 8034, 74, 1, 70, 59, 0, "StyleData", "OpenCloseItemizedPicture", \
+Cell[220689, 8058, 74, 1, 70, 59, 0, "StyleData", "OpenCloseItemizedPicture", \
 "Presentation"],
-Cell[220108, 8037, 174, 4, 70, 55, 0, "StyleData", \
+Cell[220766, 8061, 174, 4, 70, 55, 0, "StyleData", \
 "OpenCloseItemizedPicture", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[220319, 8046, 157, 4, 70, 30, 0, "StyleData", "ListGraphic", "All",
+Cell[220977, 8070, 157, 4, 70, 30, 0, "StyleData", "ListGraphic", "All",
  StyleMenuListing->None],
-Cell[220479, 8052, 61, 1, 70, 46, 0, "StyleData", "ListGraphic", \
+Cell[221137, 8076, 61, 1, 70, 46, 0, "StyleData", "ListGraphic", \
 "Presentation"],
-Cell[220543, 8055, 97, 2, 70, 42, 0, "StyleData", "ListGraphic", "Printout"]
+Cell[221201, 8079, 97, 2, 70, 42, 0, "StyleData", "ListGraphic", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[220677, 8062, 943, 25, 70, 30, 0, "StyleData", "ListNoteBox", "All",
+Cell[221335, 8086, 943, 25, 70, 30, 0, "StyleData", "ListNoteBox", "All",
  StyleMenuListing->None],
-Cell[221623, 8089, 61, 1, 70, 46, 0, "StyleData", "ListNoteBox", \
+Cell[222281, 8113, 61, 1, 70, 46, 0, "StyleData", "ListNoteBox", \
 "Presentation"],
-Cell[221687, 8092, 117, 3, 70, 42, 0, "StyleData", "ListNoteBox", "Printout"]
+Cell[222345, 8116, 117, 3, 70, 42, 0, "StyleData", "ListNoteBox", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[221841, 8100, 158, 4, 70, 31, 0, "StyleData", "PictureGroup", "All",
+Cell[222499, 8124, 158, 4, 70, 31, 0, "StyleData", "PictureGroup", "All",
  StyleMenuListing->None],
-Cell[222002, 8106, 62, 1, 70, 47, 0, "StyleData", "PictureGroup", \
+Cell[222660, 8130, 62, 1, 70, 47, 0, "StyleData", "PictureGroup", \
 "Presentation"],
-Cell[222067, 8109, 162, 4, 70, 43, 0, "StyleData", "PictureGroup", \
+Cell[222725, 8133, 162, 4, 70, 43, 0, "StyleData", "PictureGroup", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[222266, 8118, 119, 3, 70, 24, 0, "StyleData", "Sound", "All",
+Cell[222924, 8142, 119, 3, 70, 24, 0, "StyleData", "Sound", "All",
  StyleMenuListing->None],
-Cell[222388, 8123, 55, 1, 70, 40, 0, "StyleData", "Sound", "Presentation"],
-Cell[222446, 8126, 83, 2, 70, 36, 0, "StyleData", "Sound", "Printout"]
+Cell[223046, 8147, 55, 1, 70, 40, 0, "StyleData", "Sound", "Presentation"],
+Cell[223104, 8150, 83, 2, 70, 36, 0, "StyleData", "Sound", "Printout"]
 }, Closed]],
-Cell[222544, 8131, 248, 8, 70, 29, 0, "StyleData", "HeaderCell", "All",
+Cell[223202, 8155, 248, 8, 70, 29, 0, "StyleData", "HeaderCell", "All",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[222829, 8144, 26, 0, 70, "Subsection"],
-Cell[222858, 8146, 57, 1, 70, 32, 0, "StyleData", "HeadingNumber", "All",
+Cell[223487, 8168, 26, 0, 70, "Subsection"],
+Cell[223516, 8170, 57, 1, 70, 32, 0, "StyleData", "HeadingNumber", "All",
  StyleMenuListing->None]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[222964, 8153, 39, 0, 35, "Section"],
+Cell[223622, 8177, 39, 0, 35, "Section"],
 Cell[CellGroupData[{
-Cell[223028, 8157, 258, 8, 73, 36, 0, "StyleData", "SearchPageHeading", "All"],
-Cell[223289, 8167, 67, 1, 70, 52, 0, "StyleData", "SearchPageHeading", \
+Cell[223686, 8181, 258, 8, 73, 36, 0, "StyleData", "SearchPageHeading", "All"],
+Cell[223947, 8191, 67, 1, 70, 52, 0, "StyleData", "SearchPageHeading", \
 "Presentation"],
-Cell[223359, 8170, 138, 4, 70, 48, 0, "StyleData", "SearchPageHeading", \
+Cell[224017, 8194, 138, 4, 70, 48, 0, "StyleData", "SearchPageHeading", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[223534, 8179, 670, 19, 35, 40, 0, "StyleData", "SearchPageHeadingGrid", \
+Cell[224192, 8203, 670, 19, 35, 40, 0, "StyleData", "SearchPageHeadingGrid", \
 "All"],
-Cell[224207, 8200, 71, 1, 70, 56, 0, "StyleData", "SearchPageHeadingGrid", \
+Cell[224865, 8224, 71, 1, 70, 56, 0, "StyleData", "SearchPageHeadingGrid", \
 "Presentation"],
-Cell[224281, 8203, 142, 4, 70, 52, 0, "StyleData", "SearchPageHeadingGrid", \
+Cell[224939, 8227, 142, 4, 70, 52, 0, "StyleData", "SearchPageHeadingGrid", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[224460, 8212, 223, 7, 39, 34, 0, "StyleData", "SearchCountCell", "All",
+Cell[225118, 8236, 223, 7, 39, 34, 0, "StyleData", "SearchCountCell", "All",
  CounterIncrements->"SearchCountCell"],
-Cell[224686, 8221, 65, 1, 70, 50, 0, "StyleData", "SearchCountCell", \
+Cell[225344, 8245, 65, 1, 70, 50, 0, "StyleData", "SearchCountCell", \
 "Presentation"],
-Cell[224754, 8224, 136, 4, 70, 46, 0, "StyleData", "SearchCountCell", \
+Cell[225412, 8248, 136, 4, 70, 46, 0, "StyleData", "SearchCountCell", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[224927, 8233, 266, 8, 57, 40, 0, "StyleData", "SearchSuggestionsCell", \
+Cell[225585, 8257, 266, 8, 57, 40, 0, "StyleData", "SearchSuggestionsCell", \
 "All",
  CounterIncrements->"SearchSuggestionsCell"],
-Cell[225196, 8243, 71, 1, 70, 56, 0, "StyleData", "SearchSuggestionsCell", \
+Cell[225854, 8267, 71, 1, 70, 56, 0, "StyleData", "SearchSuggestionsCell", \
 "Presentation"],
-Cell[225270, 8246, 142, 4, 70, 52, 0, "StyleData", "SearchSuggestionsCell", \
+Cell[225928, 8270, 142, 4, 70, 52, 0, "StyleData", "SearchSuggestionsCell", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[225449, 8255, 194, 6, 45, 33, 0, "StyleData", "SearchAllSites", "All",
+Cell[226107, 8279, 194, 6, 45, 33, 0, "StyleData", "SearchAllSites", "All",
  CounterIncrements->"SearchCountCell"],
-Cell[225646, 8263, 64, 1, 70, 49, 0, "StyleData", "SearchAllSites", \
+Cell[226304, 8287, 64, 1, 70, 49, 0, "StyleData", "SearchAllSites", \
 "Presentation"],
-Cell[225713, 8266, 135, 4, 70, 45, 0, "StyleData", "SearchAllSites", \
+Cell[226371, 8290, 135, 4, 70, 45, 0, "StyleData", "SearchAllSites", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[225885, 8275, 186, 6, 45, 29, 0, "StyleData", "DidYouMean", "All",
+Cell[226543, 8299, 186, 6, 45, 29, 0, "StyleData", "DidYouMean", "All",
  CounterIncrements->"DidYouMean"],
-Cell[226074, 8283, 60, 1, 70, 45, 0, "StyleData", "DidYouMean", \
+Cell[226732, 8307, 60, 1, 70, 45, 0, "StyleData", "DidYouMean", \
 "Presentation"],
-Cell[226137, 8286, 131, 4, 70, 41, 0, "StyleData", "DidYouMean", "Printout"]
+Cell[226795, 8310, 131, 4, 70, 41, 0, "StyleData", "DidYouMean", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[226305, 8295, 305, 10, 43, 35, 0, "StyleData", "SearchResultCell", "All",
+Cell[226963, 8319, 305, 10, 43, 35, 0, "StyleData", "SearchResultCell", "All",
  
  CounterIncrements->"SearchResultCell"],
-Cell[226613, 8307, 66, 1, 45, 51, 0, "StyleData", "SearchResultCell", \
+Cell[227271, 8331, 66, 1, 45, 51, 0, "StyleData", "SearchResultCell", \
 "Presentation"],
-Cell[226682, 8310, 137, 4, 41, 47, 0, "StyleData", "SearchResultCell", \
+Cell[227340, 8334, 137, 4, 41, 47, 0, "StyleData", "SearchResultCell", \
 "Printout"]
 }, Closed]],
-Cell[226834, 8317, 367, 8, 40, 35, 0, "StyleData", "SearchResultLink", \
+Cell[227492, 8341, 367, 8, 40, 35, 0, "StyleData", "SearchResultLink", \
 "All"],
 Cell[CellGroupData[{
-Cell[227226, 8329, 207, 6, 59, 40, 0, "StyleData", "SearchResultPageLinks", \
+Cell[227884, 8353, 207, 6, 59, 40, 0, "StyleData", "SearchResultPageLinks", \
 "All",
  CounterIncrements->"SearchResultPageLinks"],
-Cell[227436, 8337, 71, 1, 70, 56, 0, "StyleData", "SearchResultPageLinks", \
+Cell[228094, 8361, 71, 1, 70, 56, 0, "StyleData", "SearchResultPageLinks", \
 "Presentation"],
-Cell[227510, 8340, 142, 4, 70, 52, 0, "StyleData", "SearchResultPageLinks", \
+Cell[228168, 8364, 142, 4, 70, 52, 0, "StyleData", "SearchResultPageLinks", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[227689, 8349, 627, 19, 41, 44, 0, "StyleData", \
+Cell[228347, 8373, 627, 19, 41, 44, 0, "StyleData", \
 "SearchResultPageLinksGrid", "All"],
-Cell[228319, 8370, 75, 1, 70, 60, 0, "StyleData", \
+Cell[228977, 8394, 75, 1, 70, 60, 0, "StyleData", \
 "SearchResultPageLinksGrid", "Presentation"],
-Cell[228397, 8373, 146, 4, 70, 56, 0, "StyleData", \
+Cell[229055, 8397, 146, 4, 70, 56, 0, "StyleData", \
 "SearchResultPageLinksGrid", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[228580, 8382, 155, 5, 40, 38, 0, "StyleData", "SearchResultSummary", \
+Cell[229238, 8406, 155, 5, 40, 38, 0, "StyleData", "SearchResultSummary", \
 "All"],
-Cell[228738, 8389, 69, 1, 70, 54, 0, "StyleData", "SearchResultSummary", \
+Cell[229396, 8413, 69, 1, 70, 54, 0, "StyleData", "SearchResultSummary", \
 "Presentation"],
-Cell[228810, 8392, 140, 4, 70, 50, 0, "StyleData", "SearchResultSummary", \
+Cell[229468, 8416, 140, 4, 70, 50, 0, "StyleData", "SearchResultSummary", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[228987, 8401, 141, 5, 41, 36, 0, "StyleData", "SearchResultTitle", "All"],
-Cell[229131, 8408, 67, 1, 45, 52, 0, "StyleData", "SearchResultTitle", \
+Cell[229645, 8425, 141, 5, 41, 36, 0, "StyleData", "SearchResultTitle", "All"],
+Cell[229789, 8432, 67, 1, 45, 52, 0, "StyleData", "SearchResultTitle", \
 "Presentation"],
-Cell[229201, 8411, 138, 4, 41, 48, 0, "StyleData", "SearchResultTitle", \
+Cell[229859, 8435, 138, 4, 41, 48, 0, "StyleData", "SearchResultTitle", \
 "Printout"]
 }, Closed]],
-Cell[229354, 8418, 174, 6, 38, 35, 0, "StyleData", "SearchResultType", \
+Cell[230012, 8442, 174, 6, 38, 35, 0, "StyleData", "SearchResultType", \
 "All"],
-Cell[229531, 8426, 48, 1, 40, 30, 0, "StyleData", "SymbolColor", "All"],
-Cell[229582, 8429, 47, 1, 40, 29, 0, "StyleData", "GuideColor", "All"],
-Cell[229632, 8432, 47, 1, 40, 29, 0, "StyleData", "OtherColor", "All"]
+Cell[230189, 8450, 48, 1, 40, 30, 0, "StyleData", "SymbolColor", "All"],
+Cell[230240, 8453, 47, 1, 40, 29, 0, "StyleData", "GuideColor", "All"],
+Cell[230290, 8456, 47, 1, 40, 29, 0, "StyleData", "OtherColor", "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[229716, 8438, 38, 0, 35, "Section"],
+Cell[230374, 8462, 38, 0, 35, "Section"],
 Cell[CellGroupData[{
-Cell[229779, 8442, 218, 6, 54, 32, 0, "StyleData", "NotebookImage", "All"],
-Cell[230000, 8450, 48, 0, 54, 48, 0, "StyleData", "NotebookImage", \
+Cell[230437, 8466, 218, 6, 54, 32, 0, "StyleData", "NotebookImage", "All"],
+Cell[230658, 8474, 48, 0, 54, 48, 0, "StyleData", "NotebookImage", \
 "Presentation"],
-Cell[230051, 8452, 145, 3, 54, 44, 0, "StyleData", "NotebookImage", "Printout"]
+Cell[230709, 8476, 145, 3, 54, 44, 0, "StyleData", "NotebookImage", "Printout"]
 }, Closed]],
-Cell[230211, 8458, 69, 0, 40, 69, 0, "StyleData", "WebImage", "All"],
-Cell[230283, 8460, 101, 3, 40, 37, 0, "StyleData", "ConversionLockdown", "All",
+Cell[230869, 8482, 69, 0, 40, 69, 0, "StyleData", "WebImage", "All"],
+Cell[230941, 8484, 101, 3, 40, 37, 0, "StyleData", "ConversionLockdown", "All",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[230421, 8468, 36, 0, 35, "Section"],
-Cell[230460, 8470, 121, 3, 45, "Text"],
+Cell[231079, 8492, 36, 0, 35, "Section"],
+Cell[231118, 8494, 121, 3, 45, "Text"],
 Cell[CellGroupData[{
-Cell[230606, 8477, 72, 2, 40, 21, 0, "StyleData", "JT", "All",
+Cell[231264, 8501, 72, 2, 40, 21, 0, "StyleData", "JT", "All",
  StyleMenuListing->None],
-Cell[230681, 8481, 33, 0, 70, 33, 0, "StyleData", "JT", "Printout"]
+Cell[231339, 8505, 33, 0, 70, 33, 0, "StyleData", "JT", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[230751, 8486, 72, 2, 40, 21, 0, "StyleData", "JS", "All",
+Cell[231409, 8510, 72, 2, 40, 21, 0, "StyleData", "JS", "All",
  StyleMenuListing->None],
-Cell[230826, 8490, 33, 0, 70, 33, 0, "StyleData", "JS", "Printout"]
+Cell[231484, 8514, 33, 0, 70, 33, 0, "StyleData", "JS", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[230896, 8495, 77, 2, 40, 22, 0, "StyleData", "JSB", "All",
+Cell[231554, 8519, 77, 2, 40, 22, 0, "StyleData", "JSB", "All",
  StyleMenuListing->None],
-Cell[230976, 8499, 34, 0, 70, 34, 0, "StyleData", "JSB", "Printout"]
+Cell[231634, 8523, 34, 0, 70, 34, 0, "StyleData", "JSB", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[231047, 8504, 89, 3, 40, 21, 0, "StyleData", "RM", "All",
+Cell[231705, 8528, 89, 3, 40, 21, 0, "StyleData", "RM", "All",
  StyleMenuListing->None],
-Cell[231139, 8509, 33, 0, 70, 33, 0, "StyleData", "RM", "Printout"]
+Cell[231797, 8533, 33, 0, 70, 33, 0, "StyleData", "RM", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[231209, 8514, 67, 2, 40, 21, 0, "StyleData", "BF", "All",
+Cell[231867, 8538, 67, 2, 40, 21, 0, "StyleData", "BF", "All",
  StyleMenuListing->None],
-Cell[231279, 8518, 33, 0, 70, 33, 0, "StyleData", "BF", "Printout"]
+Cell[231937, 8542, 33, 0, 70, 33, 0, "StyleData", "BF", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[231349, 8523, 68, 2, 40, 21, 0, "StyleData", "IT", "All",
+Cell[232007, 8547, 68, 2, 40, 21, 0, "StyleData", "IT", "All",
  StyleMenuListing->None],
-Cell[231420, 8527, 33, 0, 70, 33, 0, "StyleData", "IT", "Printout"]
+Cell[232078, 8551, 33, 0, 70, 33, 0, "StyleData", "IT", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[231490, 8532, 111, 4, 40, 21, 0, "StyleData", "TR", "All",
+Cell[232148, 8556, 111, 4, 40, 21, 0, "StyleData", "TR", "All",
  StyleMenuListing->None],
-Cell[231604, 8538, 33, 0, 70, 33, 0, "StyleData", "TR", "Printout"]
+Cell[232262, 8562, 33, 0, 70, 33, 0, "StyleData", "TR", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[231674, 8543, 90, 3, 40, 21, 0, "StyleData", "TI", "All",
+Cell[232332, 8567, 90, 3, 40, 21, 0, "StyleData", "TI", "All",
  StyleMenuListing->None],
-Cell[231767, 8548, 33, 0, 70, 33, 0, "StyleData", "TI", "Printout"]
+Cell[232425, 8572, 33, 0, 70, 33, 0, "StyleData", "TI", "Printout"]
 }, Closed]],
-Cell[231815, 8551, 165, 4, 40, 22, 0, "StyleData", "TI2", "All",
+Cell[232473, 8575, 165, 4, 40, 22, 0, "StyleData", "TI2", "All",
  StyleMenuListing->None],
 Cell[CellGroupData[{
-Cell[232005, 8559, 110, 4, 40, 21, 0, "StyleData", "TB", "All",
+Cell[232663, 8583, 110, 4, 40, 21, 0, "StyleData", "TB", "All",
  StyleMenuListing->None],
-Cell[232118, 8565, 33, 0, 70, 33, 0, "StyleData", "TB", "Printout"]
+Cell[232776, 8589, 33, 0, 70, 33, 0, "StyleData", "TB", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[232188, 8570, 112, 4, 40, 22, 0, "StyleData", "TBI", "All",
+Cell[232846, 8594, 112, 4, 40, 22, 0, "StyleData", "TBI", "All",
  StyleMenuListing->None],
-Cell[232303, 8576, 34, 0, 70, 34, 0, "StyleData", "TBI", "Printout"]
+Cell[232961, 8600, 34, 0, 70, 34, 0, "StyleData", "TBI", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[232374, 8581, 221, 7, 40, 21, 0, "StyleData", "MR", "All",
+Cell[233032, 8605, 221, 7, 40, 21, 0, "StyleData", "MR", "All",
  StyleMenuListing->None],
-Cell[232598, 8590, 33, 0, 70, 33, 0, "StyleData", "MR", "Printout"]
+Cell[233256, 8614, 33, 0, 70, 33, 0, "StyleData", "MR", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[232668, 8595, 180, 5, 41, 21, 0, "StyleData", "MO", "All",
+Cell[233326, 8619, 180, 5, 41, 21, 0, "StyleData", "MO", "All",
  StyleMenuListing->None],
-Cell[232851, 8602, 56, 1, 70, 33, 0, "StyleData", "MO", "Printout"]
+Cell[233509, 8626, 56, 1, 70, 33, 0, "StyleData", "MO", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[232944, 8608, 178, 5, 41, 21, 0, "StyleData", "MB", "All",
+Cell[233602, 8632, 178, 5, 41, 21, 0, "StyleData", "MB", "All",
  StyleMenuListing->None],
-Cell[233125, 8615, 33, 0, 70, 33, 0, "StyleData", "MB", "Printout"]
+Cell[233783, 8639, 33, 0, 70, 33, 0, "StyleData", "MB", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[233195, 8620, 180, 5, 41, 22, 0, "StyleData", "MBO", "All",
+Cell[233853, 8644, 180, 5, 41, 22, 0, "StyleData", "MBO", "All",
  StyleMenuListing->None],
-Cell[233378, 8627, 57, 1, 70, 34, 0, "StyleData", "MBO", "Printout"]
+Cell[234036, 8651, 57, 1, 70, 34, 0, "StyleData", "MBO", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[233472, 8633, 113, 4, 39, 21, 0, "StyleData", "SR", "All",
+Cell[234130, 8657, 113, 4, 39, 21, 0, "StyleData", "SR", "All",
  StyleMenuListing->None],
-Cell[233588, 8639, 33, 0, 70, 33, 0, "StyleData", "SR", "Printout"]
+Cell[234246, 8663, 33, 0, 70, 33, 0, "StyleData", "SR", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[233658, 8644, 114, 4, 39, 21, 0, "StyleData", "SO", "All",
+Cell[234316, 8668, 114, 4, 39, 21, 0, "StyleData", "SO", "All",
  StyleMenuListing->None],
-Cell[233775, 8650, 128, 4, 70, 33, 0, "StyleData", "SO", "Printout",
+Cell[234433, 8674, 128, 4, 70, 33, 0, "StyleData", "SO", "Printout",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[233940, 8659, 112, 4, 39, 21, 0, "StyleData", "SB", "All",
+Cell[234598, 8683, 112, 4, 39, 21, 0, "StyleData", "SB", "All",
  StyleMenuListing->None],
-Cell[234055, 8665, 58, 1, 70, 33, 0, "StyleData", "SB", "Printout",
+Cell[234713, 8689, 58, 1, 70, 33, 0, "StyleData", "SB", "Printout",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[234150, 8671, 117, 4, 39, 26, 0, "StyleData", "SBColor", "All",
+Cell[234808, 8695, 117, 4, 39, 26, 0, "StyleData", "SBColor", "All",
  StyleMenuListing->None],
-Cell[234270, 8677, 63, 1, 70, 38, 0, "StyleData", "SBColor", "Printout",
+Cell[234928, 8701, 63, 1, 70, 38, 0, "StyleData", "SBColor", "Printout",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[234370, 8683, 114, 4, 39, 22, 0, "StyleData", "SBO", "All",
+Cell[235028, 8707, 114, 4, 39, 22, 0, "StyleData", "SBO", "All",
  StyleMenuListing->None],
-Cell[234487, 8689, 128, 4, 70, 34, 0, "StyleData", "SBO", "Printout",
+Cell[235145, 8713, 128, 4, 70, 34, 0, "StyleData", "SBO", "Printout",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[234652, 8698, 137, 4, 39, 21, 0, "StyleData", "M4", "All",
+Cell[235310, 8722, 137, 4, 39, 21, 0, "StyleData", "M4", "All",
  StyleMenuListing->None],
-Cell[234792, 8704, 149, 4, 70, 33, 0, "StyleData", "M4", "Printout",
+Cell[235450, 8728, 149, 4, 70, 33, 0, "StyleData", "M4", "Printout",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[234978, 8713, 74, 2, 35, 28, 0, "StyleData", "SmallCaps", "All",
+Cell[235636, 8737, 74, 2, 35, 28, 0, "StyleData", "SmallCaps", "All",
  StyleMenuListing->None],
-Cell[235055, 8717, 40, 0, 70, 40, 0, "StyleData", "SmallCaps", "Printout"]
+Cell[235713, 8741, 40, 0, 70, 40, 0, "StyleData", "SmallCaps", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[235132, 8722, 72, 2, 40, 32, 0, "StyleData", "KeyboardChars", "All",
+Cell[235790, 8746, 72, 2, 40, 32, 0, "StyleData", "KeyboardChars", "All",
  StyleMenuListing->None],
-Cell[235207, 8726, 59, 1, 70, 44, 0, "StyleData", "KeyboardChars", \
+Cell[235865, 8750, 59, 1, 70, 44, 0, "StyleData", "KeyboardChars", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[235303, 8732, 256, 8, 41, 29, 0, "StyleData", "InlineCode", "All",
+Cell[235961, 8756, 256, 8, 41, 29, 0, "StyleData", "InlineCode", "All",
  StyleMenuListing->None],
-Cell[235562, 8742, 41, 0, 70, 41, 0, "StyleData", "InlineCode", "Printout"]
+Cell[236220, 8766, 41, 0, 70, 41, 0, "StyleData", "InlineCode", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[235640, 8747, 253, 7, 41, 38, 0, "StyleData", "InlineCharacterName", \
+Cell[236298, 8771, 253, 7, 41, 38, 0, "StyleData", "InlineCharacterName", \
 "All",
  StyleMenuListing->None],
-Cell[235896, 8756, 50, 0, 70, 50, 0, "StyleData", "InlineCharacterName", \
+Cell[236554, 8780, 50, 0, 70, 50, 0, "StyleData", "InlineCharacterName", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[235983, 8761, 191, 5, 40, 36, 0, "StyleData", "FilenameExtension", "All",
+Cell[236641, 8785, 191, 5, 40, 36, 0, "StyleData", "FilenameExtension", "All",
  
  StyleMenuListing->None],
-Cell[236177, 8768, 48, 0, 70, 48, 0, "StyleData", "FilenameExtension", \
+Cell[236835, 8792, 48, 0, 70, 48, 0, "StyleData", "FilenameExtension", \
 "Printout"]
 }, Closed]],
-Cell[236240, 8771, 105, 3, 39, 27, 0, "StyleData", "MenuName", "All"],
-Cell[236348, 8776, 218, 6, 45, 27, 0, "StyleData", "KeyEvent", "All"],
-Cell[236569, 8784, 36, 0, 40, 36, 0, "StyleData", "KeyEventDelimiter", \
+Cell[236898, 8795, 105, 3, 39, 27, 0, "StyleData", "MenuName", "All"],
+Cell[237006, 8800, 218, 6, 45, 27, 0, "StyleData", "KeyEvent", "All"],
+Cell[237227, 8808, 36, 0, 40, 36, 0, "StyleData", "KeyEventDelimiter", \
 "All"],
-Cell[236608, 8786, 96, 3, 70, 36, 0, "StyleData", "MenuNameDelimiter", \
+Cell[237266, 8810, 96, 3, 70, 36, 0, "StyleData", "MenuNameDelimiter", \
 "All"],
-Cell[236707, 8791, 96, 3, 70, 36, 0, "StyleData", "DialogElementName", \
+Cell[237365, 8815, 96, 3, 70, 36, 0, "StyleData", "DialogElementName", \
 "All"],
-Cell[236806, 8796, 130, 4, 70, 31, 0, "StyleData", "PointerEvent", "All"],
-Cell[236939, 8802, 40, 0, 70, 40, 0, "StyleData", "PointerEventDelimiter", \
+Cell[237464, 8820, 130, 4, 70, 31, 0, "StyleData", "PointerEvent", "All"],
+Cell[237597, 8826, 40, 0, 70, 40, 0, "StyleData", "PointerEventDelimiter", \
 "All"],
-Cell[236982, 8804, 30, 0, 70, 30, 0, "StyleData", "GuideEmDash", "All"],
-Cell[237015, 8806, 119, 2, 70, 34, 0, "StyleData", "InlineSeparator", "All"],
-Cell[237137, 8810, 101, 3, 70, 31, 0, "StyleData", "ExampleCount", "All"],
-Cell[237241, 8815, 91, 2, 70, 32, 0, "StyleData", "PackageLoaded", "All"],
-Cell[237335, 8819, 93, 2, 70, 35, 0, "StyleData", "PackageNotLoaded", "All"],
-Cell[237431, 8823, 30, 0, 70, 30, 0, "StyleData", "PackageName", "All"],
+Cell[237640, 8828, 30, 0, 70, 30, 0, "StyleData", "GuideEmDash", "All"],
+Cell[237673, 8830, 119, 2, 70, 34, 0, "StyleData", "InlineSeparator", "All"],
+Cell[237795, 8834, 101, 3, 70, 31, 0, "StyleData", "ExampleCount", "All"],
+Cell[237899, 8839, 91, 2, 70, 32, 0, "StyleData", "PackageLoaded", "All"],
+Cell[237993, 8843, 93, 2, 70, 35, 0, "StyleData", "PackageNotLoaded", "All"],
+Cell[238089, 8847, 30, 0, 70, 30, 0, "StyleData", "PackageName", "All"],
 Cell[CellGroupData[{
-Cell[237486, 8827, 98, 3, 70, 37, 0, "StyleData", "FunctionAnnotation", "All"],
-Cell[237587, 8832, 63, 1, 70, 49, 0, "StyleData", "FunctionAnnotation", \
+Cell[238144, 8851, 98, 3, 70, 37, 0, "StyleData", "FunctionAnnotation", "All"],
+Cell[238245, 8856, 63, 1, 70, 49, 0, "StyleData", "FunctionAnnotation", \
 "Printout"]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[237699, 8839, 29, 0, 35, "Section"],
-Cell[237731, 8841, 340, 6, 70, "Text"],
+Cell[238357, 8863, 29, 0, 35, "Section"],
+Cell[238389, 8865, 340, 6, 70, "Text"],
 Cell[CellGroupData[{
-Cell[238096, 8851, 261, 7, 70, 29, 0, "StyleData", "AnchorLink", "All",
+Cell[238754, 8875, 261, 7, 70, 29, 0, "StyleData", "AnchorLink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[238360, 8860, 106, 2, 70, 41, 0, "StyleData", "AnchorLink", "Printout"]
+Cell[239018, 8884, 106, 2, 70, 41, 0, "StyleData", "AnchorLink", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[238503, 8867, 67, 0, 70, 67, 0, "StyleData", "TrailLink", "All"],
-Cell[238573, 8869, 105, 2, 70, 40, 0, "StyleData", "TrailLink", "Printout"]
+Cell[239161, 8891, 67, 0, 70, 67, 0, "StyleData", "TrailLink", "All"],
+Cell[239231, 8893, 105, 2, 70, 40, 0, "StyleData", "TrailLink", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[238715, 8876, 394, 12, 70, 34, 0, "StyleData", "LoadPackageLink", "All",
+Cell[239373, 8900, 394, 12, 70, 34, 0, "StyleData", "LoadPackageLink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->False],
-Cell[239112, 8890, 111, 2, 70, 46, 0, "StyleData", "LoadPackageLink", \
+Cell[239770, 8914, 111, 2, 70, 46, 0, "StyleData", "LoadPackageLink", \
 "Printout"]
 }, Closed]],
-Cell[239238, 8895, 65, 1, 70, 28, 0, "StyleData", "Hyperlink", "All"],
+Cell[239896, 8919, 65, 1, 70, 28, 0, "StyleData", "Hyperlink", "All"],
 Cell[CellGroupData[{
-Cell[239328, 8900, 319, 9, 70, 32, 0, "StyleData", "MathWorldLink", "All",
+Cell[239986, 8924, 319, 9, 70, 32, 0, "StyleData", "MathWorldLink", "All",
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
-Cell[239650, 8911, 59, 1, 70, 44, 0, "StyleData", "GuideLink", "Presentation"],
-Cell[239712, 8914, 66, 1, 70, 40, 0, "StyleData", "GuideLink", "Printout"]
+Cell[240308, 8935, 59, 1, 70, 44, 0, "StyleData", "GuideLink", "Presentation"],
+Cell[240370, 8938, 66, 1, 70, 40, 0, "StyleData", "GuideLink", "Printout"]
 }, Closed]],
-Cell[239793, 8918, 323, 9, 70, 36, 0, "StyleData", "FunctionsSiteLink", "All",
+Cell[240451, 8942, 323, 9, 70, 36, 0, "StyleData", "FunctionsSiteLink", "All",
  
  StyleMenuListing->None,
  ButtonStyleMenuListing->Automatic],
 Cell[CellGroupData[{
-Cell[240141, 8931, 471, 14, 70, 31, 0, "StyleData", "MainBookLink", "All"],
-Cell[240615, 8947, 62, 1, 70, 47, 0, "StyleData", "MainBookLink", \
+Cell[240799, 8955, 471, 14, 70, 31, 0, "StyleData", "MainBookLink", "All"],
+Cell[241273, 8971, 62, 1, 70, 47, 0, "StyleData", "MainBookLink", \
 "Presentation"]
 }, Closed]],
-Cell[240692, 8951, 74, 0, 70, 74, 0, "StyleData", "NewInVersionLink", "All"],
-Cell[240769, 8953, 79, 0, 70, 79, 0, "StyleData", "ModifiedInVersionLink", \
+Cell[241350, 8975, 74, 0, 70, 74, 0, "StyleData", "NewInVersionLink", "All"],
+Cell[241427, 8977, 79, 0, 70, 79, 0, "StyleData", "ModifiedInVersionLink", \
 "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[240885, 8958, 43, 0, 35, "Section"],
+Cell[241543, 8982, 43, 0, 35, "Section"],
 Cell[CellGroupData[{
-Cell[240953, 8962, 168, 6, 70, 29, 0, "StyleData", "PageHeader", "All",
+Cell[241611, 8986, 168, 6, 70, 29, 0, "StyleData", "PageHeader", "All",
  StyleMenuListing->None],
-Cell[241124, 8970, 41, 0, 70, 41, 0, "StyleData", "PageHeader", "Printout"]
+Cell[241782, 8994, 41, 0, 70, 41, 0, "StyleData", "PageHeader", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[241202, 8975, 266, 9, 70, 29, 0, "StyleData", "PageNumber", "All",
+Cell[241860, 8999, 266, 9, 70, 29, 0, "StyleData", "PageNumber", "All",
  StyleMenuListing->None],
-Cell[241471, 8986, 41, 0, 70, 41, 0, "StyleData", "PageNumber", "Printout"]
+Cell[242129, 9010, 41, 0, 70, 41, 0, "StyleData", "PageNumber", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[241549, 8991, 124, 4, 70, 29, 0, "StyleData", "PageFooter", "All",
+Cell[242207, 9015, 124, 4, 70, 29, 0, "StyleData", "PageFooter", "All",
  StyleMenuListing->None],
-Cell[241676, 8997, 41, 0, 70, 41, 0, "StyleData", "PageFooter", "Printout"]
+Cell[242334, 9021, 41, 0, 70, 41, 0, "StyleData", "PageFooter", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[241754, 9002, 39, 0, 70, "Subsection"],
+Cell[242412, 9026, 39, 0, 70, "Subsection"],
 Cell[CellGroupData[{
-Cell[241818, 9006, 118, 4, 70, 25, 0, "StyleData", "Header", "All",
+Cell[242476, 9030, 118, 4, 70, 25, 0, "StyleData", "Header", "All",
  StyleMenuListing->None],
-Cell[241939, 9012, 37, 0, 70, 37, 0, "StyleData", "Header", "Printout"]
+Cell[242597, 9036, 37, 0, 70, 37, 0, "StyleData", "Header", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[242013, 9017, 90, 3, 70, 25, 0, "StyleData", "Footer", "All",
+Cell[242671, 9041, 90, 3, 70, 25, 0, "StyleData", "Footer", "All",
  StyleMenuListing->None],
-Cell[242106, 9022, 37, 0, 70, 37, 0, "StyleData", "Footer", "Printout"]
+Cell[242764, 9046, 37, 0, 70, 37, 0, "StyleData", "Footer", "Printout"]
 }, Closed]]
 }, Closed]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[242204, 9029, 50, 0, 35, "Section"],
-Cell[242257, 9031, 305, 5, 63, "Text"],
-Cell[242565, 9038, 56, 1, 40, 31, 0, "StyleData", "StandardForm", "All"],
-Cell[242624, 9041, 328, 5, 63, "Text"],
-Cell[242955, 9048, 75, 1, 40, 32, 0, "StyleData", "ImageGraphics", "All"],
-Cell[243033, 9051, 81, 1, 40, 36, 0, "StyleData", "Image3DGraphics3D", \
+Cell[242862, 9053, 50, 0, 35, "Section"],
+Cell[242915, 9055, 305, 5, 63, "Text"],
+Cell[243223, 9062, 56, 1, 40, 31, 0, "StyleData", "StandardForm", "All"],
+Cell[243282, 9065, 328, 5, 63, "Text"],
+Cell[243613, 9072, 75, 1, 40, 32, 0, "StyleData", "ImageGraphics", "All"],
+Cell[243691, 9075, 81, 1, 40, 36, 0, "StyleData", "Image3DGraphics3D", \
 "All"],
-Cell[243117, 9054, 138, 2, 38, 30, 0, "StyleData", "GeoGraphics", "All"],
-Cell[243258, 9058, 86, 1, 40, 61, 0, "StyleData", "UnmatchedBracket", "All",
+Cell[243775, 9078, 138, 2, 38, 30, 0, "StyleData", "GeoGraphics", "All"],
+Cell[243916, 9082, 86, 1, 40, 61, 0, "StyleData", "UnmatchedBracket", "All",
  StyleMenuListing->None]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[243381, 9064, 36, 0, 35, "Section"],
-Cell[243420, 9066, 54, 1, 70, 39, 0, "StyleData", "SlideTOC", "Printout"]
+Cell[244039, 9088, 36, 0, 35, "Section"],
+Cell[244078, 9090, 54, 1, 70, 39, 0, "StyleData", "SlideTOC", "Printout"]
 }, Closed]]
 }
 ]

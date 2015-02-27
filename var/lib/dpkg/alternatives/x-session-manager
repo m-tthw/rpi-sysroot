@@ -12,4 +12,7 @@ x-session-manager.1.gz
 /usr/bin/startlxde
 50
 /usr/share/man/man1/startlxde.1.gz
+/usr/bin/startlxde-pi
+90
+/usr/share/man/man1/startlxde.1.gz
 

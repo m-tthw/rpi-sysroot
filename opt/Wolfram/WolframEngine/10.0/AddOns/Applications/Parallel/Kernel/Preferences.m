@@ -9,7 +9,7 @@
    The cautious user will always fully qualify symbols appearing here.
  *)
 
-(* :Package Version: 1.0 ($Id: Preferences.m,v 1.37 2012/11/19 16:40:15 maeder Exp $) *)
+(* :Package Version: 1.0 ($Id: Preferences.m,v 1.38 2014/11/25 14:41:07 maeder Exp $) *)
 
 (* :Mathematica Version: 7.0.1 *)
 
@@ -23,7 +23,7 @@
 
 
 addPreference["Version" -> 3.01] (* for possible migration; see Parallel`Palette` *)
-addPreference["CVSRevision" -> StringReplace["$Revision: 1.37 $", {"$"->"", " "->"", "Revision:"->""}]]
+addPreference["CVSRevision" -> StringReplace["$Revision: 1.38 $", {"$"->"", " "->"", "Revision:"->""}]]
 
 addPreference["LocalStatus" -> Hold[
 	{tr["LocalPropertiesName_KernelName"],	Parallel`Developer`KernelName,	tr["LocalPropertiesDescription_KernelName"], Left},
@@ -113,4 +113,20 @@ addPreference[debugPreference["Batch"] -> False ]
 addPreference[Parallel`Palette`paletteConfig["PCT", "PlayerPro"] -> {Automatic, False, True, "Retry"} ]
 
 addPreference[debugPreference["PlayerPro"] -> False ]
+
+(* Player profile for EnterpriseCDF *)
+
+addPreference[Parallel`Palette`paletteConfig["PCT", "PlayerEnterprise"] -> {Automatic, False, True, "Retry"} ]
+
+addPreference[debugPreference["PlayerEnterprise"] -> False ]
+
+addPreference[Parallel`Palette`paletteConfig["Local Kernels", "PlayerEnterprise"] -> {"Limit"->8} ]
+
+(* Player profile for FreeCDF *)
+
+addPreference[Parallel`Palette`paletteConfig["PCT", "Player"] -> {Automatic, False, True, "Retry"} ]
+
+addPreference[debugPreference["Player"] -> False ]
+
+addPreference[Parallel`Palette`paletteConfig["Local Kernels", "Player"] -> {"Limit"->4} ]
 

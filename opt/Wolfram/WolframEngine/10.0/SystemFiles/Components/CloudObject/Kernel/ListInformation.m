@@ -133,12 +133,12 @@ cloudObjectInformation[obj_CloudObject, msghd_:CloudObjectInformation] :=
 		{cloud, uuid} = getCloudAndUUID[obj];
 		If[!(StringQ[cloud] && UUIDQ[uuid]), Return[$Failed]];
 		json = execute[cloud, "GET", {"files", uuid, "info"}] /. {
-			HTTPError[404] :> (Message[msghd::cloudnf, obj]; Return[$Failed]),
-			{_String, content_List} :> 
+			HTTPError[404, ___] :> (Message[msghd::cloudnf, obj]; Return[$Failed]),
+			{_String, content_List} :>
 				($lastInfoJSON = FromCharacterCode[content]),
 			other_ :> (Message[CloudObjectInformation::srverr]; Return[$Failed])
 		};
-		
+
 		allinfo = ImportString[json, "JSON"];
 		If[!ListQ[allinfo],
 			Message[CloudObjectInformation::srverr];
@@ -147,18 +147,18 @@ cloudObjectInformation[obj_CloudObject, msghd_:CloudObjectInformation] :=
 
 		files = Lookup[allinfo,
 			If[KeyExistsQ[allinfo, "files"], "files", "directoryListing"]];
-		If[files === {}, 
+		If[files === {},
 			Message[CloudObjectInformation::srverr]; (* internal error -- info about directories is broken *)
 			Return[$Failed]
 		];
 		info = files[[1]];
 		mimetype = Lookup[info, "type"];
-		
+
 		infoData = Association[{
 			"UUID" -> Lookup[info, "uuid"],
 			"Name" -> Lookup[info, "name"],
 			"OwnerWolframUUID" -> Lookup[info,
-				If[KeyExistsQ[info, "ownerUUID"], "ownerUUID", "owner"]], 
+				If[KeyExistsQ[info, "ownerUUID"], "ownerUUID", "owner"]],
 			"MimeType" -> mimetype,
 			"FileType" ->
 				If[mimetype === "inode/directory" || bundleMimeTypeQ[mimetype],
@@ -169,23 +169,16 @@ cloudObjectInformation[obj_CloudObject, msghd_:CloudObjectInformation] :=
 			"Created" -> DateObject[Lookup[info, "created"]],
 			"LastAccessed" -> DateObject[Lookup[info, "lastAccessed"]],
 			"LastModified" -> DateObject[Lookup[info, "lastModified"]],
-			"Permissions" -> 
+			"Permissions" ->
 				fromServerPermissions[Lookup[info, "filePermission"]]
 		}];
-		
+
 		If[KeyExistsQ[info, "active"],
 			AppendTo[infoData, "Active" -> Lookup[info, "active"]]
 		];
 
 		System`CloudObjectInformationData[infoData]
 	]
-
-fromServerPermissions[permjson_] := 
-	ImportString[permjson, "JSON"] /. {
-		serverPermissions_List :>
-			Map[convertFromServerPermissions, serverPermissions],
-		other_ :> ($lastServerPermissionsJSON = permjson; $Failed)
-	}
 
 End[]
 

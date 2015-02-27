@@ -10,6 +10,8 @@ CloudDirectory[] := $CloudDirectory;
 
 SetCloudDirectory[dir_] := ($CloudDirectory = CloudObject[dir]);
 
+SetCloudDirectory[] := ($CloudDirectory = $CloudRootDirectory);
+
 $CloudRootDirectory := CloudObject[CloudObject`JoinURL[{$CloudBase, $CloudObjectsRoot, "~"}]]
 
 $CloudDirectory := $CloudRootDirectory;

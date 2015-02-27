@@ -6,11 +6,9 @@
 Dataset`Private`autoloadSymbols = {
 	"System`Dataset", 
 	"System`Query", 
-	"System`DataForm", 
 	"System`FailureAction",
 	"System`MissingBehavior",
-	"System`PartBehavior",
-	"System`ValidateQuery"
+	"System`PartBehavior"
 }
 
 PacletManager`Package`loadWolframLanguageCode["Dataset", "Dataset`", DirectoryName[$InputFileName], "Assignment.m",

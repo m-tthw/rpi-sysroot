@@ -3,25 +3,43 @@ BeginPackage["ProcessLink`"];
 System`StartProcess;
 System`RunProcess;
 System`KillProcess;
-System`ProcessConnection;
 System`ProcessInformation;
 System`ProcessStatus;
 System`ProcessObject;
-System`WriteLine;
 System`Processes;
 System`$SystemShell;
-
-System`EndOfBuffer;
-System`ReadString;
-System`ReadLine;
 
 System`ProcessDirectory;
 System`ProcessEnvironment;
 
+(*TODO: move to Streams.m file*)
+System`WriteLine;
+System`ProcessConnection;
+System`EndOfBuffer;
+System`ReadString;
+System`ReadLine;
+(*TODO END*)
+
+
 Begin["`Private`"];
 
-Clear[runProcess, KillProcess, RunProcess, startProcess, getCachedStream, ProcessConnection, cachedReadString, setStreamCache,
-	getStreamCache, pushStreamCache, popStreamCache, commandToAbsolutePath];
+(*TODO: move to Streams.m file*)
+Clear[getCachedStream, ProcessConnection, cachedReadString, setStreamCache,
+	getStreamCache, pushStreamCache, popStreamCache];
+
+$Loaded;
+
+If[!TrueQ[$Loaded],
+	(* the cache always contains a string *)
+	Clear[$StreamCache];
+	$StreamCache[_] := "";
+
+	(* this cache contains the actual streams *)
+	Clear[$StreamObjectCache];
+	$StreamObjectCache[___] := None;
+	
+	$Loaded = True;
+];
 
 (* Infinity works fine here, but it causes bug https://bugs.wolfram.com/show?number=277599
 "ReadLine is incredibly slow on large file (5 megas)" *)
@@ -35,156 +53,22 @@ terminatorPattern = EndOfBuffer | EndOfFile | _String | patternOfPatterns;
 safeStringTake[l_, n_] := If[Abs[n] > StringLength[l], l, StringTake[l, n]]
 safeStringDrop[l_, n_] := If[Abs[n] > StringLength[l], "", StringDrop[l, n]]
 
-HoldFirst[safeTimeConstraint];
+HoldFirst[safeTimeConstrained];
 safeTimeConstrained[expr_, time_, ret_] := If[time <= 0, ret, TimeConstrained[ReleaseHold[expr], time, ret]]
 
-WindowsQ = !StringFreeQ[$System, "Windows"];
-
-$SystemShell = If[WindowsQ, "cmd", "/bin/sh"];
-
-$RunningProcesses = {};
-addRunningProcess[rp_] := ($RunningProcesses = Flatten[{$RunningProcesses, rp}];);
-removeRunningProcesses[rps_] := ($RunningProcesses = Complement[$RunningProcesses, rps]);  
-
-If[!StringQ[$LibraryName], $LibraryName = "libProcessLink"];
-
-If[LibraryLoad[$LibraryName] === $Failed, Message[LibraryFunction::load, $LibraryName]];
-
-maxRunArgs = 200;
-runs = Quiet[
-	Map[
-		LibraryFunctionLoad[$LibraryName, "run", Join[{Integer, "UTF8String"}, "UTF8String" & /@ Range[#]], Integer] &,
-		Range[maxRunArgs + 1]
-	],
-	LibraryFunction::overload];
-killProcess = LibraryFunctionLoad[$LibraryName, "killProcess", {Integer, Integer}, "Boolean"];
-freeProcess = LibraryFunctionLoad[$LibraryName, "freeProcess", {Integer}, "Void"];
-hasFinishedQ = LibraryFunctionLoad[$LibraryName, "hasFinishedQ", {Integer}, "Boolean"];
-getExitValue = LibraryFunctionLoad[$LibraryName, "getExitValue", {Integer}, Integer];
-hasExitValue = LibraryFunctionLoad[$LibraryName, "hasExitValue", {Integer}, "Boolean"];
-waitFor = LibraryFunctionLoad[$LibraryName, "waitFor", {Integer}, "Void"];
-
-environmentToList[environment_Association] :=
-	Select[StringJoin[ToString[StringTrim[#]] & /@ {#[[1]], "=", #[[2]]}] & /@ Normal[environment],
-		StringCount[#, "="] == 1 &]
-
-StartProcess::argtm = "Too many arguments.";
-
-absoluteFileNameQ[file_] := With[{abs = Quiet[ExpandFileName[file]]},
-	StringQ[abs] && StringMatchQ[abs, file, IgnoreCase -> True]
-];
-
-caseInsensitiveValue[a_Association, key_String] := With[
-	{values = Select[Normal[a], StringMatchQ[key, #[[1]], IgnoreCase -> True] &]},
-	
-	If[MatchQ[values, {__}],
-		values[[1, 2]],
-		Missing["KeyAbsent", key]
-	]	
-];
-
-getEnvValue[environment_Association, key_String] := If[WindowsQ,
-	caseInsensitiveValue[environment, key],
-	environment[key]
-];
-
-commandToAbsolutePath[command_String, environment_Association, processDirectory_String] := Module[
-	{paths, systemPath},
-
-	If[absoluteFileNameQ[command], Return[command]];
-
-	systemPath = getEnvValue[environment, "PATH"];
-	systemPath = If[StringQ[systemPath],
-		StringSplit[systemPath, If[WindowsQ, ";", ":"]],
-		None
-	];
-	
-	paths = Select[Flatten[{processDirectory, Directory[], systemPath}],
-		StringQ[#] && absoluteFileNameQ[#] && DirectoryQ[#] &];
-	
-	paths = FileNameJoin[{#, command}] & /@ paths;
-	
-	If[WindowsQ && !StringMatchQ[command, ___ ~~ (".exe" | ".com"), IgnoreCase -> True],
-		paths = DeleteDuplicates[Flatten[{paths, (# <> ".exe") & /@ paths, (# <> ".com") & /@ paths}]]
-	];
-	
-	paths = Select[paths, FileExistsQ, 1];
-	
-	If[MatchQ[paths, {__}], paths[[1]], $Failed]
-];
-
-commandToAbsolutePath[command_, environment_, processDirectory_] := $Failed;
-
-startProcess[method_String, {cmd_, args___}, environment : (_Association | Inherited), processDirectory : (_String | Inherited)] :=
-Module[{cmd2, commands, runid, fullArgs, retid, currDir, environment2, envList, process},
-	
-	environment2 = If[environment === Inherited, Association[GetEnvironment[]], environment];
-	envList = environmentToList[environment2];
-	currDir = If[processDirectory === Inherited, Directory[], processDirectory];
-
-	cmd2 = commandToAbsolutePath[cmd, environment2, currDir];
-	If[cmd2 === $Failed,
-		Message[StartProcess::nffil, method];
-		Return[$Failed]
-	];
-	
-	commands = {cmd2, args};
-	(* we remove the quotes on windows, the arguments have to be parsed by the OS, so quotes on commands aren't harmless.
-	To be improved *)
-	commands = If[WindowsQ, StringReplace[#, "\"" -> ""]& /@ commands, commands];
-	(* we find the function in "runs" which has the right number of arguments, and we call it *)
-	runid = Length[Join[commands, envList]];
-	If[runid <= maxRunArgs + 1,
-		fullArgs = Flatten[{Length[envList], currDir, commands, envList}];
-		retid = runs[[runid]] @@ fullArgs;
-		If[!NumberQ[retid],
-			Message[StartProcess::nffil, method];
-			$Failed
-			,
-			process = ProcessObject[retid];
-			addRunningProcess[process];
-			process
-		]
-		,
-		Message[StartProcess::argtm]; $Failed
-	]
-]
-
-startProcess[_, _, environment : (_Association | Inherited), processDirectory : (_String | Inherited)] :=
-	Message[StartProcess::nffil, method];
-
-Options[StartProcess] = {
-	ProcessEnvironment -> Inherited,
-	ProcessDirectory -> Inherited
-};
-
-StartProcess[command_String, opts:OptionsPattern[]] :=
-	startProcess["StartProcess", {command}, OptionValue[ProcessEnvironment], OptionValue[ProcessDirectory]]
-
-StartProcess[{command_String, args: (_String | (_String -> _String))...}, opts:OptionsPattern[]] := With[
-	{cmdlist = ToString /@ Prepend[Flatten[List @@@ List[args]], command]},
-	startProcess["StartProcess", cmdlist, OptionValue[ProcessEnvironment], OptionValue[ProcessDirectory]]
-]
-
-StartProcess[args___] /; (If[Length[{args}] < 1 || Length[{args}] > 2, Message[StartProcess::argt, StartProcess, Length[{args}], 1, 2]]; False) := None 
-
-Clear[StreamCache];
-StreamCache[___] := None;
-getCachedStream[p_, type_] := If[StreamCache[p, type] =!= None,
-	StreamCache[p, type]
+getCachedStream[p_, type_] := If[$StreamObjectCache[p, type] =!= None,
+	$StreamObjectCache[p, type]
 	,
 	With[{fun = Switch[
 		type,
-		"StandardInput", iGetInputStream,
-		"StandardOutput", iGetOutputStream,
+		"StandardOutput", iGetInputStream,
+		"StandardInput", iGetOutputStream,
 		"StandardError", iGetErrorStream
 	]},
-		StreamCache[p, type] = fun[p];
-		StreamCache[p, type]
+		$StreamObjectCache[p, type] = fun[p];
+		$StreamObjectCache[p, type]
 	]
 ]
-
-StartProcess::stopen = "Could not open the `1` stream"; 
 
 iGetOutputStream[ProcessObject[p_]] := If[NumberQ[p], 
 	OpenWrite["in:" <> ToString[p], Method -> "RunPipe", BinaryFormat -> True], 
@@ -198,118 +82,49 @@ iGetErrorStream[ProcessObject[p_]] := If[NumberQ[p],
 	OpenRead["err:" <> ToString[p], Method -> "RunPipe", BinaryFormat -> True], 
 	Message[StartProcess::stopen, "stardard error"]; $Failed]
 
-ProcessObject /: BinaryReadList[p : ProcessObject[_], args___] := BinaryReadList[getCachedStream[p, "StandardInput"], args]
-
-ProcessObject /: BinaryRead[p : ProcessObject[_], args___] := BinaryRead[getCachedStream[p, "StandardInput"], args]
-
-ProcessObject /: BinaryWrite[p : ProcessObject[_], args___] := BinaryWrite[getCachedStream[p, "StandardOutput"], args]
-
-iGetExitValue[ProcessObject[id_]] := If[hasExitValue[id], getExitValue[id], None]
-
-iWaitFor[pr : ProcessObject[id_]] := (waitFor[id]; iGetExitValue[pr])
-
-NoInputProvided;(* used as default value for RunProcess' input expr *)
-
-(* interleave stream reads until EOF is found in all of them *)
-readStreams[streams_List] := Module[{strings, rets = {}, len},
-	len = Length[streams];
-	strings = "" & /@ streams;
-	While[Count[rets, EndOfFile | $Failed] =!= len,
-		rets = ReadString[#, EndOfBuffer] & /@ streams;
-		Map[
-			(strings[[#]] = strings[[#]] <> Replace[rets[[#]], (EndOfFile | EndOfBuffer | $Failed) -> ""]) &,
-			Range[len]];
-	];
-	strings
+popStreamCache[st_InputStream] := With[{c = $StreamCache[st]},
+	Quiet[Unset[$StreamCache[st]], Unset::norep];
+	c
 ]
 
-runProcessOutputs = {"ExitCode", "StandardOutput", "StandardError"};
+popStreamCache[pr_ProcessObject] := popStreamCache[getCachedStream[pr, "StandardOutput"]]
 
-runProcess[commands_List, environment : (_Association | Inherited), processDirectory : (_String | Inherited), inputexpr_, return_: All] := Module[
-	{process, out, err, all, done = False},
+popStreamCache[___] := $Failed
 
-	process = startProcess["RunProcess", commands, environment, processDirectory];
-	If[!MatchQ[process, _ProcessObject], Return[$Failed]];
-	(*WithLocalSettings is not docummented: args are preprocessing, code, postprocessing, will run both with
-	abort and timeconstrained (checkAbort doesn't work with time constrained)*)
-	Internal`WithLocalSettings[None,
-		If[!MatchQ[process, ProcessObject[___]], Return[$Failed]];
-		If[inputexpr =!= NoInputProvided, BinaryWrite[process, ToString[inputexpr]]];
-		{out, err} = readStreams[{process, ProcessConnection[process, "StandardError"]}];
-		all = With[{t = Thread[runProcessOutputs -> {iGetExitValue[process], out, err}]}, Association[t] ];
-		done = True;
-		If[return === All, all, all[return]]
-	, (KillProcess[process]; FreeProcess[process])]
+pushStreamCache[st_InputStream, value_String] := With[{c = $StreamCache[st]},
+	$StreamCache[st] = c <> value;
 ]
 
-Options[RunProcess] = {
-	ProcessEnvironment -> Inherited,
-	ProcessDirectory -> Inherited
-};
+pushStreamCache[pr_ProcessObject] := pushStreamCache[getCachedStream[pr, "StandardOutput"]]
 
-RunProcess[command_String, opts:OptionsPattern[]] := RunProcess[{command}, opts]
+pushStreamCache[___] := $Failed
 
-RunProcess[commands_List, opts:OptionsPattern[]] := 
-	runProcess[commands, OptionValue[ProcessEnvironment], OptionValue[ProcessDirectory], NoInputProvided, All]
+getStreamCache[st_InputStream] := $StreamCache[st]
 
-RunProcess[command_String, ret: (All | Alternatives @@ runProcessOutputs), inputexpr_ : NoInputProvided, opts:OptionsPattern[]] :=
-	RunProcess @@ {{command}, ret, inputexpr, opts} (* using @@ to get rid of a pointless Workbench warning *)
+getStreamCache[pr_ProcessObject] := getStreamCache[getCachedStream[pr, "StandardOutput"]]
 
-RunProcess[commands_List, ret: (All | Alternatives @@ runProcessOutputs), inputexpr_ : NoInputProvided, opts:OptionsPattern[]] :=
-	runProcess[commands, OptionValue[ProcessEnvironment], OptionValue[ProcessDirectory], inputexpr, ret]
+getStreamCache[___] := $Failed
 
-RunProcess[commands : (_List | _String), ret_String, inputexpr_ : NoInputProvided, opts:OptionsPattern[]] :=
-	With[{values = StringJoin@@Riffle[Append[ToString[#, InputForm] & /@ runProcessOutputs, "and All"], ", "]},
-		Message[General::optvp, 2, "RunProcess", values];
+setStreamCache[st_InputStream, value_String] := (
+	$StreamCache[st] = value;
+)
+
+setStreamCache[pr_ProcessObject, value_String] := setStreamCache[getCachedStream[pr, "StandardOutput"], value]
+
+setStreamCache[___] := $Failed
+
+(* read all from a stream (non-blocking), including its cache, and empty the cache
+returns _String | EndOfFile | $Failed *)
+cachedReadString[st_InputStream] := With[{l = BinaryReadListEOF[st]},
+	If[l === EndOfFile,
+		With[{c = popStreamCache[st]}, If[c =!= "", c, EndOfFile]],
+		popStreamCache[st] <> StringJoin@@l
 	]
+]
 
-RunProcess[args___] /; (If[Length[{args}] < 1 || Length[{args}] > 3, Message[RunProcess::argb, RunProcess, Length[{args}], 1, 3]]; False) :=
-	None 
+cachedReadString[pr_ProcessObject] := cachedReadString[getCachedStream[pr, "StandardOutput"]]
 
-KillProcess[ProcessObject[p_], signal_ : -1] := killProcess[p, signal];
-
-KillProcess[args___ /; ArgumentCountQ[KillProcess, Length[{args}], 1, 2]] := $Failed /; False;
-
-PackageScope["FreeProcess"];
-FreeProcess[pobj : ProcessObject[p_]] := (
-	removeRunningProcesses[{pobj}];
-	freeProcess[p];
-)
-
-ProcessConnection[pr : ProcessObject[p_], stream : ("StandardInput" | "StandardOutput" | "StandardError")] := getCachedStream[pr, stream]
-
-ProcessConnection[args___] /; (If[Length[{args}] =!= 2, Message[ProcessConnection::argrx, ProcessConnection, Length[{args}], 2]]; False) := None
-
-ProcessInformation[pr : ProcessObject[p_]] := With[{t = {"ExitCode" -> ProcessInformation[pr, "ExitCode"]}}, Association[t] ]
-
-ProcessInformation[pr : ProcessObject[p_], "ExitCode"] := iGetExitValue[pr]
-
-ProcessInformation[args___] /; (If[Length[{args}] < 1 || Length[{args}] > 2, Message[ProcessInformation::argt, ProcessInformation, Length[{args}], 1, 2]]; False) := None
-
-ProcessObject /: Import[p : ProcessObject[_], args___] := Import[getCachedStream[p, "StandardInput"], args]
- 
-ProcessObject /: Read[p : ProcessObject[_], args___] := Read[getCachedStream[p, "StandardInput"], args]
-
-ProcessObject /: Write[p : ProcessObject[_], args___] := Write[getCachedStream[p, "StandardOutput"], args]
- 
-ProcessStatus[ProcessObject[id_]] := If[hasFinishedQ[id], "Finished", "Running"]
- 
-ProcessStatus[pr : ProcessObject[_], r_] := (ProcessStatus[pr] === r)
-
-ProcessStatus[args___] /; (If[Length[{args}] < 1 || Length[{args}] > 2, Message[ProcessStatus::argt, ProcessStatus, Length[{args}], 1, 2]]; False) := None
-
-ProcessObject /: WriteString[pr : ProcessObject[_], args___] := BinaryWrite[pr, args]
-
-WriteLine[st:(_ProcessObject | _OutputStream), str_String] := WriteString[st, str <> "\n"] 
-
-WriteLine[args___] /; (If[Length[{args}] =!= 2, Message[WriteLine::argrx, WriteLine, Length[{args}], 2]]; False) := None
-
-Processes[] := (
-	removeRunningProcesses[Select[$RunningProcesses, ProcessStatus[#] === "Finished" &]];
-	$RunningProcesses
-)
-
-Processes[args__] /; (Message[Processes::argrx, Processes, Length[{args}], 0]; False) := None
+cachedReadString[_] := $Failed
 
 (* non-blocking binary read list, but can return EOF (output is _String | EOF)  *)
 BinaryReadListEOF[st_] := Module[{l},
@@ -325,54 +140,6 @@ BinaryReadListEOF[st_] := Module[{l},
 		]
 	]
 ]
-
-(* the cache always contains a string *)
-Clear[$StreamCache];
-$StreamCache[_] := "";
-
-popStreamCache[st_InputStream] := With[{c = $StreamCache[st]},
-	Quiet[Unset[$StreamCache[st]], Unset::norep];
-	c
-]
-
-popStreamCache[pr_ProcessObject] := popStreamCache[getCachedStream[pr, "StandardInput"]]
-
-popStreamCache[___] := $Failed
-
-pushStreamCache[st_InputStream, value_String] := With[{c = $StreamCache[st]},
-	$StreamCache[st] = c <> value;
-]
-
-pushStreamCache[pr_ProcessObject] := pushStreamCache[getCachedStream[pr, "StandardInput"]]
-
-pushStreamCache[___] := $Failed
-
-getStreamCache[st_InputStream] := $StreamCache[st]
-
-getStreamCache[pr_ProcessObject] := getStreamCache[getCachedStream[pr, "StandardInput"]]
-
-getStreamCache[___] := $Failed
-
-setStreamCache[st_InputStream, value_String] := (
-	$StreamCache[st] = value;
-)
-
-setStreamCache[pr_ProcessObject, value_String] := setStreamCache[getCachedStream[pr, "StandardInput"], value]
-
-setStreamCache[___] := $Failed
-
-(* read all from a stream (non-blocking), including its cache, and empty the cache
-returns _String | EndOfFile | $Failed *)
-cachedReadString[st_InputStream] := With[{l = BinaryReadListEOF[st]},
-	If[l === EndOfFile,
-		With[{c = popStreamCache[st]}, If[c =!= "", c, EndOfFile]],
-		popStreamCache[st] <> StringJoin@@l
-	]
-]
-
-cachedReadString[pr_ProcessObject] := cachedReadString[getCachedStream[pr, "StandardInput"]]
-
-cachedReadString[_] := $Failed
 
 getMaxStringLength[_] := $Failed
 getMaxStringLength[str_String] := StringLength[str]
@@ -518,22 +285,284 @@ ReadLine[st:(_ProcessObject | _InputStream), opts:OptionsPattern[]] :=
 
 ReadLine[args___] /; (If[Length[{args}] =!= 1, Message[ReadLine::argx, ReadLine, Length[{args}]]]; False) := None
 
+
+
+
+ProcessObject /: BinaryReadList[p : ProcessObject[_], args___] := BinaryReadList[getCachedStream[p, "StandardOutput"], args]
+
+ProcessObject /: BinaryRead[p : ProcessObject[_], args___] := BinaryRead[getCachedStream[p, "StandardOutput"], args]
+
+ProcessObject /: BinaryWrite[p : ProcessObject[_], args___] := BinaryWrite[getCachedStream[p, "StandardInput"], args]
+
+ProcessConnection[pr : ProcessObject[p_], stream : ("StandardOutput" | "StandardInput" | "StandardError")] := getCachedStream[pr, stream]
+
+ProcessConnection[args___] /; (If[Length[{args}] =!= 2, Message[ProcessConnection::argrx, ProcessConnection, Length[{args}], 2]]; False) := None
+
+ProcessObject /: Import[p : ProcessObject[_], args___] := Import[getCachedStream[p, "StandardOutput"], args]
+ 
+ProcessObject /: Read[p : ProcessObject[_], args___] := Read[getCachedStream[p, "StandardOutput"], args]
+
+ProcessObject /: Write[p : ProcessObject[_], args___] := Write[getCachedStream[p, "StandardInput"], args]
+ 
+ProcessObject /: WriteString[pr : ProcessObject[_], args___] := BinaryWrite[pr, args]
+
+WriteLine[st:(_ProcessObject | _OutputStream), str_String] := WriteString[st, str <> "\n"] 
+
+WriteLine[args___] /; (If[Length[{args}] =!= 2, Message[WriteLine::argrx, WriteLine, Length[{args}], 2]]; False) := None
+
 ReadString::usage = "ReadString[\"file\"] reads the complete contents of a file and returns it as a string.\nReadString[stream] reads everything from a stream and returns it as a string.\nReadString[proc] reads everything generated by an external process and returns it as a string.\nReadString[src,term] reads until the terminator term is encountered.";
-StartProcess::usage = "StartProcess[\"executable\"] executes an external program, yielding a ProcessObject to represent the resulting subprocess.\nStartProcess[{\"executable\", arg 1, arg 2, ...}] executes an external program, passing it the specified arguments arg i.";
-RunProcess::usage = "RunProcess[\"command\"] runs the specified external command, returning information on the outcome.\nRunProcess[{\"command\", arg 1, arg 2, \[Ellipsis]}] runs the specified command, with command-line arguments arg i.\nRunProcess[command, \"prop\"] returns only the specified property.\nRunProcess[command, prop, input] feeds the specified initial input to the command."  
-KillProcess::usage = "KillProcess[proc] kills the external process represented by the ProcessObject proc.";
 ProcessConnection::usage = "ProcessConnection[proc, \"stream\"] returns the stream object for a given stream.";
-ProcessInformation::usage = "ProcessInformation[proc] gives information about an external process proc.\nProcessInformation[proc, \"prop\"] gives information about the property \"prop\".";
-ProcessStatus::usage = "ProcessStatus[proc] gives the current status of the external process represented by the ProcessObject proc.\nProcessStatus[proc, \"status\"] returns True if the process has the status given, and returns False otherwise.";
-ProcessObject::usage = "ProcessObject[...] is an object that represents a runnable external process.";
 WriteLine::usage = "WriteLine[stream, \"string\"] writes \"string\", followed by a newline, to the specified output stream.\nWriteLine[proc, \"string\"] writes \"string\" to an external process proc.";
-Processes::usage = "Processes[] returns a list of currently running external processes, started in this Wolfram Language session.";
-$SystemShell::usage = "$SystemShell is a symbol that specifies the system shell for the OS that is currently being used.";
 EndOfBuffer::usage = "EndOfBuffer is a symbol that represents the end of currently available data in the buffer for a process or stream.";
 ReadLine::usage = "ReadLine[stream] reads a line of text from a stream and returns it as a string.\nReadLine[proc] reads a line of text generated by an external process and returns it as a string.";
 
+
 SetAttributes[
-	{KillProcess, ProcessConnection, ProcessInformation, ProcessObject, Processes, ProcessStatus, ReadLine, ReadString, RunProcess, StartProcess, WriteLine},
+	{ProcessConnection, ReadLine, ReadString, WriteLine},
+	{Protected, ReadProtected}];
+(*TODO END*)
+Clear[runProcess, KillProcess, RunProcess, startProcess, commandToAbsolutePath];
+
+WindowsQ = !StringFreeQ[$System, "Windows"];
+
+$SystemShell = If[WindowsQ, "cmd", "/bin/sh"];
+
+addRunningProcess[rp_] := ($RunningProcesses = Flatten[{$RunningProcesses, rp}];);
+removeRunningProcesses[rps_] := ($RunningProcesses = Complement[$RunningProcesses, rps]);  
+
+If[!StringQ[$LibraryName],
+	$LibraryName = "libProcessLink";
+	$RunningProcesses = {};
+
+	If[LibraryLoad[$LibraryName] === $Failed, Message[LibraryFunction::load, $LibraryName]];
+];
+
+maxRunArgs = 200;
+runs = Quiet[
+	Map[
+		LibraryFunctionLoad[$LibraryName, "run", Join[{Integer, "UTF8String"}, "UTF8String" & /@ Range[#]], Integer] &,
+		Range[maxRunArgs + 1]
+	],
+	LibraryFunction::overload];
+killProcess = LibraryFunctionLoad[$LibraryName, "killProcess", {Integer, Integer}, "Boolean"];
+freeProcess = LibraryFunctionLoad[$LibraryName, "freeProcess", {Integer}, "Void"];
+hasFinishedQ = LibraryFunctionLoad[$LibraryName, "hasFinishedQ", {Integer}, "Boolean"];
+getExitValue = LibraryFunctionLoad[$LibraryName, "getExitValue", {Integer}, Integer];
+hasExitValue = LibraryFunctionLoad[$LibraryName, "hasExitValue", {Integer}, "Boolean"];
+waitFor = LibraryFunctionLoad[$LibraryName, "waitFor", {Integer}, "Void"];
+
+environmentToList[environment_Association] :=
+	Select[StringJoin[ToString[StringTrim[#]] & /@ {#[[1]], "=", #[[2]]}] & /@ Normal[environment],
+		StringCount[#, "="] == 1 &]
+
+StartProcess::argtm = "Too many arguments.";
+
+absoluteFileNameQ[file_] := With[{abs = Quiet[ExpandFileName[file]]},
+	StringQ[abs] && StringMatchQ[abs, file, IgnoreCase -> True]
+];
+
+caseInsensitiveValue[a_Association, key_String] := With[
+	{values = Select[Normal[a], StringMatchQ[key, #[[1]], IgnoreCase -> True] &]},
+	
+	If[MatchQ[values, {__}],
+		values[[1, 2]],
+		Missing["KeyAbsent", key]
+	]	
+];
+
+getEnvValue[environment_Association, key_String] := If[WindowsQ,
+	caseInsensitiveValue[environment, key],
+	environment[key]
+];
+
+commandToAbsolutePath[command_String, environment_Association, processDirectory_String] := Module[
+	{paths, systemPath},
+
+	If[absoluteFileNameQ[command], Return[command]];
+
+	systemPath = getEnvValue[environment, "PATH"];
+	systemPath = If[StringQ[systemPath],
+		StringSplit[systemPath, If[WindowsQ, ";", ":"]],
+		None
+	];
+	
+	paths = Select[Flatten[{processDirectory, Directory[], systemPath}],
+		StringQ[#] && absoluteFileNameQ[#] && DirectoryQ[#] &];
+	
+	paths = FileNameJoin[{#, command}] & /@ paths;
+	
+	If[WindowsQ && !StringMatchQ[command, ___ ~~ (".exe" | ".com"), IgnoreCase -> True],
+		paths = DeleteDuplicates[Flatten[{paths, (# <> ".exe") & /@ paths, (# <> ".com") & /@ paths}]]
+	];
+	
+	paths = Select[paths, FileExistsQ, 1];
+	
+	If[MatchQ[paths, {__}], paths[[1]], $Failed]
+];
+
+commandToAbsolutePath[command_, environment_, processDirectory_] := $Failed;
+
+startProcess[method_String, {cmd_, args___}, environment : (_Association | Inherited), processDirectory : (_String | Inherited)] :=
+Module[{cmd2, commands, runid, fullArgs, retid, currDir, environment2, envList, process},
+	
+	environment2 = If[environment === Inherited, Association[GetEnvironment[]], environment];
+	envList = environmentToList[environment2];
+	currDir = If[processDirectory === Inherited, Directory[], processDirectory];
+
+	cmd2 = commandToAbsolutePath[cmd, environment2, currDir];
+	If[cmd2 === $Failed,
+		Message[StartProcess::nffil, method];
+		Return[$Failed]
+	];
+	
+	commands = {cmd2, args};
+	(* we remove the quotes on windows, the arguments have to be parsed by the OS, so quotes on commands aren't harmless.
+	To be improved *)
+	commands = If[WindowsQ, StringReplace[#, "\"" -> ""]& /@ commands, commands];
+	(* we find the function in "runs" which has the right number of arguments, and we call it *)
+	runid = Length[Join[commands, envList]];
+	If[runid <= maxRunArgs + 1,
+		fullArgs = Flatten[{Length[envList], currDir, commands, envList}];
+		retid = runs[[runid]] @@ fullArgs;
+		If[!NumberQ[retid],
+			Message[StartProcess::nffil, method];
+			$Failed
+			,
+			process = ProcessObject[retid];
+			addRunningProcess[process];
+			process
+		]
+		,
+		Message[StartProcess::argtm]; $Failed
+	]
+]
+
+startProcess[_, _, environment : (_Association | Inherited), processDirectory : (_String | Inherited)] :=
+	Message[StartProcess::nffil, method];
+
+Options[StartProcess] = {
+	ProcessEnvironment -> Inherited,
+	ProcessDirectory -> Inherited
+};
+
+StartProcess[command_String, opts:OptionsPattern[]] :=
+	startProcess["StartProcess", {command}, OptionValue[ProcessEnvironment], OptionValue[ProcessDirectory]]
+
+StartProcess[{command_String, args: (_String | (_String -> _String))...}, opts:OptionsPattern[]] := With[
+	{cmdlist = ToString /@ Prepend[Flatten[List @@@ List[args]], command]},
+	startProcess["StartProcess", cmdlist, OptionValue[ProcessEnvironment], OptionValue[ProcessDirectory]]
+]
+
+StartProcess[args___] /; (If[Length[{args}] < 1 || Length[{args}] > 2, Message[StartProcess::argt, StartProcess, Length[{args}], 1, 2]]; False) := None 
+
+StartProcess::stopen = "Could not open the `1` stream"; 
+
+iGetExitValue[ProcessObject[id_]] := If[hasExitValue[id], getExitValue[id], None]
+
+iWaitFor[pr : ProcessObject[id_]] := (waitFor[id]; iGetExitValue[pr])
+
+NoInputProvided;(* used as default value for RunProcess' input expr *)
+
+(* interleave stream reads until EOF is found in all of them *)
+readStreams[streams_List] := Module[{strings, rets = {}, len},
+	len = Length[streams];
+	strings = "" & /@ streams;
+	While[Count[rets, EndOfFile | $Failed] =!= len,
+		rets = ReadString[#, EndOfBuffer] & /@ streams;
+		Map[
+			(strings[[#]] = strings[[#]] <> Replace[rets[[#]], (EndOfFile | EndOfBuffer | $Failed) -> ""]) &,
+			Range[len]];
+	];
+	strings
+]
+
+runProcessOutputs = {"ExitCode", "StandardOutput", "StandardError"};
+
+runProcess[commands_List, environment : (_Association | Inherited), processDirectory : (_String | Inherited), inputexpr_, return_: All] := Module[
+	{process, out, err, all, done = False},
+
+	process = startProcess["RunProcess", commands, environment, processDirectory];
+	If[!MatchQ[process, _ProcessObject], Return[$Failed]];
+	(*WithLocalSettings is not docummented: args are preprocessing, code, postprocessing, will run both with
+	abort and timeconstrained (checkAbort doesn't work with time constrained)*)
+	Internal`WithLocalSettings[None,
+		If[!MatchQ[process, ProcessObject[___]], Return[$Failed]];
+		If[inputexpr =!= NoInputProvided, BinaryWrite[process, ToString[inputexpr]]];
+		{out, err} = readStreams[{process, ProcessConnection[process, "StandardError"]}];
+		all = With[{t = Thread[runProcessOutputs -> {iGetExitValue[process], out, err}]}, Association[t] ];
+		done = True;
+		If[return === All, all, all[return]]
+	, (KillProcess[process]; FreeProcess[process])]
+]
+
+Options[RunProcess] = {
+	ProcessEnvironment -> Inherited,
+	ProcessDirectory -> Inherited
+};
+
+RunProcess[command_String, opts:OptionsPattern[]] := RunProcess[{command}, opts]
+
+RunProcess[commands_List, opts:OptionsPattern[]] := 
+	runProcess[commands, OptionValue[ProcessEnvironment], OptionValue[ProcessDirectory], NoInputProvided, All]
+
+RunProcess[command_String, ret: (All | Alternatives @@ runProcessOutputs), inputexpr_ : NoInputProvided, opts:OptionsPattern[]] :=
+	RunProcess @@ {{command}, ret, inputexpr, opts} (* using @@ to get rid of a pointless Workbench warning *)
+
+RunProcess[commands_List, ret: (All | Alternatives @@ runProcessOutputs), inputexpr_ : NoInputProvided, opts:OptionsPattern[]] :=
+	runProcess[commands, OptionValue[ProcessEnvironment], OptionValue[ProcessDirectory], inputexpr, ret]
+
+RunProcess[commands : (_List | _String), ret_String, inputexpr_ : NoInputProvided, opts:OptionsPattern[]] :=
+	With[{values = StringJoin@@Riffle[Append[ToString[#, InputForm] & /@ runProcessOutputs, "and All"], ", "]},
+		Message[General::optvp, 2, "RunProcess", values];
+	]
+
+RunProcess[args___] /; (If[Length[{args}] < 1 || Length[{args}] > 3, Message[RunProcess::argb, RunProcess, Length[{args}], 1, 3]]; False) :=
+	None 
+
+KillProcess[po:ProcessObject[p_], signal_ : -1] := (
+	(* we quiet the error about streams that have already been closed *)
+	Quiet[Close[ProcessConnection[po, #]]& /@ {"StandardInput", "StandardOutput", "StandardError"}, General::openx];
+	killProcess[p, signal];
+)
+
+KillProcess[args___ /; ArgumentCountQ[KillProcess, Length[{args}], 1, 2]] := $Failed /; False;
+
+PackageScope["FreeProcess"];
+FreeProcess[pobj : ProcessObject[p_]] := (
+	removeRunningProcesses[{pobj}];
+	freeProcess[p];
+)
+
+ProcessInformation[pr : ProcessObject[p_]] := With[{t = {"ExitCode" -> ProcessInformation[pr, "ExitCode"]}}, Association[t] ]
+
+ProcessInformation[pr : ProcessObject[p_], "ExitCode"] := iGetExitValue[pr]
+
+ProcessInformation[args___] /; (If[Length[{args}] < 1 || Length[{args}] > 2, Message[ProcessInformation::argt, ProcessInformation, Length[{args}], 1, 2]]; False) := None
+
+ProcessStatus[ProcessObject[id_]] := If[hasFinishedQ[id], "Finished", "Running"]
+ 
+ProcessStatus[pr : ProcessObject[_], r_] := (ProcessStatus[pr] === r)
+
+ProcessStatus[args___] /; (If[Length[{args}] < 1 || Length[{args}] > 2, Message[ProcessStatus::argt, ProcessStatus, Length[{args}], 1, 2]]; False) := None
+
+Processes[] := (
+	removeRunningProcesses[Select[$RunningProcesses, ProcessStatus[#] === "Finished" &]];
+	$RunningProcesses
+)
+
+Processes[args__] /; (Message[Processes::argrx, Processes, Length[{args}], 0]; False) := None
+
+StartProcess::usage = "StartProcess[\"executable\"] executes an external program, yielding a ProcessObject to represent the resulting subprocess.\nStartProcess[{\"executable\", arg 1, arg 2, ...}] executes an external program, passing it the specified arguments arg i.";
+RunProcess::usage = "RunProcess[\"command\"] runs the specified external command, returning information on the outcome.\nRunProcess[{\"command\", arg 1, arg 2, \[Ellipsis]}] runs the specified command, with command-line arguments arg i.\nRunProcess[command, \"prop\"] returns only the specified property.\nRunProcess[command, prop, input] feeds the specified initial input to the command."  
+KillProcess::usage = "KillProcess[proc] kills the external process represented by the ProcessObject proc.";
+ProcessInformation::usage = "ProcessInformation[proc] gives information about an external process proc.\nProcessInformation[proc, \"prop\"] gives information about the property \"prop\".";
+ProcessStatus::usage = "ProcessStatus[proc] gives the current status of the external process represented by the ProcessObject proc.\nProcessStatus[proc, \"status\"] returns True if the process has the status given, and returns False otherwise.";
+ProcessObject::usage = "ProcessObject[...] is an object that represents a runnable external process.";
+Processes::usage = "Processes[] returns a list of currently running external processes, started in this Wolfram Language session.";
+$SystemShell::usage = "$SystemShell is a symbol that specifies the system shell for the OS that is currently being used.";
+
+SetAttributes[
+	{KillProcess, ProcessInformation, ProcessObject, Processes, ProcessStatus, RunProcess, StartProcess},
 	{Protected, ReadProtected}];
 
 

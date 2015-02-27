@@ -22,9 +22,9 @@ import apport.hookutils
 #Detect session
 session = os.environ['DESKTOP_SESSION']
 
-#If it's not a specific session, fallback to LXDE
+#If it's not a specific session, pcmanfm uses name "default"
 if not session:
-    session = "LXDE"
+    session = "default"
 
 if session == "Lubuntu":
 	conf_pcmanfm = "lubuntu.conf"
@@ -34,17 +34,17 @@ else:
 #Set location of various configuration files
 system_conf_libfm = "/etc/xdg/libfm/"
 home_conf_libfm = os.path.expanduser("~/.config/libfm/")
-system_conf_pcmanfm = "/etc/xdg/pcmanfm/"
-home_conf_pcmanfm = os.path.expanduser("~/.config/pcmanfm/")
+system_conf_pcmanfm = "/etc/xdg/pcmanfm/" + session
+home_conf_pcmanfm = os.path.expanduser("~/.config/pcmanfm/") + session
 
 #Set description for each file reported by apport
 report_config_system = "Config_libfm_System_" + session
 report_config_home = "Config_libfm_Home_" + session
-report_pref_config_system = "Pref_Config_System_" + session
-report_pref_config_home = "Pref_Config_Home_" + session
 report_pcmanfm_system = "Config_pcmanfm_System_" + session
 report_pcmanfm_home = "Config_pcmanfm_Home_" + session
 
+#List of packages which could be involved with pcmanfm
+RELATED_PACKAGES = ["libmenu-cache1","libmenu-cache3","libfm4","libfm-modules","udisks","gvfs","gvfs-backend","lxde-icon-theme","gnome-icon-theme","lxpolkit"]
 
 def add_info(report):
     # If a config file exist in HOME, report it instead of the system one.
@@ -52,19 +52,14 @@ def add_info(report):
         report[report_config_home] = apport.hookutils.read_file(os.path.join(home_conf_libfm,"libfm.conf"))
     else:
         report[report_config_system] = apport.hookutils.read_file(os.path.join(system_conf_libfm,"libfm.conf"))
-    # If a config file exist in HOME, report it instead of the system one.
-    if os.path.exists(os.path.join(home_conf_libfm,"pref-apps.conf")):
-        report[report_pref_config_home] = apport.hookutils.read_file(os.path.join(home_conf_libfm,"pref-apps.conf"))
-    else:
-        report[report_pref_config_system] = apport.hookutils.read_file(os.path.join(system_conf_libfm,"pref-apps.conf"))
 
-    if os.path.exists(os.path.join(report_pcmanfm_home, conf_pcmanfm)):
-        report[report_pcmanfm_home] = apport.hookutils.read_file(os.path.join(report_pcmanfm_home, conf_pcmanfm))
+    if os.path.exists(os.path.join(home_conf_pcmanfm, conf_pcmanfm)):
+        report[report_pcmanfm_home] = apport.hookutils.read_file(os.path.join(home_conf_pcmanfm, conf_pcmanfm))
     else:
         report[report_pcmanfm_system] = apport.hookutils.read_file(os.path.join(system_conf_pcmanfm, conf_pcmanfm))
 
     # Attach information for relative packages
-    apport.hookutils.attach_related_packages(report, ["libmenu-cache1","pcmanfm","pcmanfm2","udisks","gvfs","gvfs-backend"])
+    apport.hookutils.attach_related_packages(report, RELATED_PACKAGES)
 
     # Attach udisks info
     report["Udisks_dump"] = apport.hookutils.command_output(["udisks", "--dump"])

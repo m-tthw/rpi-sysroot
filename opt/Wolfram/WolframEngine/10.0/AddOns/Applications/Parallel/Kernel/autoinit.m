@@ -1,6 +1,6 @@
 (* Master Loader of Parallel Computing Toolkit *)
 
-(* :Package Version: 3.0 ($Id: autoinit.m,v 1.34 2013/10/20 16:10:45 maeder Exp $) *)
+(* :Package Version: 3.0 ($Id: autoinit.m,v 1.35 2014/11/25 14:41:07 maeder Exp $) *)
 
 (* :Summary:
    Needs["Parallel`Kernel`autoinit`"]
@@ -21,7 +21,7 @@ If[ TrueQ[System`Parallel`$SubKernel],
 
 (* check for loading twice *)
 
-If[ NameQ["Parallel`Private`$PackageVersion"],
+If[ ValueQ["Parallel`Private`$PackageVersion"],
 	Needs::twice = "Parallel Tools are already loaded; they cannot be read again.";
 	Message[Needs::twice];
 	Abort[]
@@ -88,7 +88,7 @@ Begin["`Private`"] (* Parallel`Private` *)
 
 (* identification of package *)
 `$PackageVersion = 3.01;
-`$CVSRevision = StringReplace["$Revision: 1.34 $", {"$"->"", " "->"", "Revision:"->""}]
+`$CVSRevision = StringReplace["$Revision: 1.35 $", {"$"->"", " "->"", "Revision:"->""}]
 
 End[]
 

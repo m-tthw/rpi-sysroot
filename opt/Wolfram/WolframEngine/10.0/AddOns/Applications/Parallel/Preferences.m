@@ -10,7 +10,7 @@
    This package can be read without reading all of PT
  *)
 
-(* :Package Version: 1.0 alpha ($Id: Preferences.m,v 1.19 2013/11/15 16:46:11 maeder Exp $) *)
+(* :Package Version: 1.0 alpha ($Id: Preferences.m,v 1.20 2015/01/31 15:39:16 maeder Exp $) *)
 
 (* :Mathematica Version: 7 *)
 
@@ -36,7 +36,7 @@ debugPreference
 Begin["`Private`"]
 
 `$PackageVersion = 1.0;
-`$CVSRevision = StringReplace["$Revision: 1.19 $", {"$"->"", " "->"", "Revision:"->""}]
+`$CVSRevision = StringReplace["$Revision: 1.20 $", {"$"->"", " "->"", "Revision:"->""}]
 
 Needs["ResourceLocator`"]
 
@@ -101,7 +101,7 @@ lister[obj_][] := Union[ First /@ obj[default], First /@ obj[user] ]
 saveStore[obj_] :=
 Block[{$Context="Parallel`Preferences`", $ContextPath={"System`"}}, (* careful about symbol scopes *)
 	(* don't try to write for Player(Pro). An unset variable defaults to True *)
-	If[ Parallel`Static`$persistentPrefs =!= False,
+	If[ Parallel`Static`$persistentPrefs === True,
 		PreferencesWrite[obj[application], category, obj[user]]
 	];
 ]
@@ -114,9 +114,9 @@ loader[obj_][] := If[!initdone,
 	With[{app=obj[application]},
 		Block[{addPreference = obj[add], $Context="Parallel`Preferences`", $ContextPath={"System`"}}, (* symbols! *)
 			Get[app<>"`Kernel`Preferences`"]; (* read built-in defaults *)
-			If[ Parallel`Static`$persistentPrefs =!= False,
+			If[ Parallel`Static`$persistentPrefs === True,
 				(* only user scope for now *)
-				obj[user] = PreferencesRead[app, category] /. {Null -> {}};
+				obj[user] = PreferencesRead[app, category] /. {Null -> {}, $Failed -> {}};
 			];
 	]]; initdone=True;
 ]

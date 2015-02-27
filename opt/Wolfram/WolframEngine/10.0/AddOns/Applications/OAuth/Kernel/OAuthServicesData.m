@@ -69,11 +69,17 @@ OAuthServicesData[___]:=$Failed
 
 $packagedirectory=FileNameJoin[{DirectoryName[System`Private`$InputFileName],"Services"}];
 
-addOAuthservice[name_, dir_:$packagedirectory]:=Module[{funs},
+addOAuthservice[name_, dir_:$packagedirectory]:=Module[{funs, file},
 	Unprotect[$predefinedOAuthservicelist,oauthservicedata,oauthcookeddata,oauthsendmessage];
 	$predefinedOAuthservicelist=Union[AppendTo[$predefinedOAuthservicelist,name]];
 	ServiceConnections`Private`appendservicelist[name,"OAuth"];
-	funs=Get[FileNameJoin[{dir, "OAuth",name<>"OAuth.m"}]];
+	file=FileNameJoin[{dir, "OAuth",name<>"OAuth.m"}];
+	If[!FileExistsQ[file],
+		(* alternate *)
+		file=FileNameJoin[{dir,name<>".m"}]
+	];
+	If[!FileExistsQ[file],Return[$Failed]];
+	funs=Get[file];
 	oauthservicedata[name,args___]:=funs[[1]][args];
 	oauthcookeddata[name,args___]:=funs[[2]][args];
 	oauthsendmessage[name,args___]:=funs[[3]][args];

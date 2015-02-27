@@ -18,10 +18,22 @@ Unprotect[$CloudConnected];
 
 CloudConnect::notauth = "Unable to authenticate with Wolfram Cloud server. Please try authenticating again."
 CloudConnect::oauth = "Unrecognized authentication information. Please contact technical support for assistance.";
+CloudConnect::cerr = "Unrecognized client error; status code `1`.";
+CloudConnect::serr = "Unrecognized server error; status code `1`.";
+CloudConnect::uerr = "An unknown error occurred; status code `1`.";
 CloudConnect::creds = "Incorrect username or password.";
 CloudConnect::nocrd = "No username or password sent.";
+CloudConnect::gwto = "Unable to process request at this time. Please try again later.";
+CloudConnect::unav = "Wolfram Cloud temporarily unavailable. Please try again later.";
+CloudConnect::iserr = "Unable to process request. Please try again later.";
+CloudConnect::pcond = "Invalid authorization information; Please contact technical support for assistance.";
+CloudConnect::tout = "Request timed out. Please try again later.";
+CloudConnect::bdmtd = "HTTP method unavailable; Please contact technical support for assistance.";
+CloudConnect::nfnd = "Unable to reach Wolfram Cloud servers. Please try again later.";
+CloudConnect::bdrsp = "Unrecognized login response; Please contact technical support for assistance.";
 CloudConnect::apkey = "Unrecognized authentication keys. Please contact technical support for assistance.";
 CloudConnect::badts = "Invalid Timestamp. Please ensure your system clock is set to the correct time.";
+CloudConnect::fbdn = "Unable to authorize request.  Please contact technical support for assistance.";
 
 $AuthenticationMethod = "XAuth";
 $tag = "CloudObjectCatchThrowTag";
@@ -56,17 +68,22 @@ CloudConnect[args___,OptionsPattern[]]:=Block[{$hasFailed=False},With[{res=Catch
 		]];
 	res)/;MatchQ[res,$WolframID|$Failed|$Canceled]]]/;Not[TrueQ[$CloudEvaluation]]
 
-pingCloudServer[]:=With[{r=authenticatedURLFetch[
-		If[SameQ[StringTake[$CloudBase,-1],"/"],
+$verificationURL := If[SameQ[StringTake[$CloudBase,-1],"/"],
 			StringJoin[$CloudBase,"files/auth"],
 			StringJoin[$CloudBase,"/files/auth"]
-		],"StatusCode","VerifyPeer"->False]},(*ping server to verify credentials are still valid*)
-		If[
-			UnsameQ[r,200],(*TODO: needs more error handling*)
-			Message[CloudConnect::notauth];CloudDisconnect[];Throw[$Failed,$tag],
-			$WolframID
 		]
+
+(*ping server to verify credentials are valid and server is up*)
+pingCloudServer[]:= Module[{res,status},
+	res=authenticatedURLFetch[$verificationURL,{"StatusCode","ContentData"},"VerifyPeer"->False,"DisplayProxyDialog" -> False];
+	If[MatchQ[res,{_,_}], {status,res} = res, FEConnectFail[1600];CloudDisconnect[];Throw[$Failed,$tag]];
+	res = fcc[res];
+	If[
+		UnsameQ[status,200],
+		handleServerResponse[{status,res}];CloudDisconnect[];Throw[$Failed,$tag],
+		$WolframID
 	]
+]
 
 iConnectAndVerify[args___] := With[{res=iCloudConnect[args]},
 	If[MatchQ[res,$WolframID],
@@ -93,17 +110,23 @@ iCloudConnect[{username_String},True] :=
 iCloudConnect[{username_String,password_String},_] := authenticate[username,password]
 iCloudConnect[{args__},___] := (ArgumentCountQ[CloudConnect,Length[DeleteCases[{args},_Rule,Infinity]],0,2];Null/;False)
 iCloudConnect[{___},False] := $Failed
-CloudDisconnect[] := (
+
+flushCredentials[] := With[{username = $WolframID},
 If[$Notebooks==True,(*if FrontEnd is available*)
-	With[{username = $WolframID},
-		MathLink`CallFrontEnd@FrontEnd`WolframCloud`ConnectionTerminated [username]]];
+		MathLink`CallFrontEnd@FrontEnd`WolframCloud`ConnectionTerminated[username]];
 setCloudConnected[False];
 setWolframID[None];
 setWolframUUID[None];
 setRegisteredUserName[""];
 setAccessData["",""];
-Quiet[DeleteFile[FileNameJoin[{$credsDir,$credsFile}]]];
-)/;Not[TrueQ[$CloudEvaluation]]
+True
+]
+
+CloudDisconnect[] := Module[{},
+	flushCredentials[];
+	Quiet[DeleteFile[FileNameJoin[{$credsDir,$credsFile}]]];
+]/;Not[TrueQ[$CloudEvaluation]]
+
 CloudDisconnect[args__] := (ArgumentCountQ[CloudDisconnect,Length[{args}],0,0];Null/;False)
 
 fetchCredentials[] := Catch[
@@ -231,7 +254,7 @@ setCloudConnected[value:True|False] := (Unprotect[$CloudConnected];Set[$CloudCon
 setRegisteredUserName[name:(_String)]:=(Unprotect[$RegisteredUserName];Set[$RegisteredUserName,name];Protect[$RegisteredUserName])
 
 $CloudBase/:Set[$CloudBase,args__]/;And[Not[TrueQ[$CloudEvaluation]],Not[TrueQ[$Flag]]] := Block[{$Flag=True},
-	CloudDisconnect[];Set[$CloudBase,args]
+	flushCredentials[];Set[$CloudBase,args]
 ]
 
 
@@ -244,6 +267,9 @@ check401AndIssueMessage[content_] := Which[
 
 	StringQ[content]&&StringMatchQ[content,"{\"error\":\"OAuth Verification (2) Failed: Timestamp is out of sequence."~~__],
 	Message[CloudConnect::badts],
+	
+	StringQ[content]&&StringMatchQ[content,"{\"error\":\"Consumer Key Invalid\"}"],
+	Message[CloudConnect::apkey],
 
 	True,(*TODO: have generic handler here*)
 	Message[CloudConnect::creds]
@@ -254,6 +280,83 @@ FEConnectFail[status_Integer]/;UnsameQ[$hasFailed,True] := If[TrueQ[$Notebooks],
 	MathLink`CallFrontEnd@FrontEnd`WolframCloud`ConnectionFailed[status]
 ]
 
+fcc[arg_]:=FromCharacterCode[arg]
+
+getContentsFrom200[content_] := Quiet[
+	Check[
+		(*TODO: handle other errors here*)
+		ImportString[content, "JSON"],
+		Message[CloudConnect::bdrsp];$Failed,
+		{Import::fmterr}],
+	{Import::fmterr}
+]
+ 			
+handleServerResponse[{status_,content_}]:= Switch[status,
+	412,
+	Message[CloudConnect::pcond];FEConnectFail[status];
+	log["Authentication failed: `1`", {status, content}];
+ 	$Failed,
+	
+	408,
+	Message[CloudConnect::tout];FEConnectFail[status];
+	log["Authentication failed: `1`", {status, content}];
+ 	$Failed,	
+	
+	405,
+	Message[CloudConnect::bdmtd];FEConnectFail[status];
+	log["Authentication failed: `1`", {status, content}];
+ 	$Failed,
+	
+	404,
+	Message[CloudConnect::nfnd];FEConnectFail[status];
+	log["Authentication failed: `1`", {status, content}];
+ 	$Failed,
+	
+	403,
+	Message[CloudConnect::fbdn];FEConnectFail[status];
+	log["Authentication failed: `1`", {status, content}];
+ 	$Failed,
+
+ 	401,
+ 	check401AndIssueMessage[content];FEConnectFail[status];
+    log["Authentication failed: `1`", {status, content}];
+ 	$Failed,
+
+ 	400,
+ 	Message[CloudConnect::badts];FEConnectFail[status];
+    log["Authentication failed: `1`", {status, content}];
+ 	$Failed,
+ 	
+ 	500,
+ 	Message[CloudConnect::iserr];FEConnectFail[status];
+    log["Authentication failed: `1`", {status, content}];
+ 	$Failed, 	
+ 	
+ 	503,
+  	Message[CloudConnect::unav];FEConnectFail[status];
+    log["Authentication failed: `1`", {status, content}];
+ 	$Failed, 	
+ 	
+ 	504,
+ 	Message[CloudConnect::gwto];FEConnectFail[status];
+    log["Authentication failed: `1`", {status, content}];
+ 	$Failed,
+
+ 	code_/;400<code<500,(*client error*)
+ 	Message[CloudConnect::cerr, status];FEConnectFail[status];
+    log["Authentication failed: `1`", {status, content}];
+    $Failed,
+    
+    code_/;code>500,(*server error*)
+    Message[CloudConnect::serr, status];FEConnectFail[status];
+    log["Authentication failed: `1`", {status, content}];,
+ 	$Failed,
+ 	
+ 	_,(*all other*)
+ 	Message[CloudConnect::uerr, status];FEConnectFail[status];
+    log["Authentication failed: `1`", {status, content}];,
+ 	$Failed
+]
 
 authenticateWithServer[{username_String, password_String},other_] := Catch[
  Module[{status, contentData, content},
@@ -275,40 +378,26 @@ authenticateWithServer[{username_String, password_String},other_] := Catch[
  	{status,contentData}=status, 
  	FEConnectFail[1600];Throw[$Failed,$tag]
  ];
- content = FromCharacterCode[contentData];
- Switch[status,
- 	200,
- 	content=Quiet[Check[(*TODO: handle other errors here*)
- 		ImportString[content, "JSON"],Message[CloudConnect::apkey];$Failed,
- 			{Import::fmterr}],{Import::fmterr}];
+ content = fcc[contentData];
+ If[status === 200,
+ 	content=getContentsFrom200[content];
  	If[Not[MatchQ[content,{_Rule..}]],Return[$Failed]];
-    log["Authentication response content: `1`", content, DebugLevel->3];
-    setAuthentication[username, "uuid" /. content,
+    log["Authentication response content: `1`", content];
+    setAuthentication[
+    	username, "uuid" /. content,
  		StringJoin[{"firstname"," ","lastname"}/. content],
  		"oauth_token_secret" /. content,
- 		"oauth_token" /. content],
-
- 	401,
- 	check401AndIssueMessage[content];FEConnectFail[status];
-    log["Authentication failed: `1`", {status, content}];
- 	$Failed,
-
- 	400,
- 	Message[CloudConnect::badts];FEConnectFail[status];
-    log["Authentication failed: `1`", {status, content}];
- 	$Failed,
-
- 	_,(*all other*)
- 	Message[CloudConnect::oauth];FEConnectFail[status];
-    log["Authentication failed: `1`", {status, content}];
- 	$Failed
+ 		"oauth_token" /. content
+ 	],
+	handleServerResponse[{status,content}]
  	]],
      $tag]
 
 doAuthenticatedURLFetch[func_, url_String, param_, opts___?OptionQ] := Catch[
     If[Not[TrueQ[$CloudConnected]],Throw[$Failed["MustAuthenticate"],$tag]];
-    With[{method=OptionValue[URLFetch, {opts}, "Method"],
-        headers=OptionValue[URLFetch, {opts}, "Headers"],
+    (* Do not remove the quiet, it will send messages if users are using deprecated options in URLFetch *)
+    With[{method=Quiet[OptionValue[URLFetch, {opts}, "Method"], {OptionValue::nodef}], 
+        headers=Quiet[OptionValue[URLFetch, {opts}, "Headers"], {OptionValue::nodef}],
         options=Sequence @@ FilterRules[{opts}, Except["Method"|"Headers"]]},
         With[{auth=makeOAuthHeader[url,method]},
             log["Headers: `1`", Join[headers, {"Authorization" -> auth}], DebugLevel->3];
@@ -321,8 +410,11 @@ doAuthenticatedURLFetch[func_, url_String, param_, opts___?OptionQ] := Catch[
                 Throw[$Failed,$tag]]]],
     $tag]
 
-authenticatedURLFetch[url_String, elements_:"Content", opts___?OptionQ] :=
+authenticatedURLFetch[url_String, elements:Except[_Rule], opts___?OptionQ] :=
     doAuthenticatedURLFetch[URLFetch, url, elements, opts]
+    
+authenticatedURLFetch[url_String, opts___?OptionQ] :=
+    doAuthenticatedURLFetch[URLFetch, url, "Content", opts]
 
 authenticatedURLFetchAsynchronous[url_String, callback_, opts___?OptionQ] :=
     doAuthenticatedURLFetch[URLFetchAsynchronous, url, callback, opts]
@@ -367,62 +459,99 @@ $UseLibraryStorage = If[$CloudEvaluation === True,False,UnsameQ[loadLibCloudObj[
 
 $credsDir = FileNameJoin[{$UserBaseDirectory,"ApplicationData","CloudObject","Authentication"}];
 $credsFile ="config.pfx";(*TODO:make this an actual pfx file*)
-$storageKey:=Internal`HouseKeep[$authUrl, {
+$storageKey:=Internal`HouseKeep[$credsDir, {
 	"machine_ID" -> $MachineID,
 	"version" -> $Version,
 	"system_ID" -> $SystemID,
 	"user_name" -> $UserName
 }]
 
-encrypt[args___]:=With[{ef=If[
-	MemberQ[Names["*`RijndaelDecryption"], "NumberTheory`AESDump`RijndaelDecryption"],
-	Symbol["NumberTheory`AESDump`RijndaelDecryption"][];Symbol["NumberTheory`AESDump`Private`rijndaelEncryption"],
-	SocialMediaData[];(*load AES.m from social media data*)Symbol["DataPaclets`SocialMediaDataDump`rijndaelEncryption"]]},
+initencrypt[] := Symbol["NumberTheory`AESDump`RijndaelDecryption"][]
+
+encrypt[args___]:=With[{ef=(initencrypt[];Symbol["NumberTheory`AESDump`Private`rijndaelEncryption"])},
 	ef[args]
 ]
 
-decrypt[args___]:= With[{df=If[
-	MemberQ[Names["*`RijndaelDecryption"], "NumberTheory`AESDump`RijndaelDecryption"],
-	Symbol["NumberTheory`AESDump`RijndaelDecryption"][];Symbol["NumberTheory`AESDump`RijndaelDecryption"],
-	SocialMediaData[];(*load AES.m from social media data*)Symbol["DataPaclets`SocialMediaDataDump`RijndaelDecryption"]]},
+decrypt[args___]:= With[{df=(initencrypt[];Symbol["NumberTheory`AESDump`RijndaelDecryption"])},
 	Block[{DataPaclets`SocialMediaDataDump`Private`flagQ = True, NumberTheory`AESDump`Private`flagQ = True},
 	df[args]
 	]
 ]
 
+makeCredentialsChain[] := StringJoin[
+	"cloudbase=",$CloudBase,
+	"token=",getAccessToken[],
+	"secret=",getAccessSecret[],
+	"username=",$RegisteredUserName,
+	"uuid=",$WolframUUID,
+	"wolframid=",$WolframID
+]
+
+addToKeyChain[keychain_String,cloudbase_String] := Module[{chain=makeCredentialsChain[]},
+	StringJoin[
+		Riffle[
+			Prepend[
+				DeleteCases[
+					StringSplit[keychain,"cloudbase="],
+					x_String/;StringMatchQ[x,cloudbase~~__]
+				],
+			chain],
+		"cloudbase="]
+	]
+]
+
 storeCredentials[]:=storeCredentials[$credsDir,$credsFile,$storageKey]
 storeCredentials[directory_String,filename_String,key_String]/;authenticatedQ[]:= Catch[
-Block[{$authenticationCredentials=encrypt[
-		StringJoin["token=",getAccessToken[],"secret=",getAccessSecret[],"username=",$RegisteredUserName,"uuid=",$WolframUUID,"wolframid=",$WolframID],
-		key,"CiphertextFormat" -> "ByteList"]},
-With[{CreateDirectorymessages:={CreateDirectory::filex,CreateDirectory::privv},
-	Savemessages:={Save::wtype,Save::argm,Save::argmu,General::stream,Save::sym,General::privv,General::noopen},
-	file=FileNameJoin[{directory,filename}]},
-	If[Not[DirectoryQ[directory]],(*make directory if it doesn't exist*)
-		Quiet[Check[CreateDirectory[directory],Throw[$Failed["NoMakeDir"],$tag],CreateDirectorymessages],CreateDirectorymessages]];
-	Quiet[Check[DumpSave[file,$authenticationCredentials],Throw[$Failed["NoDump"],$tag],Savemessages],Savemessages];
-	True
-]],$tag]
+	Block[{$KeyChain=encrypt[addToKeyChain[getKeyChain[directory,filename,key],$CloudBase],key(*,"CiphertextFormat" -> "ByteList"*)]},
+		With[{
+			CreateDirectorymessages:={CreateDirectory::filex,CreateDirectory::privv},
+			Savemessages:={Save::wtype,Save::argm,Save::argmu,General::stream,Save::sym,General::privv,General::noopen},
+			file=FileNameJoin[{directory,filename}]
+		},
+		If[Not[DirectoryQ[directory]],
+			Quiet[Check[CreateDirectory[directory],Throw[$Failed["NoMakeDir"],$tag],CreateDirectorymessages],CreateDirectorymessages]
+		];
+		Quiet[Check[DumpSave[file,$KeyChain],Throw[$Failed["NoDump"],$tag],Savemessages],Savemessages];
+		True
+		]
+	],$tag]
+
 storeCredentials[___]:=$Failed["NotAuthenticated"]
+
+getKeyChain[] := getKeyChain[$credsDir, $credsFile, $storageKey]
+getKeyChain[directory_String,filename_String,key_String] := ReplaceAll[Catch[
+	If[TrueQ[$CloudDebug],Identity,Quiet][
+	Block[{$KeyChain=""},With[
+	{Getmessages:={Get::enkey,Get::notencode,General::privv,General::noopen,DumpGet::bgnew},file=FileNameJoin[{directory,filename}]},
+	If[Not[DirectoryQ[directory]],Return[""]];
+	Quiet[Check[Get[file],Return[""],Getmessages],Getmessages];
+	If[Not[MatchQ[$KeyChain,{_Integer..}]],Throw[$Failed["Bytes"],$tag]];
+	$KeyChain=decrypt[$KeyChain, key];
+	If[Not[StringQ[$KeyChain]],$KeyChain=ExportString[$KeyChain,"Byte"]];
+	$KeyChain
+]]],$tag],_$Failed->""]
 
 getCredentials[]:=getCredentials[$credsDir,$credsFile,$storageKey]
 getCredentials[directory_String,filename_String,key_String]:=Catch[
 	If[TrueQ[$CloudDebug],Identity,Quiet][
-	Block[{$authenticationCredentials},With[
-	{Getmessages:={Get::enkey,Get::notencode,General::privv,General::noopen},file=FileNameJoin[{directory,filename}]},
-	If[Not[DirectoryQ[directory]],Throw[$Failed["NotDir"],$tag]];
-	Quiet[Check[Get[file],Throw[$Failed["NoGet"],$tag],Getmessages],Getmessages];
-	If[Not[MatchQ[$authenticationCredentials,{_Integer..}]],Throw[$Failed["Bytes"],$tag]];
-	$authenticationCredentials=decrypt[$authenticationCredentials, key];
-	If[Not[StringQ[$authenticationCredentials]],$authenticationCredentials=ExportString[$authenticationCredentials,"Byte"]];
-	$authenticationCredentials=StringSplit[$authenticationCredentials, {"token=", "secret=","username=","uuid=","wolframid="}];
-	If[MatchQ[$authenticationCredentials,{_String,_String,_String,_String,_String}],
-		setAuthentication[Sequence@@Reverse[$authenticationCredentials]],
+	Block[{$KeyChain},
+		$KeyChain=getKeyChain[directory,filename,key];
+		If[!StringQ[$KeyChain],Throw[$Failed["NotString"],$tag]];
+		$KeyChain = StringSplit[$KeyChain,"cloudbase="];
+		$KeyChain = Cases[$KeyChain,x_String/;StringMatchQ[x,$CloudBase~~__]];
+		If[!MatchQ[$KeyChain,{_String}],Throw[$Failed["NoCloudBase"],$tag],$KeyChain = First[$KeyChain]];
+		$KeyChain = Rest[StringSplit[$KeyChain,{"token=", "secret=", "username=", "uuid=", "wolframid="}]];
+		If[MatchQ[$KeyChain,{_String,_String,_String,_String,_String}],
+		setAuthentication[Sequence@@Reverse[$KeyChain]],
 		Throw[$Failed["NotStringPair"],$tag]
 	]
-]]],$tag]
+]],$tag]
 getCredentials[__]:=$Failed["BadParameters"]
-
+(*
+SetAttributes[{encrypt,decrypt,storeCredentials,
+	getCredentials, $storageKey, setAuthentication, authenticateWithServer,
+	authenticate,iCloudConnect, flushCredentials}, Locked];
+*)
 SetAttributes[CloudConnect,ReadProtected];
 Protect[CloudConnect];
 SetAttributes[CloudDisconnect,ReadProtected];

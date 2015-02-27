@@ -209,10 +209,12 @@ Internal`DisableCloudObjectAutoloader[] := Block[{$Path},
 (* CloudSymbol and $CloudBase don't play nice with autoloading, so these defs need to be present at startup, in case a user
    assigns to either before CloudObject` has been loaded.
 *)
+Begin["CloudObject`Private`"]
 System`$CloudBase /: 
-    Set[System`$CloudBase, rhs_] /; (System`$CloudBase; False) := System`Assert["Unreachable"]
+    Set[System`$CloudBase, rhs_] /; (System`$CloudBase; False) := System`Private`SystemAssert["Unreachable"]
 System`CloudSymbol /: 
     Set[z_System`CloudSymbol, rhs_] /; (System`CloudSymbol; True) := Set[z, rhs] (* immediately delegate to the newly acquired upvalue *)
+End[]
 
 
 {System`HTTPResponse, System`HTTPRedirect, System`HTTPRequestData, 
@@ -427,7 +429,7 @@ Package`DeclareLoad[
 		    Semantic`PLIDump`ValidateGrammar
 		    ,
 		    (* Grammar *)
-		    System`Grammar,
+		    System`GrammarRules,
 		    System`CaseSensitive,
 		    System`FixedOrder,
 		    System`AnyOrder,
@@ -435,7 +437,7 @@ Package`DeclareLoad[
 		    System`GrammarToken
 		    ,
 		    (* Parse *)
-		    System`Parse
+		    System`GrammarApply
 		    ,
 		    (* CloudParse *)
 		    Semantic`PLIDump`receiveAlphaParse,

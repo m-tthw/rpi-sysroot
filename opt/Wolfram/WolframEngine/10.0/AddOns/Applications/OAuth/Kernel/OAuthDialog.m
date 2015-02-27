@@ -11,6 +11,9 @@ Begin["`Private`"]
 (Unprotect[#]; Clear[#])& /@ {OAuthClient`tokenOAuthDialog,OAuthClient`notokenOAuthDialog}
 Unprotect[OAuthClient`defaultServiceConnectIcon];
 
+$OAuthDialogSaveQ=False;
+$Clicked=True;
+
 stretchimage[image_, n_] := Block[{tarray, pos, swath, imagedata},
 	imagedata = ImageData[image, "Byte"];
 	tarray = Transpose[imagedata];
@@ -21,72 +24,89 @@ stretchimage[image_, n_] := Block[{tarray, pos, swath, imagedata},
   ]
   
 (*********************** Authentication Dialogs ***********************************)
-(*
-tokenOAuthDialog[url_, text_, icon_:OAuthClient`defaultServiceConnectIcon] :=
-    Block[{nb, value = Null, done = False, key = ""},
-        nb = CreateDocument[
-            DynamicModule[{
-                     button = If[text==="Permissions",permissionButton[url],authenticationButton[url, text]],
-                     smessage = Style["(you may be asked to authorize the app)", 10, FontFamily -> "Arial"],
-                     hmessage = "Paste your access key here"},
-                Column[{
-                    Grid[{{Spacer[10]},{Spacer[22], icon, Spacer[10], wolframconnector}}, Alignment -> {Left, Center}]
-                   ,
-                       Grid [{	{Spacer[22],Style["Step 1.",Gray],button},
-                       			{Spacer[22],"",smessage},
-                       			{Spacer[22],Style["Step 2.",Gray],Style["Paste your access key into the field below.",Bold]},
-                       			{Spacer[22],InputField[
-								 Dynamic[key, (key = 
-								     StringReplace[#, RegularExpression["(?ms) "] :> ""]) &], String, 
-								 Enabled -> True, ContinuousAction -> True, FieldHint -> hmessage, 
-								 ImageSize -> {445, 53}, ImageMargins -> {{0, 0}, {15, 0}}],SpanFromLeft}
-                         }
-                      , Alignment->{Left,Center},Spacings->{{0},{2,0,{2}}}
-                    ]
-                  ,
-                     Column[{Row[{Button[Style["Cancel", FontFamily -> "Arial", FontColor -> Black, FontSize -> 12], (value = $Canceled; done = True),
-                                  Background->GrayLevel[.82], ImageSize -> {90, 30}], Spacer[10],
-                                    Button[Style["Done", FontFamily -> "Arial", FontColor -> White, FontSize -> 12], (value = key; done = True),
-                                  Appearance -> redbutton, ImageSize -> {90, 30}], Spacer[22]}],
-                             Spacer[1]}]
-                  }
-                  ,
-                      Alignment -> {{{Left},Right}, Center}, Background -> {GrayLevel[.92], None, GrayLevel[.92]}, Dividers -> {None, {None,GrayLevel[.8], None, GrayLevel[.8], None}},
-                      Spacings -> 2
-                ]
-            ],
-            
-            
-            Modal -> True,
-            Background -> White,
-            ShowCellBracket->False,
-            StyleDefinitions -> "Dialog.nb",
-            CellMargins-> {{0, 0}, {0, 0}},
-            CellFrameMargins->0,
-            CellFrameLabelMargins -> 0,
-            CellLabelMargins -> 0,
-            WindowElements -> {},
-            WindowFrameElements -> {"CloseBox"},
-            WindowFrame -> "ModalDialog",
-            System`NotebookEventActions -> {
-                "ReturnKeyDown" :> (value = key; done = True),
-                {"MenuCommand", "HandleShiftReturn"} :> (value = key; done = True),
-                "EscapeKeyDown" :> (value = $Canceled; done = True),
-                "WindowClose" :>   (value = $Canceled; done = True)},
-            WindowSize -> {500, 330},
-            ShowStringCharacters -> False,
-            Evaluator -> CurrentValue["RunningEvaluator"]
-        ];
-
-        WaitUntil[done];
-
-        FrontEndExecute[FrontEnd`NotebookClose[nb, Interactive -> True, "ClosingEvent" -> Null]];
-
-        value
-    ]
-*)
 graytext=Sequence[FontFamily -> "Helvetica",RGBColor[71/255, 71/255, 71/255]];
 vertspace=Spacer[{1,20}];
+
+OAuthDialogDump`Private`key="";
+
+tokenOAuthDialog[first_, name_String, icon_: defaultServiceConnectIcon]:=tokenOAuthDialog[first, {name,None}, icon]/; $CloudEvaluation
+
+tokenOAuthDialog[{url_, redirectFun_, temptoken_}, {name_, uuid_}, icon_: defaultServiceConnectIcon] := 
+Block[{dialog, nb, header, footer, ifield}, 
+	$OAuthDialogSaveQ =  OAuthClient`$SaveConnectionDefault;
+	$Clicked=False;
+	  header = 
+	  Panel[Grid[{{Spacer[20], 
+	If[icon === "", "", ImageResize[icon, {Automatic, 32}]], 
+	wolframconnector}}], Appearance -> headerbg, 
+			Alignment -> {Left, Center}, ImageSize -> {500, 50}];
+	  footer = 
+	  With[{tt = temptoken}, 
+		   Panel[Grid[{{Spacer[20], 
+		  If[TrueQ[CloudSystem`$CloudNotebooks], 
+			 Checkbox[Dynamic[$OAuthDialogSaveQ]], 
+			 ClickPane[
+					   Dynamic[
+							   If[$OAuthDialogSaveQ, checkboxactive, 
+								  checkbox]], ($OAuthDialogSaveQ = ! $OAuthDialogSaveQ) 
+					   &]], Style["Save Connection", graytext], 
+		  Spacer[If[TrueQ[CloudSystem`$CloudNotebooks], 160, 180]], 
+		  cancelbutton[(enddialog[redirectFun, $Canceled, tt,{name, uuid}]) &], 
+		  Spacer[10], 
+		  donebutton[(enddialog[redirectFun, key, tt,{name, uuid}]) &]}}, 
+					  Alignment -> {Left, Center}, Spacings -> 0], 
+				 Appearance -> footerbg, Alignment -> {Left, Center}, 
+				 ImageSize -> {500, 50}]];
+	  ifield = 
+	  InputField[
+				 Dynamic[key, (key = 
+							   StringReplace[#, RegularExpression["(?ms) "] :> ""]) &], 
+				 String, Enabled -> True, ContinuousAction -> True, 
+				 FieldHint -> "Paste your access key here", 
+				 FieldHintStyle -> {Black, FontFamily -> "Helvetica"}, 
+				 FrameMargins -> 5, ImageSize -> {460, 58}];
+	  
+	  dialog = 
+	  DynamicModule[{}, 
+					Column[{header, vertspace, 
+		  Row[{Spacer[20], Style["Step 1.", graytext], Spacer[20], 
+			  signinbutton[name, url]}], Spacer[{1, 10}], 
+		  Row[{Spacer[(*20+42+20*)82], 
+			  Style["(you may be asked to authorize the app)", graytext]}],
+		  vertspace, 
+		  Row[{Spacer[20], Style["Step 2.", graytext], Spacer[20], 
+			  Style["Paste your access key into the field below.", Bold, 
+					graytext]}], Spacer[{1, 21}], Row[{Spacer[20], ifield}], 
+		  vertspace, footer}, Spacings -> 0, Alignment -> {Left, Center},
+						   Background -> 
+						   RGBColor[0.9411764705882353`, 0.9411764705882353`, 
+									0.9411764705882353`]]];
+	  
+	  If[TrueQ[CloudSystem`$CloudNotebooks], 
+		 CloudSystem`CreateCloudDialog[ToBoxes[dialog]], 
+		 CreateDocument[dialog, Modal -> False, Background -> White, 
+						ShowCellBracket -> False, CellMargins -> {{0, 0}, {0, 0}}, 
+						CellFrameMargins -> 0, CellFrameLabelMargins -> 0, 
+						CellLabelMargins -> 0, WindowElements -> {}, 
+						WindowFrameElements -> {"CloseBox"}, 
+						WindowFrame -> "ModalDialog", Deployed -> True, 
+						WindowSize -> {500, 303}, ShowStringCharacters -> False, 
+						Evaluator -> CurrentValue["RunningEvaluator"]]]
+   ] /; $CloudEvaluation
+
+enddialog[redirectFun_, value_, temptoken_, {name_, uuid_}] := 
+Block[{res},
+	$Clicked=True;
+  	NotebookClose[EvaluationNotebook[]];
+	  res = redirectFun[value];
+	  Set[HTTPClient`OAuth`Private`temporaryOAuthToken[temptoken], res];
+	  OAuthDialogDump`Private`key = "";
+	  If[TrueQ[$OAuthDialogSaveQ]&&StringQ[uuid],
+	  	OAuthClient`saveServiceConnection[ServiceObject[name,"ID"->uuid],Automatic]
+	  ];
+	]/;!$Clicked
+
+enddialog[___]:=NotebookClose[EvaluationNotebook[]]
 
 tokenOAuthDialog[url_, name_,icon_:defaultServiceConnectIcon] := 
 	Block[{nb, value = Null, done = False, key = "", header, footer,ifield, saveQ=OAuthClient`$SaveConnectionDefault},
@@ -140,7 +160,7 @@ tokenOAuthDialog[url_, name_,icon_:defaultServiceConnectIcon] :=
   		OAuthClient`$SaveConnection=saveQ;
   		FrontEndExecute[FrontEnd`NotebookClose[nb, Interactive -> True, "ClosingEvent" -> Null]];
   		value]
-
+  		
 tokenOAuthDialog[___] := $Failed
 
 notokenOAuthDialog[url_, text_] :=
@@ -251,6 +271,7 @@ KeyDialog[name_,icon_:defaultServiceConnectIcon] :=
   		
   		
 (* Buttons *)
+(*
 custombutton[content_, fun_, len_, {unclicked_, clicked_}] := 
 	DynamicModule[{apper = unclicked}, 
   		EventHandler[
@@ -267,7 +288,24 @@ custombutton[content_, fun_, len_, {unclicked_, clicked_}] :=
      			ImageSize -> {Clip[len, {80, 400}], 30}]], 				
      			{"MouseDown" :> (apper = unclicked; fun[]), 
     			"MouseUp" :> (apper = clicked)}]]
+*)
 
+
+custombutton[content_, fun_, len_, {unclicked_, clicked_}] := 
+DynamicModule[{apper = unclicked}, 
+			  If[TrueQ[CloudSystem`$CloudNotebooks], 
+				 Button[content, fun, 
+						Appearance -> {"Default" -> unclicked, "Pressed" -> clicked}, 
+						ImageSize -> {Clip[len, {80, 400}], 30}], 
+				 EventHandler[
+							  Dynamic[Panel[content, Alignment -> Center, Appearance -> stretchimage[apper, len], 
+											ImageSize -> {Clip[len, {80, 400}], 
+												30}]], {"MouseDown" :> (apper = unclicked; fun[]), 
+													"MouseUp" :> (apper = clicked)}]]]
+
+ 
+ 
+ 
 signinbutton[text_, url_] := 
  	With[{len = Max[150, 13 StringLength[text]]}, 
   		Panel[Hyperlink[Style["Sign in to "<>text, FontFamily -> "Arial", FontColor -> White, 

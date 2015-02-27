@@ -1,86 +1,138 @@
 <font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
 
-<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Live Coding</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">, now we’ve learned enough to really start having some fun. In this section we’ll draw from all the previous sections and show you how you can start making your music compositions live and turning them into a performance. For that we’ll need 3 main ingredients:</p>
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Stretching Samples</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Now that we can play a variety of synths and samples to create some music,
+it’s time to learn how to modify both the synths and samples to make the
+music even more unique and interesting. First, let’s explore the ability
+to <em style="font-size:15px;color:darkorange;">stretch</em> and <em style="font-size:15px;color:darkorange;">squash</em> samples.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Sample Representation</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Samples are pre-recorded sounds stored as numbers which represent how to
+move the speaker cone to reproduce the sound. The speaker cone can move
+in and out, and so the numbers just need to represent how far in and out
+the cone needs to be for each moment in time. To be able to faithfully
+reproduce a recorded sound the sample typically needs to store many
+thousands of numbers per second! Sonic Pi takes this list of numbers and
+feeds them at the right speed to move your computer’s speaker in and out
+in just the right way to reproduce the sound. However, it’s also fun to
+change the speed with which the numbers are fed to the speaker to change
+the sound.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Changing Rate</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Let’s play with one of the ambient sounds: <code style="font-size:15px; color:deeppink; background-color:white">:ambi_choir</code>. To play it
+with the default rate, you can pass a <code style="font-size:15px; color:deeppink; background-color:white">rate:</code> argument to <code style="font-size:15px; color:deeppink; background-color:white">sample</code>:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :ambi_choir, rate: 1
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">This plays it at normal rate (1), so nothing special yet. However, we’re
+free to change that number to something else. How about <code style="font-size:15px; color:deeppink; background-color:white">0.5</code>:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :ambi_choir, rate: 0.5
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Woah! What’s going on here? Well, two things. Firstly, the sample takes
+twice as long to play, secondly the sound is an octave lower. Let’s
+explore these things in a little more detail.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Let’s stretch</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">A sample that’s fun to stretch and compress is the Amen Break. At normal
+rate, we might imagine throwing it into a <em style="font-size:15px;color:darkorange;">drum ‘n’ bass</em> track:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">However by changing the rate we can switch up genres. Try half speed for
+<em style="font-size:15px;color:darkorange;">old school hip-hop</em>:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, rate: 0.5
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">If we speed it up, we enter <em style="font-size:15px;color:darkorange;">jungle</em> territory: </p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, rate: 1.5
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now for our final party trick - let’s see what happens if we use a
+negative rate:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, rate: -1
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Woah! It plays it <em style="font-size:15px;color:darkorange;">backwards</em>! Now try playing with lots of different
+samples at different rates. Try very fast rates. Try crazy slow
+rates. See what interesting sounds you can produce.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">A Simple Explanation of Sample Rate</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">A useful way to think of samples is as springs. Playback rate is like
+squashing and stretching the spring. If you play the sample at rate 2,
+you’re <em style="font-size:15px;color:darkorange;">squashing the spring</em> to half its normal length. The sample
+therefore takes half the amount of time to play as it’s shorter. If you
+play the sample at half rate, you’re <em style="font-size:15px;color:darkorange;">stretching the spring</em> to double
+its length. The sample therefore takes twice the amount of time to play
+as it’s longer. The more you squash (higher rate), the shorter it gets,
+the more you stretch (lower rate), the longer it gets.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Compressing a spring increases its density (the number of coils per cm)
+- this is similar to the sample sounding <em style="font-size:15px;color:darkorange;">higher pitched</em>. Stretching
+the spring decreases its density and is similar to the sound having a
+<em style="font-size:15px;color:darkorange;">lower pitch</em>.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">The Maths Behind Sample Rate</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">(This section is provided for those that are interested in the
+details. Please feel free to skip it…)</p>
+
+<p style="font-size:15px;color:#5e5e5e;">As we saw above, a sample is represented by a big long list of numbers
+representing where the speaker should be through time. We can take this
+list of numbers and use it to draw a graph which would look similar to
+this:</p>
+
+<p style="font-size:15px;color:#5e5e5e;"><img src=":/images/tutorial/sample.png" alt="sample graph" /></p>
+
+<p style="font-size:15px;color:#5e5e5e;">You might have seen pictures like this before. It’s called the
+<em style="font-size:15px;color:darkorange;">waveform</em> of a sample. It’s just a graph of numbers. Typically a
+waveform like this will have 44100 points of data per second (this is
+due to the Nyquist-Shannon sampling theorem). So, if the sample lasts
+for 2 seconds, the waveform will be represented by 88200 numbers which
+we would feed to the speaker at a rate of 44100 points per second. Of
+course, we could feed it at double rate which would be 88200 points per
+second. This would therefore take only 1 second to play back. We could
+also play it back at half rate which would be 22050 points per second
+taking 4 seconds to play back.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">The duration of the sample is affected by the playback rate: </p>
 
 <ul style="font-size:15px;color:#5e5e5e;">
-  <li>An ability to write code that makes sounds - CHECK!</li>
-  <li>An ability to write functions - CHECK!</li>
-  <li>An ability to use (named) threads - CHECK!</li>
+  <li>Doubling the playback rate halves the playback time,</li>
+  <li>Halving the playback rate doubles the playback time,</li>
+  <li>Using a playback rate of one fourth quadruples the playback time,</li>
+  <li>Using a playback rate of 1/10 makes playback last 10 times longer.</li>
 </ul>
 
-<p style="font-size:15px;color:#5e5e5e;">Alrighty, let’s get started. Let’s live code our first sounds. We first need a function containing the code we want to play. Let’s start simple. We also want to loop calls to that function in a thread:</p>
+<p style="font-size:15px;color:#5e5e5e;">We can represent this with the formula:</p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">define :my_loop do
-  play 50
-  sleep 1
-end
-
-in_thread(name: :looper) do
-  loop do
-    my_loop
-  end
-end
+<pre><code style="font-size:15px; color:deeppink; background-color:white">new_sample_duration = (1 / rate) * sample_duration 
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">If that looks a little too complicated to you, go ahead and re-read the sections on functions and threads. It’s not too complicated if you’ve already wrapped your head around these things. </p>
+<p style="font-size:15px;color:#5e5e5e;">Changing the playback rate also affects the pitch of the sample. The
+frequency or pitch of a waveform is determined by how fast it moves up
+and down. Our brains somehow turn fast movement of speakers into high
+notes and slow movement of speakers into low notes. This is why you can
+sometimes even see a big bass speaker move as it pumps out super low
+bass - it’s actually moving a lot slower in and out than a speaker
+producing higher notes.</p>
 
-<p style="font-size:15px;color:#5e5e5e;">What we have here is a function definition which just plays note 50 and sleeps for a second. We then define a named thread called <code style="font-size:15px; color:deeppink; background-color:white">:looper</code> which just loops round calling <code style="font-size:15px; color:deeppink; background-color:white">my_loop</code> repeatedly. </p>
-
-<p style="font-size:15px;color:#5e5e5e;">If you run this code, you’ll hear note 50 repeating again and again…</p>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Changing it up</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">Now, this is where the fun starts. Whilst the code is <em style="font-size:15px;color:darkorange;">still running</em> change 50 to another number, say 55, then press the run button again. Woah! It changed! Live!</p>
-
-<p style="font-size:15px;color:#5e5e5e;">It didn’t add a new layer because we’re using named threads which only allow one thread for each name. Also, the sound changed because we <em style="font-size:15px;color:darkorange;">redefined</em> the function. We gave <code style="font-size:15px; color:deeppink; background-color:white">:my_loop</code> a new definition. When the <code style="font-size:15px; color:deeppink; background-color:white">:looper</code> thread looped round again it simply called the new definition.</p>
-
-<p style="font-size:15px;color:#5e5e5e;">Try changing it again, change the note, change the sleep time. How about adding a <code style="font-size:15px; color:deeppink; background-color:white">use_synth</code> statement. For example, change it to:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">define :my_loop do
-  use_synth :tb303
-  play 50, release: 0.3
-  sleep 0.25
-end
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Now it’s sounding pretty interesting, but we can spice it up further. Instead of playing the same note again and again, try playing a chords</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">define :my_loop do
-  use_synth :tb303
-  play choose(chord(:e3, :minor)), release: 0.3
-  sleep 0.5
-end
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">How about playing random notes from the chords:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">define :my_loop do
-  use_synth :tb303
-  play choose(chord(:e3, :minor)), release: 0.3
-  sleep 0.25
-end
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">How about about using a random cutoff value:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">define :my_loop do
-  use_synth :tb303
-  play choose(chord(:e3, :minor)), release: 0.2, cutoff: rrand(60, 130)
-  sleep 0.25
-end
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Finally, add some drums:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">define :my_loop do
-  use_synth :tb303
-  sample :drum_bass_hard, rate: rrand(0.5, 2)
-  play choose(chord(:e3, :minor)), release: 0.2, cutoff: rrand(60, 130)
-  sleep 0.25
-end
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Now things are getting exciting! Start creating your own functions, looping them in threads and perform some music for your friends…</p>
+<p style="font-size:15px;color:#5e5e5e;">If you take a waveform and squash it it will move up and down more times
+per second. This will make it sound higher pitched. It turns out that
+doubling the amount of up and down movements (oscillations) doubles the
+frequency. So, <em style="font-size:15px;color:darkorange;">playing your sample at double rate will double the
+frequency you hear it</em>. Also, <em style="font-size:15px;color:darkorange;">halving the rate will halve the
+frequency</em>. Other rates will affect the frequency accordingly.</p>
 </font>

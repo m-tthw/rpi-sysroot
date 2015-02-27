@@ -1,3 +1,7 @@
+Package: gcc-4.8-base
+Architecture: armhf
+Auto-Installed: 1
+
 Package: dmsetup
 Architecture: armhf
 Auto-Installed: 1
@@ -234,10 +238,6 @@ Package: libxml2
 Architecture: armhf
 Auto-Installed: 1
 
-Package: gcc-4.8-base
-Architecture: armhf
-Auto-Installed: 1
-
 Package: file
 Architecture: armhf
 Auto-Installed: 1
@@ -374,6 +374,10 @@ Package: ucf
 Architecture: armhf
 Auto-Installed: 1
 
+Package: init-system-helpers
+Architecture: armhf
+Auto-Installed: 1
+
 Package: rpcbind
 Architecture: armhf
 Auto-Installed: 1
@@ -391,6 +395,14 @@ Architecture: armhf
 Auto-Installed: 1
 
 Package: samba-common
+Architecture: armhf
+Auto-Installed: 1
+
+Package: libpng12-dev
+Architecture: armhf
+Auto-Installed: 1
+
+Package: libpng12-0
 Architecture: armhf
 Auto-Installed: 1
 
@@ -1014,10 +1026,6 @@ Package: libjasper1
 Architecture: armhf
 Auto-Installed: 1
 
-Package: libpng12-0
-Architecture: armhf
-Auto-Installed: 1
-
 Package: libgstreamer-plugins-bad1.0-0
 Architecture: armhf
 Auto-Installed: 1
@@ -1210,6 +1218,10 @@ Package: gnome-desktop3-data
 Architecture: armhf
 Auto-Installed: 1
 
+Package: gnome-themes-standard
+Architecture: armhf
+Auto-Installed: 1
+
 Package: libdbus-glib-1-2
 Architecture: armhf
 Auto-Installed: 1
@@ -1249,6 +1261,10 @@ Auto-Installed: 1
 Package: libcolord1
 Architecture: armhf
 Auto-Installed: 1
+
+Package: gnome-themes-standard-data
+Architecture: armhf
+Auto-Installed: 0
 
 Package: libgnome-desktop-3-2
 Architecture: armhf
@@ -1382,10 +1398,6 @@ Package: libfm-data
 Architecture: armhf
 Auto-Installed: 1
 
-Package: libfm-gtk-bin
-Architecture: armhf
-Auto-Installed: 1
-
 Package: gconf2
 Architecture: armhf
 Auto-Installed: 1
@@ -1402,6 +1414,10 @@ Package: libwnck22
 Architecture: armhf
 Auto-Installed: 1
 
+Package: libfm-gtk-data
+Architecture: armhf
+Auto-Installed: 1
+
 Package: gconf-service
 Architecture: armhf
 Auto-Installed: 1
@@ -1410,7 +1426,7 @@ Package: libgif4
 Architecture: armhf
 Auto-Installed: 1
 
-Package: libfm-gtk1
+Package: libfm-gtk4
 Architecture: armhf
 Auto-Installed: 1
 
@@ -1426,7 +1442,7 @@ Package: lxmenu-data
 Architecture: armhf
 Auto-Installed: 1
 
-Package: libfm1
+Package: libfm4
 Architecture: armhf
 Auto-Installed: 1
 
@@ -1450,6 +1466,18 @@ Package: libid3tag0
 Architecture: armhf
 Auto-Installed: 1
 
+Package: libfm-extra4
+Architecture: armhf
+Auto-Installed: 1
+
+Package: libfm-modules
+Architecture: armhf
+Auto-Installed: 1
+
+Package: libexif12
+Architecture: armhf
+Auto-Installed: 1
+
 Package: libimlib2
 Architecture: armhf
 Auto-Installed: 1
@@ -1463,6 +1491,10 @@ Architecture: armhf
 Auto-Installed: 1
 
 Package: libobt0
+Architecture: armhf
+Auto-Installed: 1
+
+Package: lxpanel-data
 Architecture: armhf
 Auto-Installed: 1
 
@@ -1710,10 +1742,6 @@ Package: gvfs
 Architecture: armhf
 Auto-Installed: 1
 
-Package: libexif12
-Architecture: armhf
-Auto-Installed: 1
-
 Package: libltdl7
 Architecture: armhf
 Auto-Installed: 1
@@ -1759,6 +1787,10 @@ Architecture: armhf
 Auto-Installed: 1
 
 Package: fonts-freefont-ttf
+Architecture: armhf
+Auto-Installed: 1
+
+Package: libssh-4
 Architecture: armhf
 Auto-Installed: 1
 
@@ -1818,6 +1850,10 @@ Package: libgfortran3
 Architecture: armhf
 Auto-Installed: 1
 
+Package: python3.2
+Architecture: armhf
+Auto-Installed: 1
+
 Package: libdirectfb-1.2-9
 Architecture: armhf
 Auto-Installed: 1
@@ -1858,15 +1894,31 @@ Package: tcl8.5
 Architecture: armhf
 Auto-Installed: 1
 
+Package: python3
+Architecture: armhf
+Auto-Installed: 0
+
 Package: libsdl-mixer1.2
 Architecture: armhf
 Auto-Installed: 1
+
+Package: python3-minimal
+Architecture: armhf
+Auto-Installed: 1
+
+Package: python3-numpy
+Architecture: armhf
+Auto-Installed: 0
 
 Package: tk8.5
 Architecture: armhf
 Auto-Installed: 1
 
 Package: tsconf
+Architecture: armhf
+Auto-Installed: 1
+
+Package: python3.2-minimal
 Architecture: armhf
 Auto-Installed: 1
 
@@ -1886,25 +1938,9 @@ Package: libsmpeg0
 Architecture: armhf
 Auto-Installed: 1
 
-Package: python3.2
-Architecture: armhf
-Auto-Installed: 1
-
 Package: idle-python3.2
 Architecture: armhf
 Auto-Installed: 1
-
-Package: python3-minimal
-Architecture: armhf
-Auto-Installed: 1
-
-Package: python3.2-minimal
-Architecture: armhf
-Auto-Installed: 1
-
-Package: python3-numpy
-Architecture: armhf
-Auto-Installed: 0
 
 Package: libfltk1.3
 Architecture: armhf
@@ -1927,6 +1963,14 @@ Architecture: armhf
 Auto-Installed: 1
 
 Package: gettext-base
+Architecture: armhf
+Auto-Installed: 1
+
+Package: fonts-roboto
+Architecture: armhf
+Auto-Installed: 1
+
+Package: x11-xserver-utils
 Architecture: armhf
 Auto-Installed: 1
 
@@ -2055,6 +2099,10 @@ Architecture: armhf
 Auto-Installed: 1
 
 Package: pypy-setuptools
+Architecture: armhf
+Auto-Installed: 1
+
+Package: libportaudio2
 Architecture: armhf
 Auto-Installed: 1
 

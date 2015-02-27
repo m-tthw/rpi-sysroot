@@ -1,130 +1,134 @@
 <font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
 
-<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Thread Synchronisation</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">Once you have become sufficiently advanced live coding with a number of functions and threads simultaneously, you’ve probably noticed that it’s pretty easy to make a mistake in one of the threads which kills it. That’s no big deal, because you can easily restart the thread by hitting run. However, when you restart the thread it is now <em style="font-size:15px;color:darkorange;">out of time</em> with the original threads.</p>
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Synth Parameters: Amp and Pan</span></p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Inherited Time</span></p>
+<p style="font-size:15px;color:#5e5e5e;">As well as allowing you to control which note to play or which sample to
+trigger, Sonic Pi provides a whole range of parameters to craft and
+control the sounds. We’ll be covering many of these in this tutorial and
+there’s extensive documentation for each in the help system. However,
+for now we’ll introduce two of the most useful: <em style="font-size:15px;color:darkorange;">amplitude</em> and <em style="font-size:15px;color:darkorange;">pan</em>.
+First, let’s look at what parameters actually are.</p>
 
-<p style="font-size:15px;color:#5e5e5e;">As we discussed earlier, new threads created with <code style="font-size:15px; color:deeppink; background-color:white">in_thread</code> inherit all of the settings from the parent thread. This includes the current time. This means that threads are always in time with each other when started simultaneously.</p>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Parameters</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">However, when you start a thread on its own it starts with its own time which is unlikely to be in synchronisation with any of the other currently running threads.</p>
+<p style="font-size:15px;color:#5e5e5e;">Sonic Pi supports the notion of parameters for its synths. Parameters are
+controls you pass to <code style="font-size:15px; color:deeppink; background-color:white">play</code> which modify and control aspects
+of the sound you hear. Each synth has its own set of parameters for
+finely tuning its sound. However, there are common sets of parameters
+shared by many sounds such as <code style="font-size:15px; color:deeppink; background-color:white">amp:</code> and envelope parameters (covered in
+another section).</p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Cue and Sync</span></p>
+<p style="font-size:15px;color:#5e5e5e;">Parameters have two major parts, their name (the name of the control) and
+their value (the value you want to set the control at). For example, you
+might have a parameter called <code style="font-size:15px; color:deeppink; background-color:white">cheese:</code> and want to set it with a value
+of <code style="font-size:15px; color:deeppink; background-color:white">1</code>.</p>
 
-<p style="font-size:15px;color:#5e5e5e;">Sonic Pi provides a solution to this problem with the functions <code style="font-size:15px; color:deeppink; background-color:white">cue</code> and <code style="font-size:15px; color:deeppink; background-color:white">sync</code>.</p>
+<p style="font-size:15px;color:#5e5e5e;">Parameters are passed to calls to <code style="font-size:15px; color:deeppink; background-color:white">play</code> by using a comma
+<code style="font-size:15px; color:deeppink; background-color:white">,</code> and then the name of the param such as <code style="font-size:15px; color:deeppink; background-color:white">amp:</code> (don’t forget the
+colon <code style="font-size:15px; color:deeppink; background-color:white">:</code>) and then a space and the value of the parameter. For example:</p>
 
-<p style="font-size:15px;color:#5e5e5e;"><code style="font-size:15px; color:deeppink; background-color:white">cue</code> allows us to send heartbeat messages out to all other threads. By default the other threads aren’t interested and ignore these heartbeat messages. However, you can easily register interest with the <code style="font-size:15px; color:deeppink; background-color:white">sync</code> function.</p>
-
-<p style="font-size:15px;color:#5e5e5e;">The important thing to be aware of is that <code style="font-size:15px; color:deeppink; background-color:white">sync</code> is similar to <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> in that it stops the current thread from doing anything for a period time. However, with <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> you specify how long you want to wait for and with <code style="font-size:15px; color:deeppink; background-color:white">sync</code> you don’t know how long you will wait for - as you’ll wait for the next <code style="font-size:15px; color:deeppink; background-color:white">cue</code> from another thread which may be soon or a long time away. </p>
-
-<p style="font-size:15px;color:#5e5e5e;">Let’s explore this in a little more detail.</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">in_thread do
-  loop do
-    cue :tick
-    sleep 1
-  end
-end  
-
-in_thread do
-  loop do
-    sync :tick
-    sample :drum_heavy_kick
-  end
-end
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 50, cheese: 1
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Here we have two threads - one acting like a metronome not playing any sounds but sending out <code style="font-size:15px; color:deeppink; background-color:white">:tick</code> heartbeat messages every second. The second thread is synchronising on <code style="font-size:15px; color:deeppink; background-color:white">tick</code> messages and when it receives one it inherits the time of the <code style="font-size:15px; color:deeppink; background-color:white">cue</code> thread and continues running. </p>
+<p style="font-size:15px;color:#5e5e5e;">(Note that <code style="font-size:15px; color:deeppink; background-color:white">cheese:</code> isn’t a valid parameter, we’re just using it as an example).</p>
 
-<p style="font-size:15px;color:#5e5e5e;">We can see that the synchronisation is really happening by inserting a naughty <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> between threads. Typically this would make the second thread out of phase with the first. However, as we’re using <code style="font-size:15px; color:deeppink; background-color:white">cue</code> and <code style="font-size:15px; color:deeppink; background-color:white">sync</code> we automatically sync the threads bypassing any accidental timing offsets:</p>
+<p style="font-size:15px;color:#5e5e5e;">You can pass multiple parameters by separating them with a comma:</p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">in_thread do
-  loop do
-    cue :tick
-    sleep 1
-  end
-end  
-
-sleep 0.3
-
-in_thread do
-  loop do
-    sync :tick
-    sample :drum_heavy_kick
-  end
-end
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 50, cheese: 1, beans: 0.5
 </code></pre>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Cue Names</span></p>
+<p style="font-size:15px;color:#5e5e5e;">The order of the parameters doesn’t matter, so the following is identical:</p>
 
-<p style="font-size:15px;color:#5e5e5e;">You are free to use whatever name you’d like for your <code style="font-size:15px; color:deeppink; background-color:white">cue</code> messages - not much <code style="font-size:15px; color:deeppink; background-color:white">:tick</code>. You just need to ensure that any other threads are <code style="font-size:15px; color:deeppink; background-color:white">sync</code>ing on the correct name - otherwise they’ll be waiting for every (or at least until you press the stop button).</p>
-
-<p style="font-size:15px;color:#5e5e5e;">Let’s play with a few <code style="font-size:15px; color:deeppink; background-color:white">cue</code> names:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">in_thread do
-  loop do 
-    cue [:foo, :bar, :baz].choose
-    sleep 0.5
-  end
-end
-
-in_thread do
-  loop do 
-    sync :foo 
-    sample :elec_beep
-  end
-end
-
-in_thread do
-  loop do            
-    sync :bar        
-    sample :elec_flip
-  end
-end
-
-in_thread do
-  loop do            
-    sync :baz        
-    sample :elec_blup
-  end
-end
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 50, beans: 0.5, cheese: 1
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Here we have a main <code style="font-size:15px; color:deeppink; background-color:white">cue</code> loop which is randomly sending one of the heartbeat names <code style="font-size:15px; color:deeppink; background-color:white">:foo</code>, <code style="font-size:15px; color:deeppink; background-color:white">:bar</code>, or <code style="font-size:15px; color:deeppink; background-color:white">:baz</code>. We then also have three loop threads syncing on each of those names independently and then playing a different sample. The net effect is that we hear a sound every 0.6 seconds as each of the <code style="font-size:15px; color:deeppink; background-color:white">sync</code> threads is randomly synced with the <code style="font-size:15px; color:deeppink; background-color:white">cue</code> thread and plays its sample.</p>
+<p style="font-size:15px;color:#5e5e5e;">Parameters that aren’t recognised by the synth are just ignored (like
+<code style="font-size:15px; color:deeppink; background-color:white">cheese</code> and <code style="font-size:15px; color:deeppink; background-color:white">beans</code> which are clearly ridiculous param names!)</p>
 
-<p style="font-size:15px;color:#5e5e5e;">This of course also works if you order the threads in reverse as the <code style="font-size:15px; color:deeppink; background-color:white">sync</code> threads will simply sit and wait for the next <code style="font-size:15px; color:deeppink; background-color:white">cue</code>.</p>
+<p style="font-size:15px;color:#5e5e5e;">If you accidentally use the same parameter twice with different
+values, the last one wins. For example, <code style="font-size:15px; color:deeppink; background-color:white">beans:</code> here will have the
+value 2 rather than 0.5:</p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Live Coding with Cue and Sync</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">Let’s take a quick look at how you might live code with <code style="font-size:15px; color:deeppink; background-color:white">cue</code> and <code style="font-size:15px; color:deeppink; background-color:white">sync</code>. Here’s one of the examples modified to use a <code style="font-size:15px; color:deeppink; background-color:white">cue</code> metronome:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">define :metro do
-  cue :tick
-  sleep 0.5
-end
-
-define :drums do
-  sync :tick
-  sample :drum_heavy_kick, rate: 0.75
-  sleep 0.5
-  sample :drum_heavy_kick
-end
-
-define :synths do
-  sync :tick
-  use_synth :mod_pulse
-  use_synth_defaults amp: 1, mod_range: 15, cutoff: 80, pulse_width: 0.2, attack: 0.03, release: 0.6,   mod_phase: 0.25
-  play 30
-  sleep 0.25
-  play 38
-end
-
-in_thread(name: :drums){loop{drums}}
-in_thread(name: :synths){loop{synths}}
-in_thread(name: :metro){loop{metro}}
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 50, beans: 0.5, cheese: 3, eggs: 0.1, beans: 2
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">If you play this, you’ll hear everything in sync. Now, whilst it’s still playing go ahead and break the code. Change <code style="font-size:15px; color:deeppink; background-color:white">:drum_heavy_kick</code> to <code style="font-size:15px; color:deeppink; background-color:white">drum_sdlfkjsd</code>. Boom! The drums stop, and an exception is thrown telling you that something has gone wrong. Now, whilst it is still playing undo your change and switch the code back to <code style="font-size:15px; color:deeppink; background-color:white">:drum_heavy_kick</code> and press run again. Wooh! The drums have returned and are completely back in sync. The jamming can continue…</p>
+<p style="font-size:15px;color:#5e5e5e;">Many things in Sonic Pi accept parameters, so just spend a little time
+learning how to use them and you’ll be set! Let’s play with our first
+parameter: <code style="font-size:15px; color:deeppink; background-color:white">amp:</code>.</p>
 
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Amplitude</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Amplitude is a computer representation of the loudness of a sound. A
+<em style="font-size:15px;color:darkorange;">high amplitude produces a loud sound</em> and a <em style="font-size:15px;color:darkorange;">low amplitude produces a
+quiet sound</em>. Just as Sonic Pi uses numbers to represent time and notes,
+it uses numbers to represent amplitude. An amplitude of 0 is silent
+(you’ll hear nothing) whereas an amplitude of 1 is normal volume. You
+can even crank up the amplitude higher to 2, 10, 100. However, you
+should note that when the overall amplitude of all the sounds gets too
+high, Sonic Pi uses what’s called a compressor to squash them all to
+make sure things aren’t too loud for your ears. This can often make the
+sound muddy and strange. So try to use low amplitudes, i.e. in the range
+0 to 0.5 to avoid compression.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Amp it up</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">To change the amplitude of a sound, you can use the <code style="font-size:15px; color:deeppink; background-color:white">amp:</code>
+parameter. For example, to play at half amplitude pass 0.5:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, amp: 0.5
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">To play at double amplitude pass 2:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, amp: 2
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">The <code style="font-size:15px; color:deeppink; background-color:white">amp:</code> param only modifies the call to <code style="font-size:15px; color:deeppink; background-color:white">play</code> it’s associated
+with. So, in this example, the first call to play is at half volume and
+the second is back to the default (1):</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, amp: 0.5
+sleep 0.5
+play 65
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Of course, you can use different <code style="font-size:15px; color:deeppink; background-color:white">amp:</code> values for each call to play:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 50, amp: 0.1
+sleep 0.25
+play 55, amp: 0.2
+sleep 0.25
+play 57, amp: 0.4
+sleep 0.25
+play 62, amp: 1
+</code></pre>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Panning</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Another fun parameter to use is <code style="font-size:15px; color:deeppink; background-color:white">pan:</code> which controls the panning of a
+sound in stereo. Panning a sound to the left means that you hear it out
+of the left speaker, and panning it to the right means you hear it out
+of your right speaker. For our values, we use a -1 to represent fully
+left, 0 to represent center and 1 to represent fully right in the stereo
+field. Of course, we’re free to use any value between -1 and 1 to
+control the exact positioning of our sound.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Let’s play a beep out of the left speaker:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, pan: -1
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now, let’s play it out of the right speaker:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, pan: 1
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Finally let’s play it back out of the center of both (the default
+position):</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, pan: 0
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now, go and have fun changing the amplitude and panning of your sounds!</p>
 </font>

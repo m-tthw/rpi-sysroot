@@ -46,8 +46,8 @@ openSQLDialog[] := Module[{openedConn}, DynamicModule[
             Spacings -> 3,
             Scrollbars -> False,
             ContentPadding -> False,
-            FieldSize -> {Automatic, Length@dss},
-            Background -> "Gray" (*, FieldSize -> {25, 20}, Spacings -> 3, Multiselection -> False *)
+            FieldSize -> {Automatic, Length@dss}
+						(* , Background -> "Gray", FieldSize -> {25, 20}, Spacings -> 3, Multiselection -> False *)
     	]
     ];
     

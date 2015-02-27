@@ -1,12 +1,17 @@
 (* Paclet Info File *)
 
-(* created 2013/09/20*)
+(* created 2014/10/16*)
 
 Paclet[
-	Name -> "OAuth",
-	Version -> "0.1.0",
-	MathematicaVersion -> "10+",
-	Extensions -> {
-		{"Kernel", Root->"Kernel", Context->{"OAuth`","OAuthLoader`"}}
-	}
+    Name -> "OAuth",
+    Version -> "1.0.1",
+    MathematicaVersion -> "10+",
+    Extensions -> 
+        {
+            {"Kernel", Root -> "Kernel", Context -> 
+                {"OAuth`", "OAuthLoader`"}
+            }
+        }
 ]
+
+

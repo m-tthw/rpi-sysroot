@@ -1,7 +1,7 @@
-47098b0722321eeb6facadded96b3d4d  usr/lib/python2.6/dist-packages/RPi/GPIO.so
-d22a51a8d15221087158946d30cad7e2  usr/lib/python2.7/dist-packages/RPi/GPIO.so
-18578006f4345a1a1c2b616c17d35322  usr/share/doc/python-rpi.gpio/changelog.Debian.gz
-af5307d860aa2184bf1d6c98d77b16d8  usr/share/doc/python-rpi.gpio/changelog.gz
+360804a008ca2ee0407a80aeca135503  usr/lib/python2.6/dist-packages/RPi/GPIO.so
+14918342e985e6bdabd74dc00b130130  usr/lib/python2.7/dist-packages/RPi/GPIO.so
+ef03dff4366d16e67924be539218432d  usr/share/doc/python-rpi.gpio/changelog.Debian.gz
+2288d6b1bceea5d8f311aec54a09334f  usr/share/doc/python-rpi.gpio/changelog.gz
 c25436591b03e5d7d6ac454c4d531d49  usr/share/doc/python-rpi.gpio/copyright
-ebfe9e098c8b284591cee4692dd447fc  usr/share/pyshared/RPi.GPIO-0.5.6.egg-info
+560e216131c69af1dc26e524b00a463b  usr/share/pyshared/RPi.GPIO-0.5.11.egg-info
 d41d8cd98f00b204e9800998ecf8427e  usr/share/pyshared/RPi/__init__.py

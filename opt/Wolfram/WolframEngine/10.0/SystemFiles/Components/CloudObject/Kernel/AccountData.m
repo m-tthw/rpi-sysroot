@@ -58,14 +58,17 @@ validAccountDataQ[data_] :=
 	MatchQ[data, _Association | _List] &&
 	KeyExistsQ[data, "sharedObject"] && KeyExistsQ[data, "subscriptions"]
 
-$CloudCreditsAvailable := 
-	With[{credits = CloudAccountData["CloudCreditsAvailable"]},
-		If[TrueQ[$CloudConnected],
-			credits,
-			Indeterminate
-		]
-	]
-
+If[!MemberQ[Attributes@$CloudCreditsAvailable,Locked],
+	Unprotect[$CloudCreditsAvailable];
+	$CloudCreditsAvailable := 
+		With[{credits = CloudAccountData["CloudCreditsAvailable"]},
+			If[TrueQ[$CloudConnected],
+				credits,
+				Indeterminate
+			]
+		];
+	Protect[$CloudCreditsAvailable];
+]
 (*
 	If[TrueQ[$CloudConnected],
 		CloudAccountData["CloudCreditsAvailable"],
@@ -99,6 +102,8 @@ createProduct[subscription_] :=
 			"TechnicalSupportType" -> featureMap["techsupport", "limitValue"],
 			"DesktopAccessAllowed" -> 
 				TrueQ[featureMap["desktop", "limitValue"]],
+			"LocalFileAccessAllowed" -> 
+				TrueQ[featureMap["localfileaccess", "limitValue"]],
 			"FileSizeLimit" -> limitQuantity["filesize"],
 			"SessionEvaluationTimeLimit" -> limitQuantity["complength"],
 			"SessionMemoryLimit" -> limitQuantity["sessionmem"],

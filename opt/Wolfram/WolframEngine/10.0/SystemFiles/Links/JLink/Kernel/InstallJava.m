@@ -459,7 +459,20 @@ javaPreemptiveLink[] := javaPreemptiveLink[getDefaultJVM[]]
 javaPreemptiveLink[jvm_JVM] := javaPreemptiveLinkFromJVM[jvm]
 javaPreemptiveLink[Null] = Null
 
+(* Future feature. *)
+$useSandboxSecurity = False
 
+(* $jlinkExtraReadDirs and $jlinkExtraWriteDirs are lists of dirs that are made accessible in the sandbox, beyond the standard ones
+   that are based on the user (e.g., $UserBaseDirectory, etc.) We can add to this list as we discover bits of Java
+   functionality that we want to allow that requires read or write access to an assorted set of extra locations. The ones below
+   are used by JDBC on Linux.
+*)
+If[$useSandboxSecurity && !MemberQ[Attributes[$jlinkExtraReadDirs], Locked],
+    $jlinkExtraReadDirs = {"/dev/random", "/dev/urandom"};
+    $jlinkExtraWriteDirs = {"/dev/random", "/dev/urandom"};
+    SetAttributes[$jlinkExtraReadDirs, {Protected, ReadProtected, Locked}];
+    SetAttributes[$jlinkExtraWriteDirs, {Protected, ReadProtected, Locked}]
+]
 
 createCommandLine[cmdLine_, jvmArgs_] :=
 	Module[{jlinkPath, cpSpec, prefsSpec, sysLoaderSpec, javaCmd, extraArgs, quoteChar},
@@ -505,6 +518,9 @@ createCommandLine[cmdLine_, jvmArgs_] :=
 				""
 			];
 		extraArgs = If[StringQ[jvmArgs], " " <> jvmArgs, ""];
+		If[$useSandboxSecurity && Developer`$ProtectedMode && !$CloudEvaluation, (* cloud handles its own security *)
+		    extraArgs = " -Dcom.wolfram.jlink.security=com.wolfram.jlink.JLinkSandboxSecurityManager" <> extraArgs
+		];
 		If[osIsMacOSX[] && StringQ[cmdLine], extraArgs = extraArgs <> " -Xdock:name=J/Link"];
 		(* Increase default max heap from 64 Mb to 256 Mb, but only if caller has not specified another value. *)
 		If[!StringMatchQ[extraArgs, "*-xmx*", IgnoreCase->True] && !StringMatchQ[extraArgs, "*AggressiveHeap*", IgnoreCase->True],
@@ -538,11 +554,17 @@ writeInitFile[cpOpt_] :=
 
 
 initJava[jvm_JVM, setupExtraLinks:(True | False)] :=
-    Module[{uilink, prelink, prot, uiLinkName, preLinkName, linkSnooperCmdLine},
+    Module[{uilink, prelink, prot, uiLinkName, preLinkName, linkSnooperCmdLine, allowedReadDirs, allowedWriteDirs},
     	jSetVMName[jvm, nameFromJVM[jvm]];
     	jSetUserDir[jvm, $HomeDirectory];
-    	(* This is a hook that allows clients to execute M code during InstallJava. Used by MOnline. *)
+    	(* This is a hook that allows clients to execute M code during InstallJava. Used by Cloud Platform. *)
     	ReleaseHold[$jlinkInit];
+        If[$useSandboxSecurity && Developer`$ProtectedMode && !$CloudEvaluation, (* cloud handles its own security *)
+            allowedReadDirs = Flatten[{$BaseDirectory, $UserBaseDirectory, PacletManager`$UserBasePacletsDirectory, $TemporaryDirectory} ~Join~ $jlinkExtraReadDirs];
+            allowedWriteDirs = Flatten[{$TemporaryDirectory} ~Join~ $jlinkExtraWriteDirs];
+            LoadJavaClass["com.wolfram.jlink.JLinkSandboxSecurityManager"];
+            JLinkSandboxSecurityManager`setAllowedDirectories[allowedReadDirs, allowedWriteDirs]
+        ];
         If[isPreemptiveKernel[] && setupExtraLinks,
 	        (* Set up the UI link. $UILinkProtocol exists as a backdoor for users who need to
 	           force a particular protocol (e.g., TCP to avoid problems with TCPIP).
@@ -676,7 +698,7 @@ autoClassPath[] :=
 					ToFileName[{$InstallationDirectory, "AddOns", "Applications"}],
 					ToFileName[{$InstallationDirectory, "AddOns", "ExtraPackages"}],
 					ToFileName[{$InstallationDirectory, "AddOns", "Autoload"}]};
-		If[!Developer`$ProtectedMode,
+		If[!Developer`$ProtectedMode || $CloudEvaluation,
 			appPaths =
 				{ToFileName[{$UserAddOnsDirectory, "Applications"}],
 				 ToFileName[{$UserAddOnsDirectory, "AutoLoad"}],
@@ -688,7 +710,7 @@ autoClassPath[] :=
 		   $UserAddOnsDirectory/Java, not just $UserAddOnsDirectory/Applications/SomeApp/Java).
 		   Append instead of prepend, to give applications primacy.
 		*)
-		If[!Developer`$ProtectedMode,
+		If[!Developer`$ProtectedMode || $CloudEvaluation,
 			If[StringQ[$AddOnsDirectory],
 				appDirs = appDirs ~Join~ {$AddOnsDirectory, $UserAddOnsDirectory}
 			]
@@ -700,7 +722,8 @@ autoClassPath[] :=
            allows the result to be ignored if PacletManager has not been loaded (to support -nopaclet operation).
         *)
         pacletJavaResources = 
-            If[!Developer`$ProtectedMode,
+            If[!Developer`$ProtectedMode || $CloudEvaluation,
+                (* This should be switched over to the new public PacletResources[] function, but for now we want to support newer JLink in an older PM. *)
                 Cases[PacletManager`Package`resourcesLocate["Java"], {_String, _String}],
             (* else *)
                 {}

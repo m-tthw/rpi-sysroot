@@ -8,7 +8,7 @@
    Basic process control for parallel evaluation of Mathematica expressions.
  *)
 
-(* :Package Version: 3.0 ($Id: Kernels.m,v 1.100 2014/05/06 15:54:37 maeder Exp $) *)
+(* :Package Version: 3.0 ($Id: Kernels.m,v 1.103 2015/01/31 15:39:16 maeder Exp $) *)
 
 (* :Mathematica Version: 6+ *)
 
@@ -41,7 +41,7 @@ System`$KernelCount
 
 System`$KernelID
 System`$ConfiguredKernels
-System`KernelObject
+(** System`KernelObject (* moved to Parallel`Protected` because of UKCS *) **)
 
  (* low-level communication *)
  
@@ -119,6 +119,8 @@ EndPackage[]
 
 BeginPackage["Parallel`Protected`"] (* semi-hidden methods, aka protected *)
 
+`KernelObject (* moved here because of UKCS *)
+
 `PacketHandler::usage = "PacketHandler[packet, kernel] is called by receive to handle packets other than evaluation results received from a remote kernel."
 SyntaxInformation[PacketHandler] = { "ArgumentsPattern" -> {_, _} }
 
@@ -192,7 +194,7 @@ Parallel`Client`$ClientLanguageVersion
 Begin["`Private`"]
 
 `$PackageVersion = 3.0;
-`$CVSRevision = StringReplace["$Revision: 1.100 $", {"$"->"", " "->"", "Revision:"->""}]
+`$CVSRevision = StringReplace["$Revision: 1.103 $", {"$"->"", " "->"", "Revision:"->""}]
 
 Needs["SubKernels`"]; Needs["SubKernels`Protected`"]
 
@@ -517,13 +519,12 @@ ConnectMaster[] := Module[{sub, tap, new},
 (* fix random seeding *)
 (* SeedRandom[$KernelID*Round[AbsoluteTime[]/$TimeUnit]] *)
 
-(* set $Context to avoid new system symbols appearing in Global` *)
-(* $Context = "System`" *)
+(* set $Context to avoid new system symbols appearing in Global`; this is bug 214819 *)
+(* $Context = "System`"; change reverted (bug 257029) so bug 214819 is open again *)
 
 (* for performance, we collect all of these in a single batch *)
 
 AppendInitCode[holdCompound[
-	$Context = "System`",
 	SeedRandom[$KernelID*Round[AbsoluteTime[]/$TimeUnit]]
 ]]
 
@@ -1080,10 +1081,10 @@ kernel/: Abort[kernel_kernel] :=
 
 
 Format[kernel_kernel?slaveQ] :=
-	KernelObject[KernelID[kernel], KernelName[kernel]]
+	"KernelObject"[KernelID[kernel], KernelName[kernel]]
 
 Format[kernel_kernel?kernelQ] :=
-	KernelObject[If[kid[kernel]<0, -kid[kernel], 0], KernelName[kernel], "<defunct>"]
+	"KernelObject"[If[kid[kernel]<0, -kid[kernel], 0], KernelName[kernel], "<defunct>"]
 
 
 (* specials *)
@@ -1113,7 +1114,7 @@ feedbackHandler["tick"] := (currentCount++; grandCount++; If[grandCount>grandTot
 SubKernels`Protected`feedbackObject = feedbackHandler
 
 
-Parallel`Static`$launchFeedback; (* False: no feedback, Automatic: only with FE, True: always *)
+Parallel`Static`$launchFeedback = Automatic; (* False: no feedback, Automatic: only with FE, True: always *)
 
 textstyles = 
   Sequence @@ {FontFamily -> "Verdana", FontSize -> 11, FontColor -> RGBColor[0.2, 0.4, 0.6]};
@@ -1123,7 +1124,7 @@ framestyles =
 SetAttributes[launchFeedback, HoldAll]
 
 launchFeedback[cmd_] := Module[{res, nb, fb, textformFE, textformSA},
-  If[ValueQ[Parallel`Static`$launchFeedback], fb=Parallel`Static`$launchFeedback, fb=Automatic];
+  If[TrueQ[Parallel`Static`$enableLaunchFeedback], fb=Parallel`Static`$launchFeedback, fb=False];
   textformFE = If[StringQ[LaunchKernels::feedbackFE], LaunchKernels::feedbackFE, "Launching `1` `2`/`3`/`4`"];
   textformSA = If[StringQ[LaunchKernels::feedbackSA], LaunchKernels::feedbackSA, "Launching kernels..."];
   resetFeedback;
@@ -1158,7 +1159,7 @@ $autoDownValues[_] := {}
 defineAutolaunch[s_Symbol] := (
 	AppendTo[$autoSymbols, s]; Unprotect[s];
 	$autoDownValues[s] = DownValues[s]; DownValues[s] = {};
-	s[args___] := (doAutolaunch[True]; s[args]);
+	s[args___] := (doAutolaunch[TrueQ[Parallel`Static`$enableLaunchFeedback]]; s[args]);
 )
 
 clearAutolaunch[] := (

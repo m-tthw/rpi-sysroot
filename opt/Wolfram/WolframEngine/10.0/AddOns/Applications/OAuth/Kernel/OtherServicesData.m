@@ -50,11 +50,17 @@ OtherServicesData[___]:=$Failed
 
 $packagedirectory=FileNameJoin[{DirectoryName[System`Private`$InputFileName],"Services"}];
 
-addOtherservice[name_, dir_:$packagedirectory]:=Module[{funs},
+addOtherservice[name_, dir_:$packagedirectory]:=Module[{funs, file},
 	Unprotect[$predefinedOtherservicelist,otherservicedata,othercookeddata,otherrawdata,othersendmessage];
 	$predefinedOtherservicelist=Union[AppendTo[$predefinedOtherservicelist,name]];
 	ServiceConnections`Private`appendservicelist[name,"Other"];
-	funs=Get[FileNameJoin[{dir,"Other", name<>".m"}]];
+	file=FileNameJoin[{dir,"Other", name<>".m"}];
+	If[!FileExistsQ[file],
+		(* alternate *)
+		file=FileNameJoin[{dir,name<>".m"}]
+	];
+	If[!FileExistsQ[file],Return[$Failed]];
+	funs=Get[file];
 	otherservicedata[name,args___]:=funs[[1]][args];
 	othercookeddata[name,args___]:=funs[[2]][args];
 	othersendmessage[name,args___]:=funs[[3]][args];

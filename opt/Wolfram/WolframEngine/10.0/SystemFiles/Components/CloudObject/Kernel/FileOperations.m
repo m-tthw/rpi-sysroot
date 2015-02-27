@@ -58,7 +58,7 @@ CloudObject /: RenameFile[src_CloudObject, dest_CloudObject] :=
         execute[cloud, "PUT", {"files", uuid, "path"},
             Parameters -> {"path" -> path}] /. {
             {_String, _List} :> dest,
-            HTTPError[400] :> (Message[RenameFile::filex, dest]; $Failed),
+            HTTPError[400, ___] :> (Message[RenameFile::filex, dest]; $Failed),
             err_HTTPError :> (checkError[err, RenameFile]; $Failed),
             _ :> (Message[RenameFile::srverr]; $Failed)
         }
@@ -127,7 +127,7 @@ DeleteCloudObject[co_CloudObject, OptionsPattern[]] :=
 CloudObject /: DeleteFile[f_CloudObject] := Module[
 	{cloud, uuid, params},
     {cloud, uuid} = Quiet[getCloudAndUUID[f]];
-    
+
     If[!UUIDQ[uuid], (* file not found *)
         Message[DeleteFile::nffil, f];
         Return[$Failed];
@@ -136,8 +136,8 @@ CloudObject /: DeleteFile[f_CloudObject] := Module[
     params = {"filter" -> "file"};
     execute[cloud, "DELETE", {"files", uuid}, Parameters -> params] /. {
         {_String, _List} :> Return[Null] (* success *),
-        HTTPError[404] :> (Message[DeleteFile::nffil, f]; Return[$Failed]),
-        HTTPError[412] :> (Message[DeleteFile::fdir, f]; Return[$Failed]), (* attempted to delete directory *)
+        HTTPError[404, ___] :> (Message[DeleteFile::nffil, f]; Return[$Failed]),
+        HTTPError[412, ___] :> (Message[DeleteFile::fdir, f]; Return[$Failed]), (* attempted to delete directory *)
         other_ :> (Message[CloudObject::srverr]; Return[$Failed])
     };
 ];
@@ -162,9 +162,9 @@ CloudObject /: DeleteDirectory[dir_CloudObject, OptionsPattern[]] :=
         params = {"recursive" -> ToLowerCase@ToString[recursive], "filter" -> "directory"};
         execute[cloud, "DELETE", {"files", uuid}, Parameters -> params] /. {
             {_String, _List} :> Return[Null] (* success *),
-            HTTPError[400] :> If[recursive, Message[CloudObject::srverr]; $Failed, Null],
-            HTTPError[404] :> (Message[DeleteDirectory::nodir, dir]; Return[$Failed]),
-            HTTPError[412] :> (Message[DeleteDirectory::nodir, dir]; Return[$Failed]), (* attempted to delete file *)
+            HTTPError[400, ___] :> If[recursive, Message[CloudObject::srverr]; $Failed, Null],
+            HTTPError[404, ___] :> (Message[DeleteDirectory::nodir, dir]; Return[$Failed]),
+            HTTPError[412, ___] :> (Message[DeleteDirectory::nodir, dir]; Return[$Failed]), (* attempted to delete file *)
             other_ :> (Message[CloudObject::srverr]; Return[$Failed])
         };
         (* assert: delete failed with status 400 and recursive was not true ->
@@ -180,7 +180,7 @@ CloudObject /: DeleteDirectory[dir_CloudObject, OptionsPattern[]] :=
 CloudObject /: CreateDirectory[co_CloudObject] :=
     responseCheck[
         execute[co, Automatic, UseUUID -> False, Type -> "inode/directory"] /. {
-            HTTPError[400] :> (Message[CreateDirectory::filex, co];
+            HTTPError[400, ___] :> (Message[CreateDirectory::filex, co];
             Return[co])
         },
         CreateDirectory,

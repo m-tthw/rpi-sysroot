@@ -11,6 +11,8 @@
 	,
 	"LocalKernelsLicenseAvailability" -> "Limit by license availability (`1`)"	
 	,
+	"LocalKernelsUseLimit" -> "Use hard limit: "	
+	,
 	"LocalKernelsLicenseSingle" -> "The automatic configuration does not use any kernels on a single\[Hyphen]core computer."	
 	,
 	"LocalKernelsManual" -> "Manual setting"	

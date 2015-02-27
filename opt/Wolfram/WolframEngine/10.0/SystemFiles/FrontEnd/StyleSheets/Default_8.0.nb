@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     50339,       1653]
-NotebookOptionsPosition[     31398,       1211]
-NotebookOutlinePosition[     31899,       1231]
-CellTagsIndexPosition[     31856,       1228]
+NotebookDataLength[     50239,       1645]
+NotebookOptionsPosition[     31244,       1203]
+NotebookOutlinePosition[     31748,       1223]
+CellTagsIndexPosition[     31705,       1220]
 MenuPosition->0
 WindowFrame->Normal*)
 
@@ -1180,21 +1180,13 @@ Cell[StyleData["Graphics3D", "Printout"],
  ImageMargins->{{30, Inherited}, {Inherited, 0}}]
 }, Closed]],
 
-Cell[RawData["\<\
-Cell[StyleData[\"Graphics3DAxes\"],
+Cell[StyleData["Graphics3DAxes"],
  LineColor->GrayLevel[0],
- Thickness->Absolute[0.2]]\
-\>"],
- LineColor->GrayLevel[0.4],
  Thickness->Absolute[0.2]],
 
-Cell[RawData["\<\
-Cell[StyleData[\"Graphics3DTicks\"],
- LineColor->GrayLevel[0],
- ScriptLevel->1]\
-\>"],
+Cell[StyleData["Graphics3DTicks"],
  ScriptLevel->1,
- LineColor->GrayLevel[0.4]],
+ LineColor->GrayLevel[0]],
 
 Cell[StyleData["Graphics3DAxes"],
  LineColor->GrayLevel[0],
@@ -1214,7 +1206,7 @@ WindowSize->{680, 651},
 WindowMargins->{{Automatic, 30}, {Automatic, 24}},
 TrackCellChangeTimes->False,
 MenuSortingValue->None,
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 13, \
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
 2014)",
 StyleDefinitions->"StylesheetFormatting.nb",
 PrivateNotebookOptions -> {"NotebookAuthor" -> ""}
@@ -1648,11 +1640,11 @@ Cell[30548, 1172, 45, 0, 70, 45, 0, "StyleData", "Graphics3D", "Presentation"],
 Cell[30596, 1174, 113, 2, 70, 42, 0, "StyleData", "Graphics3D", "Condensed"],
 Cell[30712, 1178, 91, 1, 70, 41, 0, "StyleData", "Graphics3D", "Printout"]
 }, Closed]],
-Cell[30818, 1182, 168, 6, 65, InheritFromParent],
-Cell[30989, 1190, 149, 6, 65, InheritFromParent],
-Cell[31141, 1198, 86, 2, 36, 33, 0, "StyleData", "Graphics3DAxes", "All"],
-Cell[31230, 1202, 77, 2, 36, 34, 0, "StyleData", "Graphics3DTicks", "All"],
-Cell[31310, 1206, 60, 1, 36, 34, 0, "StyleData", "Graphics3DLabel", "All"]
+Cell[30818, 1182, 86, 2, 36, 33, 0, "StyleData", "Graphics3DAxes", "All"],
+Cell[30907, 1186, 77, 2, 36, 34, 0, "StyleData", "Graphics3DTicks", "All"],
+Cell[30987, 1190, 86, 2, 36, 33, 0, "StyleData", "Graphics3DAxes", "All"],
+Cell[31076, 1194, 77, 2, 36, 34, 0, "StyleData", "Graphics3DTicks", "All"],
+Cell[31156, 1198, 60, 1, 36, 34, 0, "StyleData", "Graphics3DLabel", "All"]
 }, Closed]]
 }, Closed]]
 }

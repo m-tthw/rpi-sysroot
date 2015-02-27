@@ -1,0 +1,42 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Enable and disable debug</font></span></p>
+<h1><font color="#3c3c3c"><pre>use_debug<pre></font></h1>
+<h2><pre>[true_or_false <font color="deeppink">(boolean)</font>]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Enable or disable messages created on synth triggers. If this is set to false, the synths will be silent until debug is turned back on. Silencing debug messages can reduce output noise and also increase performance on slower platforms. See with_debug for setting the debug value only for a specific do/end block.
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+<span style="color:white;background-color:darkorange;">Introduced in v2.0
+</span></p>
+<table cellpadding="8">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#74ACFF"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+use_debug true
+
+
+
+</pre></td>
+   <td><pre>
+# Turn on debug messages
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#B2D1FF"><h3><pre>Example 1 </pre></h3></td>
+   <td><pre>
+use_debug false
+
+
+
+</pre></td>
+   <td><pre>
+# Disable debug messages
+
+
+
+</pre></td></tr>
+</table>

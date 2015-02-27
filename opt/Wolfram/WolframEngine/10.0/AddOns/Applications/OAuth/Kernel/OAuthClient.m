@@ -1,7 +1,7 @@
 
 (* ::Package:: *)
 
-(* $Id: OAuthClient.m,v 1.36 2014/05/19 20:08:03 bobs Exp $ *)
+(* $Id: OAuthClient.m,v 1.36.2.1 2014/10/13 15:47:23 bobs Exp $ *)
 
 (* :Summary:
 	A framework for authenticating and exchanging data with OAuth services
@@ -88,9 +88,11 @@ oauthauthenticate[name_,rest___]:=With[{service=oauthauthenticate1[name,rest],
 	(* OAuthClient`$SaveConnection is set by the dialog window during authentication *)
 	save="SaveServiceConnection"/.Flatten[Cases[{rest},_?OptionQ,Infinity]]/."SaveServiceConnection"->OAuthClient`$SaveConnection},
 	
-	Switch[save,
-		"SaveServiceConnection"|False|None,Null, (* default *)
-		_,saveServiceConnection[service, save]
+	If[!$CloudEvaluation,
+		Switch[save,
+			"SaveServiceConnection"|False|None,Null, (* default *)
+			_,saveServiceConnection[service, save]
+		]
 	];
 	OAuthClient`$SaveConnection=OAuthClient`$SaveConnectionDefault;
 	service
@@ -211,7 +213,7 @@ defaultOAuthOptions={
 
 newunknownoauthauthenticate[name_,opts___]:=Module[{version,authurl,requrl,accessurl,key,
 	secret,redirect,dialogfun, token,urlfetchfun, service, id,dialog,requestformat,info,logouturl,
-	extra,scope,atokenext,extraopts,params,temprefreshtoken=None},
+	extra,scope,atokenext,extraopts,params,temprefreshtoken=None, uuid},
 	
 	params={
 		"OAuthVersion","AuthorizeEndpoint","RequestEndpoint","AccessEndpoint","ConsumerKey","ConsumerSecret",
@@ -228,12 +230,20 @@ newunknownoauthauthenticate[name_,opts___]:=Module[{version,authurl,requrl,acces
 	If[!StringQ[#],Message[ServiceConnect::url,#];Throw[$Failed]]&/@{authurl, requrl, accessurl};
 	If[!StringQ[#],Message[ServiceConnect::skey,#];Throw[$Failed]]&/@{key, secret};
 	If[!StringQ[redirect],Message[ServiceConnect::url,redirect];Throw[$Failed]];
-	dialogfun=Switch[dialog,
-		"TokenDialog",
+	
+	uuid=ServiceConnections`Private`makeuuid[];
+	dialogfun=Switch[{dialog,$CloudEvaluation},
+		{"TokenDialog",True},
+		OAuthClient`tokenOAuthDialog[#, {name,uuid}]&,
+		{"TokenlessDialog",True},
+		OAuthClient`notokenOAuthDialog[#, {name, uuid}]&,
+		{"TokenDialog",_},
 		OAuthClient`tokenOAuthDialog[#, name]&,
-		"TokenlessDialog",
+		{"TokenlessDialog",_},
 		OAuthClient`notokenOAuthDialog[#, name]&,
-		Except[_String],dialog,
+		{Except[_String],True},
+		(dialog/.HoldPattern[OAuthClient`tokenOAuthDialog][first_,second_String, rest___]:>OAuthClient`tokenOAuthDialog[first,{second, uuid}, rest]),
+		{Except[_String],_},dialog,
 		_,
 		Message[ServiceConnect::dialog,dialogfun];Throw[$Failed]
 	];
@@ -253,13 +263,11 @@ newunknownoauthauthenticate[name_,opts___]:=Module[{version,authurl,requrl,acces
 		_,
 		Message[ServiceConnect::reqform,requestformat];Throw[$Failed]
 	];
-	
-	
 	token=Which[
 		(* authenticate with parameters in request header *)
 		MatchQ[requestformat,"Headers"|{"Headers",__}]&&version==="1.0a",
 		Block[{HTTPClient`OAuth`Private`HMACSha1SignatureService,$useAuthHeader=requestformat},
-			HTTPClient`OAuth`Private`loadLibOAuth[];
+			HTTPClient`OAuth`Private`initializedQ;
 			HTTPClient`OAuth`Private`HMACSha1SignatureService[args__] := 
 				With[{res = HTTPClient`OAuth`Private`oAuth10SignURL[args]},
 					Sequence @@ OAuthClient`Private`fromURLtoAuthorizationHeaders[{res}, version,requestformat]
@@ -302,7 +310,7 @@ newunknownoauthauthenticate[name_,opts___]:=Module[{version,authurl,requrl,acces
 			redirect,{extra,scope},dialogfun,atokenext,extraopts]
 	];
 	
-	service=ServiceConnections`Private`createServiceObject["OAuth",name,token];
+	service=ServiceConnections`Private`createServiceObject["OAuth",name,token, uuid];
 	id=getServiceID[service];
 	urlfetchFun[id]=urlfetchfun;
 	refreshtoken[id]=temprefreshtoken;

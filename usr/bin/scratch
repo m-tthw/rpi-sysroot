@@ -1,14 +1,12 @@
 #!/bin/sh
 # File:            scratch
-# Description:     Script to start the Squeak VM binary with the scratch image
+# Description:     Script to start the Cog Stack VM binary with the nuscratch image
 # Original Author: Bert Freudenberg
-# Adapted by:      Miriam Ruiz
+# Adapted by:      Miriam Ruiz, Alex Bradbury
 
-VM_VERSION=`find /usr/lib/squeak/ -name "squeakvm" -type f|cut -f5 -d"/"`
-SQ_DIR=/usr/lib/squeak/$VM_VERSION
-VM="$SQ_DIR/squeakvm"
-VMOPTIONS="-encoding UTF-8 -vm-display-x11 -xshm -plugins /usr/lib/scratch/plugins/:$SQ_DIR/"
-IMAGE="/usr/share/scratch/Scratch20131203.image"
+VM="/usr/bin/squeak-stack"
+VMOPTIONS="-memory 128M"
+IMAGE="/usr/share/scratch/NuScratch140115.image"
 IMOPTIONS=""
 DOCUMENT=""
 WRAPPER=""

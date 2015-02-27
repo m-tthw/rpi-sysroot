@@ -1,10 +1,7 @@
-(* Paclet Info File *)
-
-(* created 2014/07/03*)
 
 Paclet[
     Name -> "WolframAlphaClient",
-    Version -> "1.6.1",
+    Version -> "2.0.205",
     MathematicaVersion -> "10+",
     Root -> ".",
     Internal -> True,

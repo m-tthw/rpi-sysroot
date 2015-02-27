@@ -1,42 +1,35 @@
-<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Use sample pack alias</font></span></p>
-<h1><font color="#3c3c3c"><pre>use_sample_pack_as<pre></font></h1>
-<h2><pre>[pack_path <font color="deeppink">(string)</font>]</pre></h2>
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Random list selection</font></span></p>
+<h1><font color="#3c3c3c"><pre>choose<pre></font></h1>
+<h2><pre>[list <font color="deeppink">(array)</font>]</pre></h2>
 <p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
-Similar to use_sample_pack except you can assign prefix aliases for samples. This lets you 'namespace' your sounds so that they don't clash, even if they have the same filename.
+Choose an element at random from a list (array).
 </p>
 <p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
-Introduced in v2.0.0
-</p>
-<table cellpadding="2">
+<span style="color:white;background-color:darkorange;">Introduced in v2.0
+</span></p>
+<table cellpadding="8">
  <tr>
    <th></th><th></th><th></th>
  </tr>
  <tr bgcolor="#F8F8F8">
-  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+  <td bgcolor="#74ACFF"><h3><pre>Example 0 </pre></h3></td>
    <td><pre>
-
-# lets say you have two folders of your own sample files,
-# and they both contain a file named 'bass.wav'
-use_sample_pack_as '/home/yourname/my/cool/samples/guitar', :my_guitars
-use_sample_pack_as '/home/yourname/my/cool/samples/drums', :my_drums
-
-# You can now play both the 'bass.wav' samples, as they've had the symbol stuck on the front
-sample :my_guitars_bass   
-sample :my_drums_bass 
-
+loop do
+  play choose([60, 64, 67])
+  sleep 1
+  play chord(:c, :major).choose
+  sleep 1
+end
 
 
 </pre></td>
    <td><pre>
  
+#=&gt; plays one of 60, 64 or 67 at random
+ 
+#=&gt; You can also call .choose on the list
  
  
- 
- 
- 
- 
- #=&gt; plays '/home/yourname/my/cool/samples/guitar/bass.wav'
- #=&gt; plays '/home/yourname/my/cool/samples/drums/bass.wav'
 
 
 

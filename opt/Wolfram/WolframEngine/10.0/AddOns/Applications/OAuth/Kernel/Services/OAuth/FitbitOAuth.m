@@ -11,9 +11,9 @@ Begin["`Private`"](* Begin Private Context *)
 fitbitdata[]={
         "ServiceName"       -> "Fitbit",
         "OAuthVersion"		-> "1.0a",
-        "RequestEndpoint"   -> "http://api.fitbit.com/oauth/request_token",
-        "AccessEndpoint"    -> "http://api.fitbit.com/oauth/access_token",
-        "AuthorizeEndpoint" -> "http://www.fitbit.com/oauth/authorize",
+        "RequestEndpoint"   -> "https://api.fitbit.com/oauth/request_token",
+        "AccessEndpoint"    -> "https://api.fitbit.com/oauth/access_token",
+        "AuthorizeEndpoint" -> "https://www.fitbit.com/oauth/authorize",
         "VerifierLabel"		->	"security code",
 	 	"ClientInfo"		-> {"Wolfram","Token"},
 	 	"AuthenticationDialog" :> (OAuthClient`tokenOAuthDialog[#, "Fitbit",fitbiticon]&),
@@ -63,14 +63,14 @@ fitbitimport[raw_]:=raw
  
      
 fitbitdata["RawUserData"] = {
-        "URL"				->	"http://api.fitbit.com/1/user/-/profile.json",
+        "URL"				->	"https://api.fitbit.com/1/user/-/profile.json",
         "HTTPSMethod"		-> "GET",
        	"Headers" 			-> {"Accept-Language"->"en_US"},  (* Can be "en_US", "en_GB", or "" *)
         "ResultsFunction"	-> fitbitimport
     }
  
 fitbitdata["RawMeasurements"] = {
-        "URL"				->	(ToString@StringForm["http://api.fitbit.com/1/user/-/body/date/`1`.json", formatDate[##]]&),
+        "URL"				->	(ToString@StringForm["https://api.fitbit.com/1/user/-/body/date/`1`.json", formatDate[##]]&),
        	"Headers" 			-> {"Accept-Language"->"en_US"},  (* Can be "en_US", "en_GB", or "" *)
         "PathParameters" 	-> {"Date"},
         "HTTPSMethod"		-> "GET",
@@ -79,7 +79,7 @@ fitbitdata["RawMeasurements"] = {
        
 fitbitdata["RawWeight"] = {
         "URL"				->	(ToString@
-        	StringForm["http://api.fitbit.com/1/user/-/body/log/weight/date/`1`.json", formatDate[##]]&),
+        	StringForm["https://api.fitbit.com/1/user/-/body/log/weight/date/`1`.json", formatDate[##]]&),
        	"Headers" 			-> {"Accept-Language"->"en_US"},  (* Can be "en_US", "en_GB", or "" *)
         "PathParameters" 	-> {"Date"},
         "HTTPSMethod"		-> "GET",
@@ -87,48 +87,48 @@ fitbitdata["RawWeight"] = {
     }
 
 fitbitdata["RawBodyFat"] = {
-        "URL"				->	(ToString@StringForm["http://api.fitbit.com/1/user/-/body/log/fat/date/`1`.json", formatDate[##]]&),
+        "URL"				->	(ToString@StringForm["https://api.fitbit.com/1/user/-/body/log/fat/date/`1`.json", formatDate[##]]&),
         "PathParameters" 	-> {"Date","StartDate","EndDate"},
         "HTTPSMethod"		-> "GET",
         "ResultsFunction"	-> fitbitimport
     }
            
 fitbitdata["RawFood"] = {
-        "URL"				->	(ToString@StringForm["http://api.fitbit.com/1/user/-/foods/log/date/`1`.json", formatDate[##]]&),
+        "URL"				->	(ToString@StringForm["https://api.fitbit.com/1/user/-/foods/log/date/`1`.json", formatDate[##]]&),
         "HTTPSMethod"		-> "GET",
         "PathParameters" 	-> {"Date","StartDate","EndDate"},
         "ResultsFunction"	-> fitbitimport
     }
            
 fitbitdata["RawWater"] = {
-        "URL"				->	(ToString@StringForm["http://api.fitbit.com/1/user/-/foods/log/water/date/`1`.json", formatDate[##]]&),
+        "URL"				->	(ToString@StringForm["https://api.fitbit.com/1/user/-/foods/log/water/date/`1`.json", formatDate[##]]&),
         "HTTPSMethod"		-> "GET",
         "PathParameters" 	-> {"Date"},
         "ResultsFunction"	-> fitbitimport
     }
     
 fitbitdata["RawActivity"] = {
-        "URL"				->	(ToString@StringForm["http://api.fitbit.com/1/user/-/activities/date/`1`.json", formatDate[##]]&),
+        "URL"				->	(ToString@StringForm["https://api.fitbit.com/1/user/-/activities/date/`1`.json", formatDate[##]]&),
         "PathParameters" 	-> {"Date"},
         "HTTPSMethod"		-> "GET",
         "ResultsFunction"	-> fitbitimport
     }
 fitbitdata["RawSleep"] = {
-        "URL"				->	(ToString@StringForm["http://api.fitbit.com/1/user/-/sleep/date/`1`.json", formatDate[##]]&),
+        "URL"				->	(ToString@StringForm["https://api.fitbit.com/1/user/-/sleep/date/`1`.json", formatDate[##]]&),
         "PathParameters" 	-> {"Date"},
         "HTTPSMethod"		-> "GET",
         "ResultsFunction"	->fitbitimport
     } 
            
 fitbitdata["RawFoodUnit"] = {
-        "URL"				->	"http://api.fitbit.com/1/foods/units.json",
+        "URL"				->	"https://api.fitbit.com/1/foods/units.json",
         "PathParameters" 	-> {},
         "HTTPSMethod"		-> "GET",
         "ResultsFunction"	->fitbitimport
     } 
         
 fitbitdata["RawLogFood"] = {
-        "URL"				->	"http://api.fitbit.com/1/user/-/foods/log.json",
+        "URL"				->	"https://api.fitbit.com/1/user/-/foods/log.json",
         "BodyData"			-> {"foodID","foodName","calories","brandName","mealTypeId","unitId","amount","date"},
    		"RequiredParameters"-> {"mealTypeId","unitId","amount","date"},
         "HTTPSMethod"		-> "POST",
@@ -136,7 +136,7 @@ fitbitdata["RawLogFood"] = {
     } 
                    
 fitbitdata["RawLogWeight"] = {
-        "URL"				->	"http://api.fitbit.com/1/user/-/body/log/weight.json",
+        "URL"				->	"https://api.fitbit.com/1/user/-/body/log/weight.json",
        	"Headers" 			-> {"Accept-Language"->"en_US"},  (* Can be "en_US", "en_GB", or "" *)
         "BodyData"			-> {"weight","date"},
    		"RequiredParameters"-> {"weight","date"},
@@ -145,7 +145,7 @@ fitbitdata["RawLogWeight"] = {
     } 
              
 fitbitdata["RawLogBodyFat"] = {
-        "URL"				->	"http://api.fitbit.com/1/user/-/body/log/fat.json",
+        "URL"				->	"https://api.fitbit.com/1/user/-/body/log/fat.json",
         "BodyData"			-> {"fat","date"},
    		"RequiredParameters"-> {"fat","date"},
         "HTTPSMethod"		-> "POST",
@@ -153,7 +153,7 @@ fitbitdata["RawLogBodyFat"] = {
     } 
     
 fitbitdata["RawLogMeasurement"] = {
-        "URL"				->	"http://api.fitbit.com/1/user/-/body.json",
+        "URL"				->	"https://api.fitbit.com/1/user/-/body.json",
        	"Headers" 			-> {"Accept-Language"->"en_US"},
         "BodyData"			-> {"bicep","calf","chest","fat","forearm","hips","neck","thigh","waist","weight","date"},
    		"RequiredParameters"-> {"bicep"|"calf"|"chest"|"fat"|"forearm"|"hips"|"neck"|"thigh"|"waist"|"weight"},
@@ -199,7 +199,7 @@ rawfitbittimeseriesproperties=("Raw"<>#&/@fitbittimeseriesproperties)
 fitbittimeseriesPlots=DeleteCases[StringReplace[fitbittimeseriesproperties, "TimeSeries" -> "Plot"],"Bedtimes"]
 
 fitbitdata[prop:(Alternatives@@rawfitbittimeseriesproperties)] := {
-        "URL"				->	(ToString@StringForm["http://api.fitbit.com/1/user/-/"<>
+        "URL"				->	(ToString@StringForm["https://api.fitbit.com/1/user/-/"<>
         	(prop/.Thread[rawfitbittimeseriesproperties->fitbittimeseriespaths])<>"/date/`1`/`2`.json", formatDate[#1],formatDate[#2]]&),
         "PathParameters" 	-> {"StartDate", "EndDate"},
    		"RequiredParameters"-> {"StartDate", "EndDate"},

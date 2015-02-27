@@ -3001,7 +3001,7 @@ input[type="button"].btn-block {
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 1000;
+  z-index: 1031;
   display: none;
   float: left;
   min-width: 160px;
@@ -3090,7 +3090,7 @@ input[type="button"].btn-block {
   right: 0;
   bottom: 0;
   top: 0;
-  z-index: 990;
+  z-index: 1021;
 }
 .pull-right > .dropdown-menu {
   right: 0;
@@ -3709,7 +3709,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   position: fixed;
   right: 0;
   left: 0;
-  z-index: 1030;
+  z-index: 1000;
 }
 @media (min-width: 768px) {
   .navbar-fixed-top,
@@ -6336,19 +6336,18 @@ textarea.form-control[rows] {
   position: absolute;
   top: 0;
   right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
   min-width: 100%;
   min-height: 100%;
-  font-size: 999px;
-  text-align: right;
-  filter: alpha(opacity=0);
-  opacity: 0;
-  background: red;
-  cursor: inherit;
-  display: block;
 }
 .smart-icon {
   color: #d9230f;
-  z-index: 990;
+  z-index: 1001;
 }
 .form-control:focus + .smart-icon,
 .smart-icon:hover {
@@ -6633,6 +6632,13 @@ input::-webkit-inner-spin-button {
   position: absolute;
   left: -50000px;
 }
+.checkbox .checkbox-label,
+.radio .checkbox-label,
+.checkbox .radio-label,
+.radio .radio-label {
+  display: inline-block;
+  position: relative;
+}
 .checkbox .checkbox-label:before,
 .radio .checkbox-label:before,
 .checkbox .radio-label:before,
@@ -6642,7 +6648,8 @@ input::-webkit-inner-spin-button {
   width: 15px;
   height: 15px;
   position: absolute;
-  left: 0;
+  left: -18px;
+  top: 0px;
   border: 1px solid #cccccc;
   border-radius: 3px;
   background-color: #ffffff;
@@ -6655,6 +6662,10 @@ input::-webkit-inner-spin-button {
 .checkbox .radio-label:before,
 .radio .radio-label:before {
   border-radius: 500px;
+}
+.checkbox .checkbox-label:before,
+.radio .checkbox-label:before {
+  top: -16px;
 }
 .checkbox input[type="radio"] + .radio-label:after,
 .radio input[type="radio"] + .radio-label:after,
@@ -6676,8 +6687,8 @@ input::-webkit-inner-spin-button {
   color: #cc0000;
   display: block;
   position: absolute;
-  left: 2px;
-  top: 11px;
+  left: -15px;
+  top: -12px;
   font-size: 10px;
   content: "\e013";
 }
@@ -6690,8 +6701,8 @@ input::-webkit-inner-spin-button {
   background-color: #cc0000;
   content: " ";
   position: absolute;
-  left: 5px;
-  top: 14px;
+  left: -13px;
+  top: 7px;
 }
 .checkbox input[type="radio"]:focus + .radio-label:before,
 .radio input[type="radio"]:focus + .radio-label:before,
@@ -6790,14 +6801,26 @@ input::-webkit-inner-spin-button {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
+@media (min-width: 768px) {
+  .wolfram-branding {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    bottom: 0;
+    margin-bottom: 0;
+    border-width: 1px 0 0;
+  }
+  body.has-wolfram-branding {
+    padding-bottom: 39px;
+  }
+}
+@media (min-width: 768px) and (min-width: 768px) {
+  .wolfram-branding {
+    border-radius: 0;
+  }
+}
 .wolfram-branding {
-  position: fixed;
-  right: 0;
-  left: 0;
-  z-index: 1030;
-  bottom: 0;
-  margin-bottom: 0;
-  border-width: 1px 0 0;
   height: 39px;
   display: block;
   padding: 9px 12px;
@@ -6805,11 +6828,6 @@ input::-webkit-inner-spin-button {
   background-color: #2e2e2e;
   -webkit-box-shadow: inset 0 1px 0 #545454;
   box-shadow: inset 0 1px 0 #545454;
-}
-@media (min-width: 768px) {
-  .wolfram-branding {
-    border-radius: 0;
-  }
 }
 .wolfram-branding > .wolfram-branding-cloud {
   display: block;
@@ -6877,9 +6895,6 @@ input::-webkit-inner-spin-button {
   content: "|";
   margin: 0px 4px 0px 7px;
   color: #ffffff;
-}
-body.has-wolfram-branding {
-  padding-bottom: 39px;
 }
 .glyphicon-spin,
 .icon-spin,

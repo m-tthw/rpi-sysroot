@@ -1,49 +1,41 @@
 <font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
 
-<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Triggering Samples</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">Playing beeps is only the beginning. Something that’s a lot of fun is triggering pre-recorded samples. Try it:</p>
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Blocks</span></p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :ambi_lunar_land
-</code></pre>
+<p style="font-size:15px;color:#5e5e5e;">A structure you’ll see a lot in Sonic Pi is the block. Blocks allow us
+to do useful things with large chunks of code. For example, with synth
+and sample parameters we were able to change something that happened on
+a single line. However, sometimes we want to do something meaningful to
+a number of lines of code. For example, we may wish to loop it, to add
+reverb to it, to only run it 1 time out of 5, etc. Consider the
+following code:</p>
 
-<p style="font-size:15px;color:#5e5e5e;">Sonic Pi includes many samples for you to play with. You can use them just like you use the <code style="font-size:15px; color:deeppink; background-color:white">play</code> command. To play multiple samples and notes just write them one after another:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play 36
-play 48
-sample :ambi_lunar_land
-sample :ambi_drone
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">If you want to space them out in time, use the <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> command:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :ambi_lunar_land
-sleep 1
-play 48
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 50
 sleep 0.5
-play 36
-sample :ambi_drone
-sleep 1
-play 36
+sample :elec_plip
+sleep 0.5
+play 62
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Notice how Sonic Pi doesn’t wait for a sound to finish before starting the next sound. The <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> command only describes the separation of the <em style="font-size:15px;color:darkorange;">triggering</em> of the sounds. This allows you to easily layer sounds together creating interesting overlap effects. Later in this tutorial we’ll take a look at controlling the <em style="font-size:15px;color:darkorange;">duration</em> of sounds with envelopes.</p>
+<p style="font-size:15px;color:#5e5e5e;">To do something with a chunk of code, we need to tell Sonic Pi where
+the code block <em style="font-size:15px;color:darkorange;">starts</em> and where it <em style="font-size:15px;color:darkorange;">ends</em>. We use <code style="font-size:15px; color:deeppink; background-color:white">do</code> for start and
+<code style="font-size:15px; color:deeppink; background-color:white">end</code> for end. For example:</p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Discovering Samples</span></p>
+<pre><code style="font-size:15px; color:deeppink; background-color:white">do
+  play 50
+  sleep 0.5
+  sample :elec_plip
+  sleep 0.5
+  play 62
+end
+</code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">There are two ways to discover the range of samples provided in Sonic Pi. First, you can use this help system. Click on Samples in the far left vertical menu, choose your category and then you’ll see a list of available sounds.</p>
-
-<p style="font-size:15px;color:#5e5e5e;">Alternatively you can use the <em style="font-size:15px;color:darkorange;">auto-completion system</em>. Simply type the start of a sample group such as: <code style="font-size:15px; color:deeppink; background-color:white">sample :ambi_</code> and you’ll see a drop-down of sample names appear for you to select. Try the following category prefixes: </p>
-
-<ul style="font-size:15px;color:#5e5e5e;">
-  <li><code style="font-size:15px; color:deeppink; background-color:white">:ambi_</code> </li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">:bass_</code></li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">:elec_</code></li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">:perc_</code></li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">:guit_</code></li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">:drum_</code></li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">:misc_</code></li>
-</ul>
-
-<p style="font-size:15px;color:#5e5e5e;">Now start mixing samples into your compositions!</p>
+<p style="font-size:15px;color:#5e5e5e;">However, this isn’t yet complete and won’t work (try it and you’ll get
+an error) as we haven’t told Sonic Pi what we want to do with this
+<em style="font-size:15px;color:darkorange;">do/end block</em>. We tell Sonic Pi this by writing some special code
+before the <code style="font-size:15px; color:deeppink; background-color:white">do</code>. We’ll see a number of these special pieces of code
+later on in this tutorial. For now, it’s important to know that wrapping
+your code within <code style="font-size:15px; color:deeppink; background-color:white">do</code> and <code style="font-size:15px; color:deeppink; background-color:white">end</code> tells Sonic Pi you wish to do something
+special with that chunk of code.</p>
 </font>

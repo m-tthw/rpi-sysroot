@@ -23,7 +23,8 @@ Paclet[
                 "System`FormFunction", 
                 "System`FormLayoutFunction", 
                 "System`AppearanceRules", 
-                "System`APIFunction"
+                "System`APIFunction",
+                "System`AutoSubmitting"
                 }
             }
         }

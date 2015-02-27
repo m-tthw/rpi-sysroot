@@ -138,6 +138,9 @@ titleChangedFunc
 (* Experimental utility func. *)
 asyncEvaluate
 
+(* Find the class file for a given class *)
+locateClass
+
 contextIndependentOptions
 
 End[]  (* `Package` *)
@@ -595,6 +598,25 @@ If[!ValueQ[$registeredWindows], $registeredWindows = {}]
 
 Internal`SetValueNoTrack[$nextWindowID, True]
 Internal`SetValueNoTrack[$registeredWindows, True]
+
+(**********************************  locateClass  **************************************)
+
+(* A simple utility function that gives the location on disk of the class file that a given class is coming from. *)
+
+locateClass[obj_?JavaObject] := JavaBlock[obj@getClass[]@getProtectionDomain[]@getCodeSource[]getLocation[]@toString[]]
+
+locateClass[class_String] := 
+    JavaBlock[
+        Module[{cls},
+            LoadJavaClass["com.wolfram.jlink.JLinkClassLoader"];
+            cls = JLinkClassLoader`classFromName[class];
+            If[cls =!= Null && JavaObjectQ[cls],
+                cls@getProtectionDomain[]@getCodeSource[]@getLocation[]@toString[],
+            (* else *)
+                $Failed
+            ]
+        ]
+    ]
 
 
 (**********************************  asyncEvaluate  **************************************)

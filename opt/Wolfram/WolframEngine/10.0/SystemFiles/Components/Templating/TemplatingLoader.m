@@ -4,6 +4,32 @@
    autoloadSymbols must agree with the symbols listed in the Kernel extension in the PacletInfo.m file.
 *)
 
+Map[
+    (Unprotect[#];ClearAll[#]) &, {
+        "System`CombinerFunction", 
+        "System`InsertionFunction", 
+        "System`StringTemplate", 
+        "System`DefaultValue",
+        "System`FileTemplate",
+        "System`FileTemplateApply", 
+        "System`TemplateApply", 
+        "System`TemplateObject",
+        "System`TemplateIf", 
+        "System`TemplateSequence", 
+        "System`TemplateSlot", 
+        "System`TemplateExpression", 
+        "System`TemplateWith", 
+        "System`XMLTemplate",
+        "System`Pluralize",
+        "System`Webpage",
+        "System`$HTMLExportRules",
+        "System`$TemplatePath",    
+        "Templating`*",
+        "Templating`*`*",
+        "Templating`*`*`*"
+    }
+]
+
 Templating`Private`autoloadSymbols = {
     "System`CombinerFunction", 
     "System`InsertionFunction", 
@@ -20,6 +46,7 @@ Templating`Private`autoloadSymbols = {
     "System`TemplateWith", 
     "System`XMLTemplate",
     "System`Pluralize",
+    "System`Webpage",
     "System`$HTMLExportRules",
     "System`$TemplatePath",
     "Templating`ExportHTML"
@@ -32,7 +59,7 @@ Templating`Private`symsToProtect = Hold[
         "System`$HTMLExportRules",
         "System`$TemplatePath",
         "Templating`ExportHTML",
-        "Templating`HTML`PackagePrivate`$HTMLDefaultTemplate"
+        "Templating`Webpage`PackagePrivate`templateForHead"
     })
 ];
 

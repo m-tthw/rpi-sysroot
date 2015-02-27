@@ -7,10 +7,10 @@ else
   USERNAME="$SUDO_USER"
 fi
 
-if [ -n "$USERNAME" ] && [ -d "/home/$USERNAME/Desktop" ]; then
-  cp /usr/share/applications/sonic-pi.desktop "/home/$USERNAME/Desktop"
-  chown "$USERNAME" "/home/$USERNAME/Desktop/sonic-pi.desktop"
-fi
+# if [ -n "$USERNAME" ] && [ -d "/home/$USERNAME/Desktop" ]; then
+#   cp /usr/share/applications/sonic-pi.desktop "/home/$USERNAME/Desktop"
+#   chown "$USERNAME" "/home/$USERNAME/Desktop/sonic-pi.desktop"
+# fi
 
 echo "Enabling /etc/security/limits.d/audio.conf for jackd2"
 echo "jackd2 jackd/tweak_rt_limits boolean true" | debconf-set-selections

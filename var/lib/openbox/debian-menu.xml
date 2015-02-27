@@ -121,6 +121,14 @@
         <item label='Xkill'>
           <action name='Execute'><execute>xkill</execute></action>
         </item>
+        <item label='Xrefresh'>
+          <action name='Execute'><execute>xrefresh</execute></action>
+        </item>
+      </menu>
+      <menu id='/Debian/Applications/System/Hardware' label='Hardware'>
+        <item label='Xvidtune'>
+          <action name='Execute'><execute>xvidtune</execute></action>
+        </item>
       </menu>
       <menu id='/Debian/Applications/System/Monitoring' label='Monitoring'>
         <item label='LXRandR'>

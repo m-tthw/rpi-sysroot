@@ -56,7 +56,7 @@ CloudObject /: SetOptions[obj_CloudObject, MetaInformation -> values_] :=
 
 CloudObject /: Verbatim[Options][obj_CloudObject, MetaInformation -> key_String] :=
     execute[obj, "GET", "files", {"properties", key}] /. {
-        HTTPError[404] :>
+        HTTPError[404, ___] :>
             If[FileExistsQ[obj],
                 Missing["Undefined"],
                 Message[CloudObject::cloudnf, obj];
@@ -88,7 +88,7 @@ CloudObject /: SetOptions[obj_CloudObject, Permissions -> permissions_] :=
     Module[{cloud, uuid, mimetype, accessJSON},
         mimetype = CloudObjectInformation[obj, "MimeType"];
         If[mimetype === $Failed, Return[$Failed]];
-        accessJSON = toJSON@normalizePermissions[permissions, mimetype];
+        accessJSON = toJSON@normalizePermissions[permissions, mimetype, SetOptions];
         {cloud, uuid} = getCloudAndUUID[obj];
         If[!(StringQ[cloud] && UUIDQ[uuid]),
             Message[CloudObject::cloudnf, obj];
@@ -97,7 +97,7 @@ CloudObject /: SetOptions[obj_CloudObject, Permissions -> permissions_] :=
 
         execute[cloud, "PUT", {"files", uuid, "permissions"},
             Body -> ToCharacterCode[accessJSON]] /. {
-            HTTPError[404] :> (
+            HTTPError[404, ___] :> (
                 Message[CloudObject::cloudnf, obj];
                 Return[$Failed]
             ),
@@ -119,7 +119,7 @@ CloudObject /: Verbatim[Options][obj_CloudObject, Permissions] :=
         ];
 
         permjson = execute[cloud, "GET", {"files", uuid, "permissions"}] /. {
-            HTTPError[404] :> (
+            HTTPError[404, ___] :> (
                 Message[CloudObject::cloudnf, obj];
                 Return[$Failed]
             ),
@@ -160,7 +160,7 @@ CloudObject /: Verbatim[Options][obj_CloudObject, IconRules -> name_] :=
         ];
 
         icon = execute[cloud, "GET", {"files", uuid, "icon", name}] /. {
-            HTTPError[404] :> (
+            HTTPError[404, ___] :> (
                 Message[CloudObject::noicon, name, obj];
                 Return[$Failed]
             ),
@@ -215,7 +215,7 @@ CloudObject /: Verbatim[Options][obj_CloudObject, IconRules] :=
 (*****************************************************************************)
 (* "Active" *)
 
-CloudObject /: Verbatim[Options][obj_CloudObject, "Active"] := 
+CloudObject /: Verbatim[Options][obj_CloudObject, "Active"] :=
     Module[{cloud, uuid, response},
         {cloud, uuid} = getCloudAndUUID[obj];
         If[!(StringQ[cloud] && UUIDQ[uuid]),
@@ -224,7 +224,7 @@ CloudObject /: Verbatim[Options][obj_CloudObject, "Active"] :=
         ];
 
         response = execute[cloud, "GET", {"files", uuid, "active"}] /. {
-            HTTPError[404] :> (Message[CloudObject::cloudnf, obj];
+            HTTPError[404, ___] :> (Message[CloudObject::cloudnf, obj];
                 Return[$Failed]),
             {_String, contentBytes:{_Integer ...}} :>
                 FromCharacterCode[contentBytes],
@@ -234,7 +234,7 @@ CloudObject /: Verbatim[Options][obj_CloudObject, "Active"] :=
             )
         };
 
-        StringMatchQ[StringTrim[response], "true" | "yes" | "t", 
+        StringMatchQ[StringTrim[response], "true" | "yes" | "t",
         	IgnoreCase->True]
     ]
 
@@ -248,7 +248,7 @@ CloudObject /: SetOptions[obj_CloudObject, "Active" -> activeQ_?BooleanQ] :=
 
         execute[cloud, "PUT", {"files", uuid, "active"},
             Body -> activeQBody[activeQ]] /. {
-            HTTPError[404] :> (Message[CloudObject::cloudnf, obj]; $Failed),
+            HTTPError[404, ___] :> (Message[CloudObject::cloudnf, obj]; $Failed),
             {_String, contentBytes:{_Integer ...}} :> {"Active" -> activeQ},
             other_ :> ($lastError = other;
 	            Message[CloudObject::srverr, obj];

@@ -96,3 +96,7 @@ Convert to Text Cell
 @@resource codeAssistConvertToSectionCellMenuString
 Convert to Section Cell
 @|
+@|
+@@resource codeAssistDirectoryBrowseMenuString
+Directory Browser
+@|

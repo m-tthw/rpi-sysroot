@@ -3,17 +3,17 @@
 (*** Wolfram Notebook File ***)
 (* http://www.wolfram.com/nb *)
 
-(* CreatedBy='Mathematica 10.0' *)
+(* CreatedBy='Mathematica 9.0' *)
 
 (*CacheID: 234*)
 (* Internal cache information:
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
-NotebookDataPosition[       158,          7]
-NotebookDataLength[    739133,      15784]
-NotebookOptionsPosition[    734374,      15660]
-NotebookOutlinePosition[    737055,      15734]
-CellTagsIndexPosition[    737012,      15731]
+NotebookDataPosition[       157,          7]
+NotebookDataLength[    740170,      15808]
+NotebookOptionsPosition[    735432,      15684]
+NotebookOutlinePosition[    738091,      15758]
+CellTagsIndexPosition[    738048,      15755]
 WindowTitle->Drawing Tools
 WindowFrame->Palette*)
 
@@ -8511,6 +8511,14 @@ AFKwIMQ=
                     Replace[$CellContext`x, Automatic -> 0.04], {
                     Pattern[$CellContext`x, 
                     Blank[]], 
+                    Pattern[$CellContext`y, Automatic], 
+                    Pattern[$CellContext`z, 
+                    
+                    BlankNullSequence[]]} :> {{-$CellContext`x, \
+$CellContext`y, $CellContext`z}, {$CellContext`x, $CellContext`y, \
+$CellContext`z}}, {
+                    Pattern[$CellContext`x, 
+                    Blank[]], 
                     Pattern[$CellContext`y, 
                     Blank[]], 
                     Pattern[$CellContext`z, 
@@ -8587,6 +8595,14 @@ $CellContext`z}}}], {
                     PatternTest[
                     Blank[], NumberQ], Automatic]] :> {-1, 1} 
                     Replace[$CellContext`x, Automatic -> 0.04], {
+                    Pattern[$CellContext`x, 
+                    Blank[]], 
+                    Pattern[$CellContext`y, Automatic], 
+                    Pattern[$CellContext`z, 
+                    
+                    BlankNullSequence[]]} :> {{-$CellContext`x, \
+$CellContext`y, $CellContext`z}, {$CellContext`x, $CellContext`y, \
+$CellContext`z}}, {
                     Pattern[$CellContext`x, 
                     Blank[]], 
                     Pattern[$CellContext`y, 
@@ -8679,6 +8695,14 @@ $CellContext`z}}}], {
                     Replace[$CellContext`x, Automatic -> 0.04], {
                     Pattern[$CellContext`x, 
                     Blank[]], 
+                    Pattern[$CellContext`y, Automatic], 
+                    Pattern[$CellContext`z, 
+                    
+                    BlankNullSequence[]]} :> {{-$CellContext`x, \
+$CellContext`y, $CellContext`z}, {$CellContext`x, $CellContext`y, \
+$CellContext`z}}, {
+                    Pattern[$CellContext`x, 
+                    Blank[]], 
                     Pattern[$CellContext`y, 
                     Blank[]], 
                     Pattern[$CellContext`z, 
@@ -8762,7 +8786,6 @@ $CellContext`z}}}], {
                     ListQ[$CellContext`old], 
                     Map[
                     Function[{$CellContext`a}, 
-                    
                     Replace[$CellContext`a, {
                     Automatic :> -$CellContext`v, PatternTest[
                     Pattern[$CellContext`x, 
@@ -9346,6 +9369,7 @@ $CellContext`arrowheadFunction$$[
                     If[
                     $CellContext`active$$[Arrowheads], 
                     $CellContext`cache$$[Arrowheads], 
+                    
                     CurrentValue[$FrontEnd, {NewPrimitiveStyle, Arrowheads}, 
                     0.04]]], {($CellContext`active$$[Arrowheads] = True; If[
                     FreeQ[
@@ -15675,7 +15699,8 @@ WindowMargins->FrontEnd`CurrentValue[
 WindowElements->{"VerticalScrollBar", "MagnificationPopUp", "StatusArea"},
 WindowTitle->Dynamic[
   FEPrivate`FrontEndResource["GraphicsInspectorDialog", "WindowTitleText"]],
-ScrollingOptions->{"VerticalScrollRange"->Fit},
+ScrollingOptions->{"PagewiseScrolling"->False,
+"VerticalScrollRange"->Fit},
 TaggingRules->{"NotebookID" -> "DrawingTools"},
 CellContext->Notebook,
 DynamicUpdating->True,
@@ -15699,7 +15724,7 @@ ImageSize->160},
 TooltipBoxOptions->{TooltipDelay->0.6},
 GridBoxOptions->{BaselinePosition->{{1, 1}, Baseline},
 FrameStyle->GrayLevel[0.6]},
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 27, \
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
 2013)",
 StyleDefinitions->Notebook[{
    Cell[
@@ -15718,9 +15743,8 @@ StyleDefinitions->Notebook[{
      CellFrame -> {{1, 1}, {1, 0}}, CellMargins -> 0, 
     CellFrameMargins -> {{15, 0}, {15, 0}}, CellFrameColor -> 
     GrayLevel[0.7]]}, Visible -> False, FrontEndVersion -> 
-  "10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 27, 2013)", 
-  StyleDefinitions -> "Default.nb"],
-ScrollingOptions -> {"PagewiseScrolling" -> False}
+  "9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, 2013)", 
+  StyleDefinitions -> "Default.nb"]
 ]
 (* End of Notebook Content *)
 
@@ -15734,55 +15758,55 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[608, 23, 1235, 29, 21, "SectionLabel"],
-Cell[1846, 54, 63160, 1417, 93, "SectionContent"]
+Cell[607, 23, 1235, 29, 21, "SectionLabel"],
+Cell[1845, 54, 63160, 1417, 93, "SectionContent"]
 }, Dynamic[CurrentValue[$FrontEnd, {
   PrivateFrontEndOptions, "DialogSettings", "DrawingTools", "ToolsOpener"}]]]],
 Cell[CellGroupData[{
-Cell[65147, 1477, 1245, 29, 21, "SectionLabel"],
-Cell[66395, 1508, 83632, 1823, 201, "SectionContent"]
+Cell[65146, 1477, 1245, 29, 21, "SectionLabel"],
+Cell[66394, 1508, 83632, 1823, 201, "SectionContent"]
 }, Dynamic[CurrentValue[$FrontEnd, {
   PrivateFrontEndOptions, "DialogSettings", "DrawingTools", 
    "OperationsOpener"}]]]],
 Cell[CellGroupData[{
-Cell[150177, 3338, 1233, 29, 21, "SectionLabel"],
-Cell[151413, 3369, 28359, 606, 96, "SectionContent"]
+Cell[150176, 3338, 1233, 29, 21, "SectionLabel"],
+Cell[151412, 3369, 28359, 606, 96, "SectionContent"]
 }, Dynamic[CurrentValue[$FrontEnd, {
   PrivateFrontEndOptions, "DialogSettings", "DrawingTools", 
    "FillOpener"}]]]],
 Cell[CellGroupData[{
-Cell[179912, 3981, 1238, 29, 21, "SectionLabel"],
-Cell[181153, 4012, 139082, 2945, 70, "SectionContent"]
+Cell[179911, 3981, 1238, 29, 21, "SectionLabel"],
+Cell[181152, 4012, 139082, 2945, 70, "SectionContent"]
 }, Dynamic[CurrentValue[$FrontEnd, {
   PrivateFrontEndOptions, "DialogSettings", "DrawingTools", 
    "StrokeOpener"}]]]],
 Cell[CellGroupData[{
-Cell[320381, 6964, 1238, 29, 21, "SectionLabel"],
-Cell[321622, 6995, 125768, 2716, 70, "SectionContent"]
+Cell[320380, 6964, 1238, 29, 21, "SectionLabel"],
+Cell[321621, 6995, 126827, 2740, 70, "SectionContent"]
 }, Dynamic[CurrentValue[$FrontEnd, {
   PrivateFrontEndOptions, "DialogSettings", "DrawingTools", 
    "ArrowsOpener"}]]]],
 Cell[CellGroupData[{
-Cell[447536, 9718, 1234, 29, 21, "SectionLabel"],
-Cell[448773, 9749, 173123, 3629, 70, "SectionContent"]
+Cell[448594, 9742, 1234, 29, 21, "SectionLabel"],
+Cell[449831, 9773, 173123, 3629, 70, "SectionContent"]
 }, Dynamic[CurrentValue[$FrontEnd, {
   PrivateFrontEndOptions, "DialogSettings", "DrawingTools", 
    "TextOpener"}]]]],
 Cell[CellGroupData[{
-Cell[622036, 13384, 1237, 29, 21, "SectionLabel"],
-Cell[623276, 13415, 57820, 1148, 70, "SectionContent"]
+Cell[623094, 13408, 1237, 29, 21, "SectionLabel"],
+Cell[624334, 13439, 57820, 1148, 70, "SectionContent"]
 }, Dynamic[CurrentValue[$FrontEnd, {
   PrivateFrontEndOptions, "DialogSettings", "DrawingTools", 
    "PointsOpener"}]]]],
 Cell[CellGroupData[{
-Cell[681242, 14570, 1246, 29, 21, "SectionLabel"],
-Cell[682491, 14601, 40447, 802, 70, "SectionContent"]
+Cell[682300, 14594, 1246, 29, 21, "SectionLabel"],
+Cell[683549, 14625, 40447, 802, 70, "SectionContent"]
 }, Dynamic[CurrentValue[$FrontEnd, {
   PrivateFrontEndOptions, "DialogSettings", "DrawingTools", 
    "RectanglesOpener"}]]]],
 Cell[CellGroupData[{
-Cell[723088, 15410, 1242, 29, 21, "SectionLabel"],
-Cell[724333, 15441, 9914, 214, 70, "SectionContent"]
+Cell[724146, 15434, 1242, 29, 21, "SectionLabel"],
+Cell[725391, 15465, 9914, 214, 70, "SectionContent"]
 }, Dynamic[CurrentValue[$FrontEnd, {
   PrivateFrontEndOptions, "DialogSettings", "DrawingTools", 
    "SettingsOpener"}]]]]
@@ -15791,3 +15815,4 @@ Cell[724333, 15441, 9914, 214, 70, "SectionContent"]
 *)
 
 (* End of internal cache information *)
+

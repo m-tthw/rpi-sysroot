@@ -1,221 +1,54 @@
-<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Create scale</font></span></p>
-<h1><font color="#3c3c3c"><pre>scale<pre></font></h1>
-<h2><pre>[tonic <font color="deeppink">(symbol)</font>, name <font color="deeppink">(symbol)</font>]</pre></h2>
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Factor test</font></span></p>
+<h1><font color="#3c3c3c"><pre>factor?<pre></font></h1>
+<h2><pre>[val <font color="deeppink">(number)</font>, factor <font color="deeppink">(number)</font>]</pre></h2>
 <p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
-A helper method that returns an Array of midi note numbers when given a tonic note and a scale type. Also takes an optional :num_octaves parameter (1 octave is the default)
+Test to see if factor is indeed a factor of val. In other words, can val be divided exactly by factor.
 </p>
 <p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
-Introduced in v2.0.0
-</p>
-<table cellpadding="2">
+<span style="color:white;background-color:darkorange;">Introduced in v2.1
+</span></p>
+<table cellpadding="8">
  <tr>
    <th></th><th></th><th></th>
  </tr>
  <tr bgcolor="#F8F8F8">
-  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+  <td bgcolor="#74ACFF"><h3><pre>Example 0 </pre></h3></td>
    <td><pre>
-
-puts scale(:C, :major)
+factor?(10, 2)
 
 
 
 </pre></td>
    <td><pre>
- 
- # returns the list [60, 62, 64, 65, 67, 69, 71, 72]
+# true - 10 is a multiple of 2 (2 * 5 = 10)
 
 
 
 </pre></td></tr>
  <tr bgcolor="#E8E8E8">
-  <td bgcolor="#FFE4E1"><h3><pre>Example 1 </pre></h3></td>
+  <td bgcolor="#B2D1FF"><h3><pre>Example 1 </pre></h3></td>
    <td><pre>
+factor?(11, 2)
 
-# anywhere you can use a list of notes, you can also use scale
-play_pattern scale(:C, :major)
 
 
 </pre></td>
    <td><pre>
- 
- 
- 
+#false - 11 is not a multiple of 2
 
 
 
 </pre></td></tr>
  <tr bgcolor="#F8F8F8">
-  <td bgcolor="#FFF0F5"><h3><pre>Example 2 </pre></h3></td>
+  <td bgcolor="#74ACFF"><h3><pre>Example 2 </pre></h3></td>
    <td><pre>
+factor?(2, 0.5)
 
-# you can use the :num_octaves parameter to get more notes
-play_pattern(:C, :major, num_octaves: 2)
 
 
 </pre></td>
    <td><pre>
- 
- 
- 
-
-
-
-</pre></td></tr>
- <tr bgcolor="#E8E8E8">
-  <td bgcolor="#FFE4E1"><h3><pre>Example 3 </pre></h3></td>
-   <td><pre>
-
-# Sonic Pi supports a large range of scales.
-use_bpm 300
-play_pattern scale(:C, :diatonic)
-play_pattern scale(:C, :ionian)
-play_pattern scale(:C, :major)
-play_pattern scale(:C, :dorian)
-play_pattern scale(:C, :phrygian)
-play_pattern scale(:C, :lydian)
-play_pattern scale(:C, :mixolydian)
-play_pattern scale(:C, :aeolian)
-play_pattern scale(:C, :minor)
-play_pattern scale(:C, :locrian)
-play_pattern scale(:C, :hex_major6)
-play_pattern scale(:C, :hex_dorian)
-play_pattern scale(:C, :hex_phrygian)
-play_pattern scale(:C, :hex_major7)
-play_pattern scale(:C, :hex_sus)
-play_pattern scale(:C, :hex_aeolian)
-play_pattern scale(:C, :minor_pentatonic)
-play_pattern scale(:C, :yu)
-play_pattern scale(:C, :major_pentatonic)
-play_pattern scale(:C, :gong)
-play_pattern scale(:C, :egyptian)
-play_pattern scale(:C, :shang)
-play_pattern scale(:C, :jiao)
-play_pattern scale(:C, :zhi)
-play_pattern scale(:C, :ritusen)
-play_pattern scale(:C, :whole_tone)
-play_pattern scale(:C, :whole)
-play_pattern scale(:C, :chromatic)
-play_pattern scale(:C, :harmonic_minor)
-play_pattern scale(:C, :melodic_minor_asc)
-play_pattern scale(:C, :hungarian_minor)
-play_pattern scale(:C, :octatonic)
-play_pattern scale(:C, :messiaen1)
-play_pattern scale(:C, :messiaen2)
-play_pattern scale(:C, :messiaen3)
-play_pattern scale(:C, :messiaen4)
-play_pattern scale(:C, :messiaen5)
-play_pattern scale(:C, :messiaen6)
-play_pattern scale(:C, :messiaen7)
-play_pattern scale(:C, :super_locrian)
-play_pattern scale(:C, :hirajoshi)
-play_pattern scale(:C, :kumoi)
-play_pattern scale(:C, :neapolitan_major)
-play_pattern scale(:C, :bartok)
-play_pattern scale(:C, :bhairav)
-play_pattern scale(:C, :locrian_major)
-play_pattern scale(:C, :ahirbhairav)
-play_pattern scale(:C, :enigmatic)
-play_pattern scale(:C, :neapolitan_minor)
-play_pattern scale(:C, :pelog)
-play_pattern scale(:C, :augmented2)
-play_pattern scale(:C, :scriabin)
-play_pattern scale(:C, :harmonic_major)
-play_pattern scale(:C, :melodic_minor_desc)
-play_pattern scale(:C, :romanian_minor)
-play_pattern scale(:C, :hindu)
-play_pattern scale(:C, :iwato)
-play_pattern scale(:C, :melodic_minor)
-play_pattern scale(:C, :diminished2)
-play_pattern scale(:C, :marva)
-play_pattern scale(:C, :melodic_major)
-play_pattern scale(:C, :indian)
-play_pattern scale(:C, :spanish)
-play_pattern scale(:C, :prometheus)
-play_pattern scale(:C, :diminished)
-play_pattern scale(:C, :todi)
-play_pattern scale(:C, :leading_whole)
-play_pattern scale(:C, :augmented)
-play_pattern scale(:C, :purvi)
-play_pattern scale(:C, :chinese)
-play_pattern scale(:C, :lydian_minor)
-
-
-</pre></td>
-   <td><pre>
- 
- 
- # otherwise playing all these will take ages...
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+#true - 2 is not a multiple of 0.5 (0.5 * 4 = 2)
 
 
 

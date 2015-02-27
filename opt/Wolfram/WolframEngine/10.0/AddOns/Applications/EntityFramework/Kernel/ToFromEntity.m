@@ -24,10 +24,15 @@ initGraphData[] := Module[{},
 ]
 
 
-assoc := assoc = Association[
-Thread[DataPaclets`GraphDataDump`$GraphCanonicalForms ->
-DataPaclets`GraphDataDump`$GraphAll]
-];
+assoc := assoc = If[ValueQ[DataPaclets`GraphDataDump`$GraphCanonicalForms32],
+	Association[
+   Thread[If[$SystemWordLength === 64, DataPaclets`GraphDataDump`$GraphCanonicalForms,
+DataPaclets`GraphDataDump`$GraphCanonicalForms32] -> 
+     DataPaclets`GraphDataDump`$GraphAll]],
+ Association[
+   Thread[DataPaclets`GraphDataDump`$GraphCanonicalForms -> 
+     DataPaclets`GraphDataDump`$GraphAll]]
+]
 
 $ColorHeadPattern = _RGBColor | _CMYKColor | _XYZColor | _LABColor | _LUVColor | _GrayLevel;
 

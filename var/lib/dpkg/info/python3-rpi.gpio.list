@@ -9,7 +9,7 @@
 /usr/lib
 /usr/lib/python3
 /usr/lib/python3/dist-packages
-/usr/lib/python3/dist-packages/RPi.GPIO-0.5.6.egg-info
 /usr/lib/python3/dist-packages/RPi
 /usr/lib/python3/dist-packages/RPi/GPIO.cpython-32mu.so
 /usr/lib/python3/dist-packages/RPi/__init__.py
+/usr/lib/python3/dist-packages/RPi.GPIO-0.5.11.egg-info

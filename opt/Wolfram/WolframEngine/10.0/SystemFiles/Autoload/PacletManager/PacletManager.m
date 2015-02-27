@@ -67,8 +67,8 @@ If[SyntaxQ["@mathematicaVersionNumber@"] && ToExpression["@mathematicaVersionNum
 *)
 `Information`$VersionNumber = If[SyntaxQ["2.2"], ToExpression["2.2"], 0.0]
 `Information`$ReleaseNumber = If[SyntaxQ["0"], ToExpression["0"], 0]
-`Information`$CreationID = If[SyntaxQ["20140804181430"], ToExpression["20140804181430"], 0]
-`Information`$CreationDate = If[SyntaxQ["{2014,08,04,18,14,30}"], ToExpression["{2014,08,04,18,14,30}"], {0,0,0,0,0,0}]
+`Information`$CreationID = If[SyntaxQ["20141203181504"], ToExpression["20141203181504"], 0]
+`Information`$CreationDate = If[SyntaxQ["{2014,12,03,18,15,04}"], ToExpression["{2014,12,03,18,15,04}"], {0,0,0,0,0,0}]
 `Information`$Version = "PacletManager Version 2.2.0"
 
 

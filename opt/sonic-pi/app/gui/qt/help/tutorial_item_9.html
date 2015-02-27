@@ -1,72 +1,167 @@
 <font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
 
-<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Switching Synths</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">So far we’ve had quite a lot of fun making beeps and playing samples. However, you’re probably starting to get bored of the basic beep noise. Is that all Sonic Pi has to offer? Isn’t there more to live coding life than beeps? Yes there is, and in this section we’ll explore the exciting range of sounds that Sonic Pi has to offer.</p>
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Duration with Envelopes</span></p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Synths</span></p>
+<p style="font-size:15px;color:#5e5e5e;">In an earlier section, we looked at how we can use the <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> command
+to control when to trigger our sounds. However, we haven’t yet been able
+to control the duration of our sounds.</p>
 
-<p style="font-size:15px;color:#5e5e5e;">Sonic Pi has a range of instruments it calls synths which is <em style="font-size:15px;color:darkorange;">short for synthesisers</em>. Whereas samples represent pre-recorded sounds, synths are capable of generating new sounds depending on how you control them (which we’ll explore later in this tutorial). Sonic Pi’s synths are very powerful and expressive and you’ll have a lot of fun playing with them. First, let’s learn how to select the current synth to use.</p>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Buzzy saws and prophets</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">A fun sound is the <em style="font-size:15px;color:darkorange;">saw wave</em> - let’s give it a try:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">use_synth :saw
-play 38
-sleep 0.25
-play 50
-sleep 0.25
-play 62
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Let’s try another sound - the <em style="font-size:15px;color:darkorange;">prophet</em>:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">use_synth :prophet
-play 38
-sleep 0.25
-play 50
-sleep 0.25
-play 62
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">How about combining two sounds. First one after another</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">use_synth :saw
-play 38
-sleep 0.25
-play 50
-sleep 0.25
-use_synth :prophet
-play 57
-
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Now at the same time:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">use_synth :tb303
-play 38
-use_synth :dsaw
-play 50
-sleep 0.25
-use_synth :prophet
-play 57
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Notice that the <code style="font-size:15px; color:deeppink; background-color:white">use_synth</code> command only affects the following calls to <code style="font-size:15px; color:deeppink; background-color:white">play</code>. Think of it like a <em style="font-size:15px;color:darkorange;">big switch</em> - new calls to <code style="font-size:15px; color:deeppink; background-color:white">play</code> will play whatever synth it’s currently pointing to. You can move the switch to a new synth with <code style="font-size:15px; color:deeppink; background-color:white">use_synth</code>.</p>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Discovering Synths</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">To see which synths Sonic Pi has for you to play with take a look at the Synths option in the far left vertical menu (above Samples). There are over 20 to choose from. Here are a few of my favourite:</p>
+<p style="font-size:15px;color:#5e5e5e;">In order to give us a simple, yet powerful means of <em style="font-size:15px;color:darkorange;">controlling the
+duration</em> of our sounds, Sonic Pi provides the notion of an <em style="font-size:15px;color:darkorange;">ADSR
+amplitude envelope</em> (we’ll cover what ADSR means later in this
+section). An amplitude envelope offers two useful aspects of control:</p>
 
 <ul style="font-size:15px;color:#5e5e5e;">
-  <li><code style="font-size:15px; color:deeppink; background-color:white">:prophet</code></li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">:dsaw</code></li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">:fm</code></li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">:tb303</code></li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">:pulse</code></li>
+  <li>control over the duration of a sound</li>
+  <li>control over the amplitude of a sound</li>
 </ul>
 
-<p style="font-size:15px;color:#5e5e5e;">Now play around with <em style="font-size:15px;color:darkorange;">switching synths during your music</em>. Have fun combining synths to make new sounds as well as using different synths for different sections of your music.</p>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Duration</span></p>
 
+<p style="font-size:15px;color:#5e5e5e;">The duration is the length the sound lasts for. A longer duration means
+that you hear the sound for longer. Sonic Pi’s sounds all have a
+controllable amplitude envelope, and the total duration of that envelope
+is the duration of the sound. Therefore, by controlling the envelope you
+control the duration.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Amplitude</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">The ADSR envelope not only controls duration, it also gives you <em style="font-size:15px;color:darkorange;">fine
+control over the amplitude of the sound</em>. All sounds start and end
+silent with some non-silent part in-between. Envelopes allow you to
+slide and hold the amplitude of non-silent parts of the sound. It’s like
+giving someone instructions on how to turn up and down the volume for
+some music. For example you might ask someone to “start at silence,
+slowly move up to full volume, hold it for a bit, then quickly fall back to
+silence.” Sonic Pi allows you to program this with envelopes.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">As we have seen in a previous section, an amplitude of 0 is silence and
+an amplitude of 1 is normal volume.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Release Time</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">By default all synths have a release time of 1. This means that they
+have a duration of 1 second before completing. We can change this
+duration by passing the <code style="font-size:15px; color:deeppink; background-color:white">release:</code> argument to our calls to <code style="font-size:15px; color:deeppink; background-color:white">play</code>. For
+example, to make a synth play for 2 seconds we specify a <code style="font-size:15px; color:deeppink; background-color:white">release:</code> of
+<code style="font-size:15px; color:deeppink; background-color:white">2</code>:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, release: 2
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">We can make the synth sound for a very short amount of time by using a
+very small release time:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, release: 0.2
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">So what is release time? It’s the time it takes for the sound to go from
+full amplitude (typically a value of 1) to zero amplitude. This is
+called the <em style="font-size:15px;color:darkorange;">release phase</em> and it’s a linear transition (i.e. a straight
+line). The following diagram illustrates this transition:</p>
+
+<p style="font-size:15px;color:#5e5e5e;"><img src=":/images/tutorial/env-release.png" alt="release envelope" /></p>
+
+<p style="font-size:15px;color:#5e5e5e;">The vertical line at the far left of the diagram shows that the sound
+starts at 0 amplitude, but goes up to full amplitude immediately (this
+is the attack phase which we’ll cover next). Once at full amplitude it
+then moves in a straight line down to zero taking the amount of time
+specified by <code style="font-size:15px; color:deeppink; background-color:white">release:</code>.  <em style="font-size:15px;color:darkorange;">Longer release times produce longer synth
+fade outs.</em></p>
+
+<p style="font-size:15px;color:#5e5e5e;">You can therefore change the duration of your sound by changing the
+release time. Have a play adding release times to your music.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Attack Time</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">By default, the attack phase is 0 for all synths which means they move
+from 0 amplitude to 1 immediately. This gives the synth an initial
+percussive sound. However, you may wish to fade your sound in. This can
+be achieved with the <code style="font-size:15px; color:deeppink; background-color:white">attack:</code> argument. Try fading in some sounds:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, attack: 2
+sleep 3
+play 65, attack: 0.5
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">You may use multiple arguments at the same time. For example for a short
+attack and a long release try:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, attack: 0.7, release: 4
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">This short attack and long release envelope is illustrated in the
+following diagram:</p>
+
+<p style="font-size:15px;color:#5e5e5e;"><img src=":/images/tutorial/env-attack-release.png" alt="attack release envelope" /></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Of course, you may switch things around. Try a long attack and a short
+release:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, attack: 4, release: 0.7
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;"><img src=":/images/tutorial/env-long-attack-short-release.png" alt="long attack short release envelope" /></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Finally, you can also have both short attack and release times for
+shorter sounds.</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, attack: 0.5, release: 0.5
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;"><img src=":/images/tutorial/env-short-attack-short-release.png" alt="short attack short release envelope" /></p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Sustain Time</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">In addition to specifying attack and release times, you may also
+specify a sustain time. This is the time for which the sound is
+maintained at full amplitude between the attack and release phases.</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, attack: 0.3, sustain: 1, release: 1
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;"><img src=":/images/tutorial/env-attack-sustain-release.png" alt="ASR envelope" /></p>
+
+<p style="font-size:15px;color:#5e5e5e;">The sustain time is useful for important sounds you wish to give full
+presence in the mix before entering an optional release phase. Of
+course, it’s totally valid to set both the attack and release arguments
+to 0 and just use the sustain to have absolutely no fade in or fade out
+to the sound. However, be warned, a release of 0 can produce clicks in
+the audio and it’s often better to use a very small value such as 0.2.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Decay Time</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Finally, for the moments where you need an extra level of control, you
+can also specify a decay time. This is a phase of the envelope that fits
+between the attack and sustain phases and specifies a time where the
+amplitude will drop from the <code style="font-size:15px; color:deeppink; background-color:white">attack_level</code> to the <code style="font-size:15px; color:deeppink; background-color:white">sustain_level</code>. By
+default, the decay argument is 0 and both the attack and sustain levels
+are 1 so you’ll need to specify them for the decay time to have any
+effect:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, attack: 0.1, attack_level: 1, decay: 0.2, sustain_level: 0.4, sustain: 1, release: 0.5
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;"><img src=":/images/tutorial/env-attack-decay-sustain-release.png" alt="ADSR envelope" /></p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">ADSR Envelopes</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">So to summarise, Sonic Pi’s ADSR envelopes have the following phases:</p>
+
+<ol style="font-size:15px;color:#5e5e5e;">
+  <li><em style="font-size:15px;color:darkorange;">attack</em> - time from 0 amplitude to the <code style="font-size:15px; color:deeppink; background-color:white">attack_level</code>,</li>
+  <li><em style="font-size:15px;color:darkorange;">decay</em> - time to move amplitude from <code style="font-size:15px; color:deeppink; background-color:white">attack_level</code> to <code style="font-size:15px; color:deeppink; background-color:white">sustain_level</code>,</li>
+  <li><em style="font-size:15px;color:darkorange;">sustain</em> - time to keep the amplitude at <code style="font-size:15px; color:deeppink; background-color:white">sustain_level</code>,</li>
+  <li><em style="font-size:15px;color:darkorange;">release</em> - time to move amplitude from <code style="font-size:15px; color:deeppink; background-color:white">sustain_level</code> to 0</li>
+</ol>
+
+<p style="font-size:15px;color:#5e5e5e;">It’s important to note that the duration of a sound is the summation of
+the times of each of these phases. Therefore the following sound will
+have a duration of 0.5 + 1 + 2 + 0.5 = 4 seconds:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 60, attack: 0.5, decay: 1, sustain_level: 0.4, sustain: 2, release: 0.5
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now go and have a play adding envelopes to your sounds…</p>
 </font>

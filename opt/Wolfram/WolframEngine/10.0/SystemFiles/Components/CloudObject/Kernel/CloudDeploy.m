@@ -9,7 +9,8 @@ System`APIFunction;
 System`FormFunction;
 System`HTMLData;
 System`EmbeddedHTML;
-System`Grammar;
+System`Grammar; (* TODO jmichelson: after the overlap period is gone, remove Grammar here and below *)
+System`GrammarRules;
 System`$CloudEvaluation;
 
 Attributes[headDeployFormat] = {HoldAll};
@@ -18,7 +19,8 @@ headDeployFormat[Delayed] = "Computation";
 headDeployFormat[Dynamic] = "Computation";
 headDeployFormat[FormFunction] = "Form";
 headDeployFormat[ScheduledTask] = "Task";
-headDeployFormat[Grammar] = "Grammar";
+headDeployFormat[Grammar] = "Grammar"; (* TODO jmichelson: remove me after transition period *)
+headDeployFormat[GrammarRules] = "Grammar";
 headDeployFormat[_] = None;
 
 Attributes[headDeployFormatQ] = {HoldAll};
@@ -45,7 +47,7 @@ CloudDeploy[bundle:ExternalBundle[bundleElements_List], dest_CloudObject, opts:O
     Module[{elementObjects, bundleexpr},
         (* Step 1 of 3. Ensure the bundle directory exists *)
         Quiet[createBundle[dest], CloudObject::notparam] /. {
-        	HTTPError[_] :> Return[$Failed]
+        	HTTPError[___] :> Return[$Failed]
         };
 
         (* Step 2 of 3. deploy the individual elements *)
@@ -88,10 +90,30 @@ CloudDeploy[ExternalBundle[elements_Association], dest_CloudObject, opts:Options
 CloudDeploy[apigroup_APIFunctionGroup, obj_CloudObject, opts:OptionsPattern[]] :=
     deployAPIFunctionGroup[obj, apigroup, opts]
 
-cd:CloudDeploy[grammar_Grammar, obj_CloudObject, opts:OptionsPattern[]] :=
+(* TODO jmichelson: remove this temporary downvalue added during the renaming transition.
+   See also -- and remove -- the System`Private`SystemAssert in the delegate DownValue. *)
+CloudDeploy[HoldPattern[Grammar[grammar___]], rest___] /; TrueQ[$CloudEvaluation] :=
+    CloudDeploy[GrammarRules[grammar], rest]; (* if this is evaluating on the cloud, it must have this new code! *)
+
+(* TODO jmichelson: remove this temporary downvalue added during the renaming transition.
+   See also -- and remove -- the System`Private`SystemAssert in the delegate DownValue. *)
+CloudDeploy[HoldPattern[GrammarRules[grammar___]], rest___] /; !TrueQ[$CloudEvaluation] :=
+    CloudDeploy[Grammar[grammar], rest]; (* if this is evaluating locally, don't assume cloud has the new code *)
+
+(* TODO jmichelson: remove the intermediate support for _Grammar, and the associated Assert's
+   from this delegate DownValue. *)
+cd:CloudDeploy[HoldPattern[grammar_Grammar | grammar_GrammarRules], obj_CloudObject, opts:OptionsPattern[]] :=
     If[ TrueQ[$CloudEvaluation],
+        (* The CloudDeploy[HoldPattern[Grammar[grammar___]], rest___] /; TrueQ[$CloudEvaluation]
+           DownValue guarantees the following Assert.
+           That's because, if this code is executing, then cloud has new code, so use GrammarRules *)
+        System`Private`SystemAssert[MatchQ[Unevaluated[grammar], _GrammarRules]];
         Semantic`PLIDump`iGrammarDeploy[grammar, obj, opts]
         ,
+         (* The CloudDeploy[HoldPattern[GrammarRules[grammar___]], rest___] /; !TrueQ[$CloudEvaluation]
+            DownValue guarantees the following Assert.
+            That's because, for now, assume that cloud does not yet have the new code *)
+        System`Private`SystemAssert[MatchQ[Unevaluated[grammar], _Grammar]];
         CloudEvaluate[cd]
     ];
 

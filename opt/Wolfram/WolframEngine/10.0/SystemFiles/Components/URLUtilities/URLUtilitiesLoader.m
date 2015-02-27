@@ -4,6 +4,25 @@
    autoloadSymbols must agree with the symbols listed in the Kernel extension in the PacletInfo.m file.
 *)
 
+Map[
+    (Unprotect[#];ClearAll[#]) &, {
+        "System`URLBuild",
+        "System`URLParse",
+        "System`URLEncode",
+        "System`URLDecode",
+        "System`URLQueryDecode",
+        "System`URLQueryEncode",
+        "System`URLShorten",
+        "System`URLExpand",
+        "System`URLExistsQ",
+        "System`URLExecute",
+        "System`URLDispatcher",
+        "URLUtilities`*",
+        "URLUtilities`*`*",
+        "URLUtilities`*`*`*"
+    }
+]
+
 PacletManager`Package`loadWolframLanguageCode[
     "URLUtilities", 
     "URLUtilities`", 
@@ -22,6 +41,7 @@ PacletManager`Package`loadWolframLanguageCode[
         "System`URLShorten",
         "System`URLExpand",
         "System`URLExistsQ",
-        "System`URLExecute"
+        "System`URLExecute",
+        "System`URLDispatcher"
     }
 ]

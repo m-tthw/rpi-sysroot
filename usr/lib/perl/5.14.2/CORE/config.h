@@ -9,9 +9,9 @@
 
 /* Package name      : perl5
  * Source directory  : .
- * Configuration time: Sat Mar 22 13:34:01 UTC 2014
+ * Configuration time: Sun Jan 11 16:51:47 UTC 2015
  * Configured by     : Debian Project
- * Target system     : linux plugwash.raspbian.lan 3.2.0-4-mx5 #1 debian 3.2.39-2 armv7l gnulinux 
+ * Target system     : linux odroidu2 3.0.90 #1 smp mon sep 1 00:28:47 pdt 2014 armv7l gnulinux 
  */
 
 #ifndef _config_h_
@@ -2246,7 +2246,7 @@
  *	feature tests from Configure are generally more reliable.
  */
 #define OSNAME "linux"		/**/
-#define OSVERS "3.2.0-4-mx5"		/**/
+#define OSVERS "3.0.90"		/**/
 
 /* CAT2:
  *	This macro concatenates 2 tokens together.

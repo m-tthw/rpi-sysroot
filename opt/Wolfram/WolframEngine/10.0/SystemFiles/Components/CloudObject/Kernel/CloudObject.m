@@ -17,6 +17,7 @@ With[{CloudObject`Private`dir=DirectoryName[$InputFileName]}, (*change context s
     Get[FileNameJoin[{CloudObject`Private`dir, "Delayed.m"}]];
     Get[FileNameJoin[{CloudObject`Private`dir, "JSON.m"}]];
     Get[FileNameJoin[{CloudObject`Private`dir, "ServerAPI.m"}]];
+    Get[FileNameJoin[{CloudObject`Private`dir, "PermissionsGroups.m"}]];
     Get[FileNameJoin[{CloudObject`Private`dir, "Permissions.m"}]];
     Get[FileNameJoin[{CloudObject`Private`dir, "Icons.m"}]];
     Get[FileNameJoin[{CloudObject`Private`dir, "FileOperations.m"}]];
@@ -31,7 +32,7 @@ With[{CloudObject`Private`dir=DirectoryName[$InputFileName]}, (*change context s
     Get[FileNameJoin[{CloudObject`Private`dir, "EvaluationData.m"}]];
     Get[FileNameJoin[{CloudObject`Private`dir, "CloudSymbol.m"}]];
     Get[FileNameJoin[{CloudObject`Private`dir, "Scheduling.m"}]];
-    Get[FileNameJoin[{CloudObject`Private`dir, "URLExecutePatch.m"}]];
+    Get[FileNameJoin[{CloudObject`Private`dir, "DocumentGenerating.m"}]];
     Get[FileNameJoin[{CloudObject`Private`dir, "AccountData.m"}]];
 ]
 

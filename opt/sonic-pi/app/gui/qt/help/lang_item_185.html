@@ -1,0 +1,70 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Create a ring buffer</font></span></p>
+<h1><font color="#3c3c3c"><pre>ring<pre></font></h1>
+<h2><pre>[list <font color="deeppink">(array)</font>]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+Create a new ring buffer from args. Indexes wrap around positively and negatively
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+<span style="color:white;background-color:darkorange;">Introduced in v2.2
+</span></p>
+<table cellpadding="8">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#74ACFF"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+(ring 1, 2, 3)[0]
+
+
+
+</pre></td>
+   <td><pre>
+#=&gt; 1
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#B2D1FF"><h3><pre>Example 1 </pre></h3></td>
+   <td><pre>
+(ring 1, 2, 3)[1]
+
+
+
+</pre></td>
+   <td><pre>
+#=&gt; 2
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#74ACFF"><h3><pre>Example 2 </pre></h3></td>
+   <td><pre>
+(ring 1, 2, 3)[3]
+
+
+
+</pre></td>
+   <td><pre>
+#=&gt; 1
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#B2D1FF"><h3><pre>Example 3 </pre></h3></td>
+   <td><pre>
+(ring 1, 2, 3)[-1]
+
+
+
+</pre></td>
+   <td><pre>
+#=&gt; 3
+
+
+
+</pre></td></tr>
+</table>

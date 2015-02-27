@@ -1304,6 +1304,14 @@ UndoOptions->{"Enabled"->False}
 @@resource debuggerStackWindowContents
 Notebook[{
 },
+StyleDefinitions->Notebook[{Cell[StyleData[StyleDefinitions -> "Default.nb"]],
+      Cell[StyleData["Input"], Evaluatable->False],
+      Cell[StyleData["InputOnly"], Evaluatable->False],
+      Cell[StyleData["Code"], Evaluatable->False]},
+  StyleDefinitions->"StylesheetFormatting.nb"],
+CellInsertionPointCell->None,
+Editable->False,
+Evaluatable->False,
 FontFamily->CurrentValue["PanelFontFamily"],
 GraphicsOptions->{ImageSize->100},
 Graphics3DOptions->{ImageSize->100},

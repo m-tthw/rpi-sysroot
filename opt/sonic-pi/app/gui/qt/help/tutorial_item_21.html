@@ -1,17 +1,86 @@
 <font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
 
-<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Welcome friend :-)</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">Welcome to Sonic Pi! Hopefully you’re as excited to get started making crazy sounds as I am to show you. It’s going to be a really <em style="font-size:15px;color:darkorange;">fun</em> ride where you’ll learn all about music, synthesis, programming, composition, performance and more!</p>
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Conditionals</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">But wait, how rude of me! Let me introduce myself - I’m <em style="font-size:15px;color:darkorange;">Sam Aaron</em> - the chap that created Sonic Pi. You can find me at <em style="font-size:15px;color:darkorange;">@samaaron</em> on Twitter and I’d be more than happy to say hello to you. If you have any thoughts, praise, or even grief to pass on - please do. Feedback is so helpful for improving Sonic Pi. You never know, your idea might be the next big feature!</p>
+<p style="font-size:15px;color:#5e5e5e;">A common thing you’ll likely find yourself wanting to do is to not only
+play a random note (see the previous section on randomness) but also
+make a random decision and based on the outcome run some code or some
+other code. For example, you might want to randomly play a drum or a
+cymbal. We can achieve this with an <code style="font-size:15px; color:deeppink; background-color:white">if</code> statement.</p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">There are no mistakes</span></p>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Flipping a Coin</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">Before we start, let me just give you one piece of advice I’ve learned over my years of live coding with music - <em style="font-size:15px;color:darkorange;">there are no mistakes, only opportunities</em>. This is something I’ve often heard in relation to jazz but it works equally well with live coding. No matter how experienced you are - from a complete beginner to a seasoned Algoraver, you’ll run some code that has a completely unexpected outcome. It might sound insanely cool - in which case run with it. However, it might sound totally jarring and out of place. It doesn’t matter that it happened - what matters is what you do next with it. Take the sound, manipulate it and morph it into something awesome. The crowd will go <em style="font-size:15px;color:darkorange;">wild</em>.</p>
+<p style="font-size:15px;color:#5e5e5e;">So, let’s flip a coin: if it’s heads, play a drum, if it’s tails, play a
+cymbal. Easy. We can emulate a coin flip with our <code style="font-size:15px; color:deeppink; background-color:white">one_in</code> function
+(introduced in the section on randomness) specifying a probability of 1
+in 2: <code style="font-size:15px; color:deeppink; background-color:white">one_in(2)</code>. We can then use the result of this to decide between
+two pieces of code, the code to play the drum and the code to play the
+cymbal:</p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Live coding</span></p>
+<pre><code style="font-size:15px; color:deeppink; background-color:white">loop do
 
-<p style="font-size:15px;color:#5e5e5e;">Whilst Sonic Pi is good for composing music out of code, it’s live coding where it truly shines. In this tutorial we’ll take you on a journey from making simple beeps and bleeps to live coding your own Algorave performance. Take a deep breath, here we go….</p>
+  if one_in(2)
+    sample :drum_heavy_kick
+  else
+    sample :drum_cymbal_closed
+  end
+  
+  sleep 0.5
+  
+end
+</code></pre>
 
+<p style="font-size:15px;color:#5e5e5e;">Notice that <code style="font-size:15px; color:deeppink; background-color:white">if</code> statements have three parts:</p>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>The question to ask</li>
+  <li>The first choice of code to run (if answer to the question is yes)</li>
+  <li>The second choice of code to run (if the answer to the question is no)</li>
+</ul>
+
+<p style="font-size:15px;color:#5e5e5e;">Typically in programming languages, the notion of yes is represented by
+the term <code style="font-size:15px; color:deeppink; background-color:white">true</code> and the notion of no is represented by the term
+<code style="font-size:15px; color:deeppink; background-color:white">false</code>. So we need to find a question that will give us a <code style="font-size:15px; color:deeppink; background-color:white">true</code> or
+<code style="font-size:15px; color:deeppink; background-color:white">false</code> answer which is exactly what <code style="font-size:15px; color:deeppink; background-color:white">one_in</code> does.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Notice how the first choice is wrapped between the <code style="font-size:15px; color:deeppink; background-color:white">if</code> and the <code style="font-size:15px; color:deeppink; background-color:white">else</code>
+and the second choice is wrapped between the <code style="font-size:15px; color:deeppink; background-color:white">else</code> and the <code style="font-size:15px; color:deeppink; background-color:white">end</code>. Just
+like do/end blocks you can put multiple lines of code in either
+place. For example:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">loop do
+
+  if one_in(2)
+    sample :drum_heavy_kick
+    sleep 0.5
+  else
+    sample :drum_cymbal_closed
+    sleep 0.25
+  end
+  
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">This time we’re sleeping for a different amount of time depending on
+which choice we make.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Simple if</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Sometimes you want to optionally execute just one line of code. This is
+possible by placing <code style="font-size:15px; color:deeppink; background-color:white">if</code> and then the question at the end. For example:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">use_synth :dsaw
+
+loop do
+  play 50, amp: 0.3, release: 2
+  play 53, amp: 0.3, release: 2 if one_in(2)
+  play 57, amp: 0.3, release: 2 if one_in(3)
+  play 60, amp: 0.3, release: 2 if one_in(4)
+  sleep 1.5
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">This will play chords of different numbers with the chance of each note
+playing having a different probability.</p>
 </font>

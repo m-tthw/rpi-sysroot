@@ -1,7 +1,12 @@
 #!/bin/sh
 set -e
 # Automatically added by dh_installmodules
-if [ -e /boot/System.map-3.12.28+ ]; then
-	depmod -a -F /boot/System.map-3.12.28+ 3.12.28+ || true
+if [ -e /boot/System.map-3.18.7+ ]; then
+	depmod -a -F /boot/System.map-3.18.7+ 3.18.7+ || true
+fi
+# End automatically added section
+# Automatically added by dh_installmodules
+if [ -e /boot/System.map-3.18.7-v7+ ]; then
+	depmod -a -F /boot/System.map-3.18.7-v7+ 3.18.7-v7+ || true
 fi
 # End automatically added section

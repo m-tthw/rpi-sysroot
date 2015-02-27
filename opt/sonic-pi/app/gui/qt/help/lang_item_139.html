@@ -1,32 +1,38 @@
-<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Block-level use sample pack alias</font></span></p>
-<h1><font color="#3c3c3c"><pre>with_sample_pack_as<pre></font></h1>
-<h2><pre>[pack_path <font color="deeppink">(string)</font>]</pre></h2>
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Construct chords based on scale degrees</font></span></p>
+<h1><font color="#3c3c3c"><pre>chord_degree<pre></font></h1>
+<h2><pre>[degree <font color="deeppink">(symbol_or_number)</font>, tonic <font color="deeppink">(symbol)</font>, scale <font color="deeppink">(symbol)</font>, number_of_notes <font color="deeppink">(number)</font>]</pre></h2>
 <p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
-Similar to with_sample_pack except you can assign prefix aliases for samples. This lets you 'namespace' your sounds so that they don't clash, even if they have the same filename.
+A helper method that returns a list of midi note numbers when given a degree (a symbol :i,:ii,:iii,:iv,:v :vi, :vii or a number 1-7), tonic, scale and number of notes
 </p>
 <p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
-Introduced in v2.0.0
-</p>
-<table cellpadding="2">
+<span style="color:white;background-color:darkorange;">Introduced in v2.1
+</span></p>
+<table cellpadding="8">
  <tr>
    <th></th><th></th><th></th>
  </tr>
  <tr bgcolor="#F8F8F8">
-  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+  <td bgcolor="#74ACFF"><h3><pre>Example 0 </pre></h3></td>
    <td><pre>
+puts chord_degree(:i, :A3, :major)
 
-with_sample_pack_as '/home/yourname/path/to/sample/dir', :my_samples do
- 
-  sample :my_samples_foo 
-end
 
 
 </pre></td>
    <td><pre>
- 
- 
- # The foo sample is now available, with a prefix of 'my_samples'
- #=&gt; plays /home/yourname/path/to/sample/dir/foo.{wav|wave|aif|aiff}
+# returns a list of midi notes - [69 73 76 80]
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#B2D1FF"><h3><pre>Example 1 </pre></h3></td>
+   <td><pre>
+play chord_degree(:i, :A3, :major)
+
+
+</pre></td>
+   <td><pre>
  
 
 

@@ -217,6 +217,7 @@
 <mime-type type="application/xhtml+xml"/>
 <mime-type type="application/xspf+xml"/>
 <mime-type type="application/zip"/>
+<mime-type type="application/x-scratch-project"/>
 <mime-type type="audio/ac3"/>
 <mime-type type="audio/AMR"/>
 <mime-type type="audio/AMR-WB"/>

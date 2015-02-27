@@ -1,12 +1,12 @@
-TARGETS = ifplugd rsyslog triggerhappy cgroup-bin killprocs bootlogs motd sudo apply_noobs_os_config regenerate_ssh_host_keys dbus single dphys-swapfile rsync cron ntp lightdm plymouth rc.local rmnologin
+TARGETS = rsyslog triggerhappy ifplugd cgroup-bin killprocs bootlogs motd sudo regenerate_ssh_host_keys apply_noobs_os_config dbus single ntp rsync dphys-swapfile cron lightdm plymouth rmnologin rc.local
 INTERACTIVE =
 dbus: rsyslog
 single: killprocs bootlogs motd
-dphys-swapfile: rsyslog
-rsync: rsyslog
-cron: rsyslog
 ntp: rsyslog
+rsync: rsyslog
+dphys-swapfile: rsyslog
+cron: rsyslog
 lightdm: dbus
-plymouth: ifplugd rsyslog lightdm dbus triggerhappy cgroup-bin bootlogs motd dphys-swapfile rsync cron ntp sudo apply_noobs_os_config regenerate_ssh_host_keys
-rc.local: ifplugd rsyslog lightdm dbus triggerhappy cgroup-bin bootlogs motd dphys-swapfile rsync cron ntp sudo apply_noobs_os_config regenerate_ssh_host_keys
-rmnologin: sudo ifplugd rsyslog lightdm dbus triggerhappy cgroup-bin bootlogs motd dphys-swapfile rsync cron ntp apply_noobs_os_config regenerate_ssh_host_keys
+plymouth: rsyslog lightdm dbus triggerhappy ifplugd cgroup-bin bootlogs motd ntp sudo regenerate_ssh_host_keys rsync apply_noobs_os_config dphys-swapfile cron
+rmnologin: sudo rsyslog lightdm dbus triggerhappy ifplugd cgroup-bin bootlogs motd ntp regenerate_ssh_host_keys rsync apply_noobs_os_config dphys-swapfile cron
+rc.local: rsyslog lightdm dbus triggerhappy ifplugd cgroup-bin bootlogs motd ntp sudo regenerate_ssh_host_keys rsync apply_noobs_os_config dphys-swapfile cron

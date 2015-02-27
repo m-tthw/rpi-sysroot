@@ -22,7 +22,7 @@ eval "exec /usr/bin/perl -S $0 $@"
 # 02111-1307 USA.
 
 $VERSION = "2.13";
-$PKGVERSION = "(Debian EGLIBC 2.13-38+rpi2+deb7u3) ";
+$PKGVERSION = "(Debian EGLIBC 2.13-38+rpi2+deb7u7) ";
 $REPORT_BUGS_TO = '<http://www.debian.org/Bugs/>';
 $progname = $0;
 

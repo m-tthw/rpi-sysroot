@@ -1,0 +1,352 @@
+<font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">History</span></p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Version 2.4 - ‘Defrost’</span></p>
+<p style="font-size:15px;color:#5e5e5e;"><em style="font-size:15px;color:darkorange;">Wednesday 11th February, 2015</em>
+<a style="text-decoration: none; color:dodgerblue;" href="https://github.com/samaaron/sonic-pi/commits/v2.4.0">(view commits)</a></p>
+
+<p style="font-size:15px;color:#5e5e5e;">A quick release following <code style="font-size:15px; color:deeppink; background-color:white">v2.3</code> to address an issue with the GUI
+freezing on specific CPUs. However, although this release has had a
+small development cycle, it ships with three fantastic features. Firstly
+we now have the <code style="font-size:15px; color:deeppink; background-color:white">spread</code> fn which provides an amazing way to create
+interesting rhythms with very little code. Secondly we can now use
+<code style="font-size:15px; color:deeppink; background-color:white">cutoff:</code> on any sample massively increasing their timbral range and
+finally we have three exciting new synths for you to play with. Have
+fun!</p>
+
+<h3 id="breaking-changes">Breaking Changes</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Unfortunately 5 pre-release synths accidentally slipped into
+v2.3. Three of them have been polished up and are in this release (one
+with major changes including a name change). However, the other two
+have been removed.</li>
+</ul>
+
+<h3 id="new">New</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">spread</code> for creating rings of Euclidean distributions. Great
+for quickly creating interesting rhythms.</li>
+  <li>GUI now automatically appends a : to the FX param autocomplete list  </li>
+  <li>Synths and FX now raise an exception if any of their non-modulatable
+params are modulated. This is disabled when the pref ‘check synth
+args’ is unchecked.</li>
+  <li>GUI now renders pretty UTF-8 └─ ├─ characters when printing in the log
+on RP.</li>
+  <li>Improve docstrings for sample player.</li>
+</ul>
+
+<h3 id="synths--fx">Synths &amp; FX</h3>
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>New Synth <code style="font-size:15px; color:deeppink; background-color:white">:dark_ambience</code>, an ambient bass trying to escape the
+darkness.</li>
+  <li>New Synth <code style="font-size:15px; color:deeppink; background-color:white">:hollow</code>, a hollow breathy sound.</li>
+  <li>New Synth <code style="font-size:15px; color:deeppink; background-color:white">:growl</code>, a deep rumbling growl.</li>
+  <li>Sampler synths now sport built-in <code style="font-size:15px; color:deeppink; background-color:white">rlpf</code> and <code style="font-size:15px; color:deeppink; background-color:white">normaliser</code> FX. These
+are disabled by default (i.e. won’t affect sound of the sample) and
+can by enabled via the new <code style="font-size:15px; color:deeppink; background-color:white">cutoff:</code>, <code style="font-size:15px; color:deeppink; background-color:white">res:</code> and <code style="font-size:15px; color:deeppink; background-color:white">norm:</code> params. </li>
+</ul>
+
+<h3 id="bug-fixes">Bug Fixes</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Fix insanely obsure bug which caused the GUI to freeze on certain
+platforms (32 bit Windows and RP2 with 2G/2G kernel).</li>
+  <li>Remove DC Bias offset from Prophet synth (see
+http://en.wikipedia.org/wiki/DC_bias)</li>
+</ul>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Version 2.3 - ‘Bitcrush’</span></p>
+<p style="font-size:15px;color:#5e5e5e;"><em style="font-size:15px;color:darkorange;">Wednesday 28th January, 2015</em>
+<a style="text-decoration: none; color:dodgerblue;" href="https://github.com/samaaron/sonic-pi/commits/v2.3.0">(view commits)</a></p>
+
+<h3 id="breaking-changes-1">Breaking Changes</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Playing chords with the fn <code style="font-size:15px; color:deeppink; background-color:white">chord</code> now divides the amplitiude of each
+resulting synth by the number of notes in the chord. This ensures the
+resulting amplitude isn’t excessive and is normalised.</li>
+  <li>Chords now evaluate their args once and those args are used for all
+synth triggers. This means random values are only generated once and
+are similar across all notes in the chord. Previous behaviour can be
+obtained by calling play multiple times with no interleaved sleeps.</li>
+  <li>Ensure each new thread’s random number generator is unique yet seeded
+in a deterministic manner. This stops random vals across <code style="font-size:15px; color:deeppink; background-color:white">at</code> from
+being identical.</li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">range</code> is now exclusive: <code style="font-size:15px; color:deeppink; background-color:white">(range 1, 5) #=&gt; (ring 1, 2, 3, 4)</code></li>
+</ul>
+
+<h3 id="new-1">New</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">density</code> for compressing and repeating time Dr Who style. For
+example, wrapping some code with a call to density of 2 will double
+the bpm for that block as well as repeating it twice. This ensures the
+block takes the same amount of time to execute while doing double the
+work.</li>
+  <li>New fns <code style="font-size:15px; color:deeppink; background-color:white">with_bpm_mul</code> and <code style="font-size:15px; color:deeppink; background-color:white">use_bpm_mul</code> which will multiply the
+current bpm by a specified amount. Useful for slowing down and
+speeding up the execution of a specific thread or live_loop.</li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">rdist</code> - generate a random number with a centred distribution</li>
+  <li>New examples: <code style="font-size:15px; color:deeppink; background-color:white">square skit</code>, <code style="font-size:15px; color:deeppink; background-color:white">shufflit</code> and <code style="font-size:15px; color:deeppink; background-color:white">tilburg</code></li>
+</ul>
+
+<h3 id="improvements">Improvements</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Teach control to ignore nil nodes i.e. <code style="font-size:15px; color:deeppink; background-color:white">control nil, amp: 3</code> will do
+nothing.</li>
+  <li>Teach Float#times to yield a float to the block. For example,
+<code style="font-size:15px; color:deeppink; background-color:white">3.4.times {|v| puts v}</code> will yield <code style="font-size:15px; color:deeppink; background-color:white">0.0</code>, <code style="font-size:15px; color:deeppink; background-color:white">1.0</code> and <code style="font-size:15px; color:deeppink; background-color:white">2.0</code>.</li>
+  <li>Synth, Sample and FX args now handle bools and nil correctly. <code style="font-size:15px; color:deeppink; background-color:white">true</code>
+resolves to <code style="font-size:15px; color:deeppink; background-color:white">1.0</code> and <code style="font-size:15px; color:deeppink; background-color:white">false</code>, <code style="font-size:15px; color:deeppink; background-color:white">nil</code> resolve to <code style="font-size:15px; color:deeppink; background-color:white">0.0</code>. This allows you
+to write code such as: <code style="font-size:15px; color:deeppink; background-color:white">play :e3, invert_wave: true</code></li>
+  <li>Teach <code style="font-size:15px; color:deeppink; background-color:white">at</code> to handle varying block arities differently. See docs for
+more detail. Original behaviour is preserved and only extended. </li>
+  <li>App now checks for updates (at most once every 2 weeks). This may be
+disabled in the prefs.</li>
+  <li>Teach <code style="font-size:15px; color:deeppink; background-color:white">:reverb</code> FX to extend its kill delay time with larger room
+sizes to reduce the chance of clipping.</li>
+</ul>
+
+<h3 id="synths--fx-1">Synths &amp; FX</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>New FX <code style="font-size:15px; color:deeppink; background-color:white">bitcrusher</code> - for crunching and destroying those hi-fi sounds.</li>
+  <li>New FX <code style="font-size:15px; color:deeppink; background-color:white">flanger</code> - a classic swhooshing effect typically used with
+vocals and guitars.</li>
+  <li>New FX <code style="font-size:15px; color:deeppink; background-color:white">ring</code> - ring modulation for that friendly Dalek sound</li>
+  <li>New FX <code style="font-size:15px; color:deeppink; background-color:white">bpf</code> - a band pass filter</li>
+  <li>New FX <code style="font-size:15px; color:deeppink; background-color:white">rbpf</code> - a resonant band pass filter</li>
+  <li>New FX <code style="font-size:15px; color:deeppink; background-color:white">nbpf</code> - a normalised band pass filter</li>
+  <li>New FX <code style="font-size:15px; color:deeppink; background-color:white">nrbpf</code> - a normalised resonant band pass filter</li>
+</ul>
+
+<h3 id="new-samples">New Samples</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li><code style="font-size:15px; color:deeppink; background-color:white">perc_snap</code> - a finger snap</li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">perc_snap2</code> - another finger snap</li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">bd_ada</code> - a bass drum</li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">guit_em9</code> - a lovely guitar arpegio over Em9</li>
+</ul>
+
+<h3 id="bug-fixes-1">Bug Fixes</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Namespace <code style="font-size:15px; color:deeppink; background-color:white">live_loop</code> fn and thread names to stop them clashing with
+standard user defined threads and fns.</li>
+  <li>GUI no longer crashes when you start a line with a symbol.</li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">with_fx</code> now returns the result of the block</li>
+  <li>Kill zombie scsynth servers on startup for better crash recovery.</li>
+  <li>Handle paths with UTF8 characters gracefully</li>
+  <li>Force sample rate for output and input to 44k on OS X. This stops
+scsynth from crashing when output and input sample rates are
+different.</li>
+</ul>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Version 2.2 - ‘Slicer’</span></p>
+<p style="font-size:15px;color:#5e5e5e;"><em style="font-size:15px;color:darkorange;">Thursday 18th December, 2014</em>
+<a style="text-decoration: none; color:dodgerblue;" href="https://github.com/samaaron/sonic-pi/commits/v2.2.0">(view commits)</a></p>
+
+<p style="font-size:15px;color:#5e5e5e;">This release brings a number of nice enhancements. However the main
+feature is the accurate timing for triggering FX. This means you can now
+reliably use FX for accurate rhythmic purposes such as wobbling, slicing
+and echoes.</p>
+
+<h3 id="breaking-changes-2">Breaking Changes</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li><code style="font-size:15px; color:deeppink; background-color:white">use_sample_pack_as</code> now uses a double underscore <code style="font-size:15px; color:deeppink; background-color:white">__</code> as a separator
+between the user-specified alias and the sample name.</li>
+</ul>
+
+<h3 id="api-changes">API Changes</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Teach synth args to take prefixed maps: <code style="font-size:15px; color:deeppink; background-color:white">play 50, {amp: 0.5}, {release: 2}, amp: 2</code></li>
+  <li>Don’t round Floats when user specifically prints them to log with puts</li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">with_fx</code> FX synths are now triggered using virtual time rather than
+real time. This means that FX can now be used for rhythmical purposes.</li>
+  <li>Work on new <code style="font-size:15px; color:deeppink; background-color:white">RingArray</code> datastructure. This is essentially an array
+that wraps its indexes so you can use indexes larger than the array size.</li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">ring</code> - <code style="font-size:15px; color:deeppink; background-color:white">(ring 1, 2, 3)</code> creates a new ring array.</li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">knit</code> - <code style="font-size:15px; color:deeppink; background-color:white">(knit :a1, 2, :c1, 1)</code> returns <code style="font-size:15px; color:deeppink; background-color:white">(ring :a1, :a1, :c1)</code> </li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">bools</code> - <code style="font-size:15px; color:deeppink; background-color:white">(bools 1, 0, 1)</code> returns <code style="font-size:15px; color:deeppink; background-color:white">(ring true, false, true)</code></li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">range</code> - <code style="font-size:15px; color:deeppink; background-color:white">(range 70, 100, 10)</code> returns <code style="font-size:15px; color:deeppink; background-color:white">(ring 70, 80, 90, 100)</code></li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">sample_loaded?</code> - to detect whether a specific sample has been loaded</li>
+</ul>
+
+<h3 id="synths--fx-2">Synths &amp; FX</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Fixed regression in <code style="font-size:15px; color:deeppink; background-color:white">:tb303</code> synth - sound is reverted to v2.0 behaviour</li>
+  <li>New Synth - <code style="font-size:15px; color:deeppink; background-color:white">:square</code> - Pure square wave</li>
+</ul>
+
+<h3 id="gui">GUI</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Help system now autodocks on close</li>
+  <li>Preferences are now remembered across sessions</li>
+  <li>On Raspberry Pi, previous volume and audio output options are forced
+on boot.</li>
+</ul>
+
+<h3 id="new-samples-1">New Samples</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li><code style="font-size:15px; color:deeppink; background-color:white">bd_tek</code> - Bass drum</li>
+</ul>
+
+<h3 id="bug-fixes-2">Bug fixes</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li><code style="font-size:15px; color:deeppink; background-color:white">one_in</code> now returns false if num is &lt; 1</li>
+  <li>Ensure <code style="font-size:15px; color:deeppink; background-color:white">live_loop</code>’s no-sleep detector works within nested <code style="font-size:15px; color:deeppink; background-color:white">with_fx</code> blocks</li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">chord</code> now returns a ring.</li>
+</ul>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Version 2.1.1</span></p>
+<p style="font-size:15px;color:#5e5e5e;"><em style="font-size:15px;color:darkorange;">Tuesday 25th November, 2014</em>
+<a style="text-decoration: none; color:dodgerblue;" href="https://github.com/samaaron/sonic-pi/commits/v2.1.1">(view commits)</a></p>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Windows version no longer needs special firewall exceptions to run</li>
+  <li>Added license information to info window</li>
+  <li>Minor grammar and spelling tweaks to tutorial</li>
+</ul>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Version 2.1 - ‘Core’</span></p>
+<p style="font-size:15px;color:#5e5e5e;"><em style="font-size:15px;color:darkorange;">Friday 21st November, 2014</em>
+<a style="text-decoration: none; color:dodgerblue;" href="https://github.com/samaaron/sonic-pi/commits/v2.1.0">(view commits)</a></p>
+
+<p style="font-size:15px;color:#5e5e5e;">The focus of release is very much on technical improvements, efficiency
+and general polish. </p>
+
+<p style="font-size:15px;color:#5e5e5e;">The most obvious and exciting change is the introduction of the
+<code style="font-size:15px; color:deeppink; background-color:white">live_loop</code> which will change the way you work with Sonic Pi. For more
+information on <code style="font-size:15px; color:deeppink; background-color:white">live_loop</code> take a look at the new section in the
+tutorial. Another very exciting development is that v2.1 marks the
+official support for Windows thanks to the excellent work by Jeremy
+Weatherford. Finally, this release is also the first release where Sonic
+Pi has a Core Team of developers. Please give a warm welcome to Xavier
+Riley, Jeremy Weatherford and Joseph Wilk.</p>
+
+<h3 id="api-changes-1">API Changes</h3>
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">live_loop</code> - A loop for live coding</li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">inc</code> - increment</li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">dec</code> - decrement</li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">quantise</code> - quantise a value to resolution</li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">factor?</code> - Factor test</li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">at</code> - Run a block at the given times</li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">degree</code> - for resolving a note in a scale by degree such as <code style="font-size:15px; color:deeppink; background-color:white">:i</code>, <code style="font-size:15px; color:deeppink; background-color:white">:iv</code></li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">chord_degree</code> - Construct chords based on scale degrees</li>
+  <li>New TL fn <code style="font-size:15px; color:deeppink; background-color:white">use_sample_bpm</code> - for changing the BPM based on a sample’s duration</li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">rest?</code> - Determine if note or args is a rest</li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">vt</code> - Get virtual time</li>
+  <li>New fn <code style="font-size:15px; color:deeppink; background-color:white">set_control_delta!</code> - Set control delta globally</li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">wait</code> now handles both <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> and <code style="font-size:15px; color:deeppink; background-color:white">sync</code> functionality </li>
+  <li>Allow first arg to <code style="font-size:15px; color:deeppink; background-color:white">play</code> to be a proc or lambda. In which case simple call it and use the result as the note</li>
+  <li>Teach <code style="font-size:15px; color:deeppink; background-color:white">play</code> to accept a single map argument (in which case it will extract <code style="font-size:15px; color:deeppink; background-color:white">:note</code> key out if it exists.</li>
+  <li>Fns <code style="font-size:15px; color:deeppink; background-color:white">play</code> and <code style="font-size:15px; color:deeppink; background-color:white">synth</code> now treat ‘notes’ <code style="font-size:15px; color:deeppink; background-color:white">nil</code>, <code style="font-size:15px; color:deeppink; background-color:white">:r</code> and <code style="font-size:15px; color:deeppink; background-color:white">:rest</code> as rests and don’t trigger any synths. </li>
+</ul>
+
+<h3 id="gui-modifications">GUI Modifications</h3>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Updated and improved tutorial</li>
+  <li>Much improved autocompletion</li>
+  <li>Add HPF, LPF, mono forcer and stereo swapping preferences to new studio section for use when performing with Sonic Pi through an external PA.</li>
+  <li>Shortcuts overhauled - now supports basic Emacs-style Ctrl-* navigation.</li>
+  <li>Shortcuts Alt-[ and Alt-] now cycle through workspaces</li>
+  <li>Shortcuts now work when toolbar is hidden</li>
+  <li>Font sizes for individual workspaces are now stored between sessions</li>
+  <li>Ctl-Mouse-wheel zooms font on Windows</li>
+  <li>Links are now clickable (opening external browser)</li>
+  <li>Entries  in docsystem’s synth arg table are now clickable and will take focus down to arg documentation</li>
+  <li>Stop users accidentally clearing entire workspace if they type quickly after hitting run</li>
+  <li>Hitting F1 or <code style="font-size:15px; color:deeppink; background-color:white">C-i</code> over a function name now opens up the doc system at the relevant place</li>
+</ul>
+
+<h3 id="bugsimprovements">Bugs/Improvements</h3>
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Reworked examples.</li>
+  <li>Much improved efficiency in many areas - especially for Raspberry Pi.</li>
+  <li>Avoid occasional clicking sound when stopping runs</li>
+  <li>Note Cb is now correctly resolved to be a semitone lower than C</li>
+  <li>Non RP systems now start with more audio busses (1024)</li>
+  <li>Array#sample and Array#shuffle are now correctly seeded with thread local random generator</li>
+  <li>Log files are now placed into ~/.sonic-pi/log</li>
+  <li>Chords and scales now wrap around when accessed from indexes outside of their range.</li>
+  <li><code style="font-size:15px; color:deeppink; background-color:white">rand_i</code> and <code style="font-size:15px; color:deeppink; background-color:white">rrand_i</code> now correctly return integers rather than floats</li>
+  <li>rrand arguments now correctly handle a range of 0 (i.e. min == max)</li>
+  <li>Line offset in error messages is now correct</li>
+  <li>When saving files on Windows, CRLF line endings are used</li>
+  <li>Stop users defining functions with same name as core API fns</li>
+</ul>
+
+<h3 id="synths-samples--fx">Synths, Samples &amp; FX</h3>
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>New samples (bass drums, snares and loops)</li>
+  <li>Allow <code style="font-size:15px; color:deeppink; background-color:white">mod_range</code> param to have negative values (for oscillating with lower notes)</li>
+  <li>Change slide mechanism to default to linear sliding with support for changing the curve type. All modifiable args now have corresponding  <code style="font-size:15px; color:deeppink; background-color:white">_slide_shape</code> and <code style="font-size:15px; color:deeppink; background-color:white">_slide_curve</code> args.</li>
+  <li>Improve TB303 synth - now supports separate cutoff ADSR envelopes. New args:
+    <ul style="font-size:15px;color:#5e5e5e;">
+      <li><code style="font-size:15px; color:deeppink; background-color:white">cutoff_attack</code>, </li>
+      <li><code style="font-size:15px; color:deeppink; background-color:white">cutoff_sustain</code>, </li>
+      <li><code style="font-size:15px; color:deeppink; background-color:white">cutoff_decay</code>, </li>
+      <li><code style="font-size:15px; color:deeppink; background-color:white">cutoff_release</code>, </li>
+      <li><code style="font-size:15px; color:deeppink; background-color:white">cutoff_min_slide</code>, </li>
+      <li><code style="font-size:15px; color:deeppink; background-color:white">cutoff_attack_level</code>, </li>
+      <li><code style="font-size:15px; color:deeppink; background-color:white">cutoff_sustain_level</code>,</li>
+      <li><code style="font-size:15px; color:deeppink; background-color:white">cutoff_env_curve</code></li>
+    </ul>
+  </li>
+</ul>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Version 2.0.1</span></p>
+<p style="font-size:15px;color:#5e5e5e;"><em style="font-size:15px;color:darkorange;">Tuesday 9th September, 2014</em>
+<a style="text-decoration: none; color:dodgerblue;" href="https://github.com/samaaron/sonic-pi/commits/v2.0.1">(view commits)</a></p>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Fix recording functionality</li>
+  <li>Improve documentation content and layout</li>
+  <li>Close off OSC server from external clients</li>
+  <li>Add History, Contributors and Community pages to info window</li>
+  <li>Improve startup speed on OS X</li>
+  <li>Re-work and add to shortcuts for key actions:
+    <ul style="font-size:15px;color:#5e5e5e;">
+      <li>on RP they are all <code style="font-size:15px; color:deeppink; background-color:white">alt-*</code> prefixed</li>
+      <li>on OS X they are all <code style="font-size:15px; color:deeppink; background-color:white">cmd-*</code> prefixed</li>
+    </ul>
+  </li>
+  <li>Improve highlighting of log messages (<code style="font-size:15px; color:deeppink; background-color:white">cue</code>/<code style="font-size:15px; color:deeppink; background-color:white">sync</code> messages are more clearly highlighted)</li>
+  <li>Log now communicates when a run has completed executing</li>
+  <li>Fix bug encountered when stopping threads in super fast loops (stopped comms with server)</li>
+</ul>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Version 2.0 - ‘Phoenix’</span></p>
+<p style="font-size:15px;color:#5e5e5e;"><em style="font-size:15px;color:darkorange;">Tuesday 2nd September, 2014</em>
+<a style="text-decoration: none; color:dodgerblue;" href="https://github.com/samaaron/sonic-pi/commits/v2.0.0">(view commits)</a></p>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Complete rewrite since v1.0</li>
+  <li>Support for Live Coding - redefining behaviour whilst music is playing</li>
+  <li>New timing system - timing now guaranteed to be accurate</li>
+  <li>Many new synths</li>
+  <li>New chainable studio FX system </li>
+  <li>Support for sample playback</li>
+  <li>Inclusion of over 70 CC0 licensed samples from http://freesound.org</li>
+  <li>Support for controlling and modifying synth, fx and sample playback
+arguments after they have been triggered</li>
+  <li>Completely re-designed GUI</li>
+  <li>Help system with full documentation, tutorial and many examples</li>
+  <li>Record functionality (for recording performances/pieces)</li>
+  <li>Support for controlling system audio settings on RP</li>
+</ul>
+
+</font>

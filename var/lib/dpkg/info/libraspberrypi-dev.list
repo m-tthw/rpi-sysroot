@@ -2,6 +2,7 @@
 /opt
 /opt/vc
 /opt/vc/lib
+/opt/vc/lib/libdebug_sym_static.a
 /opt/vc/lib/libvchostif.a
 /opt/vc/lib/libkhrn_client.a
 /opt/vc/lib/libvcilcs.a
@@ -128,6 +129,7 @@
 /opt/vc/include/interface/mmal/core/mmal_clock_private.h
 /opt/vc/include/interface/mmal/core/mmal_component_private.h
 /opt/vc/include/interface/mmal/core/mmal_port_private.h
+/opt/vc/include/interface/mmal/core/mmal_events_private.h
 /opt/vc/include/interface/mmal/core/mmal_core_private.h
 /opt/vc/include/interface/mmal/mmal.h
 /opt/vc/include/interface/vctypes

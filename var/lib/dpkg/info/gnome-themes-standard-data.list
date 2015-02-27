@@ -3,6 +3,8 @@
 /usr/share
 /usr/share/themes
 /usr/share/themes/Mist
+/usr/share/themes/Crux
+/usr/share/themes/Raleigh
 /usr/share/themes/Adwaita
 /usr/share/themes/Adwaita/backgrounds
 /usr/share/themes/Adwaita/backgrounds/good-night.jpg
@@ -18,6 +20,10 @@
 /usr/share/themes/Adwaita/gtk-3.0/gtk.css
 /usr/share/themes/Adwaita/gtk-3.0/settings.ini
 /usr/share/themes/Adwaita/gtk-3.0/gtk-dark.css
+/usr/share/themes/ThinIce
+/usr/share/themes/Redmond
+/usr/share/themes/Industrial
+/usr/share/themes/Clearlooks
 /usr/share/gnome-background-properties
 /usr/share/gnome-background-properties/adwaita.xml
 /usr/share/doc
@@ -120,3 +126,9 @@
 /usr/share/icons/Adwaita/cursor.theme
 /usr/share/icons/default
 /usr/share/themes/Mist/gtk-3.0
+/usr/share/themes/Crux/gtk-3.0
+/usr/share/themes/Raleigh/gtk-3.0
+/usr/share/themes/ThinIce/gtk-3.0
+/usr/share/themes/Redmond/gtk-3.0
+/usr/share/themes/Industrial/gtk-3.0
+/usr/share/themes/Clearlooks/gtk-3.0

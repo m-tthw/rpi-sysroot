@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     26650,        616]
-NotebookOptionsPosition[     24281,        549]
-NotebookOutlinePosition[     26596,        613]
-CellTagsIndexPosition[     26553,        610]
+NotebookDataLength[     26851,        620]
+NotebookOptionsPosition[     24472,        553]
+NotebookOutlinePosition[     26797,        617]
+CellTagsIndexPosition[     26754,        614]
 WindowTitle->Wolfram Product Activation
 WindowFrame->ModalDialog*)
 
@@ -76,11 +76,11 @@ Cell[BoxData[
   OverlayBox[{
    DynamicBox[FEPrivate`ImportImage[
      FrontEnd`FileName[{"Dialogs", "Activation"}, "SignInBackground.png"]],
-    ImageSizeCache->{825., {208., 212.}}], 
+    ImageSizeCache->{35., {1., 8.}}], 
    DynamicBox[FEPrivate`ImportImage[
      FrontEnd`FileName[{"Dialogs", "Activation"}, 
       "SignInBackground-Error.png"]],
-    ImageSizeCache->{825., {208., 212.}}], 
+    ImageSizeCache->{35., {1., 8.}}], 
    FrameBox[
     DynamicModuleBox[{$CellContext`userid$$ = "", $CellContext`userpwd$$ = 
      "", $CellContext`errorMessagePane$$, $CellContext`ERRORCODE$$ = 0}, 
@@ -117,7 +117,7 @@ Cell[BoxData[
                     
                     DynamicBox[FEPrivate`FrontEndResource[
                     "ActivationDialog", "SignInTitle"],
-                    ImageSizeCache->{200., {3., 11.}}], "DialogStyle", 
+                    ImageSizeCache->{176., {3., 11.}}], "DialogStyle", 
                     "ControlStyle",
                     StripOnInput->False],
                     StripOnInput->False,
@@ -139,6 +139,8 @@ Cell[BoxData[
                     Enabled->FEPrivate`UnsameQ[
                     FrontEnd`CurrentValue["WolframCloudConnected"], "Pending"],
                     FieldHint->$CellContext`uidfieldhint$$,
+                    FieldSize->{{1., 
+                    DirectedInfinity[1]}, 1},
                     FrameMargins->{{Automatic, Automatic}, {Automatic, 4}},
                     ImageSize->{225, 25}],
                     ImageMargins->{{0, 0}, {15, 0}}]},
@@ -159,6 +161,8 @@ Cell[BoxData[
                     FrontEnd`CurrentValue["WolframCloudConnected"], "Pending"],
                     FieldHint->$CellContext`pwdfieldhint$$,
                     FieldMasked->True,
+                    FieldSize->{{1., 
+                    DirectedInfinity[1]}, 1},
                     FrameMargins->{{Automatic, Automatic}, {Automatic, 4}},
                     ImageSize->{225, 25}],
                     ImageMargins->{{0, 0}, {15, 0}}]},
@@ -173,15 +177,14 @@ Cell[BoxData[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "CheckboxOn.png"]],
-                    ImageSizeCache->{16., {6., 10.}}], False->
+                    ImageSizeCache->{35., {1., 8.}}], False->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "CheckboxOff.png"]],
-                    ImageSizeCache->{16., {6., 10.}}]}, FrontEnd`CurrentValue[
-                    
+                    ImageSizeCache->{35., {1., 8.}}]}, FrontEnd`CurrentValue[
                     FrontEndObject[
-                    LinkObject["pxggw_shm", 3, 1]], {
+                    LinkObject["ric3v_shm", 3, 1]], {
                     PrivateFrontEndOptions, "DialogSettings", "Login", 
                     "RememberMe"}, True]], 
                     PaneSelectorBox[{False->
@@ -212,6 +215,7 @@ Cell[BoxData[
                     
                     GridBoxAlignment->{
                     "Columns" -> {{Left}}, "Rows" -> {{Bottom}}},
+                    
                     GridBoxItemSize->{
                     "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
                     "Grid"],
@@ -244,7 +248,7 @@ Cell[BoxData[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-Default.png"]],
-                    ImageSizeCache->{67., {13., 17.}}], True->
+                    ImageSizeCache->{45., {1., 11.}}], True->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
@@ -264,63 +268,61 @@ Cell[BoxData[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-loading-0.png"]],
-                    ImageSizeCache->{67., {13., 17.}}], 2->
+                    ImageSizeCache->{45., {1., 11.}}], 2->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-loading-1.png"]],
-                    ImageSizeCache->{67., {13., 17.}}], 3->
+                    ImageSizeCache->{45., {1., 11.}}], 3->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-loading-2.png"]],
-                    ImageSizeCache->{67., {13., 17.}}], 4->
+                    ImageSizeCache->{45., {1., 11.}}], 4->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-loading-3.png"]],
-                    ImageSizeCache->{67., {13., 17.}}], 5->
+                    ImageSizeCache->{45., {1., 11.}}], 5->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-loading-4.png"]],
-                    ImageSizeCache->{67., {13., 17.}}], 6->
+                    ImageSizeCache->{45., {1., 11.}}], 6->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-loading-5.png"]],
-                    ImageSizeCache->{67., {13., 17.}}], 7->
+                    ImageSizeCache->{45., {1., 11.}}], 7->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-loading-6.png"]],
-                    ImageSizeCache->{67., {13., 17.}}], 8->
+                    ImageSizeCache->{45., {1., 11.}}], 8->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-loading-7.png"]],
-                    ImageSizeCache->{67., {13., 17.}}], 9->
+                    ImageSizeCache->{45., {1., 11.}}], 9->
                     DynamicBox[FEPrivate`ImportImage[
-                    
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-loading-8.png"]],
-                    ImageSizeCache->{67., {13., 17.}}], 10->
+                    ImageSizeCache->{45., {1., 11.}}], 10->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-loading-9.png"]],
-                    ImageSizeCache->{67., {13., 17.}}], 11->
+                    ImageSizeCache->{45., {1., 11.}}], 11->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-loading-10.png"]],
-                    ImageSizeCache->{67., {13., 17.}}], 12->
+                    ImageSizeCache->{45., {1., 11.}}], 12->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "SignIn-loading-11.png"]],
-                    ImageSizeCache->{67., {13., 17.}}]}, Dynamic[Typeset`var],
-                    
+                    ImageSizeCache->{45., {1., 11.}}]}, Dynamic[Typeset`var],
                     ImageSize->All]}]],
                     {"ListAnimator", AnimationRate -> 11}]}, FEPrivate`SameQ[
                     FrontEnd`CurrentValue["WolframCloudConnected"], 
@@ -337,7 +339,8 @@ Cell[BoxData[
                     255, 255, 255, 0}}, {{255, 255, 255, 0}, {255, 255, 255, 
                     0}}, {{255, 255, 255, 0}, {255, 255, 255, 0}}, {{255, 255,
                      255, 0}, {255, 255, 255, 0}}}, "Byte", ColorSpace -> 
-                    "RGB", Interleaving -> True], "ButtonType" -> "Default"},
+                    "RGB", ImageSize -> Automatic, Interleaving -> True], 
+                    "ButtonType" -> "Default"},
                     
                     ButtonFunction:>
                     Module[{$CellContext`loginReturn$, \
@@ -359,7 +362,7 @@ $CellContext`errorCode$; Null]],
                     Enabled->FEPrivate`UnsameQ[
                     FrontEnd`CurrentValue["WolframCloudConnected"], "Pending"],
                     Evaluator->Automatic,
-                    ImageSize->{Automatic, 30},
+                    ImageSize->{Automatic, All},
                     Method->"Queued"], 
                     PaneBox[
                     ButtonBox[
@@ -384,7 +387,7 @@ $CellContext`errorCode$; Null]],
                     FrontEnd`FrontEndToken["FrontEndQuitNonInteractive"]],
                     Enabled->True,
                     Evaluator->Automatic,
-                    ImageSize->{Automatic, 30},
+                    ImageSize->{Automatic, All},
                     Method->"Preemptive"],
                     Alignment->Right,
                     ImageSize->Full]}
@@ -458,7 +461,7 @@ $CellContext`errorCode$; Null]],
                     "ActivationDialog", 
                     "UserPWFieldHint"]])], $CellContext`errorcode$$ = \
 $CellContext`ERRORCODE$$,
-                   ImageSizeCache->{227., {102., 108.}}],
+                   ImageSizeCache->{227., {98., 104.}}],
                   FrameMargins->0,
                   FrameStyle->None,
                   StripOnInput->False]},
@@ -471,7 +474,7 @@ $CellContext`ERRORCODE$$,
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
                     "HelpIcon-Default.png"]],
-                    ImageSizeCache->{17., {7., 11.}}], True->
+                    ImageSizeCache->{35., {1., 8.}}], True->
                     DynamicBox[FEPrivate`ImportImage[
                     
                     FrontEnd`FileName[{"Dialogs", "Activation"}, 
@@ -505,6 +508,7 @@ $CellContext`ERRORCODE$$,
            GridBoxSpacings->{"Columns" -> {{0}}, "Rows" -> {{0}}}],
           "Grid"]}
        },
+       BaselinePosition->{{1, 1}, Baseline},
        DefaultBaseStyle->"Column",
        GridBoxAlignment->{"Columns" -> {{Left}}},
        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
@@ -568,7 +572,7 @@ WindowFrame->"ModalDialog",
 WindowTitle->FEPrivate`FrontEndResource["ActivationDialog", "WindowTitle"],
 CellContext->"Global`",
 Background->GrayLevel[1],
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (May 13, \
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
 2014)",
 StyleDefinitions->Notebook[{
    Cell[
@@ -597,7 +601,7 @@ StyleDefinitions->Notebook[{
       ButtonFunction :> (FE`hyperlinkCoded[
        "https://www.wolframcloud.com/app/account/", "source=signinscreen"]& ),
        Evaluator -> Automatic}]}, Visible -> False, FrontEndVersion -> 
-  "10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (May 13, 2014)", 
+  "10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, 2014)", 
   StyleDefinitions -> "Default.nb"],
 Modal -> True
 ]
@@ -615,7 +619,7 @@ Notebook[{
 Cell[603, 21, 1701, 50, 1, InheritFromParent,
  PageBreakAbove->True,
  PageBreakWithin->False],
-Cell[2307, 73, 21970, 474, 419, InheritFromParent,
+Cell[2307, 73, 22161, 478, 379, InheritFromParent,
  PageBreakAbove->True,
  PageBreakWithin->False]
 }
@@ -624,4 +628,4 @@ Cell[2307, 73, 21970, 474, 419, InheritFromParent,
 
 (* End of internal cache information *)
 
-(* NotebookSignature QIjmjL6Zh8m0hJ57GJyiOxco *)
+(* NotebookSignature jI4L0i65bXU0pK#Lx5rtDjGA *)

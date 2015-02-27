@@ -168,7 +168,7 @@ If[ StringLength[s] > 32,
     If[ StringMatchQ[ StringTake[#, 5] <> StringDrop[#, 6], RegularExpression["[ \\d]+"]]
         && 
         StringMatchQ[StringTake[#, {6, 6}], "."],
-        DateList[{If[# > 50, 1900 + #, 2000 + #]&[ToExpression[StringTake[#, 2]]],1,ToExpression[StringTake[#, {3, -1}]],0,0,0}],
+        DateObject[{If[# > 50, 1900 + #, 2000 + #]&[ToExpression[StringTake[#, 2]]],1,ToExpression[StringTake[#, {3, -1}]],0,0,0}],
         $Failed
     ] &[ StringTake[s, {19, 32}] ],
     $Failed
@@ -180,7 +180,7 @@ If[ StringLength[s] > 43,
     If[ StringMatchQ[StringDrop[#, 2], RegularExpression["\\d+ *"]]
         && 
         StringMatchQ[StringTake[#, 2], 
-        RegularExpression["[ \\-\\+]\\."]], ToExpression[#], 
+        RegularExpression["[ \\-\\+]\\."]], Quantity[ToExpression[#],"Revolutions"/"Days"/"Days"], 
         $Failed
      ] &[ StringTake[s, {34, 43}] ],
      $Failed
@@ -194,7 +194,7 @@ If[ StringLength[s] > 61,
         StringMatchQ[StringTake[#, {2, 6}], RegularExpression["\\d+ *"]]
         && 
         StringMatchQ[StringTake[#, {7, 8}], RegularExpression["[\\-\\+0]\\d"]], 
-        N[ToExpression[ StringTake[#, 6]]*(10^ToExpression[StringTake[#, -2]])],
+        Quantity[N[ToExpression[ StringTake[#, 6]]*(10^ToExpression[StringTake[#, -2]])],1/"EarthEquatorialRadius"],
         $Failed
     ] &[ StringTake[s, {54, 61}] ],
     $Failed
@@ -227,7 +227,7 @@ If[ StringLength[s] > 75,
     If[ StringMatchQ[StringTake[#, 3] <> StringDrop[#, 4], RegularExpression[" *\\d+ *"]]
         &&
         StringMatchQ[StringTake[#, {4, 4}], "."],
-        ToExpression[#],
+        Quantity[ToExpression[#],"AngularDegrees"],
         $Failed
     ] &[ StringTake[s, {78, 85}] ],
     $Failed
@@ -239,7 +239,7 @@ If[ StringLength[s] > 94,
     If[ StringMatchQ[StringTake[#, 3] <> StringDrop[#, 4], RegularExpression[" *\\d+ *"]]
         &&
         StringMatchQ[StringTake[#, {4, 4}], "."],
-        ToExpression[#],
+        Quantity[ToExpression[#],"AngularDegrees"],
         $Failed
     ] &[ StringTake[s, {87, 94}] ],
     $Failed
@@ -261,7 +261,7 @@ If[ StringLength[s] > 111,
    If[ StringMatchQ[StringTake[#, 3] <> StringDrop[#, 4], RegularExpression[" *\\d+ *"]]
        &&
        StringMatchQ[StringTake[#, {4, 4}], "."],
-       ToExpression[#],
+       Quantity[ToExpression[#],"AngularDegrees"],
        $Failed
     ] &[ StringTake[s, {104, 111}] ],
     $Failed
@@ -273,7 +273,7 @@ If[ StringLength[s] > 120,
     If[ StringMatchQ[StringTake[#, 3] <> StringDrop[#, 4], RegularExpression[" *\\d+ *"]]
         &&
         StringMatchQ[StringTake[#, {4, 4}], "."],
-        ToExpression[#],
+        Quantity[ToExpression[#],"AngularDegrees"],
         $Failed
      ] &[ StringTake[s, {113, 120}] ],
 $Failed]
@@ -284,7 +284,7 @@ If[ StringLength[s] > 132,
     If[ StringMatchQ[StringTake[#, 2] <> StringDrop[#, 3], RegularExpression[" *\\d+ *"]]
         &&
         StringMatchQ[StringTake[#, {3, 3}], "."],
-        ToExpression[#],
+        Quantity[ToExpression[#],"Revolutions"/"Days"],
         $Failed
     ] &[ StringTake[s, {122, 132}] ],
     $Failed
@@ -294,7 +294,7 @@ If[ StringLength[s] > 132,
 TLEConversion[s_String, "RevolutionNumber"] := 
 If[ StringLength[s] >= 137, 
     If[ StringMatchQ[#, RegularExpression[" *\\d+ *"]],
-        ToExpression[#],
+        Quantity[ToExpression[#],"Revolutions"],
         $Failed
     ]&[ StringTake[s, {133, 137}] ],
     $Failed

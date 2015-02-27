@@ -1,159 +1,147 @@
 <font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
 
-<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Studio FX</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">One of the most rewarding and fun aspects of Sonic Pi is the ability to easily add studio effects to your sounds. However, before we can use them we need to learn an important piece of code syntax - do/end blocks/</p>
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Iteration and Loops</span></p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">do/end Blocks</span></p>
+<p style="font-size:15px;color:#5e5e5e;">So far we’ve spent a lot of time looking at the different sounds you
+can make with <code style="font-size:15px; color:deeppink; background-color:white">play</code> and <code style="font-size:15px; color:deeppink; background-color:white">sample</code> blocks. We’ve also learned how to
+trigger these sounds through time using <code style="font-size:15px; color:deeppink; background-color:white">sleep</code>.</p>
 
-<p style="font-size:15px;color:#5e5e5e;">With parameters we were able to change something that happened on a single line. However, sometimes we want to do something meaningful to a number of lines of code. For example we may wish to add reverb to some of our calls to <code style="font-size:15px; color:deeppink; background-color:white">play</code> or <code style="font-size:15px; color:deeppink; background-color:white">sample</code>. Consider the following code:</p>
+<p style="font-size:15px;color:#5e5e5e;">As you’ve probably found out, there’s a <em style="font-size:15px;color:darkorange;">lot</em> of fun you can have with
+these basic building blocks. However, a whole new dimension of fun opens
+up when you start using the power of code to structure your music and
+compositions. In the next few sections we’ll explore some of these
+powerful new tools. First up is iteration and loops.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Repetition</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Have you written some code you’d like to repeat a few times? For
+example, you might have something like this:</p>
 
 <pre><code style="font-size:15px; color:deeppink; background-color:white">play 50
 sleep 0.5
-sample :elec_plip
+sample :elec_blup
 sleep 0.5
 play 62
+sleep 0.25
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">We therefore need to tell Sonic Pi where we wish to <em style="font-size:15px;color:darkorange;">start</em> using reverb and where to <em style="font-size:15px;color:darkorange;">end</em> using reverb. We use <code style="font-size:15px; color:deeppink; background-color:white">do</code> for start and <code style="font-size:15px; color:deeppink; background-color:white">end</code> for end. For example:</p>
+<p style="font-size:15px;color:#5e5e5e;">What if we wished to repeat this 3 times? Well, we could do something
+simple and just copy and paste it three times:</p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">do
+<pre><code style="font-size:15px; color:deeppink; background-color:white">play 50
+sleep 0.5
+sample :elec_blup
+sleep 0.5
+play 62
+sleep 0.25
+
+play 50
+sleep 0.5
+sample :elec_blup
+sleep 0.5
+play 62
+sleep 0.25
+
+play 50
+sleep 0.5
+sample :elec_blup
+sleep 0.5
+play 62
+sleep 0.25
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now that’s a lot of code! What happens if you want to change the
+sample to <code style="font-size:15px; color:deeppink; background-color:white">:elec_plip</code>? You’re going to have to find all the places
+with the original <code style="font-size:15px; color:deeppink; background-color:white">:elec_blup</code> and switch them over. More importantly,
+what if you wanted to repeat the original piece of code 50 times or
+1000? Now that would be a lot of code, and a lot of lines of code to
+alter if you wanted to make a change.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Iteration</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">In fact, repeating the code should be as easy as saying <em style="font-size:15px;color:darkorange;">do this three
+times</em>. Well, it pretty much is. Remember our old friend the code
+block? We can use it to mark the start and end of the code we’d like
+to repeat three times. We then use the special code <code style="font-size:15px; color:deeppink; background-color:white">3.times</code>. So,
+instead of writing <em style="font-size:15px;color:darkorange;">do this three times</em>, we write <code style="font-size:15px; color:deeppink; background-color:white">3.times do</code> -
+that’s not too hard. Just remember to write <code style="font-size:15px; color:deeppink; background-color:white">end</code> at the end of the
+code you’d like to repeat:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">3.times do
   play 50
   sleep 0.5
-  sample :elec_plip
+  sample :elec_blup
   sleep 0.5
   play 62
+  sleep 0.25
 end
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">However, this isn’t yet complete and won’t work (try it and you’ll get an error) as we haven’t told Sonic Pi what we want to do with this <em style="font-size:15px;color:darkorange;">do/end block</em>. We tell Sonic Pi this by writing some special code before the <code style="font-size:15px; color:deeppink; background-color:white">do</code>. For example, let’s look at adding some reverb.</p>
+<p style="font-size:15px;color:#5e5e5e;">Now isn’t that much neater than cutting and pasting! We can use this to
+create lots of nice repeating structures:</p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Reverb</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">If we want to use reverb we write <code style="font-size:15px; color:deeppink; background-color:white">with_fx :reverb</code> like this:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">with_fx :reverb do
+<pre><code style="font-size:15px; color:deeppink; background-color:white">4.times do
   play 50
   sleep 0.5
-  sample :elec_plip
-  sleep 0.5
-  play 62
 end
 
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Now play this code and you’ll hear it played with reverb. It sounds good doesn’t it! Everything sounds pretty nice with reverb. </p>
-
-<p style="font-size:15px;color:#5e5e5e;">Now let’s look what happens if we have code outside the do/end block:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">with_fx :reverb do
-  play 50
-  sleep 0.5
-  sample :elec_plip
-  sleep 0.5
-  play 62
+8.times do
+  play 55, release: 0.2
+  sleep 0.25
 end
 
-sleep 1
-play 55
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Notice how the final <code style="font-size:15px; color:deeppink; background-color:white">play 55</code> isn’t played with reverb. This is because it is <em style="font-size:15px;color:darkorange;">outside</em> the do/end block, so it isn’t captured by the reverb FX.</p>
-
-<p style="font-size:15px;color:#5e5e5e;">Similarly, if you make sounds before the do/end block, they also won’t be captured:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play 55
-sleep 1
-
-with_fx :reverb do
+4.times do
   play 50
   sleep 0.5
-  sample :elec_plip
-  sleep 0.5
-  play 62
-end
-
-sleep 1
-play 55
-</code></pre>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Echo</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">There are many FX to choose from. How about some echo?</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">with_fx :echo do
-  play 50
-  sleep 0.5
-  sample :elec_plip
-  sleep 0.5
-  play 62
 end
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">One of the powerful aspects of Sonic Pi’s FX blocks is that they may be passed parameters similar to parameters we’ve already seen with <code style="font-size:15px; color:deeppink; background-color:white">play</code> and <code style="font-size:15px; color:deeppink; background-color:white">sample</code>. For example a fun echo parameter to play with is <code style="font-size:15px; color:deeppink; background-color:white">phase:</code> which represents the duration of a given echo in seconds. Let’s make the echo slower:</p>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Nesting Iterations</span></p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">with_fx :echo, phase: 0.5 do
-  play 50
-  sleep 0.5
-  sample :elec_plip
-  sleep 0.5
-  play 62
-end
-</code></pre>
+<p style="font-size:15px;color:#5e5e5e;">We can put iterations inside other iterations to create interesting
+patterns. For example:</p>
 
-<p style="font-size:15px;color:#5e5e5e;">Let’s also make the echo faster:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">with_fx :echo, phase: 0.125 do
-  play 50
-  sleep 0.5
-  sample :elec_plip
-  sleep 0.5
-  play 62
-end
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Finally we can use a number of parameters. Let’s make the echo take longer to fade away by setting the <code style="font-size:15px; color:deeppink; background-color:white">decay:</code> time to 8 seconds:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">with_fx :echo, phase: 0.5, decay: 8 do
-  play 50
-  sleep 0.5
-  sample :elec_plip
-  sleep 0.5
-  play 62
-end
-</code></pre>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Nesting FX</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">One of the most powerful aspects of the FX blocks is that you can nest them. This allows you to very easily chain FX together. For example, what if you wanted to play some code with echo and then with reverb? Easy, just put one inside the other:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">with_fx :reverb do
-  with_fx :echo, phase: 0.5, decay: 8 do
-    play 50
-    sleep 0.5
-    sample :elec_blup
-    sleep 0.5
-    play 62
+<pre><code style="font-size:15px; color:deeppink; background-color:white">4.times do
+  sample :drum_heavy_kick
+  2.times do
+    sample :elec_blip2, rate: 2
+    sleep 0.25
+  end
+  sample :elec_snare
+  4.times do
+    sample :drum_tom_mid_soft
+    sleep 0.125
   end
 end
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Think about the audio flowing from the inside of the inner block out. The sound of all the code within the inner do/end block such as <code style="font-size:15px; color:deeppink; background-color:white">play 50</code> is first sent to the echo FX and the sound of the echo FX is in turn sent out to the reverb FX.</p>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Looping</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">We may use very deep nestings for crazy results. However, be warned, the FX can use a lot of resources and when you nest them you’re effectively running multiple FX simultaneously. So be sparing with your use of FX especially on low powered platforms such as the Raspberry Pi.</p>
+<p style="font-size:15px;color:#5e5e5e;">If you want something to repeat a lot of times, you might find yourself
+using really large numbers such as <code style="font-size:15px; color:deeppink; background-color:white">1000.times do</code>. In this case, you’re
+probably better off asking Sonic Pi to repeat forever (at least until
+you press the stop button!). Let’s loop the amen break forever:</p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Discovering FX</span></p>
+<pre><code style="font-size:15px; color:deeppink; background-color:white">loop do
+  sample :loop_amen
+  sleep sample_duration :loop_amen
+end
+</code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Sonic Pi ships with a large number of FX for you to play with. To find out which ones are available click on FX in the far right of this help system and you’ll see a list of available options. Here’s a list of some of my favourite:</p>
+<p style="font-size:15px;color:#5e5e5e;">The important thing to know about loops is that they act like black
+holes for code. Once the code enters a loop it can never leave until you
+press stop - it will just go round and round the loop forever. This
+means if you have code after the loop you will <em style="font-size:15px;color:darkorange;">never</em> hear it. For
+example, the cymbal after this loop will never play:</p>
 
-<ul style="font-size:15px;color:#5e5e5e;">
-  <li>wobble,</li>
-  <li>reverb,</li>
-  <li>echo,</li>
-  <li>distortion,</li>
-  <li>slicer</li>
-</ul>
+<pre><code style="font-size:15px; color:deeppink; background-color:white">loop do
+  play 50
+  sleep 1
+end
 
-<p style="font-size:15px;color:#5e5e5e;">Now go crazy and add FX everywhere for some amazing new sounds!</p>
+sample :drum_cymbal_open
+</code></pre>
 
+<p style="font-size:15px;color:#5e5e5e;">Now, get structuring your code with iteration and loops!</p>
 </font>

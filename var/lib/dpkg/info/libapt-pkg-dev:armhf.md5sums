@@ -1,4 +1,4 @@
-f06a093432411738488e4f3deac142aa  usr/include/apt-pkg/acquire-item.h
+986e3ff9e2c1a19dce85be6f65d1a6f9  usr/include/apt-pkg/acquire-item.h
 b23b331f8900a1f7f353f9f475dd72fe  usr/include/apt-pkg/acquire-method.h
 025821d6f5ecb3e54333bc54d6c24aed  usr/include/apt-pkg/acquire-worker.h
 f95e4ca48fbab7379569544d5d7af9c4  usr/include/apt-pkg/acquire.h
@@ -69,5 +69,5 @@ cbbbe39e66f5b804e97ac0d483e9d631  usr/include/apt-pkg/version.h
 ae7b67a28ab26dcc49f12472c94e2a0d  usr/include/apt-pkg/versionmatch.h
 0474331c56bf052e7757ccf2bf6e46d9  usr/include/apt-pkg/weakptr.h
 0a9faf4bc39390053967e50c703b7c0e  usr/share/doc/libapt-pkg-dev/NEWS.Debian.gz
-e2a2037f326a35920cc270eb4fe6c45d  usr/share/doc/libapt-pkg-dev/changelog.gz
+d62bfc8e257be73d209f0583eb54af6e  usr/share/doc/libapt-pkg-dev/changelog.gz
 fa9fc3fde34b734ee15aecd2066df5b1  usr/share/doc/libapt-pkg-dev/copyright

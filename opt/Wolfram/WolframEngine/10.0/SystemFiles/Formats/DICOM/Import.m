@@ -11,9 +11,9 @@ ImportExport`RegisterImport[
   },
   {
 	"GraphicsList" -> GetGraphics,
-	"ImageList" -> (GraphicToImage[GetGraphics[##]]&),
+	"ImageList" -> (GraphicToImage[GetGraphics[##],##]&),
 	"Graphics" -> GetGraphic[1],
-	"Image" -> (GraphicToImage[GetGraphic[1][##]]&),
+	"Image" -> (GraphicToImage[GetGraphic[1][##],##]&),
 	"Data" -> GetData,
 	Automatic -> GetDefault,
 	"Overlays" :> GetOverlays,

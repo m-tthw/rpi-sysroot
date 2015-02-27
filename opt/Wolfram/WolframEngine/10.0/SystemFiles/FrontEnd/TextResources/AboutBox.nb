@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    434495,       9976]
-NotebookOptionsPosition[    361599,       8370]
-NotebookOutlinePosition[    372680,       8630]
-CellTagsIndexPosition[    372440,       8620]
+NotebookDataLength[    490385,      11336]
+NotebookOptionsPosition[    407711,       9523]
+NotebookOutlinePosition[    418798,       9783]
+CellTagsIndexPosition[    418558,       9773]
 WindowTitle->About Wolfram Mathematica
 WindowFrame->Palette*)
 
@@ -62,7 +62,7 @@ Cell[BoxData[
   ButtonData->"aboutboxSysInfoPaletteTitle"]], "TopMatter"],
 
 Cell[TextData[{
- "\[Copyright] Copyright 1988-",
+ "\[Copyright] Copyright 1988\[Dash]",
  
  ValueBox["$CopyrightYear"],
  " Wolfram Research, Inc. Protected by copyright law and international \
@@ -91,8 +91,6 @@ Cell[BoxData[
    DynamicBox[FEPrivate`FrontEndResource["FEStrings", "aboutboxCredits"],
     ImageSizeCache->{32., {1., 8.}}],
    ButtonData->"PiCredits"]}]], "MainNavigationBar", "MainNavigationBar"],
-
-Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{
@@ -127,8 +125,6 @@ Cell[TextData[{
      FontSize->10]], TraditionalForm]]],
  "\[ThickSpace]Credits"
 }], "SectionHeading"],
-
-Cell[CellGroupData[{
 
 Cell["Software Credits and Copyrights", "LicenseHeading"],
 
@@ -903,15 +899,17 @@ Cell["Licensed under the Apache License, Version 2.0", "LicenseText"],
 Cell["Boost Libraries", "LicenseText",
  FontWeight->"Bold"],
 
-Cell["Boost Software License - Version 1.0 - August 17th, 2003", "LicenseText"],
+Cell["Boost Software License 1.0", "LicenseText"],
+
+Cell["Copyright 2006 Nemanja Trifunovic", "LicenseText"],
 
 Cell["\<\
 Permission is hereby granted, free of charge, to any person or organization \
 obtaining a copy of the software and accompanying documentation covered by \
-this license (the \"Software\") to use, reproduce, display, distribute, \
-execute, and transmit the Software, and to prepare derivative works of the \
-Software, and to permit third-parties to whom the Software is furnished to do \
-so, all subject to the following:\
+this license (the \[OpenCurlyDoubleQuote]Software\[CloseCurlyDoubleQuote]) to \
+use, reproduce, display, distribute, execute, and transmit the Software, and \
+to prepare derivative works of the Software, and to permit third-parties to \
+whom the Software is furnished to do so, all subject to the following:\
 \>", "LicenseText"],
 
 Cell["\<\
@@ -924,13 +922,14 @@ language processor.\
 \>", "LicenseText"],
 
 Cell["\<\
-THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR \
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, \
-FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT \
-SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR \
-ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, \
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER \
-DEALINGS IN THE SOFTWARE.\
+THE SOFTWARE IS PROVIDED \[OpenCurlyDoubleQuote]AS \
+IS\[CloseCurlyDoubleQuote], WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, \
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A \
+PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE \
+COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR ANY \
+DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, ARISING \
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS \
+IN THE SOFTWARE.\
 \>", "LicenseText"],
 
 Cell["BZIP2", "LicenseText",
@@ -938,16 +937,85 @@ Cell["BZIP2", "LicenseText",
 
 Cell["Licensed under the Apache License, Version 2.0", "LicenseText"],
 
+Cell["Caffe", "LicenseText",
+ FontWeight->"Bold"],
+
+Cell["COPYRIGHT", "LicenseText"],
+
+Cell["All contributions by the University of California:", "LicenseText"],
+
+Cell["\<\
+Copyright (c) 2014, The Regents of the University of California (Regents)\
+\>", "LicenseText"],
+
+Cell["All rights reserved.", "LicenseText"],
+
+Cell["All other contributions:", "LicenseText"],
+
+Cell["Copyright (c) 2014, the respective contributors", "LicenseText"],
+
+Cell["All rights reserved.", "LicenseText"],
+
+Cell["\<\
+Caffe uses a shared copyright model: each contributor holds copyright over \
+their contributions to Caffe. The project versioning records all such \
+contribution and copyright details. If a contributor wants to further mark \
+their specific copyright on a particular contribution, they should indicate \
+their copyright solely in the commit message of the change when it is \
+committed.\
+\>", "LicenseText"],
+
+Cell["LICENSE", "LicenseText"],
+
+Cell["\<\
+Redistribution and use in source and binary forms, with or without \
+modification, are permitted provided that the following conditions are met: \
+\>", "LicenseText"],
+
+Cell["\<\
+1. Redistributions of source code must retain the above copyright notice, \
+this list of conditions and the following disclaimer. \
+\>", "LicenseText"],
+
+Cell["\<\
+2. Redistributions in binary form must reproduce the above copyright notice, \
+this list of conditions and the following disclaimer in the documentation \
+and/or other materials provided with the distribution. \
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" \
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE \
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE \
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE \
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR \
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF \
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS \
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN \
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) \
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE \
+POSSIBILITY OF SUCH DAMAGE.\
+\>", "LicenseText"],
+
+Cell["CONTRIBUTION AGREEMENT", "LicenseText"],
+
+Cell["\<\
+By contributing to the BVLC/caffe repository through pull-request, comment, \
+or otherwise, the contributor releases their content to the license and \
+copyright terms herein.\
+\>", "LicenseText"],
+
 Cell["Cairo", "LicenseText",
  FontWeight->"Bold"],
 
+Cell[TextData[ButtonBox["http://cairographics.org",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["http://cairographics.org"], None},
+ ButtonNote->"http://cairographics.org"]], "LicenseText"],
+
 Cell[TextData[{
- ButtonBox["http://cairographics.org",
-  BaseStyle->"Hyperlink",
-  ButtonData->{
-    URL["http://cairographics.org"], None},
-  ButtonNote->"http://cairographics.org"],
- "\nCairo is distributed under the GNU Lesser General Public License (LGPL), \
+ "Cairo is distributed under the GNU Lesser General Public License (LGPL), \
 available at ",
  ButtonBox["http://www.gnu.org/licenses/lgpl.html",
   BaseStyle->"Hyperlink",
@@ -1020,11 +1088,11 @@ Cell["CDFLib", "LicenseText",
 
 Cell["CDF Copyright Notice", "LicenseText"],
 
-Cell["\<\
-Copyright 2005
-Space Physics Data Center
-NASA/Goddard Space Flight Center\
-\>", "LicenseText"],
+Cell["Copyright 2005", "LicenseText"],
+
+Cell["Space Physics Data Center", "LicenseText"],
+
+Cell["NASA/Goddard Space Flight Center", "LicenseText"],
 
 Cell["\<\
 This software may be copied or redistributed as long as it is not sold for \
@@ -1035,8 +1103,12 @@ it must include the following notices:\
 
 Cell["\<\
 * The software is not the original (for protection of the original author's \
-reputations from any problems introduced by others)
-* Change history (e.g. date, functionality, etc.)
+reputations from any problems introduced by others)\
+\>", "LicenseText"],
+
+Cell["* Change history (e.g. date, functionality, etc.)", "LicenseText"],
+
+Cell["\<\
 This copyright notice must be reproduced on each copy made. This software is \
 provided as is without any express or implied warranties whatsoever.\
 \>", "LicenseText"],
@@ -1385,6 +1457,493 @@ Cell["\<\
 Neither the name of the University of Colorado nor the names of its \
 contributors may be used to endorse or promote products derived from this \
 software without specific prior written permission.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" \
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE \
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE \
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE \
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR \
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF \
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS \
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN \
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) \
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE \
+POSSIBILITY OF SUCH DAMAGE.\
+\>", "LicenseText"],
+
+Cell["DCMTK", "LicenseText",
+ FontWeight->"Bold"],
+
+Cell["Copyright (C) 1994-2011, OFFIS e.V.", "LicenseText"],
+
+Cell["All rights reserved.", "LicenseText"],
+
+Cell["This software and supporting documentation were developed by", \
+"LicenseText"],
+
+Cell["\<\
+  OFFIS e.V.
+  R&D Division Health
+  Escherweg 2
+  26121 Oldenburg, Germany\
+\>", "LicenseText"],
+
+Cell["\<\
+Redistribution and use in source and binary forms, with or without \
+modification, are permitted provided that the following conditions are met:\
+\>", "LicenseText"],
+
+Cell["\<\
+- Redistributions of source code must retain the above copyright notice, this \
+list of conditions and the following disclaimer.\
+\>", "LicenseText"],
+
+Cell["\<\
+- Redistributions in binary form must reproduce the above copyright notice, \
+this list of conditions and the following disclaimer in the documentation \
+and/or other materials provided with the distribution.\
+\>", "LicenseText"],
+
+Cell["\<\
+- Neither the name of OFFIS nor the names of its contributors may be used to \
+endorse or promote products derived from this software without specific prior \
+written permission.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" \
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE \
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE \
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE \
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR \
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF \
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS \
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN \
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) \
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE \
+POSSIBILITY OF SUCH DAMAGE.\
+\>", "LicenseText"],
+
+Cell["\<\
+Some portions of the DCMTK software package are derived from earlier versions \
+of this software with the following copyright, and can be identified by the \
+following copyright notice located in each source file:\
+\>", "LicenseText"],
+
+Cell["\<\
+Copyright (C) 1993/1994, OFFIS, Oldenburg University and CERIUM\
+\>", "LicenseText"],
+
+Cell["This software and supporting documentation were developed by", \
+"LicenseText"],
+
+Cell["\<\
+  Institut OFFIS
+  Bereich Kommunikationssysteme
+  Westerstr. 10-12
+  26121 Oldenburg, Germany
+  \
+\>", "LicenseText"],
+
+Cell["\<\
+  Fachbereich Informatik
+  Abteilung Prozessinformatik
+  Carl von Ossietzky Universitaet Oldenburg
+  Ammerlaender Heerstr. 114-118
+  26111 Oldenburg, Germany
+  \
+\>", "LicenseText"],
+
+Cell["\<\
+  CERIUM
+  Laboratoire SIM
+  Faculte de Medecine
+  2 Avenue du Pr. Leon Bernard
+  35043 Rennes Cedex, France
+  \
+\>", "LicenseText"],
+
+Cell["\<\
+for CEN/TC251/WG4 as a contribution to the Radiological Society of North \
+America (RSNA) 1993 Digital Imaging and Communications in Medicine (DICOM) \
+Demonstration.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS MADE AVAILABLE, AS IS, AND NEITHER OFFIS, OLDENBURG \
+UNIVERSITY NOR CERIUM MAKE ANY WARRANTY REGARDING THE SOFTWARE, ITS \
+PERFORMANCE, ITS MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR USE, FREEDOM \
+FROM ANY COMPUTER DISEASES OR ITS CONFORMITY TO ANY SPECIFICATION.  THE \
+ENTIRE RISK AS TO QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH THE USER.\
+\>", "LicenseText"],
+
+Cell["\<\
+Copyright of the software and supporting documentation is, unless otherwise \
+stated, jointly owned by OFFIS, Oldenburg University and CERIUM and free \
+access is hereby granted as a license to use this software, copy this \
+software and prepare derivative works based upon this software. However, any \
+distribution of this software source code or supporting documentation or \
+derivative works (source code and supporting documentation) must include the \
+three paragraphs of this copyright notice.\
+\>", "LicenseText"],
+
+Cell["\<\
+Some other parts of this software within the dcmtk/dcmnet sub-package related \
+to the DICOM Upper Layer Protocol are derived from software developed for the \
+RSNA'93 DICOM demonstration and kindly made available to us by the \
+Mallinckrodt Institute of Radiology.  Such software can be identified by the \
+following copyright notice located in each affected source file:\
+\>", "LicenseText"],
+
+Cell["Copyright (C) 1993, RSNA and Washington University", "LicenseText"],
+
+Cell["\<\
+The software and supporting documentation for the Radiological Society of \
+North America (RSNA) 1993 Digital Imaging and Communications in Medicine \
+(DICOM) Demonstration were developed at the\
+\>", "LicenseText"],
+
+Cell["\<\
+        Electronic Radiology Laboratory
+        Mallinckrodt Institute of Radiology
+        Washington University School of Medicine
+        510 S. Kingshighway Blvd.
+        St. Louis, MO 63110\
+\>", "LicenseText"],
+
+Cell["\<\
+as part of the 1993 DICOM Central Test Node project for, and under contract \
+with, the Radiological Society of North America.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS MADE AVAILABLE, AS IS, AND NEITHER RSNA NOR WASHINGTON \
+UNIVERSITY MAKE ANY WARRANTY ABOUT THE SOFTWARE, ITS PERFORMANCE, ITS \
+MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR USE, FREEDOM FROM ANY COMPUTER \
+DISEASES OR ITS CONFORMITY TO ANY SPECIFICATION. THE ENTIRE RISK AS TO \
+QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH THE USER.\
+\>", "LicenseText"],
+
+Cell["\<\
+Copyright of the software and supporting documentation is jointly owned by \
+RSNA and Washington University, and free access is hereby granted as a \
+license to use this software, copy this software and prepare derivative works \
+based upon this software. However, any distribution of this software source \
+code or supporting documentation or derivative works (source code and \
+supporting documentation) must include the three paragraphs of the copyright \
+notice.\
+\>", "LicenseText"],
+
+Cell["\<\
+The dcmjpeg sub-package includes an adapted version of the Independent JPEG \
+Group Toolkit Version 6b, which is contained in dcmjpeg/libijg8, \
+dcmjpeg/libijg12 and dcmjpeg/libijg16.  This toolkit is covered by the \
+following copyright.  The original README file for the Independent JPEG Group \
+Toolkit is located in dcmjpeg/docs/ijg_readme.txt.\
+\>", "LicenseText"],
+
+Cell["\<\
+The authors make NO WARRANTY or representation, either express or implied, \
+with respect to this software, its quality, accuracy, merchantability, or \
+fitness for a particular purpose.  This software is provided \"AS IS\", and \
+you, its user, assume the entire risk as to its quality and accuracy.\
+\>", "LicenseText"],
+
+Cell["This software is copyright (C) 1991-1998, Thomas G. Lane.", \
+"LicenseText"],
+
+Cell["All Rights Reserved except as specified below.", "LicenseText"],
+
+Cell["\<\
+Permission is hereby granted to use, copy, modify, and distribute this \
+software (or portions thereof) for any purpose, without fee, subject to these \
+conditions:\
+\>", "LicenseText"],
+
+Cell["\<\
+(1) If any part of the source code for this software is distributed, then \
+this README file must be included, with this copyright and no-warranty notice \
+unaltered; and any additions, deletions, or changes to the original files \
+must be clearly indicated in accompanying documentation.\
+\>", "LicenseText"],
+
+Cell["\<\
+(2) If only executable code is distributed, then the accompanying \
+documentation must state that \"this software is based in part on the work of \
+the Independent JPEG Group\".\
+\>", "LicenseText"],
+
+Cell["\<\
+(3) Permission for use of this software is granted only if the user accepts \
+full responsibility for any undesirable consequences; the authors accept NO \
+LIABILITY for damages of any kind.\
+\>", "LicenseText"],
+
+Cell["\<\
+These conditions apply to any software derived from or based on the IJG code, \
+not just to the unmodified library.  If you use our work, you ought to \
+acknowledge us.\
+\>", "LicenseText"],
+
+Cell["\<\
+Permission is NOT granted for the use of any IJG author's name or company \
+name in advertising or publicity relating to this software or products \
+derived from it.  This software may be referred to only as \"the Independent \
+JPEG Group's software\".\
+\>", "LicenseText"],
+
+Cell["\<\
+We specifically permit and encourage the use of this software as the basis of \
+commercial products, provided that all warranty or liability claims are \
+assumed by the product vendor.\
+\>", "LicenseText"],
+
+Cell["\<\
+The code for the interpolatePixel() image scaling algorithm in module \
+dcmimgle has been derived from code written by Jef Poskanzer for the \
+\"Extended Portable Bitmap Toolkit\" (pbmplus10dec91) which has the following \
+copyright:\
+\>", "LicenseText"],
+
+Cell["Copyright (C) 1991 by Jef Poskanzer.", "LicenseText"],
+
+Cell["\<\
+Permission to use, copy, modify, and distribute this software and its \
+documentation for any purpose and without fee is hereby granted, provided \
+that the above copyright notice appear in all copies and that both that \
+copyright notice and this permission notice appear in supporting \
+documentation.  This software is provided \"as is\" without express or \
+implied warranty.\
+\>", "LicenseText"],
+
+Cell["\<\
+The color quantization code in module dcmimage (dcmquant and the related \
+classes) has been derived from code written by Jef Poskanzer for the NetPBM \
+toolkit which has the following copyright:\
+\>", "LicenseText"],
+
+Cell["Copyright (C) 1989, 1991 by Jef Poskanzer.", "LicenseText"],
+
+Cell["\<\
+Permission to use, copy, modify, and distribute this software and its \
+documentation for any purpose and without fee is hereby granted, provided \
+that the above copyright notice appear in all copies and that both that \
+copyright notice and this permission notice appear in supporting \
+documentation.  This software is provided \"as is\" without express or \
+implied warranty.\
+\>", "LicenseText"],
+
+Cell["\<\
+The code for the OFStandard::strlcpy and OFStandard::strlcat helper functions \
+in ofstd/libsrc/ofstd.cc has been derived from the BSD implementation of \
+strlcpy() and strlcat() and which carries the following copyright notice:\
+\>", "LicenseText"],
+
+Cell["\<\
+Copyright (c) 1998 Todd C. Miller <Todd.Miller(at)courtesan.com>\
+\>", "LicenseText"],
+
+Cell["All rights reserved.", "LicenseText"],
+
+Cell["\<\
+Redistribution and use in source and binary forms, with or without \
+modification, are permitted provided that the following conditions are met:\
+\>", "LicenseText"],
+
+Cell["\<\
+1. Redistributions of source code must retain the above copyright notice, \
+this list of conditions and the following disclaimer.\
+\>", "LicenseText"],
+
+Cell["\<\
+2. Redistributions in binary form must reproduce the above copyright notice, \
+this list of conditions and the following disclaimer in the documentation \
+and/or other materials provided with the distribution.\
+\>", "LicenseText"],
+
+Cell["\<\
+3. The name of the author may not be used to endorse or promote products \
+derived from this software without specific prior written permission.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, \
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND \
+FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE \
+AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR \
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF \
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS \
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN \
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) \
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE \
+POSSIBILITY OF SUCH DAMAGE.\
+\>", "LicenseText"],
+
+Cell["\<\
+The code for the OFStandard::atof helper function in ofstd/libsrc/ofstd.cc \
+has been derived from an implementation which carries the following copyright \
+notice:\
+\>", "LicenseText"],
+
+Cell["\<\
+Copyright 1988 Regents of the University of California Permission to use, \
+copy, modify, and distribute this software and its documentation for any \
+purpose and without fee is hereby granted, provided that the above copyright \
+notice appear in all copies.  The University of California makes no \
+representations about the suitability of this software for any purpose.  It \
+is provided \"as is\" without express or implied warranty.\
+\>", "LicenseText"],
+
+Cell["\<\
+The code for OFStandard::ftoa has been derived from an implementation which \
+carries the following copyright notice:\
+\>", "LicenseText"],
+
+Cell["Copyright (c) 1988 Regents of the University of California.", \
+"LicenseText"],
+
+Cell["All rights reserved.", "LicenseText"],
+
+Cell["\<\
+Redistribution and use in source and binary forms are permitted provided that \
+the above copyright notice and this paragraph are duplicated in all such \
+forms and that any documentation, advertising materials, and other materials \
+related to such distribution and use acknowledge that the software was \
+developed by the University of California, Berkeley.  The name of the \
+University may not be used to endorse or promote products derived from this \
+software without specific prior written permission.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED \
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF \
+MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.\
+\>", "LicenseText"],
+
+Cell["\<\
+The \"Base64\" encoder/decoder in ofstd/libsrc/ofstd.cc has been derived from \
+an implementation which carries the following copyright notice:\
+\>", "LicenseText"],
+
+Cell["Copyright (c) 1999, Bob Withers - bwit(at)pobox.com", "LicenseText"],
+
+Cell["\<\
+This code may be freely used for any purpose, either personal or commercial, \
+provided the authors copyright notice remains intact.\
+\>", "LicenseText"],
+
+Cell["\<\
+The oflog sub-package is based on the log4cplus library which is covered by \
+the following two copyright notices (for details see oflog/docs/LICENSE):\
+\>", "LicenseText"],
+
+Cell["Copyright (C) 1999-2009 Contributors to log4cplus project.", \
+"LicenseText"],
+
+Cell["All rights reserved.", "LicenseText"],
+
+Cell["\<\
+Redistribution and use in source and binary forms, with or without \
+modification, are permitted provided that the following conditions are met:\
+\>", "LicenseText"],
+
+Cell["\<\
+1. Redistributions of  source code must  retain the above copyright  notice, \
+this list of conditions and the following disclaimer.\
+\>", "LicenseText"],
+
+Cell["\<\
+2. Redistributions in binary form must reproduce the above copyright notice, \
+this list of conditions and the following disclaimer in the documentation \
+and/or other materials provided with the distribution.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES, \
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND \
+FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL THE \
+APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT, \
+INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES \
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; \
+LOSS OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED \
+AND ON ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  \
+OR TORT (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  \
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
+\>", "LicenseText"],
+
+Cell["Module: Log4CPLUS", "LicenseText"],
+
+Cell["File: appender.h", "LicenseText"],
+
+Cell["Created: 6/2001", "LicenseText"],
+
+Cell["Author: Tad E. Smith", "LicenseText"],
+
+Cell["Copyright 2001-2009 Tad E. Smith", "LicenseText"],
+
+Cell["\<\
+Licensed under the Apache License, Version 2.0 (the \"License\"); you may not \
+use this file except in compliance with the License.\
+\>", "LicenseText"],
+
+Cell["You may obtain a copy of the License at", "LicenseText"],
+
+Cell[TextData[ButtonBox["http://www.apache.org/licenses/LICENSE-2.0",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["http://www.apache.org/licenses/LICENSE-2.0"], None},
+ ButtonNote->"http://www.apache.org/licenses/LICENSE-2.0"]], "LicenseText"],
+
+Cell["\<\
+Unless required by applicable law or agreed to in writing, software \
+distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT \
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\
+\>", "LicenseText"],
+
+Cell["\<\
+See the License for the specific language governing permissions and \
+limitations under the License.\
+\>", "LicenseText"],
+
+Cell["\<\
+The dcmjpls sub-package is based on the CharLS library, which is contained in \
+dcmjpls/libcharls. This toolkit is covered by the following copyright:\
+\>", "LicenseText"],
+
+Cell["The CharLS library is available under the following license:", \
+"LicenseText"],
+
+Cell["\<\
+------------------------------------------------------------------------------\
+-\
+\>", "LicenseText"],
+
+Cell["Copyright (c) 2007-2010, Jan de Vaan", "LicenseText"],
+
+Cell["All rights reserved.", "LicenseText"],
+
+Cell["\<\
+Redistribution and use in source and binary forms, with or without \
+modification, are permitted provided that the following conditions are met:\
+\>", "LicenseText"],
+
+Cell["\<\
+* Redistributions of source code must retain the above copyright notice, this \
+list of conditions and the following disclaimer.\
+\>", "LicenseText"],
+
+Cell["\<\
+* Redistributions in binary form must reproduce the above copyright notice, \
+this list of conditions and the following disclaimer in the documentation \
+and/or other materials provided with the distribution.\
+\>", "LicenseText"],
+
+Cell["\<\
+* Neither the name of my employer, nor the names of its contributors may be \
+used to endorse or promote products derived from this software without \
+specific prior written permission.\
 \>", "LicenseText"],
 
 Cell["\<\
@@ -3913,6 +4472,69 @@ Cell[TextData[{
  ")."
 }], "LicenseText"],
 
+Cell["JasPer", "LicenseText",
+ FontWeight->"Bold"],
+
+Cell["JasPer License Version 2.0", "LicenseText"],
+
+Cell["Copyright (c) 2001-2006 Michael David Adams", "LicenseText"],
+
+Cell["Copyright (c) 1999-2000 Image Power, Inc.", "LicenseText"],
+
+Cell["Copyright (c) 1999-2000 The University of British Columbia", \
+"LicenseText"],
+
+Cell["All rights reserved.", "LicenseText"],
+
+Cell["\<\
+Permission is hereby granted, free of charge, to any person (the \"User\") \
+obtaining a copy of this software and associated documentation files (the \
+\"Software\"), to deal in the Software without restriction, including without \
+limitation the rights to use, copy, modify, merge, publish, distribute, \
+and/or sell copies of the Software, and to permit persons to whom the \
+Software is furnished to do so, subject to the following conditions:\
+\>", "LicenseText"],
+
+Cell["\<\
+1.  The above copyright notices and this permission notice (which includes \
+the disclaimer below) shall be included in all copies or substantial portions \
+of the Software.\
+\>", "LicenseText"],
+
+Cell["\<\
+2.  The name of a copyright holder shall not be used to endorse or promote \
+products derived from the Software without specific prior written permission.\
+\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS DISCLAIMER OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF THIS LICENSE.  \
+NO USE OF THE SOFTWARE IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER.  \
+THE SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS \"AS IS\", WITHOUT WARRANTY \
+OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES \
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF \
+THIRD PARTY RIGHTS.  IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR \
+ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES, OR ANY DAMAGES \
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION \
+OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN \
+CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.  NO ASSURANCES ARE \
+PROVIDED BY THE COPYRIGHT HOLDERS THAT THE SOFTWARE DOES NOT INFRINGE THE \
+PATENT OR OTHER INTELLECTUAL PROPERTY RIGHTS OF ANY OTHER ENTITY. EACH \
+COPYRIGHT HOLDER DISCLAIMS ANY LIABILITY TO THE USER FOR CLAIMS BROUGHT BY \
+ANY OTHER ENTITY BASED ON INFRINGEMENT OF INTELLECTUAL PROPERTY RIGHTS OR \
+OTHERWISE.  AS A CONDITION TO EXERCISING THE RIGHTS GRANTED HEREUNDER, EACH \
+USER HEREBY ASSUMES SOLE RESPONSIBILITY TO SECURE ANY OTHER INTELLECTUAL \
+PROPERTY RIGHTS NEEDED, IF ANY.  THE SOFTWARE IS NOT FAULT-TOLERANT AND IS \
+NOT INTENDED FOR USE IN MISSION-CRITICAL SYSTEMS, SUCH AS THOSE USED IN THE \
+OPERATION OF NUCLEAR FACILITIES, AIRCRAFT NAVIGATION OR COMMUNICATION \
+SYSTEMS, AIR TRAFFIC CONTROL SYSTEMS, DIRECT LIFE SUPPORT MACHINES, OR \
+WEAPONS SYSTEMS, IN WHICH THE FAILURE OF THE SOFTWARE OR SYSTEM COULD LEAD \
+DIRECTLY TO DEATH, PERSONAL INJURY, OR SEVERE PHYSICAL OR ENVIRONMENTAL \
+DAMAGE (\"HIGH RISK ACTIVITIES\").  THE COPYRIGHT HOLDERS SPECIFICALLY \
+DISCLAIM ANY EXPRESS OR IMPLIED WARRANTY OF FITNESS FOR HIGH RISK ACTIVITIES.\
+\
+\>", "LicenseText"],
+
 Cell["Java Excel API", "LicenseText",
  FontWeight->"Bold"],
 
@@ -4905,15 +5527,6 @@ after the cause of action arose. Each party waives its rights to a jury trial \
 in any resulting litigation.\
 \>", "LicenseText"],
 
-Cell["LAME", "LicenseText",
- FontWeight->"Bold"],
-
-Cell["\<\
-This software uses code from the LAME encoding engine, version 3.96.1. LAME \
-is licensed under the LGPL. A copy of the LAME source can be obtained at \
-www.mp3dev.org. \
-\>", "LicenseText"],
-
 Cell["LAME MP3 Encoder", "LicenseText",
  FontWeight->"Bold"],
 
@@ -5029,6 +5642,48 @@ Cell[TextData[{
     URL["http://creativecommons.org/licenses/by/3.0/us/"], None},
   ButtonNote->"http://creativecommons.org/licenses/by/3.0/us/"]
 }], "LicenseText"],
+
+Cell["leveldb", "LicenseText",
+ FontWeight->"Bold"],
+
+Cell["Copyright (c) 2011 The LevelDB Authors. All rights reserved.", \
+"LicenseText"],
+
+Cell["\<\
+Redistribution and use in source and binary forms, with or without \
+modification, are permitted provided that the following conditions are met:\
+\>", "LicenseText"],
+
+Cell["\<\
+* Redistributions of source code must retain the above copyright notice, this \
+list of conditions and the following disclaimer.\
+\>", "LicenseText"],
+
+Cell["\<\
+* Redistributions in binary form must reproduce the above copyright notice, \
+this list of conditions and the following disclaimer in the documentation \
+and/or other materials provided with the distribution.\
+\>", "LicenseText"],
+
+Cell["\<\
+* Neither the name of Google Inc. nor the names of its contributors may be \
+used to endorse or promote products derived from this software without \
+specific prior written permission.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" \
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE \
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE \
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE \
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR \
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF \
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS \
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN \
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) \
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE \
+POSSIBILITY OF SUCH DAMAGE.\
+\>", "LicenseText"],
 
 Cell["libffi", "LicenseText",
  FontWeight->"Bold"],
@@ -5211,6 +5866,49 @@ Cell["libsndfile", "LicenseText",
 Cell["\<\
 libsndfile is released under the terms of the GNU Lesser General Public \
 License.\
+\>", "LicenseText"],
+
+Cell["LIBSVM", "LicenseText",
+ FontWeight->"Bold"],
+
+Cell["Copyright (c) 2000-2014 Chih-Chung Chang and Chih-Jen Lin", \
+"LicenseText"],
+
+Cell["All rights reserved.", "LicenseText"],
+
+Cell["\<\
+Redistribution and use in source and binary forms, with or without \
+modification, are permitted provided that the following conditions are met:\
+\>", "LicenseText"],
+
+Cell["\<\
+1. Redistributions of source code must retain the above copyright notice, \
+this list of conditions and the following disclaimer.\
+\>", "LicenseText"],
+
+Cell["\<\
+2. Redistributions in binary form must reproduce the above copyright notice, \
+this list of conditions and the following disclaimer in the documentation \
+and/or other materials provided with the distribution.\
+\>", "LicenseText"],
+
+Cell["\<\
+3. Neither name of copyright holders nor the names of its contributors may be \
+used to endorse or promote products derived from this software without \
+specific prior written permission.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS'' \
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE \
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE \
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR \
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL \
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR \
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER \
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, \
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE \
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
 \>", "LicenseText"],
 
 Cell["libtiff", "LicenseText",
@@ -6074,6 +6772,114 @@ and/or royalty payment obligations in connection with Licensee's use of the \
 H.264 video codecs are solely the responsibility of Licensee. \
 \>", "LicenseText"],
 
+Cell["Open Asset Import Library (assimp)", "LicenseText",
+ FontWeight->"Bold"],
+
+Cell["Copyright (c) 2006-2012, assimp team", "LicenseText"],
+
+Cell["All rights reserved.", "LicenseText"],
+
+Cell["\<\
+Redistribution and use of this software in source and binary forms, with or \
+without modification, are permitted provided that the following conditions \
+are met:\
+\>", "LicenseText"],
+
+Cell["\<\
+* Redistributions of source code must retain the above copyright notice, this \
+list of conditions and the following disclaimer.\
+\>", "LicenseText"],
+
+Cell["\<\
+* Redistributions in binary form must reproduce the above copyright notice, \
+this list of conditions and the following disclaimer in the documentation \
+and/or other materials provided with the distribution.\
+\>", "LicenseText"],
+
+Cell["\<\
+* Neither the name of the assimp team, nor the names of its contributors may \
+be used to endorse or promote products derived from this software without \
+specific prior written permission of the assimp team.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" \
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE \
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE \
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE \
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR \
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF \
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS \
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN \
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) \
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE \
+POSSIBILITY OF SUCH DAMAGE.\
+\>", "LicenseText"],
+
+Cell["\<\
+******************************************************************************\
+\>", "LicenseText"],
+
+Cell["\<\
+AN EXCEPTION applies to all files in the ./test/models-nonbsd folder. These \
+are 3d models for testing purposes, from various free sources on the \
+internet. They are - unless otherwise stated - copyright of their respective \
+creators, which may impose additional requirements on the use of their work. \
+For any of these models, see .source.txt for more legal information. Contact \
+us if you are a copyright holder and believe that we credited you inproperly \
+or if you don't want your files to appear in the repository.\
+\>", "LicenseText"],
+
+Cell["\<\
+******************************************************************************\
+\>", "LicenseText"],
+
+Cell["Poly2Tri Copyright (c) 2009-2010, Poly2Tri Contributors", "LicenseText"],
+
+Cell[TextData[ButtonBox["http://code.google.com/p/poly2tri/",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["http://code.google.com/p/poly2tri/"], None},
+ ButtonNote->"http://code.google.com/p/poly2tri/"]], "LicenseText"],
+
+Cell["All rights reserved. ", "LicenseText"],
+
+Cell["\<\
+Redistribution and use in source and binary forms, with or without \
+modification, are permitted provided that the following conditions are met:\
+\>", "LicenseText"],
+
+Cell["\<\
+* Redistributions of source code must retain the above copyright notice, this \
+list of conditions and the following disclaimer.\
+\>", "LicenseText"],
+
+Cell["\<\
+* Redistributions in binary form must reproduce the above copyright notice, \
+this list of conditions and the following disclaimer in the documentation \
+and/or other materials provided with the distribution.\
+\>", "LicenseText"],
+
+Cell["\<\
+* Neither the name of Poly2Tri nor the names of its contributors may be used \
+to endorse or promote products derived from this software without specific \
+prior written permission.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" \
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE \
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE \
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE \
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR \
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF \
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS \
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN \
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) \
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE \
+POSSIBILITY OF SUCH DAMAGE.\
+\>", "LicenseText"],
+
 Cell["OpenCascade", "LicenseText",
  FontWeight->"Bold"],
 
@@ -6349,42 +7155,47 @@ UPDATES, ENHANCEMENTS, OR MODIFICATIONS.\
 Cell["PCRE", "LicenseText",
  FontWeight->"Bold"],
 
-Cell["Copyright (c) 2006, Google Inc. All rights reserved.", "LicenseText"],
-
 Cell["\<\
-Regular Expression and other string matching support relies on the PCRE \
-library package, which is open source software, written by Philip Hazel, and \
-Copyright (c) 1997 - 2003 University of Cambridge, England.\
+PCRE is a library of functions to support regular expressions whose syntax \
+and semantics are as close as possible to those of the Perl 5 language.\
 \>", "LicenseText"],
 
-Cell["\<\
-Release 6 of PCRE is distributed under the terms of the \"BSD\" license, as \
-specified below.\
-\>", "LicenseText"],
+Cell["Written by Philip Hazel", "LicenseText"],
 
-Cell["THE \"BSD\" LICENSE", "LicenseText"],
+Cell["Copyright (c) 1997-2014 University of Cambridge", "LicenseText"],
+
+Cell["\<\
+-----------------------------------------------------------------------------\
+\
+\>", "LicenseText"],
 
 Cell["\<\
 Redistribution and use in source and binary forms, with or without \
-modification, are permitted provided that the following conditions are met :\
+modification, are permitted provided that the following conditions are met:\
 \>", "LicenseText"],
 
 Cell["\<\
 * Redistributions of source code must retain the above copyright notice, this \
-list of conditions and the following disclaimer.
+list of conditions and the following disclaimer.\
+\>", "LicenseText"],
+
+Cell["\<\
 * Redistributions in binary form must reproduce the above copyright notice, \
 this list of conditions and the following disclaimer in the documentation \
-and/or other materials provided with the distribution.
-* Neither the name of the University of Cambridge nor the name of Google Inc. \
-nor the names of their contributors may be used to endorse or promote \
-products derived from this software without specific prior written permission.\
+and/or other materials provided with the distribution.\
+\>", "LicenseText"],
+
+Cell["\<\
+* Neither the name of the University of Cambridge nor the names of its \
+contributors may be used to endorse or promote products derived from this \
+software without specific prior written permission.\
 \>", "LicenseText"],
 
 Cell["\<\
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" \
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE \
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE \
-ARE DISCLAIMED.IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE \
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE \
 LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR \
 CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF \
 SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS \
@@ -6392,6 +7203,43 @@ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN \
 CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) \
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE \
 POSSIBILITY OF SUCH DAMAGE.\
+\>", "LicenseText"],
+
+Cell["PCRE Just-In-Time compiler", "LicenseText"],
+
+Cell["\<\
+Copyright 2009-2012 Zoltan Herczeg (hzmester@freemail.hu). All rights \
+reserved.\
+\>", "LicenseText"],
+
+Cell["\<\
+Redistribution and use in source and binary forms, with or without \
+modification, are permitted provided that the following conditions are met:\
+\>", "LicenseText"],
+
+Cell["\<\
+1. Redistributions of source code must retain the above copyright notice, \
+this list of conditions and the following disclaimer.\
+\>", "LicenseText"],
+
+Cell["\<\
+2. Redistributions in binary form must reproduce the above copyright notice, \
+this list of conditions and the following disclaimer in the documentation \
+and/or other materials provided with the distribution.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND CONTRIBUTORS ``AS \
+IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, \
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR \
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER(S) OR \
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, \
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, \
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; \
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, \
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR \
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF \
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
 \>", "LicenseText"],
 
 Cell["Pixman", "LicenseText",
@@ -6853,6 +7701,243 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE \
 SOFTWARE. \
 \>", "LicenseText"],
 
+Cell["Snappy", "LicenseText",
+ FontWeight->"Bold"],
+
+Cell["Copyright 2011, Google Inc.", "LicenseText"],
+
+Cell["All rights reserved.", "LicenseText"],
+
+Cell["\<\
+Redistribution and use in source and binary forms, with or without \
+modification, are permitted provided that the following conditions are met:\
+\>", "LicenseText"],
+
+Cell["\<\
+* Redistributions of source code must retain the above copyright notice, this \
+list of conditions and the following disclaimer.\
+\>", "LicenseText"],
+
+Cell["\<\
+* Redistributions in binary form must reproduce the above copyright notice, \
+this list of conditions and the following disclaimer in the documentation \
+and/or other materials provided with the distribution.\
+\>", "LicenseText"],
+
+Cell["\<\
+* Neither the name of Google Inc. nor the names of its contributors may be \
+used to endorse or promote products derived from this software without \
+specific prior written permission.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" \
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE \
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE \
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE \
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR \
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF \
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS \
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN \
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) \
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE \
+POSSIBILITY OF SUCH DAMAGE.\
+\>", "LicenseText"],
+
+Cell["===", "LicenseText"],
+
+Cell["\<\
+Some of the benchmark data in util/zippy/testdata is licensed differently:\
+\>", "LicenseText"],
+
+Cell[TextData[{
+ "- fireworks.jpeg is Copyright 2013 Steinar H. Gunderson, and is licensed \
+under the Creative Commons Attribution 3.0 license (CC-BY-3.0). See ",
+ ButtonBox["https://creativecommons.org/licenses/by/3.0/",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://creativecommons.org/licenses/by/3.0/"], None},
+  ButtonNote->"https://creativecommons.org/licenses/by/3.0/"],
+ " for more information."
+}], "LicenseText"],
+
+Cell["\<\
+- kppkn.gtb is taken from the Gaviota chess tablebase set, and is licensed \
+under the MIT License. See \
+https://sites.google.com/site/gaviotachessengine/Home/endgame-tablebases-1 \
+for more information.\
+\>", "LicenseText"],
+
+Cell[TextData[{
+ "- paper-100k.pdf is an excerpt (bytes 92160 to 194560) from the paper \
+\"Combinatorial Modeling of Chromatin Features Quantitatively Predicts DNA \
+Replication Timing in _Drosophila_\" by Federico Comoglio and Renato Paro, \
+which is licensed under the CC-BY license. See ",
+ ButtonBox["http://www.ploscompbiol.org/static/license",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.ploscompbiol.org/static/license"], None},
+  ButtonNote->"http://www.ploscompbiol.org/static/license"],
+ " for more ifnormation."
+}], "LicenseText"],
+
+Cell[TextData[{
+ "- alice29.txt, asyoulik.txt, plrabn12.txt and lcet10.txt are from Project \
+Gutenberg. The first three have expired copyrights and are in the public \
+domain; the latter does not have expired copyright, but is still in the \
+public domain according to the license information (",
+ ButtonBox["http://www.gutenberg.org/ebooks/53",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.gutenberg.org/ebooks/53"], None},
+  ButtonNote->"http://www.gutenberg.org/ebooks/53"],
+ ")."
+}], "LicenseText"],
+
+Cell["Source Sans Pro", "LicenseText",
+ FontWeight->"Bold"],
+
+Cell[TextData[{
+ "Copyright \[Copyright] 2010, Adobe Systems, Inc. (",
+ ButtonBox["http://www.adobe.com/",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.adobe.com/"], None},
+  ButtonNote->"http://www.adobe.com/"],
+ ")"
+}], "LicenseText"],
+
+Cell["\<\
+This Font Software is licensed under the SIL Open Font License, Version 1.1.\
+\>", "LicenseText"],
+
+Cell["\<\
+This license is copied below, and is also available with a FAQ at:\
+\>", "LicenseText"],
+
+Cell[TextData[ButtonBox["http://scripts.sil.org/OFL",
+ BaseStyle->"Hyperlink",
+ ButtonData->{
+   URL["http://scripts.sil.org/OFL"], None},
+ ButtonNote->"http://scripts.sil.org/OFL"]], "LicenseText"],
+
+Cell["-----------------------------------------------------------", \
+"LicenseText"],
+
+Cell["SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007", "LicenseText"],
+
+Cell["-----------------------------------------------------------", \
+"LicenseText"],
+
+Cell["PREAMBLE", "LicenseText"],
+
+Cell["\<\
+The goals of the Open Font License (OFL) are to stimulate worldwide \
+development of collaborative font projects, to support the font creation \
+efforts of academic and linguistic communities, and to provide a free and \
+open framework in which fonts may be shared and improved in partnership with \
+others.  The OFL allows the licensed fonts to be used, studied, modified and \
+redistributed freely as long as they are not sold by themselves. The fonts, \
+including any derivative works, can be bundled, embedded, redistributed \
+and/or sold with any software provided that any reserved names are not used \
+by deriva- tive works. The fonts and derivatives, however, cannot be released \
+under any other type of license. The requirement for fonts to remain under \
+this license does not apply to any document created using the fonts or their \
+derivatives.\
+\>", "LicenseText"],
+
+Cell["DEFINITIONS", "LicenseText"],
+
+Cell["\<\
+\"Font Software\" refers to the set of files released by the Copyright \
+Holder(s) under this license and clearly marked as such. This may include \
+source files, build scripts and documentation.\
+\>", "LicenseText"],
+
+Cell["\<\
+\"Reserved Font Name\" refers to any names specified as such after the \
+copyright statement(s).\
+\>", "LicenseText"],
+
+Cell["\<\
+\"Original Version\" refers to the collection of Font Software components as \
+distributed by the Copyright Holder(s).\
+\>", "LicenseText"],
+
+Cell["\<\
+\"Modified Version\" refers to any derivative made by adding to, deleting, or \
+substituting -- in part or in whole -- any of the components of the Original \
+Version, by changing formats or by porting the Font Soft- ware to a new  \
+environment.\
+\>", "LicenseText"],
+
+Cell["\<\
+\"Author\" refers to any designer, engineer, programmer, technical writer or \
+other person who contributed to the Font Software.\
+\>", "LicenseText"],
+
+Cell["PERMISSION & CONDITIONS", "LicenseText"],
+
+Cell["\<\
+Permission is hereby granted, free of charge, to any person obtaining a copy \
+of the Font Software, to use, study, copy, merge, embed, modify, \
+redistribute, and sell modified and unmodified copies of the Font Software, \
+subject to the following conditions:\
+\>", "LicenseText"],
+
+Cell["\<\
+1) Neither the Font Software nor any of its individual components, in \
+Original or Modified Versions, may be sold by itself.\
+\>", "LicenseText"],
+
+Cell["\<\
+2) Original or Modified Versions of the Font Software may be bundled, \
+redistributed and/or sold with any software, provided that each copy contains \
+the above copyright notice and this license. These can be included either as \
+stand-alone text files, human-readable headers or in the appropriate \
+machine-reada- ble metadata fields within text or binary files as long as \
+those fields can be easily viewed by the user.\
+\>", "LicenseText"],
+
+Cell["\<\
+3) No Modified Version of the Font Software may use the Reserved Font Name(s) \
+unless explicit written permission is granted by the corresponding Copyright \
+Holder. This restriction only applies to the primaryfont name as presented to \
+the users.\
+\>", "LicenseText"],
+
+Cell["\<\
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font \
+Software shall not be used to promote, endorse or advertise any Modified \
+Version, except to acknowledge the contribution(s) of the Copyright Holder(s) \
+and the Author(s) or with their explicit written permission.\
+\>", "LicenseText"],
+
+Cell["\<\
+5) The Font Software, modified or unmodified, in part or in whole, must be \
+distributed entirely under this license, and must not be distributed under \
+any other license. The requirement for fonts to remain under this license \
+does not apply to any document created using the Font Software.\
+\>", "LicenseText"],
+
+Cell["TERMINATION", "LicenseText"],
+
+Cell["\<\
+This license becomes null and void if any of the above conditions are not met.\
+\>", "LicenseText"],
+
+Cell["\<\
+DISCLAIMER THE FONT SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY \
+KIND, EXPRESS OR IM- PLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF \
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF \
+COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE COPYRIGHT \
+HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING ANY \
+GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN \
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR \
+INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE FONT \
+SOFTWARE.\
+\>", "LicenseText"],
+
 Cell["SQLite", "LicenseText",
  FontWeight->"Bold"],
 
@@ -7276,6 +8361,76 @@ TeX American English Hyphen Patterns \[Copyright] Donald E. Knuth. Freely \
 licensed for use with the sole restriction that derivative products are not \
 named TeX or METAFONT.\
 \>", "LicenseText"],
+
+Cell["The Gibbs SeaWater (GSW) Oceanographic Toolbox", "LicenseText",
+ FontWeight->"Bold"],
+
+Cell["\<\
+Copyright (c) 2011, SCOR/IAPSO WG127 (Scientific Committee on Oceanic \
+Research/ International Association for the Physical Sciences of the Oceans, \
+Working Group 127).\
+\>", "LicenseText"],
+
+Cell["All rights reserved.", "LicenseText"],
+
+Cell["\<\
+Redistribution and use, in source and binary forms, without modification, is \
+permitted provided that the following conditions are met:\
+\>", "LicenseText"],
+
+Cell["\<\
+\[Bullet] Redistributions of source code must retain the above copyright \
+notice, this list of conditions and the following disclaimer.\
+\>", "LicenseText"],
+
+Cell["\<\
+\[Bullet] Redistributions in binary form must reproduce the above copyright \
+notice, this list of conditions and the following disclaimer in the \
+documentation and/or other materials provided with the distribution.\
+\>", "LicenseText"],
+
+Cell["\<\
+\[Bullet] Neither the name of SCOR/IAPSO WG127 nor the names of its \
+contributors may be used to endorse or promote products derived from this \
+software without specific prior written permission.\
+\>", "LicenseText"],
+
+Cell["\<\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" \
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE \
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE \
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE \
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR \
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF \
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS \
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN \
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) \
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE \
+POSSIBILITY OF SUCH DAMAGE.\
+\>", "LicenseText"],
+
+Cell[TextData[{
+ "The software is available from ",
+ ButtonBox["http://www.TEOS-10.org",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.TEOS-10.org"], None},
+  ButtonNote->"http://www.TEOS-10.org"]
+}], "LicenseText"],
+
+Cell["TurboVNC", "LicenseText",
+ FontWeight->"Bold"],
+
+Cell[TextData[{
+ "TurboVNC is separately distributed under the terms of the GNU General \
+Public License (GPL) version 2, available at ",
+ ButtonBox["http://www.gnu.org/licenses/gpl.html",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.gnu.org/licenses/gpl.html"], None},
+  ButtonNote->"http://www.gnu.org/licenses/gpl.html"],
+ "."
+}], "LicenseText"],
 
 Cell["tvreg", "LicenseText",
  FontWeight->"Bold"],
@@ -7785,9 +8940,7 @@ NOTICES FOR C++ Big Integer Library
 I, Matt McCutchen, the sole author of the original Big Integer Library, waive \
 my copyright to it, placing it in the public domain. The library comes with \
 absolutely no warranty.\
-\>", "LicenseText"]
-}, Open  ]]
-}, Open  ]],
+\>", "LicenseText"],
 
 Cell[CellGroupData[{
 
@@ -8393,7 +9546,7 @@ TaggingRules->{WindowSize -> {340,
      Blank[], 470]}, "NotebookID" -> "AboutBox"},
 DynamicUpdating->True,
 Background->GrayLevel[1],
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (April 15, \
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
 2014)",
 StyleDefinitions->Notebook[{
    Cell[
@@ -8582,7 +9735,7 @@ StyleDefinitions->Notebook[{
        CellGroupingRules -> {"SectionGrouping", 60}, 
        ParagraphSpacing -> {0.5, 0}, FontFamily -> "Helvetica", FontSize -> 
        10]}, Closed]]}, Visible -> False, FrontEndVersion -> 
-  "10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (April 15, 2014)", 
+  "10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, 2014)", 
   StyleDefinitions -> "PrivateStylesheetFormatting.nb"],
 ScrollingOptions -> {"PagewiseScrolling" -> False}
 ]
@@ -8594,11 +9747,11 @@ CellTagsIndex->{
  "SlideShowHeader"->{
   Cell[598, 21, 201, 3, 202, "TopGraphic",
    CellTags->{"SlideShowHeader", "Main", "PiTopPage"}],
-  Cell[3298, 96, 1018, 22, 56, "NavigationBar",
+  Cell[3282, 94, 1018, 22, 56, "NavigationBar",
    CellTags->{"SlideShowHeader", "PiCredits"}],
-  Cell[338887, 7793, 1027, 22, 30, "NavigationBar",
+  Cell[384999, 8946, 1027, 22, 30, "NavigationBar",
    CellTags->{"SlideShowHeader", "PiLicenseAgreement"}],
-  Cell[356141, 8227, 1024, 22, 30, "NavigationBar",
+  Cell[402253, 9380, 1024, 22, 30, "NavigationBar",
    CellTags->{"SlideShowHeader", "PiPrivacyPolicy"}]},
  "Main"->{
   Cell[598, 21, 201, 3, 202, "TopGraphic",
@@ -8607,24 +9760,24 @@ CellTagsIndex->{
   Cell[598, 21, 201, 3, 202, "TopGraphic",
    CellTags->{"SlideShowHeader", "Main", "PiTopPage"}]},
  "PiCredits"->{
-  Cell[3298, 96, 1018, 22, 56, "NavigationBar",
+  Cell[3282, 94, 1018, 22, 56, "NavigationBar",
    CellTags->{"SlideShowHeader", "PiCredits"}]},
  "PiLicenseAgreement"->{
-  Cell[338887, 7793, 1027, 22, 30, "NavigationBar",
+  Cell[384999, 8946, 1027, 22, 30, "NavigationBar",
    CellTags->{"SlideShowHeader", "PiLicenseAgreement"}]},
  "PiPrivacyPolicy"->{
-  Cell[356141, 8227, 1024, 22, 30, "NavigationBar",
+  Cell[402253, 9380, 1024, 22, 30, "NavigationBar",
    CellTags->{"SlideShowHeader", "PiPrivacyPolicy"}]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"SlideShowHeader", 371402, 8593},
- {"Main", 371824, 8602},
- {"PiTopPage", 371940, 8605},
- {"PiCredits", 372056, 8608},
- {"PiLicenseAgreement", 372178, 8611},
- {"PiPrivacyPolicy", 372310, 8614}
+ {"SlideShowHeader", 417520, 9746},
+ {"Main", 417942, 9755},
+ {"PiTopPage", 418058, 9758},
+ {"PiCredits", 418174, 9761},
+ {"PiLicenseAgreement", 418296, 9764},
+ {"PiPrivacyPolicy", 418428, 9767}
  }
 *)
 (*NotebookFileOutline
@@ -8633,1350 +9786,1557 @@ Cell[598, 21, 201, 3, 202, "TopGraphic",
  CellTags->{"SlideShowHeader", "Main", "PiTopPage"}],
 Cell[802, 26, 1154, 29, 79, "TopMatter"],
 Cell[1959, 57, 195, 4, 35, "TopMatter"],
-Cell[2157, 63, 482, 14, 61, "TopMatter"],
-Cell[2642, 79, 631, 13, 24, "MainNavigationBar"],
-Cell[CellGroupData[{
-Cell[3298, 96, 1018, 22, 56, "NavigationBar",
+Cell[2157, 63, 488, 14, 61, "TopMatter"],
+Cell[2648, 79, 631, 13, 24, "MainNavigationBar"],
+Cell[3282, 94, 1018, 22, 56, "NavigationBar",
  CellTags->{"SlideShowHeader", "PiCredits"}],
-Cell[4319, 120, 214, 8, 16, "SectionHeading"],
+Cell[4303, 118, 214, 8, 16, "SectionHeading"],
+Cell[4520, 128, 57, 0, 12, "LicenseHeading"],
+Cell[4580, 130, 56, 1, 12, "LicenseText"],
+Cell[4639, 133, 173, 3, 25, "LicenseText"],
+Cell[4815, 138, 495, 8, 129, "LicenseText"],
+Cell[5313, 148, 1022, 15, 259, "LicenseText"],
+Cell[6338, 165, 53, 1, 20, "LicenseText"],
+Cell[6394, 168, 278, 6, 20, "LicenseText"],
+Cell[6675, 176, 97, 2, 31, "LicenseText"],
+Cell[6775, 180, 83, 1, 20, "LicenseText"],
+Cell[6861, 183, 115, 3, 31, "LicenseText"],
+Cell[6979, 188, 637, 9, 163, "LicenseText"],
+Cell[7619, 199, 1266, 18, 247, "LicenseText"],
+Cell[8888, 219, 3465, 46, 655, "LicenseText"],
+Cell[12356, 267, 278, 5, 55, "LicenseText"],
+Cell[12637, 274, 878, 12, 175, "LicenseText"],
+Cell[13518, 288, 830, 12, 163, "LicenseText"],
+Cell[14351, 302, 330, 5, 67, "LicenseText"],
+Cell[14684, 309, 1754, 24, 367, "LicenseText"],
+Cell[16441, 335, 1328, 18, 283, "LicenseText"],
+Cell[17772, 355, 556, 8, 115, "LicenseText"],
+Cell[18331, 365, 1062, 15, 199, "LicenseText"],
+Cell[19396, 382, 1305, 18, 247, "LicenseText"],
+Cell[20704, 402, 1597, 22, 295, "LicenseText"],
+Cell[22304, 426, 207, 4, 43, "LicenseText"],
+Cell[22514, 432, 133, 3, 31, "LicenseText"],
+Cell[22650, 437, 56, 1, 20, "LicenseText"],
+Cell[22709, 440, 69, 0, 20, "LicenseText"],
+Cell[22781, 442, 62, 1, 20, "LicenseText"],
+Cell[22846, 445, 69, 0, 20, "LicenseText"],
+Cell[22918, 447, 78, 1, 20, "LicenseText"],
+Cell[22999, 450, 69, 0, 20, "LicenseText"],
+Cell[23071, 452, 71, 1, 20, "LicenseText"],
+Cell[23145, 455, 70, 0, 20, "LicenseText"],
+Cell[23218, 457, 77, 1, 20, "LicenseText"],
+Cell[23298, 460, 70, 0, 20, "LicenseText"],
+Cell[23371, 462, 74, 1, 20, "LicenseText"],
+Cell[23448, 465, 70, 0, 20, "LicenseText"],
+Cell[23521, 467, 71, 1, 20, "LicenseText"],
+Cell[23595, 470, 70, 0, 20, "LicenseText"],
+Cell[23668, 472, 66, 1, 20, "LicenseText"],
+Cell[23737, 475, 70, 0, 20, "LicenseText"],
+Cell[23810, 477, 58, 1, 20, "LicenseText"],
+Cell[23871, 480, 48, 0, 20, "LicenseText"],
+Cell[23922, 482, 165, 3, 20, "LicenseText"],
+Cell[24090, 487, 85, 1, 31, "LicenseText"],
+Cell[24178, 490, 38, 0, 20, "LicenseText"],
+Cell[24219, 492, 173, 3, 43, "LicenseText"],
+Cell[24395, 497, 150, 3, 31, "LicenseText"],
+Cell[24548, 502, 502, 8, 91, "LicenseText"],
+Cell[25053, 512, 143, 3, 31, "LicenseText"],
+Cell[25199, 517, 204, 4, 43, "LicenseText"],
+Cell[25406, 523, 258, 4, 55, "LicenseText"],
+Cell[25667, 529, 275, 5, 55, "LicenseText"],
+Cell[25945, 536, 503, 8, 103, "LicenseText"],
+Cell[26451, 546, 942, 13, 175, "LicenseText"],
+Cell[27396, 561, 215, 4, 43, "LicenseText"],
+Cell[27614, 567, 423, 7, 79, "LicenseText"],
+Cell[28040, 576, 1001, 14, 187, "LicenseText"],
+Cell[29044, 592, 258, 4, 55, "LicenseText"],
+Cell[29305, 598, 131, 3, 31, "LicenseText"],
+Cell[29439, 603, 137, 3, 31, "LicenseText"],
+Cell[29579, 608, 298, 5, 55, "LicenseText"],
+Cell[29880, 615, 1004, 14, 187, "LicenseText"],
+Cell[30887, 631, 404, 7, 79, "LicenseText"],
+Cell[31294, 640, 480, 7, 103, "LicenseText"],
+Cell[31777, 649, 312, 5, 67, "LicenseText"],
+Cell[32092, 656, 630, 9, 127, "LicenseText"],
+Cell[32725, 667, 754, 11, 139, "LicenseText"],
+Cell[33482, 680, 693, 10, 127, "LicenseText"],
+Cell[34178, 692, 50, 0, 20, "LicenseText"],
+Cell[34231, 694, 54, 1, 20, "LicenseText"],
+Cell[34288, 697, 70, 0, 20, "LicenseText"],
+Cell[34361, 699, 57, 1, 20, "LicenseText"],
+Cell[34421, 702, 70, 0, 20, "LicenseText"],
+Cell[34494, 704, 57, 1, 20, "LicenseText"],
+Cell[34554, 707, 70, 0, 20, "LicenseText"],
+Cell[34627, 709, 50, 1, 20, "LicenseText"],
+Cell[34680, 712, 58, 0, 20, "LicenseText"],
+Cell[34741, 714, 179, 3, 43, "LicenseText"],
+Cell[34923, 719, 179, 4, 43, "LicenseText"],
+Cell[35105, 725, 940, 14, 207, "LicenseText"],
+Cell[36048, 741, 773, 11, 187, "LicenseText"],
+Cell[36824, 754, 165, 3, 31, "LicenseText"],
+Cell[36992, 759, 149, 3, 31, "LicenseText"],
+Cell[37144, 764, 117, 3, 31, "LicenseText"],
+Cell[37264, 769, 310, 7, 31, "LicenseText"],
+Cell[37577, 778, 47, 1, 20, "LicenseText"],
+Cell[37627, 781, 68, 0, 20, "LicenseText"],
+Cell[37698, 783, 43, 0, 20, "LicenseText"],
+Cell[37744, 785, 175, 3, 43, "LicenseText"],
+Cell[37922, 790, 160, 3, 31, "LicenseText"],
+Cell[38085, 795, 240, 4, 55, "LicenseText"],
+Cell[38328, 801, 226, 4, 43, "LicenseText"],
+Cell[38557, 807, 807, 12, 199, "LicenseText"],
+Cell[39367, 821, 50, 1, 20, "LicenseText"],
+Cell[39420, 824, 77, 0, 20, "LicenseText"],
+Cell[39500, 826, 407, 6, 79, "LicenseText"],
+Cell[39910, 834, 356, 6, 67, "LicenseText"],
+Cell[40269, 842, 189, 3, 43, "LicenseText"],
+Cell[40461, 847, 49, 1, 20, "LicenseText"],
+Cell[40513, 850, 118, 3, 31, "LicenseText"],
+Cell[40634, 855, 78, 0, 20, "LicenseText"],
+Cell[40715, 857, 175, 3, 43, "LicenseText"],
+Cell[40893, 862, 160, 3, 31, "LicenseText"],
+Cell[41056, 867, 241, 4, 55, "LicenseText"],
+Cell[41300, 873, 210, 4, 43, "LicenseText"],
+Cell[41513, 879, 808, 12, 199, "LicenseText"],
+Cell[42324, 893, 53, 1, 20, "LicenseText"],
+Cell[42380, 896, 69, 0, 20, "LicenseText"],
+Cell[42452, 898, 59, 1, 20, "LicenseText"],
+Cell[42514, 901, 49, 0, 20, "LicenseText"],
+Cell[42566, 903, 56, 0, 20, "LicenseText"],
+Cell[42625, 905, 493, 7, 91, "LicenseText"],
+Cell[43121, 914, 436, 7, 79, "LicenseText"],
+Cell[43560, 923, 563, 9, 127, "LicenseText"],
+Cell[44126, 934, 49, 1, 20, "LicenseText"],
+Cell[44178, 937, 69, 0, 20, "LicenseText"],
+Cell[44250, 939, 49, 1, 20, "LicenseText"],
+Cell[44302, 942, 32, 0, 20, "LicenseText"],
+Cell[44337, 944, 73, 0, 20, "LicenseText"],
+Cell[44413, 946, 104, 2, 31, "LicenseText"],
+Cell[44520, 950, 43, 0, 20, "LicenseText"],
+Cell[44566, 952, 47, 0, 20, "LicenseText"],
+Cell[44616, 954, 70, 0, 20, "LicenseText"],
+Cell[44689, 956, 43, 0, 20, "LicenseText"],
+Cell[44735, 958, 417, 7, 79, "LicenseText"],
+Cell[45155, 967, 30, 0, 20, "LicenseText"],
+Cell[45188, 969, 176, 3, 43, "LicenseText"],
+Cell[45367, 974, 161, 3, 31, "LicenseText"],
+Cell[45531, 979, 241, 4, 55, "LicenseText"],
+Cell[45775, 985, 807, 12, 199, "LicenseText"],
+Cell[46585, 999, 45, 0, 20, "LicenseText"],
+Cell[46633, 1001, 206, 4, 43, "LicenseText"],
+Cell[46842, 1007, 49, 1, 20, "LicenseText"],
+Cell[46894, 1010, 192, 4, 20, "LicenseText"],
+Cell[47089, 1016, 339, 9, 31, "LicenseText"],
+Cell[47431, 1027, 50, 1, 20, "LicenseText"],
+Cell[47484, 1030, 82, 1, 20, "LicenseText"],
+Cell[47569, 1033, 211, 4, 43, "LicenseText"],
+Cell[47783, 1039, 171, 3, 43, "LicenseText"],
+Cell[47957, 1044, 240, 4, 55, "LicenseText"],
+Cell[48200, 1050, 237, 4, 55, "LicenseText"],
+Cell[48440, 1056, 250, 4, 55, "LicenseText"],
+Cell[48693, 1062, 260, 8, 31, "LicenseText"],
+Cell[48956, 1072, 785, 11, 199, "LicenseText"],
+Cell[49744, 1085, 50, 1, 20, "LicenseText"],
+Cell[49797, 1088, 43, 0, 20, "LicenseText"],
+Cell[49843, 1090, 37, 0, 20, "LicenseText"],
+Cell[49883, 1092, 48, 0, 20, "LicenseText"],
+Cell[49934, 1094, 55, 0, 20, "LicenseText"],
+Cell[49992, 1096, 305, 5, 55, "LicenseText"],
+Cell[50300, 1103, 160, 3, 31, "LicenseText"],
+Cell[50463, 1108, 72, 0, 20, "LicenseText"],
+Cell[50538, 1110, 178, 3, 43, "LicenseText"],
+Cell[50719, 1115, 54, 1, 20, "LicenseText"],
+Cell[50776, 1118, 78, 0, 20, "LicenseText"],
+Cell[50857, 1120, 175, 3, 43, "LicenseText"],
+Cell[51035, 1125, 159, 3, 31, "LicenseText"],
+Cell[51197, 1130, 239, 4, 55, "LicenseText"],
+Cell[51439, 1136, 215, 4, 43, "LicenseText"],
+Cell[51657, 1142, 807, 12, 199, "LicenseText"],
+Cell[52467, 1156, 53, 1, 20, "LicenseText"],
+Cell[52523, 1159, 56, 0, 20, "LicenseText"],
+Cell[52582, 1161, 241, 4, 67, "LicenseText"],
+Cell[52826, 1167, 37, 0, 20, "LicenseText"],
+Cell[52866, 1169, 46, 0, 20, "LicenseText"],
+Cell[52915, 1171, 148, 3, 31, "LicenseText"],
+Cell[53066, 1176, 142, 4, 53, "LicenseText"],
+Cell[53211, 1182, 539, 8, 103, "LicenseText"],
+Cell[53753, 1192, 103, 2, 31, "LicenseText"],
+Cell[53859, 1196, 214, 4, 43, "LicenseText"],
+Cell[54076, 1202, 115, 3, 31, "LicenseText"],
+Cell[54194, 1207, 134, 3, 31, "LicenseText"],
+Cell[54331, 1212, 41, 0, 20, "LicenseText"],
+Cell[54375, 1214, 396, 6, 79, "LicenseText"],
+Cell[54774, 1222, 740, 11, 139, "LicenseText"],
+Cell[55517, 1235, 857, 12, 163, "LicenseText"],
+Cell[56377, 1249, 211, 4, 43, "LicenseText"],
+Cell[56591, 1255, 38, 0, 20, "LicenseText"],
+Cell[56632, 1257, 151, 3, 31, "LicenseText"],
+Cell[56786, 1262, 98, 2, 20, "LicenseText"],
+Cell[56887, 1266, 866, 14, 219, "LicenseText"],
+Cell[57756, 1282, 78, 0, 20, "LicenseText"],
+Cell[57837, 1284, 77, 0, 20, "LicenseText"],
+Cell[57917, 1286, 106, 2, 31, "LicenseText"],
+Cell[58026, 1290, 121, 3, 31, "LicenseText"],
+Cell[58150, 1295, 224, 4, 43, "LicenseText"],
+Cell[58377, 1301, 49, 0, 20, "LicenseText"],
+Cell[58429, 1303, 1508, 21, 283, "LicenseText"],
+Cell[59940, 1326, 683, 10, 139, "LicenseText"],
+Cell[60626, 1338, 37, 0, 20, "LicenseText"],
+Cell[60666, 1340, 751, 11, 163, "LicenseText"],
+Cell[61420, 1353, 49, 0, 20, "LicenseText"],
+Cell[61472, 1355, 581, 9, 139, "LicenseText"],
+Cell[62056, 1366, 33, 0, 20, "LicenseText"],
+Cell[62092, 1368, 384, 6, 79, "LicenseText"],
+Cell[62479, 1376, 750, 11, 139, "LicenseText"],
+Cell[63232, 1389, 594, 9, 115, "LicenseText"],
+Cell[63829, 1400, 1280, 18, 235, "LicenseText"],
+Cell[65112, 1420, 371, 6, 67, "LicenseText"],
+Cell[65486, 1428, 48, 1, 20, "LicenseText"],
+Cell[65537, 1431, 43, 0, 20, "LicenseText"],
+Cell[65583, 1433, 93, 2, 20, "LicenseText"],
+Cell[65679, 1437, 43, 0, 20, "LicenseText"],
+Cell[65725, 1439, 175, 3, 43, "LicenseText"],
+Cell[65903, 1444, 157, 3, 31, "LicenseText"],
+Cell[66063, 1449, 237, 4, 43, "LicenseText"],
+Cell[66303, 1455, 228, 4, 43, "LicenseText"],
+Cell[66534, 1461, 807, 12, 199, "LicenseText"],
+Cell[67344, 1475, 49, 1, 20, "LicenseText"],
+Cell[67396, 1478, 58, 0, 20, "LicenseText"],
+Cell[67457, 1480, 43, 0, 20, "LicenseText"],
+Cell[67503, 1482, 85, 1, 20, "LicenseText"],
+Cell[67591, 1485, 106, 5, 70, "LicenseText"],
+Cell[67700, 1492, 175, 3, 43, "LicenseText"],
+Cell[67878, 1497, 159, 3, 31, "LicenseText"],
+Cell[68040, 1502, 239, 4, 55, "LicenseText"],
+Cell[68282, 1508, 209, 4, 43, "LicenseText"],
+Cell[68494, 1514, 808, 12, 199, "LicenseText"],
+Cell[69305, 1528, 244, 4, 55, "LicenseText"],
+Cell[69552, 1534, 94, 2, 31, "LicenseText"],
+Cell[69649, 1538, 85, 1, 20, "LicenseText"],
+Cell[69737, 1541, 128, 6, 87, "LicenseText"],
+Cell[69868, 1549, 191, 7, 104, "LicenseText"],
+Cell[70062, 1558, 142, 7, 104, "LicenseText"],
+Cell[70207, 1567, 197, 4, 43, "LicenseText"],
+Cell[70407, 1573, 399, 6, 103, "LicenseText"],
+Cell[70809, 1581, 531, 8, 103, "LicenseText"],
+Cell[71343, 1591, 403, 6, 79, "LicenseText"],
+Cell[71749, 1599, 73, 0, 20, "LicenseText"],
+Cell[71825, 1601, 225, 4, 55, "LicenseText"],
+Cell[72053, 1607, 225, 6, 87, "LicenseText"],
+Cell[72281, 1615, 157, 3, 31, "LicenseText"],
+Cell[72441, 1620, 386, 6, 103, "LicenseText"],
+Cell[72830, 1628, 497, 8, 103, "LicenseText"],
+Cell[73330, 1638, 379, 6, 79, "LicenseText"],
+Cell[73712, 1646, 331, 5, 67, "LicenseText"],
+Cell[74046, 1653, 82, 1, 20, "LicenseText"],
+Cell[74131, 1656, 69, 0, 20, "LicenseText"],
+Cell[74203, 1658, 195, 4, 43, "LicenseText"],
+Cell[74401, 1664, 319, 5, 67, "LicenseText"],
+Cell[74723, 1671, 208, 4, 43, "LicenseText"],
+Cell[74934, 1677, 221, 4, 43, "LicenseText"],
+Cell[75158, 1683, 199, 4, 43, "LicenseText"],
+Cell[75360, 1689, 283, 5, 55, "LicenseText"],
+Cell[75646, 1696, 215, 4, 43, "LicenseText"],
+Cell[75864, 1702, 264, 5, 55, "LicenseText"],
+Cell[76131, 1709, 59, 0, 20, "LicenseText"],
+Cell[76193, 1711, 410, 7, 79, "LicenseText"],
+Cell[76606, 1720, 226, 4, 43, "LicenseText"],
+Cell[76835, 1726, 65, 0, 20, "LicenseText"],
+Cell[76903, 1728, 410, 7, 79, "LicenseText"],
+Cell[77316, 1737, 259, 4, 55, "LicenseText"],
+Cell[77578, 1743, 95, 2, 20, "LicenseText"],
+Cell[77676, 1747, 43, 0, 20, "LicenseText"],
+Cell[77722, 1749, 175, 3, 43, "LicenseText"],
+Cell[77900, 1754, 160, 3, 31, "LicenseText"],
+Cell[78063, 1759, 240, 4, 55, "LicenseText"],
+Cell[78306, 1765, 175, 3, 43, "LicenseText"],
+Cell[78484, 1770, 739, 11, 175, "LicenseText"],
+Cell[79226, 1783, 195, 4, 43, "LicenseText"],
+Cell[79424, 1789, 467, 7, 91, "LicenseText"],
+Cell[79894, 1798, 148, 3, 31, "LicenseText"],
+Cell[80045, 1803, 84, 1, 20, "LicenseText"],
+Cell[80132, 1806, 43, 0, 20, "LicenseText"],
+Cell[80178, 1808, 539, 8, 103, "LicenseText"],
+Cell[80720, 1818, 228, 4, 67, "LicenseText"],
+Cell[80951, 1824, 174, 3, 43, "LicenseText"],
+Cell[81128, 1829, 74, 0, 20, "LicenseText"],
+Cell[81205, 1831, 163, 3, 31, "LicenseText"],
+Cell[81371, 1836, 182, 3, 43, "LicenseText"],
+Cell[81556, 1841, 83, 1, 20, "LicenseText"],
+Cell[81642, 1844, 43, 0, 20, "LicenseText"],
+Cell[81688, 1846, 175, 3, 43, "LicenseText"],
+Cell[81866, 1851, 163, 3, 31, "LicenseText"],
+Cell[82032, 1856, 240, 4, 55, "LicenseText"],
+Cell[82275, 1862, 804, 11, 199, "LicenseText"],
+Cell[83082, 1875, 40, 0, 20, "LicenseText"],
+Cell[83125, 1877, 39, 0, 20, "LicenseText"],
+Cell[83167, 1879, 38, 0, 20, "LicenseText"],
+Cell[83208, 1881, 43, 0, 20, "LicenseText"],
+Cell[83254, 1883, 55, 0, 20, "LicenseText"],
+Cell[83312, 1885, 163, 3, 31, "LicenseText"],
+Cell[83478, 1890, 62, 0, 20, "LicenseText"],
+Cell[83543, 1892, 246, 4, 20, "LicenseText"],
+Cell[83792, 1898, 243, 4, 55, "LicenseText"],
+Cell[84038, 1904, 131, 3, 31, "LicenseText"],
+Cell[84172, 1909, 181, 3, 43, "LicenseText"],
+Cell[84356, 1914, 85, 1, 20, "LicenseText"],
+Cell[84444, 1917, 112, 3, 20, "LicenseText"],
+Cell[84559, 1922, 59, 0, 20, "LicenseText"],
+Cell[84621, 1924, 43, 0, 20, "LicenseText"],
+Cell[84667, 1926, 175, 3, 43, "LicenseText"],
+Cell[84845, 1931, 159, 3, 31, "LicenseText"],
+Cell[85007, 1936, 239, 4, 55, "LicenseText"],
+Cell[85249, 1942, 216, 4, 43, "LicenseText"],
+Cell[85468, 1948, 807, 12, 199, "LicenseText"],
+Cell[86278, 1962, 50, 1, 20, "LicenseText"],
+Cell[86331, 1965, 79, 0, 20, "LicenseText"],
+Cell[86413, 1967, 47, 1, 20, "LicenseText"],
+Cell[86463, 1970, 45, 0, 20, "LicenseText"],
+Cell[86511, 1972, 119, 3, 31, "LicenseText"],
+Cell[86633, 1977, 586, 9, 115, "LicenseText"],
+Cell[87222, 1988, 510, 8, 91, "LicenseText"],
+Cell[87735, 1998, 98, 1, 20, "LicenseText"],
+Cell[87836, 2001, 38, 0, 20, "LicenseText"],
+Cell[87877, 2003, 110, 3, 31, "LicenseText"],
+Cell[87990, 2008, 107, 2, 31, "LicenseText"],
+Cell[88100, 2012, 175, 3, 43, "LicenseText"],
+Cell[88278, 2017, 159, 3, 31, "LicenseText"],
+Cell[88440, 2022, 239, 4, 55, "LicenseText"],
+Cell[88682, 2028, 242, 4, 55, "LicenseText"],
+Cell[88927, 2034, 807, 12, 199, "LicenseText"],
+Cell[89737, 2048, 51, 1, 20, "LicenseText"],
+Cell[89791, 2051, 72, 0, 20, "LicenseText"],
+Cell[89866, 2053, 32, 0, 20, "LicenseText"],
+Cell[89901, 2055, 144, 4, 53, "LicenseText"],
+Cell[90048, 2061, 34, 0, 20, "LicenseText"],
+Cell[90085, 2063, 287, 10, 155, "LicenseText"],
+Cell[90375, 2075, 284, 5, 55, "LicenseText"],
+Cell[90662, 2082, 277, 5, 67, "LicenseText"],
+Cell[90942, 2089, 233, 4, 55, "LicenseText"],
+Cell[91178, 2095, 48, 1, 20, "LicenseText"],
+Cell[91229, 2098, 61, 0, 20, "LicenseText"],
+Cell[91293, 2100, 176, 3, 43, "LicenseText"],
+Cell[91472, 2105, 567, 9, 125, "LicenseText"],
+Cell[92042, 2116, 801, 11, 151, "LicenseText"],
+Cell[92846, 2129, 59, 1, 20, "LicenseText"],
+Cell[92908, 2132, 85, 1, 20, "LicenseText"],
+Cell[92996, 2135, 475, 7, 91, "LicenseText"],
+Cell[93474, 2144, 159, 3, 31, "LicenseText"],
+Cell[93636, 2149, 505, 8, 127, "LicenseText"],
+Cell[94144, 2159, 54, 1, 20, "LicenseText"],
+Cell[94201, 2162, 67, 0, 20, "LicenseText"],
+Cell[94271, 2164, 162, 3, 31, "LicenseText"],
+Cell[94436, 2169, 62, 1, 20, "LicenseText"],
+Cell[94501, 2172, 457, 9, 55, "LicenseText"],
+Cell[94961, 2183, 52, 1, 20, "LicenseText"],
+Cell[95016, 2186, 249, 7, 31, "LicenseText"],
+Cell[95268, 2195, 61, 1, 20, "LicenseText"],
+Cell[95332, 2198, 106, 2, 31, "LicenseText"],
+Cell[95441, 2202, 476, 7, 91, "LicenseText"],
+Cell[95920, 2211, 143, 3, 31, "LicenseText"],
+Cell[96066, 2216, 160, 3, 31, "LicenseText"],
+Cell[96229, 2221, 506, 8, 127, "LicenseText"],
+Cell[96738, 2231, 54, 0, 20, "LicenseText"],
+Cell[96795, 2233, 77, 0, 20, "LicenseText"],
+Cell[96875, 2235, 145, 3, 31, "LicenseText"],
+Cell[97023, 2240, 60, 0, 20, "LicenseText"],
+Cell[97086, 2242, 62, 0, 20, "LicenseText"],
+Cell[97151, 2244, 60, 0, 20, "LicenseText"],
+Cell[97214, 2246, 62, 0, 20, "LicenseText"],
+Cell[97279, 2248, 62, 0, 20, "LicenseText"],
+Cell[97344, 2250, 61, 0, 20, "LicenseText"],
+Cell[97408, 2252, 74, 0, 20, "LicenseText"],
+Cell[97485, 2254, 68, 0, 20, "LicenseText"],
+Cell[97556, 2256, 65, 0, 20, "LicenseText"],
+Cell[97624, 2258, 67, 0, 20, "LicenseText"],
+Cell[97694, 2260, 62, 0, 20, "LicenseText"],
+Cell[97759, 2262, 57, 0, 20, "LicenseText"],
+Cell[97819, 2264, 103, 2, 31, "LicenseText"],
+Cell[97925, 2268, 60, 0, 20, "LicenseText"],
+Cell[97988, 2270, 60, 0, 20, "LicenseText"],
+Cell[98051, 2272, 66, 0, 20, "LicenseText"],
+Cell[98120, 2274, 69, 0, 20, "LicenseText"],
+Cell[98192, 2276, 61, 0, 20, "LicenseText"],
+Cell[98256, 2278, 63, 0, 20, "LicenseText"],
+Cell[98322, 2280, 85, 1, 20, "LicenseText"],
+Cell[98410, 2283, 78, 0, 20, "LicenseText"],
+Cell[98491, 2285, 72, 0, 20, "LicenseText"],
+Cell[98566, 2287, 97, 2, 20, "LicenseText"],
+Cell[98666, 2291, 82, 1, 20, "LicenseText"],
+Cell[98751, 2294, 60, 0, 20, "LicenseText"],
+Cell[98814, 2296, 131, 3, 31, "LicenseText"],
+Cell[98948, 2301, 64, 0, 20, "LicenseText"],
+Cell[99015, 2303, 62, 0, 20, "LicenseText"],
+Cell[99080, 2305, 61, 0, 20, "LicenseText"],
+Cell[99144, 2307, 70, 0, 20, "LicenseText"],
+Cell[99217, 2309, 84, 1, 20, "LicenseText"],
+Cell[99304, 2312, 60, 0, 20, "LicenseText"],
+Cell[99367, 2314, 96, 2, 20, "LicenseText"],
+Cell[99466, 2318, 67, 0, 20, "LicenseText"],
+Cell[99536, 2320, 171, 3, 43, "LicenseText"],
+Cell[99710, 2325, 51, 1, 20, "LicenseText"],
+Cell[99764, 2328, 106, 1, 20, "LicenseText"],
+Cell[99873, 2331, 57, 1, 20, "LicenseText"],
+Cell[99933, 2334, 60, 0, 20, "LicenseText"],
+Cell[99996, 2336, 61, 1, 20, "LicenseText"],
+Cell[100060, 2339, 123, 3, 31, "LicenseText"],
+Cell[100186, 2344, 51, 1, 20, "LicenseText"],
+Cell[100240, 2347, 228, 4, 20, "LicenseText"],
+Cell[100471, 2353, 341, 9, 31, "LicenseText"],
+Cell[100815, 2364, 48, 1, 20, "LicenseText"],
+Cell[100866, 2367, 231, 4, 20, "LicenseText"],
+Cell[101100, 2373, 338, 9, 31, "LicenseText"],
+Cell[101441, 2384, 70, 1, 20, "LicenseText"],
+Cell[101514, 2387, 46, 0, 20, "LicenseText"],
+Cell[101563, 2389, 229, 7, 20, "LicenseText"],
+Cell[101795, 2398, 151, 3, 31, "LicenseText"],
+Cell[101949, 2403, 31, 0, 20, "LicenseText"],
+Cell[101983, 2405, 130, 3, 31, "LicenseText"],
+Cell[102116, 2410, 558, 8, 115, "LicenseText"],
+Cell[102677, 2420, 442, 7, 91, "LicenseText"],
+Cell[103122, 2429, 314, 5, 55, "LicenseText"],
+Cell[103439, 2436, 327, 5, 67, "LicenseText"],
+Cell[103769, 2443, 237, 4, 55, "LicenseText"],
+Cell[104009, 2449, 346, 6, 67, "LicenseText"],
+Cell[104358, 2457, 721, 10, 139, "LicenseText"],
+Cell[105082, 2469, 444, 7, 91, "LicenseText"],
+Cell[105529, 2478, 116, 3, 31, "LicenseText"],
+Cell[105648, 2483, 44, 0, 20, "LicenseText"],
+Cell[105695, 2485, 38, 0, 20, "LicenseText"],
+Cell[105736, 2487, 102, 2, 31, "LicenseText"],
+Cell[105841, 2491, 142, 3, 31, "LicenseText"],
+Cell[105986, 2496, 221, 4, 43, "LicenseText"],
+Cell[106210, 2502, 307, 5, 55, "LicenseText"],
+Cell[106520, 2509, 119, 3, 31, "LicenseText"],
+Cell[106642, 2514, 432, 7, 91, "LicenseText"],
+Cell[107077, 2523, 242, 4, 55, "LicenseText"],
+Cell[107322, 2529, 580, 9, 103, "LicenseText"],
+Cell[107905, 2540, 38, 0, 20, "LicenseText"],
+Cell[107946, 2542, 187, 4, 43, "LicenseText"],
+Cell[108136, 2548, 302, 5, 55, "LicenseText"],
+Cell[108441, 2555, 722, 11, 139, "LicenseText"],
+Cell[109166, 2568, 848, 12, 163, "LicenseText"],
+Cell[110017, 2582, 169, 3, 43, "LicenseText"],
+Cell[110189, 2587, 106, 2, 31, "LicenseText"],
+Cell[110298, 2591, 44, 0, 20, "LicenseText"],
+Cell[110345, 2593, 517, 8, 103, "LicenseText"],
+Cell[110865, 2603, 727, 11, 139, "LicenseText"],
+Cell[111595, 2616, 192, 4, 43, "LicenseText"],
+Cell[111790, 2622, 93, 2, 20, "LicenseText"],
+Cell[111886, 2626, 309, 5, 67, "LicenseText"],
+Cell[112198, 2633, 484, 7, 91, "LicenseText"],
+Cell[112685, 2642, 52, 0, 20, "LicenseText"],
+Cell[112740, 2644, 494, 7, 91, "LicenseText"],
+Cell[113237, 2653, 161, 3, 31, "LicenseText"],
+Cell[113401, 2658, 61, 0, 20, "LicenseText"],
+Cell[113465, 2660, 241, 4, 55, "LicenseText"],
+Cell[113709, 2666, 134, 3, 31, "LicenseText"],
+Cell[113846, 2671, 254, 4, 55, "LicenseText"],
+Cell[114103, 2677, 479, 7, 91, "LicenseText"],
+Cell[114585, 2686, 265, 5, 55, "LicenseText"],
+Cell[114853, 2693, 615, 9, 115, "LicenseText"],
+Cell[115471, 2704, 53, 0, 20, "LicenseText"],
+Cell[115527, 2706, 248, 4, 55, "LicenseText"],
+Cell[115778, 2712, 264, 4, 55, "LicenseText"],
+Cell[116045, 2718, 724, 10, 139, "LicenseText"],
+Cell[116772, 2730, 314, 5, 67, "LicenseText"],
+Cell[117089, 2737, 823, 12, 151, "LicenseText"],
+Cell[117915, 2751, 260, 4, 55, "LicenseText"],
+Cell[118178, 2757, 211, 4, 43, "LicenseText"],
+Cell[118392, 2763, 889, 13, 163, "LicenseText"],
+Cell[119284, 2778, 486, 7, 91, "LicenseText"],
+Cell[119773, 2787, 687, 10, 127, "LicenseText"],
+Cell[120463, 2799, 518, 8, 103, "LicenseText"],
+Cell[120984, 2809, 336, 5, 67, "LicenseText"],
+Cell[121323, 2816, 43, 0, 20, "LicenseText"],
+Cell[121369, 2818, 585, 9, 115, "LicenseText"],
+Cell[121957, 2829, 438, 7, 91, "LicenseText"],
+Cell[122398, 2838, 242, 4, 55, "LicenseText"],
+Cell[122643, 2844, 150, 3, 31, "LicenseText"],
+Cell[122796, 2849, 214, 4, 43, "LicenseText"],
+Cell[123013, 2855, 227, 4, 43, "LicenseText"],
+Cell[123243, 2861, 131, 3, 31, "LicenseText"],
+Cell[123377, 2866, 146, 3, 31, "LicenseText"],
+Cell[123526, 2871, 334, 5, 67, "LicenseText"],
+Cell[123863, 2878, 634, 9, 115, "LicenseText"],
+Cell[124500, 2889, 268, 5, 55, "LicenseText"],
+Cell[124771, 2896, 208, 4, 43, "LicenseText"],
+Cell[124982, 2902, 38, 0, 20, "LicenseText"],
+Cell[125023, 2904, 334, 5, 67, "LicenseText"],
+Cell[125360, 2911, 408, 6, 79, "LicenseText"],
+Cell[125771, 2919, 400, 6, 79, "LicenseText"],
+Cell[126174, 2927, 341, 5, 67, "LicenseText"],
+Cell[126518, 2934, 68, 0, 20, "LicenseText"],
+Cell[126589, 2936, 586, 9, 115, "LicenseText"],
+Cell[127178, 2947, 72, 0, 20, "LicenseText"],
+Cell[127253, 2949, 299, 5, 67, "LicenseText"],
+Cell[127555, 2956, 650, 10, 127, "LicenseText"],
+Cell[128208, 2968, 508, 8, 91, "LicenseText"],
+Cell[128719, 2978, 35, 0, 20, "LicenseText"],
+Cell[128757, 2980, 244, 4, 55, "LicenseText"],
+Cell[129004, 2986, 597, 9, 115, "LicenseText"],
+Cell[129604, 2997, 293, 5, 55, "LicenseText"],
+Cell[129900, 3004, 417, 7, 79, "LicenseText"],
+Cell[130320, 3013, 936, 13, 175, "LicenseText"],
+Cell[131259, 3028, 472, 7, 91, "LicenseText"],
+Cell[131734, 3037, 994, 14, 187, "LicenseText"],
+Cell[132731, 3053, 225, 4, 43, "LicenseText"],
+Cell[132959, 3059, 59, 0, 20, "LicenseText"],
+Cell[133021, 3061, 691, 10, 139, "LicenseText"],
+Cell[133715, 3073, 74, 0, 20, "LicenseText"],
+Cell[133792, 3075, 544, 8, 103, "LicenseText"],
+Cell[134339, 3085, 60, 0, 20, "LicenseText"],
+Cell[134402, 3087, 288, 5, 55, "LicenseText"],
+Cell[134693, 3094, 544, 8, 103, "LicenseText"],
+Cell[135240, 3104, 278, 5, 55, "LicenseText"],
+Cell[135521, 3111, 245, 4, 55, "LicenseText"],
+Cell[135769, 3117, 50, 0, 20, "LicenseText"],
+Cell[135822, 3119, 593, 9, 151, "LicenseText"],
+Cell[136418, 3130, 51, 0, 20, "LicenseText"],
+Cell[136472, 3132, 691, 10, 175, "LicenseText"],
+Cell[137166, 3144, 416, 6, 79, "LicenseText"],
+Cell[137585, 3152, 51, 0, 20, "LicenseText"],
+Cell[137639, 3154, 77, 1, 20, "LicenseText"],
+Cell[137719, 3157, 49, 0, 20, "LicenseText"],
+Cell[137771, 3159, 270, 5, 55, "LicenseText"],
+Cell[138044, 3166, 198, 4, 43, "LicenseText"],
+Cell[138245, 3172, 31, 0, 20, "LicenseText"],
+Cell[138279, 3174, 302, 5, 67, "LicenseText"],
+Cell[138584, 3181, 452, 7, 91, "LicenseText"],
+Cell[139039, 3190, 471, 7, 91, "LicenseText"],
+Cell[139513, 3199, 306, 5, 55, "LicenseText"],
+Cell[139822, 3206, 521, 8, 103, "LicenseText"],
+Cell[140346, 3216, 226, 4, 43, "LicenseText"],
+Cell[140575, 3222, 395, 6, 79, "LicenseText"],
+Cell[140973, 3230, 434, 7, 79, "LicenseText"],
+Cell[141410, 3239, 406, 6, 79, "LicenseText"],
+Cell[141819, 3247, 458, 7, 91, "LicenseText"],
+Cell[142280, 3256, 475, 7, 91, "LicenseText"],
+Cell[142758, 3265, 504, 8, 91, "LicenseText"],
+Cell[143265, 3275, 377, 6, 79, "LicenseText"],
+Cell[143645, 3283, 292, 5, 55, "LicenseText"],
+Cell[143940, 3290, 359, 6, 67, "LicenseText"],
+Cell[144302, 3298, 130, 3, 43, "LicenseText"],
+Cell[144435, 3303, 348, 6, 67, "LicenseText"],
+Cell[144786, 3311, 234, 4, 43, "LicenseText"],
+Cell[145023, 3317, 508, 8, 91, "LicenseText"],
+Cell[145534, 3327, 351, 6, 67, "LicenseText"],
+Cell[145888, 3335, 502, 8, 91, "LicenseText"],
+Cell[146393, 3345, 443, 7, 91, "LicenseText"],
+Cell[146839, 3354, 174, 3, 43, "LicenseText"],
+Cell[147016, 3359, 293, 5, 67, "LicenseText"],
+Cell[147312, 3366, 78, 0, 20, "LicenseText"],
+Cell[147393, 3368, 159, 3, 31, "LicenseText"],
+Cell[147555, 3373, 154, 3, 31, "LicenseText"],
+Cell[147712, 3378, 463, 7, 91, "LicenseText"],
+Cell[148178, 3387, 396, 6, 79, "LicenseText"],
+Cell[148577, 3395, 657, 10, 127, "LicenseText"],
+Cell[149237, 3407, 279, 5, 55, "LicenseText"],
+Cell[149519, 3414, 273, 5, 55, "LicenseText"],
+Cell[149795, 3421, 543, 8, 103, "LicenseText"],
+Cell[150341, 3431, 228, 4, 43, "LicenseText"],
+Cell[150572, 3437, 146, 3, 31, "LicenseText"],
+Cell[150721, 3442, 427, 7, 91, "LicenseText"],
+Cell[151151, 3451, 353, 6, 67, "LicenseText"],
+Cell[151507, 3459, 355, 6, 67, "LicenseText"],
+Cell[151865, 3467, 370, 6, 67, "LicenseText"],
+Cell[152238, 3475, 442, 7, 79, "LicenseText"],
+Cell[152683, 3484, 414, 6, 79, "LicenseText"],
+Cell[153100, 3492, 298, 5, 55, "LicenseText"],
+Cell[153401, 3499, 407, 6, 79, "LicenseText"],
+Cell[153811, 3507, 464, 7, 91, "LicenseText"],
+Cell[154278, 3516, 720, 10, 139, "LicenseText"],
+Cell[155001, 3528, 495, 8, 91, "LicenseText"],
+Cell[155499, 3538, 249, 4, 55, "LicenseText"],
+Cell[155751, 3544, 208, 4, 43, "LicenseText"],
+Cell[155962, 3550, 151, 3, 31, "LicenseText"],
+Cell[156116, 3555, 528, 8, 103, "LicenseText"],
+Cell[156647, 3565, 308, 5, 67, "LicenseText"],
+Cell[156958, 3572, 430, 7, 79, "LicenseText"],
+Cell[157391, 3581, 229, 4, 43, "LicenseText"],
+Cell[157623, 3587, 225, 4, 43, "LicenseText"],
+Cell[157851, 3593, 504, 8, 103, "LicenseText"],
+Cell[158358, 3603, 545, 8, 103, "LicenseText"],
+Cell[158906, 3613, 472, 7, 91, "LicenseText"],
+Cell[159381, 3622, 857, 13, 163, "LicenseText"],
+Cell[160241, 3637, 254, 4, 55, "LicenseText"],
+Cell[160498, 3643, 663, 10, 127, "LicenseText"],
+Cell[161164, 3655, 148, 3, 31, "LicenseText"],
+Cell[161315, 3660, 509, 8, 91, "LicenseText"],
+Cell[161827, 3670, 295, 5, 55, "LicenseText"],
+Cell[162125, 3677, 481, 7, 91, "LicenseText"],
+Cell[162609, 3686, 543, 8, 103, "LicenseText"],
+Cell[163155, 3696, 34, 0, 20, "LicenseText"],
+Cell[163192, 3698, 644, 9, 163, "LicenseText"],
+Cell[163839, 3709, 660, 10, 163, "LicenseText"],
+Cell[164502, 3721, 50, 0, 20, "LicenseText"],
+Cell[164555, 3723, 77, 1, 20, "LicenseText"],
+Cell[164635, 3726, 46, 0, 20, "LicenseText"],
+Cell[164684, 3728, 96, 2, 20, "LicenseText"],
+Cell[164783, 3732, 151, 3, 31, "LicenseText"],
+Cell[164937, 3737, 231, 4, 55, "LicenseText"],
+Cell[165171, 3743, 49, 0, 20, "LicenseText"],
+Cell[165223, 3745, 204, 4, 43, "LicenseText"],
+Cell[165430, 3751, 162, 3, 31, "LicenseText"],
+Cell[165595, 3756, 290, 5, 55, "LicenseText"],
+Cell[165888, 3763, 245, 4, 55, "LicenseText"],
+Cell[166136, 3769, 299, 5, 67, "LicenseText"],
+Cell[166438, 3776, 317, 5, 67, "LicenseText"],
+Cell[166758, 3783, 64, 0, 20, "LicenseText"],
+Cell[166825, 3785, 150, 3, 31, "LicenseText"],
+Cell[166978, 3790, 54, 0, 20, "LicenseText"],
+Cell[167035, 3792, 314, 5, 67, "LicenseText"],
+Cell[167352, 3799, 278, 5, 55, "LicenseText"],
+Cell[167633, 3806, 135, 3, 31, "LicenseText"],
+Cell[167771, 3811, 95, 2, 20, "LicenseText"],
+Cell[167869, 3815, 444, 7, 91, "LicenseText"],
+Cell[168316, 3824, 184, 3, 43, "LicenseText"],
+Cell[168503, 3829, 115, 3, 31, "LicenseText"],
+Cell[168621, 3834, 41, 0, 20, "LicenseText"],
+Cell[168665, 3836, 315, 5, 67, "LicenseText"],
+Cell[168983, 3843, 186, 3, 43, "LicenseText"],
+Cell[169172, 3848, 117, 3, 31, "LicenseText"],
+Cell[169292, 3853, 273, 5, 55, "LicenseText"],
+Cell[169568, 3860, 50, 0, 20, "LicenseText"],
+Cell[169621, 3862, 429, 7, 91, "LicenseText"],
+Cell[170053, 3871, 359, 6, 67, "LicenseText"],
+Cell[170415, 3879, 703, 10, 139, "LicenseText"],
+Cell[171121, 3891, 45, 0, 20, "LicenseText"],
+Cell[171169, 3893, 337, 5, 67, "LicenseText"],
+Cell[171509, 3900, 207, 4, 43, "LicenseText"],
+Cell[171719, 3906, 213, 4, 43, "LicenseText"],
+Cell[171935, 3912, 92, 2, 20, "LicenseText"],
+Cell[172030, 3916, 295, 5, 67, "LicenseText"],
+Cell[172328, 3923, 640, 9, 127, "LicenseText"],
+Cell[172971, 3934, 316, 5, 67, "LicenseText"],
+Cell[173290, 3941, 85, 1, 20, "LicenseText"],
+Cell[173378, 3944, 250, 7, 31, "LicenseText"],
+Cell[173631, 3953, 337, 9, 31, "LicenseText"],
+Cell[173971, 3964, 285, 7, 31, "LicenseText"],
+Cell[174259, 3973, 54, 1, 20, "LicenseText"],
+Cell[174316, 3976, 66, 0, 20, "LicenseText"],
+Cell[174385, 3978, 244, 4, 55, "LicenseText"],
+Cell[174632, 3984, 530, 8, 139, "LicenseText"],
+Cell[175165, 3994, 52, 1, 20, "LicenseText"],
+Cell[175220, 3997, 231, 4, 20, "LicenseText"],
+Cell[175454, 4003, 109, 2, 31, "LicenseText"],
+Cell[175566, 4007, 168, 3, 43, "LicenseText"],
+Cell[175737, 4012, 74, 0, 20, "LicenseText"],
+Cell[175814, 4014, 70, 0, 20, "LicenseText"],
+Cell[175887, 4016, 69, 0, 20, "LicenseText"],
+Cell[175959, 4018, 112, 3, 31, "LicenseText"],
+Cell[176074, 4023, 66, 0, 20, "LicenseText"],
+Cell[176143, 4025, 89, 1, 20, "LicenseText"],
+Cell[176235, 4028, 64, 0, 20, "LicenseText"],
+Cell[176302, 4030, 67, 0, 20, "LicenseText"],
+Cell[176372, 4032, 64, 0, 20, "LicenseText"],
+Cell[176439, 4034, 87, 1, 20, "LicenseText"],
+Cell[176529, 4037, 90, 1, 20, "LicenseText"],
+Cell[176622, 4040, 102, 2, 20, "LicenseText"],
+Cell[176727, 4044, 332, 5, 67, "LicenseText"],
+Cell[177062, 4051, 310, 5, 79, "LicenseText"],
+Cell[177375, 4058, 385, 6, 91, "LicenseText"],
+Cell[177763, 4066, 47, 1, 20, "LicenseText"],
+Cell[177813, 4069, 103, 2, 31, "LicenseText"],
+Cell[177919, 4073, 43, 0, 20, "LicenseText"],
+Cell[177965, 4075, 303, 5, 67, "LicenseText"],
+Cell[178271, 4082, 225, 4, 43, "LicenseText"],
+Cell[178499, 4088, 161, 3, 31, "LicenseText"],
+Cell[178663, 4093, 235, 4, 43, "LicenseText"],
+Cell[178901, 4099, 213, 4, 43, "LicenseText"],
+Cell[179117, 4105, 325, 5, 67, "LicenseText"],
+Cell[179445, 4112, 259, 4, 55, "LicenseText"],
+Cell[179707, 4118, 33, 0, 20, "LicenseText"],
+Cell[179743, 4120, 366, 6, 79, "LicenseText"],
+Cell[180112, 4128, 48, 1, 20, "LicenseText"],
+Cell[180163, 4131, 136, 3, 31, "LicenseText"],
+Cell[180302, 4136, 178, 3, 43, "LicenseText"],
+Cell[180483, 4141, 43, 0, 20, "LicenseText"],
+Cell[180529, 4143, 303, 5, 67, "LicenseText"],
+Cell[180835, 4150, 225, 4, 43, "LicenseText"],
+Cell[181063, 4156, 161, 3, 31, "LicenseText"],
+Cell[181227, 4161, 235, 4, 43, "LicenseText"],
+Cell[181465, 4167, 213, 4, 43, "LicenseText"],
+Cell[181681, 4173, 348, 6, 67, "LicenseText"],
+Cell[182032, 4181, 306, 5, 67, "LicenseText"],
+Cell[182341, 4188, 994, 14, 199, "LicenseText"],
+Cell[183338, 4204, 1036, 15, 199, "LicenseText"],
+Cell[184377, 4221, 50, 1, 20, "LicenseText"],
+Cell[184430, 4224, 104, 2, 31, "LicenseText"],
+Cell[184537, 4228, 175, 3, 43, "LicenseText"],
+Cell[184715, 4233, 157, 3, 31, "LicenseText"],
+Cell[184875, 4238, 237, 4, 43, "LicenseText"],
+Cell[185115, 4244, 228, 4, 43, "LicenseText"],
+Cell[185346, 4250, 823, 12, 199, "LicenseText"],
+Cell[186172, 4264, 58, 1, 20, "LicenseText"],
+Cell[186233, 4267, 104, 2, 31, "LicenseText"],
+Cell[186340, 4271, 175, 3, 43, "LicenseText"],
+Cell[186518, 4276, 157, 3, 31, "LicenseText"],
+Cell[186678, 4281, 237, 4, 43, "LicenseText"],
+Cell[186918, 4287, 226, 4, 43, "LicenseText"],
+Cell[187147, 4293, 813, 12, 199, "LicenseText"],
+Cell[187963, 4307, 146, 3, 31, "LicenseText"],
+Cell[188112, 4312, 47, 1, 20, "LicenseText"],
+Cell[188162, 4315, 34, 0, 20, "LicenseText"],
+Cell[188199, 4317, 54, 0, 20, "LicenseText"],
+Cell[188256, 4319, 109, 2, 31, "LicenseText"],
+Cell[188368, 4323, 43, 0, 20, "LicenseText"],
+Cell[188414, 4325, 645, 9, 127, "LicenseText"],
+Cell[189062, 4336, 639, 9, 163, "LicenseText"],
+Cell[189704, 4347, 271, 5, 55, "LicenseText"],
+Cell[189978, 4354, 47, 1, 20, "LicenseText"],
+Cell[190028, 4357, 103, 2, 31, "LicenseText"],
+Cell[190134, 4361, 175, 3, 43, "LicenseText"],
+Cell[190312, 4366, 159, 3, 31, "LicenseText"],
+Cell[190474, 4371, 239, 4, 55, "LicenseText"],
+Cell[190716, 4377, 235, 4, 55, "LicenseText"],
+Cell[190954, 4383, 808, 12, 199, "LicenseText"],
+Cell[191765, 4397, 54, 1, 20, "LicenseText"],
+Cell[191822, 4400, 41, 0, 20, "LicenseText"],
+Cell[191866, 4402, 169, 3, 43, "LicenseText"],
+Cell[192038, 4407, 85, 1, 20, "LicenseText"],
+Cell[192126, 4410, 211, 4, 43, "LicenseText"],
+Cell[192340, 4416, 221, 4, 43, "LicenseText"],
+Cell[192564, 4422, 189, 3, 43, "LicenseText"],
+Cell[192756, 4427, 216, 4, 43, "LicenseText"],
+Cell[192975, 4433, 291, 5, 55, "LicenseText"],
+Cell[193269, 4440, 173, 3, 43, "LicenseText"],
+Cell[193445, 4445, 259, 8, 20, "LicenseText"],
+Cell[193707, 4455, 52, 1, 20, "LicenseText"],
+Cell[193762, 4458, 243, 4, 55, "LicenseText"],
+Cell[194008, 4464, 324, 8, 31, "LicenseText"],
+Cell[194335, 4474, 50, 1, 20, "LicenseText"],
+Cell[194388, 4477, 49, 0, 20, "LicenseText"],
+Cell[194440, 4479, 66, 0, 20, "LicenseText"],
+Cell[194509, 4481, 64, 0, 20, "LicenseText"],
+Cell[194576, 4483, 83, 1, 20, "LicenseText"],
+Cell[194662, 4486, 43, 0, 20, "LicenseText"],
+Cell[194708, 4488, 478, 7, 91, "LicenseText"],
+Cell[195189, 4497, 204, 4, 43, "LicenseText"],
+Cell[195396, 4503, 187, 4, 43, "LicenseText"],
+Cell[195586, 4509, 1869, 26, 475, "LicenseText"],
+Cell[197458, 4537, 58, 1, 20, "LicenseText"],
+Cell[197519, 4540, 53, 0, 20, "LicenseText"],
+Cell[197575, 4542, 511, 10, 67, "LicenseText"],
+Cell[198089, 4554, 276, 5, 67, "LicenseText"],
+Cell[198368, 4561, 64, 1, 20, "LicenseText"],
+Cell[198435, 4564, 241, 4, 55, "LicenseText"],
+Cell[198679, 4570, 158, 3, 31, "LicenseText"],
+Cell[198840, 4575, 238, 4, 43, "LicenseText"],
+Cell[199081, 4581, 219, 4, 43, "LicenseText"],
+Cell[199303, 4587, 853, 12, 211, "LicenseText"],
+Cell[200159, 4601, 194, 4, 43, "LicenseText"],
+Cell[200356, 4607, 56, 1, 20, "LicenseText"],
+Cell[200415, 4610, 390, 6, 79, "LicenseText"],
+Cell[200808, 4618, 64, 0, 20, "LicenseText"],
+Cell[200875, 4620, 68, 1, 20, "LicenseText"],
+Cell[200946, 4623, 264, 5, 55, "LicenseText"],
+Cell[201213, 4630, 225, 4, 20, "LicenseText"],
+Cell[201441, 4636, 54, 0, 20, "LicenseText"],
+Cell[201498, 4638, 238, 4, 67, "LicenseText"],
+Cell[201739, 4644, 37, 0, 20, "LicenseText"],
+Cell[201779, 4646, 787, 14, 195, "LicenseText"],
+Cell[202569, 4662, 107, 2, 31, "LicenseText"],
+Cell[202679, 4666, 214, 4, 43, "LicenseText"],
+Cell[202896, 4672, 208, 4, 43, "LicenseText"],
+Cell[203107, 4678, 194, 4, 43, "LicenseText"],
+Cell[203304, 4684, 41, 0, 20, "LicenseText"],
+Cell[203348, 4686, 2121, 30, 418, "LicenseText"],
+Cell[205472, 4718, 39, 0, 20, "LicenseText"],
+Cell[205514, 4720, 153, 3, 31, "LicenseText"],
+Cell[205670, 4725, 972, 15, 248, "LicenseText"],
+Cell[206645, 4742, 82, 1, 20, "LicenseText"],
+Cell[206730, 4745, 167, 4, 48, "LicenseText"],
+Cell[206900, 4751, 120, 3, 31, "LicenseText"],
+Cell[207023, 4756, 134, 3, 31, "LicenseText"],
+Cell[207160, 4761, 237, 4, 43, "LicenseText"],
+Cell[207400, 4767, 49, 0, 20, "LicenseText"],
+Cell[207452, 4769, 1509, 21, 283, "LicenseText"],
+Cell[208964, 4792, 683, 10, 139, "LicenseText"],
+Cell[209650, 4804, 767, 11, 163, "LicenseText"],
+Cell[210420, 4817, 608, 9, 151, "LicenseText"],
+Cell[211031, 4828, 34, 0, 20, "LicenseText"],
+Cell[211068, 4830, 384, 6, 79, "LicenseText"],
+Cell[211455, 4838, 752, 11, 139, "LicenseText"],
+Cell[212210, 4851, 594, 9, 115, "LicenseText"],
+Cell[212807, 4862, 894, 13, 163, "LicenseText"],
+Cell[213704, 4877, 370, 6, 67, "LicenseText"],
+Cell[214077, 4885, 52, 1, 20, "LicenseText"],
+Cell[214132, 4888, 93, 2, 20, "LicenseText"],
+Cell[214228, 4892, 72, 0, 20, "LicenseText"],
+Cell[214303, 4894, 73, 0, 20, "LicenseText"],
+Cell[214379, 4896, 33, 0, 20, "LicenseText"],
+Cell[214415, 4898, 203, 4, 55, "LicenseText"],
+Cell[214621, 4904, 48, 1, 20, "LicenseText"],
+Cell[214672, 4907, 110, 3, 31, "LicenseText"],
+Cell[214785, 4912, 313, 5, 67, "LicenseText"],
+Cell[215101, 4919, 175, 3, 43, "LicenseText"],
+Cell[215279, 4924, 161, 3, 31, "LicenseText"],
+Cell[215443, 4929, 261, 4, 55, "LicenseText"],
+Cell[215707, 4935, 221, 4, 55, "LicenseText"],
+Cell[215931, 4941, 208, 4, 43, "LicenseText"],
+Cell[216142, 4947, 446, 7, 91, "LicenseText"],
+Cell[216591, 4956, 774, 11, 187, "LicenseText"],
+Cell[217368, 4969, 428, 10, 55, "LicenseText"],
+Cell[217799, 4981, 52, 1, 20, "LicenseText"],
+Cell[217854, 4984, 145, 3, 31, "LicenseText"],
+Cell[218002, 4989, 68, 0, 20, "LicenseText"],
+Cell[218073, 4991, 184, 3, 43, "LicenseText"],
+Cell[218260, 4996, 575, 9, 125, "LicenseText"],
+Cell[218838, 5007, 807, 12, 199, "LicenseText"],
+Cell[219648, 5021, 50, 1, 20, "LicenseText"],
+Cell[219701, 5024, 41, 0, 20, "LicenseText"],
+Cell[219745, 5026, 1851, 25, 343, "LicenseText"],
+Cell[221599, 5053, 63, 0, 20, "LicenseText"],
+Cell[221665, 5055, 50, 1, 20, "LicenseText"],
+Cell[221718, 5058, 267, 5, 20, "LicenseText"],
+Cell[221988, 5065, 340, 9, 31, "LicenseText"],
+Cell[222331, 5076, 50, 1, 20, "LicenseText"],
+Cell[222384, 5079, 69, 0, 20, "LicenseText"],
+Cell[222456, 5081, 48, 1, 20, "LicenseText"],
+Cell[222507, 5084, 137, 3, 31, "LicenseText"],
+Cell[222647, 5089, 330, 5, 67, "LicenseText"],
+Cell[222980, 5096, 196, 4, 43, "LicenseText"],
+Cell[223179, 5102, 320, 5, 67, "LicenseText"],
+Cell[223502, 5109, 209, 4, 43, "LicenseText"],
+Cell[223714, 5115, 221, 4, 43, "LicenseText"],
+Cell[223938, 5121, 198, 4, 43, "LicenseText"],
+Cell[224139, 5127, 282, 5, 55, "LicenseText"],
+Cell[224424, 5134, 215, 4, 43, "LicenseText"],
+Cell[224642, 5140, 48, 1, 20, "LicenseText"],
+Cell[224693, 5143, 128, 3, 31, "LicenseText"],
+Cell[224824, 5148, 179, 4, 43, "LicenseText"],
+Cell[225006, 5154, 160, 3, 31, "LicenseText"],
+Cell[225169, 5159, 240, 4, 55, "LicenseText"],
+Cell[225412, 5165, 177, 3, 43, "LicenseText"],
+Cell[225592, 5170, 779, 11, 187, "LicenseText"],
+Cell[226374, 5183, 57, 1, 20, "LicenseText"],
+Cell[226434, 5186, 50, 0, 20, "LicenseText"],
+Cell[226487, 5188, 475, 7, 91, "LicenseText"],
+Cell[226965, 5197, 159, 3, 31, "LicenseText"],
+Cell[227127, 5202, 69, 0, 20, "LicenseText"],
+Cell[227199, 5204, 505, 8, 127, "LicenseText"],
+Cell[227707, 5214, 48, 1, 20, "LicenseText"],
+Cell[227758, 5217, 443, 7, 91, "LicenseText"],
+Cell[228204, 5226, 49, 1, 20, "LicenseText"],
+Cell[228256, 5229, 197, 4, 43, "LicenseText"],
+Cell[228456, 5235, 56, 0, 20, "LicenseText"],
+Cell[228515, 5237, 241, 4, 67, "LicenseText"],
+Cell[228759, 5243, 37, 0, 20, "LicenseText"],
+Cell[228799, 5245, 46, 0, 20, "LicenseText"],
+Cell[228848, 5247, 148, 3, 31, "LicenseText"],
+Cell[228999, 5252, 69, 0, 20, "LicenseText"],
+Cell[229071, 5254, 55, 0, 20, "LicenseText"],
+Cell[229129, 5256, 54, 0, 20, "LicenseText"],
+Cell[229186, 5258, 151, 3, 31, "LicenseText"],
+Cell[229340, 5263, 248, 4, 55, "LicenseText"],
+Cell[229591, 5269, 155, 3, 43, "LicenseText"],
+Cell[229749, 5274, 70, 0, 20, "LicenseText"],
+Cell[229822, 5276, 103, 2, 31, "LicenseText"],
+Cell[229928, 5280, 214, 4, 43, "LicenseText"],
+Cell[230145, 5286, 115, 3, 31, "LicenseText"],
+Cell[230263, 5291, 134, 3, 31, "LicenseText"],
+Cell[230400, 5296, 41, 0, 20, "LicenseText"],
+Cell[230444, 5298, 396, 6, 79, "LicenseText"],
+Cell[230843, 5306, 740, 11, 139, "LicenseText"],
+Cell[231586, 5319, 857, 12, 163, "LicenseText"],
+Cell[232446, 5333, 211, 4, 43, "LicenseText"],
+Cell[232660, 5339, 38, 0, 20, "LicenseText"],
+Cell[232701, 5341, 151, 3, 31, "LicenseText"],
+Cell[232855, 5346, 98, 2, 20, "LicenseText"],
+Cell[232956, 5350, 48, 0, 20, "LicenseText"],
+Cell[233007, 5352, 305, 5, 67, "LicenseText"],
+Cell[233315, 5359, 215, 4, 43, "LicenseText"],
+Cell[233533, 5365, 169, 3, 43, "LicenseText"],
+Cell[233705, 5370, 241, 4, 55, "LicenseText"],
+Cell[233949, 5376, 78, 0, 20, "LicenseText"],
+Cell[234030, 5378, 77, 0, 20, "LicenseText"],
+Cell[234110, 5380, 106, 2, 31, "LicenseText"],
+Cell[234219, 5384, 121, 3, 31, "LicenseText"],
+Cell[234343, 5389, 224, 4, 43, "LicenseText"],
+Cell[234570, 5395, 49, 0, 20, "LicenseText"],
+Cell[234622, 5397, 1192, 17, 223, "LicenseText"],
+Cell[235817, 5416, 107, 2, 31, "LicenseText"],
+Cell[235927, 5420, 269, 5, 55, "LicenseText"],
+Cell[236199, 5427, 683, 10, 139, "LicenseText"],
+Cell[236885, 5439, 37, 0, 20, "LicenseText"],
+Cell[236925, 5441, 752, 11, 163, "LicenseText"],
+Cell[237680, 5454, 49, 0, 20, "LicenseText"],
+Cell[237732, 5456, 581, 9, 139, "LicenseText"],
+Cell[238316, 5467, 33, 0, 20, "LicenseText"],
+Cell[238352, 5469, 384, 6, 79, "LicenseText"],
+Cell[238739, 5477, 750, 11, 139, "LicenseText"],
+Cell[239492, 5490, 594, 9, 115, "LicenseText"],
+Cell[240089, 5501, 1280, 18, 235, "LicenseText"],
+Cell[241372, 5521, 370, 6, 67, "LicenseText"],
+Cell[241745, 5529, 60, 1, 20, "LicenseText"],
+Cell[241808, 5532, 520, 14, 48, "LicenseText"],
+Cell[242331, 5548, 50, 1, 20, "LicenseText"],
+Cell[242384, 5551, 77, 0, 20, "LicenseText"],
+Cell[242464, 5553, 200, 4, 43, "LicenseText"],
+Cell[242667, 5559, 586, 9, 125, "LicenseText"],
+Cell[243256, 5570, 807, 12, 199, "LicenseText"],
+Cell[244066, 5584, 56, 1, 20, "LicenseText"],
+Cell[244125, 5587, 234, 4, 43, "LicenseText"],
+Cell[244362, 5593, 212, 4, 77, "LicenseText"],
+Cell[244577, 5599, 450, 7, 91, "LicenseText"],
+Cell[245030, 5608, 436, 7, 79, "LicenseText"],
+Cell[245469, 5617, 518, 8, 127, "LicenseText"],
+Cell[245990, 5627, 53, 1, 20, "LicenseText"],
+Cell[246046, 5630, 414, 13, 20, "LicenseText"],
+Cell[246463, 5645, 51, 1, 20, "LicenseText"],
+Cell[246517, 5648, 85, 1, 20, "LicenseText"],
+Cell[246605, 5651, 175, 3, 43, "LicenseText"],
+Cell[246783, 5656, 159, 3, 31, "LicenseText"],
+Cell[246945, 5661, 239, 4, 55, "LicenseText"],
+Cell[247187, 5667, 215, 4, 43, "LicenseText"],
+Cell[247405, 5673, 807, 12, 199, "LicenseText"],
+Cell[248215, 5687, 50, 1, 20, "LicenseText"],
+Cell[248268, 5690, 127, 3, 31, "LicenseText"],
+Cell[248398, 5695, 475, 7, 91, "LicenseText"],
+Cell[248876, 5704, 159, 3, 31, "LicenseText"],
+Cell[249038, 5709, 505, 8, 127, "LicenseText"],
+Cell[249546, 5719, 52, 1, 20, "LicenseText"],
+Cell[249601, 5722, 67, 0, 20, "LicenseText"],
+Cell[249671, 5724, 606, 9, 115, "LicenseText"],
+Cell[250280, 5735, 505, 8, 127, "LicenseText"],
+Cell[250788, 5745, 61, 1, 20, "LicenseText"],
+Cell[250852, 5748, 62, 0, 20, "LicenseText"],
+Cell[250917, 5750, 175, 3, 43, "LicenseText"],
+Cell[251095, 5755, 159, 3, 31, "LicenseText"],
+Cell[251257, 5760, 239, 4, 55, "LicenseText"],
+Cell[251499, 5766, 227, 4, 43, "LicenseText"],
+Cell[251729, 5772, 801, 11, 199, "LicenseText"],
+Cell[252533, 5785, 58, 1, 20, "LicenseText"],
+Cell[252594, 5788, 432, 10, 55, "LicenseText"],
+Cell[253029, 5800, 50, 1, 20, "LicenseText"],
+Cell[253082, 5803, 106, 2, 31, "LicenseText"],
+Cell[253191, 5807, 207, 4, 43, "LicenseText"],
+Cell[253401, 5813, 92, 2, 20, "LicenseText"],
+Cell[253496, 5817, 144, 3, 31, "LicenseText"],
+Cell[253643, 5822, 135, 3, 31, "LicenseText"],
+Cell[253781, 5827, 328, 5, 67, "LicenseText"],
+Cell[254112, 5834, 893, 13, 163, "LicenseText"],
+Cell[255008, 5849, 50, 1, 20, "LicenseText"],
+Cell[255061, 5852, 325, 8, 43, "LicenseText"],
+Cell[255389, 5862, 54, 1, 20, "LicenseText"],
+Cell[255446, 5865, 113, 3, 31, "LicenseText"],
+Cell[255562, 5870, 50, 1, 20, "LicenseText"],
+Cell[255615, 5873, 82, 1, 20, "LicenseText"],
+Cell[255700, 5876, 43, 0, 20, "LicenseText"],
+Cell[255746, 5878, 175, 3, 43, "LicenseText"],
+Cell[255924, 5883, 160, 3, 31, "LicenseText"],
+Cell[256087, 5888, 240, 4, 55, "LicenseText"],
+Cell[256330, 5894, 218, 4, 43, "LicenseText"],
+Cell[256551, 5900, 797, 11, 199, "LicenseText"],
+Cell[257351, 5913, 51, 1, 20, "LicenseText"],
+Cell[257405, 5916, 115, 3, 31, "LicenseText"],
+Cell[257523, 5921, 528, 8, 103, "LicenseText"],
+Cell[258054, 5931, 233, 4, 67, "LicenseText"],
+Cell[258290, 5937, 409, 6, 103, "LicenseText"],
+Cell[258702, 5945, 50, 1, 20, "LicenseText"],
+Cell[258755, 5948, 470, 7, 91, "LicenseText"],
+Cell[259228, 5957, 76, 0, 20, "LicenseText"],
+Cell[259307, 5959, 674, 10, 127, "LicenseText"],
+Cell[259984, 5971, 138, 3, 31, "LicenseText"],
+Cell[260125, 5976, 291, 5, 55, "LicenseText"],
+Cell[260419, 5983, 208, 4, 43, "LicenseText"],
+Cell[260630, 5989, 561, 8, 151, "LicenseText"],
+Cell[261194, 5999, 314, 5, 67, "LicenseText"],
+Cell[261511, 6006, 53, 1, 20, "LicenseText"],
+Cell[261567, 6009, 60, 0, 20, "LicenseText"],
+Cell[261630, 6011, 520, 8, 91, "LicenseText"],
+Cell[262153, 6021, 159, 3, 31, "LicenseText"],
+Cell[262315, 6026, 550, 9, 127, "LicenseText"],
+Cell[262868, 6037, 51, 1, 20, "LicenseText"],
+Cell[262922, 6040, 94, 2, 20, "LicenseText"],
+Cell[263019, 6044, 57, 1, 20, "LicenseText"],
+Cell[263079, 6047, 1678, 24, 317, "LicenseText"],
+Cell[264760, 6073, 57, 1, 20, "LicenseText"],
+Cell[264820, 6076, 222, 4, 55, "LicenseText"],
+Cell[265045, 6082, 68, 1, 20, "LicenseText"],
+Cell[265116, 6085, 64, 0, 20, "LicenseText"],
+Cell[265183, 6087, 83, 1, 20, "LicenseText"],
+Cell[265269, 6090, 476, 7, 91, "LicenseText"],
+Cell[265748, 6099, 160, 3, 31, "LicenseText"],
+Cell[265911, 6104, 480, 7, 127, "LicenseText"],
+Cell[266394, 6113, 119, 2, 20, "LicenseText"],
+Cell[266516, 6117, 121, 3, 31, "LicenseText"],
+Cell[266640, 6122, 247, 4, 55, "LicenseText"],
+Cell[266890, 6128, 49, 1, 20, "LicenseText"],
+Cell[266942, 6131, 318, 5, 55, "LicenseText"],
+Cell[267263, 6138, 49, 0, 20, "LicenseText"],
+Cell[267315, 6140, 591, 9, 115, "LicenseText"],
+Cell[267909, 6151, 366, 6, 67, "LicenseText"],
+Cell[268278, 6159, 360, 7, 36, "LicenseText"],
+Cell[268641, 6168, 51, 1, 20, "LicenseText"],
+Cell[268695, 6171, 95, 2, 20, "LicenseText"],
+Cell[268793, 6175, 475, 7, 91, "LicenseText"],
+Cell[269271, 6184, 159, 3, 31, "LicenseText"],
+Cell[269433, 6189, 505, 8, 127, "LicenseText"],
+Cell[269941, 6199, 47, 1, 20, "LicenseText"],
+Cell[269991, 6202, 85, 1, 20, "LicenseText"],
+Cell[270079, 6205, 241, 4, 55, "LicenseText"],
+Cell[270323, 6211, 565, 9, 125, "LicenseText"],
+Cell[270891, 6222, 795, 11, 199, "LicenseText"],
+Cell[271689, 6235, 602, 9, 127, "LicenseText"],
+Cell[272294, 6246, 48, 1, 20, "LicenseText"],
+Cell[272345, 6249, 126, 3, 31, "LicenseText"],
+Cell[272474, 6254, 184, 4, 43, "LicenseText"],
+Cell[272661, 6260, 320, 5, 67, "LicenseText"],
+Cell[272984, 6267, 161, 3, 31, "LicenseText"],
+Cell[273148, 6272, 241, 4, 55, "LicenseText"],
+Cell[273392, 6278, 265, 4, 55, "LicenseText"],
+Cell[273660, 6284, 807, 12, 199, "LicenseText"],
+Cell[274470, 6298, 50, 1, 20, "LicenseText"],
+Cell[274523, 6301, 155, 3, 31, "LicenseText"],
+Cell[274681, 6306, 62, 1, 20, "LicenseText"],
+Cell[274746, 6309, 110, 3, 31, "LicenseText"],
+Cell[274859, 6314, 61, 1, 20, "LicenseText"],
+Cell[274923, 6317, 248, 4, 55, "LicenseText"],
+Cell[275174, 6323, 49, 1, 20, "LicenseText"],
+Cell[275226, 6326, 481, 7, 91, "LicenseText"],
+Cell[275710, 6335, 187, 3, 43, "LicenseText"],
+Cell[275900, 6340, 50, 1, 20, "LicenseText"],
+Cell[275953, 6343, 531, 14, 48, "LicenseText"],
+Cell[276487, 6359, 72, 1, 20, "LicenseText"],
+Cell[276562, 6362, 228, 4, 20, "LicenseText"],
+Cell[276793, 6368, 358, 6, 67, "LicenseText"],
+Cell[277154, 6376, 48, 1, 20, "LicenseText"],
+Cell[277205, 6379, 172, 3, 43, "LicenseText"],
+Cell[277380, 6384, 50, 1, 20, "LicenseText"],
+Cell[277433, 6387, 70, 0, 20, "LicenseText"],
+Cell[277506, 6389, 63, 1, 20, "LicenseText"],
+Cell[277572, 6392, 77, 0, 20, "LicenseText"],
+Cell[277652, 6394, 581, 9, 115, "LicenseText"],
+Cell[278236, 6405, 31, 0, 20, "LicenseText"],
+Cell[278270, 6407, 724, 10, 151, "LicenseText"],
+Cell[278997, 6419, 37, 0, 20, "LicenseText"],
+Cell[279037, 6421, 145, 3, 31, "LicenseText"],
+Cell[279185, 6426, 152, 3, 31, "LicenseText"],
+Cell[279340, 6431, 114, 3, 31, "LicenseText"],
+Cell[279457, 6436, 42, 0, 20, "LicenseText"],
+Cell[279502, 6438, 344, 6, 67, "LicenseText"],
+Cell[279849, 6446, 453, 7, 91, "LicenseText"],
+Cell[280305, 6455, 361, 6, 67, "LicenseText"],
+Cell[280669, 6463, 434, 7, 91, "LicenseText"],
+Cell[281106, 6472, 61, 0, 20, "LicenseText"],
+Cell[281170, 6474, 265, 5, 55, "LicenseText"],
+Cell[281438, 6481, 41, 0, 20, "LicenseText"],
+Cell[281482, 6483, 192, 4, 43, "LicenseText"],
+Cell[281677, 6489, 300, 5, 67, "LicenseText"],
+Cell[281980, 6496, 102, 2, 31, "LicenseText"],
+Cell[282085, 6500, 46, 0, 20, "LicenseText"],
+Cell[282134, 6502, 518, 8, 103, "LicenseText"],
+Cell[282655, 6512, 247, 4, 55, "LicenseText"],
+Cell[282905, 6518, 315, 5, 67, "LicenseText"],
+Cell[283223, 6525, 35, 0, 20, "LicenseText"],
+Cell[283261, 6527, 682, 10, 139, "LicenseText"],
+Cell[283946, 6539, 638, 10, 127, "LicenseText"],
+Cell[284587, 6551, 40, 0, 20, "LicenseText"],
+Cell[284630, 6553, 423, 7, 79, "LicenseText"],
+Cell[285056, 6562, 78, 0, 31, "LicenseText"],
+Cell[285137, 6564, 348, 6, 91, "LicenseText"],
+Cell[285488, 6572, 544, 8, 139, "LicenseText"],
+Cell[286035, 6582, 127, 3, 31, "LicenseText"],
+Cell[286165, 6587, 39, 0, 20, "LicenseText"],
+Cell[286207, 6589, 405, 6, 91, "LicenseText"],
+Cell[286615, 6597, 1247, 17, 235, "LicenseText"],
+Cell[287865, 6616, 1085, 15, 199, "LicenseText"],
+Cell[288953, 6633, 541, 8, 139, "LicenseText"],
+Cell[289497, 6643, 561, 8, 139, "LicenseText"],
+Cell[290061, 6653, 836, 12, 163, "LicenseText"],
+Cell[290900, 6667, 382, 6, 79, "LicenseText"],
+Cell[291285, 6675, 862, 12, 163, "LicenseText"],
+Cell[292150, 6689, 168, 3, 31, "LicenseText"],
+Cell[292321, 6694, 35, 0, 20, "LicenseText"],
+Cell[292359, 6696, 47, 0, 20, "LicenseText"],
+Cell[292409, 6698, 279, 5, 55, "LicenseText"],
+Cell[292691, 6705, 52, 0, 20, "LicenseText"],
+Cell[292746, 6707, 100, 2, 20, "LicenseText"],
+Cell[292849, 6711, 76, 0, 20, "LicenseText"],
+Cell[292928, 6713, 82, 1, 20, "LicenseText"],
+Cell[293013, 6716, 35, 0, 20, "LicenseText"],
+Cell[293051, 6718, 55, 0, 20, "LicenseText"],
+Cell[293109, 6720, 167, 3, 43, "LicenseText"],
+Cell[293279, 6725, 146, 3, 31, "LicenseText"],
+Cell[293428, 6730, 29, 0, 20, "LicenseText"],
+Cell[293460, 6732, 32, 0, 20, "LicenseText"],
+Cell[293495, 6734, 338, 5, 67, "LicenseText"],
+Cell[293836, 6741, 279, 5, 20, "LicenseText"],
+Cell[294118, 6748, 146, 3, 31, "LicenseText"],
+Cell[294267, 6753, 44, 0, 20, "LicenseText"],
+Cell[294314, 6755, 325, 5, 67, "LicenseText"],
+Cell[294642, 6762, 228, 4, 20, "LicenseText"],
+Cell[294873, 6768, 248, 4, 55, "LicenseText"],
+Cell[295124, 6774, 78, 1, 20, "LicenseText"],
+Cell[295205, 6777, 59, 0, 20, "LicenseText"],
+Cell[295267, 6779, 43, 0, 20, "LicenseText"],
+Cell[295313, 6781, 194, 4, 43, "LicenseText"],
+Cell[295510, 6787, 159, 3, 31, "LicenseText"],
+Cell[295672, 6792, 239, 4, 55, "LicenseText"],
+Cell[295914, 6798, 239, 4, 55, "LicenseText"],
+Cell[296156, 6804, 807, 12, 199, "LicenseText"],
+Cell[296966, 6818, 109, 2, 31, "LicenseText"],
+Cell[297078, 6822, 556, 8, 103, "LicenseText"],
+Cell[297637, 6832, 109, 2, 31, "LicenseText"],
+Cell[297749, 6836, 78, 0, 20, "LicenseText"],
+Cell[297830, 6838, 222, 4, 20, "LicenseText"],
+Cell[298055, 6844, 44, 0, 20, "LicenseText"],
+Cell[298102, 6846, 175, 3, 43, "LicenseText"],
+Cell[298280, 6851, 159, 3, 31, "LicenseText"],
+Cell[298442, 6856, 239, 4, 55, "LicenseText"],
+Cell[298684, 6862, 212, 4, 43, "LicenseText"],
+Cell[298899, 6868, 807, 12, 199, "LicenseText"],
+Cell[299709, 6882, 55, 1, 20, "LicenseText"],
+Cell[299767, 6885, 278, 6, 20, "LicenseText"],
+Cell[300048, 6893, 345, 9, 31, "LicenseText"],
+Cell[300396, 6904, 50, 1, 20, "LicenseText"],
+Cell[300449, 6907, 94, 2, 20, "LicenseText"],
+Cell[300546, 6911, 165, 3, 31, "LicenseText"],
+Cell[300714, 6916, 175, 3, 43, "LicenseText"],
+Cell[300892, 6921, 160, 3, 31, "LicenseText"],
+Cell[301055, 6926, 240, 4, 55, "LicenseText"],
+Cell[301298, 6932, 184, 4, 43, "LicenseText"],
+Cell[301485, 6938, 791, 11, 151, "LicenseText"],
+Cell[302279, 6951, 167, 3, 31, "LicenseText"],
+Cell[302449, 6956, 51, 1, 20, "LicenseText"],
+Cell[302503, 6959, 44, 0, 20, "LicenseText"],
+Cell[302550, 6961, 156, 3, 31, "LicenseText"],
+Cell[302709, 6966, 175, 3, 43, "LicenseText"],
+Cell[302887, 6971, 157, 3, 31, "LicenseText"],
+Cell[303047, 6976, 237, 4, 43, "LicenseText"],
+Cell[303287, 6982, 226, 4, 43, "LicenseText"],
+Cell[303516, 6988, 807, 12, 199, "LicenseText"],
+Cell[304326, 7002, 59, 1, 20, "LicenseText"],
+Cell[304388, 7005, 38, 0, 20, "LicenseText"],
+Cell[304429, 7007, 247, 4, 55, "LicenseText"],
+Cell[304679, 7013, 129, 3, 31, "LicenseText"],
+Cell[304811, 7018, 175, 3, 43, "LicenseText"],
+Cell[304989, 7023, 160, 3, 31, "LicenseText"],
+Cell[305152, 7028, 240, 4, 55, "LicenseText"],
+Cell[305395, 7034, 787, 11, 199, "LicenseText"],
+Cell[306185, 7047, 251, 4, 55, "LicenseText"],
+Cell[306439, 7053, 52, 1, 20, "LicenseText"],
+Cell[306494, 7056, 38, 0, 20, "LicenseText"],
+Cell[306535, 7058, 228, 4, 20, "LicenseText"],
+Cell[306766, 7064, 37, 0, 20, "LicenseText"],
+Cell[306806, 7066, 282, 5, 55, "LicenseText"],
+Cell[307091, 7073, 131, 3, 31, "LicenseText"],
+Cell[307225, 7078, 251, 4, 55, "LicenseText"],
+Cell[307479, 7084, 476, 7, 91, "LicenseText"],
+Cell[307958, 7093, 261, 4, 55, "LicenseText"],
+Cell[308222, 7099, 614, 9, 115, "LicenseText"],
+Cell[308839, 7110, 49, 1, 20, "LicenseText"],
+Cell[308891, 7113, 168, 4, 20, "LicenseText"],
+Cell[309062, 7119, 339, 9, 31, "LicenseText"],
+Cell[309404, 7130, 31, 0, 20, "LicenseText"],
+Cell[309438, 7132, 332, 5, 67, "LicenseText"],
+Cell[309773, 7139, 310, 5, 79, "LicenseText"],
+Cell[310086, 7146, 384, 6, 91, "LicenseText"],
+Cell[310473, 7154, 48, 1, 20, "LicenseText"],
+Cell[310524, 7157, 179, 3, 43, "LicenseText"],
+Cell[310706, 7162, 46, 0, 20, "LicenseText"],
+Cell[310755, 7164, 70, 0, 20, "LicenseText"],
+Cell[310828, 7166, 110, 3, 20, "LicenseText"],
+Cell[310941, 7171, 175, 3, 43, "LicenseText"],
+Cell[311119, 7176, 159, 3, 31, "LicenseText"],
+Cell[311281, 7181, 239, 4, 55, "LicenseText"],
+Cell[311523, 7187, 231, 4, 43, "LicenseText"],
+Cell[311757, 7193, 807, 12, 199, "LicenseText"],
+Cell[312567, 7207, 49, 0, 20, "LicenseText"],
+Cell[312619, 7209, 112, 3, 31, "LicenseText"],
+Cell[312734, 7214, 175, 3, 43, "LicenseText"],
+Cell[312912, 7219, 160, 3, 31, "LicenseText"],
+Cell[313075, 7224, 240, 4, 55, "LicenseText"],
+Cell[313318, 7230, 813, 12, 199, "LicenseText"],
+Cell[314134, 7244, 50, 1, 20, "LicenseText"],
+Cell[314187, 7247, 71, 0, 20, "LicenseText"],
+Cell[314261, 7249, 79, 0, 20, "LicenseText"],
+Cell[314343, 7251, 63, 0, 20, "LicenseText"],
+Cell[314409, 7253, 48, 0, 20, "LicenseText"],
+Cell[314460, 7255, 96, 2, 31, "LicenseText"],
+Cell[314559, 7259, 83, 1, 20, "LicenseText"],
+Cell[314645, 7262, 52, 0, 20, "LicenseText"],
+Cell[314700, 7264, 72, 0, 20, "LicenseText"],
+Cell[314775, 7266, 50, 0, 20, "LicenseText"],
+Cell[314828, 7268, 50, 0, 20, "LicenseText"],
+Cell[314881, 7270, 72, 0, 20, "LicenseText"],
+Cell[314956, 7272, 53, 0, 20, "LicenseText"],
+Cell[315012, 7274, 69, 0, 20, "LicenseText"],
+Cell[315084, 7276, 57, 0, 20, "LicenseText"],
+Cell[315144, 7278, 54, 0, 20, "LicenseText"],
+Cell[315201, 7280, 97, 2, 20, "LicenseText"],
+Cell[315301, 7284, 61, 0, 20, "LicenseText"],
+Cell[315365, 7286, 475, 7, 91, "LicenseText"],
+Cell[315843, 7295, 192, 4, 43, "LicenseText"],
+Cell[316038, 7301, 506, 8, 127, "LicenseText"],
+Cell[316547, 7311, 112, 2, 20, "LicenseText"],
+Cell[316662, 7315, 101, 3, 36, "LicenseText"],
+Cell[316766, 7320, 53, 1, 20, "LicenseText"],
+Cell[316822, 7323, 126, 3, 31, "LicenseText"],
+Cell[316951, 7328, 475, 7, 91, "LicenseText"],
+Cell[317429, 7337, 161, 3, 31, "LicenseText"],
+Cell[317593, 7342, 505, 8, 127, "LicenseText"],
+Cell[318101, 7352, 169, 3, 43, "LicenseText"],
+Cell[318273, 7357, 323, 5, 67, "LicenseText"],
+Cell[318599, 7364, 48, 1, 20, "LicenseText"],
+Cell[318650, 7367, 70, 0, 20, "LicenseText"],
+Cell[318723, 7369, 66, 1, 20, "LicenseText"],
+Cell[318792, 7372, 34, 0, 20, "LicenseText"],
+Cell[318829, 7374, 349, 6, 67, "LicenseText"],
+Cell[319181, 7382, 114, 3, 31, "LicenseText"],
+Cell[319298, 7387, 175, 3, 43, "LicenseText"],
+Cell[319476, 7392, 588, 9, 115, "LicenseText"],
+Cell[320067, 7403, 808, 12, 199, "LicenseText"],
+Cell[320878, 7417, 46, 1, 20, "LicenseText"],
+Cell[320927, 7420, 61, 0, 20, "LicenseText"],
+Cell[320991, 7422, 146, 3, 31, "LicenseText"],
+Cell[321140, 7427, 52, 1, 20, "LicenseText"],
+Cell[321195, 7430, 34, 0, 20, "LicenseText"],
+Cell[321232, 7432, 71, 0, 20, "LicenseText"],
+Cell[321306, 7434, 92, 2, 20, "LicenseText"],
+Cell[321401, 7438, 99, 2, 31, "LicenseText"],
+Cell[321503, 7442, 89, 1, 20, "LicenseText"],
+Cell[321595, 7445, 69, 0, 20, "LicenseText"],
+Cell[321667, 7447, 72, 0, 20, "LicenseText"],
+Cell[321742, 7449, 64, 0, 20, "LicenseText"],
+Cell[321809, 7451, 60, 0, 20, "LicenseText"],
+Cell[321872, 7453, 70, 0, 20, "LicenseText"],
+Cell[321945, 7455, 58, 0, 20, "LicenseText"],
+Cell[322006, 7457, 53, 0, 20, "LicenseText"],
+Cell[322062, 7459, 69, 0, 20, "LicenseText"],
+Cell[322134, 7461, 53, 0, 20, "LicenseText"],
+Cell[322190, 7463, 57, 0, 20, "LicenseText"],
+Cell[322250, 7465, 57, 0, 20, "LicenseText"],
+Cell[322310, 7467, 75, 0, 20, "LicenseText"],
+Cell[322388, 7469, 49, 0, 20, "LicenseText"],
+Cell[322440, 7471, 58, 0, 20, "LicenseText"],
+Cell[322501, 7473, 55, 0, 20, "LicenseText"],
+Cell[322559, 7475, 58, 0, 20, "LicenseText"],
+Cell[322620, 7477, 58, 0, 20, "LicenseText"],
+Cell[322681, 7479, 54, 0, 20, "LicenseText"],
+Cell[322738, 7481, 65, 0, 20, "LicenseText"],
+Cell[322806, 7483, 58, 0, 20, "LicenseText"],
+Cell[322867, 7485, 68, 0, 20, "LicenseText"],
+Cell[322938, 7487, 64, 0, 20, "LicenseText"],
+Cell[323005, 7489, 53, 0, 20, "LicenseText"],
+Cell[323061, 7491, 59, 0, 20, "LicenseText"],
+Cell[323123, 7493, 65, 0, 20, "LicenseText"],
+Cell[323191, 7495, 67, 0, 20, "LicenseText"],
+Cell[323261, 7497, 64, 0, 20, "LicenseText"],
+Cell[323328, 7499, 56, 0, 20, "LicenseText"],
+Cell[323387, 7501, 55, 0, 20, "LicenseText"],
+Cell[323445, 7503, 58, 0, 20, "LicenseText"],
+Cell[323506, 7505, 51, 0, 20, "LicenseText"],
+Cell[323560, 7507, 57, 0, 20, "LicenseText"],
+Cell[323620, 7509, 65, 0, 20, "LicenseText"],
+Cell[323688, 7511, 59, 0, 20, "LicenseText"],
+Cell[323750, 7513, 71, 0, 20, "LicenseText"],
+Cell[323824, 7515, 62, 0, 20, "LicenseText"],
+Cell[323889, 7517, 134, 3, 31, "LicenseText"],
+Cell[324026, 7522, 143, 3, 31, "LicenseText"],
+Cell[324172, 7527, 175, 3, 43, "LicenseText"],
+Cell[324350, 7532, 157, 3, 31, "LicenseText"],
+Cell[324510, 7537, 237, 4, 43, "LicenseText"],
+Cell[324750, 7543, 247, 4, 55, "LicenseText"],
+Cell[325000, 7549, 809, 12, 199, "LicenseText"],
+Cell[325812, 7563, 49, 1, 20, "LicenseText"],
+Cell[325864, 7566, 172, 3, 43, "LicenseText"],
+Cell[326039, 7571, 144, 3, 31, "LicenseText"],
+Cell[326186, 7576, 60, 0, 20, "LicenseText"],
+Cell[326249, 7578, 560, 8, 103, "LicenseText"],
+Cell[326812, 7588, 51, 1, 20, "LicenseText"],
+Cell[326866, 7591, 58, 0, 20, "LicenseText"],
+Cell[326927, 7593, 225, 4, 43, "LicenseText"],
+Cell[327155, 7599, 475, 7, 91, "LicenseText"],
+Cell[327633, 7608, 159, 3, 31, "LicenseText"],
+Cell[327795, 7613, 505, 8, 127, "LicenseText"],
+Cell[328303, 7623, 60, 1, 20, "LicenseText"],
+Cell[328366, 7626, 167, 3, 43, "LicenseText"],
+Cell[328536, 7631, 82, 1, 20, "LicenseText"],
+Cell[328621, 7634, 180, 3, 43, "LicenseText"],
+Cell[328804, 7639, 215, 4, 31, "LicenseText"],
+Cell[329022, 7645, 325, 5, 67, "LicenseText"],
+Cell[329350, 7652, 364, 7, 31, "LicenseText"],
+Cell[329717, 7661, 59, 1, 20, "LicenseText"],
+Cell[329779, 7664, 172, 3, 43, "LicenseText"],
+Cell[329954, 7669, 49, 1, 20, "LicenseText"],
+Cell[330006, 7672, 95, 3, 36, "LicenseText"],
+Cell[330104, 7677, 43, 0, 20, "LicenseText"],
+Cell[330150, 7679, 463, 7, 91, "LicenseText"],
+Cell[330616, 7688, 159, 3, 31, "LicenseText"],
+Cell[330778, 7693, 506, 8, 127, "LicenseText"],
+Cell[331287, 7703, 50, 1, 20, "LicenseText"],
+Cell[331340, 7706, 50, 0, 20, "LicenseText"],
+Cell[331393, 7708, 43, 0, 20, "LicenseText"],
+Cell[331439, 7710, 175, 3, 43, "LicenseText"],
+Cell[331617, 7715, 159, 3, 31, "LicenseText"],
+Cell[331779, 7720, 239, 4, 55, "LicenseText"],
+Cell[332021, 7726, 215, 4, 43, "LicenseText"],
+Cell[332239, 7732, 807, 12, 199, "LicenseText"],
+Cell[333049, 7746, 26, 0, 20, "LicenseText"],
+Cell[333078, 7748, 105, 2, 31, "LicenseText"],
+Cell[333186, 7752, 436, 9, 55, "LicenseText"],
+Cell[333625, 7763, 235, 5, 55, "LicenseText"],
+Cell[333863, 7770, 560, 11, 79, "LicenseText"],
+Cell[334426, 7783, 520, 11, 67, "LicenseText"],
+Cell[334949, 7796, 59, 1, 20, "LicenseText"],
+Cell[335011, 7799, 253, 8, 20, "LicenseText"],
+Cell[335267, 7809, 107, 2, 31, "LicenseText"],
+Cell[335377, 7813, 97, 2, 20, "LicenseText"],
+Cell[335477, 7817, 198, 4, 20, "LicenseText"],
+Cell[335678, 7823, 84, 1, 20, "LicenseText"],
+Cell[335765, 7826, 75, 0, 20, "LicenseText"],
+Cell[335843, 7828, 84, 1, 20, "LicenseText"],
+Cell[335930, 7831, 31, 0, 20, "LicenseText"],
+Cell[335964, 7833, 888, 13, 175, "LicenseText"],
+Cell[336855, 7848, 34, 0, 20, "LicenseText"],
+Cell[336892, 7850, 226, 4, 43, "LicenseText"],
+Cell[337121, 7856, 127, 3, 31, "LicenseText"],
+Cell[337251, 7861, 149, 3, 31, "LicenseText"],
+Cell[337403, 7866, 277, 5, 55, "LicenseText"],
+Cell[337683, 7873, 160, 3, 31, "LicenseText"],
+Cell[337846, 7878, 46, 0, 20, "LicenseText"],
+Cell[337895, 7880, 291, 5, 55, "LicenseText"],
+Cell[338189, 7887, 156, 3, 31, "LicenseText"],
+Cell[338348, 7892, 455, 7, 91, "LicenseText"],
+Cell[338806, 7901, 280, 5, 55, "LicenseText"],
+Cell[339089, 7908, 319, 5, 67, "LicenseText"],
+Cell[339411, 7915, 324, 5, 67, "LicenseText"],
+Cell[339738, 7922, 34, 0, 20, "LicenseText"],
+Cell[339775, 7924, 109, 2, 31, "LicenseText"],
+Cell[339887, 7928, 653, 10, 163, "LicenseText"],
+Cell[340543, 7940, 50, 1, 20, "LicenseText"],
+Cell[340596, 7943, 39, 0, 20, "LicenseText"],
+Cell[340638, 7945, 629, 9, 115, "LicenseText"],
+Cell[341270, 7956, 60, 1, 20, "LicenseText"],
+Cell[341333, 7959, 83, 1, 20, "LicenseText"],
+Cell[341419, 7962, 498, 7, 91, "LicenseText"],
+Cell[341920, 7971, 52, 1, 20, "LicenseText"],
+Cell[341975, 7974, 183, 3, 43, "LicenseText"],
+Cell[342161, 7979, 1548, 22, 343, "LicenseText"],
+Cell[343712, 8003, 1197, 17, 223, "LicenseText"],
+Cell[344912, 8022, 53, 1, 20, "LicenseText"],
+Cell[344968, 8025, 180, 5, 31, "LicenseText"],
+Cell[345151, 8032, 98, 2, 31, "LicenseText"],
+Cell[345252, 8036, 86, 1, 20, "LicenseText"],
+Cell[345341, 8039, 29, 0, 20, "LicenseText"],
+Cell[345373, 8041, 48, 1, 20, "LicenseText"],
+Cell[345424, 8044, 511, 8, 103, "LicenseText"],
+Cell[345938, 8054, 204, 4, 43, "LicenseText"],
+Cell[346145, 8060, 347, 6, 67, "LicenseText"],
+Cell[346495, 8068, 298, 5, 55, "LicenseText"],
+Cell[346796, 8075, 51, 1, 20, "LicenseText"],
+Cell[346850, 8078, 210, 4, 43, "LicenseText"],
+Cell[347063, 8084, 61, 0, 20, "LicenseText"],
+Cell[347127, 8086, 277, 5, 55, "LicenseText"],
+Cell[347407, 8093, 206, 4, 43, "LicenseText"],
+Cell[347616, 8099, 660, 12, 171, "LicenseText"],
+Cell[348279, 8113, 407, 6, 79, "LicenseText"],
+Cell[348689, 8121, 695, 10, 139, "LicenseText"],
+Cell[349387, 8133, 993, 14, 187, "LicenseText"],
+Cell[350383, 8149, 610, 9, 115, "LicenseText"],
+Cell[350996, 8160, 536, 8, 103, "LicenseText"],
+Cell[351535, 8170, 923, 13, 187, "LicenseText"],
+Cell[352461, 8185, 635, 9, 115, "LicenseText"],
+Cell[353099, 8196, 1057, 15, 199, "LicenseText"],
+Cell[354159, 8213, 521, 8, 103, "LicenseText"],
+Cell[354683, 8223, 730, 11, 139, "LicenseText"],
+Cell[355416, 8236, 429, 7, 79, "LicenseText"],
+Cell[355848, 8245, 201, 4, 43, "LicenseText"],
+Cell[356052, 8251, 435, 7, 79, "LicenseText"],
+Cell[356490, 8260, 286, 6, 77, "LicenseText"],
+Cell[356779, 8268, 245, 4, 55, "LicenseText"],
+Cell[357027, 8274, 567, 8, 103, "LicenseText"],
+Cell[357597, 8284, 651, 10, 149, "LicenseText"],
+Cell[358251, 8296, 49, 1, 20, "LicenseText"],
+Cell[358303, 8299, 751, 11, 151, "LicenseText"],
+Cell[359057, 8312, 53, 1, 20, "LicenseText"],
+Cell[359113, 8315, 443, 10, 55, "LicenseText"],
+Cell[359559, 8327, 346, 6, 67, "LicenseText"],
+Cell[359908, 8335, 50, 1, 20, "LicenseText"],
+Cell[359961, 8338, 113, 3, 31, "LicenseText"],
+Cell[360077, 8343, 30, 0, 20, "LicenseText"],
+Cell[360110, 8345, 93, 2, 20, "LicenseText"],
+Cell[360206, 8349, 96, 2, 20, "LicenseText"],
+Cell[360305, 8353, 29, 0, 20, "LicenseText"],
+Cell[360337, 8355, 55, 1, 20, "LicenseText"],
+Cell[360395, 8358, 207, 4, 43, "LicenseText"],
+Cell[360605, 8364, 90, 1, 20, "LicenseText"],
+Cell[360698, 8367, 201, 4, 43, "LicenseText"],
+Cell[360902, 8373, 43, 0, 20, "LicenseText"],
+Cell[360948, 8375, 167, 3, 43, "LicenseText"],
+Cell[361118, 8380, 167, 3, 31, "LicenseText"],
+Cell[361288, 8385, 247, 4, 55, "LicenseText"],
+Cell[361538, 8391, 228, 4, 43, "LicenseText"],
+Cell[361769, 8397, 808, 12, 199, "LicenseText"],
+Cell[362580, 8411, 231, 7, 20, "LicenseText"],
+Cell[362814, 8420, 52, 1, 20, "LicenseText"],
+Cell[362869, 8423, 365, 9, 43, "LicenseText"],
+Cell[363237, 8434, 49, 1, 20, "LicenseText"],
+Cell[363289, 8437, 79, 0, 20, "LicenseText"],
+Cell[363371, 8439, 175, 3, 43, "LicenseText"],
+Cell[363549, 8444, 370, 6, 67, "LicenseText"],
+Cell[363922, 8452, 807, 12, 199, "LicenseText"],
+Cell[364732, 8466, 51, 1, 20, "LicenseText"],
+Cell[364786, 8469, 194, 4, 43, "LicenseText"],
+Cell[364983, 8475, 38, 0, 20, "LicenseText"],
+Cell[365024, 8477, 131, 3, 31, "LicenseText"],
+Cell[365158, 8482, 144, 3, 43, "LicenseText"],
+Cell[365305, 8487, 721, 10, 139, "LicenseText"],
+Cell[366029, 8499, 62, 1, 20, "LicenseText"],
+Cell[366094, 8502, 82, 1, 31, "LicenseText"],
+Cell[366179, 8505, 414, 7, 91, "LicenseText"],
+Cell[366596, 8514, 435, 7, 103, "LicenseText"],
+Cell[367034, 8523, 54, 0, 20, "LicenseText"],
+Cell[367091, 8525, 177, 3, 43, "LicenseText"],
+Cell[367271, 8530, 992, 14, 187, "LicenseText"],
+Cell[368266, 8546, 670, 10, 163, "LicenseText"],
+Cell[368939, 8558, 285, 5, 55, "LicenseText"],
+Cell[369227, 8565, 55, 1, 20, "LicenseText"],
+Cell[369285, 8568, 76, 0, 20, "LicenseText"],
+Cell[369364, 8570, 83, 1, 20, "LicenseText"],
+Cell[369450, 8573, 175, 3, 43, "LicenseText"],
+Cell[369628, 8578, 165, 3, 31, "LicenseText"],
+Cell[369796, 8583, 245, 4, 55, "LicenseText"],
+Cell[370044, 8589, 216, 4, 43, "LicenseText"],
+Cell[370263, 8595, 797, 11, 199, "LicenseText"],
+Cell[371063, 8608, 53, 1, 20, "LicenseText"],
+Cell[371119, 8611, 1214, 20, 279, "LicenseText"],
+Cell[372336, 8633, 49, 1, 20, "LicenseText"],
+Cell[372388, 8636, 203, 4, 43, "LicenseText"],
+Cell[372594, 8642, 208, 4, 43, "LicenseText"],
+Cell[372805, 8648, 50, 1, 20, "LicenseText"],
+Cell[372858, 8651, 82, 1, 20, "LicenseText"],
+Cell[372943, 8654, 61, 0, 20, "LicenseText"],
+Cell[373007, 8656, 43, 0, 20, "LicenseText"],
+Cell[373053, 8658, 175, 3, 43, "LicenseText"],
+Cell[373231, 8663, 160, 3, 31, "LicenseText"],
+Cell[373394, 8668, 240, 4, 55, "LicenseText"],
+Cell[373637, 8674, 808, 12, 199, "LicenseText"],
+Cell[374448, 8688, 55, 1, 20, "LicenseText"],
+Cell[374506, 8691, 157, 3, 31, "LicenseText"],
+Cell[374666, 8696, 48, 1, 20, "LicenseText"],
+Cell[374717, 8699, 97, 2, 20, "LicenseText"],
+Cell[374817, 8703, 175, 3, 43, "LicenseText"],
+Cell[374995, 8708, 161, 3, 31, "LicenseText"],
+Cell[375159, 8713, 241, 4, 55, "LicenseText"],
+Cell[375403, 8719, 236, 4, 55, "LicenseText"],
+Cell[375642, 8725, 808, 12, 199, "LicenseText"],
+Cell[376453, 8739, 59, 0, 20, "LicenseText"],
+Cell[376515, 8741, 137, 3, 31, "LicenseText"],
+Cell[376655, 8746, 1213, 17, 223, "LicenseText"],
+Cell[377871, 8765, 52, 1, 20, "LicenseText"],
+Cell[377926, 8768, 31, 0, 20, "LicenseText"],
+Cell[377960, 8770, 475, 7, 91, "LicenseText"],
+Cell[378438, 8779, 159, 3, 31, "LicenseText"],
+Cell[378600, 8784, 506, 8, 127, "LicenseText"],
+Cell[379109, 8794, 75, 0, 20, "LicenseText"],
+Cell[379187, 8796, 77, 0, 20, "LicenseText"],
+Cell[379267, 8798, 50, 1, 20, "LicenseText"],
+Cell[379320, 8801, 119, 3, 31, "LicenseText"],
+Cell[379442, 8806, 104, 2, 31, "LicenseText"],
+Cell[379549, 8810, 48, 1, 20, "LicenseText"],
+Cell[379600, 8813, 78, 0, 20, "LicenseText"],
+Cell[379681, 8815, 209, 4, 43, "LicenseText"],
+Cell[379893, 8821, 222, 4, 43, "LicenseText"],
+Cell[380118, 8827, 281, 5, 55, "LicenseText"],
+Cell[380402, 8834, 155, 3, 31, "LicenseText"],
+Cell[380560, 8839, 106, 2, 31, "LicenseText"],
+Cell[380669, 8843, 53, 1, 20, "LicenseText"],
+Cell[380725, 8846, 69, 0, 20, "LicenseText"],
+Cell[380797, 8848, 37, 0, 20, "LicenseText"],
+Cell[380837, 8850, 489, 13, 167, "LicenseText"],
+Cell[381329, 8865, 399, 10, 116, "LicenseText"],
+Cell[381731, 8877, 1733, 30, 511, "LicenseText"],
+Cell[383467, 8909, 1090, 22, 297, "LicenseText"],
+Cell[384560, 8933, 414, 9, 94, "LicenseText"],
 Cell[CellGroupData[{
-Cell[4558, 132, 57, 0, 12, "LicenseHeading"],
-Cell[4618, 134, 56, 1, 12, "LicenseText"],
-Cell[4677, 137, 173, 3, 25, "LicenseText"],
-Cell[4853, 142, 495, 8, 129, "LicenseText"],
-Cell[5351, 152, 1022, 15, 259, "LicenseText"],
-Cell[6376, 169, 53, 1, 20, "LicenseText"],
-Cell[6432, 172, 278, 6, 20, "LicenseText"],
-Cell[6713, 180, 97, 2, 31, "LicenseText"],
-Cell[6813, 184, 83, 1, 20, "LicenseText"],
-Cell[6899, 187, 115, 3, 31, "LicenseText"],
-Cell[7017, 192, 637, 9, 163, "LicenseText"],
-Cell[7657, 203, 1266, 18, 247, "LicenseText"],
-Cell[8926, 223, 3465, 46, 655, "LicenseText"],
-Cell[12394, 271, 278, 5, 55, "LicenseText"],
-Cell[12675, 278, 878, 12, 175, "LicenseText"],
-Cell[13556, 292, 830, 12, 163, "LicenseText"],
-Cell[14389, 306, 330, 5, 67, "LicenseText"],
-Cell[14722, 313, 1754, 24, 367, "LicenseText"],
-Cell[16479, 339, 1328, 18, 283, "LicenseText"],
-Cell[17810, 359, 556, 8, 115, "LicenseText"],
-Cell[18369, 369, 1062, 15, 199, "LicenseText"],
-Cell[19434, 386, 1305, 18, 247, "LicenseText"],
-Cell[20742, 406, 1597, 22, 295, "LicenseText"],
-Cell[22342, 430, 207, 4, 43, "LicenseText"],
-Cell[22552, 436, 133, 3, 31, "LicenseText"],
-Cell[22688, 441, 56, 1, 20, "LicenseText"],
-Cell[22747, 444, 69, 0, 20, "LicenseText"],
-Cell[22819, 446, 62, 1, 20, "LicenseText"],
-Cell[22884, 449, 69, 0, 20, "LicenseText"],
-Cell[22956, 451, 78, 1, 20, "LicenseText"],
-Cell[23037, 454, 69, 0, 20, "LicenseText"],
-Cell[23109, 456, 71, 1, 20, "LicenseText"],
-Cell[23183, 459, 70, 0, 20, "LicenseText"],
-Cell[23256, 461, 77, 1, 20, "LicenseText"],
-Cell[23336, 464, 70, 0, 20, "LicenseText"],
-Cell[23409, 466, 74, 1, 20, "LicenseText"],
-Cell[23486, 469, 70, 0, 20, "LicenseText"],
-Cell[23559, 471, 71, 1, 20, "LicenseText"],
-Cell[23633, 474, 70, 0, 20, "LicenseText"],
-Cell[23706, 476, 66, 1, 20, "LicenseText"],
-Cell[23775, 479, 70, 0, 20, "LicenseText"],
-Cell[23848, 481, 58, 1, 20, "LicenseText"],
-Cell[23909, 484, 48, 0, 20, "LicenseText"],
-Cell[23960, 486, 165, 3, 20, "LicenseText"],
-Cell[24128, 491, 85, 1, 31, "LicenseText"],
-Cell[24216, 494, 38, 0, 20, "LicenseText"],
-Cell[24257, 496, 173, 3, 43, "LicenseText"],
-Cell[24433, 501, 150, 3, 31, "LicenseText"],
-Cell[24586, 506, 502, 8, 91, "LicenseText"],
-Cell[25091, 516, 143, 3, 31, "LicenseText"],
-Cell[25237, 521, 204, 4, 43, "LicenseText"],
-Cell[25444, 527, 258, 4, 55, "LicenseText"],
-Cell[25705, 533, 275, 5, 55, "LicenseText"],
-Cell[25983, 540, 503, 8, 103, "LicenseText"],
-Cell[26489, 550, 942, 13, 175, "LicenseText"],
-Cell[27434, 565, 215, 4, 43, "LicenseText"],
-Cell[27652, 571, 423, 7, 79, "LicenseText"],
-Cell[28078, 580, 1001, 14, 187, "LicenseText"],
-Cell[29082, 596, 258, 4, 55, "LicenseText"],
-Cell[29343, 602, 131, 3, 31, "LicenseText"],
-Cell[29477, 607, 137, 3, 31, "LicenseText"],
-Cell[29617, 612, 298, 5, 55, "LicenseText"],
-Cell[29918, 619, 1004, 14, 187, "LicenseText"],
-Cell[30925, 635, 404, 7, 79, "LicenseText"],
-Cell[31332, 644, 480, 7, 103, "LicenseText"],
-Cell[31815, 653, 312, 5, 67, "LicenseText"],
-Cell[32130, 660, 630, 9, 127, "LicenseText"],
-Cell[32763, 671, 754, 11, 139, "LicenseText"],
-Cell[33520, 684, 693, 10, 127, "LicenseText"],
-Cell[34216, 696, 50, 0, 20, "LicenseText"],
-Cell[34269, 698, 54, 1, 20, "LicenseText"],
-Cell[34326, 701, 70, 0, 20, "LicenseText"],
-Cell[34399, 703, 57, 1, 20, "LicenseText"],
-Cell[34459, 706, 70, 0, 20, "LicenseText"],
-Cell[34532, 708, 57, 1, 20, "LicenseText"],
-Cell[34592, 711, 70, 0, 20, "LicenseText"],
-Cell[34665, 713, 50, 1, 20, "LicenseText"],
-Cell[34718, 716, 58, 0, 20, "LicenseText"],
-Cell[34779, 718, 179, 3, 43, "LicenseText"],
-Cell[34961, 723, 179, 4, 43, "LicenseText"],
-Cell[35143, 729, 940, 14, 207, "LicenseText"],
-Cell[36086, 745, 773, 11, 187, "LicenseText"],
-Cell[36862, 758, 165, 3, 31, "LicenseText"],
-Cell[37030, 763, 149, 3, 31, "LicenseText"],
-Cell[37182, 768, 117, 3, 31, "LicenseText"],
-Cell[37302, 773, 310, 7, 31, "LicenseText"],
-Cell[37615, 782, 47, 1, 20, "LicenseText"],
-Cell[37665, 785, 68, 0, 20, "LicenseText"],
-Cell[37736, 787, 43, 0, 20, "LicenseText"],
-Cell[37782, 789, 175, 3, 43, "LicenseText"],
-Cell[37960, 794, 160, 3, 31, "LicenseText"],
-Cell[38123, 799, 240, 4, 55, "LicenseText"],
-Cell[38366, 805, 226, 4, 43, "LicenseText"],
-Cell[38595, 811, 807, 12, 199, "LicenseText"],
-Cell[39405, 825, 50, 1, 20, "LicenseText"],
-Cell[39458, 828, 77, 0, 20, "LicenseText"],
-Cell[39538, 830, 407, 6, 79, "LicenseText"],
-Cell[39948, 838, 356, 6, 67, "LicenseText"],
-Cell[40307, 846, 189, 3, 43, "LicenseText"],
-Cell[40499, 851, 49, 1, 20, "LicenseText"],
-Cell[40551, 854, 118, 3, 31, "LicenseText"],
-Cell[40672, 859, 78, 0, 20, "LicenseText"],
-Cell[40753, 861, 175, 3, 43, "LicenseText"],
-Cell[40931, 866, 160, 3, 31, "LicenseText"],
-Cell[41094, 871, 241, 4, 55, "LicenseText"],
-Cell[41338, 877, 210, 4, 43, "LicenseText"],
-Cell[41551, 883, 808, 12, 199, "LicenseText"],
-Cell[42362, 897, 53, 1, 20, "LicenseText"],
-Cell[42418, 900, 69, 0, 20, "LicenseText"],
-Cell[42490, 902, 59, 1, 20, "LicenseText"],
-Cell[42552, 905, 79, 0, 20, "LicenseText"],
-Cell[42634, 907, 450, 7, 91, "LicenseText"],
-Cell[43087, 916, 436, 7, 79, "LicenseText"],
-Cell[43526, 925, 518, 8, 127, "LicenseText"],
-Cell[44047, 935, 49, 1, 20, "LicenseText"],
-Cell[44099, 938, 69, 0, 20, "LicenseText"],
-Cell[44171, 940, 49, 1, 20, "LicenseText"],
-Cell[44223, 943, 509, 14, 48, "LicenseText"],
-Cell[44735, 959, 50, 1, 20, "LicenseText"],
-Cell[44788, 962, 82, 1, 20, "LicenseText"],
-Cell[44873, 965, 211, 4, 43, "LicenseText"],
-Cell[45087, 971, 171, 3, 43, "LicenseText"],
-Cell[45261, 976, 240, 4, 55, "LicenseText"],
-Cell[45504, 982, 237, 4, 55, "LicenseText"],
-Cell[45744, 988, 250, 4, 55, "LicenseText"],
-Cell[45997, 994, 260, 8, 31, "LicenseText"],
-Cell[46260, 1004, 785, 11, 199, "LicenseText"],
-Cell[47048, 1017, 50, 1, 20, "LicenseText"],
-Cell[47101, 1020, 43, 0, 20, "LicenseText"],
-Cell[47147, 1022, 104, 4, 53, "LicenseText"],
-Cell[47254, 1028, 305, 5, 55, "LicenseText"],
-Cell[47562, 1035, 358, 6, 89, "LicenseText"],
-Cell[47923, 1043, 54, 1, 20, "LicenseText"],
-Cell[47980, 1046, 78, 0, 20, "LicenseText"],
-Cell[48061, 1048, 175, 3, 43, "LicenseText"],
-Cell[48239, 1053, 159, 3, 31, "LicenseText"],
-Cell[48401, 1058, 239, 4, 55, "LicenseText"],
-Cell[48643, 1064, 215, 4, 43, "LicenseText"],
-Cell[48861, 1070, 807, 12, 199, "LicenseText"],
-Cell[49671, 1084, 53, 1, 20, "LicenseText"],
-Cell[49727, 1087, 56, 0, 20, "LicenseText"],
-Cell[49786, 1089, 241, 4, 67, "LicenseText"],
-Cell[50030, 1095, 37, 0, 20, "LicenseText"],
-Cell[50070, 1097, 46, 0, 20, "LicenseText"],
-Cell[50119, 1099, 148, 3, 31, "LicenseText"],
-Cell[50270, 1104, 142, 4, 53, "LicenseText"],
-Cell[50415, 1110, 539, 8, 103, "LicenseText"],
-Cell[50957, 1120, 103, 2, 31, "LicenseText"],
-Cell[51063, 1124, 214, 4, 43, "LicenseText"],
-Cell[51280, 1130, 115, 3, 31, "LicenseText"],
-Cell[51398, 1135, 134, 3, 31, "LicenseText"],
-Cell[51535, 1140, 41, 0, 20, "LicenseText"],
-Cell[51579, 1142, 396, 6, 79, "LicenseText"],
-Cell[51978, 1150, 740, 11, 139, "LicenseText"],
-Cell[52721, 1163, 857, 12, 163, "LicenseText"],
-Cell[53581, 1177, 211, 4, 43, "LicenseText"],
-Cell[53795, 1183, 38, 0, 20, "LicenseText"],
-Cell[53836, 1185, 151, 3, 31, "LicenseText"],
-Cell[53990, 1190, 98, 2, 20, "LicenseText"],
-Cell[54091, 1194, 866, 14, 219, "LicenseText"],
-Cell[54960, 1210, 78, 0, 20, "LicenseText"],
-Cell[55041, 1212, 77, 0, 20, "LicenseText"],
-Cell[55121, 1214, 106, 2, 31, "LicenseText"],
-Cell[55230, 1218, 121, 3, 31, "LicenseText"],
-Cell[55354, 1223, 224, 4, 43, "LicenseText"],
-Cell[55581, 1229, 49, 0, 20, "LicenseText"],
-Cell[55633, 1231, 1508, 21, 283, "LicenseText"],
-Cell[57144, 1254, 683, 10, 139, "LicenseText"],
-Cell[57830, 1266, 37, 0, 20, "LicenseText"],
-Cell[57870, 1268, 751, 11, 163, "LicenseText"],
-Cell[58624, 1281, 49, 0, 20, "LicenseText"],
-Cell[58676, 1283, 581, 9, 139, "LicenseText"],
-Cell[59260, 1294, 33, 0, 20, "LicenseText"],
-Cell[59296, 1296, 384, 6, 79, "LicenseText"],
-Cell[59683, 1304, 750, 11, 139, "LicenseText"],
-Cell[60436, 1317, 594, 9, 115, "LicenseText"],
-Cell[61033, 1328, 1280, 18, 235, "LicenseText"],
-Cell[62316, 1348, 371, 6, 67, "LicenseText"],
-Cell[62690, 1356, 48, 1, 20, "LicenseText"],
-Cell[62741, 1359, 43, 0, 20, "LicenseText"],
-Cell[62787, 1361, 93, 2, 20, "LicenseText"],
-Cell[62883, 1365, 43, 0, 20, "LicenseText"],
-Cell[62929, 1367, 175, 3, 43, "LicenseText"],
-Cell[63107, 1372, 157, 3, 31, "LicenseText"],
-Cell[63267, 1377, 237, 4, 43, "LicenseText"],
-Cell[63507, 1383, 228, 4, 43, "LicenseText"],
-Cell[63738, 1389, 807, 12, 199, "LicenseText"],
-Cell[64548, 1403, 50, 1, 20, "LicenseText"],
-Cell[64601, 1406, 79, 0, 20, "LicenseText"],
-Cell[64683, 1408, 47, 1, 20, "LicenseText"],
-Cell[64733, 1411, 45, 0, 20, "LicenseText"],
-Cell[64781, 1413, 119, 3, 31, "LicenseText"],
-Cell[64903, 1418, 586, 9, 115, "LicenseText"],
-Cell[65492, 1429, 510, 8, 91, "LicenseText"],
-Cell[66005, 1439, 98, 1, 20, "LicenseText"],
-Cell[66106, 1442, 38, 0, 20, "LicenseText"],
-Cell[66147, 1444, 110, 3, 31, "LicenseText"],
-Cell[66260, 1449, 107, 2, 31, "LicenseText"],
-Cell[66370, 1453, 175, 3, 43, "LicenseText"],
-Cell[66548, 1458, 159, 3, 31, "LicenseText"],
-Cell[66710, 1463, 239, 4, 55, "LicenseText"],
-Cell[66952, 1469, 242, 4, 55, "LicenseText"],
-Cell[67197, 1475, 807, 12, 199, "LicenseText"],
-Cell[68007, 1489, 51, 1, 20, "LicenseText"],
-Cell[68061, 1492, 72, 0, 20, "LicenseText"],
-Cell[68136, 1494, 32, 0, 20, "LicenseText"],
-Cell[68171, 1496, 144, 4, 53, "LicenseText"],
-Cell[68318, 1502, 34, 0, 20, "LicenseText"],
-Cell[68355, 1504, 287, 10, 155, "LicenseText"],
-Cell[68645, 1516, 284, 5, 55, "LicenseText"],
-Cell[68932, 1523, 277, 5, 67, "LicenseText"],
-Cell[69212, 1530, 233, 4, 55, "LicenseText"],
-Cell[69448, 1536, 48, 1, 20, "LicenseText"],
-Cell[69499, 1539, 61, 0, 20, "LicenseText"],
-Cell[69563, 1541, 176, 3, 43, "LicenseText"],
-Cell[69742, 1546, 567, 9, 125, "LicenseText"],
-Cell[70312, 1557, 801, 11, 151, "LicenseText"],
-Cell[71116, 1570, 59, 1, 20, "LicenseText"],
-Cell[71178, 1573, 85, 1, 20, "LicenseText"],
-Cell[71266, 1576, 475, 7, 91, "LicenseText"],
-Cell[71744, 1585, 159, 3, 31, "LicenseText"],
-Cell[71906, 1590, 505, 8, 127, "LicenseText"],
-Cell[72414, 1600, 54, 1, 20, "LicenseText"],
-Cell[72471, 1603, 67, 0, 20, "LicenseText"],
-Cell[72541, 1605, 162, 3, 31, "LicenseText"],
-Cell[72706, 1610, 62, 1, 20, "LicenseText"],
-Cell[72771, 1613, 457, 9, 55, "LicenseText"],
-Cell[73231, 1624, 52, 1, 20, "LicenseText"],
-Cell[73286, 1627, 249, 7, 31, "LicenseText"],
-Cell[73538, 1636, 61, 1, 20, "LicenseText"],
-Cell[73602, 1639, 106, 2, 31, "LicenseText"],
-Cell[73711, 1643, 476, 7, 91, "LicenseText"],
-Cell[74190, 1652, 143, 3, 31, "LicenseText"],
-Cell[74336, 1657, 160, 3, 31, "LicenseText"],
-Cell[74499, 1662, 506, 8, 127, "LicenseText"],
-Cell[75008, 1672, 54, 0, 20, "LicenseText"],
-Cell[75065, 1674, 77, 0, 20, "LicenseText"],
-Cell[75145, 1676, 145, 3, 31, "LicenseText"],
-Cell[75293, 1681, 60, 0, 20, "LicenseText"],
-Cell[75356, 1683, 62, 0, 20, "LicenseText"],
-Cell[75421, 1685, 60, 0, 20, "LicenseText"],
-Cell[75484, 1687, 62, 0, 20, "LicenseText"],
-Cell[75549, 1689, 62, 0, 20, "LicenseText"],
-Cell[75614, 1691, 61, 0, 20, "LicenseText"],
-Cell[75678, 1693, 74, 0, 20, "LicenseText"],
-Cell[75755, 1695, 68, 0, 20, "LicenseText"],
-Cell[75826, 1697, 65, 0, 20, "LicenseText"],
-Cell[75894, 1699, 67, 0, 20, "LicenseText"],
-Cell[75964, 1701, 62, 0, 20, "LicenseText"],
-Cell[76029, 1703, 57, 0, 20, "LicenseText"],
-Cell[76089, 1705, 103, 2, 31, "LicenseText"],
-Cell[76195, 1709, 60, 0, 20, "LicenseText"],
-Cell[76258, 1711, 60, 0, 20, "LicenseText"],
-Cell[76321, 1713, 66, 0, 20, "LicenseText"],
-Cell[76390, 1715, 69, 0, 20, "LicenseText"],
-Cell[76462, 1717, 61, 0, 20, "LicenseText"],
-Cell[76526, 1719, 63, 0, 20, "LicenseText"],
-Cell[76592, 1721, 85, 1, 20, "LicenseText"],
-Cell[76680, 1724, 78, 0, 20, "LicenseText"],
-Cell[76761, 1726, 72, 0, 20, "LicenseText"],
-Cell[76836, 1728, 97, 2, 20, "LicenseText"],
-Cell[76936, 1732, 82, 1, 20, "LicenseText"],
-Cell[77021, 1735, 60, 0, 20, "LicenseText"],
-Cell[77084, 1737, 131, 3, 31, "LicenseText"],
-Cell[77218, 1742, 64, 0, 20, "LicenseText"],
-Cell[77285, 1744, 62, 0, 20, "LicenseText"],
-Cell[77350, 1746, 61, 0, 20, "LicenseText"],
-Cell[77414, 1748, 70, 0, 20, "LicenseText"],
-Cell[77487, 1750, 84, 1, 20, "LicenseText"],
-Cell[77574, 1753, 60, 0, 20, "LicenseText"],
-Cell[77637, 1755, 96, 2, 20, "LicenseText"],
-Cell[77736, 1759, 67, 0, 20, "LicenseText"],
-Cell[77806, 1761, 171, 3, 43, "LicenseText"],
-Cell[77980, 1766, 51, 1, 20, "LicenseText"],
-Cell[78034, 1769, 106, 1, 20, "LicenseText"],
-Cell[78143, 1772, 57, 1, 20, "LicenseText"],
-Cell[78203, 1775, 60, 0, 20, "LicenseText"],
-Cell[78266, 1777, 61, 1, 20, "LicenseText"],
-Cell[78330, 1780, 123, 3, 31, "LicenseText"],
-Cell[78456, 1785, 51, 1, 20, "LicenseText"],
-Cell[78510, 1788, 228, 4, 20, "LicenseText"],
-Cell[78741, 1794, 341, 9, 31, "LicenseText"],
-Cell[79085, 1805, 48, 1, 20, "LicenseText"],
-Cell[79136, 1808, 231, 4, 20, "LicenseText"],
-Cell[79370, 1814, 338, 9, 31, "LicenseText"],
-Cell[79711, 1825, 70, 1, 20, "LicenseText"],
-Cell[79784, 1828, 46, 0, 20, "LicenseText"],
-Cell[79833, 1830, 229, 7, 20, "LicenseText"],
-Cell[80065, 1839, 151, 3, 31, "LicenseText"],
-Cell[80219, 1844, 31, 0, 20, "LicenseText"],
-Cell[80253, 1846, 130, 3, 31, "LicenseText"],
-Cell[80386, 1851, 558, 8, 115, "LicenseText"],
-Cell[80947, 1861, 442, 7, 91, "LicenseText"],
-Cell[81392, 1870, 314, 5, 55, "LicenseText"],
-Cell[81709, 1877, 327, 5, 67, "LicenseText"],
-Cell[82039, 1884, 237, 4, 55, "LicenseText"],
-Cell[82279, 1890, 346, 6, 67, "LicenseText"],
-Cell[82628, 1898, 721, 10, 139, "LicenseText"],
-Cell[83352, 1910, 444, 7, 91, "LicenseText"],
-Cell[83799, 1919, 116, 3, 31, "LicenseText"],
-Cell[83918, 1924, 44, 0, 20, "LicenseText"],
-Cell[83965, 1926, 38, 0, 20, "LicenseText"],
-Cell[84006, 1928, 102, 2, 31, "LicenseText"],
-Cell[84111, 1932, 142, 3, 31, "LicenseText"],
-Cell[84256, 1937, 221, 4, 43, "LicenseText"],
-Cell[84480, 1943, 307, 5, 55, "LicenseText"],
-Cell[84790, 1950, 119, 3, 31, "LicenseText"],
-Cell[84912, 1955, 432, 7, 91, "LicenseText"],
-Cell[85347, 1964, 242, 4, 55, "LicenseText"],
-Cell[85592, 1970, 580, 9, 103, "LicenseText"],
-Cell[86175, 1981, 38, 0, 20, "LicenseText"],
-Cell[86216, 1983, 187, 4, 43, "LicenseText"],
-Cell[86406, 1989, 302, 5, 55, "LicenseText"],
-Cell[86711, 1996, 722, 11, 139, "LicenseText"],
-Cell[87436, 2009, 848, 12, 163, "LicenseText"],
-Cell[88287, 2023, 169, 3, 43, "LicenseText"],
-Cell[88459, 2028, 106, 2, 31, "LicenseText"],
-Cell[88568, 2032, 44, 0, 20, "LicenseText"],
-Cell[88615, 2034, 517, 8, 103, "LicenseText"],
-Cell[89135, 2044, 727, 11, 139, "LicenseText"],
-Cell[89865, 2057, 192, 4, 43, "LicenseText"],
-Cell[90060, 2063, 93, 2, 20, "LicenseText"],
-Cell[90156, 2067, 309, 5, 67, "LicenseText"],
-Cell[90468, 2074, 484, 7, 91, "LicenseText"],
-Cell[90955, 2083, 52, 0, 20, "LicenseText"],
-Cell[91010, 2085, 494, 7, 91, "LicenseText"],
-Cell[91507, 2094, 161, 3, 31, "LicenseText"],
-Cell[91671, 2099, 61, 0, 20, "LicenseText"],
-Cell[91735, 2101, 241, 4, 55, "LicenseText"],
-Cell[91979, 2107, 134, 3, 31, "LicenseText"],
-Cell[92116, 2112, 254, 4, 55, "LicenseText"],
-Cell[92373, 2118, 479, 7, 91, "LicenseText"],
-Cell[92855, 2127, 265, 5, 55, "LicenseText"],
-Cell[93123, 2134, 615, 9, 115, "LicenseText"],
-Cell[93741, 2145, 53, 0, 20, "LicenseText"],
-Cell[93797, 2147, 248, 4, 55, "LicenseText"],
-Cell[94048, 2153, 264, 4, 55, "LicenseText"],
-Cell[94315, 2159, 724, 10, 139, "LicenseText"],
-Cell[95042, 2171, 314, 5, 67, "LicenseText"],
-Cell[95359, 2178, 823, 12, 151, "LicenseText"],
-Cell[96185, 2192, 260, 4, 55, "LicenseText"],
-Cell[96448, 2198, 211, 4, 43, "LicenseText"],
-Cell[96662, 2204, 889, 13, 163, "LicenseText"],
-Cell[97554, 2219, 486, 7, 91, "LicenseText"],
-Cell[98043, 2228, 687, 10, 127, "LicenseText"],
-Cell[98733, 2240, 518, 8, 103, "LicenseText"],
-Cell[99254, 2250, 336, 5, 67, "LicenseText"],
-Cell[99593, 2257, 43, 0, 20, "LicenseText"],
-Cell[99639, 2259, 585, 9, 115, "LicenseText"],
-Cell[100227, 2270, 438, 7, 91, "LicenseText"],
-Cell[100668, 2279, 242, 4, 55, "LicenseText"],
-Cell[100913, 2285, 150, 3, 31, "LicenseText"],
-Cell[101066, 2290, 214, 4, 43, "LicenseText"],
-Cell[101283, 2296, 227, 4, 43, "LicenseText"],
-Cell[101513, 2302, 131, 3, 31, "LicenseText"],
-Cell[101647, 2307, 146, 3, 31, "LicenseText"],
-Cell[101796, 2312, 334, 5, 67, "LicenseText"],
-Cell[102133, 2319, 634, 9, 115, "LicenseText"],
-Cell[102770, 2330, 268, 5, 55, "LicenseText"],
-Cell[103041, 2337, 208, 4, 43, "LicenseText"],
-Cell[103252, 2343, 38, 0, 20, "LicenseText"],
-Cell[103293, 2345, 334, 5, 67, "LicenseText"],
-Cell[103630, 2352, 408, 6, 79, "LicenseText"],
-Cell[104041, 2360, 400, 6, 79, "LicenseText"],
-Cell[104444, 2368, 341, 5, 67, "LicenseText"],
-Cell[104788, 2375, 68, 0, 20, "LicenseText"],
-Cell[104859, 2377, 586, 9, 115, "LicenseText"],
-Cell[105448, 2388, 72, 0, 20, "LicenseText"],
-Cell[105523, 2390, 299, 5, 67, "LicenseText"],
-Cell[105825, 2397, 650, 10, 127, "LicenseText"],
-Cell[106478, 2409, 508, 8, 91, "LicenseText"],
-Cell[106989, 2419, 35, 0, 20, "LicenseText"],
-Cell[107027, 2421, 244, 4, 55, "LicenseText"],
-Cell[107274, 2427, 597, 9, 115, "LicenseText"],
-Cell[107874, 2438, 293, 5, 55, "LicenseText"],
-Cell[108170, 2445, 417, 7, 79, "LicenseText"],
-Cell[108590, 2454, 936, 13, 175, "LicenseText"],
-Cell[109529, 2469, 472, 7, 91, "LicenseText"],
-Cell[110004, 2478, 994, 14, 187, "LicenseText"],
-Cell[111001, 2494, 225, 4, 43, "LicenseText"],
-Cell[111229, 2500, 59, 0, 20, "LicenseText"],
-Cell[111291, 2502, 691, 10, 139, "LicenseText"],
-Cell[111985, 2514, 74, 0, 20, "LicenseText"],
-Cell[112062, 2516, 544, 8, 103, "LicenseText"],
-Cell[112609, 2526, 60, 0, 20, "LicenseText"],
-Cell[112672, 2528, 288, 5, 55, "LicenseText"],
-Cell[112963, 2535, 544, 8, 103, "LicenseText"],
-Cell[113510, 2545, 278, 5, 55, "LicenseText"],
-Cell[113791, 2552, 245, 4, 55, "LicenseText"],
-Cell[114039, 2558, 50, 0, 20, "LicenseText"],
-Cell[114092, 2560, 593, 9, 151, "LicenseText"],
-Cell[114688, 2571, 51, 0, 20, "LicenseText"],
-Cell[114742, 2573, 691, 10, 175, "LicenseText"],
-Cell[115436, 2585, 416, 6, 79, "LicenseText"],
-Cell[115855, 2593, 51, 0, 20, "LicenseText"],
-Cell[115909, 2595, 77, 1, 20, "LicenseText"],
-Cell[115989, 2598, 49, 0, 20, "LicenseText"],
-Cell[116041, 2600, 270, 5, 55, "LicenseText"],
-Cell[116314, 2607, 198, 4, 43, "LicenseText"],
-Cell[116515, 2613, 31, 0, 20, "LicenseText"],
-Cell[116549, 2615, 302, 5, 67, "LicenseText"],
-Cell[116854, 2622, 452, 7, 91, "LicenseText"],
-Cell[117309, 2631, 471, 7, 91, "LicenseText"],
-Cell[117783, 2640, 306, 5, 55, "LicenseText"],
-Cell[118092, 2647, 521, 8, 103, "LicenseText"],
-Cell[118616, 2657, 226, 4, 43, "LicenseText"],
-Cell[118845, 2663, 395, 6, 79, "LicenseText"],
-Cell[119243, 2671, 434, 7, 79, "LicenseText"],
-Cell[119680, 2680, 406, 6, 79, "LicenseText"],
-Cell[120089, 2688, 458, 7, 91, "LicenseText"],
-Cell[120550, 2697, 475, 7, 91, "LicenseText"],
-Cell[121028, 2706, 504, 8, 91, "LicenseText"],
-Cell[121535, 2716, 377, 6, 79, "LicenseText"],
-Cell[121915, 2724, 292, 5, 55, "LicenseText"],
-Cell[122210, 2731, 359, 6, 67, "LicenseText"],
-Cell[122572, 2739, 130, 3, 43, "LicenseText"],
-Cell[122705, 2744, 348, 6, 67, "LicenseText"],
-Cell[123056, 2752, 234, 4, 43, "LicenseText"],
-Cell[123293, 2758, 508, 8, 91, "LicenseText"],
-Cell[123804, 2768, 351, 6, 67, "LicenseText"],
-Cell[124158, 2776, 502, 8, 91, "LicenseText"],
-Cell[124663, 2786, 443, 7, 91, "LicenseText"],
-Cell[125109, 2795, 174, 3, 43, "LicenseText"],
-Cell[125286, 2800, 293, 5, 67, "LicenseText"],
-Cell[125582, 2807, 78, 0, 20, "LicenseText"],
-Cell[125663, 2809, 159, 3, 31, "LicenseText"],
-Cell[125825, 2814, 154, 3, 31, "LicenseText"],
-Cell[125982, 2819, 463, 7, 91, "LicenseText"],
-Cell[126448, 2828, 396, 6, 79, "LicenseText"],
-Cell[126847, 2836, 657, 10, 127, "LicenseText"],
-Cell[127507, 2848, 279, 5, 55, "LicenseText"],
-Cell[127789, 2855, 273, 5, 55, "LicenseText"],
-Cell[128065, 2862, 543, 8, 103, "LicenseText"],
-Cell[128611, 2872, 228, 4, 43, "LicenseText"],
-Cell[128842, 2878, 146, 3, 31, "LicenseText"],
-Cell[128991, 2883, 427, 7, 91, "LicenseText"],
-Cell[129421, 2892, 353, 6, 67, "LicenseText"],
-Cell[129777, 2900, 355, 6, 67, "LicenseText"],
-Cell[130135, 2908, 370, 6, 67, "LicenseText"],
-Cell[130508, 2916, 442, 7, 79, "LicenseText"],
-Cell[130953, 2925, 414, 6, 79, "LicenseText"],
-Cell[131370, 2933, 298, 5, 55, "LicenseText"],
-Cell[131671, 2940, 407, 6, 79, "LicenseText"],
-Cell[132081, 2948, 464, 7, 91, "LicenseText"],
-Cell[132548, 2957, 720, 10, 139, "LicenseText"],
-Cell[133271, 2969, 495, 8, 91, "LicenseText"],
-Cell[133769, 2979, 249, 4, 55, "LicenseText"],
-Cell[134021, 2985, 208, 4, 43, "LicenseText"],
-Cell[134232, 2991, 151, 3, 31, "LicenseText"],
-Cell[134386, 2996, 528, 8, 103, "LicenseText"],
-Cell[134917, 3006, 308, 5, 67, "LicenseText"],
-Cell[135228, 3013, 430, 7, 79, "LicenseText"],
-Cell[135661, 3022, 229, 4, 43, "LicenseText"],
-Cell[135893, 3028, 225, 4, 43, "LicenseText"],
-Cell[136121, 3034, 504, 8, 103, "LicenseText"],
-Cell[136628, 3044, 545, 8, 103, "LicenseText"],
-Cell[137176, 3054, 472, 7, 91, "LicenseText"],
-Cell[137651, 3063, 857, 13, 163, "LicenseText"],
-Cell[138511, 3078, 254, 4, 55, "LicenseText"],
-Cell[138768, 3084, 663, 10, 127, "LicenseText"],
-Cell[139434, 3096, 148, 3, 31, "LicenseText"],
-Cell[139585, 3101, 509, 8, 91, "LicenseText"],
-Cell[140097, 3111, 295, 5, 55, "LicenseText"],
-Cell[140395, 3118, 481, 7, 91, "LicenseText"],
-Cell[140879, 3127, 543, 8, 103, "LicenseText"],
-Cell[141425, 3137, 34, 0, 20, "LicenseText"],
-Cell[141462, 3139, 644, 9, 163, "LicenseText"],
-Cell[142109, 3150, 660, 10, 163, "LicenseText"],
-Cell[142772, 3162, 50, 0, 20, "LicenseText"],
-Cell[142825, 3164, 77, 1, 20, "LicenseText"],
-Cell[142905, 3167, 46, 0, 20, "LicenseText"],
-Cell[142954, 3169, 96, 2, 20, "LicenseText"],
-Cell[143053, 3173, 151, 3, 31, "LicenseText"],
-Cell[143207, 3178, 231, 4, 55, "LicenseText"],
-Cell[143441, 3184, 49, 0, 20, "LicenseText"],
-Cell[143493, 3186, 204, 4, 43, "LicenseText"],
-Cell[143700, 3192, 162, 3, 31, "LicenseText"],
-Cell[143865, 3197, 290, 5, 55, "LicenseText"],
-Cell[144158, 3204, 245, 4, 55, "LicenseText"],
-Cell[144406, 3210, 299, 5, 67, "LicenseText"],
-Cell[144708, 3217, 317, 5, 67, "LicenseText"],
-Cell[145028, 3224, 64, 0, 20, "LicenseText"],
-Cell[145095, 3226, 150, 3, 31, "LicenseText"],
-Cell[145248, 3231, 54, 0, 20, "LicenseText"],
-Cell[145305, 3233, 314, 5, 67, "LicenseText"],
-Cell[145622, 3240, 278, 5, 55, "LicenseText"],
-Cell[145903, 3247, 135, 3, 31, "LicenseText"],
-Cell[146041, 3252, 95, 2, 20, "LicenseText"],
-Cell[146139, 3256, 444, 7, 91, "LicenseText"],
-Cell[146586, 3265, 184, 3, 43, "LicenseText"],
-Cell[146773, 3270, 115, 3, 31, "LicenseText"],
-Cell[146891, 3275, 41, 0, 20, "LicenseText"],
-Cell[146935, 3277, 315, 5, 67, "LicenseText"],
-Cell[147253, 3284, 186, 3, 43, "LicenseText"],
-Cell[147442, 3289, 117, 3, 31, "LicenseText"],
-Cell[147562, 3294, 273, 5, 55, "LicenseText"],
-Cell[147838, 3301, 50, 0, 20, "LicenseText"],
-Cell[147891, 3303, 429, 7, 91, "LicenseText"],
-Cell[148323, 3312, 359, 6, 67, "LicenseText"],
-Cell[148685, 3320, 703, 10, 139, "LicenseText"],
-Cell[149391, 3332, 45, 0, 20, "LicenseText"],
-Cell[149439, 3334, 337, 5, 67, "LicenseText"],
-Cell[149779, 3341, 207, 4, 43, "LicenseText"],
-Cell[149989, 3347, 213, 4, 43, "LicenseText"],
-Cell[150205, 3353, 92, 2, 20, "LicenseText"],
-Cell[150300, 3357, 295, 5, 67, "LicenseText"],
-Cell[150598, 3364, 640, 9, 127, "LicenseText"],
-Cell[151241, 3375, 316, 5, 67, "LicenseText"],
-Cell[151560, 3382, 85, 1, 20, "LicenseText"],
-Cell[151648, 3385, 250, 7, 31, "LicenseText"],
-Cell[151901, 3394, 337, 9, 31, "LicenseText"],
-Cell[152241, 3405, 285, 7, 31, "LicenseText"],
-Cell[152529, 3414, 54, 1, 20, "LicenseText"],
-Cell[152586, 3417, 66, 0, 20, "LicenseText"],
-Cell[152655, 3419, 244, 4, 55, "LicenseText"],
-Cell[152902, 3425, 530, 8, 139, "LicenseText"],
-Cell[153435, 3435, 52, 1, 20, "LicenseText"],
-Cell[153490, 3438, 231, 4, 20, "LicenseText"],
-Cell[153724, 3444, 109, 2, 31, "LicenseText"],
-Cell[153836, 3448, 168, 3, 43, "LicenseText"],
-Cell[154007, 3453, 74, 0, 20, "LicenseText"],
-Cell[154084, 3455, 70, 0, 20, "LicenseText"],
-Cell[154157, 3457, 69, 0, 20, "LicenseText"],
-Cell[154229, 3459, 112, 3, 31, "LicenseText"],
-Cell[154344, 3464, 66, 0, 20, "LicenseText"],
-Cell[154413, 3466, 89, 1, 20, "LicenseText"],
-Cell[154505, 3469, 64, 0, 20, "LicenseText"],
-Cell[154572, 3471, 67, 0, 20, "LicenseText"],
-Cell[154642, 3473, 64, 0, 20, "LicenseText"],
-Cell[154709, 3475, 87, 1, 20, "LicenseText"],
-Cell[154799, 3478, 90, 1, 20, "LicenseText"],
-Cell[154892, 3481, 102, 2, 20, "LicenseText"],
-Cell[154997, 3485, 332, 5, 67, "LicenseText"],
-Cell[155332, 3492, 310, 5, 79, "LicenseText"],
-Cell[155645, 3499, 385, 6, 91, "LicenseText"],
-Cell[156033, 3507, 47, 1, 20, "LicenseText"],
-Cell[156083, 3510, 103, 2, 31, "LicenseText"],
-Cell[156189, 3514, 43, 0, 20, "LicenseText"],
-Cell[156235, 3516, 303, 5, 67, "LicenseText"],
-Cell[156541, 3523, 225, 4, 43, "LicenseText"],
-Cell[156769, 3529, 161, 3, 31, "LicenseText"],
-Cell[156933, 3534, 235, 4, 43, "LicenseText"],
-Cell[157171, 3540, 213, 4, 43, "LicenseText"],
-Cell[157387, 3546, 325, 5, 67, "LicenseText"],
-Cell[157715, 3553, 259, 4, 55, "LicenseText"],
-Cell[157977, 3559, 33, 0, 20, "LicenseText"],
-Cell[158013, 3561, 366, 6, 79, "LicenseText"],
-Cell[158382, 3569, 48, 1, 20, "LicenseText"],
-Cell[158433, 3572, 136, 3, 31, "LicenseText"],
-Cell[158572, 3577, 178, 3, 43, "LicenseText"],
-Cell[158753, 3582, 43, 0, 20, "LicenseText"],
-Cell[158799, 3584, 303, 5, 67, "LicenseText"],
-Cell[159105, 3591, 225, 4, 43, "LicenseText"],
-Cell[159333, 3597, 161, 3, 31, "LicenseText"],
-Cell[159497, 3602, 235, 4, 43, "LicenseText"],
-Cell[159735, 3608, 213, 4, 43, "LicenseText"],
-Cell[159951, 3614, 348, 6, 67, "LicenseText"],
-Cell[160302, 3622, 306, 5, 67, "LicenseText"],
-Cell[160611, 3629, 994, 14, 199, "LicenseText"],
-Cell[161608, 3645, 1036, 15, 199, "LicenseText"],
-Cell[162647, 3662, 50, 1, 20, "LicenseText"],
-Cell[162700, 3665, 104, 2, 31, "LicenseText"],
-Cell[162807, 3669, 175, 3, 43, "LicenseText"],
-Cell[162985, 3674, 157, 3, 31, "LicenseText"],
-Cell[163145, 3679, 237, 4, 43, "LicenseText"],
-Cell[163385, 3685, 228, 4, 43, "LicenseText"],
-Cell[163616, 3691, 823, 12, 199, "LicenseText"],
-Cell[164442, 3705, 58, 1, 20, "LicenseText"],
-Cell[164503, 3708, 104, 2, 31, "LicenseText"],
-Cell[164610, 3712, 175, 3, 43, "LicenseText"],
-Cell[164788, 3717, 157, 3, 31, "LicenseText"],
-Cell[164948, 3722, 237, 4, 43, "LicenseText"],
-Cell[165188, 3728, 226, 4, 43, "LicenseText"],
-Cell[165417, 3734, 813, 12, 199, "LicenseText"],
-Cell[166233, 3748, 146, 3, 31, "LicenseText"],
-Cell[166382, 3753, 47, 1, 20, "LicenseText"],
-Cell[166432, 3756, 34, 0, 20, "LicenseText"],
-Cell[166469, 3758, 54, 0, 20, "LicenseText"],
-Cell[166526, 3760, 109, 2, 31, "LicenseText"],
-Cell[166638, 3764, 43, 0, 20, "LicenseText"],
-Cell[166684, 3766, 645, 9, 127, "LicenseText"],
-Cell[167332, 3777, 639, 9, 163, "LicenseText"],
-Cell[167974, 3788, 271, 5, 55, "LicenseText"],
-Cell[168248, 3795, 47, 1, 20, "LicenseText"],
-Cell[168298, 3798, 103, 2, 31, "LicenseText"],
-Cell[168404, 3802, 175, 3, 43, "LicenseText"],
-Cell[168582, 3807, 159, 3, 31, "LicenseText"],
-Cell[168744, 3812, 239, 4, 55, "LicenseText"],
-Cell[168986, 3818, 235, 4, 55, "LicenseText"],
-Cell[169224, 3824, 808, 12, 199, "LicenseText"],
-Cell[170035, 3838, 54, 1, 20, "LicenseText"],
-Cell[170092, 3841, 41, 0, 20, "LicenseText"],
-Cell[170136, 3843, 169, 3, 43, "LicenseText"],
-Cell[170308, 3848, 85, 1, 20, "LicenseText"],
-Cell[170396, 3851, 211, 4, 43, "LicenseText"],
-Cell[170610, 3857, 221, 4, 43, "LicenseText"],
-Cell[170834, 3863, 189, 3, 43, "LicenseText"],
-Cell[171026, 3868, 216, 4, 43, "LicenseText"],
-Cell[171245, 3874, 291, 5, 55, "LicenseText"],
-Cell[171539, 3881, 173, 3, 43, "LicenseText"],
-Cell[171715, 3886, 259, 8, 20, "LicenseText"],
-Cell[171977, 3896, 52, 1, 20, "LicenseText"],
-Cell[172032, 3899, 243, 4, 55, "LicenseText"],
-Cell[172278, 3905, 324, 8, 31, "LicenseText"],
-Cell[172605, 3915, 58, 1, 20, "LicenseText"],
-Cell[172666, 3918, 53, 0, 20, "LicenseText"],
-Cell[172722, 3920, 511, 10, 67, "LicenseText"],
-Cell[173236, 3932, 276, 5, 67, "LicenseText"],
-Cell[173515, 3939, 64, 1, 20, "LicenseText"],
-Cell[173582, 3942, 241, 4, 55, "LicenseText"],
-Cell[173826, 3948, 158, 3, 31, "LicenseText"],
-Cell[173987, 3953, 238, 4, 43, "LicenseText"],
-Cell[174228, 3959, 219, 4, 43, "LicenseText"],
-Cell[174450, 3965, 853, 12, 211, "LicenseText"],
-Cell[175306, 3979, 194, 4, 43, "LicenseText"],
-Cell[175503, 3985, 56, 1, 20, "LicenseText"],
-Cell[175562, 3988, 390, 6, 79, "LicenseText"],
-Cell[175955, 3996, 64, 0, 20, "LicenseText"],
-Cell[176022, 3998, 68, 1, 20, "LicenseText"],
-Cell[176093, 4001, 264, 5, 55, "LicenseText"],
-Cell[176360, 4008, 225, 4, 20, "LicenseText"],
-Cell[176588, 4014, 54, 0, 20, "LicenseText"],
-Cell[176645, 4016, 238, 4, 67, "LicenseText"],
-Cell[176886, 4022, 37, 0, 20, "LicenseText"],
-Cell[176926, 4024, 787, 14, 195, "LicenseText"],
-Cell[177716, 4040, 107, 2, 31, "LicenseText"],
-Cell[177826, 4044, 214, 4, 43, "LicenseText"],
-Cell[178043, 4050, 208, 4, 43, "LicenseText"],
-Cell[178254, 4056, 194, 4, 43, "LicenseText"],
-Cell[178451, 4062, 41, 0, 20, "LicenseText"],
-Cell[178495, 4064, 2121, 30, 418, "LicenseText"],
-Cell[180619, 4096, 39, 0, 20, "LicenseText"],
-Cell[180661, 4098, 153, 3, 31, "LicenseText"],
-Cell[180817, 4103, 972, 15, 248, "LicenseText"],
-Cell[181792, 4120, 82, 1, 20, "LicenseText"],
-Cell[181877, 4123, 167, 4, 48, "LicenseText"],
-Cell[182047, 4129, 120, 3, 31, "LicenseText"],
-Cell[182170, 4134, 134, 3, 31, "LicenseText"],
-Cell[182307, 4139, 237, 4, 43, "LicenseText"],
-Cell[182547, 4145, 49, 0, 20, "LicenseText"],
-Cell[182599, 4147, 1509, 21, 283, "LicenseText"],
-Cell[184111, 4170, 683, 10, 139, "LicenseText"],
-Cell[184797, 4182, 767, 11, 163, "LicenseText"],
-Cell[185567, 4195, 608, 9, 151, "LicenseText"],
-Cell[186178, 4206, 34, 0, 20, "LicenseText"],
-Cell[186215, 4208, 384, 6, 79, "LicenseText"],
-Cell[186602, 4216, 752, 11, 139, "LicenseText"],
-Cell[187357, 4229, 594, 9, 115, "LicenseText"],
-Cell[187954, 4240, 894, 13, 163, "LicenseText"],
-Cell[188851, 4255, 370, 6, 67, "LicenseText"],
-Cell[189224, 4263, 52, 1, 20, "LicenseText"],
-Cell[189279, 4266, 93, 2, 20, "LicenseText"],
-Cell[189375, 4270, 72, 0, 20, "LicenseText"],
-Cell[189450, 4272, 73, 0, 20, "LicenseText"],
-Cell[189526, 4274, 33, 0, 20, "LicenseText"],
-Cell[189562, 4276, 203, 4, 55, "LicenseText"],
-Cell[189768, 4282, 48, 1, 20, "LicenseText"],
-Cell[189819, 4285, 110, 3, 31, "LicenseText"],
-Cell[189932, 4290, 313, 5, 67, "LicenseText"],
-Cell[190248, 4297, 175, 3, 43, "LicenseText"],
-Cell[190426, 4302, 161, 3, 31, "LicenseText"],
-Cell[190590, 4307, 261, 4, 55, "LicenseText"],
-Cell[190854, 4313, 221, 4, 55, "LicenseText"],
-Cell[191078, 4319, 208, 4, 43, "LicenseText"],
-Cell[191289, 4325, 446, 7, 91, "LicenseText"],
-Cell[191738, 4334, 774, 11, 187, "LicenseText"],
-Cell[192515, 4347, 428, 10, 55, "LicenseText"],
-Cell[192946, 4359, 52, 1, 20, "LicenseText"],
-Cell[193001, 4362, 145, 3, 31, "LicenseText"],
-Cell[193149, 4367, 68, 0, 20, "LicenseText"],
-Cell[193220, 4369, 184, 3, 43, "LicenseText"],
-Cell[193407, 4374, 575, 9, 125, "LicenseText"],
-Cell[193985, 4385, 807, 12, 199, "LicenseText"],
-Cell[194795, 4399, 50, 1, 20, "LicenseText"],
-Cell[194848, 4402, 41, 0, 20, "LicenseText"],
-Cell[194892, 4404, 1851, 25, 343, "LicenseText"],
-Cell[196746, 4431, 63, 0, 20, "LicenseText"],
-Cell[196812, 4433, 50, 1, 20, "LicenseText"],
-Cell[196865, 4436, 267, 5, 20, "LicenseText"],
-Cell[197135, 4443, 340, 9, 31, "LicenseText"],
-Cell[197478, 4454, 50, 1, 20, "LicenseText"],
-Cell[197531, 4457, 69, 0, 20, "LicenseText"],
-Cell[197603, 4459, 48, 1, 20, "LicenseText"],
-Cell[197654, 4462, 137, 3, 31, "LicenseText"],
-Cell[197794, 4467, 330, 5, 67, "LicenseText"],
-Cell[198127, 4474, 196, 4, 43, "LicenseText"],
-Cell[198326, 4480, 320, 5, 67, "LicenseText"],
-Cell[198649, 4487, 209, 4, 43, "LicenseText"],
-Cell[198861, 4493, 221, 4, 43, "LicenseText"],
-Cell[199085, 4499, 198, 4, 43, "LicenseText"],
-Cell[199286, 4505, 282, 5, 55, "LicenseText"],
-Cell[199571, 4512, 215, 4, 43, "LicenseText"],
-Cell[199789, 4518, 48, 1, 20, "LicenseText"],
-Cell[199840, 4521, 128, 3, 31, "LicenseText"],
-Cell[199971, 4526, 179, 4, 43, "LicenseText"],
-Cell[200153, 4532, 160, 3, 31, "LicenseText"],
-Cell[200316, 4537, 240, 4, 55, "LicenseText"],
-Cell[200559, 4543, 177, 3, 43, "LicenseText"],
-Cell[200739, 4548, 779, 11, 187, "LicenseText"],
-Cell[201521, 4561, 57, 1, 20, "LicenseText"],
-Cell[201581, 4564, 50, 0, 20, "LicenseText"],
-Cell[201634, 4566, 475, 7, 91, "LicenseText"],
-Cell[202112, 4575, 159, 3, 31, "LicenseText"],
-Cell[202274, 4580, 69, 0, 20, "LicenseText"],
-Cell[202346, 4582, 505, 8, 127, "LicenseText"],
-Cell[202854, 4592, 48, 1, 20, "LicenseText"],
-Cell[202905, 4595, 443, 7, 91, "LicenseText"],
-Cell[203351, 4604, 49, 1, 20, "LicenseText"],
-Cell[203403, 4607, 197, 4, 43, "LicenseText"],
-Cell[203603, 4613, 56, 0, 20, "LicenseText"],
-Cell[203662, 4615, 241, 4, 67, "LicenseText"],
-Cell[203906, 4621, 37, 0, 20, "LicenseText"],
-Cell[203946, 4623, 46, 0, 20, "LicenseText"],
-Cell[203995, 4625, 148, 3, 31, "LicenseText"],
-Cell[204146, 4630, 69, 0, 20, "LicenseText"],
-Cell[204218, 4632, 55, 0, 20, "LicenseText"],
-Cell[204276, 4634, 54, 0, 20, "LicenseText"],
-Cell[204333, 4636, 151, 3, 31, "LicenseText"],
-Cell[204487, 4641, 248, 4, 55, "LicenseText"],
-Cell[204738, 4647, 155, 3, 43, "LicenseText"],
-Cell[204896, 4652, 70, 0, 20, "LicenseText"],
-Cell[204969, 4654, 103, 2, 31, "LicenseText"],
-Cell[205075, 4658, 214, 4, 43, "LicenseText"],
-Cell[205292, 4664, 115, 3, 31, "LicenseText"],
-Cell[205410, 4669, 134, 3, 31, "LicenseText"],
-Cell[205547, 4674, 41, 0, 20, "LicenseText"],
-Cell[205591, 4676, 396, 6, 79, "LicenseText"],
-Cell[205990, 4684, 740, 11, 139, "LicenseText"],
-Cell[206733, 4697, 857, 12, 163, "LicenseText"],
-Cell[207593, 4711, 211, 4, 43, "LicenseText"],
-Cell[207807, 4717, 38, 0, 20, "LicenseText"],
-Cell[207848, 4719, 151, 3, 31, "LicenseText"],
-Cell[208002, 4724, 98, 2, 20, "LicenseText"],
-Cell[208103, 4728, 48, 0, 20, "LicenseText"],
-Cell[208154, 4730, 305, 5, 67, "LicenseText"],
-Cell[208462, 4737, 215, 4, 43, "LicenseText"],
-Cell[208680, 4743, 169, 3, 43, "LicenseText"],
-Cell[208852, 4748, 241, 4, 55, "LicenseText"],
-Cell[209096, 4754, 78, 0, 20, "LicenseText"],
-Cell[209177, 4756, 77, 0, 20, "LicenseText"],
-Cell[209257, 4758, 106, 2, 31, "LicenseText"],
-Cell[209366, 4762, 121, 3, 31, "LicenseText"],
-Cell[209490, 4767, 224, 4, 43, "LicenseText"],
-Cell[209717, 4773, 49, 0, 20, "LicenseText"],
-Cell[209769, 4775, 1192, 17, 223, "LicenseText"],
-Cell[210964, 4794, 107, 2, 31, "LicenseText"],
-Cell[211074, 4798, 269, 5, 55, "LicenseText"],
-Cell[211346, 4805, 683, 10, 139, "LicenseText"],
-Cell[212032, 4817, 37, 0, 20, "LicenseText"],
-Cell[212072, 4819, 752, 11, 163, "LicenseText"],
-Cell[212827, 4832, 49, 0, 20, "LicenseText"],
-Cell[212879, 4834, 581, 9, 139, "LicenseText"],
-Cell[213463, 4845, 33, 0, 20, "LicenseText"],
-Cell[213499, 4847, 384, 6, 79, "LicenseText"],
-Cell[213886, 4855, 750, 11, 139, "LicenseText"],
-Cell[214639, 4868, 594, 9, 115, "LicenseText"],
-Cell[215236, 4879, 1280, 18, 235, "LicenseText"],
-Cell[216519, 4899, 370, 6, 67, "LicenseText"],
-Cell[216892, 4907, 48, 1, 20, "LicenseText"],
-Cell[216943, 4910, 200, 4, 43, "LicenseText"],
-Cell[217146, 4916, 60, 1, 20, "LicenseText"],
-Cell[217209, 4919, 520, 14, 48, "LicenseText"],
-Cell[217732, 4935, 50, 1, 20, "LicenseText"],
-Cell[217785, 4938, 77, 0, 20, "LicenseText"],
-Cell[217865, 4940, 200, 4, 43, "LicenseText"],
-Cell[218068, 4946, 586, 9, 125, "LicenseText"],
-Cell[218657, 4957, 807, 12, 199, "LicenseText"],
-Cell[219467, 4971, 56, 1, 20, "LicenseText"],
-Cell[219526, 4974, 234, 4, 43, "LicenseText"],
-Cell[219763, 4980, 212, 4, 77, "LicenseText"],
-Cell[219978, 4986, 450, 7, 91, "LicenseText"],
-Cell[220431, 4995, 436, 7, 79, "LicenseText"],
-Cell[220870, 5004, 518, 8, 127, "LicenseText"],
-Cell[221391, 5014, 53, 1, 20, "LicenseText"],
-Cell[221447, 5017, 414, 13, 20, "LicenseText"],
-Cell[221864, 5032, 50, 1, 20, "LicenseText"],
-Cell[221917, 5035, 127, 3, 31, "LicenseText"],
-Cell[222047, 5040, 475, 7, 91, "LicenseText"],
-Cell[222525, 5049, 159, 3, 31, "LicenseText"],
-Cell[222687, 5054, 505, 8, 127, "LicenseText"],
-Cell[223195, 5064, 52, 1, 20, "LicenseText"],
-Cell[223250, 5067, 67, 0, 20, "LicenseText"],
-Cell[223320, 5069, 606, 9, 115, "LicenseText"],
-Cell[223929, 5080, 505, 8, 127, "LicenseText"],
-Cell[224437, 5090, 61, 1, 20, "LicenseText"],
-Cell[224501, 5093, 62, 0, 20, "LicenseText"],
-Cell[224566, 5095, 175, 3, 43, "LicenseText"],
-Cell[224744, 5100, 159, 3, 31, "LicenseText"],
-Cell[224906, 5105, 239, 4, 55, "LicenseText"],
-Cell[225148, 5111, 227, 4, 43, "LicenseText"],
-Cell[225378, 5117, 801, 11, 199, "LicenseText"],
-Cell[226182, 5130, 58, 1, 20, "LicenseText"],
-Cell[226243, 5133, 432, 10, 55, "LicenseText"],
-Cell[226678, 5145, 50, 1, 20, "LicenseText"],
-Cell[226731, 5148, 106, 2, 31, "LicenseText"],
-Cell[226840, 5152, 207, 4, 43, "LicenseText"],
-Cell[227050, 5158, 92, 2, 20, "LicenseText"],
-Cell[227145, 5162, 144, 3, 31, "LicenseText"],
-Cell[227292, 5167, 135, 3, 31, "LicenseText"],
-Cell[227430, 5172, 328, 5, 67, "LicenseText"],
-Cell[227761, 5179, 893, 13, 163, "LicenseText"],
-Cell[228657, 5194, 50, 1, 20, "LicenseText"],
-Cell[228710, 5197, 325, 8, 43, "LicenseText"],
-Cell[229038, 5207, 54, 1, 20, "LicenseText"],
-Cell[229095, 5210, 113, 3, 31, "LicenseText"],
-Cell[229211, 5215, 51, 1, 20, "LicenseText"],
-Cell[229265, 5218, 115, 3, 31, "LicenseText"],
-Cell[229383, 5223, 528, 8, 103, "LicenseText"],
-Cell[229914, 5233, 233, 4, 67, "LicenseText"],
-Cell[230150, 5239, 409, 6, 103, "LicenseText"],
-Cell[230562, 5247, 50, 1, 20, "LicenseText"],
-Cell[230615, 5250, 470, 7, 91, "LicenseText"],
-Cell[231088, 5259, 76, 0, 20, "LicenseText"],
-Cell[231167, 5261, 674, 10, 127, "LicenseText"],
-Cell[231844, 5273, 138, 3, 31, "LicenseText"],
-Cell[231985, 5278, 291, 5, 55, "LicenseText"],
-Cell[232279, 5285, 208, 4, 43, "LicenseText"],
-Cell[232490, 5291, 561, 8, 151, "LicenseText"],
-Cell[233054, 5301, 314, 5, 67, "LicenseText"],
-Cell[233371, 5308, 53, 1, 20, "LicenseText"],
-Cell[233427, 5311, 60, 0, 20, "LicenseText"],
-Cell[233490, 5313, 520, 8, 91, "LicenseText"],
-Cell[234013, 5323, 159, 3, 31, "LicenseText"],
-Cell[234175, 5328, 550, 9, 127, "LicenseText"],
-Cell[234728, 5339, 51, 1, 20, "LicenseText"],
-Cell[234782, 5342, 94, 2, 20, "LicenseText"],
-Cell[234879, 5346, 57, 1, 20, "LicenseText"],
-Cell[234939, 5349, 1678, 24, 317, "LicenseText"],
-Cell[236620, 5375, 57, 1, 20, "LicenseText"],
-Cell[236680, 5378, 222, 4, 55, "LicenseText"],
-Cell[236905, 5384, 68, 1, 20, "LicenseText"],
-Cell[236976, 5387, 64, 0, 20, "LicenseText"],
-Cell[237043, 5389, 83, 1, 20, "LicenseText"],
-Cell[237129, 5392, 476, 7, 91, "LicenseText"],
-Cell[237608, 5401, 160, 3, 31, "LicenseText"],
-Cell[237771, 5406, 480, 7, 127, "LicenseText"],
-Cell[238254, 5415, 119, 2, 20, "LicenseText"],
-Cell[238376, 5419, 121, 3, 31, "LicenseText"],
-Cell[238500, 5424, 247, 4, 55, "LicenseText"],
-Cell[238750, 5430, 49, 1, 20, "LicenseText"],
-Cell[238802, 5433, 318, 5, 55, "LicenseText"],
-Cell[239123, 5440, 49, 0, 20, "LicenseText"],
-Cell[239175, 5442, 591, 9, 115, "LicenseText"],
-Cell[239769, 5453, 366, 6, 67, "LicenseText"],
-Cell[240138, 5461, 360, 7, 36, "LicenseText"],
-Cell[240501, 5470, 51, 1, 20, "LicenseText"],
-Cell[240555, 5473, 95, 2, 20, "LicenseText"],
-Cell[240653, 5477, 475, 7, 91, "LicenseText"],
-Cell[241131, 5486, 159, 3, 31, "LicenseText"],
-Cell[241293, 5491, 505, 8, 127, "LicenseText"],
-Cell[241801, 5501, 47, 1, 20, "LicenseText"],
-Cell[241851, 5504, 85, 1, 20, "LicenseText"],
-Cell[241939, 5507, 241, 4, 55, "LicenseText"],
-Cell[242183, 5513, 565, 9, 125, "LicenseText"],
-Cell[242751, 5524, 795, 11, 199, "LicenseText"],
-Cell[243549, 5537, 602, 9, 127, "LicenseText"],
-Cell[244154, 5548, 48, 1, 20, "LicenseText"],
-Cell[244205, 5551, 126, 3, 31, "LicenseText"],
-Cell[244334, 5556, 184, 4, 43, "LicenseText"],
-Cell[244521, 5562, 320, 5, 67, "LicenseText"],
-Cell[244844, 5569, 161, 3, 31, "LicenseText"],
-Cell[245008, 5574, 241, 4, 55, "LicenseText"],
-Cell[245252, 5580, 265, 4, 55, "LicenseText"],
-Cell[245520, 5586, 807, 12, 199, "LicenseText"],
-Cell[246330, 5600, 50, 1, 20, "LicenseText"],
-Cell[246383, 5603, 155, 3, 31, "LicenseText"],
-Cell[246541, 5608, 62, 1, 20, "LicenseText"],
-Cell[246606, 5611, 110, 3, 31, "LicenseText"],
-Cell[246719, 5616, 61, 1, 20, "LicenseText"],
-Cell[246783, 5619, 248, 4, 55, "LicenseText"],
-Cell[247034, 5625, 49, 1, 20, "LicenseText"],
-Cell[247086, 5628, 481, 7, 91, "LicenseText"],
-Cell[247570, 5637, 187, 3, 43, "LicenseText"],
-Cell[247760, 5642, 50, 1, 20, "LicenseText"],
-Cell[247813, 5645, 531, 14, 48, "LicenseText"],
-Cell[248347, 5661, 72, 1, 20, "LicenseText"],
-Cell[248422, 5664, 228, 4, 20, "LicenseText"],
-Cell[248653, 5670, 358, 6, 67, "LicenseText"],
-Cell[249014, 5678, 48, 1, 20, "LicenseText"],
-Cell[249065, 5681, 172, 3, 43, "LicenseText"],
-Cell[249240, 5686, 50, 1, 20, "LicenseText"],
-Cell[249293, 5689, 70, 0, 20, "LicenseText"],
-Cell[249366, 5691, 63, 1, 20, "LicenseText"],
-Cell[249432, 5694, 77, 0, 20, "LicenseText"],
-Cell[249512, 5696, 581, 9, 115, "LicenseText"],
-Cell[250096, 5707, 31, 0, 20, "LicenseText"],
-Cell[250130, 5709, 724, 10, 151, "LicenseText"],
-Cell[250857, 5721, 37, 0, 20, "LicenseText"],
-Cell[250897, 5723, 145, 3, 31, "LicenseText"],
-Cell[251045, 5728, 152, 3, 31, "LicenseText"],
-Cell[251200, 5733, 114, 3, 31, "LicenseText"],
-Cell[251317, 5738, 42, 0, 20, "LicenseText"],
-Cell[251362, 5740, 344, 6, 67, "LicenseText"],
-Cell[251709, 5748, 453, 7, 91, "LicenseText"],
-Cell[252165, 5757, 361, 6, 67, "LicenseText"],
-Cell[252529, 5765, 434, 7, 91, "LicenseText"],
-Cell[252966, 5774, 61, 0, 20, "LicenseText"],
-Cell[253030, 5776, 265, 5, 55, "LicenseText"],
-Cell[253298, 5783, 41, 0, 20, "LicenseText"],
-Cell[253342, 5785, 192, 4, 43, "LicenseText"],
-Cell[253537, 5791, 300, 5, 67, "LicenseText"],
-Cell[253840, 5798, 102, 2, 31, "LicenseText"],
-Cell[253945, 5802, 46, 0, 20, "LicenseText"],
-Cell[253994, 5804, 518, 8, 103, "LicenseText"],
-Cell[254515, 5814, 247, 4, 55, "LicenseText"],
-Cell[254765, 5820, 315, 5, 67, "LicenseText"],
-Cell[255083, 5827, 35, 0, 20, "LicenseText"],
-Cell[255121, 5829, 682, 10, 139, "LicenseText"],
-Cell[255806, 5841, 638, 10, 127, "LicenseText"],
-Cell[256447, 5853, 40, 0, 20, "LicenseText"],
-Cell[256490, 5855, 423, 7, 79, "LicenseText"],
-Cell[256916, 5864, 78, 0, 31, "LicenseText"],
-Cell[256997, 5866, 348, 6, 91, "LicenseText"],
-Cell[257348, 5874, 544, 8, 139, "LicenseText"],
-Cell[257895, 5884, 127, 3, 31, "LicenseText"],
-Cell[258025, 5889, 39, 0, 20, "LicenseText"],
-Cell[258067, 5891, 405, 6, 91, "LicenseText"],
-Cell[258475, 5899, 1247, 17, 235, "LicenseText"],
-Cell[259725, 5918, 1085, 15, 199, "LicenseText"],
-Cell[260813, 5935, 541, 8, 139, "LicenseText"],
-Cell[261357, 5945, 561, 8, 139, "LicenseText"],
-Cell[261921, 5955, 836, 12, 163, "LicenseText"],
-Cell[262760, 5969, 382, 6, 79, "LicenseText"],
-Cell[263145, 5977, 862, 12, 163, "LicenseText"],
-Cell[264010, 5991, 168, 3, 31, "LicenseText"],
-Cell[264181, 5996, 35, 0, 20, "LicenseText"],
-Cell[264219, 5998, 47, 0, 20, "LicenseText"],
-Cell[264269, 6000, 279, 5, 55, "LicenseText"],
-Cell[264551, 6007, 52, 0, 20, "LicenseText"],
-Cell[264606, 6009, 100, 2, 20, "LicenseText"],
-Cell[264709, 6013, 76, 0, 20, "LicenseText"],
-Cell[264788, 6015, 82, 1, 20, "LicenseText"],
-Cell[264873, 6018, 35, 0, 20, "LicenseText"],
-Cell[264911, 6020, 55, 0, 20, "LicenseText"],
-Cell[264969, 6022, 167, 3, 43, "LicenseText"],
-Cell[265139, 6027, 146, 3, 31, "LicenseText"],
-Cell[265288, 6032, 29, 0, 20, "LicenseText"],
-Cell[265320, 6034, 32, 0, 20, "LicenseText"],
-Cell[265355, 6036, 338, 5, 67, "LicenseText"],
-Cell[265696, 6043, 279, 5, 20, "LicenseText"],
-Cell[265978, 6050, 146, 3, 31, "LicenseText"],
-Cell[266127, 6055, 44, 0, 20, "LicenseText"],
-Cell[266174, 6057, 325, 5, 67, "LicenseText"],
-Cell[266502, 6064, 228, 4, 20, "LicenseText"],
-Cell[266733, 6070, 248, 4, 55, "LicenseText"],
-Cell[266984, 6076, 55, 1, 20, "LicenseText"],
-Cell[267042, 6079, 278, 6, 20, "LicenseText"],
-Cell[267323, 6087, 345, 9, 31, "LicenseText"],
-Cell[267671, 6098, 50, 1, 20, "LicenseText"],
-Cell[267724, 6101, 94, 2, 20, "LicenseText"],
-Cell[267821, 6105, 165, 3, 31, "LicenseText"],
-Cell[267989, 6110, 175, 3, 43, "LicenseText"],
-Cell[268167, 6115, 160, 3, 31, "LicenseText"],
-Cell[268330, 6120, 240, 4, 55, "LicenseText"],
-Cell[268573, 6126, 184, 4, 43, "LicenseText"],
-Cell[268760, 6132, 791, 11, 151, "LicenseText"],
-Cell[269554, 6145, 167, 3, 31, "LicenseText"],
-Cell[269724, 6150, 51, 1, 20, "LicenseText"],
-Cell[269778, 6153, 44, 0, 20, "LicenseText"],
-Cell[269825, 6155, 156, 3, 31, "LicenseText"],
-Cell[269984, 6160, 175, 3, 43, "LicenseText"],
-Cell[270162, 6165, 157, 3, 31, "LicenseText"],
-Cell[270322, 6170, 237, 4, 43, "LicenseText"],
-Cell[270562, 6176, 226, 4, 43, "LicenseText"],
-Cell[270791, 6182, 807, 12, 199, "LicenseText"],
-Cell[271601, 6196, 59, 1, 20, "LicenseText"],
-Cell[271663, 6199, 38, 0, 20, "LicenseText"],
-Cell[271704, 6201, 247, 4, 55, "LicenseText"],
-Cell[271954, 6207, 129, 3, 31, "LicenseText"],
-Cell[272086, 6212, 175, 3, 43, "LicenseText"],
-Cell[272264, 6217, 160, 3, 31, "LicenseText"],
-Cell[272427, 6222, 240, 4, 55, "LicenseText"],
-Cell[272670, 6228, 787, 11, 199, "LicenseText"],
-Cell[273460, 6241, 251, 4, 55, "LicenseText"],
-Cell[273714, 6247, 52, 1, 20, "LicenseText"],
-Cell[273769, 6250, 38, 0, 20, "LicenseText"],
-Cell[273810, 6252, 228, 4, 20, "LicenseText"],
-Cell[274041, 6258, 37, 0, 20, "LicenseText"],
-Cell[274081, 6260, 282, 5, 55, "LicenseText"],
-Cell[274366, 6267, 131, 3, 31, "LicenseText"],
-Cell[274500, 6272, 251, 4, 55, "LicenseText"],
-Cell[274754, 6278, 476, 7, 91, "LicenseText"],
-Cell[275233, 6287, 261, 4, 55, "LicenseText"],
-Cell[275497, 6293, 614, 9, 115, "LicenseText"],
-Cell[276114, 6304, 49, 1, 20, "LicenseText"],
-Cell[276166, 6307, 168, 4, 20, "LicenseText"],
-Cell[276337, 6313, 339, 9, 31, "LicenseText"],
-Cell[276679, 6324, 31, 0, 20, "LicenseText"],
-Cell[276713, 6326, 332, 5, 67, "LicenseText"],
-Cell[277048, 6333, 310, 5, 79, "LicenseText"],
-Cell[277361, 6340, 384, 6, 91, "LicenseText"],
-Cell[277748, 6348, 48, 1, 20, "LicenseText"],
-Cell[277799, 6351, 75, 0, 20, "LicenseText"],
-Cell[277877, 6353, 243, 4, 55, "LicenseText"],
-Cell[278123, 6359, 125, 3, 31, "LicenseText"],
-Cell[278251, 6364, 42, 0, 20, "LicenseText"],
-Cell[278296, 6366, 176, 3, 43, "LicenseText"],
-Cell[278475, 6371, 599, 9, 137, "LicenseText"],
-Cell[279077, 6382, 806, 12, 199, "LicenseText"],
-Cell[279886, 6396, 50, 1, 20, "LicenseText"],
-Cell[279939, 6399, 71, 0, 20, "LicenseText"],
-Cell[280013, 6401, 79, 0, 20, "LicenseText"],
-Cell[280095, 6403, 63, 0, 20, "LicenseText"],
-Cell[280161, 6405, 48, 0, 20, "LicenseText"],
-Cell[280212, 6407, 96, 2, 31, "LicenseText"],
-Cell[280311, 6411, 83, 1, 20, "LicenseText"],
-Cell[280397, 6414, 52, 0, 20, "LicenseText"],
-Cell[280452, 6416, 72, 0, 20, "LicenseText"],
-Cell[280527, 6418, 50, 0, 20, "LicenseText"],
-Cell[280580, 6420, 50, 0, 20, "LicenseText"],
-Cell[280633, 6422, 72, 0, 20, "LicenseText"],
-Cell[280708, 6424, 53, 0, 20, "LicenseText"],
-Cell[280764, 6426, 69, 0, 20, "LicenseText"],
-Cell[280836, 6428, 57, 0, 20, "LicenseText"],
-Cell[280896, 6430, 54, 0, 20, "LicenseText"],
-Cell[280953, 6432, 97, 2, 20, "LicenseText"],
-Cell[281053, 6436, 61, 0, 20, "LicenseText"],
-Cell[281117, 6438, 475, 7, 91, "LicenseText"],
-Cell[281595, 6447, 192, 4, 43, "LicenseText"],
-Cell[281790, 6453, 506, 8, 127, "LicenseText"],
-Cell[282299, 6463, 112, 2, 20, "LicenseText"],
-Cell[282414, 6467, 101, 3, 36, "LicenseText"],
-Cell[282518, 6472, 53, 1, 20, "LicenseText"],
-Cell[282574, 6475, 126, 3, 31, "LicenseText"],
-Cell[282703, 6480, 475, 7, 91, "LicenseText"],
-Cell[283181, 6489, 161, 3, 31, "LicenseText"],
-Cell[283345, 6494, 505, 8, 127, "LicenseText"],
-Cell[283853, 6504, 169, 3, 43, "LicenseText"],
-Cell[284025, 6509, 323, 5, 67, "LicenseText"],
-Cell[284351, 6516, 48, 1, 20, "LicenseText"],
-Cell[284402, 6519, 70, 0, 20, "LicenseText"],
-Cell[284475, 6521, 66, 1, 20, "LicenseText"],
-Cell[284544, 6524, 34, 0, 20, "LicenseText"],
-Cell[284581, 6526, 349, 6, 67, "LicenseText"],
-Cell[284933, 6534, 114, 3, 31, "LicenseText"],
-Cell[285050, 6539, 175, 3, 43, "LicenseText"],
-Cell[285228, 6544, 588, 9, 115, "LicenseText"],
-Cell[285819, 6555, 808, 12, 199, "LicenseText"],
-Cell[286630, 6569, 46, 1, 20, "LicenseText"],
-Cell[286679, 6572, 61, 0, 20, "LicenseText"],
-Cell[286743, 6574, 146, 3, 31, "LicenseText"],
-Cell[286892, 6579, 52, 1, 20, "LicenseText"],
-Cell[286947, 6582, 34, 0, 20, "LicenseText"],
-Cell[286984, 6584, 71, 0, 20, "LicenseText"],
-Cell[287058, 6586, 92, 2, 20, "LicenseText"],
-Cell[287153, 6590, 99, 2, 31, "LicenseText"],
-Cell[287255, 6594, 89, 1, 20, "LicenseText"],
-Cell[287347, 6597, 69, 0, 20, "LicenseText"],
-Cell[287419, 6599, 72, 0, 20, "LicenseText"],
-Cell[287494, 6601, 64, 0, 20, "LicenseText"],
-Cell[287561, 6603, 60, 0, 20, "LicenseText"],
-Cell[287624, 6605, 70, 0, 20, "LicenseText"],
-Cell[287697, 6607, 58, 0, 20, "LicenseText"],
-Cell[287758, 6609, 53, 0, 20, "LicenseText"],
-Cell[287814, 6611, 69, 0, 20, "LicenseText"],
-Cell[287886, 6613, 53, 0, 20, "LicenseText"],
-Cell[287942, 6615, 57, 0, 20, "LicenseText"],
-Cell[288002, 6617, 57, 0, 20, "LicenseText"],
-Cell[288062, 6619, 75, 0, 20, "LicenseText"],
-Cell[288140, 6621, 49, 0, 20, "LicenseText"],
-Cell[288192, 6623, 58, 0, 20, "LicenseText"],
-Cell[288253, 6625, 55, 0, 20, "LicenseText"],
-Cell[288311, 6627, 58, 0, 20, "LicenseText"],
-Cell[288372, 6629, 58, 0, 20, "LicenseText"],
-Cell[288433, 6631, 54, 0, 20, "LicenseText"],
-Cell[288490, 6633, 65, 0, 20, "LicenseText"],
-Cell[288558, 6635, 58, 0, 20, "LicenseText"],
-Cell[288619, 6637, 68, 0, 20, "LicenseText"],
-Cell[288690, 6639, 64, 0, 20, "LicenseText"],
-Cell[288757, 6641, 53, 0, 20, "LicenseText"],
-Cell[288813, 6643, 59, 0, 20, "LicenseText"],
-Cell[288875, 6645, 65, 0, 20, "LicenseText"],
-Cell[288943, 6647, 67, 0, 20, "LicenseText"],
-Cell[289013, 6649, 64, 0, 20, "LicenseText"],
-Cell[289080, 6651, 56, 0, 20, "LicenseText"],
-Cell[289139, 6653, 55, 0, 20, "LicenseText"],
-Cell[289197, 6655, 58, 0, 20, "LicenseText"],
-Cell[289258, 6657, 51, 0, 20, "LicenseText"],
-Cell[289312, 6659, 57, 0, 20, "LicenseText"],
-Cell[289372, 6661, 65, 0, 20, "LicenseText"],
-Cell[289440, 6663, 59, 0, 20, "LicenseText"],
-Cell[289502, 6665, 71, 0, 20, "LicenseText"],
-Cell[289576, 6667, 62, 0, 20, "LicenseText"],
-Cell[289641, 6669, 134, 3, 31, "LicenseText"],
-Cell[289778, 6674, 143, 3, 31, "LicenseText"],
-Cell[289924, 6679, 175, 3, 43, "LicenseText"],
-Cell[290102, 6684, 157, 3, 31, "LicenseText"],
-Cell[290262, 6689, 237, 4, 43, "LicenseText"],
-Cell[290502, 6695, 247, 4, 55, "LicenseText"],
-Cell[290752, 6701, 809, 12, 199, "LicenseText"],
-Cell[291564, 6715, 49, 1, 20, "LicenseText"],
-Cell[291616, 6718, 172, 3, 43, "LicenseText"],
-Cell[291791, 6723, 144, 3, 31, "LicenseText"],
-Cell[291938, 6728, 60, 0, 20, "LicenseText"],
-Cell[292001, 6730, 560, 8, 103, "LicenseText"],
-Cell[292564, 6740, 51, 1, 20, "LicenseText"],
-Cell[292618, 6743, 58, 0, 20, "LicenseText"],
-Cell[292679, 6745, 225, 4, 43, "LicenseText"],
-Cell[292907, 6751, 475, 7, 91, "LicenseText"],
-Cell[293385, 6760, 159, 3, 31, "LicenseText"],
-Cell[293547, 6765, 505, 8, 127, "LicenseText"],
-Cell[294055, 6775, 60, 1, 20, "LicenseText"],
-Cell[294118, 6778, 167, 3, 43, "LicenseText"],
-Cell[294288, 6783, 82, 1, 20, "LicenseText"],
-Cell[294373, 6786, 180, 3, 43, "LicenseText"],
-Cell[294556, 6791, 215, 4, 31, "LicenseText"],
-Cell[294774, 6797, 325, 5, 67, "LicenseText"],
-Cell[295102, 6804, 364, 7, 31, "LicenseText"],
-Cell[295469, 6813, 59, 1, 20, "LicenseText"],
-Cell[295531, 6816, 172, 3, 43, "LicenseText"],
-Cell[295706, 6821, 49, 1, 20, "LicenseText"],
-Cell[295758, 6824, 95, 3, 36, "LicenseText"],
-Cell[295856, 6829, 43, 0, 20, "LicenseText"],
-Cell[295902, 6831, 463, 7, 91, "LicenseText"],
-Cell[296368, 6840, 159, 3, 31, "LicenseText"],
-Cell[296530, 6845, 506, 8, 127, "LicenseText"],
-Cell[297039, 6855, 50, 1, 20, "LicenseText"],
-Cell[297092, 6858, 39, 0, 20, "LicenseText"],
-Cell[297134, 6860, 629, 9, 115, "LicenseText"],
-Cell[297766, 6871, 60, 1, 20, "LicenseText"],
-Cell[297829, 6874, 83, 1, 20, "LicenseText"],
-Cell[297915, 6877, 498, 7, 91, "LicenseText"],
-Cell[298416, 6886, 52, 1, 20, "LicenseText"],
-Cell[298471, 6889, 183, 3, 43, "LicenseText"],
-Cell[298657, 6894, 1548, 22, 343, "LicenseText"],
-Cell[300208, 6918, 1197, 17, 223, "LicenseText"],
-Cell[301408, 6937, 53, 1, 20, "LicenseText"],
-Cell[301464, 6940, 180, 5, 31, "LicenseText"],
-Cell[301647, 6947, 98, 2, 31, "LicenseText"],
-Cell[301748, 6951, 86, 1, 20, "LicenseText"],
-Cell[301837, 6954, 29, 0, 20, "LicenseText"],
-Cell[301869, 6956, 48, 1, 20, "LicenseText"],
-Cell[301920, 6959, 511, 8, 103, "LicenseText"],
-Cell[302434, 6969, 204, 4, 43, "LicenseText"],
-Cell[302641, 6975, 347, 6, 67, "LicenseText"],
-Cell[302991, 6983, 298, 5, 55, "LicenseText"],
-Cell[303292, 6990, 51, 1, 20, "LicenseText"],
-Cell[303346, 6993, 210, 4, 43, "LicenseText"],
-Cell[303559, 6999, 61, 0, 20, "LicenseText"],
-Cell[303623, 7001, 277, 5, 55, "LicenseText"],
-Cell[303903, 7008, 206, 4, 43, "LicenseText"],
-Cell[304112, 7014, 660, 12, 171, "LicenseText"],
-Cell[304775, 7028, 407, 6, 79, "LicenseText"],
-Cell[305185, 7036, 695, 10, 139, "LicenseText"],
-Cell[305883, 7048, 993, 14, 187, "LicenseText"],
-Cell[306879, 7064, 610, 9, 115, "LicenseText"],
-Cell[307492, 7075, 536, 8, 103, "LicenseText"],
-Cell[308031, 7085, 923, 13, 187, "LicenseText"],
-Cell[308957, 7100, 635, 9, 115, "LicenseText"],
-Cell[309595, 7111, 1057, 15, 199, "LicenseText"],
-Cell[310655, 7128, 521, 8, 103, "LicenseText"],
-Cell[311179, 7138, 730, 11, 139, "LicenseText"],
-Cell[311912, 7151, 429, 7, 79, "LicenseText"],
-Cell[312344, 7160, 201, 4, 43, "LicenseText"],
-Cell[312548, 7166, 435, 7, 79, "LicenseText"],
-Cell[312986, 7175, 286, 6, 77, "LicenseText"],
-Cell[313275, 7183, 245, 4, 55, "LicenseText"],
-Cell[313523, 7189, 567, 8, 103, "LicenseText"],
-Cell[314093, 7199, 651, 10, 149, "LicenseText"],
-Cell[314747, 7211, 49, 1, 20, "LicenseText"],
-Cell[314799, 7214, 751, 11, 151, "LicenseText"],
-Cell[315553, 7227, 53, 1, 20, "LicenseText"],
-Cell[315609, 7230, 443, 10, 55, "LicenseText"],
-Cell[316055, 7242, 346, 6, 67, "LicenseText"],
-Cell[316404, 7250, 50, 1, 20, "LicenseText"],
-Cell[316457, 7253, 113, 3, 31, "LicenseText"],
-Cell[316573, 7258, 30, 0, 20, "LicenseText"],
-Cell[316606, 7260, 93, 2, 20, "LicenseText"],
-Cell[316702, 7264, 96, 2, 20, "LicenseText"],
-Cell[316801, 7268, 29, 0, 20, "LicenseText"],
-Cell[316833, 7270, 55, 1, 20, "LicenseText"],
-Cell[316891, 7273, 207, 4, 43, "LicenseText"],
-Cell[317101, 7279, 49, 1, 20, "LicenseText"],
-Cell[317153, 7282, 79, 0, 20, "LicenseText"],
-Cell[317235, 7284, 175, 3, 43, "LicenseText"],
-Cell[317413, 7289, 370, 6, 67, "LicenseText"],
-Cell[317786, 7297, 807, 12, 199, "LicenseText"],
-Cell[318596, 7311, 51, 1, 20, "LicenseText"],
-Cell[318650, 7314, 194, 4, 43, "LicenseText"],
-Cell[318847, 7320, 38, 0, 20, "LicenseText"],
-Cell[318888, 7322, 131, 3, 31, "LicenseText"],
-Cell[319022, 7327, 144, 3, 43, "LicenseText"],
-Cell[319169, 7332, 721, 10, 139, "LicenseText"],
-Cell[319893, 7344, 62, 1, 20, "LicenseText"],
-Cell[319958, 7347, 82, 1, 31, "LicenseText"],
-Cell[320043, 7350, 414, 7, 91, "LicenseText"],
-Cell[320460, 7359, 435, 7, 103, "LicenseText"],
-Cell[320898, 7368, 54, 0, 20, "LicenseText"],
-Cell[320955, 7370, 177, 3, 43, "LicenseText"],
-Cell[321135, 7375, 992, 14, 187, "LicenseText"],
-Cell[322130, 7391, 670, 10, 163, "LicenseText"],
-Cell[322803, 7403, 285, 5, 55, "LicenseText"],
-Cell[323091, 7410, 55, 1, 20, "LicenseText"],
-Cell[323149, 7413, 76, 0, 20, "LicenseText"],
-Cell[323228, 7415, 83, 1, 20, "LicenseText"],
-Cell[323314, 7418, 175, 3, 43, "LicenseText"],
-Cell[323492, 7423, 165, 3, 31, "LicenseText"],
-Cell[323660, 7428, 245, 4, 55, "LicenseText"],
-Cell[323908, 7434, 216, 4, 43, "LicenseText"],
-Cell[324127, 7440, 797, 11, 199, "LicenseText"],
-Cell[324927, 7453, 53, 1, 20, "LicenseText"],
-Cell[324983, 7456, 1214, 20, 279, "LicenseText"],
-Cell[326200, 7478, 49, 1, 20, "LicenseText"],
-Cell[326252, 7481, 203, 4, 43, "LicenseText"],
-Cell[326458, 7487, 208, 4, 43, "LicenseText"],
-Cell[326669, 7493, 50, 1, 20, "LicenseText"],
-Cell[326722, 7496, 82, 1, 20, "LicenseText"],
-Cell[326807, 7499, 61, 0, 20, "LicenseText"],
-Cell[326871, 7501, 43, 0, 20, "LicenseText"],
-Cell[326917, 7503, 175, 3, 43, "LicenseText"],
-Cell[327095, 7508, 160, 3, 31, "LicenseText"],
-Cell[327258, 7513, 240, 4, 55, "LicenseText"],
-Cell[327501, 7519, 808, 12, 199, "LicenseText"],
-Cell[328312, 7533, 55, 1, 20, "LicenseText"],
-Cell[328370, 7536, 157, 3, 31, "LicenseText"],
-Cell[328530, 7541, 48, 1, 20, "LicenseText"],
-Cell[328581, 7544, 97, 2, 20, "LicenseText"],
-Cell[328681, 7548, 175, 3, 43, "LicenseText"],
-Cell[328859, 7553, 161, 3, 31, "LicenseText"],
-Cell[329023, 7558, 241, 4, 55, "LicenseText"],
-Cell[329267, 7564, 236, 4, 55, "LicenseText"],
-Cell[329506, 7570, 808, 12, 199, "LicenseText"],
-Cell[330317, 7584, 59, 0, 20, "LicenseText"],
-Cell[330379, 7586, 137, 3, 31, "LicenseText"],
-Cell[330519, 7591, 1213, 17, 223, "LicenseText"],
-Cell[331735, 7610, 52, 1, 20, "LicenseText"],
-Cell[331790, 7613, 31, 0, 20, "LicenseText"],
-Cell[331824, 7615, 475, 7, 91, "LicenseText"],
-Cell[332302, 7624, 159, 3, 31, "LicenseText"],
-Cell[332464, 7629, 506, 8, 127, "LicenseText"],
-Cell[332973, 7639, 75, 0, 20, "LicenseText"],
-Cell[333051, 7641, 77, 0, 20, "LicenseText"],
-Cell[333131, 7643, 50, 1, 20, "LicenseText"],
-Cell[333184, 7646, 119, 3, 31, "LicenseText"],
-Cell[333306, 7651, 104, 2, 31, "LicenseText"],
-Cell[333413, 7655, 48, 1, 20, "LicenseText"],
-Cell[333464, 7658, 78, 0, 20, "LicenseText"],
-Cell[333545, 7660, 209, 4, 43, "LicenseText"],
-Cell[333757, 7666, 222, 4, 43, "LicenseText"],
-Cell[333982, 7672, 281, 5, 55, "LicenseText"],
-Cell[334266, 7679, 155, 3, 31, "LicenseText"],
-Cell[334424, 7684, 106, 2, 31, "LicenseText"],
-Cell[334533, 7688, 53, 1, 20, "LicenseText"],
-Cell[334589, 7691, 69, 0, 20, "LicenseText"],
-Cell[334661, 7693, 37, 0, 20, "LicenseText"],
-Cell[334701, 7695, 489, 13, 167, "LicenseText"],
-Cell[335193, 7710, 399, 10, 116, "LicenseText"],
-Cell[335595, 7722, 1733, 30, 511, "LicenseText"],
-Cell[337331, 7754, 1090, 22, 297, "LicenseText"],
-Cell[338424, 7778, 414, 9, 94, "LicenseText"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[338887, 7793, 1027, 22, 30, "NavigationBar",
+Cell[384999, 8946, 1027, 22, 30, "NavigationBar",
  CellTags->{"SlideShowHeader", "PiLicenseAgreement"}],
-Cell[339917, 7817, 234, 8, 92, "SectionHeading"],
+Cell[386029, 8970, 234, 8, 92, "SectionHeading"],
 Cell[CellGroupData[{
-Cell[340176, 7829, 36, 0, 32, "LicenseHeading"],
-Cell[340215, 7831, 195, 4, 20, "LicenseText"],
-Cell[340413, 7837, 802, 18, 67, "LicenseText"],
-Cell[341218, 7857, 727, 11, 103, "LicenseText"]
+Cell[386288, 8982, 36, 0, 32, "LicenseHeading"],
+Cell[386327, 8984, 195, 4, 20, "LicenseText"],
+Cell[386525, 8990, 802, 18, 67, "LicenseText"],
+Cell[387330, 9010, 727, 11, 103, "LicenseText"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[341982, 7873, 37, 0, 32, "LicenseHeading"],
-Cell[342022, 7875, 160, 5, 31, "LicenseText"],
-Cell[342185, 7882, 326, 7, 55, "LicenseText"],
-Cell[342514, 7891, 360, 7, 55, "LicenseText"],
-Cell[342877, 7900, 262, 8, 43, "LicenseText"],
-Cell[343142, 7910, 371, 8, 67, "LicenseText"]
+Cell[388094, 9026, 37, 0, 32, "LicenseHeading"],
+Cell[388134, 9028, 160, 5, 31, "LicenseText"],
+Cell[388297, 9035, 326, 7, 55, "LicenseText"],
+Cell[388626, 9044, 360, 7, 55, "LicenseText"],
+Cell[388989, 9053, 262, 8, 43, "LicenseText"],
+Cell[389254, 9063, 371, 8, 67, "LicenseText"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[343550, 7923, 35, 0, 32, "LicenseHeading"],
-Cell[343588, 7925, 990, 14, 187, "LicenseText"]
+Cell[389662, 9076, 35, 0, 32, "LicenseHeading"],
+Cell[389700, 9078, 990, 14, 187, "LicenseText"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[344615, 7944, 58, 0, 32, "LicenseHeading"],
-Cell[344676, 7946, 251, 4, 55, "LicenseText"],
-Cell[344930, 7952, 45, 0, 20, "LicenseText"],
-Cell[344978, 7954, 94, 2, 20, "LicenseText"],
-Cell[345075, 7958, 594, 17, 46, "LicenseText"]
+Cell[390727, 9097, 58, 0, 32, "LicenseHeading"],
+Cell[390788, 9099, 251, 4, 55, "LicenseText"],
+Cell[391042, 9105, 45, 0, 20, "LicenseText"],
+Cell[391090, 9107, 94, 2, 20, "LicenseText"],
+Cell[391187, 9111, 594, 17, 46, "LicenseText"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[345706, 7980, 41, 0, 32, "LicenseHeading"],
-Cell[345750, 7982, 230, 4, 43, "LicenseText"],
-Cell[345983, 7988, 99, 2, 20, "LicenseText"],
-Cell[346085, 7992, 98, 2, 31, "LicenseText"],
-Cell[346186, 7996, 117, 3, 31, "LicenseText"],
-Cell[346306, 8001, 494, 10, 67, "LicenseText"],
-Cell[346803, 8013, 268, 5, 55, "LicenseText"],
-Cell[347074, 8020, 260, 4, 55, "LicenseText"],
-Cell[347337, 8026, 117, 3, 31, "LicenseText"],
-Cell[347457, 8031, 247, 4, 55, "LicenseText"],
-Cell[347707, 8037, 160, 3, 31, "LicenseText"],
-Cell[347870, 8042, 286, 5, 55, "LicenseText"]
+Cell[391818, 9133, 41, 0, 32, "LicenseHeading"],
+Cell[391862, 9135, 230, 4, 43, "LicenseText"],
+Cell[392095, 9141, 99, 2, 20, "LicenseText"],
+Cell[392197, 9145, 98, 2, 31, "LicenseText"],
+Cell[392298, 9149, 117, 3, 31, "LicenseText"],
+Cell[392418, 9154, 494, 10, 67, "LicenseText"],
+Cell[392915, 9166, 268, 5, 55, "LicenseText"],
+Cell[393186, 9173, 260, 4, 55, "LicenseText"],
+Cell[393449, 9179, 117, 3, 31, "LicenseText"],
+Cell[393569, 9184, 247, 4, 55, "LicenseText"],
+Cell[393819, 9190, 160, 3, 31, "LicenseText"],
+Cell[393982, 9195, 286, 5, 55, "LicenseText"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[348193, 8052, 37, 0, 32, "LicenseHeading"],
-Cell[348233, 8054, 912, 13, 175, "LicenseText"]
+Cell[394305, 9205, 37, 0, 32, "LicenseHeading"],
+Cell[394345, 9207, 912, 13, 175, "LicenseText"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[349182, 8072, 50, 0, 32, "LicenseHeading"],
-Cell[349235, 8074, 1322, 18, 235, "LicenseText"],
-Cell[350560, 8094, 822, 18, 96, "LicenseText"]
+Cell[395294, 9225, 50, 0, 32, "LicenseHeading"],
+Cell[395347, 9227, 1322, 18, 235, "LicenseText"],
+Cell[396672, 9247, 822, 18, 96, "LicenseText"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[351419, 8117, 75, 0, 48, "LicenseHeading"],
-Cell[351497, 8119, 755, 11, 139, "LicenseText"],
-Cell[352255, 8132, 171, 3, 43, "LicenseText"],
-Cell[352429, 8137, 715, 10, 139, "LicenseText"],
-Cell[353147, 8149, 526, 8, 103, "LicenseText"],
-Cell[353676, 8159, 306, 5, 67, "LicenseText"],
-Cell[353985, 8166, 176, 3, 43, "LicenseText"]
+Cell[397531, 9270, 75, 0, 48, "LicenseHeading"],
+Cell[397609, 9272, 755, 11, 139, "LicenseText"],
+Cell[398367, 9285, 171, 3, 43, "LicenseText"],
+Cell[398541, 9290, 715, 10, 139, "LicenseText"],
+Cell[399259, 9302, 526, 8, 103, "LicenseText"],
+Cell[399788, 9312, 306, 5, 67, "LicenseText"],
+Cell[400097, 9319, 176, 3, 43, "LicenseText"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[354198, 8174, 41, 0, 32, "LicenseHeading"],
-Cell[354242, 8176, 809, 12, 139, "LicenseText"]
+Cell[400310, 9327, 41, 0, 32, "LicenseHeading"],
+Cell[400354, 9329, 809, 12, 139, "LicenseText"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[355088, 8193, 76, 0, 48, "LicenseHeading"],
-Cell[355167, 8195, 389, 6, 79, "LicenseText"]
+Cell[401200, 9346, 76, 0, 48, "LicenseHeading"],
+Cell[401279, 9348, 389, 6, 79, "LicenseText"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[355593, 8206, 36, 0, 32, "LicenseHeading"],
-Cell[355632, 8208, 460, 13, 67, "LicenseText"]
+Cell[401705, 9359, 36, 0, 32, "LicenseHeading"],
+Cell[401744, 9361, 460, 13, 67, "LicenseText"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[356141, 8227, 1024, 22, 30, "NavigationBar",
+Cell[402253, 9380, 1024, 22, 30, "NavigationBar",
  CellTags->{"SlideShowHeader", "PiPrivacyPolicy"}],
-Cell[357168, 8251, 209, 8, 92, "SectionHeading"],
-Cell[357380, 8261, 932, 23, 139, "LicenseText"],
-Cell[358315, 8286, 1247, 26, 199, "LicenseText"],
-Cell[359565, 8314, 550, 16, 79, "LicenseText"],
-Cell[360118, 8332, 411, 8, 79, "LicenseText"],
-Cell[360532, 8342, 429, 9, 79, "LicenseText"],
-Cell[360964, 8353, 261, 4, 51, "LicenseText"],
-Cell[361228, 8359, 355, 8, 55, "LicenseText"]
+Cell[403280, 9404, 209, 8, 92, "SectionHeading"],
+Cell[403492, 9414, 932, 23, 139, "LicenseText"],
+Cell[404427, 9439, 1247, 26, 199, "LicenseText"],
+Cell[405677, 9467, 550, 16, 79, "LicenseText"],
+Cell[406230, 9485, 411, 8, 79, "LicenseText"],
+Cell[406644, 9495, 429, 9, 79, "LicenseText"],
+Cell[407076, 9506, 261, 4, 51, "LicenseText"],
+Cell[407340, 9512, 355, 8, 55, "LicenseText"]
 }, Open  ]]
 }
 ]

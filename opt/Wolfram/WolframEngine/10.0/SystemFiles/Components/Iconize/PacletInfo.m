@@ -1,10 +1,10 @@
 (* Paclet Info File *)
 
-(* created 2014/05/21*)
+(* created 2014/10/16*)
 
 Paclet[
     Name -> "Iconize",
-    Version -> "0.9.9.5",
+    Version -> "0.9.9.6",
     MathematicaVersion -> "10+",
     Description -> "Generate an icon for an arbitrary WL expression",
     Extensions -> 

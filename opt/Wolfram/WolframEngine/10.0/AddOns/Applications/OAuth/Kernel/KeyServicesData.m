@@ -52,11 +52,17 @@ KeyServicesData[___]:=$Failed
 
 $packagedirectory=FileNameJoin[{DirectoryName[System`Private`$InputFileName],"Services"}];
 
-addKeyservice[name_, dir_:$packagedirectory]:=Module[{funs},
+addKeyservice[name_, dir_:$packagedirectory]:=Module[{funs, file},
 	Unprotect[$predefinedKeyservicelist,keyservicedata,keycookeddata,keysendmessage];
 	$predefinedKeyservicelist=Union[AppendTo[$predefinedKeyservicelist,name]];
 	ServiceConnections`Private`appendservicelist[name,"APIKey"];
-	funs=Get[FileNameJoin[{dir, "APIKey",name<>"API.m"}]];
+	file=FileNameJoin[{dir, "APIKey",name<>"API.m"}];
+	If[!FileExistsQ[file],
+		(* alternate *)
+		file=FileNameJoin[{dir,name<>".m"}]
+	];
+	If[!FileExistsQ[file],Return[$Failed]];
+	funs=Get[file];
 	keyservicedata[name,args___]:=funs[[1]][args];
 	keycookeddata[name,args___]:=funs[[2]][args];
 	keysendmessage[name,args___]:=funs[[3]][args];

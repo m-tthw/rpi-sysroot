@@ -31,9 +31,9 @@ class SPIDevice(object):
         spi_device = "%s%d.%d" % (SPIDEV, self.bus, self.chip_select)
         self.open_fd(spi_device)
 
-    def __del__(self):
-        if self.fd is not None:
-            self.close_fd()
+    # def __del__(self):
+    #     if self.fd is not None:
+    #         self.close_fd()
 
     def open_fd(self, spi_device):
         try:
@@ -46,7 +46,7 @@ class SPIDevice(object):
 
     def close_fd(self):
         posix.close(self.fd)
-        del self.fd
+        self.fd = None
 
     def spisend(self, bytes_to_send):
         """Sends bytes via the SPI bus.

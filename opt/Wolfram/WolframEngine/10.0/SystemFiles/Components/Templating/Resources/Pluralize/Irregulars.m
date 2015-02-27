@@ -535,7 +535,7 @@
  "pintado" -> "pintadoes", "pipra" -> "pipras", "piracy" -> "piracies", 
  "pistillidium" -> "pistillida", "placitum" -> "placita", 
  "plaga" -> "plagae", "plagiary" -> "plagiaries", "planula" -> "planulae", 
- "plasmodium" -> "plasmodia", "plenty" -> "in", "pleopod" -> "pleopoda", 
+ "plasmodium" -> "plasmodia", "plenty" -> "plenties", "pleopod" -> "pleopoda", 
  "plesiosaurus" -> "plesiosauri", "plethrum" -> "plethra", 
  "pleura" -> "pleurae", "pleurapophysis" -> "pleurapophyses", 
  "pleurobranchia" -> "pleuroeranchiae", "pleuron" -> "pleura", 

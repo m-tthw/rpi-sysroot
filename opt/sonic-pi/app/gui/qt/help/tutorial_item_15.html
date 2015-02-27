@@ -1,191 +1,93 @@
 <font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
 
-<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Threads</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">So you’ve made your killer bassline and a phat beat. How do you play them at the same time? One solution is to weave them together manually - play some bass, then a bit of drums, then more bass… However, the timing soon gets hard to think about, especially when you start weaving in more elements. </p>
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Partial Samples</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">What if Sonic Pi could weave things for you automatically? Well it can, and you do it with a special thing called a thread.</p>
+<p style="font-size:15px;color:#5e5e5e;">This section will conclude our exploration of Sonic Pi’s sample
+player. Let’s do a quick recap. So far we’ve looked at how we can
+trigger samples:</p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Infinite Loops</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">To keep this example simple, you’ll have to imagine that this is a phat beat and killer bassline:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">loop do
-  sample :drum_heavy_kick
-  sleep 1
-end
-
-loop do
-  use_synth :fm
-  play 40, release: 0.2
-  sleep 0.5
-end
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">As we’ve discussed previously, loops are like <em style="font-size:15px;color:darkorange;">black holes</em> for the program. Once you enter a loop you can never exit them until you hit stop. How do we play both loops at the same time? We have to tell Sonic Pi that we want to start something at the same time as the rest of the code. This is where threads come to the rescue.</p>
+<p style="font-size:15px;color:#5e5e5e;">We then looked at how we can change the rate of samples such as
+playing them at half speed:</p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Threads to the Rescue</span></p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">in_thread do
-  loop do
-    sample :drum_heavy_kick
-    sleep 1
-  end
-end
-
-loop do
-  use_synth :fm
-  play 40, release: 0.2
-  sleep 0.5
-end
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, rate: 0.5
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">By wrapping the first loop in an <code style="font-size:15px; color:deeppink; background-color:white">in_thread</code> do/end block we tell Sonic Pi to run the contents of the do/end block at <em style="font-size:15px;color:darkorange;">exactly</em> the same time as the next statement after the do end block (which happens to be the second loop). Try it and you’ll hear both the drums and the bassline weaved together!</p>
+<p style="font-size:15px;color:#5e5e5e;">Next, we looked at how we could fade a sample in (let’s do it at half
+speed):</p>
 
-<p style="font-size:15px;color:#5e5e5e;">Now what if we wanted to add a synth on top. Something like:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">in_thread do
-  loop do
-    sample :drum_heavy_kick
-    sleep 1
-  end
-end
-
-loop do
-  use_synth :fm
-  play 40, release: 0.2
-  sleep 0.5
-end
-
-loop do
-  use_synth :zawa
-  play 52, release: 2.5, phase: 2, amp: 0.5
-  sleep 2
-end
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, rate: 0.5, attack: 1
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Now we have the same problem as before. The first loop is played at the same time as the second loop due to the <code style="font-size:15px; color:deeppink; background-color:white">in_thread</code>. However, <em style="font-size:15px;color:darkorange;">the third loop is never reached</em>. We therefore need another thread:</p>
+<p style="font-size:15px;color:#5e5e5e;">We also looked at how we could use the start of a sample percussively
+by giving <code style="font-size:15px; color:deeppink; background-color:white">sustain:</code> an explicit value and setting both the attack and
+release to be short values:</p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">in_thread do
-  loop do
-    sample :drum_heavy_kick
-    sleep 1
-  end
-end
-
-in_thread do
-  loop do
-    use_synth :fm
-    play 40, release: 0.2
-    sleep 0.5
-  end
-end
-
-loop do
-  use_synth :zawa
-  play 52, release: 2.5, phase: 2, amp: 0.5
-  sleep 2
-end
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, rate: 2, attack: 0.01, sustain: 0, release: 0.35
 </code></pre>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Runs as threads</span></p>
+<p style="font-size:15px;color:#5e5e5e;">However, wouldn’t it be nice if we didn’t have to always start at the
+beginning of the sample? Wouldn’t it also be nice if we didn’t have to
+always finish at the end of the sample?</p>
 
-<p style="font-size:15px;color:#5e5e5e;">What may surprise you is that when you press the run button, you’re actually creating a new thread for the code to run. This is why pressing it multiple times will layer sounds over each other. As the runs themselves are threads, they will automatically weave the sounds together for you.</p>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Choosing a starting point</span></p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Scope</span></p>
+<p style="font-size:15px;color:#5e5e5e;">It is possible to choose an arbitrary starting point in the sample as a
+value between 0 and 1 where 0 is the start of the sample, 1 is the end
+and 0.5 is half way through the sample. Let’s try playing only the last
+half of the amen break:</p>
 
-<p style="font-size:15px;color:#5e5e5e;">As you learn how to master Sonic Pi, you’ll learn that threads are the most important building block for your music. One of the important jobs they have is to isolate the notion of <em style="font-size:15px;color:darkorange;">current things</em> from other threads. What does this mean? Well, when you switch synths using <code style="font-size:15px; color:deeppink; background-color:white">use_synth</code> you’re actually just switching the synth in the <em style="font-size:15px;color:darkorange;">current thread</em> - no other thread will have their synth switched. Let’s see this in action:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play 50
-sleep 1
-
-in_thread do
-  use_synth :tb303
-  play 50
-end
-
-sleep 1
-play 50
-
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, start: 0.5
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Notice how the middle sound was different to the others? The <code style="font-size:15px; color:deeppink; background-color:white">use_synth</code> statement only affected the thread it was in and not the outer main run thread.</p>
+<p style="font-size:15px;color:#5e5e5e;">How about the last quarter of the sample:</p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Inheritance</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">When you create a new thread with <code style="font-size:15px; color:deeppink; background-color:white">in_thread</code> the new thread will automatically inherit all of the current settings from the current thread. Let’s see that:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">use_synth :tb303
-play 50
-sleep 1
-
-in_thread do
-  play 55
-end
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, start: 0.75
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Notice how the second note is played with the <code style="font-size:15px; color:deeppink; background-color:white">:tb303</code> synth even though it was played from a separate thread? Any of the settings modified with the various <code style="font-size:15px; color:deeppink; background-color:white">use_*</code> functions will behave in the same way.</p>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Choosing a finish point</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">When threads are created, they inherit all the settings from their parent but they don’t share any changes back.</p>
+<p style="font-size:15px;color:#5e5e5e;">Similarly, it is possible to choose an arbitrary finish point in the
+sample as a value between 0 and 1. Let’s finish the amen break half way
+through:</p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Naming Threads</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">Finally, we can give our threads names:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">in_thread(name: :bass) do
-  loop do
-    use_synth :prophet
-    play chord(:e2, :m7).choose, release: 0.6
-    sleep 0.5
-  end
-end
-
-in_thread(name: :drums) do
-  loop do
-    sample :elec_snare
-    sleep 1
-  end
-end
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, finish: 0.5
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Look at the log pane when you run this code. See how the log reports the name of the thread with the message:</p>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Specifying start and finish</span></p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">[Run 36, Time 4.0, Thread :bass]
- |- synth :prophet, {release: 0.6, note: 47}
+<p style="font-size:15px;color:#5e5e5e;">Of course, we can combine these two to play arbitrary segments of the
+audio file. How about only a small section in the middle:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, start: 0.4, finish: 0.6
 </code></pre>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Only One Thread per Name Allowed</span></p>
+<p style="font-size:15px;color:#5e5e5e;">What happens if we choose a start position after the finish position?</p>
 
-<p style="font-size:15px;color:#5e5e5e;">One last thing to know about named threads is that only one thread of that name may be running at the same time. Let’s explore this. Consider this code:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">in_thread do
-  loop do
-    sample :loop_amen
-    sleep sample_duration :loop_amen
-  end
-end
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, start: 0.6, finish: 0.4
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Go ahead and paste that into a workspace and press the run button. Press it again a couple of times. Listen to the cacophony of multiple amen breaks looping out of time with each other. Ok, you can press stop now. </p>
+<p style="font-size:15px;color:#5e5e5e;">Cool! It plays it backwards!</p>
 
-<p style="font-size:15px;color:#5e5e5e;">This is the behaviour we’ve seen again and again - if you press the run button, sound layers on top of any existing sound. Therefore if you have a loop and press the run button three times, you’ll have three layers of loops playing simultaneously.</p>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Combining with rate</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">However, with named threads it is different:</p>
+<p style="font-size:15px;color:#5e5e5e;">We can combine this new ability to play arbitrary segments of audio with
+our friend <code style="font-size:15px; color:deeppink; background-color:white">rate:</code>. For example, we can play a very small section of the
+middle of the amen break very slowly:</p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">in_thread(name: :amen) do
-  loop do
-    sample :loop_amen
-    sleep sample_duration :loop_amen
-  end
-end
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, start: 0.5, finish: 0.7, rate: 0.2
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Try pressing the run button multiple times with this code. You’ll only ever hear one amen break loop. You’ll also see this in the log:</p>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Combining with envelopes</span></p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">==&gt; Skipping thread creation: thread with name :amen already exists.
+<p style="font-size:15px;color:#5e5e5e;">Finally, we can combine all of this with our ADSR envelopes to produce
+interesting results:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, start: 0.5, finish: 0.8, rate: -0.2, attack: 0.3, release: 1
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Sonic Pi is telling you that a thread with the name <code style="font-size:15px; color:deeppink; background-color:white">:amen</code> is already playing, so it’s not creating another. </p>
-
-<p style="font-size:15px;color:#5e5e5e;">This behaviour may not seem immediately useful to you now - but it will be very handy when we start to live code…</p>
+<p style="font-size:15px;color:#5e5e5e;">Now go and have a play mashing up samples with all of this fun stuff…</p>
 </font>

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+dpkg-divert --package nuscratch --divert /usr/bin/scratch.old --rename /usr/bin/scratch
+
+

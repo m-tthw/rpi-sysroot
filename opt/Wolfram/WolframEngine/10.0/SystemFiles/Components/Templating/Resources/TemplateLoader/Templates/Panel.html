@@ -1,0 +1,22 @@
+<wolfram:get path="Templates/Clean.html">
+  <wolfram:slot id="Content">
+    <wolfram:get path="Templates/Includes/Title.html"/>
+    <div class="panel panel-default panel-main panel-form">
+      <wolfram:if test="! MatchQ[#PanelTitle, _Missing]">
+        <div class="panel-heading">
+          <wolfram:slot id="PanelTitle"/>
+        </div>
+      </wolfram:if>
+      <div class="panel-body">
+        <wolfram:slot/>
+      </div>
+      <wolfram:if test="Not @ MatchQ[#FormSubmitLabel, _Missing|None]">
+        <div class="panel-footer text-right">
+          <button type="submit" class="btn btn-primary form-submit" autocomplete="off">
+            <wolfram:slot id="FormSubmitLabel">Submit</wolfram:slot>
+          </button>
+        </div>
+      </wolfram:if>
+    </div>
+  </wolfram:slot>
+</wolfram:get>

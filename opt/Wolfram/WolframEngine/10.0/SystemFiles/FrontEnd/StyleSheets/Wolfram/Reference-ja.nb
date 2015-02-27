@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       145,          7]
-NotebookDataLength[     19154,        626]
-NotebookOptionsPosition[     14113,        498]
-NotebookOutlinePosition[     14641,        520]
-CellTagsIndexPosition[     14598,        517]
+NotebookDataLength[     19445,        637]
+NotebookOptionsPosition[     14284,        506]
+NotebookOutlinePosition[     14812,        528]
+CellTagsIndexPosition[     14769,        525]
 MenuPosition->0
 WindowFrame->Normal*)
 
@@ -315,26 +315,34 @@ Cell["Format Page Styles", "Section"],
 
 Cell[StyleData["FormatUsage"],
  Editable->False,
- CellFrame->{{0, 0}, {0.5, 0.5}},
  ShowCellBracket->False,
- CellMargins->{{0, 0}, {10, 8}},
- CellGroupingRules->{"SectionGrouping", 40},
- CellFrameMargins->{{24, 24}, {7, 7}},
- CellFrameColor->GrayLevel[0.752941],
+ CellMargins->{{40, 24}, {24, 18}},
  Hyphenation->False,
- ParagraphSpacing->{0.3, 0},
+ LineSpacing->{1, 5},
  StyleMenuListing->None,
- FontFamily->"Arial",
+ FontFamily->"Verdana",
  FontSize->12,
- Background->GrayLevel[0.929412],
- GridBoxOptions->{BaseStyle->{FontFamily -> "Arial"},
+ GridBoxOptions->{BaseStyle->{FontFamily -> "Verdana"},
  GridBoxAlignment->{
   "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
    "RowsIndexed" -> {}},
  GridBoxItemSize->{"Columns" -> {
      Scaled[0.003], {
       Scaled[0.996]}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
-   "RowsIndexed" -> {}}}]
+   "RowsIndexed" -> {}}}],
+
+Cell[StyleData["FormatNotes"],
+ Editable->False,
+ CellDingbat->StyleBox[
+  "\[FilledSmallSquare]", FontColor -> 
+   RGBColor[0.6000000000000001, 0.6000000000000001, 0.6000000000000001]],
+ ShowCellBracket->Automatic,
+ CellMargins->{{40, 24}, {10, 2}},
+ CellFrameMargins->4,
+ MenuSortingValue->None,
+ MenuCommandKey->"8",
+ FontFamily->"Verdana",
+ FontSize->12]
 }, Closed]],
 
 Cell[CellGroupData[{
@@ -519,7 +527,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[561, 21, 119, 1, 37, 119, 1, "StyleData", "StyleDefinitions", ""],
+Cell[561, 21, 119, 1, 71, 119, 1, "StyleData", "StyleDefinitions", ""],
 Cell[683, 24, 297, 9, 35, 35, 0, "StyleData", "ScreencastMarker", "All"],
 Cell[CellGroupData[{
 Cell[1005, 37, 41, 0, 51, "Section"],
@@ -578,55 +586,58 @@ Cell[9335, 298, 303, 10, 46, 56, 0, "StyleData", "MathCaption", "All",
 }, Closed]],
 Cell[CellGroupData[{
 Cell[9675, 313, 37, 0, 35, "Section"],
-Cell[9715, 315, 730, 21, 62, 30, 0, "StyleData", "FormatUsage", "All",
- StyleMenuListing->None]
-}, Closed]],
-Cell[CellGroupData[{
-Cell[10482, 341, 65, 1, 35, "Section",
- CellID->1492764801],
-Cell[10550, 344, 592, 19, 64, 33, 0, "StyleData", "LegacyInputV10", "All",
+Cell[9715, 315, 540, 16, 85, 30, 0, "StyleData", "FormatUsage", "All",
+ StyleMenuListing->None],
+Cell[10258, 333, 358, 11, 40, 30, 0, "StyleData", "FormatNotes", "All",
  MenuSortingValue->None,
  MenuCommandKey->"8"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[11179, 368, 39, 0, 35, "Section"],
-Cell[11221, 370, 224, 7, 42, 34, 0, "StyleData", "SearchCountCell", "All",
+Cell[10653, 349, 65, 1, 35, "Section",
+ CellID->1492764801],
+Cell[10721, 352, 592, 19, 64, 33, 0, "StyleData", "LegacyInputV10", "All",
+ MenuSortingValue->None,
+ MenuCommandKey->"8"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[11350, 376, 39, 0, 35, "Section"],
+Cell[11392, 378, 224, 7, 42, 34, 0, "StyleData", "SearchCountCell", "All",
  CounterIncrements->"SearchCountCell"],
 Cell[CellGroupData[{
-Cell[11470, 381, 267, 8, 58, 40, 0, "StyleData", "SearchSuggestionsCell", \
+Cell[11641, 389, 267, 8, 58, 40, 0, "StyleData", "SearchSuggestionsCell", \
 "All",
  CounterIncrements->"SearchSuggestionsCell"],
-Cell[11740, 391, 71, 1, 61, 56, 0, "StyleData", "SearchSuggestionsCell", \
+Cell[11911, 399, 71, 1, 61, 56, 0, "StyleData", "SearchSuggestionsCell", \
 "Presentation"],
-Cell[11814, 394, 142, 4, 61, 52, 0, "StyleData", "SearchSuggestionsCell", \
+Cell[11985, 402, 142, 4, 61, 52, 0, "StyleData", "SearchSuggestionsCell", \
 "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[11993, 403, 195, 6, 42, 33, 0, "StyleData", "SearchAllSites", "All",
+Cell[12164, 411, 195, 6, 42, 33, 0, "StyleData", "SearchAllSites", "All",
  CounterIncrements->"SearchCountCell"],
-Cell[12191, 411, 64, 1, 61, 49, 0, "StyleData", "SearchAllSites", \
+Cell[12362, 419, 64, 1, 61, 49, 0, "StyleData", "SearchAllSites", \
 "Presentation"],
-Cell[12258, 414, 135, 4, 61, 45, 0, "StyleData", "SearchAllSites", "Printout"]
+Cell[12429, 422, 135, 4, 61, 45, 0, "StyleData", "SearchAllSites", "Printout"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[12430, 423, 187, 6, 42, 29, 0, "StyleData", "DidYouMean", "All",
+Cell[12601, 431, 187, 6, 42, 29, 0, "StyleData", "DidYouMean", "All",
  CounterIncrements->"DidYouMean"],
-Cell[12620, 431, 60, 1, 61, 45, 0, "StyleData", "DidYouMean", "Presentation"],
-Cell[12683, 434, 131, 4, 61, 41, 0, "StyleData", "DidYouMean", "Printout"]
+Cell[12791, 439, 60, 1, 61, 45, 0, "StyleData", "DidYouMean", "Presentation"],
+Cell[12854, 442, 131, 4, 61, 41, 0, "StyleData", "DidYouMean", "Printout"]
 }, Closed]],
-Cell[12829, 441, 207, 6, 51, 40, 0, "StyleData", "SearchResultPageLinks", \
+Cell[13000, 449, 207, 6, 51, 40, 0, "StyleData", "SearchResultPageLinks", \
 "All",
  CounterIncrements->"SearchResultPageLinks"],
-Cell[13039, 449, 304, 10, 43, 35, 0, "StyleData", "SearchResultCell", "All",
+Cell[13210, 457, 304, 10, 43, 35, 0, "StyleData", "SearchResultCell", "All",
  CounterIncrements->"SearchResultCell"],
-Cell[13346, 461, 124, 4, 35, 38, 0, "StyleData", "SearchResultSummary", "All"],
-Cell[13473, 467, 122, 4, 36, 36, 0, "StyleData", "SearchResultTitle", "All"],
-Cell[13598, 473, 204, 6, 36, 35, 0, "StyleData", "SearchResultType", "All"]
+Cell[13517, 469, 124, 4, 35, 38, 0, "StyleData", "SearchResultSummary", "All"],
+Cell[13644, 475, 122, 4, 36, 36, 0, "StyleData", "SearchResultTitle", "All"],
+Cell[13769, 481, 204, 6, 36, 35, 0, "StyleData", "SearchResultType", "All"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[13839, 484, 36, 0, 35, "Section"],
-Cell[13878, 486, 120, 4, 36, 27, 0, "StyleData", "MenuName", "All"],
-Cell[14001, 492, 96, 3, 36, 36, 0, "StyleData", "DialogElementName", "All"]
+Cell[14010, 492, 36, 0, 35, "Section"],
+Cell[14049, 494, 120, 4, 36, 27, 0, "StyleData", "MenuName", "All"],
+Cell[14172, 500, 96, 3, 36, 36, 0, "StyleData", "DialogElementName", "All"]
 }, Closed]]
 }
 ]

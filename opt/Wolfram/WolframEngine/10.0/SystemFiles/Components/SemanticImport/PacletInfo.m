@@ -29,7 +29,7 @@ Paclet[
 		},	
 		{"Resource", 
 			Root -> "resources",
-			Resources -> {"spellings","config"}	
+			Resources -> {"spellings"}	
 		},
 		{"Kernel", Root-> "Kernel", Context -> {"SemanticImportLoader`", {"SemanticImport`", "SemanticImportMain.m"}}} 
 	}

@@ -33,6 +33,8 @@ Needs["WolframAlphaClient`"];(*initialize WAClient*)
 (* this should only have to live in TypesetInit.m, but for some reason gets clobbered when this is loaded... *)
 Unprotect[System`Entity, System`EntityProperty, EntityFramework`MakeEntityFrameworkBoxes];
 
+Options[EntityPropertyClass] = Options[EntityProperty] = {UnitSystem :> $UnitSystem}
+
 SetAttributes[EntityFramework`MakeEntityFrameworkBoxes, HoldAllComplete];
 
 Entity /: MakeBoxes[x_Entity, fmt_] := (Entity;(*trigger auto-loader*)
@@ -55,6 +57,16 @@ EntityPropertyClass /: MakeBoxes[x_EntityPropertyClass, fmt_] := (Entity;(*trigg
 
 $entitynametimeout = 0.8; (* Seconds timeout for single entity formatting *)
 
+getetypeLabel[etype_] := If[MatchQ[entityLabelRules, {_Rule..}],
+	etype /. entityLabelRules,
+	etype
+]
+
+geteclasstypeLabel[etype_] := If[MatchQ[entityClassLabelRules, {_Rule..}],
+	etype /. entityClassLabelRules,
+	etype
+]
+
 makeTooltip[e_] := With[{str=ToString[e, InputForm]}, 
    MakeBoxes[str, StandardForm]
 ]
@@ -69,7 +81,7 @@ EntityFramework`MakeEntityFrameworkBoxes[__] = $Failed;
 EntityFramework`MakeEntityFrameworkBoxes[e:Entity[etype_String, ename:(_String|_List|_Integer), opts___], StandardForm]/;!TrueQ[$dontFormatEntity] := 
   With[{fname = GetEntityName[e, $entitynametimeout]},
     With[{tooltip = makeTooltip[e],
-      label = ToBoxes[If[StringQ[Unevaluated[etype]], etype /. entityLabelRules, "unknown"], StandardForm],
+      label = ToBoxes[If[StringQ[Unevaluated[etype]], getetypeLabel[etype], "unknown"], StandardForm],
       boxes = Block[{$dontFormatEntity=True}, 
         With[{strip=e}, MakeBoxes[strip, StandardForm]]]
       },
@@ -117,7 +129,7 @@ Module[{eboxes = MakeBoxes[e, fmt], propboxes = MakeBoxes[prop, fmt]},
 EntityFramework`MakeEntityFrameworkBoxes[e:EntityClass[etype_String, ename:(_String|_List|All), opts___], StandardForm]/;!TrueQ[$dontFormatEntity] := 
   With[{fname = GetEntityName[e, $entitynametimeout]},
     With[{tooltip = makeTooltip[e],
-      label = ToBoxes[If[StringQ[Unevaluated[etype]], etype /. entityClassLabelRules, "unknown"], StandardForm],
+      label = ToBoxes[If[StringQ[Unevaluated[etype]], geteclasstypeLabel[etype], "unknown"], StandardForm],
       boxes = Block[{$dontFormatEntity=True}, 
         MakeBoxes[e, StandardForm]]
       },
@@ -151,11 +163,15 @@ EntityFramework`MakeEntityFrameworkBoxes[e:EntityPropertyClass[ptype_String, pna
 
 (*** Entity Name Cache ***)
 (*** Very basic down values based, partly because the plan is to cache it on disk as well ***)
-$EntityNamesMXFile = FileNameJoin[{DirectoryName[DirectoryName[$InputFileName]],"Resources",$SystemID,"EntityNames.mx"}];
-$EntityNameCacheDirectory = FileNameJoin[{DirectoryName[DirectoryName[$InputFileName]],"Resources",$SystemID}]
+$SystemArchitecture := Switch[$ProcessorType,
+	"x86-64", "64Bit",
+	"x86", "32Bit",
+	_, "32Bit"]
+$EntityNamesMXFile = FileNameJoin[{DirectoryName[DirectoryName[$InputFileName]],"Resources",$SystemArchitecture,"EntityNames.mx"}];
+$EntityNameCacheDirectory = FileNameJoin[{DirectoryName[DirectoryName[$InputFileName]],"Resources",$SystemArchitecture}]
 $MaxEntityCacheSizeTotal = 4*10^6;
 
-$specialCacheEntityTypes = {"City", "Chemical"};
+$specialCacheEntityTypes = {"City", "Chemical", "WeatherStation"};
 
 initSpecialCacheCases[]:=Module[{},
 	Set[specialCacheNotLoadedQ[#],True]&/@$specialCacheEntityTypes
@@ -163,10 +179,11 @@ initSpecialCacheCases[]:=Module[{},
 
 markCacheLoaded["City"] := Set[specialCacheNotLoadedQ["City"],False]
 markCacheLoaded["Chemical"] := Set[specialCacheNotLoadedQ["Chemical"],False]
-
+markCacheLoaded["WeatherStation"] := Set[specialCacheNotLoadedQ["WeatherStation"],False]
 
 EntityNameCacheFileLookup["City"] = FileNameJoin[{$EntityNameCacheDirectory,"CityEntityNames.mx"}]
 EntityNameCacheFileLookup["Chemical"] = FileNameJoin[{$EntityNameCacheDirectory,"ChemicalEntityNames.mx"}]
+EntityNameCacheFileLookup["WeatherStation"] = FileNameJoin[{$EntityNameCacheDirectory,"WeatherStationEntityNames.mx"}]
 
 loadMXFile[file_String] := Module[{},
 	If[FileExistsQ[file],
@@ -231,6 +248,7 @@ Internal`AddToEntityNameCache[entity_List,name_] := EntityNameCacheAdd[Entity@@e
 Internal`AddToEntityNameCache[x__] := EntityNameCacheAdd[x];  (* externally exposed function *)
 
 Internal`PreloadEntityNameCache[expr_]:= Module[{res = {}, entities=Cases[Hold[expr], Entity[type_,name_]/;rawENC[{type,name}]===None, Infinity]},
+	warmUpEntityValue[];
 	If[entities=!={}, res = Internal`MWACompute["MWAEntityNames",{DeleteDuplicates[entities]}]];
 	If[MatchQ[res, (HoldComplete|Hold)[{__Rule}]],
 		EntityNameCacheAdd[Entity@@#[[1]], #[[2]]] &/@ ReleaseHold[res];
@@ -243,6 +261,7 @@ Internal`PreloadEntityNameCache[expr_]:= Module[{res = {}, entities=Cases[Hold[e
 (* used by Dataset component for faster formatting -- taliesinb *)
 Internal`BulkFetchEntityNames[list_] := Module[
 	{res = {}, entities= DeleteCases[list, Entity[type_,name_]/;rawENC[{type,name}] =!= None]},
+	warmUpEntityValue[];
 	If[entities=!={}, 
 		 entities = DeleteDuplicates[entities];
 		 If[Length[entities] > 32,
@@ -276,6 +295,7 @@ OKEntityNameQ[other_]:=With[{n=ToString[Head[other]]},Catch[(*TODO: put somethin
 ]]
 (*TODO:Migrate to MWANames once it's working*)
 getEntityNameServer[Entity[type_String,name_]]:=Module[{apires},
+  warmUpEntityValue[];
   apires = Internal`MWACompute["MWAEntityNames",{Entity[type, name]}];
   apires = ReleaseHold[apires];
   Which[
@@ -287,6 +307,7 @@ getEntityNameServer[Entity[type_String,name_]]:=Module[{apires},
 ]
 
 getEntityNameServer[EntityClass[type_String,name_]]:=Module[{apires},
+  warmUpEntityValue[];
   apires = Internal`MWACompute["MWANames",{EntityClass[type,name]}];
   apires = ReleaseHold[apires];
   If[!MatchQ[apires,{___,"EntityClassNameRules" -> {_Rule},___}], $Failed, 
@@ -294,6 +315,7 @@ getEntityNameServer[EntityClass[type_String,name_]]:=Module[{apires},
 ]
 
 getEntityNameServer[EntityProperty[type_String,name_]]:=Module[{apires},
+  warmUpEntityValue[];
   apires = Internal`MWACompute["MWANames",{EntityProperty[type,name]}];
   apires = ReleaseHold[apires];
   If[!MatchQ[apires,{___,"PropertyNameRules" -> {_Rule},___}], $Failed, 
@@ -301,6 +323,7 @@ getEntityNameServer[EntityProperty[type_String,name_]]:=Module[{apires},
 ]
 
 getEntityNameServer[EntityProperty[type_String,name_,qualifiers_List]]:=Module[{apires,qual},
+  warmUpEntityValue[];
   apires = Internal`MWACompute["MWANames",{EntityProperty[type,name,qualifiers]}];
   apires = ReleaseHold[apires];
   If[!MatchQ[apires,{___,"PropertyNameRules" -> {_Rule},___}], $Failed, 
@@ -308,7 +331,7 @@ getEntityNameServer[EntityProperty[type_String,name_,qualifiers_List]]:=Module[{
   	qual=({type,name,Sequence@@#}&/@qualifiers)/.qual;
   	qual = (qual /. {type,name,_,x_} :> {type,name,x})/.replaceWithDefault["QualifierValueNameRules",apires,{}];
   	qual = qual /. {type,name,x_} :> x;
-  	qual = (qual /. Interval[i_List]:>Row[i,"to"]) /. date_DateObject :> DateString[date];
+  	qual = (qual /. Interval[i_List]:>Row[i,"\"to\""]) /. date_DateObject :> DateString[date];
   	{
   		{type,name}/.replaceWithDefault["PropertyNameRules",apires,{}],
   		qual
@@ -316,6 +339,7 @@ getEntityNameServer[EntityProperty[type_String,name_,qualifiers_List]]:=Module[{
 ]
 
 getEntityNameServer[EntityPropertyClass[type_String,name_]]:=Module[{apires},
+  warmUpEntityValue[];
   apires = Internal`MWACompute["MWANames",{EntityPropertyClass[type,name]}];
   apires = ReleaseHold[apires];
   If[!MatchQ[apires,{___,"PropertyClassNameRules" -> {_Rule},___}], $Failed, 
@@ -377,6 +401,7 @@ ConvertTemporaryMWASymbols[x_, newcontext_String:"Global`"] := Module[{names, ne
 ]
 
 Internal`CacheEntityNames[res_] := Module[{rules,apires=ReleaseHold[res]},
+	If[And[!MatchQ[apires,{_Rule..}],MatchQ[apires,{_,_Rule..}]], apires = Rest[apires]];
 	If[MatchQ[apires,{_Rule..}],
 		rules = replaceWithDefault["EntityNameRules",apires, {}];
 	    EntityNameCacheAdd[Entity@@#[[1]], #[[2]]] &/@ rules;
@@ -441,7 +466,7 @@ iEntityValue[entity:(_Entity|{_Entity..}),property:(_String|_EntityProperty)]/;T
 	
 iEntityValue[input_,props_List,arg___]/;Not[TrueQ[$EPLF]] := Block[{
 	$EPLF = True, 
-	$EntityValueListThresholdValue = Max[1,Floor[2*$EntityValueListThresholdValue/Length[props]]]},
+	$EntityValueListThresholdValue = Max[1,Floor[2*$EntityValueListThresholdValue/Max[Length[props],1]]]},
 	iEntityValue[input,props,arg]
 ]
 iEntityValue[list:{(_Entity|_Missing)..},args___]/;TrueQ[Length[list]>$EntityValueListThresholdValue]:= GetEntityValueInChunks[list,args]
@@ -459,12 +484,15 @@ iEntityValue[class_EntityClass,args__]/;TrueQ[$GetEntityClassDataInBatches] := B
 ]
 iEntityValue[list:{_EntityClass..}, args___] /;And[!TrueQ[$galf], Length[list]>1]:= Block[{$galf=True},With[{groups=Table[{i, i}, {i, Length[list]}]},
 	EntityFramework`Dialog`interruptableDataDownloadManager[groups,list,args]]]
-iEntityValue[e___]:=Module[{res,apires, msg},Block[
+iEntityValue[e___]:= callMWACompute[e]
+
+callMWACompute[args___] := With[{e = optionsToQualifier[args]},warmUpEntityValue[];
+Module[{res,apires, msg},Block[
 	{WolframAlphaClient`Private`$AlphaQueryMMode=If[
 		MemberQ[$EVMMODES,WolframAlphaClient`Private`$AlphaQueryMMode],
 		WolframAlphaClient`Private`$AlphaQueryMMode,
-		"entity"]},
-    apires=Internal`MWACompute["MWACalculateData",Internal`MWASymbols`MWAData[e, "Version"->0.1	]];
+		"entity"], usys = OptionValue[EntityProperty,UnitSystem]},
+    apires=Internal`MWACompute["MWACalculateData",Internal`MWASymbols`MWAData[e, "Version"->0.1	], "UnitSystem"->usys];
     apires=ReleaseMWAComputeHold[apires];
     If[SameQ[apires,$Failed["ComputationTimeout"]],Message[EntityValue::timeout,EntityValue]];
     If[!OptionQ[apires], res = $Failed];
@@ -475,9 +503,31 @@ iEntityValue[e___]:=Module[{res,apires, msg},Block[
 		res = ConvertTemporaryMWASymbols[res]/.$Failed[_]->$Failed;
     ];
 	res]
+]]
+
+optionsToQualifier[input___] := Sequence@@({input}/.EntityProperty[type_,prop_,opts__]:>EntityProperty[type,prop,fixQualifiers[opts]])
+fixQualifiers[l_List] := l
+fixQualifiers[r:Rule[UnitSystem,_]] := {r}
+(*fixQualifiers[l:(_List..)] := Join[l]*)
+fixQualifiers[l_List,r:Rule[UnitSystem,_]] := Append[l,r]
+fixQualifiers[r:Rule[UnitSystem,_],l_List] := Prepend[l,r]
+fixQualifiers[other__]:=other
+
+$WarmUp = True;
+
+warmUpEntityValue[] /; TrueQ[$WarmUp] := AbortProtect[Module[{cell},
+  cell = If[TrueQ[$Notebooks], PrintTemporary[EntityFramework`Dialog`loadingPanel[#]]&, Print][
+   "Initializing Wolfram Knowledgebase connection ...."];
+  Needs["WolframAlphaClient`"];
+  $UnitSystem(*calls WA via MWACompute and sets $UnitSystem*);
+  Set[$WarmUp, False];
+  If[UnsameQ[cell,Null],Quiet[NotebookDelete[cell]]];
+  ]
 ]
 
+
 Experimental`FindEntities[s_String,filter_:Automatic]:=Module[{res,apires, rules},
+  warmUpEntityValue[];
   apires=Internal`MWACompute["MWAFindEntities",{s,filter}];
   apires=ReleaseMWAComputeHold[apires];
   If[!OptionQ[apires], Message[Internal`FindEntities::TODO]; Return[$Failed]];
@@ -489,7 +539,7 @@ Experimental`FindEntities[s_String,filter_:Automatic]:=Module[{res,apires, rules
 ]
 
 GetEntityNames[expr_, n_] := Catch[
- Module[{apires}, 
+ Module[{apires}, warmUpEntityValue[];
   apires = TimeConstrained[
   	Internal`MWACompute["MWANames", {expr}],
   	n,

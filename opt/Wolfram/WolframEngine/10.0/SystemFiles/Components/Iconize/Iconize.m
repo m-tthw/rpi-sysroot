@@ -1,24 +1,8 @@
-(* toicon is the core function that generates the central pane for each icon.
-Each downvalue corresponds to a different category of expressions.  Currently, there are:
-Graphics (includes Graphics3D, Legended, and Graph)
-Image
-GraphicsList (includes Graphics3D, Legended, Graph, and GeoGraphics)
-ImageList
-Notebook
-DynamicObject 
-DynamicObjectList
-GraphicsGrid (a Grid of the form Grid[{_Graphics}..].  Supports the same types as GraphicsList and Image)
-FormFunction
-FormObject
-MixedList- a list with mixed graphics elements
-Expression- this is the the catch all final category
-*)
-
 Package["Iconize`"]
-PackageImport["GeneralUtilities`"]
 
 PackageExport["Iconize"]
-   
+
+(*This needs to be above the error message*)
 $deployments = {"Default", "API", "WebForm", "EmbedCode", 
 	"Report", "Mobile", "Publish", "EditPage", "EmbedContent", 
 	"WebComputation", "ExportDoc", "ScheduledProg"};
@@ -26,10 +10,20 @@ $deployments = {"Default", "API", "WebForm", "EmbedCode",
 Iconize::deployment = "Deployment type `1` is not one of "~~StringJoin[Riffle[Most[$deployments], ", "]] ~~ " or " ~~ Last[$deployments] ~~ ".";
 
 (*******************************Global Variables*********************************************)
+$sys = Association[Thread[Names["System`*"] -> True]];
+
 $cat = {"cloud", "core", "data", "documents",
 	"engineering", "external", "finance", "geography",
 	"geometry", "graphs", "images", "math", "sound",
 	"strings", "time", "UI", "viz"};
+	
+$graphicsHeads = {Graphics, Graphics3D, GeoGraphics, Image, Legended, Graph};
+
+$dynamicObjects = {Manipulate, MenuView, Slider, Button, 
+   ChoiceButtons, PopupMenu, ActionMenu, TabView, FlipView, 
+   SlideView, OpenerView, Opener, Checkbox, Toggler, Setter, Panel, 
+   Slider2D, VerticalSlider, ProgressIndicator, Animator, 
+   Manipulator, Control};
 	
 $dir = DirectoryName[$InputFileName];
 $allHeads = Import[FileNameJoin[{$dir, "Resources","allHeads.m"}]];
@@ -81,7 +75,7 @@ $documentHeight = N[50/85];
 (*Background color of upper pane for mobile icons*)
 $mobilePaneColor = RGBColor[247,247,247];
 
-(*********************************************************************************************)
+(********************* Functions that do not depend on the input expressiopn**************************************)
 
 (*A function that lazily loads the icon and corresponding background color for a given deployment*)
 deployInfo[x_] := deployInfo[x] = {Import[FileNameJoin[{PacletManager`PacletResource["Iconize","DeploymentIcons"], StringJoin[x]<>".png"}]],$deployColorInfo[x]}
@@ -125,14 +119,6 @@ If[Length[categories[[2]]]>0,categories[[2,1]],{}]
 
 ]
 
-(*Find the categories that the heads of an expression belong to*)
-SetAttributes[findCategory,HoldAllComplete];
-findCategory[expr_]:= Module[{$commonheads, heads},
-	$commonheads = {"List","Rule","Hold"};
-	heads = Complement[ToString /@ Cases[Hold[expr],h_[body___]:>h,Infinity], $commonheads];
-	DeleteDuplicates[Flatten[headCategory/@heads]]
-]
-
 (*Determine the positions of the category icons on the top pane of the icon*)
 (*If the deployment type is default, then the icons are shifted over to RHS and no deployment icon is shown*)
 catIconPositions[x_List, sz_, deploy_] := Module[{start, diff, height},
@@ -149,25 +135,59 @@ hexToRGB[x_String]:=Module[{std, length},
 	RGBColor@@(IntegerDigits[std~StringDrop~1~FromDigits~16,256,3]/255.)
 ]
 
-(*Format expression*)
-styledExpression[expr_, fs_] := Style[expr, 
-		LineIndentMaxFraction -> 0.05, 
-		LineSpacing -> {1, 0}, 
-		FontSize -> fs, 
-		Italic,
-		FontFamily -> "Helvetica", 
-		FontColor -> Gray
-		]
-		
 (*CloudExport File Style*)
 exportedFileStyle[format_]:=Style[format, 
    			FontSize -> 24, 
    			FontColor -> RGBColor[.5, .5, .5],
    			FontFamily -> "Helvetica", 
    			Bold
-   			]		
+   			]
+   			
+(*Make thumbnail simply pads and resizes thumbnails*)
+MakeThumbnail[img_Image, {tw_,th_}, bg_] := Module[{w,h},
+	{w,h} = ImageDimensions[img];
+	If[w > tw || h > th,
+		ImageResize[img, {{tw},{th}}],
+		img] // ImageCrop[#, {tw, th}, Padding->hexToRGB[bg]]&
+];
+
+(********************* Functions that involve the input expressiopn**************************************)
+(*Find the categories that the heads of an expression belong to.*)
+
+(*
+Note that in findCategory, symbols are extracted in two ways, by 
+looking at subexpressions of the form head_[body___] as well as simply
+taking all wordcharacter strings in a stringified expression.  
+The first method will miss symbols in expressions such as 
+Through[{first, second, third}[arg]], and the second will miss 
+shorthand characters such as !MemberQ and so on. On it's own, the 
+first method gets most heads in expressions, and the stringified
+method is just to get some of these corner cases. 
+*)
+
+SetAttributes[findCategory,HoldAllComplete];
+findCategory[expr_]:=Module[{$commonheads, heads, headsAndOther},
+$commonheads={"List","Rule","Hold"};
+heads = Cases[Hold[expr],
+	h_Symbol[___]:>With[{hs = Quiet[SymbolName[Unevaluated[h]], {SymbolName::sym}]}, 
+	hs /; $sys[hs] && Context[Unevaluated[h]] === "System`"&&!MemberQ[$commonheads, hs]], 
+	Infinity];
+headsAndOther = DeleteDuplicates @ Select[StringCases[ToString[InputForm[Hold[expr]]], RegularExpression["\\w+"]], $sys[#] &];
+DeleteDuplicates[Flatten[headCategory/@Union[heads,headsAndOther]]]]
+
+(*Format expression*)
+SetAttributes[styledExpression, HoldFirst];
+styledExpression[expr_, fs_] := Style[HoldForm[expr], 
+		LineIndentMaxFraction -> 0.05, 
+		LineSpacing -> {1, 0}, 
+		FontSize -> fs, 
+		Italic,
+		FontFamily -> "Helvetica", 
+		FontColor -> Gray
+		]		
 		
-(*Decrease font size if expression is larger than pane*)		
+(*Decrease font size if expression is larger than pane*)	
+SetAttributes[findFontSize,HoldFirst];	
 findFontSize[expr_, sz_] := Module[{paneSize, maxChar, fsTemp},
 	paneSize = (1 - $textSpacing)*sz[[1]]*(1 - $textSpacing)*sz[[2]];
 	fsTemp = fontsize[sz[[1]]];
@@ -178,52 +198,51 @@ findFontSize[expr_, sz_] := Module[{paneSize, maxChar, fsTemp},
 (*Creates thumbnail icons for expressions.  This is the final catch-all category*)
 SetAttributes[ExpressionThumbnail, HoldFirst];
 ExpressionThumbnail[expr_, sz_, bg_] := Module[{img,fs}, 
-	fs = findFontSize[expr, sz];
-    img = Rasterize[Pane[styledExpression[expr, fs], sz[[1]], ImageSizeAction -> "Clip"], "Image", Background->hexToRGB[bg]];
+	fs = findFontSize[Unevaluated[expr], sz];
+    img = Rasterize[Pane[styledExpression[Unevaluated[expr], fs], sz[[1]], ImageSizeAction -> "Clip"], "Image", Background->hexToRGB[bg]];
     If[Last@ImageDimensions[img] > Last[sz], ImageTake[img, Last[sz]], img]
-  ]
-
+  ];
+ 
 (*Create thumbnail for graphics objects*)  
+SetAttributes[GraphicsThumbnail, HoldFirst];
 GraphicsThumbnail[expr_, sz_, bg_] := Module[{img},
-  img = Rasterize[Pane[Show[expr, Ticks->None], First@sz, ImageSizeAction -> "ResizeToFit"], "Image", Background -> hexToRGB[bg]];
+  img = Rasterize[Pane[Show[Unevaluated[expr], Ticks->None], First@sz, ImageSizeAction -> "ResizeToFit"], "Image", Background -> hexToRGB[bg]];
   If[Last@ImageDimensions[img] > Last[sz], ImageTake[img, Last[sz]], img]
   ]  
 
-(*Make thumbnail simply pads and resizes thumbnails*)
-MakeThumbnail[img_Image, {tw_,th_}, bg_] := Module[{w,h},
-	{w,h} = ImageDimensions[img];
-	If[w > tw || h > th,
-		ImageResize[img, {{tw},{th}}],
-		img] // ImageCrop[#, {tw, th}, Padding->hexToRGB[bg]]&
-];
+(*Commonly used patterns in toicon*)
+SetAttributes[MakeThumbnailRaster, HoldFirst];
+MakeThumbnailRaster[expr_, sz_, bg_] := MakeThumbnail[Rasterize[Unevaluated[expr],"Image",Background->hexToRGB[bg]], sz, bg]
 
-(*A commonly used pattern*)
-MakeThumbnailRaster[expr_, sz_, bg_] := MakeThumbnail[Rasterize[expr,"Image",Background->hexToRGB[bg]], sz, bg]
+SetAttributes[FormThumbnail, HoldFirst];
+FormThumbnail[expr_, sz_, bg_] := MakeThumbnail[
+	Rasterize[Pane[styledExpression[Unevaluated[expr], fontsize[sz[[1]]]], 2*sz[[1]]], 
+		"Image", 
+		Background->hexToRGB[bg], 
+		ImageSizeAction->"Clip"], 
+	sz, bg]
+
+(*Used below to extract heads from lists of objects inside function conditions*)	
+SetAttributes[safeHead, HoldAllComplete];
+safeHead[expr_] := Part[HoldComplete[expr], 1, 0]
 
 (*********************************************************************************************)
-
-$graphicsHeads = {Graphics, Graphics3D, GeoGraphics, Image, Legended, Graph};
-
-$dynamicObjects = {Manipulate, MenuView, Slider, Button, 
-   ChoiceButtons, PopupMenu, ActionMenu, TabView, FlipView, 
-   SlideView, OpenerView, Opener, Checkbox, Toggler, Setter, Panel, 
-   Slider2D, VerticalSlider, ProgressIndicator, Animator, 
-   Manipulator, Control};
-
 SetAttributes[toicon, HoldAll];
 
 toicon[i_Image, sz_, bg_] := {"Image", MakeThumbnail[i, sz, bg]};
 
-toicon[{x__Image}, sz_, bg_] := {"ImageList", MakeThumbnail[ImageCollage@Evaluate[{x}], sz, bg]}
+toicon[{x__Image}, sz_, bg_] := {"ImageList", MakeThumbnail[ImageCollage@{x}, sz, bg]}
 
-toicon[g_Graphics | g_Graphics3D | g_Legended | g_Graph | g_GeoGraphics, sz_, bg_] := {"Graphics", MakeThumbnailRaster[Show[g, Ticks->None], sz, bg]}
+toicon[g_Graphics | g_Graphics3D | g_Legended | g_Graph | g_GeoGraphics, sz_, bg_] := {"Graphics", MakeThumbnailRaster[Show[Unevaluated[g], Ticks->None], sz, bg]}
 
-toicon[{x__Graphics | x__Graphics3D | x__Legended | x__Graph | x__GeoGraphics}, sz_, bg_] := {"GraphicsList", MakeThumbnail[ImageCollage[Show[#,Ticks->None, Background->White]&/@Evaluate[{x}]],sz,bg]}
+toicon[{x__Graphics | x__Graphics3D | x__Legended | x__Graph | x__GeoGraphics}, sz_, bg_] := {"GraphicsList", MakeThumbnail[ImageCollage[Show[#,Ticks->None, Background->White]&/@{x}],sz,bg]}
 
 toicon[expr_NotebookObject | expr_Notebook, sz_, bg_] := Module[{pre, isz, pad, temp, img},
  temp = expr;
  If[Head[expr] == NotebookObject, SetOptions[temp, WindowSize -> 500, Visible -> False]];
- pre = ImageCrop@Rasterize[temp];
+ pre = ImageCrop@Quiet@Check[Rasterize[temp], 
+  Rasterize[Notebook[NotebookRead /@ Cells[temp][[1 ;; 100]]]], 
+  Rasterize::bigraster];
  isz = ImageDimensions[pre];
  
  pad = (sz[[1]] - isz[[1]])/2;
@@ -233,8 +252,8 @@ toicon[expr_NotebookObject | expr_Notebook, sz_, bg_] := Module[{pre, isz, pad, 
   {"Notebook", MakeThumbnail[img, sz, bg]}
  ]
 
-toicon[type_Global`CloudExportFormat, sz_, bg_]:= Module[{deployPad, documentIcon, format,imageSize, stringLength, text},
-	format = Lookup[$formatFormats, type[[1]], "?"];
+toicon[type_ExportForm, sz_, bg_]:= Module[{deployPad, documentIcon, format,imageSize, stringLength, text},
+	format = Lookup[$formatFormats, type[[2]], "?"];
 	stringLength = StringLength[format];
 	imageSize = Which[1 <= stringLength <= 4, {Automatic, 94}, 4 <= stringLength <= 8, 250, stringLength > 8, 275];
 	text = Rasterize[exportedFileStyle[format], Background -> None, ImageResolution -> 500, ImageSize -> imageSize];
@@ -242,20 +261,20 @@ toicon[type_Global`CloudExportFormat, sz_, bg_]:= Module[{deployPad, documentIco
    	deployPad = ImageCompose[ImageResize[Graphics[{hexToRGB[bg], Rectangle[{0, 0}, sz]}, PlotRangePadding->None], sz], documentIcon];	
    {"ExportedFile", deployPad}
   ]
-  
-toicon[expr_, sz_, bg_] := {"DynamicObject", MakeThumbnailRaster[expr, sz, bg]} /; MemberQ[$dynamicObjects, Head[expr]]
-
-toicon[{x__}, sz_, bg_] := ({"DynamicObjectList", MakeThumbnail[ImageCollage[Rasterize/@Evaluate[{x}], Background -> hexToRGB[bg]], sz, bg]}) /; SubsetQ[$dynamicObjects, Head /@ {x}]
-
-toicon[{x__}, sz_, bg_] := {"MixedGraphicsList", MakeThumbnail[ImageCollage[Evaluate[{x}], Background -> White], sz, bg]} /; SubsetQ[$graphicsHeads, Head /@ {x}]
-
-toicon[expr_, sz_, bg_] := {"GraphicsGrid", toicon[expr[[1,1,1]], sz, bg][[2]]} /; MatchQ[expr, Grid[{{_Graphics | _Graphics3D | _Image | _Legended | _GeoGraphics}..}]]
  
-toicon[expr_FormFunction, sz_, bg_] := {"FormFunction", MakeThumbnail[Rasterize[Pane[styledExpression[Grid[{List @@ expr}], fontsize[sz[[1]]]], 2*sz[[1]]], "Image", Background->hexToRGB[bg], ImageSizeAction->"Clip"], sz, bg]}
+toicon[expr_, sz_, bg_] := {"DynamicObject", MakeThumbnailRaster[expr, sz, bg]} /; MemberQ[$dynamicObjects, Head[Unevaluated[expr]]]
 
-toicon[expr_FormObject, sz_, bg_] := {"FormObject", MakeThumbnail[Rasterize[Pane[styledExpression[expr, fontsize[sz[[1]]]], 2*sz[[1]]], "Image", Background->hexToRGB[bg], ImageSizeAction->"Clip"], sz, bg]} 
+toicon[{x__}, sz_, bg_] := ({"DynamicObjectList", MakeThumbnail[ImageCollage[Rasterize/@{x}, Background -> hexToRGB[bg]], sz, bg]}) /; SubsetQ[$dynamicObjects, List@ReleaseHold[safeHead/@ Hold[x]]]
+
+toicon[{x__}, sz_, bg_] := {"MixedGraphicsList", MakeThumbnail[ImageCollage[{x}, Background -> White], sz, bg]} /; SubsetQ[$graphicsHeads, List@ReleaseHold[safeHead/@ Hold[x]]]
+
+toicon[expr_, sz_, bg_] := {"GraphicsGrid", toicon[expr[[1,1,1]], sz, bg][[2]]} /; MatchQ[Unevaluated[expr], Grid[{{_Graphics | _Graphics3D | _Image | _Legended | _GeoGraphics}..}]]
  
-toicon[expr_, sz_, bg_] := {"Expression", MakeThumbnail[ExpressionThumbnail[Unevaluated[expr], {(1 - $textSpacing)*sz[[1]], (1 - $upperTextSpacing)*sz[[2]]}, bg], sz, bg]};
+toicon[expr_FormFunction, sz_, bg_] := {"FormFunction", With[{expr1=expr[[1]]}, FormThumbnail[expr1, sz, bg]]}
+
+toicon[expr_FormObject, sz_, bg_] := {"FormObject", FormThumbnail[Unevaluated[expr], sz, bg]}
+
+toicon[expr_, sz_, bg_] := {"Expression", MakeThumbnail[ExpressionThumbnail[Unevaluated[expr], {(1 - $textSpacing)*sz[[1]], (1 - $upperTextSpacing)*sz[[2]]}, bg], sz, bg]}
 
 (*********************************************************************************************)
 
@@ -289,31 +308,39 @@ Iconize[expr_, dpl_: "Default", OptionsPattern[]] := Module[{$fail, $iconType, i
 	(*Primary icon for expression*)
 	(*The image pad is for the thin border separating the upper and lower panes*)
 	itheicon = Quiet @ Check[
-		With[{icon = toicon[expr, {width, $paneFraction*height}, dColor]},
+		With[{icon = toicon[Unevaluated[expr], {width, $paneFraction*height}, dColor]},
 			$iconType = icon[[1]];
 			ImagePad[icon[[2]],{{0,0},{0,1}}, Padding->hexToRGB["#b2b2b2"]]
 		],
 			$fail = True;ImageResize[$questionMark, sz]
 ];
 
+	(*If for whatever reason, the iconization process fails, return the gray question mark*)
 	theicon = If[UnsameQ[Head[itheicon],Image], $fail = True;ImageResize[$questionMark, sz], itheicon];	
 
 	(*Add in "Core Language" as a category only if nothing else matches*)
-	categories = With[{icat = Complement[findCategory[expr],{"core"}]},
+	categories = With[{icat = Complement[findCategory[Unevaluated[expr]],{"core"}]},
 		If[Length[icat]==0,{"core"}, icat]
 	];
 	
+	(*NotebookObjects have the head LinkObject which is matched to the category ExternalInterfaces.
+	We only want a single notebook icon for notebooks, so we simply override the initial category scoring*)
 	If[$iconType=="Notebook", Set[categories, {"documents"}]];
-	
+
+	(*If a failure happens, display the gray question mark*)
 	If[$fail,
 		theicon,
 	(*Restrict to only 4 categories*)
 	cat4 = If[Length[categories]>4, Take[categories,4],categories];
 	iconpositions = catIconPositions[cat4, sz, dpl];
+	
 	(*If the deployment is not default, then place the deployment icon in the upper RHS*)
 	If[dpl != "Default",
 	AppendTo[iconpositions, Inactive[Sequence][dIcon,{$heightFraction*width, $paneFraction*height + .5*(1-$paneFraction)*height}]]];
 	
+	(*The background color for the upper pane can be different for different platforms.
+	For the mobile browser, we want the pane to match the background of the surrounding box, 
+	so that it looks transparent.*)
 	paneColor = Switch[OptionValue[Platform],
 		"mobile", $mobilePaneColor,
 		"Android", $mobilePaneColor,

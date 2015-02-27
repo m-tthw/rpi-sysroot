@@ -3,6 +3,7 @@ Paclet[
 	Version -> "0.9.3",
 	MathematicaVersion -> "10+",
 	Description -> "Automatic machine learning functionality",
+	Creator -> "Etienne Bernard <etienneb@wolfram.com>, Sebastian Bodenstein <sebastianb@wolfram.com>",
 	Loading -> Automatic,
 	Extensions -> {
 		{"Resource", Root -> "Resources", Resources -> {"Binaries", "Unicode", "Libraries"} },

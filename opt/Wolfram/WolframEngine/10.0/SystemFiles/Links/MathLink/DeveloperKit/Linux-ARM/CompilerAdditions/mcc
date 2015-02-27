@@ -618,7 +618,7 @@ if [ "${platform}" = "Darwin" ] ; then
 	fi
 	libs="${libs} -framework Foundation"
 elif [ "${platform}" = "Linux" ] ; then
-	libs="-lm -lpthread -lrt -ldl -lstdc++"
+	libs="-lm -lpthread -lrt -ldl -lstdc++ -luuid"
 	if [ ${bittype} = ${bit32} ] ; then
 		libname="${mldkpath}/libML32i${interface}"
 	elif [ ${bittype} = ${bit64} ] ; then

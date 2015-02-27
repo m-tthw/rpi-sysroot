@@ -4,6 +4,9 @@ libgtk-3-bin
 /usr/share/man/man1/sh.1.gz
 /usr/share/man/man1/sh.distrib.1.gz
 dash
+/usr/bin/scratch
+/usr/bin/scratch.old
+nuscratch
 /lib/udev/rules.d/75-persistent-net-generator.rules
 /lib/udev/rules.d/75-persistent-net-generator.rules.distrib
 :

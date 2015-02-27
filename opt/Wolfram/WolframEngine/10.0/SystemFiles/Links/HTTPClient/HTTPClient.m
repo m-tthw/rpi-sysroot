@@ -1,12 +1,16 @@
+
 (* Wolfram HTTPClient Package *)
 
 BeginPackage["HTTPClient`"]
 
-URLFetch::usage = "URLFetch[url, elements] return elements from url, for any accessible URL."
-URLSave::usage = "URLSave[url, file, elements] return elements from url for any accessible URL, and store the content in file. "
-URLFetchAsynchronous::usage = "URLFetchAsynchronous[url, eventFunction] asynchronously connect to a URL"
-URLSaveAsynchronous::usage = "URLSaveAsynchronous[url, file, eventFunction] asynchronously connect to a URL, and store the content in a file."
+URLFetch::usage = "URLFetch[url, elements] return elements from url, for any accessible URL.";
+URLSave::usage = "URLSave[url, file, elements] return elements from url for any accessible URL, and store the content in file. ";
+URLFetchAsynchronous::usage = "URLFetchAsynchronous[url, eventFunction] asynchronously connect to a URL";
+URLSaveAsynchronous::usage = "URLSaveAsynchronous[url, file, eventFunction] asynchronously connect to a URL, and store the content in a file.";
 $HTTPCookies::usage = "Returns the list of globally shared cookies."
+
+
+
 SetAttributes[URLFetch, {ReadProtected}];
 SetAttributes[URLSave, {ReadProtected}];
 SetAttributes[URLFetchAsynchronous, {ReadProtected}];
@@ -28,38 +32,61 @@ $MessageHead = HTTPClient;
 
 (****************************************************************************)
 (* Default options for URLFetch *)
-$StandardOptions :=
-	{	"Method" -> "GET", 
-		"Parameters" -> {},
-		"BodyData" -> "", 
-		"MultipartData" -> {},
-		"VerifyPeer" -> True, 
-		"Username" -> "", 
-		"Password" -> "", 
-		"UserAgent" -> Automatic, 
-		"Cookies" -> Automatic, 
-		"StoreCookies" -> True,
-		"Headers" -> {},
-		"CredentialsProvider"->Automatic,
-		"ConnectTimeout"->0,
-		"ReadTimeout"->0,
-		"DisplayProxyDialog" -> True,
-		"OAuthAuthentication"->None
-	}
-	
-Options[URLFetch] := Flatten[{$StandardOptions}]
-Options[URLSave] := Flatten[{$StandardOptions, BinaryFormat->True}]
-Options[setStandardOptions] := $StandardOptions
+$StandardOptions = {	
+	"Method" -> "GET", 
+	"Parameters" -> {},
+	"Body" -> "", 
+	"MultipartElements" -> {},
+	"VerifyPeer" -> True, 
+	"Username" -> "", 
+	"Password" -> "", 
+	"UserAgent" -> Automatic, 
+	"Cookies" -> Automatic, 
+	"StoreCookies" -> True,
+	"Headers" -> {},
+	"CredentialsProvider"->Automatic,
+	"ConnectTimeout"->0,
+	"ReadTimeout"->0,
+	"DisplayProxyDialog" -> True,
+	"OAuthAuthentication" -> None,
+	"FollowRedirects" -> True
+}
 
-(* By default only return the content of the site *)
-URLFetch[url_String, opts:OptionsPattern[]] :=
-	URLFetch[url, "Content", opts]
+$DeprecatedOptions = {
+	"BodyData" -> "Body",
+	"MultipartData" -> "MultipartElements"
+}
+	
+Options[URLFetch] = $StandardOptions
+Options[setStandardOptions] = $StandardOptions
+
+(* Deprecated options fix *)
+
+(* Uncomment those lines and the message inside deprecatedOptionFix to send a deprecation warning. *)
+(* URLFetch::depropt             = "The option \"``\" is deprecated, please use \"``\""; *)
+(* URLSave::depropt              = URLFetch::depropt; *)
+(* URLFetchAsynchronous::depropt = URLFetch::depropt; *)
+(* URLSaveAsynchronous::depropt  = URLFetch::depropt; *)
+
+deprecatedOptionFix[sym_, options___] := Sequence @@ Replace[
+	{options}, 
+	head_[key:Alternatives @@ Keys[$DeprecatedOptions], value_] :> (
+		(* uncomment the next line to send a deprecation warning *)
+		(* Message[sym::depropt, key, Lookup[$DeprecatedOptions, key]]; *)
+		head[Lookup[$DeprecatedOptions, key], value]
+	),
+	{1}
+]
+deprecatedOptionQ[options___] := Cases[Keys @ {options}, Alternatives @@ Keys[$DeprecatedOptions]] =!= {}
+
+URLFetch[url_String, res:(_String|_List|All):"Content", options___?OptionQ] /; deprecatedOptionQ[options] := 
+	URLFetch[url, res, deprecatedOptionFix[URLFetch, options]] 
 
 allowCredintalDialog[opts:OptionsPattern[]] := (
 	"DisplayProxyDialog" /. Flatten[{opts}] /. "DisplayProxyDialog"->True
 );
 	
-URLFetch[url_String, res:(_String|_List|All), opts:OptionsPattern[]] /; InitializeQ[] :=
+URLFetch[url_String, res:(_String|_List|All):"Content", opts:OptionsPattern[]] /; InitializeQ[] :=
 	Module[{handle, output, error, stdOpts, elements, wellFormedURL, oauth, token, args},	
 		setMessageHead[URLFetch];
 		If[OptionValue["OAuthAuthentication"] =!= None,
@@ -159,11 +186,17 @@ URLFetch::noelem = "The element \"`1`\" is not allowed."
 	
 (****************************************************************************)
 (* URLSave... *)
+Options[URLSave] = Join[$StandardOptions, {BinaryFormat->True}]
 
-URLSave[url_String, file_String, opts:OptionsPattern[]] :=
-	URLSave[url, file, "Content", opts]  
+URLSave[url_String, options___?OptionQ] := URLSave[url, Automatic, options]
+
+URLSave[url_String, Automatic|None|Null, rest___] := 
+	URLSave[url, FileNameJoin[{$TemporaryDirectory, CreateUUID[] <> ".tmp"}], rest]
+
+URLSave[url_String, file_String, res:(_String|_List|All):"Content", options___?OptionQ] /; deprecatedOptionQ[options] := 
+	URLSave[url, file, deprecatedOptionFix[URLSave, options]]  
 	
-URLSave[url_String, file_String, res:(_String|_List|All), opts:OptionsPattern[]] /; InitializeQ[] :=
+URLSave[url_String, file_String, res:(_String|_List|All):"Content", opts:OptionsPattern[]] /; InitializeQ[] :=
 	Module[{handle, output, error, stdOpts, elements, wellFormedURL, oauth, token, args},
 		setMessageHead[URLSave];
 		If[OptionValue["OAuthAuthentication"] =!= None,
@@ -334,17 +367,17 @@ validOptionsQ[opts_, func_] :=
 			Return[False];
 		];
 		
-		If[("BodyData" /. opts) =!= "" && 
-			!MatchQ[("BodyData" /. opts), _String|List[___Integer]],
-			Message[General::erropts, "BodyData" /. opts, "BodyData"];
+		If[("Body" /. opts) =!= "" && 
+			!MatchQ[("Body" /. opts), _String|List[___Integer]],
+			Message[General::erropts, "Body" /. opts, "Body"];
 			Return[False];
 		];
 		
-		If[("MultipartData" /. opts) =!= {} && (
-			!MatchQ[("MultipartData" /. opts), {{_String, _String, {__Integer}}..}] &&
-			!MatchQ[("MultipartData" /. opts), {Rule[{_String, _String}, {__Integer}]..}] && 
-			!MatchQ[("MultipartData" /. opts), {Rule[{_String, _String}, _String]..}]),
-			Message[General::erropts, "MultipartData" /. opts, "MultipartData"];
+		If[("MultipartElements" /. opts) =!= {} && (
+			!MatchQ[("MultipartElements" /. opts), {{_String, _String, {__Integer}}..}] &&
+			!MatchQ[("MultipartElements" /. opts), {Rule[{_String, _String}, {__Integer}]..}] && 
+			!MatchQ[("MultipartElements" /. opts), {Rule[{_String, _String}, _String]..}]),
+			Message[General::erropts, "MultipartElements" /. opts, "MultipartElements"];
 			Return[False];
 		];
 		
@@ -730,7 +763,7 @@ setStandardOptions[handle_CURLHandle, url_String, opts:OptionsPattern[]] :=
 			
 		CURLOption[handle, "CURLOPT_CAINFO", $CACERT];
 		CURLOption[handle, "CURLOPT_SSL_VERIFYPEER", OptionValue["VerifyPeer"]]; 
-		CURLOption[handle, "CURLOPT_FOLLOWLOCATION", True];
+		CURLOption[handle, "CURLOPT_FOLLOWLOCATION", OptionValue["FollowRedirects"]];
 		CURLOption[handle, "CURLOPT_POSTREDIR", HTTPClient`CURLInfo`Private`$CURLPostRedir]; 
 		CURLOption[handle, "CURLOPT_TIMEOUT", OptionValue["ReadTimeout"]];
 		CURLOption[handle, "CURLOPT_CONNECTTIMEOUT", OptionValue["ConnectTimeout"]];
@@ -773,46 +806,46 @@ setStandardOptions[handle_CURLHandle, url_String, opts:OptionsPattern[]] :=
 			]
 		];
 		(* If the Parmeters are set then, we don't want to set the body. *)
-		If[StringQ[OptionValue["BodyData"]] && ( OptionValue["Parameters"] ==={} ), 
-			CURLOption[handle, "CURLOPT_COPYPOSTFIELDS", OptionValue["BodyData"]];
+		If[StringQ[OptionValue["Body"]] && ( OptionValue["Parameters"] ==={} ), 
+			CURLOption[handle, "CURLOPT_COPYPOSTFIELDS", OptionValue["Body"]];
 		];
 		
 		CURLCredentialsProvider[handle, ToString[OptionValue["CredentialsProvider"]]];
 
 		(*Handles the old List cases of Multipart Requests*)
-		If[MatchQ[OptionValue["MultipartData"], {{_String, _String, {__Integer}}..}],
+		If[MatchQ[OptionValue["MultipartElements"], {{_String, _String, {__Integer}}..}],
 			CURLForm[handle, 
 					#[[1]], 
 					#[[2]], 
 					#[[3]], 
 					Length[#[[3]]],
 					""
-			] & /@ OptionValue["MultipartData"]
+			] & /@ OptionValue["MultipartElements"]
 		];	
 
 		(*Handles a List of Rules of MutipartData*)
-		Which[MatchQ[OptionValue["MultipartData"], {Rule[{_String, String_}, _String]..}], 
+		Which[MatchQ[OptionValue["MultipartElements"], {Rule[{_String, String_}, _String]..}], 
 				CURLForm[handle, 
 					#[[1]][[1]], 
 					#[[1]][[2]], 
 					#[[2]], 
 					Length[#[[2]]],
 					""
-			] & /@ ((Rule[#[[1]],ToCharacterCode[#[[2]]]])& /@ OptionValue["MultipartData"]),
-			MatchQ[OptionValue["MultipartData"], {Rule[{_String, _String}, {__Integer}]..}],
+			] & /@ ((Rule[#[[1]],ToCharacterCode[#[[2]]]])& /@ OptionValue["MultipartElements"]),
+			MatchQ[OptionValue["MultipartElements"], {Rule[{_String, _String}, {__Integer}]..}],
 				CURLForm[handle, 
 					#[[1]][[1]], 
 					#[[1]][[2]], 
 					#[[2]], 
 					Length[#[[2]]],
 					""
-			] & /@ OptionValue["MultipartData"]
+			] & /@ OptionValue["MultipartElements"]
 		];
 
 		(* If the Parmeters are set then, we don't want to set the body. *)
-		If[MatchQ[OptionValue["BodyData"], {__Integer}|{}]&& ( OptionValue["Parameters"] ==={}) ,
-			CURLOption[handle, "CURLOPT_POSTFIELDSIZE", Length[OptionValue["BodyData"]]];
-			CURLOption[handle, "CURLOPT_COPYPOSTFIELDS", OptionValue["BodyData"]]
+		If[MatchQ[OptionValue["Body"], {__Integer}|{}]&& ( OptionValue["Parameters"] ==={}) ,
+			CURLOption[handle, "CURLOPT_POSTFIELDSIZE", Length[OptionValue["Body"]]];
+			CURLOption[handle, "CURLOPT_COPYPOSTFIELDS", OptionValue["Body"]]
 		];
 			
 		handle["URL"] = finalURL;
@@ -856,7 +889,7 @@ streamInit[url_String, opts_List] :=
 		]
 	]
 	
-Options[streamCookies] := $StandardOptions
+Options[streamCookies] = $StandardOptions
 streamCookies[id_Integer] :=
 	streamCookies[id, Sequence@@CURLHandle[id]["OPTIONS"]]
 
@@ -1061,8 +1094,12 @@ callBackWrapper[obj_, "credentials", data_] :=
 callBackWrapper[obj_, name_, data_] := {obj, name, data}
 
 (****************************************************************************)
-Options[URLFetchAsynchronous] := Flatten[{$StandardOptions, "Progress"->False, "Transfer"->Automatic, "UserData"->None}];
-URLFetchAsynchronous[url_String, func_, opts:OptionsPattern[]] /; InitializeQ[] := 
+Options[URLFetchAsynchronous] = Join[$StandardOptions, {"Progress"->False, "Transfer"->Automatic, "UserData"->None}];
+
+URLFetchAsynchronous[url_String, func:Except[_Rule|_RuleDelayed|_String], options___?OptionQ] /; deprecatedOptionQ[options] := 
+	URLFetchAsynchronous[url, func, deprecatedOptionFix[URLFetchAsynchronous, options]] 
+
+URLFetchAsynchronous[url_String, func:Except[_Rule|_RuleDelayed|_String], opts:OptionsPattern[]] /; InitializeQ[] := 
 	Module[{handle, stdOpts, error, oauth, token, args, output},
 		If[OptionValue["OAuthAuthentication"] =!= None,
 			oauth = OptionValue["OAuthAuthentication"];
@@ -1108,8 +1145,18 @@ URLFetchAsynchronous[url_String, func_, opts:OptionsPattern[]] /; InitializeQ[] 
 	
 
 (****************************************************************************)
-Options[URLSaveAsynchronous] := Flatten[{$StandardOptions, "Progress"->False, BinaryFormat->True, "UserData"->None}];
-URLSaveAsynchronous[url_String, file_String, func_, opts:OptionsPattern[]] /; InitializeQ[] := 
+Options[URLSaveAsynchronous] = Join[$StandardOptions, {"Progress"->False, BinaryFormat->True, "UserData"->None}];
+
+URLSaveAsynchronous[url_String, func:Except[_Rule|_RuleDelayed|_String], options___?OptionQ] := 
+	URLSaveAsynchronous[url, Automatic, options]
+
+URLSaveAsynchronous[url_String, Automatic|None|Null, rest___] := 
+	URLSaveAsynchronous[url, FileNameJoin[{$TemporaryDirectory, CreateUUID[] <> ".tmp"}], rest]
+
+URLSaveAsynchronous[url_String, file_String, func:Except[_Rule|_RuleDelayed|_String], options___?OptionQ] /; deprecatedOptionQ[options] := 
+	URLSaveAsynchronous[url, file, func, deprecatedOptionFix[URLSaveAsynchronous, options]] 
+
+URLSaveAsynchronous[url_String, file_String, func:Except[_Rule|_RuleDelayed|_String], opts:OptionsPattern[]] /; InitializeQ[] := 
 	Module[{handle, stdOpts, error, oauth, token, args, output},
 		If[OptionValue["OAuthAuthentication"] =!= None,
 			oauth = OptionValue["OAuthAuthentication"];

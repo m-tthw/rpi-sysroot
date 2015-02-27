@@ -9,13 +9,25 @@ If[DownValues[EvaluationData] === {},
 	SetAttributes[EvaluationData, HoldAllComplete];
 	EvaluationData[expr_] :=
 		Module[{walltime, cputime, $messages, handleMessage, messageList,
-			success, messageParts, result, data},
+			success, messageParts, $printOutput, handlePrint, printList, result, data},
 			$messages = Internal`Bag[];
 			handleMessage = logMessage[$messages, #]&;
 			Internal`AddHandler["Message", handleMessage];
-
-			{walltime, {cputime, result}} =
-				AbsoluteTiming[Timing[Catch[Catch[expr, _]]]];
+			
+			$printOutput = Internal`Bag[];
+			handlePrint= logOutput[$printOutput, #]&;
+			Internal`AddHandler["Wolfram.System.Print", handlePrint];
+			
+			AbsoluteTiming[Timing[Catch[Catch[expr, _]]]] /. {
+				{wall_, {cpu_, res__}} :> 
+				(* we use res__ because expr could evaluate to a Sequence, 
+					see https://jira.wolfram.com/jira/browse/SAAS-11630 *)
+				(
+					walltime = wall;
+					cputime = cpu;
+					result = res
+				)
+			};
 
 			messageList = Internal`BagPart[$messages, All];
 			success = messageList === {};
@@ -24,12 +36,15 @@ If[DownValues[EvaluationData] === {},
 				{{}, {}, {}},
 				Transpose[messageList]
 			];
+			
+			printList = Internal`BagPart[$printOutput, All];
 
 			data = <|
 				"Result" -> result,
 				"Success" -> success,
 				"FailureType" -> If[success, None, "MessageFailure"], (* this needs to be designed *)
 				(*"InputString" -> input, *) (* temporarily disabled *)
+				"OutputLog" -> printList,
 				"Messages" -> messageParts[[1]],
 				"MessagesText" -> messageParts[[2]],
 				"MessagesExpressions" -> messageParts[[3]],
@@ -66,6 +81,11 @@ If[DownValues[EvaluationData] === {},
 			StringForm[If[Head[msgname] === MessageName,
 				ReplacePart[msgname, 1 -> General], msgname], args]
 	    }]];
+	
+	logOutput[bag_, res:HoldComplete[output_]] := 
+		 Internal`StuffBag[bag, outputToString[res]]; 
+		 
+	outputToString[HoldComplete[output_]] := ToString[output]    
 ];
 
 End[]

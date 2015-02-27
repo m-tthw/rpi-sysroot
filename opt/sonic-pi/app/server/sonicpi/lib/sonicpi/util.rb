@@ -12,11 +12,13 @@
 #++
 require 'cgi'
 require 'fileutils'
+require 'securerandom'
 
 module SonicPi
   module Util
     @@project_path = nil
     @@log_path = nil
+    @@current_uuid = nil
 
     def os
       case RUBY_PLATFORM
@@ -33,6 +35,15 @@ module SonicPi
       end
     end
 
+    def num_audio_busses_for_current_os
+      if os == :raspberry
+        64
+      else
+        1024
+      end
+
+    end
+
     def default_sched_ahead_time
       if (os == :raspberry)
         1
@@ -41,8 +52,16 @@ module SonicPi
       end
     end
 
+    def default_control_delta
+      if (os == :raspberry)
+        0.02
+      else
+        0.005
+      end
+    end
+
     def home_dir
-      File.expand_path(Dir.home + '/.sonic-pi/')
+      File.expand_path('~/.sonic-pi/')
     end
 
     def project_path
@@ -60,6 +79,27 @@ module SonicPi
       ensure_dir(path)
       @@log_path = path
       path
+    end
+
+    def global_uuid
+      return @@current_uuid if @@current_uuid
+      path = home_dir + '/.uuid'
+      ensure_dir(home_dir)
+
+      if (File.exists? path)
+        old_id = File.readlines(path).first.strip
+        if  (not old_id.empty?) &&
+            (old_id.size == 36)
+          @@current_uuid = old_id
+          return old_id
+        end
+      end
+
+      # invalid or no uuid - create and store a new one
+      new_uuid = SecureRandom.uuid
+      File.open(path, 'w') {|f| f.write(new_uuid)}
+      @@current_uuid = new_uuid
+      new_uuid
     end
 
     def ensure_dir(d)
@@ -122,11 +162,61 @@ module SonicPi
       File.absolute_path("#{server_path}/native/#{os}")
     end
 
+    def user_settings_path
+      File.absolute_path("#{home_dir}/settings.json")
+    end
+
+    def log_raw(s)
+        # TODO: consider moving this into a worker thread to reduce file
+        # io overhead:
+      File.open("#{log_path}/debug.log", 'a') {|f| f.write("[#{Time.now.strftime("%Y-%m-%d %H:%M:%S")}] #{s}")}
+    end
+
+    def log_exception(e, context="")
+      if debug_mode
+        res = "Exception => #{context} #{e.message}"
+        e.backtrace.each do |b|
+          res << "                                        "
+          res << b
+          res << "\n"
+        end
+        log_raw res
+      end
+    end
+
+    def log_info(s)
+      log "--------------->  " + s
+    end
+
     def log(message)
-      File.open("#{log_path}/sonicpi.log", 'a') {|f| f.write("#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} #{message}\n")} if debug_mode
+      if debug_mode
+        res = ""
+        first = true
+        while !(message.empty?)
+          if first
+            res << message.slice!(0..151)
+            res << "\n"
+            first = false
+          else
+            res << "                                        "
+            res << message.slice!(0..133)
+            res << "\n"
+
+          end
+        end
+        log_raw res
+      end
     end
 
     def debug_mode
+      false
+    end
+
+    def osc_debug_mode
+      false
+    end
+
+    def incoming_osc_debug_mode
       false
     end
 
@@ -135,22 +225,39 @@ module SonicPi
       when Hash
         return opts
       when Array
-        s = opts.size
-        return Hash[*opts] if s.even? && s > 1
-        case s
-        when 1
-          case opts[0]
-          when Hash
-            return opts[0]
-          else
-            raise "Invalid options. Options should either be an even list of key value pairs or a single Hash. Got #{opts.inspect}"
-          end
-        when 0
-          return {}
-        end
+        merge_synth_arg_maps_array(opts)
+      when NilClass
+        return {}
       else
-        raise "Invalid options. Options should either be an even list of key value pairs or a single Hash. Got #{opts.inspect}"
+        raise "Invalid options. Options should either be an even list of key value pairs, a single Hash or nil. Got #{opts.inspect}"
       end
     end
+
+    def merge_synth_arg_maps_array(opts_a)
+      res = {}
+      idx = 0
+      size = opts_a.size
+
+      while (idx < size) && (m = opts_a[idx]).is_a?(Hash)
+        res = res.merge(m)
+        idx += 1
+      end
+
+      return res if idx == size
+      left = (opts_a[idx..-1])
+      raise "There must be an even number of trailing synth args" unless left.size.even?
+      res.merge(Hash[*left])
+    end
+
+    def arg_h_pp(arg_h)
+      s = "{"
+      arg_h.each do |k, v|
+        rounded = v.is_a?(Float) ? v.round(4) : v
+        s << "#{k}: #{rounded}, "
+      end
+      s.chomp(", ") << "}"
+    end
+
+
   end
 end

@@ -101,8 +101,8 @@ LoadSecurityData::usage = "LoadSecurityData[ dir,file] returns the security data
 `Information`$Version = "Security Version 1.0.0";
 `Information`$VersionNumber = 1.0;
 `Information`$ReleaseNumber = 0;
-`Information`$CreationID = If[SyntaxQ["45"], ToExpression["45"], 0]
-`Information`$CreationDate = If[SyntaxQ["{2014, 08, 04, 18, 41, 49}"], ToExpression["{2014, 08, 04, 18, 41, 49}"], {0,0,0,0,0,0}]
+`Information`$CreationID = If[SyntaxQ["223"], ToExpression["223"], 0]
+`Information`$CreationDate = If[SyntaxQ["{2015, 02, 02, 18, 19, 37}"], ToExpression["{2015, 02, 02, 18, 19, 37}"], {0,0,0,0,0,0}]
 
 Begin[ "`Private`"]
 

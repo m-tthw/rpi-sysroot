@@ -1,4 +1,4 @@
-<wolfram:get path="Templates/Default.html">
+<wolfram:get path="Templates/Clean.html">
   <wolfram:slot id="ExtraHead">
     <style type="text/css">
 
@@ -70,41 +70,18 @@
     </style>
   </wolfram:slot>  
 
-  <wolfram:slot id="BodyContent">
-
-
-
-    <!-- Begin page content -->
-    <div id="content" class="container container-main">
-
-        <form action="`FormAction`" method='<* Replace[`FormMethod`, Automatic|_Missing|None|Null -> "POST"] *>' class="has-feedback form-function " enctype="multipart/form-data" autocomplete="off"> 
-
-
-          <wolfram:if test="! MatchQ[`PageTitle`, Automatic|_Missing|None|Null]">
-            <h1 class="page-title text-center">
-              <wolfram:slot id="PageTitle"/>
-            </h1>
-          </wolfram:if>
-          <wolfram:if test="! MatchQ[`PageDescription`, Automatic|_Missing|None|Null]">
-            <p class="page-description">
-              <wolfram:slot id="PageDescription"/>
-            </p>
-          </wolfram:if>
-
-          <wolfram:slot/>
-
-          <wolfram:if test="`IsForm` === True">
-            <div class="text-center submit-row">
-                <button type="submit" class="btn btn-primary form-submit" autocomplete="off">
-                  <wolfram:slot id="SubmitLabel">Submit</wolfram:slot>
-                </button>
-            </div>
-          </wolfram:if>
-
-
-        </form>
-
-    </div>
+  <wolfram:slot id="Content">
+      <wolfram:get path="Templates/Includes/Title.html"/>
+      <div class="panel-body">
+        <wolfram:slot id="Expression"/>
+      </div>
+      <wolfram:if test="Not @ MatchQ[#FormSubmitLabel, _Missing|None]">
+        <div class="text-center submit-row">
+          <button type="submit" class="btn btn-primary form-submit" autocomplete="off">
+            <wolfram:slot id="FormSubmitLabel">Submit</wolfram:slot>
+          </button>
+        </div>
+      </wolfram:if>
   </wolfram:slot>
 
 

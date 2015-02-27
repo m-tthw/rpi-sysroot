@@ -4,6 +4,7 @@ System`CloudLoggingData;
 
 Begin["`Private`"]
 
+Needs["JSONTools`"]
 (* CloudLoggingData *)
 
 CloudLoggingData[obj_CloudObject] :=
@@ -139,7 +140,8 @@ getLoggingData[cloud_String, uuid_String] :=
 		err_HTTPError :> (
 			checkError[$lastLoggingDataError = err, CloudLoggingData];
 			$Failed),
-		{_, bytes_List} :> ImportString[FromCharacterCode[bytes], "JSON"]
+			(* Using JSONTools directly to work around ImportString's overhead in using a temporary file. We can use ImportString again when this is fixed. *)
+		{_, bytes_List} :> JSONTools`FromJSON[FromCharacterCode[bytes]]
 	}
 
 getLoggingDataForChannelsAndDateRange[deployment_, channels_List, start_List, 
@@ -152,7 +154,8 @@ getLoggingDataForChannelsAndDateRange[deployment_, channels_List, start_List,
 		err_HTTPError :> (
 			checkError[$lastLoggingDataError = err, CloudLoggingData];
 			$Failed),
-		{_, bytes_List} :> ImportString[FromCharacterCode[bytes], "JSON"]
+			(* Using JSONTools directly to work around ImportString's overhead in using a temporary file. We can use ImportString again when this is fixed. *)
+		{_, bytes_List} :> JSONTools`FromJSON[FromCharacterCode[bytes]]
 	}
 
 toServerDeploymentType[deployment_] := ToUpperCase[deployment]
@@ -276,7 +279,8 @@ removeProductFromChannel[channel_] :=
     StringReplace[channel, {StartOfString ~~ (Except[":"] ..) ~~ ":" -> ""}]
 
 parseLogEntryMessage[msg_] :=
-    ImportString[msg, "JSON"] /. { (* TODO convert message on the server side *)
+    (* Using JSONTools directly to work around ImportString's overhead in using a temporary file. We can use ImportString again when this is fixed. *)
+    JSONTools`FromJSON[msg] /. { (* TODO convert message on the server side *)
     (* only the data field of the message object is needed *)
         data_List :> Association[Evaluate["data" /. data]]
     }
@@ -326,7 +330,8 @@ deployedObjects[] :=
     Module[{filesdata},
         filesdata = CloudObject`Private`execute[$CloudBase, "GET",
             {"objects", "deployments"}] /. {
-            {_, bytes_List} :> ImportString[FromCharacterCode[bytes], "JSON"]
+            (* Using JSONTools directly to work around ImportString's overhead in using a temporary file. We can use ImportString again when this is fixed. *)
+            {_, bytes_List} :> JSONTools`FromJSON[FromCharacterCode[bytes]]
         };
         Association@
             Map[With[{uuid = "uuid" /. #}, cloudObjectFromUUID[uuid] -> uuid]&,

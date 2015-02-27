@@ -1,5 +1,5 @@
 (* ::Package:: *)
-(* $Id: errmsg.m,v 1.3813 2014/06/17 20:24:49 bakshee Exp $ *)
+(* $Id: errmsg.m,v 1.3813.2.35 2014/11/07 21:08:41 kkouptsov Exp $ *)
 
 General::settf = "Cannot set `1` to `2`; value must be True or False."
 $BatchInput::bitf = "Cannot set `1` to `2`; value must be True or False."
@@ -106,6 +106,7 @@ Developer`CalendarData::cal = "`1` is not supported in the `2` calendar."
 Developer`CalendarData::nohday = "`1` was not a recognized holiday in `2`."
 Developer`CalendarData::ijtime = DatePlus::ijtime = DateDifference::ijtime = DateRange::ijtime = DayName::ijtime = LeapYearQ::ijtime = DayRange::ijtime = DayPlus::ijtime = DayCount::ijtime = DayMatchQ::ijtime = BusinessDayQ::ijtime = DayRound::ijtime = "`1` dates cannot have hours, minutes, seconds."
 Developer`CalendarData::month = DatePlus::month = DateDifference::month = DateRange::month = DayName::month = LeapYearQ::month = DayRange::month = DayPlus::month = DayCount::month = DayMatchQ::month = BusinessDayQ::month = DayRound::month = "`1` is not a known month for the `2` calendar. Use CalendarData[\"`2`\", \"MonthList\"] for a list of months."
+DatePlus::nint = "Argument `1` should be an integer value for `2`.";
 DayRound::badinc = "The rounding `1` does not apply to the selected day type; changed to `2`.";
 CellularAutomaton::ospec = "The specified order `1` should be a positive machine integer."
 CellularAutomaton::rspec = "The neighbor specification at position 3 of rule specification `1` should be a radius, a non-empty list of radii, or a non-empty list of offsets. A radius must be (d - 1)/2 for some positive machine integer d. The offsets are non-empty lists of machine integers."
@@ -180,6 +181,7 @@ CreateNotebook::nbnfnd = "Unable to find the notebook `1`."
 CreateNotebook::noconv = "Converting `1` to type `2` is not supported yet."
 General::invrk = "The argument `1` is not a valid rule."
 General::invak = "The argument `1` is not a valid Association."
+General::inval = "The argument `1` is not a valid AmbiguityList."
 General::invlc = "The argument `1` is not a list of Associations."
 General::invas = "The argument `1` is not a valid Association or rule."
 General::invaa = "The argument `1` is not a valid Association or a list of Associations."
@@ -1230,6 +1232,7 @@ General::real = "Argument `1` should be a real number."
 General::mepreal = "In attempting to decide whether a solution `1` is real, $MaxExtraPrecision `2` was encountered. The solution was assumed real. Increasing the value of $MaxExtraPrecision may help resolve the uncertainty."
 General::sandbox = "The operation `1` is not allowed while running in sandbox mode."
 General::sandboxfl = "The operation `1` is not allowed to access the file `2` while running in sandbox mode."
+General::sandboxfd = "`1` is not a valid file or directory path."
 General::span = "`1` is not a valid Span specification. A Span specification should be 1, 2, or 3 integers separated by ;;. (Any of the integers can be omitted or replaced with All.)"
 General::strval = "The value can only be changed to a string."
 Dot::rect = Tr::rect = "Nonrectangular tensor encountered."
@@ -1515,7 +1518,7 @@ Import::installreq = Export::installreq = "`1` format is supported only if `2` i
 Import::intp = "`1` is not a positive integer."
 Import::uneqlen = "Elements `1` and `2` must have the same length."
 Import::memavail = "Could not allocate memory for import of `1` format."
-Export::nojmem = Import::nojmem = "There was insufficient Java heap space for the operation. Try increasing the Java Virtual Machine heap size."
+BarcodeRecognize::nojmem = BarcodeImage::nojmem = Export::nojmem = Import::nojmem = "There was insufficient Java heap space for the operation. Try increasing the Java Virtual Machine heap size."
 Export::nojlink = Import::nojlink = "The LinkObject `1` closed during the operation. Try increasing the Java Virtual Machine heap size."
 Import::nlist = "`1` is not a list of strings."
 Import::nlist2 = "`1` is not a list of two elements."
@@ -1570,6 +1573,9 @@ SendMail::argerr = "Messages were encountered during argument evaluation. Email 
 SendMail::nonopt = "SendMail called with unexpected arguments. Rules are required."
 SendMail::prefloadfail = "Failed to load settings for SendMail. Use the Preferences dialog to configure settings."
 SendMail::prefsavefail = "Failed to save mail settings."
+SendMail::noid = "Unable to send mail to $WolframID. $WolframID is set to None."
+SendMail::invarg = "SendMail called with unexpected arguments."
+SendMail::invbody = "SendMail called with an invalid message body. A string is expected."
 Inequality::ineq = "Inequality called with `1` arguments; the number of arguments is expected to be an odd number >= 3."
 Reduce`InequalityInstance::lowpr = Reduce`ExistsRealQ::lowpr = Reduce`ForAllRealQ::lowpr = Reduce`ImpliesRealQ::lowpr = "The precision of coefficients of system `1` was too low to decide whether there are any solutions."
 SemialgebraicComponentInstances::nrpi = Reduce`InequalityInstance::nrpi = Reduce`ExistsRealQ::nrpi = Reduce`ForAllRealQ::nrpi = Reduce`ImpliesRealQ::nrpi = "`1` is not a logical formula consisting of polynomial equations and inequalities in `2` with exact real number coefficients."
@@ -1595,7 +1601,7 @@ Sum::isub = "Warning: infinite subdivision of the iteration domain has been used
 Product::isub = "Warning: infinite subdivision of the iteration domain has been used in computation of the product `1`. If the product is not absolutely convergent, the result may be incorrect."
 Integrate::mdiv = "The multivariate integral `1` does not converge."
 Integrate::vvar = "The vector variable `1` cannot be used for indefinite integration."
-Integrate::ilim = "Invalid integration variable or limit(s) in `1`."
+Integrate::ilim = NIntegrate::ilim = "Invalid integration variable or limit(s) in `1`."
 Integrate::quantd = "Missing or incompatible quantities encountered in integration limits `1`.";
 Integrate::diffbody = "Unmatched differential operator `1` found in the integrand body of `2`. There may be too many differential operators or they may not appear at the end of the integral."
 Integrate::diffend = "`1` cannot be interpreted since `2` is followed by `3`. It may be necessary to use parentheses to ensure that `2` appears at the end of the integral."
@@ -1712,6 +1718,8 @@ LinearProgramming::bab = "Warning: problem specified contains integer variables;
 FindMinimum::lpmp2 = FindMaximum::lpmp2 = FindArgMin::lpmp2 = FindArgMax::lpmp2 = FindMinValue::lpmp2 = FindMaxValue::lpmp2 = Optimization`QuadraticProgramming::lpmp2 = DualLinearProgramming::lpmp2 = LinearProgramming::lpmp2 = "Warning: Method -> `1` is specified for a non-machine-precision problem; the problem will be converted into machine precision. Used Method -> `2` for non-machine-number problem."
 DualLinearProgramming::lpmp = LinearProgramming::lpmp = "Warning: Method -> `1` is specified for a non-machine-precision problem; the problem will be converted into machine precision."
 FindMinimum::lpip = FindMaximum::lpip = FindArgMin::lpip = FindArgMax::lpip = FindMinValue::lpip = FindMaxValue::lpip = DualLinearProgramming::lpip = LinearProgramming::lpip = "Warning: integer linear programming will use a machine-precision approximation of the inputs."
+FindMinimum::cnpreg = FindMaximum::cnpreg = FindArgMin::cnpreg = FindArgMax::cnpreg = FindMinValue::cnpreg = FindMaxValue::cnpreg = "Could not process the region `1`." 
+FindMinimum::cnpcons = FindMaximum::cnpcons = FindArgMin::cnpcons = FindArgMax::cnpcons = FindMinValue::cnpcons = FindMaxValue::cnpcons = "Could not process the constraints `1`."
 Optimization`QuadraticProgramming::qp1 = LinearProgramming::qp1 = DualLinearProgramming::qp1 = "The first argument `1` must be a matrix."
 DualLinearProgramming::ivs = LinearProgramming::ivs = "The value of IntegerValues -> `1` must be None, All, or a list of positive integers no larger than the number of variables."
 Optimization`QuadraticProgramming::mcp = LinearProgramming::mcp = "Warning: only Method -> CLP is allowed for a quadratic programming problem. Using Method -> CLP instead."
@@ -1753,7 +1761,7 @@ ConfigureEngine::filecreate = "Launch Manager encountered an error while trying 
 ConfigureEngine::kernelerr = "Launch Manager unable to read or write data to the Kernel: `1`."
 ConfigureEngine::launcherr = "Launch Manager unable to start Kernel: `1`."
 ConfigureEngine::maxeng = "Launch Manager has reached maximum number of launched engines; no engines available."
-ConfigureEngine::nosucheng = "Launch Manager cannot locate an engine with named `1`."
+ConfigureEngine::nosucheng = "Launch Manager cannot locate an engine with name `1`."
 ConfigureEngine::running = "Launch Manager cannot launch a Kernel with service name `1`; already running a Kernel with that service name."
 ConfigureEngine::wstperr = "Launch Manager cannot send message through a WSTP link: `1`."
 ManagerLocation::nogeoloc = "Launch Manager cannot find $GeoLocation."
@@ -2062,7 +2070,7 @@ NDSolve::impsgm = NDSolveValue::impsgm = ParametricNDSolve::impsgm = ParametricN
 NDSolve::impsitsf = NDSolveValue::impsitsf = ParametricNDSolve::impsitsf = ParametricNDSolveValue::impsitsf = NDSolve`ProcessEquations::impsitsf = "Unable to satisfy the ImplicitSolver tolerance for IterationSafetyFactor at `1` = `2`."
 NDSolve::impsagpg = NDSolveValue::impsagpg = ParametricNDSolve::impsagpg = ParametricNDSolveValue::impsagpg = NDSolve`ProcessEquations::impsagpg = "Unable to satisfy the ImplicitSolver tolerances for AccuracyGoal and PrecisionGoal at `1` = `2`."
 NDSolve::bw = NDSolveValue::bw = ParametricNDSolve::bw = ParametricNDSolveValue::bw = NDSolve`Iterate::bw = "The value of the option `1` -> `2` should be a positive integer or a list of two positive integers giving upper and lower bandwidths."
-NDSolve::lsband = NDSolveValue::lsband = ParametricNDSolve::lsband = ParametricNDSolveValue::lsband = NDSolve`Iterate::lsband = "\"LinearSolveMethod\" -> \"Band\" for the Newton step can only be used with \"VariableStepCoefficients\" -> True." 
+NDSolve::lsband = NDSolveValue::lsband = ParametricNDSolve::lsband = ParametricNDSolveValue::lsband = NDSolve`Iterate::lsband = "\"LinearSolveMethod\" -> \"Band\" for the Newton step can only be used with \"VariableStepCoefficients\" -> True."
 NDSolve::otype = NDSolveValue::otype = ParametricNDSolve::otype = ParametricNDSolveValue::otype = NDSolve`Iterate::otype = "The value of the option `1` -> `2` should be ModifiedGramSchmidt or ClassicalGramSchmidt."
 NDSolve::scpar = NDSolveValue::scpar = ParametricNDSolve::scpar = ParametricNDSolveValue::scpar = NDSolve`ProcessEquations::scpar = "The value of the option `1` -> `2` of the method `3` should be Automatic or a pair of real numbers 0 <= {a, b} <= 1."
 NDSolve::subsp = NDSolveValue::subsp = ParametricNDSolve::subsp = ParametricNDSolveValue::subsp = NDSolve`Iterate::subsp = "The value of `1` -> `2` should be a positive integer or Automatic."
@@ -2081,7 +2089,7 @@ NDSolve::evdir = NDSolveValue::evdir = ParametricNDSolve::evdir = ParametricNDSo
 NDSolve::evact = NDSolveValue::evact = ParametricNDSolve::evact = ParametricNDSolveValue::evact = NDSolve`Iterate::evact = "The value of the option `1` for the EventLocator method is a list with length different from the number of events (`2`), so it will be treated as a single action to take for all specified events."
 NDSolve::evwe = NDSolveValue::evwe = ParametricNDSolve::evwe = ParametricNDSolveValue::evwe = NDSolve`Iterate::evwe = "WhenEvent expressions should be included with the equations and will be ignored in `1` since they do not evaluate to True, False, or real numbers."
 NDSolve::evre = NDSolveValue::evre = ParametricNDSolve::evre = ParametricNDSolveValue::evre = NDSolve`ProcessEquations::evre = "The value of the event function at `1` = `2` was not a real number. The event will be ignored in steps where it does not evaluate to real numbers at both ends."
-NDSolve::event = NDSolveValue::event = ParametricNDSolve::event = ParametricNDSolveValue::event = NDSolve`ProcessEquations::event = "Event `1` should be a WhenEvent expression." 
+NDSolve::event = NDSolveValue::event = ParametricNDSolve::event = ParametricNDSolveValue::event = NDSolve`ProcessEquations::event = "Event `1` should be a WhenEvent expression."
 NDSolve::evboo = NDSolveValue::evboo = ParametricNDSolve::evboo = ParametricNDSolveValue::evboo = NDSolve`ProcessEquations::evboo = "The value of the event function at `1` = `2` was not True or False. When not True, the value will be considered as False."
 NDSolve::ecboo = NDSolveValue::ecboo = ParametricNDSolve::ecboo = ParametricNDSolveValue::ecboo = NDSolve`ProcessEquations::ecboo = "The value of event condition function at `1` = `2` was not True or False. The event will be considered inactive."
 NDSolve::evfrf = NDSolveValue::evfrf = ParametricNDSolve::evfrf = ParametricNDSolveValue::evfrf = NDSolve`ProcessEquations::evfrf = "The event function did not evaluate to a real number somewhere between `1` = `2` and `1` = `3`, preventing FindRoot from finding the root accurately."
@@ -2105,7 +2113,7 @@ NDSolve::smpf = NDSolveValue::smpf = ParametricNDSolve::smpf = ParametricNDSolve
 NDSolve::smdelta = NDSolveValue::smdelta = ParametricNDSolve::smdelta = ParametricNDSolveValue::smdelta = NDSolve`ProcessEquations::smdelta = "The solution was in sliding mode along some discontinuities at `1` = `2` when a Dirac delta discontinuity was encountered. The solution beyond this point was computed from a continuation."
 NDSolve::smdae = NDSolveValue::smdae = ParametricNDSolve::smdae = ParametricNDSolveValue::smdae = NDSolve`ProcessEquations::smdae = "Events for discontinuities with possible sliding mode were given but the equations are being solved as a DAE, so sliding mode will not be considered."
 NDSolve::ndvran = NDSolveValue::ndvran = ParametricNDSolve::ndvran = ParametricNDSolveValue::ndvran = NDSolve`ProcessEquations::ndvran = "`1` is not a valid variable range."
-NDSolve::ndvrng = NDSolveValue::ndvrng = ParametricNDSolve::ndvrng = ParametricNDSolveValue::ndvrng = NDSolve`ProcessEquations::ndvrng = "The range `1` in `2` is not valid." 
+NDSolve::ndvrng = NDSolveValue::ndvrng = ParametricNDSolve::ndvrng = ParametricNDSolveValue::ndvrng = NDSolve`ProcessEquations::ndvrng = "The range `1` in `2` is not valid."
 NDSolve::ndsdtc = NDSolveValue::ndsdtc = ParametricNDSolve::ndsdtc = ParametricNDSolveValue::ndsdtc = NDSolve`ProcessEquations::ndsdtc = "The time constraint of `1` seconds was exceeded trying to solve for derivatives, so the system will be treated as a system of differential-algebraic equations. You can use Method->{\"EquationSimplification\"->\"Solve\"} to have the system solved as ordinary differential equations."
 NDSolve::disder = NDSolveValue::disder = ParametricNDSolve::disder = ParametricNDSolveValue::disder = NDSolve`ProcessEquations::disder = "Cannot take the derivative of discrete variable `1`."
 NDSolve::depdole = NDSolveValue::depdole = ParametricNDSolve::depdole = ParametricNDSolveValue::depdole = NDSolve`ProcessEquations::depdole = "The differential order of a dependent variable in `1` exceeds the highest order that appears in the differential equations."
@@ -2122,28 +2130,28 @@ NDSolve::dimmatch = NDSolveValue::dimmatch = ParametricNDSolve::dimmatch = Param
 NDSolve::actid = NDSolveValue::actid = ParametricNDSolve::actid = ParametricNDSolveValue::actid = NDSolve`ProcessEquations::actid = "Event action `1` does not match the form RuleDelayed[ \"Action\" , _]."
 NDSolve::disspec = NDSolveValue::disspec = ParametricNDSolve::disspec = ParametricNDSolveValue::disspec = NDSolve`ProcessEquations::disspec = "Invalid discrete variable specification `1`."
 NDSolve::evnoact = NDSolveValue::evnoact = ParametricNDSolve::evnoact = ParametricNDSolveValue::evnoact = NDSolve`ProcessEquations::evnoact = "Event action `1` will have no effect. `1` should be given as an expression with arguments."
-NDSolve::bdedm = NDSolveValue::bdedm = ParametricNDSolve::bdedm = ParametricNDSolveValue::bdedm = NDSolve`ProcessEquations::bdedm = "`1` is not a valid event detection method." 
+NDSolve::bdedm = NDSolveValue::bdedm = ParametricNDSolve::bdedm = ParametricNDSolveValue::bdedm = NDSolve`ProcessEquations::bdedm = "`1` is not a valid event detection method."
 NDSolve::svnder = NDSolveValue::svnder = ParametricNDSolve::svnder = ParametricNDSolveValue::svnder = NDSolve`ProcessEquations::svnder = "The variables `1` in `2` cannot be set as state variables while solving as an ODE because some are the highest order derivatives. You may be able to use these if you solve as a system of DAEs by using Method->{\"EquationSimplification\"->\"Residual\"}."
 NDSolve::wends = NDSolveValue::wends = ParametricNDSolve::wends = ParametricNDSolveValue::wends = NDSolve`ProcessEquations::wends = "Warning: the rule `1` will not set the discontinuity state because the left-hand side is not a discrete variable restricted to integer values {-1, 0, 1} or {-1, 1}."
 NDSolve::wenset = NDSolveValue::wenset = ParametricNDSolve::wenset = ParametricNDSolveValue::wenset = NDSolve`ProcessEquations::wenset = "Warning: the rule `1` will not directly set the state because the left-hand side is not a list of state variables."
-NDSolve::daeresidual = NDSolveValue::daeresidual = ParametricNDSolve::daeresidual = ParametricNDSolveValue::daeresidual = NDSolve`ProcessEquations::daeresidual = "No change in residual and/or line search did not yield any reduction. Terminating after `1` iterations with residue of `2`." ; 
-NDSolve::daenoconv = NDSolveValue::daenoconv = ParametricNDSolve::daenoconv = ParametricNDSolveValue::daenoconv = NDSolve`ProcessEquations::daenoconv = "Scaled residual norm did not go below `1` in `3` iterations. Scaled norm at the end of `3` iterations = `2`." ; 
-NDSolve::daenoconv1 = NDSolveValue::daenoconv1 = ParametricNDSolve::daenoconv1 = ParametricNDSolveValue::daenoconv1 = NDSolve`ProcessEquations::daenoconv1 = "Iterations did not converge. Please try perturbing the initial conditions." ; 
-NDSolve::daenoconv2 = NDSolveValue::daenoconv2 = ParametricNDSolve::daenoconv2 = ParametricNDSolveValue::daenoconv2 = NDSolve`ProcessEquations::daenoconv2 = "Iterations did not converge. Weighting the initial conditions and performing new iterations." ; 
+NDSolve::daeresidual = NDSolveValue::daeresidual = ParametricNDSolve::daeresidual = ParametricNDSolveValue::daeresidual = NDSolve`ProcessEquations::daeresidual = "No change in residual and/or line search did not yield any reduction. Terminating after `1` iterations with residue of `2`." ;
+NDSolve::daenoconv = NDSolveValue::daenoconv = ParametricNDSolve::daenoconv = ParametricNDSolveValue::daenoconv = NDSolve`ProcessEquations::daenoconv = "Scaled residual norm did not go below `1` in `3` iterations. Scaled norm at the end of `3` iterations = `2`." ;
+NDSolve::daenoconv1 = NDSolveValue::daenoconv1 = ParametricNDSolve::daenoconv1 = ParametricNDSolveValue::daenoconv1 = NDSolve`ProcessEquations::daenoconv1 = "Iterations did not converge. Please try perturbing the initial conditions." ;
+NDSolve::daenoconv2 = NDSolveValue::daenoconv2 = ParametricNDSolve::daenoconv2 = ParametricNDSolveValue::daenoconv2 = NDSolve`ProcessEquations::daenoconv2 = "Iterations did not converge. Weighting the initial conditions and performing new iterations." ;
 NDSolve::daebadic = NDSolveValue::daebadic = ParametricNDSolve::daebadic = ParametricNDSolveValue::daebadic = NDSolve`ProcessEquations::daebadic = "Combination of initial conditions associated with variables `1` may be inconsistent. Weighting the initial conditions and performing new iterations." ;
-NDSolve::changedic = NDSolveValue::changedic = ParametricNDSolve::changedic = ParametricNDSolveValue::changedic = NDSolve`ProcessEquations::changedic = "Given initial conditions have been modified to be consistent with system of equations."; 
-NDSolve::daebadcollorder = NDSolveValue::daebadcollorder = ParametricNDSolve::daebadcollorder = ParametricNDSolveValue::daebadcollorder = NDSolve`ProcessEquations::daebadcollorder = "CollocationOrder should be an integer value. Proceeding with CollocationOrder -> 6." ; 
+NDSolve::changedic = NDSolveValue::changedic = ParametricNDSolve::changedic = ParametricNDSolveValue::changedic = NDSolve`ProcessEquations::changedic = "Given initial conditions have been modified to be consistent with system of equations.";
+NDSolve::daebadcollorder = NDSolveValue::daebadcollorder = ParametricNDSolve::daebadcollorder = ParametricNDSolveValue::daebadcollorder = NDSolve`ProcessEquations::daebadcollorder = "CollocationOrder should be an integer value. Proceeding with CollocationOrder -> 6." ;
 NDSolve::daemincollorder = NDSolveValue::daemincollorder = ParametricNDSolve::daemincollorder = ParametricNDSolveValue::daemincollorder = NDSolve`ProcessEquations::daemincollorder = "CollocationOrder should be greater than 2. Proceeding with CollocationOrder -> 2." ;
 NDSolve::daebadmaxiter = NDSolveValue::daebadmaxiter = ParametricNDSolve::daebadmaxiter = ParametricNDSolveValue::daebadmaxiter = NDSolve`ProcessEquations::daebadmaxiter = "Maximum iterations should be an integer value. Proceeding with MaxIterations -> 100." ;
-NDSolve::daeminiter = NDSolveValue::daeminiter = ParametricNDSolve::daeminiter = ParametricNDSolveValue::daeminiter = NDSolve`ProcessEquations::daeminiter = "Minimum iterations should be at least 1. Proceeding with MaxIterations -> 1." ; 
+NDSolve::daeminiter = NDSolveValue::daeminiter = ParametricNDSolve::daeminiter = ParametricNDSolveValue::daeminiter = NDSolve`ProcessEquations::daeminiter = "Minimum iterations should be at least 1. Proceeding with MaxIterations -> 1." ;
 NDSolve::daebadcolldir = NDSolveValue::daebadcolldir = ParametricNDSolve::daebadcolldir = ParametricNDSolveValue::daebadcolldir = NDSolve`ProcessEquations::daebadcolldir = "`1` is not Forward, Backward, or Centered. Proceeding with CollocationDirection -> Centered." ;
-NDSolve::daebadmethod = NDSolveValue::daebadmethod = ParametricNDSolve::daebadmethod = ParametricNDSolveValue::daebadmethod = NDSolve`ProcessEquations::daebadmethod = "`1` is not Chebyshev or Taylor. Proceeding with BasisType -> Chebyshev." ; 
-NDSolve::badextrapts = NDSolveValue::badextrapts = ParametricNDSolve::badextrapts = ParametricNDSolveValue::badextrapts = NDSolve`ProcessEquations::badextrapts = "ExtraCollocationPoints should be an integer. Proceeding with ExtraCollocationPoints -> 3." ; 
-NDSolve::daeminextrapts = NDSolveValue::daeminextrapts = ParametricNDSolve::daeminextrapts = ParametricNDSolveValue::daeminextrapts = NDSolve`ProcessEquations::daeminextrapts = "ExtraCollocationPoints should be at least 0. Proceeding with ExtraCollocationPoints -> 0." ; 
-NDSolve::badcollrange = NDSolveValue::badcollrange = ParametricNDSolve::badcollrange = ParametricNDSolveValue::badcollrange = NDSolve`ProcessEquations::badcollrange = "CollocationRange should be greater than 0. Proceeding with CollocationRange -> Automatic." ; 
-NDSolve::largecollrange = NDSolveValue::largecollrange = ParametricNDSolve::largecollrange = ParametricNDSolveValue::largecollrange = NDSolve`ProcessEquations::largecollrange = "CollocationRange is possibly large. Solution may not converge." ; 
+NDSolve::daebadmethod = NDSolveValue::daebadmethod = ParametricNDSolve::daebadmethod = ParametricNDSolveValue::daebadmethod = NDSolve`ProcessEquations::daebadmethod = "`1` is not Chebyshev or Taylor. Proceeding with BasisType -> Chebyshev." ;
+NDSolve::badextrapts = NDSolveValue::badextrapts = ParametricNDSolve::badextrapts = ParametricNDSolveValue::badextrapts = NDSolve`ProcessEquations::badextrapts = "ExtraCollocationPoints should be an integer. Proceeding with ExtraCollocationPoints -> 3." ;
+NDSolve::daeminextrapts = NDSolveValue::daeminextrapts = ParametricNDSolve::daeminextrapts = ParametricNDSolveValue::daeminextrapts = NDSolve`ProcessEquations::daeminextrapts = "ExtraCollocationPoints should be at least 0. Proceeding with ExtraCollocationPoints -> 0." ;
+NDSolve::badcollrange = NDSolveValue::badcollrange = ParametricNDSolve::badcollrange = ParametricNDSolveValue::badcollrange = NDSolve`ProcessEquations::badcollrange = "CollocationRange should be greater than 0. Proceeding with CollocationRange -> Automatic." ;
+NDSolve::largecollrange = NDSolveValue::largecollrange = ParametricNDSolve::largecollrange = ParametricNDSolveValue::largecollrange = NDSolve`ProcessEquations::largecollrange = "CollocationRange is possibly large. Solution may not converge." ;
 NDSolve::daebadsolmethod = NDSolveValue::daebadsolmethod = ParametricNDSolve::daebadsolmethod = ParametricNDSolveValue::daebadsolmethod = NDSolve`ProcessEquations::daebadsolmethod = "`1` is not LinearSolve or LeastSquares. Proceeding with SolvingMethod -> LinearSolve.";
-NDSolve::badicweight = NDSolveValue::badicweight = ParametricNDSolve::badicweight = ParametricNDSolveValue::badicweight = NDSolve`ProcessEquations::badicweight = "The weights should be positive. Proceeding with InitialConditionWeight -> 1." ; 
+NDSolve::badicweight = NDSolveValue::badicweight = ParametricNDSolve::badicweight = ParametricNDSolveValue::badicweight = NDSolve`ProcessEquations::badicweight = "The weights should be positive. Proceeding with InitialConditionWeight -> 1." ;
 NDSolve::index = NDSolveValue::index = ParametricNDSolve::index = ParametricNDSolveValue::index = NDSolve`Iterate::index = "The DAE solver failed at `1` = `2`. The solver is intended for index 1 DAE systems and structural analysis indicates that the DAE index is `3`. The option Method->{\"IndexReduction\"->Automatic} may be used to reduce the index of the system.";
 NDSolve::chknic = NDSolveValue::chknic = ParametricNDSolve::chknic = ParametricNDSolveValue::chknic = NDSolve`Iterate::chknic = NDSolve`ProcessEquations::chknic = "Structural analysis indicates that `1` initial conditions are needed to fix the state of the system. Currently only `2` initial conditions are specified. NDSolve may return one of a family of solutions.";
 NDSolve::indexss = NDSolveValue::indexss = ParametricNDSolve::indexss = ParametricNDSolveValue::indexss = NDSolve`Iterate::indexss = "The DAE solver failed at `1` = `2`. The solver is intended for index 1 DAE systems and structural analysis indicates that the DAE is structurally singular.";
@@ -2156,12 +2164,12 @@ NDSolve::irfail = NDSolveValue::irfail = ParametricNDSolve::irfail = ParametricN
 NDSolve::pstr = NDSolveValue::pstr = ParametricNDSolve::pstr = ParametricNDSolveValue::pstr = NDSolve`ProcessEquations::pstr = "`2` is not a valid setting for `1`."
 NDSolve::duplct = NDSolveValue::duplct = ParametricNDSolve::duplct = ParametricNDSolveValue::duplct = NDSolve`ProcessEquations::duplct = "Duplicate variable specification for `1` given in `2`."
 NDSolve::oneregion = NDSolveValue::oneregion = ParametricNDSolve::oneregion = ParametricNDSolveValue::oneregion = NDSolve`ProcessEquations::oneregion = "Spatial discretization can only be done over a single region."
-NDSolve::bdsspc = NDSolveValue::bdsspc = ParametricNDSolve::bdsspc = ParametricNDSolveValue::bdsspc = NDSolve`ProcessEquations::bdsspc = "Defaults will be used instead of the incorrectly specified method options in `1`." 
-NDSolve::iopnma = NDSolveValue::iopnma = ParametricNDSolve::iopnma = ParametricNDSolveValue::iopnma = NDSolve`ProcessEquations::iopnma = "Value of `1` method option \"SensitivityOrder\" should be a non-negative machine-sized integer, None, or Automatic." 
-NDSolve::jevlm = NDSolveValue::jevlm = ParametricNDSolve::jevlm = ParametricNDSolveValue::jevlm = NDSolve`ProcessEquations::jevlm = "The location method \"BrentBracketRoot\" may only be used when the event can be handled as a real-valued function." 
-NDSolve::tddisc = NDSolveValue::tddisc = ParametricNDSolve::tddisc = ParametricNDSolveValue::tddisc = NDSolve`ProcessEquations::tddisc = "NDSolve cannot do a discontinuity replacement for event surfaces that depend only on time." 
-NDSolve::deltad = NDSolveValue::deltad = ParametricNDSolve::deltad = ParametricNDSolveValue::deltad = NDSolve`ProcessEquations::deltad = "NDSolve cannot handle discontinuities where the argument of DiracDelta depends on any variable besides the temporal independent variable." 
-NDSolve`DeltaDiscontinuity::ddss = "Incorrect DiracDelta discontinuity specification encountered in `1`." 
+NDSolve::bdsspc = NDSolveValue::bdsspc = ParametricNDSolve::bdsspc = ParametricNDSolveValue::bdsspc = NDSolve`ProcessEquations::bdsspc = "Defaults will be used instead of the incorrectly specified method options in `1`."
+NDSolve::iopnma = NDSolveValue::iopnma = ParametricNDSolve::iopnma = ParametricNDSolveValue::iopnma = NDSolve`ProcessEquations::iopnma = "Value of `1` method option \"SensitivityOrder\" should be a non-negative machine-sized integer, None, or Automatic."
+NDSolve::jevlm = NDSolveValue::jevlm = ParametricNDSolve::jevlm = ParametricNDSolveValue::jevlm = NDSolve`ProcessEquations::jevlm = "The location method \"BrentBracketRoot\" may only be used when the event can be handled as a real-valued function."
+NDSolve::tddisc = NDSolveValue::tddisc = ParametricNDSolve::tddisc = ParametricNDSolveValue::tddisc = NDSolve`ProcessEquations::tddisc = "NDSolve cannot do a discontinuity replacement for event surfaces that depend only on time."
+NDSolve::deltad = NDSolveValue::deltad = ParametricNDSolve::deltad = ParametricNDSolveValue::deltad = NDSolve`ProcessEquations::deltad = "NDSolve cannot handle discontinuities where the argument of DiracDelta depends on any variable besides the temporal independent variable."
+NDSolve`DeltaDiscontinuity::ddss = "Incorrect DiracDelta discontinuity specification encountered in `1`."
 NDSolveValue::ndsvb = "There are multiple solution branches for the equations, but NDSolveValue will return only one. Use NDSolve to get all of the solution branches.";
 ParametricNDSolve::iopna = ParametricNDSolveValue::iopna = "Value of option `1` -> `2` should be a non-negative integer or Automatic.";
 ParametricNDSolve::fpct = ParametricNDSolveValue::fpct = "Too many parameters in `1` to be filled from `2`.";
@@ -2203,7 +2211,6 @@ NDSolve::dontknowhowtohandlenoderivatives = "Unable to find appropriate dummy de
 (* FEM general *)
 NDSolve::femtnq = NDSolveValue::femtnq = ParametricNDSolve::femtnq = ParametricNDSolveValue::femtnq = NDSolve`FEM`ToElementMesh::femtnq = "`1` needs to be a numeric quantity."
 NDSolve::femnnbc = NDSolveValue::femnnbc = ParametricNDSolve::femnnbc = ParametricNDSolveValue::femnnbc = "`1` is not a supported Finite Element boundary condition; specify a NeumannValue instead."
-
 (* FEM elements *)
 NDSolve`FEM`PointElement::femdmi = NDSolve`FEM`LineElement::femdmi = NDSolve`FEM`TriangleElement::femdmi = NDSolve`FEM`QuadElement::femdmi = NDSolve`FEM`TetrahedronElement::femdmi = NDSolve`FEM`HexahedronElement::femdmi = "Mesh element type `1` does not match incidents `2`."
 NDSolve`FEM`PointElement::femiml = NDSolve`FEM`LineElement::femiml = NDSolve`FEM`TriangleElement::femiml = NDSolve`FEM`QuadElement::femiml = NDSolve`FEM`TetrahedronElement::femiml = NDSolve`FEM`HexahedronElement::femiml = "Length of incidents `1` does not match length of markers `2`."
@@ -2223,7 +2230,7 @@ NDSolve::fememieo = NDSolveValue::fememieo = ParametricNDSolve::fememieo = Param
 NDSolve::fememino = NDSolveValue::fememino = ParametricNDSolve::fememino = ParametricNDSolveValue::fememino = NDSolve`FEM`ElementMesh::fememino = NDSolve`FEM`ToBoundaryMesh::fememino = NDSolve`FEM`ToElementMesh::fememino = "The mesh elements are not valid. A set of valid mesh element incidents needs to be positive integers and be able to form a complete sequence starting from 1 to the largest incident present. There is no incident 1."
 NDSolve::fememins = NDSolveValue::fememins = ParametricNDSolve::fememins = ParametricNDSolveValue::fememins = NDSolve`FEM`ElementMesh::fememins = NDSolve`FEM`ToBoundaryMesh::fememins = NDSolve`FEM`ToElementMesh::fememins = "The mesh elements are not valid. A set of valid mesh element incidents needs to be positive integers and be able to form a complete sequence starting from 1 to the largest incident present. There are missing incidents; a complete sequence cannot be formed."
 NDSolve::fememnht = NDSolveValue::fememnht = ParametricNDSolve::fememnht = ParametricNDSolveValue::fememnht = NDSolve`FEM`ElementMesh::fememnht = NDSolve`FEM`ToBoundaryMesh::fememnht = NDSolve`FEM`ToElementMesh::fememnht = "It is not possible to have a mixed HexahedronElement and TetrahedronElement element mesh."
-NDSolve::femimq = NDSolveValue::femimq = ParametricNDSolve::femimq = ParametricNDSolveValue::femimq = NDSolve`FEM`ElementMesh::femimq = NDSolve`FEM`ToBoundaryMesh::femimq = NDSolve`FEM`ToElementMesh::femimq = Interpolation::femimq = NDSolve`FEM`ElementMeshInterpolation::femimq = "The element mesh has insufficient quality of `1` . A quality estimate below 0. may be caused by a wrong ordering of element incidents or self-intersecting elements."
+NDSolve::femimq = NDSolveValue::femimq = ParametricNDSolve::femimq = ParametricNDSolveValue::femimq = NDSolve`FEM`ElementMesh::femimq = NDSolve`FEM`ToBoundaryMesh::femimq = NDSolve`FEM`ToElementMesh::femimq = Interpolation::femimq = NDSolve`FEM`ElementMeshInterpolation::femimq = "The element mesh has insufficient quality of `1`. A quality estimate below 0. may be caused by a wrong ordering of element incidents or self-intersecting elements."
 (* FEM to element / boundary mesh and related *)
 NDSolve::femtbmbid = NDSolveValue::femtbmbid = ParametricNDSolve::femtbmbid = ParametricNDSolveValue::femtbmbid = NDSolve`FEM`ToBoundaryMesh::femtbmbid = NDSolve`FEM`ToElementMesh::femtbmbid = "The input data has deficiencies and cannot be repaired."
 NDSolve::femtbmbnc = NDSolveValue::femtbmbnc = ParametricNDSolve::femtbmbnc = ParametricNDSolveValue::femtbmbnc = NDSolve`FEM`ToBoundaryMesh::femtbmbnc = NDSolve`FEM`ToElementMesh::femtbmbnc = "`1` cannot be converted to an ElementMesh. The Input is not valid."
@@ -2245,7 +2252,7 @@ NDSolve::femtemip = NDSolveValue::femtemip = ParametricNDSolve::femtemip = Param
 NDSolve::femtemmc = NDSolveValue::femtemmc = ParametricNDSolve::femtemmc = ParametricNDSolveValue::femtemmc = NDSolve`FEM`ToElementMesh::femtemmc = "The `1` constraint cannot be fulfilled. The default `2` is used."
 NDSolve::femtemna = NDSolveValue::femtemna = ParametricNDSolve::femtemna = ParametricNDSolveValue::femtemna = NDSolve`FEM`ToElementMesh::femtemna = "Mesh generation for `1` with the `2` elements is currently not available."
 NDSolve::femtemnb = NDSolveValue::femtemnb = ParametricNDSolve::femtemnb = ParametricNDSolveValue::femtemnb = NDSolve`FEM`ToElementMesh::femtemnb = "BoundaryElements `1` from `2` are not valid."
-NDSolve::femtemnbb = NDSolveValue::femtemnbb = ParametricNDSolve::femtemnbb = ParametricNDSolveValue::femtemnbb = NDSolve`FEM`ToElementMesh::femtemnbb = NDSolve`FEM`NumericalRegion::femtemnbb = "The bounds for `1` are `2`. It is suggested to specify explicit numeric bounds."
+NDSolve::femtemnbb = NDSolveValue::femtemnbb = ParametricNDSolve::femtemnbb = ParametricNDSolveValue::femtemnbb = NIntegrate::femtemnbb = NDSolve`FEM`ToElementMesh::femtemnbb = NDSolve`FEM`ToBoundaryMesh::femtemnbb = NDSolve`FEM`NumericalRegion::femtemnbb = "The bounds for `1` are `2`. Unless finite numeric bounds are specified, the mesh generation will constrain the region to have finite bounds."
 NDSolve::femtemnc = NDSolveValue::femtemnc = ParametricNDSolve::femtemnc = ParametricNDSolveValue::femtemnc = NDSolve`FEM`ToElementMesh::femtemnc = "The coordinates `1` from `2` are not Real, not with last dimensions `3`, or not longer than `3` entires."
 NDSolve::femtemne = NDSolveValue::femtemne = ParametricNDSolve::femtemne = ParametricNDSolveValue::femtemne = NDSolve`FEM`ToElementMesh::femtemne = "Mesh contains no elements."
 NDSolve::femtemnm = NDSolveValue::femtemnm = ParametricNDSolve::femtemnm = ParametricNDSolveValue::femtemnm = NDSolve`FEM`ToElementMesh::femtemnm = NDSolve`FEM`ToBoundaryMesh::femtemnm = "A mesh could not be generated."
@@ -2285,9 +2292,8 @@ NDSolve::femcdim = NDSolveValue::femcdim = ParametricNDSolve::femcdim = Parametr
 NDSolve::femcnmd = NDSolveValue::femcnmd = ParametricNDSolve::femcnmd = ParametricNDSolveValue::femcnmd = NDSolve`ProcessEquations::femcnmd = NDSolve`FEM`InitializePDECoefficients::femcnmd = "The PDE coefficient `1` does not evaluate to a numeric matrix of dimensions `2`."
 NDSolve::femcmsd = NDSolveValue::femcmsd = ParametricNDSolve::femcmsd = ParametricNDSolveValue::femcmsd = NDSolve`ProcessEquations::femcmsd = NDSolve`FEM`InitializePDECoefficients::femcmsd = "The spatial derivative order of the PDE may not exceed two."
 NDSolve::femcnsd = NDSolveValue::femcnsd = ParametricNDSolve::femcnsd = ParametricNDSolveValue::femcnsd = NDSolve`ProcessEquations::femcnsd = NDSolve`FEM`InitializePDECoefficients::femcnsd = "The PDE coefficient `1` does not evaluate to a numeric scalar."
-
-
 (* FEM PDE coefficient stability analysis *)
+NDSolve::femcscd = NDSolveValue::femcscd = ParametricNDSolve::femcscd = ParametricNDSolveValue::femcscd = NDSolve`ProcessEquations::femcscd = NDSolve`FEM`InitializePDECoefficients::femcscd = "The PDE is convection dominated and the result may not be stable. Adding artificial diffusion may help."
 NDSolve::femcsp = NDSolveValue::femcsp = ParametricNDSolve::femcsp = ParametricNDSolveValue::femcsp = NDSolve`ProcessEquations::femcsp = NDSolve`FEM`InitializePDECoefficients::femcsp = "The computed Peclet number is `1` and is larger than the mesh order (`2`), and the result may not be stable. Adding artificial diffusion may help."
 NDSolve::femcsdp = NDSolveValue::femcsdp = ParametricNDSolve::femcsdp = ParametricNDSolveValue::femcsdp = NDSolve`ProcessEquations::femcsdp = NDSolve`FEM`InitializePDECoefficients::femcsdp = "The product of 2 times the Damkoehler number (`1`) and the Peclet number (`2`) is `3` and is larger than the mesh order (`4`), and the computed result may not be stable. Adding artificial diffusion may help."
 (* FEM boundary condition initialization *)
@@ -2299,6 +2305,8 @@ NDSolve::fembrne = NDSolveValue::fembrne = ParametricNDSolve::fembrne = Parametr
 NDSolve::fembrvf = NDSolveValue::fembrvf = ParametricNDSolve::fembrvf = ParametricNDSolveValue::fembrvf = NDSolve`ProcessEquations::fembrvf = NDSolve`FEM`InitializeBoundaryConditions::fembrvf = "The dependent variable in `1` in the Neumann boundary condition `2` needs to be linear."
 NDSolve::femibcbdl = NDSolveValue::femibcbdl = ParametricNDSolve::femibcbdl = ParametricNDSolveValue::femibcbdl = NDSolve`FEM`InitializeBoundaryConditions::femibcbdl = "The number of boundary condition sets (`1`) does not match the number of dependent variables (`2`)."
 NDSolve::femibcsfn = NDSolveValue::femibcsfn = ParametricNDSolve::femibcsfn = ParametricNDSolveValue::femibcsfn = NDSolve`FEM`InitializeBoundaryConditions::femibcsfn = "\"ScaleFactor\" needs to be None or a non-negative numeric quantity, not `1`."
+NDSolve::femibcnc = NDSolveValue::femibcnc = ParametricNDSolve::femibcnc = ParametricNDSolveValue::femibcnc = NDSolve`ProcessEquations::femibcnc = NDSolve`FEM`InitializeBoundaryConditions::femibcnc = "Complex-valued NeumannValues (`1`) cannot be handled in this version."
+NDSolve::femibcnd = NDSolveValue::femibcnd = ParametricNDSolve::femibcnd = ParametricNDSolveValue::femibcnd = NDSolve`ProcessEquations::femibcnd = NDSolve`FEM`InitializeBoundaryConditions::femibcnd = "No DirichletCondition or Robin-type NeumannValue was specified; the result may be off by a constant value."
 (* FEM PDE discretization *)
 NDSolve::femdpt = NDSolveValue::femdpt = ParametricNDSolve::femdpt = ParametricNDSolveValue::femdpt = NDSolve`FEM`DiscretizePDE::femdpt = "Time must be specified either as a numeric quantity or as None instead of `1`."
 NDSolve::femdpu = NDSolveValue::femdpu = ParametricNDSolve::femdpu = ParametricNDSolveValue::femdpu = NDSolve`FEM`DiscretizePDE::femdpu = "The initial dependent variable must be specified as a vector, a matrix quantity, or as None instead of `1`."
@@ -2321,12 +2329,15 @@ NDSolve`FEM`ElementMeshToGraphicsComplex::fememwnpe = NDSolve`FEM`ElementMeshWir
 NDSolve`FEM`AssembleMatrix::badmat = "`1` is not a valid element matrix to be assembled."
 NDSolve`FEM`MapInverse::smatlst = "`1` needs to be a symbol that evaluates to a numeric matrix."
 (* NDSolve/FEM lacking functionality *)
-NDSolve::femnlmts = NDSolveValue::femnlmts = ParametricNDSolve::femnlmts = ParametricNDSolveValue::femnlmts = "Appending constraints to transient systems is not available in this version of NDSolve. Constraints are inserted instead."
-NDSolve::femnonlinear = NDSolveValue::femnonlinear = ParametricNDSolve::femnonlinear = ParametricNDSolveValue::femnonlinear = "Nonlinear coefficients are not supported in this version of NDSolve."
-NDSolve::femconsttderiv = NDSolveValue::femconsttderiv = ParametricNDSolve::femconsttderiv = ParametricNDSolveValue::femconsttderiv = "Temporal derivatives need to have coefficients that are constant in time in this version of NDSolve."
-NDSolve::fembcderiv = NDSolveValue::fembcderiv = ParametricNDSolve::fembcderiv = ParametricNDSolveValue::fembcderiv = "Dirichlet boundary conditions need to be differentiatable by D[`1`, `2`] in this version of NDSolve."
+NDSolve::femnlmts = NDSolveValue::femnlmts = ParametricNDSolve::femnlmts = ParametricNDSolveValue::femnlmts = NDSolve`ProcessEquations::femnlmts = "Appending constraints to transient systems is not available in this version of NDSolve. Constraints are inserted instead."
+NDSolve::femnonlinear = NDSolveValue::femnonlinear = ParametricNDSolve::femnonlinear = ParametricNDSolveValue::femnonlinear = NDSolve`ProcessEquations::femnonlinear = "Nonlinear coefficients are not supported in this version of NDSolve."
+NDSolve::femconsttderiv = NDSolveValue::femconsttderiv = ParametricNDSolve::femconsttderiv = ParametricNDSolveValue::femconsttderiv = NDSolve`ProcessEquations::femconsttderiv = "Temporal derivatives need to have coefficients that are constant in time in this version of NDSolve."
+NDSolve::fembcderiv = NDSolveValue::fembcderiv = ParametricNDSolve::fembcderiv = ParametricNDSolveValue::fembcderiv = NDSolve`ProcessEquations::fembcderiv = "Dirichlet boundary conditions need to be differentiable by D[`1`, `2`] in this version of NDSolve."
+NDSolve::fembcnp = NDSolveValue::fembcnp = ParametricNDSolve::fembcnp = ParametricNDSolveValue::fembcnp = NDSolve`ProcessEquations::fembcnp = "Periodic boundary conditions (`1`) are not supported for the finite element method."
+NDSolve::fememd = NDSolveValue::fememd = ParametricNDSolve::fememd = ParametricNDSolveValue::fememd = NDSolve`ProcessEquations::fememd = "The region dimension of a given region (`1`) needs to be the same as the region's embedding dimension in this version of NDSolve."
+NDSolve::fememrc = NDSolveValue::fememrc = ParametricNDSolve::fememrc = ParametricNDSolveValue::fememrc = NDSolve`ProcessEquations::fememrc = "The ranges `1` cannot be combined to a region. Please specify a combined region."
+NDSolve::femnfm = NDSolveValue::femnfm = ParametricNDSolve::femnfm = ParametricNDSolveValue::femnfm = NDSolve`ProcessEquations::femnfm = "The current version of NDSolve cannot solve equations over boundaries or surfaces. Please specify a region where the embedding dimension is the same as the dimension."
 (* End FEM related messages *)
-
 Nearest::near1 = "`1` is neither a list of real points nor a valid list of rules."
 Nearest::near3 = "`1` is neither a non-negative integer nor a list of the form {n, r} with n a positive integer and r a non-negative real number."
 Nearest::nearuf = "The user-supplied distance function `1` does not give a real numeric distance when applied to the point pair `2` and `3`."
@@ -3441,7 +3452,7 @@ ReliabilityDistribution::nonunate = FailureDistribution::nonunate = "The Boolean
 ReliabilityDistribution::negdom = FailureDistribution::negdom = StandbyDistribution::negdom = "The lower domain boundary `1` of `2` is negative.";
 ReliabilityDistribution::dupldist = FailureDistribution::dupldist = "The variable `1` is specified more than once.";
 ReliabilityDistribution::vundef = FailureDistribution::vundef = "The variable `1` has no associated distribution.";
-ReliabilityDistribution::mixdist = FailureDistribution::mixdist = "Lifetime distributions must be all univariate continuous, or all univariate discrete."; 
+ReliabilityDistribution::mixdist = FailureDistribution::mixdist = "Lifetime distributions must be all univariate continuous, or all univariate discrete.";
  (* "Mixtures of continuous and discrete lifetime distributions are not supported. Multivariate distributions are not supported."; *)
 StandbyDistribution::noncont = "`1` is not a continuous univariate lifetime distribution.";
 StructuralImportance::nonunate = "The expression `1` is not positive unate. This can be checked with UnateQ.";
@@ -3509,7 +3520,7 @@ General::coldir = "`1` contains an invalid color or gray-level directives."
 General::nodata = "Unable to download data for `1`."
 General::olddata = "Unable to update data for `1` to the latest version."
 General::network = "`1` requires active Internet connectivity."
-General::timeout = "A network operation for `1` timed out. Please try again later."
+GrammarApply::timeout2 = General::timeout = "A network operation for `1` timed out. Please try again later."
 Blend::arg = "`1` is not a valid list of colors or images, or pairs of a real number and a color or an image."
 Blend::argch = "Blend of images with Automatic color space and a different number of channels is not supported."
 Blend::argp = "`1` should be a real number."
@@ -3732,8 +3743,8 @@ General::roi = "Expecting an image, a graphics object, or a real-valued matrix t
 General::roi3d = "Expecting a 3D image or a real-valued 3D array to define the region of interest instead of `1`."
 ImageApply::roicomp = ImageFilter::roicomp = "Applying `1` to the region of interest produces pixels incompatible with the ones of the input image."
 ImageApply::arg2 = ImageApplyIndexed::arg2 = "The argument `1` should be an image or a list of commensurate images."
-ImageApply::itlvimgs = ImageApplyIndexed::itlvimgs = "With Interleaving -> False, all images should have the same number of channels." 
-ImageApply::imgsroi = ImageApplyIndexed::imgsroi = "The value of option Masking -> `1` should be All when the second argument is a list of images." 
+ImageApply::itlvimgs = ImageApplyIndexed::itlvimgs = "With Interleaving -> False, all images should have the same number of channels."
+ImageApply::imgsroi = ImageApplyIndexed::imgsroi = "The value of option Masking -> `1` should be All when the second argument is a list of images."
 General::knlinv = "Expecting a machine-sized number or a binary matrix instead of `1`."
 HitMissTransform::seinv = "Expecting a composite structuring element formed of integers 1, 0, and -1 or a list of composite structuring elements instead of `1`."
 SetAlphaChannel::autimginv = "`1` of color space Automatic does not support alpha channel."
@@ -4109,6 +4120,7 @@ MorphologicalTransform::imglistinv = "`1` is not a valid image nor a list of val
 MorphologicalTransform::funcinv = "`1` is not a valid function, nor a rule number, nor a function string, nor a list of the above."
 MorphologicalTransform::binimginv = "`1` is not a binary image nor a list of binary images."
 HitMissTransform::imgconpad = MorphologicalTransform::imgconpad = MorphologicalBranchPoints::imgconpad = Thinning::imgconpad = Pruning::imgconpad = SkeletonTransform::imgconpad = "`1` is not a valid constant image padding specification."
+SkeletonTransform::mtdinv = "The value of option Method->`1` should be \"MedialAxis\" or \"ReducedMedialAxis\"."
 MorphologicalBranchPoints::imglistinv = "`1` is not a valid image nor a list of valid images."
 MorphologicalBranchPoints::binimglistinv = "`1` is not a valid binary image nor a list of valid binary images."
 General::invbvtd = "The argument `1` at position `2` should be a matrix of real numbers of dimension 2 with length greater than 2."
@@ -4379,7 +4391,7 @@ OutputResponse::negdelayss = "The system `1` contains negative time delays that 
 StateResponse::ddinc="The initial condition given for the descriptor system is inconsistent; a consistent value will be used instead."
 StateResponse::initcn2="The number of states `1` does not match the number of initial conditions in `2`."
 StateResponse::delaysm="The system contains time delays. An exact simulation is not possible; try simulating over a time span."
-StateResponse::method2="The method `1` is not a known method." 
+StateResponse::method2="The method `1` is not a known method."
 StateResponse::nldelays="Delays are not supported in `1` simulations; try using a StateSpaceModel."
 StateResponse::singmeth="The method `1` does not support systems with descriptor matrices. Try another method."
 StateResponse::delayrec="The RecurrenceTable method does not support time delays; try using the Iterate method instead."
@@ -4396,7 +4408,7 @@ OutputResponse::incinit2="The given initial conditions are not consistent with t
 OutputResponse::ddinc="The initial condition given for the descriptor system is inconsistent; a consistent value will be used instead."
 OutputResponse::initcn2="The number of states `1` does not match the number of initial conditions in `2`."
 OutputResponse::delaysm="The system contains time delays. An exact simulation is not possible; try simulating over a time span."
-OutputResponse::method2="The method `1` is not a known method." 
+OutputResponse::method2="The method `1` is not a known method."
 OutputResponse::nldelays="Delays are not supported in `1` simulations; try using a StateSpaceModel."
 OutputResponse::singmeth="The method `1` does not support systems with descriptor matrices. Try another method."
 OutputResponse::delayrec="The RecurrenceTable method does not support time delays; try using the Iterate method instead."
@@ -4546,7 +4558,7 @@ Control`SystemsModelMerge::dupvar="The merge is ambiguous due to the multiply-de
 General::icdims = "`1` has incompatible dimensions."
 General::varslen = "The variables specification `1` is not of length `2`."
 General::invvarsp = "`1` is an invalid specification. Possible variable specifications are var, {var, var0}, var->var0."
-General::smdims = "Could not determine the `1` dimensions." 
+General::smdims = "Could not determine the `1` dimensions."
 General::autovar = "Automatic generation of variables failed."
 General::badtrans = "Unable to compute the inverse of the transformation `1`."
 General::invtrans = "The transformation `1` does not have a correct inverse."
@@ -4697,6 +4709,7 @@ TensorTranspose::symmperm = "Invalid permutation or symmetry generator `1`."
 TensorTranspose::ttrank = "Permutation `1` moves slots beyond tensor rank `2`."
 TensorExpand::incdim = "Found inconsistent dimensions `1` and `2`."
 ImageTransformation::imgrsasp = "Value of option AspectRatio -> `1` should be a positive number or a pair of positive numbers."
+ImageForwardTransformation::nmthd = "Value of option Method -> `1` should be Automatic or None."
 ImageForwardTransformation::imgrsasp = "Value of option AspectRatio -> `1` should be a positive number or a pair of positive numbers."
 ImagePerspectiveTransformation::imgrsasp = "Value of option AspectRatio -> `1` should be a positive number or a pair of positive numbers."
 ImageForwardTransformation::imgrsm = "Option value `1` for \"Interpolated\" should be either True or False."
@@ -4777,7 +4790,7 @@ PageRankCentrality::div = HITSCentrality::div = "Divergence has been detected. A
 KatzCentrality::nosol = PageRankCentrality::nosol = StatusCentrality::nosol = "Linear equation encountered that has no solution."
 ImageAlign::pts="The number `1` of correspondences found is not enough to align the images."
 ImageAlign::bdtrnsf = "The specified geometric transformation class `1` is invalid for this method."
-ImageAlign::mtd3d = "The alignment method is not available with 3D images."  
+ImageAlign::mtd3d = "The alignment method is not available with 3D images."
 ImageAlign::bdmethod = "The value of option Method -> `1` should be Automatic, \"Keypoints\", \"MeanSquareGradientDescent\", \"Fourier\", or \"FourierBlurInvariant\"."
 ImageAlign::size = "Both input images should be larger than 4 in every dimension."
 FindGeometricTransform::size = "Both input images should be larger than 4 in every dimension with the method \"ImageAlign\"."
@@ -4805,7 +4818,7 @@ ArrayResample::noarr = "`1` is not a regular array."
 ArrayResample::nodim = "Invalid dimension specification `1`."
 ArrayResample::dimslen = "The number of `1` resampling dimensions exceeds the array rank."
 ArrayResample::noschm = "Expecting a \"Point\" or \"Bin\"-scheme specification instead of `1`."
-ArrayResample::schmslen = "The number of `1` resampling schemes exceeds the array rank or number of specified output dimensions." 
+ArrayResample::schmslen = "The number of `1` resampling schemes exceeds the array rank or number of specified output dimensions."
 ArrayResample::nobnd = "Invalid resampling subrange specification `1`."
 ArrayResample::bndslen = "The number of `1` subranges exceeds the array rank or number of specified output dimensions."
 ArrayResample::nopad = "Unsupported Padding option value `1`."
@@ -4841,7 +4854,7 @@ LinearAlgebra`FeastEigensystem::iopt = LinearAlgebra`FeastEigenvalues::iopt = Li
 LinearAlgebra`FeastEigensystem::tol = LinearAlgebra`FeastEigenvalues::tol = LinearAlgebra`FeastEigenvectors::tol = "The value of option Tolerance -> `1` should be zero or a positive integer."
 LinearAlgebra`FeastEigensystem::maxit = LinearAlgebra`FeastEigenvalues::maxit = LinearAlgebra`FeastEigenvectors::maxit = "The value of option MaxIterations -> `1` should be a positive integer."
 LinearAlgebra`FeastEigensystem::cntpts = LinearAlgebra`FeastEigenvalues::cntpts = LinearAlgebra`FeastEigenvectors::cntpts = "The value of option ContourPoints -> `1` should be one of {3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48}. The default value is 8."
-LinearAlgebra`FeastEigensystem::bandsol = LinearAlgebra`FeastEigenvalues::bandsol = LinearAlgebra`FeastEigenvectors::bandsol = "The value of option UseBandedSolver -> `1` should be either True or False." 
+LinearAlgebra`FeastEigensystem::bandsol = LinearAlgebra`FeastEigenvalues::bandsol = LinearAlgebra`FeastEigenvectors::bandsol = "The value of option UseBandedSolver -> `1` should be either True or False."
 LinearAlgebra`FeastEigensystem::restrt = LinearAlgebra`FeastEigenvalues::restrt = LinearAlgebra`FeastEigenvectors::restrt = "The value of option NumberOfRestarts -> `1` should be zero or a positive integer."
 Eigensystem::noeig = Eigenvalues::noeig = Eigenvectors::noeig = LinearAlgebra`FeastEigensystem::noeig = LinearAlgebra`FeastEigenvalues::noeig = LinearAlgebra`FeastEigenvectors::noeig = "No eigenvalues are found in the given search interval."
 Eigensystem::subsmll = Eigenvalues::subsmll = Eigenvectors::subsmll = "Warning: Subspace dimension is too small for the FEAST method. Increase the option \"SubspaceSize\"."
@@ -4855,7 +4868,7 @@ Eigensystem::nofeast = Eigenvalues::nofeast = Eigenvectors::nofeast = LinearAlge
 LinearAlgebra`FeastEigenvalues::wrarch = LinearAlgebra`FeastEigenvectors::wrarch = LinearAlgebra`FeastEigensystem::wrarch = "A wrong platform or a wrong MKL library."
 Eigenvalues::wcfail = Eigenvectors::wcfail = Eigensystem::wcfail = LinearAlgebra`FeastEigenvalues::wcfail = LinearAlgebra`FeastEigenvectors::wcfail = LinearAlgebra`FeastEigensystem::wcfail = "Warning: Algorithm failed to converge."
 LinearAlgebra`FeastEigenvalues::dbginfo = LinearAlgebra`FeastEigenvectors::dbginfo = LinearAlgebra`FeastEigensystem::dbginfo = "The value of the option PrintDebugInfo can be only True or False."
-EigenvectorCentrality::arfail = "Arnoldi failed to find the maximum eigenvector." 
+EigenvectorCentrality::arfail = "Arnoldi failed to find the maximum eigenvector."
 FinancialDerivative::unrec = "Unrecognized set of arguments to function FinancialDerivative[].";
 FinancialDerivative::compspec = "Each mixed-strategy component must be a list.";
 FinancialDerivative::checkc = "The contract specification `1` does not match any available pattern.";
@@ -4915,13 +4928,13 @@ Curl::hrank = "Tensor expression `1` does not have a curl because its rank, `2`,
 Div::sclr = "The scalar expression `1` does not have a divergence.";
 Div::ndiml = "There is no `3`-dimensional divergence for the array `1` because its innermost dimension is `2`."; (* N-DIMensional Last slot *)
 General::twmtrc = "`1` and `2` define coordinate charts for different metrics and therefore have no associated coordinate mapping.";
-General::bdchrt = "`1` does not define a known coordinate chart in `2` dimensions."; 
+General::bdchrt = "`1` does not define a known coordinate chart in `2` dimensions.";
 General::bdmap = "`1` does not define a coordinate mapping in `2` dimensions.";
 General::nmpctd = "No coordinate mapping is available between `1` and `2`."; (* No MaP in CoordinateTransformData *)
 General::bdpt = "Evaluation point `1` is incompatible with the coordinate assumptions of the specified coordinate chart.";
 CoordinateTransformData::dimb = CoordinateChartData::dimb = "Dimension specification `1` should be a positive integer."; (* DIMension Bad *)
-CoordinateChartData::dimm = "Coordinate system `2` of metric `1` requires a dimension specification or an evaluation point."; (* DIMension Missing *) 
-CoordinateTransformData::dimm = "A map between `1` and `2` requires a dimension specification or an evaluation point."; (* DIMension Missing *) 
+CoordinateChartData::dimm = "Coordinate system `2` of metric `1` requires a dimension specification or an evaluation point."; (* DIMension Missing *)
+CoordinateTransformData::dimm = "A map between `1` and `2` requires a dimension specification or an evaluation point."; (* DIMension Missing *)
 CoordinateChartData::dima = "Cannot specify evaluation point `1` in addition to dimension specification All."; (* DIMension versus All *)
 CoordinateTransformData::dimp = CoordinateChartData::dimp = "Evaluation point `1` has dimension `2`, which does not match dimension specification `3`."; (* DIMension versus Point *)
 CoordinateChartData::cspec = "`1` is expected to be a string, a pair of the form {_String, _}, or the symbol All."; (* Chart SPEC *)
@@ -4939,14 +4952,20 @@ CoordinateTransformData::bdpars = CoordinateChartData::bdpars = "Parameter value
 CoordinateTransformData::rename = "Warning: Default parameter name `1` was renamed `2` to preserve generality. Manually specify parameters to restrict to special cases.";
 CoordinateTransformData::renames = "Warning: Default parameter renamings `1` were performed to preserve generality. Manually specify parameters to restrict to special cases.";
 CoordinateTransformData::cas = "Coordinate transform `1` produces contradictory assumptions `2`.";
-ArcLength::vars = "Integration range specification `1` is not of the form {x, xmin, xmax}."
-ArcLength::nlim = "`1` = `2` is not a valid limit of integration."
-ArcLength::nlim1 = "Non-numeric limit `1` = `2` is incompatible with numeric method `3`."
-ArcLength::ncrve = "Curve `1` contains symbolic parameters and is therefore incompatible with numeric method \"`2`\"."
-ArcLength::nchrt = "Coordinate chart `1` contains symbolic parameters and is therefore incompatible with numeric method \"`2`\"."
+ArcLength::vars = Area::vars = Volume::vars = "Integration range specification `1` is not of the form {x, xmin, xmax}."
+ArcLength::nlim = Area::nlim = Volume::nlim = "`1` = `2` is not a valid limit of integration."
+ArcLength::nlim1 = Area::nlim1 = Volume::nlim1 = "Non-numeric limit `1` = `2` is incompatible with numeric method `3`."
+ArcLength::ncrve = "Parametric curve `1` contains symbolic parameters and is therefore incompatible with numeric method \"`2`\"."
+Area::ncrve = "Parametric surface `1` contains symbolic parameters and is therefore incompatible with numeric method \"`2`\"."
+Volume::ncrve = "Parametric volume `1` contains symbolic parameters and is therefore incompatible with numeric method \"`2`\"."
+ArcLength::nchrt = Area::nchrt = Volume::nchrt = "Coordinate chart `1` contains symbolic parameters and is therefore incompatible with numeric method \"`2`\"."
+ArcLength::bdmtd = Area::bdmtd = Volume::bdmtd = "Method value `1` should be Automatic, \"Integrate\", \"NIntegrate\", or a list containing a method name and options."
 ArcCurvature::inpf = ArcLength::inpf = FrenetSerretSystem::inpf = "`1` is neither a parametric curve nor a scalar expression."
+Area::inpf = "`1` is neither a parametric surface nor a scalar expression."
+Volume::inpf = "`1` is neither a parametric surface nor a scalar expression."
+Area::argt = "Area called with `1` arguments. 1, 3, or 4 are expected.";
+Volume::argt = "Volume called with `1` arguments. 1, 4, or 5 are expected.";
 ArcCurvature::sing = FrenetSerretSystem::sing = "Input curve `1` is singular."
-ArcLength::bdmtd = "Method value `1` should be Automatic, \"Integrate\", \"NIntegrate\", or a list containing a method name and options."
 General::grphch = "Scalar input `1` is incompatible with a coordinate chart specification."
 General::repvars = "Domain variables `1` and target variables `2` cannot have common names.";
 General::mpvrs = "`1` should be a rule of the form oldvars -> newvars, where oldvars and newvars are non-empty lists of valid variables.";
@@ -5001,9 +5020,9 @@ TransferFunctionTransform::invf = "Applying function `1` does not yield a valid 
 BesselFilterModel::spec = ButterworthFilterModel::spec = Chebyshev1FilterModel::spec = Chebyshev2FilterModel::spec = EllipticFilterModel::spec = "`1` is not a valid filter specification."
 BesselFilterModel::ivar = ButterworthFilterModel::ivar = Chebyshev1FilterModel::ivar = Chebyshev2FilterModel::ivar = EllipticFilterModel::ivar = "`1` is not a valid variable."
 EquirippleFilterKernel::deviation = "A deviation error has occurred. Increase filter length or width of transition bands or WorkingPrecision and try again."
-EquirippleFilterKernel::type = "Unknown filter type `1` encountered. Supported filter types are: \"bandpass\", \"differentiator\", and \"Hilbert\"." 
-EquirippleFilterKernel::wts = "Expecting a vector of positive numbers instead of `1`." 
-EquirippleFilterKernel::ampl = "Neighboring bands cannot have the same amplitudes." 
+EquirippleFilterKernel::type = "Unknown filter type `1` encountered. Supported filter types are: \"bandpass\", \"differentiator\", and \"Hilbert\"."
+EquirippleFilterKernel::wts = "Expecting a vector of positive numbers instead of `1`."
+EquirippleFilterKernel::ampl = "Neighboring bands cannot have the same amplitudes."
 EquirippleFilterKernel::length = "The length of the transition regions in `1` should be greater than zero."
 EquirippleFilterKernel::err = "A convergence error has occurred. Try increasing the precision of the filter specification and the value of the WorkingPrecision option."
 EquirippleFilterKernel::spec = LeastSquaresFilterKernel::spec = FrequencySamplingFilterKernel::spec = "`1` is not a valid filter specification."
@@ -5015,17 +5034,18 @@ FrequencySamplingFilterKernel::length = "Incompatible number of frequency sample
 LeastSquaresFilterKernel::prec = FrequencySamplingFilterKernel::prec = "Value of option WorkingPrecision -> `1` is not a positive machine-sized real or integer."
 FrequencySamplingFilterKernel::type = "The type `1` should be 1, 2, 3, or 4."
 FrequencySamplingFilterKernel::shift = "Value of option \"Shifted\" -> `1` is not a Boolean value."
-RecurrenceFilter::init = "Expecting a real number instead of `1`." 
-RecurrenceFilter::coeff = "Expecting a pair of non-empty vectors with the first element of the first vector being nonzero or a discrete TransferFunctionModel object instead of `1`." 
+RecurrenceFilter::init = "Expecting a real number instead of `1`."
+RecurrenceFilter::coeff = "Expecting a pair of non-empty vectors with the first element of the first vector being nonzero or a discrete TransferFunctionModel object instead of `1`."
 BandpassFilter::invpad = BandstopFilter::invpad = DifferentiatorFilter::invpad = HilbertFilter::invpad = LowpassFilter::invpad = HighpassFilter::invpad = RecurrenceFilter::invpad = "`1` is not a valid padding specification."
-BandpassFilter::data = BandstopFilter::data = DifferentiatorFilter::data = HilbertFilter::data = LowpassFilter::data = HighpassFilter::data = RecurrenceFilter::data = "Expecting an image, a sound, or a non-empty array instead of `1`." 
-Periodogram::sndinv = PeriodogramArray::sndinv = Spectrogram::sndinv = SpectrogramArray::sndinv = BandpassFilter::sndinv = BandstopFilter::sndinv = DifferentiatorFilter::sndinv = HilbertFilter::sndinv = LowpassFilter::sndinv = HighpassFilter::sndinv = RecurrenceFilter::sndinv = "SoundNote objects are not supported." 
+BandpassFilter::data = BandstopFilter::data = DifferentiatorFilter::data = HilbertFilter::data = LowpassFilter::data = HighpassFilter::data = RecurrenceFilter::data = "Expecting an image, a sound, or a non-empty array instead of `1`."
+Periodogram::sndinv = PeriodogramArray::sndinv = Spectrogram::sndinv = SpectrogramArray::sndinv = BandpassFilter::sndinv = BandstopFilter::sndinv = DifferentiatorFilter::sndinv = HilbertFilter::sndinv = LowpassFilter::sndinv = HighpassFilter::sndinv = RecurrenceFilter::sndinv = "SoundNote objects are not supported."
 DifferentiatorFilter::freq = HilbertFilter::freq = LowpassFilter::freq = HighpassFilter::freq = "`1` should be a non-negative real number or a vector of such numbers."
 BandpassFilter::freq = BandstopFilter::freq = "`1` should be a vector of two non-negative, ordered real numbers or a list of such vectors."
 BandpassFilter::length = BandstopFilter::length = DifferentiatorFilter::length = HilbertFilter::length = LowpassFilter::length = HighpassFilter::length = "`1` should be a positive integer."
 BandpassFilter::winsize = BandstopFilter::winsize = DifferentiatorFilter::winsize = HilbertFilter::winsize = LowpassFilter::winsize = HighpassFilter::winsize = "The window size `1` and filter length `2` do not match."
 BandpassFilter::win = BandstopFilter::win = DifferentiatorFilter::win = HilbertFilter::win = LowpassFilter::win = HighpassFilter::win = "Invalid window type `1`."
 BandpassFilter::srate = BandstopFilter::srate = DifferentiatorFilter::srate = HilbertFilter::srate = LowpassFilter::srate = HighpassFilter::srate = "The value of option SampleRate->`1` should be a positive integer."
+HadamardMatrix::mtdinv = DiscreteHadamardTransform::mtdinv = "The value of option Method->`1` should be \"Sequency\" or \"BitComplement\"."
 DiscreteHadamardTransform::data = "`1` is not a real-valued numerical array."
 DiscreteChirpZTransform::data = "`1` is not a numerical array."
 DiscreteHadamardTransform::seq = "`1` is not a Boolean value."
@@ -5056,7 +5076,7 @@ ImagePeriodogram::align = "`1` is not a valid alignment specification."
 Periodogram::data = "Expecting a SampledSoundList, a numeric vector, or a numeric matrix instead of `1`."
 SpectrogramArray::length = Spectrogram::length = Periodogram::length = "`1` is not a positive integer."
 SpectrogramArray::ovlp = Spectrogram::ovlp = Periodogram::ovlp = "`1` is not a positive integer."
-Periodogram::sfinv = "The value of the option ScalingFunctions -> `1` should be either \"dB\" or \"Absolute\"." 
+Periodogram::sfinv = "The value of the option ScalingFunctions -> `1` should be either \"dB\" or \"Absolute\"."
 HighlightImage::bdmtd = "The value of the option Method -> `1` is not valid."
 ColorReplace::imginv = "Expecting an image or graphics instead of `1`.";
 ColorReplace::color = "Expecting a nonzero binary image of size `1`, a color, or a color replacement rule instead of `2`.";
@@ -5154,6 +5174,7 @@ WindDirectionData::extended="Extended values in both location and date are not s
 WindVectorData::extended="Extended values in both location and date are not supported.";
 WeatherData::notentity="`1` is not a valid entity for `2`.";
 WeatherData::interval="Invalid value `1` for option IntervalValue.";
+WeatherData::extr= "`1` represents an extended geographic region; using `2` for calculations.";
 StandardAtmosphereData::qdim="`1` is not a unit of length.";
 StandardAtmosphereData::qrange="The altitude `1` falls outside of the supported range from `2` to `3` Meters.";
 StandardAtmosphereData::nsupport="`1` is not supported for `2`.";
@@ -5264,13 +5285,13 @@ General::invldd = "The input data `1` should be a vector or matrix of real numbe
 General::bdlag = "The lag specification `1` should be a symbol, an integer with magnitude less than the length of the data, or a range specification indicating such integers."
 General::unisp = "Uniformly sampled data expected at position `1` in `2`."
 PartialCorrelationFunction::bdlag = "The lag specification `1` should be a symbol, a nonzero integer with magnitude less than the length of the data, or a range specification indicating such integers."
-PartialCorrelationFunction::nonwkst = "The process is not weakly stationary." 
+PartialCorrelationFunction::nonwkst = "The process is not weakly stationary."
 PartialCorrelationFunction::farg = "{} is not a valid process or data input."
-AbsoluteCorrelationFunction::nonwkst = "The process is not weakly stationary." 
+AbsoluteCorrelationFunction::nonwkst = "The process is not weakly stationary."
 AbsoluteCorrelationFunction::farg = "{} is not a valid process or data input."
-CorrelationFunction::nonwkst = "The process is not weakly stationary." 
+CorrelationFunction::nonwkst = "The process is not weakly stationary."
 CorrelationFunction::farg = "{} is not a valid process or data input."
-CovarianceFunction::nonwkst = "The process is not weakly stationary." 
+CovarianceFunction::nonwkst = "The process is not weakly stationary."
 CovarianceFunction::farg = "{} is not a valid process or data input."
 PowerSpectralDensity::cutoff = "The cutoff value `1` should be a positive integer less than the length of the data or Automatic."
 PowerSpectralDensity::wfnctn = "The window function `1` should be Automatic, a real vector with values between -1 and 1, or a function."
@@ -5297,13 +5318,13 @@ DiscreteMarkovProcess::dmnorm = "The transition matrix had some row sums that we
 ContinuousMarkovProcess::cmnorm = "The transition rate matrix had some row sums that were not 0, so the diagonal element for those rows has been set to the negative sum of the remaining row elements."
 HiddenMarkovProcess::hmnorm = "The initial state vector, transition matrix, and/or emission matrix have been normalized such that rows sum to 1."
 ARProcess::nonwkst = ARMAProcess::nonwkst = SARMAProcess::nonwkst = "The process is not weakly stationary."
-ARProcess::invld = MAProcess::invld = ARMAProcess::invld = ARIMAProcess::invld = SARMAProcess::invld = SARIMAProcess::invld = "Parameters of the process `1` have unexpected structure." 
+ARProcess::invld = MAProcess::invld = ARMAProcess::invld = ARIMAProcess::invld = SARMAProcess::invld = SARIMAProcess::invld = "Parameters of the process `1` have unexpected structure."
 ARIMAProcess::nonwkst = FARIMAProcess::nonwkst = SARIMAProcess::nonwkst = "The appropriate difference of the process is not weakly stationary."
 ARProcess::arprm = MAProcess::arprm = ARMAProcess::arprm = ARIMAProcess::arprm = SARMAProcess::arprm = SARIMAProcess::arprm = "The value `1` at position `2` in `3` is expected to be an array of real numbers."
-ARCHProcess::nonwkst = GARCHProcess::nonwkst = "The process is not weakly stationary." 
+ARCHProcess::nonwkst = GARCHProcess::nonwkst = "The process is not weakly stationary."
 ARCHProcess::arprm = GARCHProcess::arprm = "The value `1` at position `2` in `3` is expected to be an array of real numbers."
-TimeSeriesForecast::covmthd = "Covariance method is not supported since the process is not weakly stationary." 
-TimeSeriesForecast::nonwkst = "The process `1` is not weakly stationary." 
+TimeSeriesForecast::covmthd = "Covariance method is not supported since the process is not weakly stationary."
+TimeSeriesForecast::nonwkst = "The process `1` is not weakly stationary."
 TimeSeriesForecast::noniwkst = KalmanFilter::noniwkst = "The appropriate difference of the process `1` is not weakly stationary."
 TimeSeriesForecast::klmnnmrc = "The parameters of `1` are expected to be numeric."
 KalmanFilter::klmnnmrc = "The parameters of `1` are expected to be numeric."
@@ -5385,6 +5406,7 @@ ColorNegate::imginv = "`1` should be a valid image, a color directive, or a list
 LunarEclipse::arg = MoonPhase::arg = MoonPosition::arg = SolarEclipse::arg = SunPosition::arg = Sunrise::arg = Sunset::arg = SiderealTime::arg = DaylightQ::arg = "`1` is an invalid argument."
 MoonPosition::locfun = SunPosition::locfun = Sunrise::locfun = Sunset::locfun = SiderealTime::locfun = "The location function `1` should be Automatic, Max, Min, Mean, or Interval."
 MoonPosition::coord = SunPosition::coord = "The coordinate system `1` should be \"Equatorial\" or \"Horizon\". \"Horizon\" will be used instead."
+MoonPosition::altm = SunPosition::altm = "The altitude method `1` should be \"TrueAltitude\" or \"ApparentAltitude\". \"TrueAltitude\" will be used instead."
 LunarEclipse::evincr = SolarEclipse::evincr = Sunrise::evincr = Sunset::evincr = "`1` is expected to be 1 or -1. 1 will be used instead."
 SolarEclipse::ectype="`1` is expected to be one of Automatic, \"Annular\", \"Hybrid\",\"Partial\", or \"Total\". Automatic will be used instead."
 LunarEclipse::ectype="`1` is expected to be one of Automatic,\"Partial\",or \"Total\". Automatic will be used instead."
@@ -5421,8 +5443,8 @@ BarcodeImage::pdflev = "Level `1` is currently not supported.";
 BarcodeImage::itf = "Expecting a string of 80 or fewer (but even) digits instead of `1`.";
 BarcodeImage::codabar = "Expecting a string containing digits or special characters (-, $, :, /, +, .) instead of `1`.";
 BarcodeRecognize::err = "Unknown error occurred.";
-BarcodeRecognize::format = "Expecting \"Aztec\", ,\"Codabar\", \"Code39\", \"Code93\", \"Code128\", \"DataMatrix\", \"EAN8\", \"EAN13\", \"ExpandedGS1\", \"GS1\", \"ITF\" ,\"Maxicode\", \"PDF417\", \"QR\", \"UPC\", \"UPCE\", or a list of these formats instead of `1`.";
-BarcodeRecognize::props = "Expecting \"BoundingBox\", \"Data\", \"Format\", \"Orientation\", or a list of these properties instead of `1`." 
+BarcodeRecognize::format = "Expecting \"Aztec\", \"Codabar\", \"Code39\", \"Code93\", \"Code128\", \"DataMatrix\", \"EAN8\", \"EAN13\", \"ExpandedGS1\", \"GS1\", \"ITF\" , \"MaxiCode\", \"PDF417\", \"QR\", \"UPC\", \"UPCE\", or a list of these formats instead of `1`.";
+BarcodeRecognize::props = "Expecting \"BoundingBox\", \"Data\", \"Format\", \"Orientation\", or a list of these properties instead of `1`."
 General::noclass = "A driver for `1` was not found on your local computer or currently available paclet sites. If you can locate the driver, add the driver directory to $Path or load the driver directly with Get. If you cannot locate the driver, contact the device manufacturer or create a driver using the Wolfram Device Framework. See http://devices.wolfram.com for more information."
 General::noop = "`1` not supported for `2`."
 General::nsupm = "The method `1` is not supported for `2`."
@@ -5452,11 +5474,11 @@ DeviceConfigure::confv = "`1` is not a valid value for the configuration paramet
 DeviceConfigure::confx = "`1` is not a recognized configuration parameter."
 DeviceExecuteAsynchronous::noopa = "Asynchronous operation `1` is not supported for `2`."
 DeviceClose::ncdevc = "There are no open devices in the `1` class."
-DeviceReadTimeSeries::tslow = "The result may have taken longer to obtain and/or may have a smaller number of data points because `1` measurement(s) took longer than the requested interval `2`, about `3` seconds (on average)." 
+DeviceReadTimeSeries::tslow = "The result may have taken longer to obtain and/or may have a smaller number of data points because `1` measurement(s) took longer than the requested interval `2`, about `3` seconds (on average)."
 DeviceReadTimeSeries::runits = "Range specification `1` is not a real number or a Quantity object representing time."
 DeviceReadTimeSeries::range = "Argument `1` is not in the form of a range specification, {t, dt}."
 DeviceReadLatest::ncoll = "No data was collected for `1` yet. Try using DeviceRead or a related function first."
-DeviceReadBuffer::blen = "The requested number of items `1` exceeds the capacity of the buffer." 
+DeviceReadBuffer::blen = "The requested number of items `1` exceeds the capacity of the buffer."
 DeviceFramework`DeviceClassRegister::readp = "Class `1` is read-protected."
 DeviceFramework`DeviceClassRegister::unqprop = "String names of properties `1` in `2` are not unique."
 DeviceFramework`DeviceClassRegister::props = "Invalid property specification `1`. Properties must be specified as a list of rules."
@@ -5520,8 +5542,8 @@ RegionIntersection::dims = "Intersection of regions `1` and `2` with different e
 RegionDifference::dims = "Difference of regions `1` and `2` with different embedding dimensions is not well-defined."
 RegionSymmetricDifference::dims = "Symmetric difference of regions `1` and `2` with different embedding dimensions is not well-defined."
 BooleanRegion::rglst = "`1` should be a non-empty list of regions."
-TransformedRegion::vfunc = "`1` evaluated at a list of length `2` should give a non-empty list." 
-InverseTransformedRegion::vfunc = "`1` evaluated at a list of length `2` should give a list of length `3`." 
+TransformedRegion::vfunc = "`1` evaluated at a list of length `2` should give a non-empty list."
+InverseTransformedRegion::vfunc = "`1` evaluated at a list of length `2` should give a list of length `3`."
 Circumsphere::realc = Simplex::realc = Parallelogram::realc = Parallelepiped::realc = Ellipsoid::realc = InfiniteLine::realc = HalfLine::realc = ConicHullRegion::realc = RegionDistance::realc = SignedRegionDistance::realc = RegionNearest::realc = "`1` should be a non-empty list of real-valued quantities."
 Simplex::vlst = "`1` should be a non-empty list of lists of equal nonzero length."
 Simplex::indep = "`1` should be a list of affinely independent points."
@@ -5598,11 +5620,11 @@ DiscretizeRegion::drf = BoundaryDiscretizeRegion::drf = "`1` was unable to discr
 DiscretizeRegion::drc = "Available methods not able to resolve all components of dimension less than the embedding dimension `1`; these may be omitted from the result."
 DiscretizeRegion::drcm = "Method->`2` not able to resolve all components of dimension less than the embedding dimension `1`; these may be omitted from the result."
 DiscretizeRegion::drcd = "Available methods not able to resolve all components of dimension `1`; these may be omitted from the result."
-Developer`InactivateExclusions::iexlist = "The value of `1` must be a list of pairs of the form {_Symbol, \"Symbol\"} or {_Symbol, \"Expression\"}."; 
-Developer`InactivateExclusions::iexval = "`1` is not a pair of the form {_Symbol, \"Symbol\"} or {_Symbol, \"Expression\"}."; 
+Developer`InactivateExclusions::iexlist = "The value of `1` must be a list of pairs of the form {_Symbol, \"Symbol\"} or {_Symbol, \"Expression\"}.";
+Developer`InactivateExclusions::iexval = "`1` is not a pair of the form {_Symbol, \"Symbol\"} or {_Symbol, \"Expression\"}.";
 Developer`InactivateExclusions::iexmult = "Multiple entries found for `1`. Only the first will be used."
 RegionPlot::invplotreg = RegionPlot3D::invplotreg ="`1` is not a valid region to plot."
-ConvexHull::invmethod = ConvexHullMesh::invmethod = "`1` is an invalid Method option. Must be Automatic, \"Andrews\", \"Melkman\", \"Graham\", or \"Jarvis\"." 
+ConvexHull::invmethod = ConvexHullMesh::invmethod = "`1` is an invalid Method option. Must be Automatic, \"Andrews\", \"Melkman\", \"Graham\", or \"Jarvis\"."
 ConvexHull::invpts = ConvexHullMesh::invpts = "Cannot construct a valid ConvexHull with the given points."
 TriangulateMesh::qgoal = DiscretizeRegion::qgoal = "The value of the option MeshQualityGoal->`1` is Automatic, \"Minimal\", or a number between 0 and 1. The value `2` will be used."
 General::bdmcm = "Value of option MaxCellMeasure->`1` is not Automatic, a real number, or a list of rules for \"Length\", \"Area\", and or \"Volume\". The Automatic value will be used instead."
@@ -5665,42 +5687,56 @@ General::noang = "Cannot convert quantity `1` into an angle."
 General::nodt = "Cannot convert `1` into a date."
 General::unitsys = "`1` is not a valid UnitSystem specification."
 General::msgs = "Evaluation of `1` generated message(s) `2`."
-Parse::arg1 = "The first argument `1` is expected to be a CloudObject.";
-Parse::arg2 = "The second argument `1` is expected to be a String or a List.";
-Parse::bdpm = "The value `1` for AllowLooseGrammar should be True, False, or Automatic";
-Parse::bdat = "The value `1` for AllowTransliteration should be True, False or Automatic";
-Parse::bdic = "The value `1` for IgnoreCase should be True or Automatic";
-Parse::misspdi = "Missing parser data item '`1`'";
-Parse::assrt = Grammar::assrt = "An internal error prevented the operation from proceeding. Please help improve the Wolfram Language by reporting this issue. Error Code: `1`";
-Grammar::ngr1 = "The first argument is expected to be a list of grammar rules of the form grammarPattern:>action or GrammarToken[grammarSymbol].";
-Grammar::ngr2 = "The second argument is expected to be a list of grammar rules of the form grammarSymbol->grammarPattern:>action, grammarSymbol->{(grammarPattern:>action)..}, or grammarSymbol->GrammarToken[grammarSymbol].";
-Grammar::arg1 = "The first argument is expected to be a list of grammar rules of the form grammarPattern:>action or GrammarToken[grammarSymbol]. Invalid grammar rule: `1`";
-Grammar::arg2 = "The second argument is expected to be a list of grammar rules of the form grammarSymbol->grammarPattern:>action, grammarSymbol->{(grammarPattern:>action)..}, or grammarSymbol->GrammarToken[grammarSymbol]. Invalid grammar rule: `1`";
-Grammar::bdrule1 = "The grammar pattern `1` should have head String, FixedOrder, AnyOrder, Alternatives, Repeated, RepeatedNull, DelimitedSequence, CaseSensitive, or Pattern. Grammar rule: `2`";
-Grammar::bdrule2 = "The grammar pattern `1` should have head String, FixedOrder, AnyOrder, OptionalElement, Alternatives, Repeated, RepeatedNull, DelimitedSequence, CaseSensitive, or Pattern. Grammar rule: `2`";
-Grammar::bdpm = "The value `1` for AllowLooseGrammar should be True, False, or Automatic.";
-Grammar::invr = "Invalid grammar rule: `1`"
-Grammar::invb = "Named patterns may not be used here: `1`, Grammar rule: `2`";
-Grammar::repargs = "The second argument of Repeated should be an Integer, Infinity, or of the form {minimumNumberOfMatches_Integer, maximumNumberOfMatches:(_Integer | Infinity)}. You supplied: `1`, Pattern: `2`, Grammar rule: `3`";
-Grammar::csarg = "The argument to CaseSensitive must be a String. You supplied: `1`, Pattern: `2`, Grammar rule: `3`";
-Grammar::ippna1 = "Grammar rule patterns of type `1` require arguments. Invalid grammar rule: `2`";
-Grammar::ippna2 = "Grammar rule patterns of type `1` require arguments. Contained within larger pattern: `2`, Invalid grammar rule: `3`";
-Grammar::invarga1 = "Grammar rule patterns of type `1` require `2` arguments. Pattern: `3`, Grammar rule: `4`";
-Grammar::invargb1 = "Grammar rule patterns of type `1` require `2` arguments. Pattern: `3`, Contained within larger pattern: `4`, Grammar rule: `5`";
-Grammar::invarga2 = "Grammar rule patterns of type `1` require `2`-`3` arguments. Pattern: `4`, Invalid grammar rule: `5`";
-Grammar::invargb2 = "Grammar rule patterns of type `1` require `2`-`3` arguments. Pattern: `4`, Contained within larger pattern: `5`, Grammar rule: `6`";
-Grammar::invsp = "Grammar rule patterns of type `1` are not supported. Subpattern: `2`, Contained within larger pattern: `3`";
-Grammar::nullable = "Grammar rule patterns must contain at least one non-optional part. Pattern: `1`, Invalid grammar rule: `2`";
-Grammar::gta = "GrammarTokens must have either a String argument (to specify a grammar symbol) or a List argument of form {_String, _String | _String | ...} (to specify a grammar symbol and qualifier). Pattern: `1`, Invalid grammar rule: `2`";
-Grammar::invalidlhs = "The left-hand side of a grammar rule is expected to be a grammar symbol, but it was not a String. Grammar rule: `1`"
-Grammar::cr = "The grammar contains circular reductions, such as: `1`";
-Grammar::nos = "The first argument must contain at least one rule.";
-Grammar::singins = "Singleton reductions in the first argument should be of the form GrammarToken[\"Symbol\"]. They imply that the given symbol is suitable for a full parse. Grammar rule: `1`";
-Grammar::shads = "The Alpha grammar symbol `1` has been shadowed by your grammar. All references to `1` will refer to your local definition.";
-Grammar::gsexp = "Excessive number of grammar symbols (`1`) present in grammar.";
-Grammar::aotme = "AnyOrder with too many elements.";
+GrammarApply::arg1 = "The first argument `1` is expected to be a CloudObject.";
+GrammarApply::arg1g = "`1` is not a deployed GrammarRules object."
+GrammarApply::arg2 = "The second argument `1` is expected to be a String or a List.";
+GrammarApply::sarg1 = "The first argument `2` of `1` is expected to be a String or a List.";
+GrammarApply::bdpm = "The value `1` for AllowLooseGrammar should be True, False, or Automatic.";
+GrammarApply::bdat = "The value `1` for AllowTransliteration should be True, False, or Automatic.";
+GrammarApply::bdic = "The value `1` for IgnoreCase should be True or Automatic.";
+GrammarApply::misspdi = "Missing parser data item '`1`'.";
+GrammarApply::assrt = GrammarRules::assrt = "An internal error prevented the operation from proceeding. Please help improve the Wolfram Language by reporting this issue. Error Code: `1`";
+GrammarApply::badresponse = "The Wolfram Cloud replied with an unexpected response. Please try again.";
+GrammarApply::toolarge = "Application of the grammar was aborted because the resultant data was too large to transmit.";
+GrammarRules::ngr1 = "The first argument is expected to be a list of grammar rules of the form grammarPattern:>action or GrammarToken[grammarSymbol].";
+GrammarRules::ngr2 = "The second argument is expected to be a list of grammar rules of the form grammarSymbol->grammarPattern:>action, grammarSymbol->{(grammarPattern:>action)..}, or grammarSymbol->GrammarToken[grammarSymbol].";
+GrammarRules::arg1 = "The first argument is expected to be a list of grammar rules of the form grammarPattern:>action or GrammarToken[grammarSymbol]. Invalid grammar rule: `1`";
+GrammarRules::arg2 = "The second argument is expected to be a list of grammar rules of the form grammarSymbol->grammarPattern:>action, grammarSymbol->{(grammarPattern:>action)..}, or grammarSymbol->GrammarToken[grammarSymbol]. Invalid grammar rule: `1`";
+GrammarRules::bdrule1 = "The grammar pattern `1` should have head String, FixedOrder, AnyOrder, Alternatives, Repeated, RepeatedNull, DelimitedSequence, CaseSensitive, or Pattern. Grammar rule: `2`";
+GrammarRules::bdrule2 = "The grammar pattern `1` should have head String, FixedOrder, AnyOrder, OptionalElement, Alternatives, Repeated, RepeatedNull, DelimitedSequence, CaseSensitive, or Pattern. Grammar rule: `2`";
+GrammarRules::bdpm = "The value `1` for AllowLooseGrammar should be True, False, or Automatic.";
+GrammarRules::bdes = "The value `1` for ExternalSymbols should be a list of strings.";
+GrammarRules::invr = "Invalid grammar rule: `1`"
+GrammarRules::invb = "Named patterns may not be used here: `1`, Grammar rule: `2`";
+GrammarRules::repargs = "The second argument of Repeated should be an Integer, Infinity, or of the form {minimumNumberOfMatches_Integer, maximumNumberOfMatches:(_Integer | Infinity)}. You supplied: `1`, Pattern: `2`, Grammar rule: `3`";
+GrammarRules::depargs = "The second argument of DelimitedSequence should either be a grammar pattern or a list of three grammar patterns representing {left, sep, right}. You supplied: `1`, Pattern: `2`, Grammar rule: `3`";
+GrammarRules::resfirstarg = "The first argument of Restricted should be a grammar pattern. You supplied: `1`, Pattern: `2`, Grammar rule: `3`";
+GrammarRules::resargs = "The second argument of Restricted should be an Integer, Infinity, or of the form {minimumNumberOfMatches_Integer, maximumNumberOfMatches:(_Integer | Infinity)}. You supplied: `1`, Pattern: `2`, Grammar rule: `3`";
+GrammarRules::csarg = "The argument to CaseSensitive must be a String. You supplied: `1`, Pattern: `2`, Grammar rule: `3`";
+GrammarRules::ippna1 = "Grammar rule patterns of type `1` require arguments. Invalid grammar rule: `2`";
+GrammarRules::ippna2 = "Grammar rule patterns of type `1` require arguments. Contained within larger pattern: `2`, Invalid grammar rule: `3`";
+GrammarRules::invarga1 = "Grammar rule patterns of type `1` require `2` arguments. Pattern: `3`, Grammar rule: `4`";
+GrammarRules::invargb1 = "Grammar rule patterns of type `1` require `2` arguments. Pattern: `3`, Contained within larger pattern: `4`, Grammar rule: `5`";
+GrammarRules::invarga2 = "Grammar rule patterns of type `1` require `2`-`3` arguments. Pattern: `4`, Invalid grammar rule: `5`";
+GrammarRules::invargb2 = "Grammar rule patterns of type `1` require `2`-`3` arguments. Pattern: `4`, Contained within larger pattern: `5`, Grammar rule: `6`";
+GrammarRules::invsp = "Grammar rule patterns of type `1` are not supported. Subpattern: `2`, Contained within larger pattern: `3`";
+GrammarRules::nullable = "Grammar rule patterns must contain at least one non-optional part. Pattern: `1`, Invalid grammar rule: `2`";
+GrammarRules::gta = "GrammarTokens must have either a String argument (to specify a grammar symbol) or a List argument of form {_String, _String | _String | ...} (to specify a grammar symbol and qualifier). Pattern: `1`, Invalid grammar rule: `2`";
+GrammarRules::invalidlhs = "The left-hand side of a grammar rule is expected to be a grammar symbol, but it was not a String. Grammar rule: `1`"
+GrammarRules::cr = "The grammar contains circular reductions, such as: `1`";
+GrammarRules::nos = "The first argument must contain at least one rule.";
+GrammarRules::singins = "Singleton reductions in the first argument should be of the form GrammarToken[\"Symbol\"]. They imply that the given symbol is suitable for a full parse. Grammar rule: `1`";
+GrammarRules::shads = "The Wolfram|Alpha grammar symbol `1` has been shadowed by your grammar. All references to `1` will refer to your local definition.";
+GrammarRules::gsexp = "Excessive number of grammar symbols (`1`) present in grammar.";
+GrammarRules::aotme = "AnyOrder with too many elements.";
+GrammarRules::undsym = "The grammar symbol `1` is undefined.";
 General::gpts1 = "Data value `1` must be a list of at least 3 points in 3D."
 General::gmat1 = "Data value `1` must be a list of points of dimension 3."
 IntegerName::type = "`1` is not a known string type.  Valid types include \"DigitsWords\", \"Words\", \"Approximate\", and \"ApproximateWords\".";
 General::nspoly = "`1` is not a simple Polygon."
 General::ngdim1 = "Graphics primitives with coordinates `1` are not supported."
+General::stempu = "The server is temporarily unavailable. Please try again."SemanticInterpretation::arg1 = "The first argument is expected to be a string."
+SemanticInterpretation::arg1 = "The first argument is expected to be a string."
+General::idomdim = "`1` does not have a valid dimension as a plotting domain."
+General::nnregion = "`1` cannot be automatically discretized."
+General::idombds = "`1` is not a valid plotting domain; it may contain invalid interior boundaries."

@@ -1,7 +1,7 @@
 Origin: Collabora
 Label: Collabora Raspberry Pi graphics enablement
 Codename: wheezy
-Date: Sat, 06 Sep 2014 13:35:24 UTC
+Date: Wed, 28 Jan 2015 13:41:15 UTC
 Architectures: armhf
 Components: rpi web wayland
 Description: Collabora Raspberry Pi graphics enablement
@@ -14,13 +14,13 @@ MD5Sum:
  d7611bd9b7e75a94844f32afda26e62d 3914 rpi/source/Sources
  5d32c14081bfc9f8ba53526b3c6139fb 1406 rpi/source/Sources.gz
  ff2d8381bf98b87ee267b56ac723c09b 160 rpi/source/Release
- ed32ff7d4d6551201750c4669757321b 379310 web/binary-armhf/Packages
- 820ba5c844890fa6675a780ab1fb25cf 80032 web/binary-armhf/Packages.gz
+ b58e30645346e2d2b41e9be7ec76b138 33488 web/binary-armhf/Packages
+ a5f4e0afb6a3ae587689321c65190adb 7989 web/binary-armhf/Packages.gz
  10d556a1967bc92e80b1ded233c91ee8 159 web/binary-armhf/Release
- 1e0e8d1732d692a87a0461712bdbeb3f 9180 web/debian-installer/binary-armhf/Packages
- 7132355d9b0cd70645482ea880604131 3272 web/debian-installer/binary-armhf/Packages.gz
- 2a643bddee3c272e73fc791a6497c072 99938 web/source/Sources
- 1afe26e75ad68aad8a350879ee4761f0 26535 web/source/Sources.gz
+ f8c0201a55520acbb88918ac21a5b385 1631 web/debian-installer/binary-armhf/Packages
+ ddd55a65b433817d8e2548cfb3125b9b 874 web/debian-installer/binary-armhf/Packages.gz
+ 4015548756083bdcba1f737b9e856d8c 13057 web/source/Sources
+ 17d6fc727692f3f14b26e92c1192cb45 4173 web/source/Sources.gz
  f89ddabbaf6c564d680d2665a477f8d4 160 web/source/Release
  2db79f0f8d37c0ad103445ae6f8b8ae8 53916 wayland/binary-armhf/Packages
  dd8d200a3c0e5718afb62ccc44ac9c62 11551 wayland/binary-armhf/Packages.gz
@@ -32,8 +32,8 @@ MD5Sum:
  71e9782dcdb650612b915d7bbcff03d1 164 wayland/source/Release
  753ca0bf7057a5244a92f39137fa7187 15853 rpi/Contents-armhf
  16427469d25edbbf74ee75b87fb52f4d 1765 rpi/Contents-armhf.bz2
- 159fb2ceee83276fa4c3570d25b9c577 4334249 web/Contents-armhf
- 351f7ccc9b8c51f4fcbe05128b3a1099 212418 web/Contents-armhf.bz2
+ 7188cc5475ade41766fcbf134bc02558 360324 web/Contents-armhf
+ 7d1e8244451488a03ff84afd73cf6597 15389 web/Contents-armhf.bz2
  39d576e20d536c68485ef61627484100 182422 wayland/Contents-armhf
  f19f106c4a76bd5a8e68db1d63263a31 13098 wayland/Contents-armhf.bz2
 SHA1:
@@ -45,13 +45,13 @@ SHA1:
  70c83080abb9fd181b0b8b5f390f2d91e43c783f 3914 rpi/source/Sources
  4305f5dd82a0c59863db0d1e18413449cf88da2e 1406 rpi/source/Sources.gz
  62b9be9ead3efedb9c1c2d1de1c545b2b1ebf08d 160 rpi/source/Release
- fbea680b6e65617ed4927f96118217bb25d82765 379310 web/binary-armhf/Packages
- 29a2ae2eacdad70ce5bca42c0da538be672dff58 80032 web/binary-armhf/Packages.gz
+ 80ede328f0ec78401c11633a94f6b0eef8591937 33488 web/binary-armhf/Packages
+ dcd55008f9fedf32e6e96631bd89ec964274cb64 7989 web/binary-armhf/Packages.gz
  fd3bd94845199cfdf1b4a737b79ec11bfa1554f6 159 web/binary-armhf/Release
- 65b83c344e3ecf1d1120d75e0e0a706ed4ab5d96 9180 web/debian-installer/binary-armhf/Packages
- fd559a47a6131da8c297a9fb0cd749c6e09062b5 3272 web/debian-installer/binary-armhf/Packages.gz
- 8d86c793681edae93a0d3d4f999ab3e5e914035f 99938 web/source/Sources
- aeae0e44c02025e66f392003970c5a918139df57 26535 web/source/Sources.gz
+ 0284d6ad6c3ad87f6324d575361101600af18cd9 1631 web/debian-installer/binary-armhf/Packages
+ d06e2f8eaddfb0b8f19d0e25cc25ab3fd2281b83 874 web/debian-installer/binary-armhf/Packages.gz
+ a7b2b7b84d728347d238295ef8ba80c2097ba902 13057 web/source/Sources
+ bccc4b54d15e7478653be45d7cfc36a233f9ca25 4173 web/source/Sources.gz
  cc7ebdbb759d3890ffe9a9ce2cdb8f14a658b4e1 160 web/source/Release
  ba5dd4dfe5e378375a1a678357833f6a16b3fba8 53916 wayland/binary-armhf/Packages
  24620c87656c13845f29e49efc8ed46b3d305919 11551 wayland/binary-armhf/Packages.gz
@@ -63,8 +63,8 @@ SHA1:
  c86f332051637a55c0cb71df537d417e87366d23 164 wayland/source/Release
  cdf6c3639c54762339cf76372ab9d2658ec2ebd1 15853 rpi/Contents-armhf
  879adb70ca238b3e6bc19c366d2c909010850703 1765 rpi/Contents-armhf.bz2
- e61073529a7871b434d1afeb6e544320f8b14495 4334249 web/Contents-armhf
- 8f4e64236afa6d0c5451bdcb6a8a260816bb8ca7 212418 web/Contents-armhf.bz2
+ 69809661c1ed2c60f44c4b7dfd3d54eadcf00b38 360324 web/Contents-armhf
+ c0ed1c6fabd55e70bf13e10bba111ae0b08c135e 15389 web/Contents-armhf.bz2
  149a8c4fcfe076869f0ee2873fdb191efd733e80 182422 wayland/Contents-armhf
  f0be97df2a0aab847f1ec26d248f2424d13f410b 13098 wayland/Contents-armhf.bz2
 SHA256:
@@ -76,13 +76,13 @@ SHA256:
  c09311faafd433b376cc27a0525c2147512c877c32f3bf9dd6b5da55ad0be755 3914 rpi/source/Sources
  56f3c6a5d1a60034b752d190aff607c7d8c865c9ccde73c586e707550189aadf 1406 rpi/source/Sources.gz
  cc4cc6a090351af3ec318cf7110176a4f702929fdd4220b66a110dc66ab35ce2 160 rpi/source/Release
- 9cfcb81f706b4215f87f7b03f6b2cfcaf9973bf8bbeda8962c4cf5fd4f10ed7c 379310 web/binary-armhf/Packages
- 1a065df1e41d261b302b7aaab6bc71904106eddbd444b6a5638463473225fc58 80032 web/binary-armhf/Packages.gz
+ f4de8f4fb7c984c792d3b19a4133de01508de575102d88435839c3cc32ea9d25 33488 web/binary-armhf/Packages
+ ddd1bfe76898cfd53085965a381b2283d00d2d37c0ee35a18c4263c20842910e 7989 web/binary-armhf/Packages.gz
  375f3b221abebbabbb297863a1d866d8559e72180ed400902417cd16308fa794 159 web/binary-armhf/Release
- 3d3e948d9e1bb00b78278cf8d629bf94545624ccec5d99e8e987b32a521271ee 9180 web/debian-installer/binary-armhf/Packages
- 58b6a123b0221cac8fe7947a85dc5513b284de19967089d33c8c1346b8d30a7a 3272 web/debian-installer/binary-armhf/Packages.gz
- 4e5939043a0d84affa0b88a91aa2431dbef90900af07a50fba7644402fdac9bc 99938 web/source/Sources
- eb83dbbba5172b244845f69b10d7290c6454f32181bd66102f99d489a6e814de 26535 web/source/Sources.gz
+ 69fd5b851b2f4735c7735c46c7c4d3deb1b274e90520d9257a99698f94174b2a 1631 web/debian-installer/binary-armhf/Packages
+ c47c8b92ed376006589e7b1b41b62ce9792261c49060e29c8d338296bc23daad 874 web/debian-installer/binary-armhf/Packages.gz
+ 1ec53cd433d77bdee96051c98ad4454c37626642bd97a5d5308ba4c1192ce6ce 13057 web/source/Sources
+ 476248160027976500b21520201d3513a83cd79cad3cd3d290f524231921d2b2 4173 web/source/Sources.gz
  e11f120d97d28ff9ff211a8f956300307b2c7bececf179f2cc627ffb31c8b853 160 web/source/Release
  c5daa601b54c64c09690e638608da1ba5c875d16c196c327bc7ef91891b587e4 53916 wayland/binary-armhf/Packages
  1d85e7023cc5bd9dda1175e6e5cedb869a081720f4f88be18080a235e21a4f5c 11551 wayland/binary-armhf/Packages.gz
@@ -94,7 +94,7 @@ SHA256:
  58e59c45e09b0f300e1413f55c5ebebba0b04f91c4aed747399a69ed5b8288a8 164 wayland/source/Release
  a4c359f74ed88445f1b10221b18ac6e41273f99571d578f95be57b73d6caffe6 15853 rpi/Contents-armhf
  cb32cc75fa0e6308453976f099a93e0cb907670b64f78b01cd923cffe4696cf9 1765 rpi/Contents-armhf.bz2
- c92eefe53af1cb36eff8202497b7c99fa45d8e2248cd942c62d113b4ba370235 4334249 web/Contents-armhf
- d0bbb03e58d45680b9a266d6c18de13ac1c40de4cd7e9f72da141d281192d326 212418 web/Contents-armhf.bz2
+ 5d64faef0efc936dc10ef66817ce066c9b01035236cdb2bdae0565e3adbeeabd 360324 web/Contents-armhf
+ 930af40498959fc16a18146d301bde885eb79a6dd1c454960327ce968485b5b3 15389 web/Contents-armhf.bz2
  6ec46a42ed4cb4190937ec681c3f98736636a32a53dfc51e5622222737640bcc 182422 wayland/Contents-armhf
  d6a626763790172a614377f06a25a347da7b387f0f4aef73273706d85cf93826 13098 wayland/Contents-armhf.bz2

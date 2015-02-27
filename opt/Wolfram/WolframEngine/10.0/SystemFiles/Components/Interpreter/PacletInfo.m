@@ -2,7 +2,7 @@
 
 Paclet[
 	Name -> "Interpreter",
-	Version -> "1.2.66.0",
+	Version -> "1.2.94.0",
 	MathematicaVersion -> "10+",
 	Description -> "Interpretation of strings",
 	Loading -> Automatic,
@@ -19,7 +19,6 @@ Paclet[
 				"System`$InterpreterTypes"
 			}
 		},
-		{"JLink"},
-		{"Resource", Root -> ".", Resources -> {"MetaData"}}
+		{"JLink"}
 	}
 ]

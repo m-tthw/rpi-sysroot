@@ -424,12 +424,12 @@ Description: Collection of command line DVB utilities
  streams, via another application using the dvr device).
 
 Package: epiphany-browser
-Version: 3.8.2.0-0rpi14rpi2
+Version: 3.8.2.0-0rpi18rpi1
 Architecture: armhf
 Maintainer: Josselin Mouette <joss@debian.org>
 Installed-Size: 2053
-Depends: epiphany-browser-data (>= 3.8), epiphany-browser-data (<< 3.9), libavahi-client3 (>= 0.6.16), libavahi-common3 (>= 0.6.16), libavahi-gobject0 (>= 0.6.22), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgnome-desktop-3-2 (>= 3.2.0), libgtk-3-0 (>= 3.5.12), libnotify4 (>= 0.7.0), libnspr4 (>= 2:4.9-2~) | libnspr4-0d (>= 1.8.0.10), libnss3 (>= 2:3.13.4-2~) | libnss3-1d (>= 3.12.0~1.9b1), libpango-1.0-0 (>= 1.20.0), libpangocairo-1.0-0 (>= 1.14.0), libsecret-1-0 (>= 0.14), libsoup2.4-1 (>= 2.41.90), libsqlite3-0 (>= 3.5.9), libwebkitgtk-3.0-0 (>= 1.10.1), libwnck-3-0 (>= 2.91.6), libx11-6, libxml2 (>= 2.7.4), libxslt1.1 (>= 1.1.25), gnome-icon-theme (>= 2.9.90), gnome-icon-theme-symbolic, dbus-x11, iso-codes, gsettings-desktop-schemas
-Recommends: yelp, evince, cgroup-bin, ca-certificates, gnome-themes-standard
+Depends: epiphany-browser-data (>= 3.8), epiphany-browser-data (<< 3.9), libavahi-client3 (>= 0.6.16), libavahi-common3 (>= 0.6.16), libavahi-gobject0 (>= 0.6.22), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgnome-desktop-3-2 (>= 3.2.0), libgtk-3-0 (>= 3.5.12), libnotify4 (>= 0.7.0), libnspr4 (>= 2:4.9-2~) | libnspr4-0d (>= 1.8.0.10), libnss3 (>= 2:3.13.4-2~) | libnss3-1d (>= 3.12.0~1.9b1), libpango-1.0-0 (>= 1.20.0), libpangocairo-1.0-0 (>= 1.14.0), libsecret-1-0 (>= 0.14), libsoup2.4-1 (>= 2.41.90), libsqlite3-0 (>= 3.5.9), libwebkitgtk-3.0-0 (>= 1.10.1), libwnck-3-0 (>= 2.91.6), libx11-6, libxml2 (>= 2.7.4), libxslt1.1 (>= 1.1.25), gnome-icon-theme (>= 2.9.90), gnome-icon-theme-symbolic, dbus-x11, iso-codes, gsettings-desktop-schemas, gnome-themes-standard
+Recommends: yelp, evince, cgroup-bin, ca-certificates
 Conflicts: epiphany-extensions (<< 3.7.91), epiphany-gecko (<< 2.28), epiphany-webkit (<< 2.28), swfdec-mozilla
 Breaks: gnome-session (<< 3.4.2.1-3), gnome-shell (<< 3.4.2-1)
 Replaces: epiphany-gecko (<< 2.28), epiphany-webkit (<< 2.28)
@@ -437,11 +437,11 @@ Provides: gnome-www-browser, www-browser
 Homepage: http://www.gnome.org/projects/epiphany/
 Priority: optional
 Section: gnome
-Filename: pool/main/e/epiphany-browser/epiphany-browser_3.8.2.0-0rpi14rpi2_armhf.deb
-Size: 1490482
-SHA256: 49b2070d5b8036fdc8e9cfba96fc4cddb7ba9b381505b8412e8e73a70cc445e8
-SHA1: 7c87c6664996842042f037c2abacf00908471405
-MD5sum: d63e5693c24ac6edb96ba8b8fbc9f985
+Filename: pool/main/e/epiphany-browser/epiphany-browser_3.8.2.0-0rpi18rpi1_armhf.deb
+Size: 1492302
+SHA256: 9d5601ba2901828d35eff763becd807efec669dc67e192e05585e93e419032c0
+SHA1: 5eadebeb5244281976c58accaa09afbeb7eac06b
+MD5sum: 806a0e74b440782c2072651a89d7d8f7
 Description: Intuitive GNOME web browser
  Epiphany is a simple yet powerful GNOME web browser targeted at
  non-technical users. Its principles are simplicity and standards
@@ -461,20 +461,20 @@ Description: Intuitive GNOME web browser
 
 Package: epiphany-browser-data
 Source: epiphany-browser
-Version: 3.8.2.0-0rpi14rpi2
+Version: 3.8.2.0-0rpi18rpi1
 Architecture: all
 Maintainer: Josselin Mouette <joss@debian.org>
-Installed-Size: 7282
+Installed-Size: 7293
 Depends: dconf-gsettings-backend | gsettings-backend
 Recommends: epiphany-browser
 Homepage: http://www.gnome.org/projects/epiphany/
 Priority: optional
 Section: gnome
-Filename: pool/main/e/epiphany-browser/epiphany-browser-data_3.8.2.0-0rpi14rpi2_all.deb
-Size: 2120142
-SHA256: e92e82c701ba51346ff2a8184902a021e9782ea373ae81364ea7425c6940d7df
-SHA1: f1145ab8635469696f25b86585892d62b747e835
-MD5sum: a4e4b2d7bb7982018a2ddb4d32a2e6a9
+Filename: pool/main/e/epiphany-browser/epiphany-browser-data_3.8.2.0-0rpi18rpi1_all.deb
+Size: 2122692
+SHA256: 99010293b3d7f618c328bdbec26ebfa0d261c357835d63865e2cca5373d1a906
+SHA1: 0d892004f866b1bf71709051a8c183a83bc4c676
+MD5sum: 90720665f6705ccea94ea6dc1518c74f
 Description: Data files for the GNOME web browser
  Epiphany is a simple yet powerful GNOME web browser targeted at
  non-technical users. Its principles are simplicity and standards
@@ -485,20 +485,20 @@ Description: Data files for the GNOME web browser
 
 Package: epiphany-browser-dbg
 Source: epiphany-browser
-Version: 3.8.2.0-0rpi14rpi2
+Version: 3.8.2.0-0rpi18rpi1
 Architecture: armhf
 Maintainer: Josselin Mouette <joss@debian.org>
-Installed-Size: 3637
-Depends: epiphany-browser (= 3.8.2.0-0rpi14rpi2)
+Installed-Size: 3641
+Depends: epiphany-browser (= 3.8.2.0-0rpi18rpi1)
 Recommends: libwebkitgtk-3.0-0-dbg (>= 1.9.6)
 Homepage: http://www.gnome.org/projects/epiphany/
 Priority: extra
 Section: debug
-Filename: pool/main/e/epiphany-browser/epiphany-browser-dbg_3.8.2.0-0rpi14rpi2_armhf.deb
-Size: 1851914
-SHA256: 38d2bb537fe68388bcb5057e7b9a0244983240abf547730d2bad0648c5b17154
-SHA1: 2c2f06caa6d91280d7b752d2d6542ffbfa6bf402
-MD5sum: 4c577194a07701002876bf8084e25fef
+Filename: pool/main/e/epiphany-browser/epiphany-browser-dbg_3.8.2.0-0rpi18rpi1_armhf.deb
+Size: 1854028
+SHA256: 60cfc326cf08c4bf5556530c71d5a38a500cb29f12ed0590269afa12bf61ca1a
+SHA1: 36fedf8c6349788b50db137754e055a9bb7de5ce
+MD5sum: 91bf0fff0d6cfe65b64063d6e100d3c3
 Description: Debugging symbols for the GNOME web browser
  Epiphany is a simple yet powerful GNOME web browser targeted at
  non-technical users. Its principles are simplicity and standards
@@ -508,12 +508,12 @@ Description: Debugging symbols for the GNOME web browser
 
 Package: epiphany-browser-webkit2
 Source: epiphany-browser
-Version: 3.8.2.0-0rpi14rpi2
+Version: 3.8.2.0-0rpi18rpi1
 Architecture: armhf
 Maintainer: Josselin Mouette <joss@debian.org>
 Installed-Size: 2039
-Depends: epiphany-browser-data (>= 3.8), epiphany-browser-data (<< 3.9), libavahi-client3 (>= 0.6.16), libavahi-common3 (>= 0.6.16), libavahi-gobject0 (>= 0.6.22), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgnome-desktop-3-2 (>= 3.2.0), libgtk-3-0 (>= 3.5.12), libnotify4 (>= 0.7.0), libnspr4 (>= 2:4.9-2~) | libnspr4-0d (>= 1.8.0.10), libnss3 (>= 2:3.13.4-2~) | libnss3-1d (>= 3.12.0~1.9b1), libpango-1.0-0 (>= 1.20.0), libpangocairo-1.0-0 (>= 1.14.0), libsecret-1-0 (>= 0.14), libsoup2.4-1 (>= 2.41.90), libsqlite3-0 (>= 3.5.9), libwebkitgtk-3.0-0 (>= 1.10.1), libwnck-3-0 (>= 2.91.6), libx11-6, libxml2 (>= 2.7.4), libxslt1.1 (>= 1.1.25), gnome-icon-theme (>= 2.9.90), dbus-x11, iso-codes, gsettings-desktop-schemas
-Recommends: yelp, evince, ca-certificates, gnome-themes-standard
+Depends: epiphany-browser-data (>= 3.8), epiphany-browser-data (<< 3.9), libavahi-client3 (>= 0.6.16), libavahi-common3 (>= 0.6.16), libavahi-gobject0 (>= 0.6.22), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgnome-desktop-3-2 (>= 3.2.0), libgtk-3-0 (>= 3.5.12), libnotify4 (>= 0.7.0), libnspr4 (>= 2:4.9-2~) | libnspr4-0d (>= 1.8.0.10), libnss3 (>= 2:3.13.4-2~) | libnss3-1d (>= 3.12.0~1.9b1), libpango-1.0-0 (>= 1.20.0), libpangocairo-1.0-0 (>= 1.14.0), libsecret-1-0 (>= 0.14), libsoup2.4-1 (>= 2.41.90), libsqlite3-0 (>= 3.5.9), libwebkitgtk-3.0-0 (>= 1.10.1), libwnck-3-0 (>= 2.91.6), libx11-6, libxml2 (>= 2.7.4), libxslt1.1 (>= 1.1.25), gnome-icon-theme (>= 2.9.90), dbus-x11, iso-codes, gsettings-desktop-schemas, gnome-themes-standard
+Recommends: yelp, evince, ca-certificates
 Conflicts: epiphany-browser, epiphany-extensions (<< 3.7.91), epiphany-gecko (<< 2.28), epiphany-webkit (<< 2.28), swfdec-mozilla
 Breaks: gnome-session (<< 3.4.2.1-3), gnome-shell (<< 3.4.2-1)
 Replaces: epiphany-browser, epiphany-gecko (<< 2.28), epiphany-webkit (<< 2.28)
@@ -521,11 +521,11 @@ Provides: epiphany-browser, gnome-www-browser, www-browser
 Homepage: http://www.gnome.org/projects/epiphany/
 Priority: optional
 Section: gnome
-Filename: pool/main/e/epiphany-browser/epiphany-browser-webkit2_3.8.2.0-0rpi14rpi2_armhf.deb
-Size: 1489978
-SHA256: 3a25dfb9b235f6f3833596ff6a2ae9fd0569d0b1b1b463d09c17d8f333220314
-SHA1: b35562995fec763bc1d905a725af8ce8fc47b819
-MD5sum: a75558324087f6ad69914b8dcc220dca
+Filename: pool/main/e/epiphany-browser/epiphany-browser-webkit2_3.8.2.0-0rpi18rpi1_armhf.deb
+Size: 1491070
+SHA256: dd371f6e5a4535a5526e75d858d2a7f2657720360d4bcac110ea43eb7d27bc87
+SHA1: 7344cbffc3fd667b03538d89af3d078963326f02
+MD5sum: 49f1c7521071403025228083dcb24a1b
 Description: Intuitive GNOME web browser - WebKit2-powered
  Epiphany is a simple yet powerful GNOME web browser targeted at
  non-technical users. Its principles are simplicity and standards
@@ -549,21 +549,21 @@ Description: Intuitive GNOME web browser - WebKit2-powered
 
 Package: epiphany-browser-webkit2-dbg
 Source: epiphany-browser
-Version: 3.8.2.0-0rpi14rpi2
+Version: 3.8.2.0-0rpi18rpi1
 Architecture: armhf
 Maintainer: Josselin Mouette <joss@debian.org>
-Installed-Size: 3637
-Depends: epiphany-browser-webkit2 (= 3.8.2.0-0rpi14rpi2)
+Installed-Size: 3641
+Depends: epiphany-browser-webkit2 (= 3.8.2.0-0rpi18rpi1)
 Recommends: libwebkit2gtk-3.0-25-dbg
 Conflicts: epiphany-browser-dbg
 Homepage: http://www.gnome.org/projects/epiphany/
 Priority: extra
 Section: debug
-Filename: pool/main/e/epiphany-browser/epiphany-browser-webkit2-dbg_3.8.2.0-0rpi14rpi2_armhf.deb
-Size: 1851974
-SHA256: 57075e8b67aec1f4adca30c40efa9b7a956db3235db0096cb16755dbda542c2a
-SHA1: 4b4112cbd03a670a8f5c72ff9e4e0cf4f1466531
-MD5sum: 2e9a51cda1b468b36bf7d6a26398cc37
+Filename: pool/main/e/epiphany-browser/epiphany-browser-webkit2-dbg_3.8.2.0-0rpi18rpi1_armhf.deb
+Size: 1853982
+SHA256: 30b07493e8fa3becde73ece6d30024443878faa35b4c5a87e3560839957f721e
+SHA1: 05403f13898a8ae526c78ffab82bc5eece61fab8
+MD5sum: b99e6eb4f60b0e03075a9e244081e0d5
 Description: Debugging symbols for the GNOME web browser
  Epiphany is a simple yet powerful GNOME web browser targeted at
  non-technical users. Its principles are simplicity and standards
@@ -574,27 +574,53 @@ Description: Debugging symbols for the GNOME web browser
 
 Package: epiphany-extensions
 Source: epiphany-browser
-Version: 3.8.2.0-0rpi14rpi2
+Version: 3.8.2.0-0rpi18rpi1
 Architecture: all
 Maintainer: Josselin Mouette <joss@debian.org>
 Installed-Size: 1235
 Homepage: http://www.gnome.org/projects/epiphany/
 Priority: optional
 Section: gnome
-Filename: pool/main/e/epiphany-browser/epiphany-extensions_3.8.2.0-0rpi14rpi2_all.deb
-Size: 1239566
-SHA256: 55b0b6608ab06d318e9cc10ac475bf5a2869f87895c40ca07414c8a4e3dc2ff5
-SHA1: 1aabd21affcaac4e46a64185063257922272b6e6
-MD5sum: 75671223b6327f52d90ef8296bd93816
+Filename: pool/main/e/epiphany-browser/epiphany-extensions_3.8.2.0-0rpi18rpi1_all.deb
+Size: 1240022
+SHA256: 0ff0391351f63a6e0e83bc9cdc68c250cc03038d4dceeb278810e4b6edaa7d96
+SHA1: a1c44cf7a03c3b08178716e696b1c8ca91a37df2
+MD5sum: d4776f4acc4b66e6a724d76c0dcc9d24
 Description: Transitional package, to satisfy the GNOME meta package dependency
  Epiphany no longer supports extensions. While they may come back
  later, it will likely be in a different form. This package is empty
  and can be safely removed. It exists only to satisfy the GNOME meta
  package dependencies.
 
+Package: fake-hwclock
+Version: 0.8
+Architecture: all
+Maintainer: Steve McIntyre <93sam@debian.org>
+Installed-Size: 73
+Depends: init-system-helpers (>= 1.18~)
+Suggests: cron | cron-daemon, ntp
+Priority: extra
+Section: admin
+Filename: pool/main/f/fake-hwclock/fake-hwclock_0.8_all.deb
+Size: 6358
+SHA256: 28ce68ae8a7ed3bb090b6da5d6f20b4f2ea61be18e3d0c684112f61a8a8fe6f7
+SHA1: 1c1572f9b46307ea452c1efaacfadf0e4c2e79d2
+MD5sum: 0bac500213106523db17d2ce2fcd0365
+Description: Save/restore system clock on machines without working RTC hardware
+ Some machines don't have a working realtime clock (RTC) unit, or no
+ driver for the hardware that does exist. fake-hwclock is a simple set
+ of scripts to save the kernel's current clock periodically (including
+ at shutdown) and restore it at boot so that the system clock keeps at
+ least close to realtime. This will stop some of the problems that may
+ be caused by a system believing it has travelled in time back to
+ 1970, such as needing to perform filesystem checks at every boot.
+ .
+ On top of this, use of NTP is still recommended to deal with the fake
+ clock "drifting" while the hardware is halted or rebooting.
+
 Package: firmware-brcm80211
 Source: firmware-nonfree
-Version: 0.43
+Version: 0.43-1raspi
 Architecture: all
 Maintainer: Debian Kernel Team <debian-kernel@lists.debian.org>
 Installed-Size: 3545
@@ -603,11 +629,11 @@ Multi-Arch: foreign
 Homepage: http://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git
 Priority: optional
 Section: non-free/kernel
-Filename: pool/main/f/firmware-nonfree/firmware-brcm80211_0.43_all.deb
-Size: 1502174
-SHA256: 7052f1a6fa681a0239c4bc0a602480ee84137450e4517e8d686d9af0a6acb306
-SHA1: 989a99ea194d6ee66f54a93fef2de54259519e20
-MD5sum: f845b92e1c6bfff739ded08fdcb08c8d
+Filename: pool/main/f/firmware-nonfree/firmware-brcm80211_0.43-1raspi_all.deb
+Size: 2633254
+SHA256: 2e4b71e82696aa9915e9ff9891a87a9bb451f14ddf91be151357eef8294e550b
+SHA1: 44dc2ac1b6909541107247da04da4831aadaba28
+MD5sum: c73937c0a0d8efa916b1e8a322c53592
 Description: Binary firmware for Broadcom 802.11 wireless cards
  This package contains the binary firmware for wireless network cards with
  the Broadcom BCM4313, BCM43224, BCM43225, BCM43241, BCM4329, BCM4330,
@@ -651,6 +677,48 @@ Description: Fix non-ANSI header files
  Not all packages with header files are installed on the system, when the
  package is built, so we make fixincludes available at build time of other
  packages, such that checking tools like lintian can make use of it.
+
+Package: fonts-roboto
+Source: fonts-android
+Version: 1:4.3-3~bpo70+1
+Architecture: all
+Maintainer: Debian Fonts Task Force <pkg-fonts-devel@lists.alioth.debian.org>
+Installed-Size: 2547
+Pre-Depends: dpkg (>= 1.15.6~)
+Multi-Arch: foreign
+Homepage: https://android.googlesource.com/platform/frameworks/base/
+Priority: optional
+Section: fonts
+Filename: pool/main/f/fonts-android/fonts-roboto_4.3-3~bpo70+1_all.deb
+Size: 724862
+SHA256: 1e090672897616fbe39c8fe8f476a675d269886381f4adbfb6da4b649ab704ef
+SHA1: 923e8f7f8d04f977004b01b13df95cf14e24c404
+MD5sum: dbe2ebbe273df8c87b6e94eab0a2ec52
+Description: sans-serif font family released with Android Ice Cream Sandwich
+ This package contains fonts released with Android Ice Cream Sandwich OS.
+ Google describes the font as "modern yet approachable and emotional". This
+ family includes regular and oblique styles of Thin, Light, Regular, Medium,
+ Bold, Black, and Condensed widths.
+
+Package: freetype2-demos
+Source: freetype
+Version: 2.5.2-2rpi1rpi1
+Architecture: armhf
+Maintainer: Steve Langasek <vorlon@debian.org>
+Installed-Size: 503
+Depends: libc6 (>= 2.13-28), libfreetype6 (>= 2.4.11), libpng12-0 (>= 1.2.13-4), libx11-6, zlib1g (>= 1:1.1.4)
+Replaces: freetype-tools
+Homepage: http://www.freetype.org
+Priority: optional
+Section: utils
+Filename: pool/main/f/freetype/freetype2-demos_2.5.2-2rpi1rpi1_armhf.deb
+Size: 209738
+SHA256: ce45a24a0ad41b8dbe275e02051b16b8b956206953301a4d8fc4dd64f8a1e294
+SHA1: a8766624ffa463cd59db207ffb0c4dd053dbca87
+MD5sum: 752f6d89a3d9ed9a1eadfa207b78f2b8
+Description: FreeType 2 demonstration programs
+ This package contains some demonstration programs and utilities
+ which showcase the features of the FreeType 2 font engine.
 
 Package: frei0r-plugins
 Source: frei0r
@@ -1268,21 +1336,21 @@ Description: GTK+ graphical user interface library -- gir bindings
 
 Package: gir1.2-javascriptcoregtk-3.0
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
+Version: 2.4.1-1rpi35rpi1
 Architecture: armhf
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
-Installed-Size: 184
+Installed-Size: 187
 Depends: libjavascriptcoregtk-3.0-0 (>= 1.5.1)
 Conflicts: gir1.0-webkit-3.0, gir1.2-webkit-3.0 (<< 1.5.0), gobject-introspection-repository
 Replaces: gir1.2-webkit-3.0 (<< 1.5.0)
 Homepage: http://webkitgtk.org/
 Priority: optional
 Section: introspection
-Filename: pool/main/w/webkitgtk/gir1.2-javascriptcoregtk-3.0_2.4.1-1rpi24rpi1_armhf.deb
-Size: 122374
-SHA256: 29f6fd6e3bbaab7c868f431ebdb90bdf690092e73225e6e3c294d44c56a4c112
-SHA1: dd17ac2781f895c770f46266785eb4a0c5a927ed
-MD5sum: c5c154a24fabd838339f77ca04865062
+Filename: pool/main/w/webkitgtk/gir1.2-javascriptcoregtk-3.0_2.4.1-1rpi35rpi1_armhf.deb
+Size: 125632
+SHA256: 9b68e7a36d3abdf69ee65b2facda34a0e30a9fd637d4c82ecc0f7592f4840d7a
+SHA1: 2cf7861da5e9452511d1d8689818af0baf7b5149
+MD5sum: 44283072e6fb886629467cbece08f325
 Description: JavaScript engine library from WebKitGTK+ - GObject introspection data
  JavaScriptCore is the JavaScript engine used in WebKit. It consists
  of the following building blocks: lexer, parser, start-up interpreter
@@ -1381,20 +1449,20 @@ Description: GObject introspection data for the libsoup HTTP library
 
 Package: gir1.2-webkit-3.0
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
+Version: 2.4.1-1rpi35rpi1
 Architecture: armhf
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
-Installed-Size: 459
-Depends: gir1.2-javascriptcoregtk-3.0 (= 2.4.1-1rpi24rpi1), gir1.2-glib-2.0, gir1.2-gtk-3.0 (>= 3.10.0), gir1.2-soup-2.4, libjavascriptcoregtk-3.0-0 (>= 1.5.1), libwebkitgtk-3.0-0 (>= 2.3.90)
+Installed-Size: 462
+Depends: gir1.2-javascriptcoregtk-3.0 (= 2.4.1-1rpi35rpi1), gir1.2-glib-2.0, gir1.2-gtk-3.0 (>= 3.10.0), gir1.2-soup-2.4, libjavascriptcoregtk-3.0-0 (>= 1.5.1), libwebkitgtk-3.0-0 (>= 2.3.90)
 Conflicts: gir1.0-webkit-3.0, gobject-introspection-repository
 Homepage: http://webkitgtk.org/
 Priority: optional
 Section: introspection
-Filename: pool/main/w/webkitgtk/gir1.2-webkit-3.0_2.4.1-1rpi24rpi1_armhf.deb
-Size: 172030
-SHA256: dddcbbb5e5f05c1c195e5087e44e2134b5101ffd7ec9b599ffb6fd160095708d
-SHA1: 34690c5eae9722b1aed9adc60d2b1d620b5ba972
-MD5sum: 7506d4a969d4d4cd5e4dbb8503d8ef3d
+Filename: pool/main/w/webkitgtk/gir1.2-webkit-3.0_2.4.1-1rpi35rpi1_armhf.deb
+Size: 175268
+SHA256: 323ecca552511f953ea35c1c42db1758afb288893864de3de0f6d427a1193eae
+SHA1: 69214ea9828fd0af3b7c38485075dad786c80f10
+MD5sum: 6af98fe98561f3e85da24cbd70b09cb0
 Description: Web content engine library for GTK+ - GObject introspection data
  WebKit is a web content engine, derived from KHTML and KJS from KDE, and
  used primarily in Apple's Safari browser.  It is made to be embedded in
@@ -1491,7 +1559,7 @@ Description: network-related giomodules for GLib - D-Bus services
 
 Package: gnome-accessibility-themes
 Source: gnome-themes-standard
-Version: 3.9.91+557c2ba-rpi4rpi2
+Version: 3.9.91+557c2ba-rpi5rpi1
 Architecture: all
 Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
 Installed-Size: 4689
@@ -1500,51 +1568,51 @@ Replaces: gnome-themes-standard (<< 3.6.2-1)
 Multi-Arch: foreign
 Priority: optional
 Section: gnome
-Filename: pool/main/g/gnome-themes-standard/gnome-accessibility-themes_3.9.91+557c2ba-rpi4rpi2_all.deb
-Size: 2295500
-SHA256: c1a4c8a76f491d5722fb666fd52425d76cd70ae25229e2595482baf10913476e
-SHA1: 1eae2088910e60719fca10fe602b00c2bec470df
-MD5sum: c1f9827119d2f51abd1193f7fc160f7f
+Filename: pool/main/g/gnome-themes-standard/gnome-accessibility-themes_3.9.91+557c2ba-rpi5rpi1_all.deb
+Size: 2295678
+SHA256: 9112bea73c9a08ea838edd0a6f9042709d636a3f53aa694bb34d2de0d943e663
+SHA1: 132cba775bff7a76cbedb6fdcaaafe68666354df
+MD5sum: 21b5ffa23e0da7fce96a5278d4c9c6f3
 Description: Accessibility themes for the GNOME desktop
  This package contains some high accessibility themes for the GNOME
  desktop environment, designed for the visually impaired.
 
 Package: gnome-themes-standard
-Version: 3.9.91+557c2ba-rpi4rpi2
+Version: 3.9.91+557c2ba-rpi5rpi1
 Architecture: armhf
 Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
 Installed-Size: 298
 Pre-Depends: multiarch-support
-Depends: gnome-themes-standard-data (= 3.9.91+557c2ba-rpi4rpi2), libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo-gobject2 (>= 1.10.0), libcairo2 (>= 1.12.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgtk-3-0 (>= 3.6.2), libpango-1.0-0 (>= 1.14.0), libpangocairo-1.0-0 (>= 1.14.0), librsvg2-2 (>= 2.14.4)
+Depends: gnome-themes-standard-data (= 3.9.91+557c2ba-rpi5rpi1), libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo-gobject2 (>= 1.10.0), libcairo2 (>= 1.12.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgtk-3-0 (>= 3.6.2), libpango-1.0-0 (>= 1.14.0), libpangocairo-1.0-0 (>= 1.14.0), librsvg2-2 (>= 2.14.4)
 Recommends: gtk2-engines-pixbuf, gnome-accessibility-themes
 Breaks: libmutter0 (<< 3.2)
 Multi-Arch: same
 Priority: optional
 Section: gnome
-Filename: pool/main/g/gnome-themes-standard/gnome-themes-standard_3.9.91+557c2ba-rpi4rpi2_armhf.deb
-Size: 251024
-SHA256: ffc4bdcf1e49b6a6385aea620a0b796f4888b82e2f3b51692ae78f149e534943
-SHA1: 7388668bcabf2bbce7ceff8d30730e9ef8463e94
-MD5sum: fd97c27a89adc4612d97e7b95e1777cc
+Filename: pool/main/g/gnome-themes-standard/gnome-themes-standard_3.9.91+557c2ba-rpi5rpi1_armhf.deb
+Size: 251090
+SHA256: 79b3b3e51ef6bfe5d7d1efbe3928563a8a5614baced25e730fae92af27069945
+SHA1: b4a67e518f9a4defad6fb2ced45b42a5a10cca6c
+MD5sum: a2b6c3c058d65634ee1128fe0ade61a6
 Description: Standard GNOME themes
  This package contains a set of standard GNOME themes.
 
 Package: gnome-themes-standard-data
 Source: gnome-themes-standard
-Version: 3.9.91+557c2ba-rpi4rpi2
+Version: 3.9.91+557c2ba-rpi5rpi1
 Architecture: all
 Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
-Installed-Size: 6090
+Installed-Size: 6115
 Breaks: gnome-themes-standard (<< 3.6.2-1)
 Replaces: gnome-themes-standard (<< 3.6.2-1)
 Multi-Arch: foreign
 Priority: optional
 Section: gnome
-Filename: pool/main/g/gnome-themes-standard/gnome-themes-standard-data_3.9.91+557c2ba-rpi4rpi2_all.deb
-Size: 2457822
-SHA256: 45e8189be1fef3c1a2df4716462b37ded05568a9d2924aa59cf50e4739973dd9
-SHA1: 4ec6e13336ffbd8a6a8e4b9101752208ee76ec9e
-MD5sum: 49168ad77364e3a38b8ca05d05a2df2f
+Filename: pool/main/g/gnome-themes-standard/gnome-themes-standard-data_3.9.91+557c2ba-rpi5rpi1_all.deb
+Size: 2457768
+SHA256: 3697c4aa1a70c5bee2444ba694f2ccd42505456d85f84fb6db831a2643df513f
+SHA1: b1f2726ded941ac004068a1012631394273999df
+MD5sum: 1b5fed6569de33643a04cbf49cceeb8e
 Description: Data files for GNOME standard themes
  This package contains data files for standard themes for the GNOME
  desktop environment.
@@ -2347,6 +2415,31 @@ Description: ICELib-dev offers gives the developers.
  The IndieCity Extras Library (ICELib) is a set of libraries offering online services to games and apps.
  .
  It is built and maintained by IndieCity.
+
+Package: init-system-helpers
+Version: 1.18~bpo70+1
+Architecture: all
+Maintainer: pkg-systemd-maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+Installed-Size: 96
+Depends: perl
+Breaks: systemd (<< 44-12)
+Multi-Arch: foreign
+Priority: extra
+Section: admin
+Filename: pool/main/i/init-system-helpers/init-system-helpers_1.18~bpo70+1_all.deb
+Size: 14164
+SHA256: 2c380070cadf7ac1940fb4b4594d98fcd5d8442751a7d03a53d419e191d101d8
+SHA1: 845b65c1239758e56080b6693892054f52967428
+MD5sum: 7eb5810351f9fa9fc1b2b62cc5e0d50d
+Description: helper tools for all init systems
+ This package contains helper tools that are necessary for switching between
+ the various init systems that Debian contains (e.g. sysvinit, upstart,
+ systemd). An example is deb-systemd-helper, a script that enables systemd unit
+ files without depending on a running systemd.
+ .
+ While this package is maintained by pkg-systemd-maintainers, it is NOT
+ specific to systemd at all. Maintainers of other init systems are welcome to
+ include their helpers in this package.
 
 Package: ir-keytable
 Source: v4l-utils
@@ -3494,6 +3587,393 @@ Description: computer vision library - libcvaux translation package
  of high level functionalities for video acquisition, image processing and
  analysis, structural analysis, motion analysis and object tracking, object
  recognition, camera calibration and 3D reconstruction.
+
+Package: libfm-data
+Source: libfm
+Version: 1.2.3-1
+Architecture: all
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 1715
+Breaks: libfm0, libfm1
+Replaces: libfm0, libfm1
+Multi-Arch: foreign
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: optional
+Section: misc
+Filename: pool/main/libf/libfm/libfm-data_1.2.3-1_all.deb
+Size: 407842
+SHA256: fe5b72998ef1ae00602132c5cedf428ccfaf0201f5f88ad71e5a180d5c865874
+SHA1: 8e2c2e60137286ec116077658a91fca49cc686f4
+MD5sum: 4047caf9a864ee19ec0fbe8de6ff51e9
+Description: file management support (common data)
+ LibFM provides file management functions built on top of Glib/GIO,
+ giving a convenient higher-level API.
+ .
+ This package contains the common data of the core library.
+
+Package: libfm-dbg
+Source: libfm
+Version: 1.2.3-1
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 418
+Depends: libfm4 (= 1.2.3-1), libfm-extra4 (= 1.2.3-1)
+Breaks: libfm1-dbg
+Replaces: libfm1-dbg
+Multi-Arch: same
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: extra
+Section: debug
+Filename: pool/main/libf/libfm/libfm-dbg_1.2.3-1_armhf.deb
+Size: 310622
+SHA256: a49d205bb8b2c441f53f77d132a1554f8bfbbffc6e57f5720345fc9c4a2326c8
+SHA1: 701188789f0547e076af1ae33ab2826b1fc75b80
+MD5sum: c2fb8f41aaf9caba372fed1cd2a368ae
+Description: file management support (libfm debug)
+ LibFM provides file management functions built on top of Glib/GIO,
+ giving a convenient higher-level API.
+ .
+ This package contains the debugging symbols for GUI independent library.
+
+Package: libfm-dev
+Source: libfm
+Version: 1.2.3-1
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 297
+Depends: libfm4 (= 1.2.3-1), libfm-extra4 (= 1.2.3-1), libglib2.0-dev
+Suggests: libfm-doc
+Multi-Arch: same
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: optional
+Section: libdevel
+Filename: pool/main/libf/libfm/libfm-dev_1.2.3-1_armhf.deb
+Size: 65154
+SHA256: 66a5b8970df9ebb0a9d56ab2551257100dc2661983cf9f895d4c0141c3ece025
+SHA1: ce4f8546bb9743f85499414a9046f4a79f36638c
+MD5sum: a7d8bee0b0afcf22839c69e4362a5e12
+Description: file management support (core development files)
+ LibFM provides file management functions built on top of Glib/GIO,
+ giving a convenient higher-level API.
+ .
+ This package contains the development files for GUI-independent build.
+
+Package: libfm-doc
+Source: libfm
+Version: 1.2.3-1
+Architecture: all
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 2207
+Recommends: libglib2.0-doc, libgtk-3-doc
+Breaks: libfm-dev (<< 1.1.1)
+Replaces: libfm-dev (<< 1.1.1)
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: optional
+Section: doc
+Filename: pool/main/libf/libfm/libfm-doc_1.2.3-1_all.deb
+Size: 245678
+SHA256: 526ca2c123b527f1ef0539ed3b819c3ae2a7f923f7944aecf0af4006682d4fa0
+SHA1: 9149b1131a2abe0a1aef63fca3e1739c1b46a056
+MD5sum: 6217d48e658287c5e25e1904055af35f
+Description: file management support (development documentation)
+ LibFM provides file management functions built on top of Glib/GIO,
+ giving a convenient higher-level API.
+ .
+ This package contains the development HTML documentation.
+
+Package: libfm-extra4
+Source: libfm
+Version: 1.2.3-1
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 88
+Pre-Depends: multiarch-support
+Depends: libc6 (>= 2.13-28), libglib2.0-0 (>= 2.37.3)
+Multi-Arch: same
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: optional
+Section: libs
+Filename: pool/main/libf/libfm/libfm-extra4_1.2.3-1_armhf.deb
+Size: 30908
+SHA256: dec644bf4670c91260e1425ba88c5cdfbaad6234d728f2b17fbcc2e7f95d9386
+SHA1: f1f4eccc8f6121a830d60d7a985dc0a8b2e99bbc
+MD5sum: 2933bdc611307c19004c95e22dfbf783
+Description: file management support (extra library)
+ LibFM provides file management functions built on top of Glib/GIO
+ giving a convenient higher-level API.
+ .
+ This package contains standalone library which extends libfm.
+
+Package: libfm-gtk-data
+Source: libfm
+Version: 1.2.3-1
+Architecture: all
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 178
+Breaks: libfm-gtk-bin (<< 1.0), libfm-gtk0
+Replaces: libfm-gtk0
+Multi-Arch: foreign
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: optional
+Section: misc
+Filename: pool/main/libf/libfm/libfm-gtk-data_1.2.3-1_all.deb
+Size: 33772
+SHA256: b1f5e73b4c35a12eb5b899de55902dec03aa3236ecf4ec8fdc2e12c94decd824
+SHA1: 39128e8f0118ed0528e1619d3d311b4cac7fe3f8
+MD5sum: 11e8d17e87840a53dcee60de841c32c1
+Description: file management support (GTK+ library common data)
+ LibFM provides file management functions built on top of Glib/GIO,
+ giving a convenient higher-level API.
+ .
+ This package contains the common data of the GTK+ library.
+
+Package: libfm-gtk-dbg
+Source: libfm
+Version: 1.2.3-1
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 646
+Depends: libfm-gtk4 (= 1.2.3-1)
+Breaks: libfm-dbg (<< 1.0.2)
+Multi-Arch: same
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: extra
+Section: debug
+Filename: pool/main/libf/libfm/libfm-gtk-dbg_1.2.3-1_armhf.deb
+Size: 515526
+SHA256: f08a12d4d66253e38a127e673dd8c77c6e352ff0772a22e266cb5b7101bffe12
+SHA1: 0e126f1b034cfb5e23fb3d02fa2146a5a369b1c6
+MD5sum: 8711c36ceb33f7f540baf17fc19ff9b4
+Description: file management support (libfm-gtk debug)
+ LibFM provides file management functions built on top of Glib/GIO,
+ giving a convenient higher-level API.
+ .
+ This package contains the debugging symbols for GTK+ library.
+
+Package: libfm-gtk-dev
+Source: libfm
+Version: 1.2.3-1
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 58
+Depends: libfm-dev (= 1.2.3-1), libfm-gtk4 (= 1.2.3-1), libgtk2.0-dev
+Breaks: libfm-dev (<< 1.0.2)
+Multi-Arch: same
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: optional
+Section: libdevel
+Filename: pool/main/libf/libfm/libfm-gtk-dev_1.2.3-1_armhf.deb
+Size: 19606
+SHA256: 7ebd121ed5db8329579ce3effcf7b3d4a2e72995f8b4f190f7dc1f00f2a1bbc9
+SHA1: e7dc131bb74d2a1cd1ea33ec463fef4894c93e55
+MD5sum: f92d787a3d1665721048ef0e21df017b
+Description: file management support (GTK+ GUI development files)
+ LibFM provides file management functions built on top of Glib/GIO,
+ giving a convenient higher-level API.
+ .
+ This package contains the development files for builds using GTK+ library.
+
+Package: libfm-gtk4
+Source: libfm
+Version: 1.2.3-1
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 450
+Pre-Depends: multiarch-support
+Depends: libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libfm4 (= 1.2.3-1), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgtk2.0-0 (>= 2.24.0), libmenu-cache1, libpango-1.0-0 (>= 1.20.0), libpangocairo-1.0-0 (>= 1.14.0), libpangoft2-1.0-0 (>= 1.14.0), libfm-gtk-data (>= 1.2.0~)
+Suggests: libfm-tools, nautilus-actions
+Multi-Arch: same
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: optional
+Section: libs
+Filename: pool/main/libf/libfm/libfm-gtk4_1.2.3-1_armhf.deb
+Size: 187136
+SHA256: 0e00a28f7c434878c6662beb4ba62a429203a2b9d0da7af6e6f6a19a6d5657ef
+SHA1: b6dabdced04eaf066736e47ce6c277948bad7d7c
+MD5sum: 3c5b1b4bc14a662319cca315d05f099d
+Description: file management support (GTK+ 2.0 GUI library)
+ LibFM provides file management functions built on top of Glib/GIO
+ giving a convenient higher-level API.
+ .
+ This package contains the GTK+ version 2.0 GUI.
+
+Package: libfm-modules
+Source: libfm
+Version: 1.2.3-1
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 166
+Depends: libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libfm-extra4 (>= 1.2.0), libfm-gtk4 (>= 0.1.12), libfm4 (>= 1.0.2), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgtk2.0-0 (>= 2.18.0), libmenu-cache1, libpango-1.0-0 (>= 1.14.0), libpangocairo-1.0-0 (>= 1.14.0), libpangoft2-1.0-0 (>= 1.14.0)
+Multi-Arch: same
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: optional
+Section: libs
+Filename: pool/main/libf/libfm/libfm-modules_1.2.3-1_armhf.deb
+Size: 54680
+SHA256: 05238ce93d6d6e2df90743944755c4f1951703fad585b1c5a84e2c99e1b12c9c
+SHA1: b3b160a2c27fb558fe0ef10a41348876a4421538
+MD5sum: 93e15e931398d58d4120d4b9df01efa9
+Description: file management support (loadable modules for library)
+ LibFM provides file management functions built on top of Glib/GIO
+ giving a convenient higher-level API.
+ .
+ This package contains loadable modules used by libfm* libraries.
+
+Package: libfm-modules-dbg
+Source: libfm
+Version: 1.2.3-1
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 220
+Depends: libfm-modules (= 1.2.3-1)
+Multi-Arch: same
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: extra
+Section: debug
+Filename: pool/main/libf/libfm/libfm-modules-dbg_1.2.3-1_armhf.deb
+Size: 121962
+SHA256: 866cd9704ded4307d3d6d74f1dd1f0e073459dc7b7e673a43b1c59c320964795
+SHA1: 468d7b61ec8c1bb85efd0e7f83cfeaf5c1f9d38d
+MD5sum: aa4b5828c7522b2dc481cdf7e1ac1420
+Description: file management support (libfm-modules debug)
+ LibFM provides file management functions built on top of Glib/GIO,
+ giving a convenient higher-level API.
+ .
+ This package contains the debugging symbols for libfm modules.
+
+Package: libfm-tools
+Source: libfm
+Version: 1.2.3-1
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 90
+Depends: libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libfm-gtk4 (>= 1.2.0), libfm4 (>= 0.1.99), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.28.0), libgtk2.0-0 (>= 2.12.0), libmenu-cache1, libpango-1.0-0 (>= 1.14.0), libpangocairo-1.0-0 (>= 1.14.0), libpangoft2-1.0-0 (>= 1.14.0), libfm-modules
+Conflicts: libfm-gtk-bin, lxshortcut
+Replaces: libfm-gtk-bin, lxshortcut
+Provides: libfm-gtk-bin, lxshortcut
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: optional
+Section: misc
+Filename: pool/main/libf/libfm/libfm-tools_1.2.3-1_armhf.deb
+Size: 32264
+SHA256: d2c50e290b42556de85ec54d1e85b3496697a2e248fb59cf03471442cb1ef83d
+SHA1: d383b78e782cdfece3d3b2a3e21341ab9bcaa6e2
+MD5sum: 541dc069490b42024787756d181e7c85
+Description: file management support (utilities)
+ LibFM provides file management functions built on top of Glib/GIO
+ giving a convenient higher-level API.
+ .
+ This package contains applications libfm-pref-apps and lxshortcut.
+
+Package: libfm4
+Source: libfm
+Version: 1.2.3-1
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 304
+Pre-Depends: multiarch-support
+Depends: libc6 (>= 2.13-28), libdbus-1-3 (>= 1.0.2), libdbus-glib-1-2 (>= 0.78), libexif12, libglib2.0-0 (>= 2.37.3), libmenu-cache1, libfm-data (>= 1.2.0~), lxmenu-data
+Recommends: libfm-modules
+Multi-Arch: same
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: optional
+Section: libs
+Filename: pool/main/libf/libfm/libfm4_1.2.3-1_armhf.deb
+Size: 129378
+SHA256: 5231e1406d2423f56dd811dcd15838b2a4af5915d69f5102e397926e6a3f5bb3
+SHA1: e60b693889ee69e4985fc75ed9ed9466b74c55a4
+MD5sum: 10e8ffd617f1179bf6c564253c3af50a
+Description: file management support (core library)
+ LibFM provides file management functions built on top of Glib/GIO,
+ giving a convenient higher-level API.
+ .
+ Some features:
+  * Desktop-independent, following FreeDesktop standards;
+  * Fast, light on memory usage, and responsive - well suited to
+    less powerful hardware such as netbooks and thin clients;
+  * Uses GIO/GVFS (like Nautilus) for Trash support and access to
+    remote file systems (FTP, SFTP, WebDAV, Windows shares, etc.);
+  * Clipboard operations are compatible with GTK+/GNOME and Qt/KDE;
+  * Supports both Drag-and-Drop, and the X Direct Save protocol;
+  * Reusable design with the core functions separated out to
+    simplify porting to other GUIs.
+ .
+ This package contains the core library.
+
+Package: libfreetype6
+Source: freetype
+Version: 2.5.2-2rpi1rpi1
+Architecture: armhf
+Maintainer: Steve Langasek <vorlon@debian.org>
+Installed-Size: 761
+Pre-Depends: multiarch-support
+Depends: libc6 (>= 2.13-28), libpng12-0 (>= 1.2.13-4), zlib1g (>= 1:1.1.4)
+Multi-Arch: same
+Homepage: http://www.freetype.org
+Priority: optional
+Section: libs
+Filename: pool/main/f/freetype/libfreetype6_2.5.2-2rpi1rpi1_armhf.deb
+Size: 468720
+SHA256: 03fe44e481162b5876fe67b204084d345d028abe4dfa3b31a43e1a569257ef96
+SHA1: 205b0c993cec8feaeb1f9e656edafb43ffb44d8f
+MD5sum: afc43ea6c31d02f273f47ca8ebfe16fb
+Description: FreeType 2 font engine, shared library files
+ The FreeType project is a team of volunteers who develop free,
+ portable and high-quality software solutions for digital typography.
+ They specifically target embedded systems and focus on bringing small,
+ efficient and ubiquitous products.
+ .
+ The FreeType 2 library is their new software font engine.  It has been
+ designed to provide the following important features:
+  * A universal and simple API to manage font files
+  * Support for several font formats through loadable modules
+  * High-quality anti-aliasing
+  * High portability & performance
+ .
+ Supported font formats include:
+  * TrueType files (.ttf) and collections (.ttc)
+  * Type 1 font files both in ASCII (.pfa) or binary (.pfb) format
+  * Type 1 Multiple Master fonts.  The FreeType 2 API also provides
+    routines to manage design instances easily
+  * Type 1 CID-keyed fonts
+  * OpenType/CFF (.otf) fonts
+  * CFF/Type 2 fonts
+  * Adobe CEF fonts (.cef), used to embed fonts in SVG documents with
+    the Adobe SVG viewer plugin.
+  * Windows FNT/FON bitmap fonts
+ .
+ This package contains the files needed to run programs that use the
+ FreeType 2 library.
+ .
+  Home Page: http://www.freetype.org/
+  Authors: David Turner   <david.turner@freetype.org>
+           Robert Wilhelm <robert.wilhelm@freetype.org>
+           Werner Lemberg <werner.lemberg@freetype.org>
+
+Package: libfreetype6-dev
+Source: freetype
+Version: 2.5.2-2rpi1rpi1
+Architecture: armhf
+Maintainer: Steve Langasek <vorlon@debian.org>
+Installed-Size: 3279
+Depends: libfreetype6 (= 2.5.2-2rpi1rpi1), libc6-dev | libc-dev, zlib1g-dev | libz-dev, libpng-dev
+Homepage: http://www.freetype.org
+Priority: optional
+Section: libdevel
+Filename: pool/main/f/freetype/libfreetype6-dev_2.5.2-2rpi1rpi1_armhf.deb
+Size: 795244
+SHA256: 37695cb80d169ba7947d121b0d691bffe955d0acb36193230c69ea4a3f70a2ea
+SHA1: 3ec7fb10ebbcdfda218742e560326a05ae9b1587
+MD5sum: a87b683dfa4d836f35829ffda9cea9e8
+Description: FreeType 2 font engine, development files
+ The FreeType project is a team of volunteers who develop free,
+ portable and high-quality software solutions for digital typography.
+ They specifically target embedded systems and focus on bringing small,
+ efficient and ubiquitous products.
+ .
+ This package contains all supplementary files (static library, headers
+ and documentation) you need to develop your own programs using the
+ FreeType 2 library.
 
 Package: libgail-3-0
 Source: gtk+3.0
@@ -5009,21 +5489,21 @@ Description: JACK Audio Connection Kit (development files)
 
 Package: libjavascriptcoregtk-3.0-0
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
+Version: 2.4.1-1rpi35rpi1
 Architecture: armhf
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
-Installed-Size: 6220
+Installed-Size: 6223
 Pre-Depends: multiarch-support
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libglib2.0-0 (>= 2.36.0), libicu48 (>= 4.8-1), libstdc++6 (>= 4.8.1), zlib1g (>= 1:1.1.4)
 Multi-Arch: same
 Homepage: http://webkitgtk.org/
 Priority: optional
 Section: libs
-Filename: pool/main/w/webkitgtk/libjavascriptcoregtk-3.0-0_2.4.1-1rpi24rpi1_armhf.deb
-Size: 1684030
-SHA256: 969f2d002d3b26e016105942c8ab4641af6dbd1b91cd84272cb19a5faacd54ac
-SHA1: 66b3b57189bf869deae6452630cc188ad2e3062b
-MD5sum: 962ae227736683f2bf6c3e4573f15272
+Filename: pool/main/w/webkitgtk/libjavascriptcoregtk-3.0-0_2.4.1-1rpi35rpi1_armhf.deb
+Size: 1685780
+SHA256: a279fa37ecca25fc3134003629218f6d3cb5fc05e4849306916bfa54acd66dc4
+SHA1: 3da7b9537ec6e6e2e779beffbb16f8358d22957c
+MD5sum: 0342fe6849bc93b1260daf9129dcf074
 Description: JavaScript engine library from WebKitGTK+
  JavaScriptCore is the JavaScript engine used in WebKit. It consists
  of the following building blocks: lexer, parser, start-up interpreter
@@ -5036,20 +5516,20 @@ Description: JavaScript engine library from WebKitGTK+
 
 Package: libjavascriptcoregtk-3.0-0-dbg
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
+Version: 2.4.1-1rpi35rpi1
 Architecture: armhf
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
-Installed-Size: 198959
-Depends: libjavascriptcoregtk-3.0-0 (= 2.4.1-1rpi24rpi1)
+Installed-Size: 198962
+Depends: libjavascriptcoregtk-3.0-0 (= 2.4.1-1rpi35rpi1)
 Multi-Arch: same
 Homepage: http://webkitgtk.org/
 Priority: extra
 Section: debug
-Filename: pool/main/w/webkitgtk/libjavascriptcoregtk-3.0-0-dbg_2.4.1-1rpi24rpi1_armhf.deb
-Size: 15106442
-SHA256: 37a5e1878d75db61b3eac69b0455c634fef1f4eac21f2bcd613d1a290c044380
-SHA1: 6b82dd03a202bd2e3fa27427ee16d180b661f978
-MD5sum: d9e68c02c6785d13a468e66a2252a022
+Filename: pool/main/w/webkitgtk/libjavascriptcoregtk-3.0-0-dbg_2.4.1-1rpi35rpi1_armhf.deb
+Size: 15104726
+SHA256: 7032446d60e82ec44a46b6fac8da8b8787f7e2f9e6f454ebb82c62afddbaf89f
+SHA1: 7cb5d2d666580906fb71d1e348222c58fde34995
+MD5sum: 8bfe8668f4a6aec8fa12bcb300a1b137
 Description: JavaScript engine library from WebKitGTK+ - debugging symbols
  JavaScriptCore is the JavaScript engine used in WebKit. It consists
  of the following building blocks: lexer, parser, start-up interpreter
@@ -5062,19 +5542,19 @@ Description: JavaScript engine library from WebKitGTK+ - debugging symbols
 
 Package: libjavascriptcoregtk-3.0-bin
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
+Version: 2.4.1-1rpi35rpi1
 Architecture: armhf
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
-Installed-Size: 239
+Installed-Size: 242
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libjavascriptcoregtk-3.0-0 (>= 1.5.1), libstdc++6 (>= 4.1.1)
 Homepage: http://webkitgtk.org/
 Priority: optional
 Section: interpreters
-Filename: pool/main/w/webkitgtk/libjavascriptcoregtk-3.0-bin_2.4.1-1rpi24rpi1_armhf.deb
-Size: 140932
-SHA256: a6a413c0701d9a7652499a3b8b33f3c6022ba2cca53781aac4310ad535c4b79c
-SHA1: e1b3bfebf4def0cb133a769cdc6cab130ed2bd36
-MD5sum: 47590aa14759662a646f5b9ca292e7f2
+Filename: pool/main/w/webkitgtk/libjavascriptcoregtk-3.0-bin_2.4.1-1rpi35rpi1_armhf.deb
+Size: 144180
+SHA256: 40a0f39d7f1e1ebb35f54c08c5a42c52559d51c6e0e75944999cea57742c133e
+SHA1: a5c10910e9ff1cab2434d13fbec7968d0db3b847
+MD5sum: 59b3b88557ad5d5ab298a73f5f2cd2a0
 Description: JavaScript engine library from WebKitGTK+ - command-line interpreter
  JavaScriptCore is the JavaScript engine used in WebKit. It consists
  of the following building blocks: lexer, parser, start-up interpreter
@@ -5087,21 +5567,21 @@ Description: JavaScript engine library from WebKitGTK+ - command-line interprete
 
 Package: libjavascriptcoregtk-3.0-dev
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
+Version: 2.4.1-1rpi35rpi1
 Architecture: armhf
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
-Installed-Size: 276
-Depends: libjavascriptcoregtk-3.0-0 (= 2.4.1-1rpi24rpi1), gir1.2-javascriptcoregtk-3.0 (= 2.4.1-1rpi24rpi1)
+Installed-Size: 279
+Depends: libjavascriptcoregtk-3.0-0 (= 2.4.1-1rpi35rpi1), gir1.2-javascriptcoregtk-3.0 (= 2.4.1-1rpi35rpi1)
 Conflicts: libwebkitgtk-3.0-dev (<< 1.5.0)
 Replaces: libwebkitgtk-3.0-dev (<< 1.5.0)
 Homepage: http://webkitgtk.org/
 Priority: extra
 Section: libdevel
-Filename: pool/main/w/webkitgtk/libjavascriptcoregtk-3.0-dev_2.4.1-1rpi24rpi1_armhf.deb
-Size: 132634
-SHA256: afaadae58e10c96a3ddb40769e24b01f2cc527239ca44591ff96e6d9e692d05f
-SHA1: 5d66f9a875e1781809d5b080d22ba9a89a654eb0
-MD5sum: 77790ed2ef8c720d31bac16774f1d199
+Filename: pool/main/w/webkitgtk/libjavascriptcoregtk-3.0-dev_2.4.1-1rpi35rpi1_armhf.deb
+Size: 135832
+SHA256: a17a6567efe8f87cdfb3c9667f38509f696a266f145e9ce01aeca00e1e7b9fdd
+SHA1: 4daac919e3882e8677cc5d0dbb9e283d7ce28ad2
+MD5sum: 6e01090a920b3373e66b67f0f5ca78e1
 Description: JavaScript engine library from WebKitGTK+ - development files
  JavaScriptCore is the JavaScript engine used in WebKit. It consists
  of the following building blocks: lexer, parser, start-up interpreter
@@ -6890,20 +7370,20 @@ Description: Phobos D standard library
 
 Package: libpixman-1-0
 Source: pixman
-Version: 0.33.1+git20140627-c37ff5-rpi1rpi1
+Version: 0.33.1+git20140627-c37ff5-rpi2rpi1
 Architecture: armhf
 Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
-Installed-Size: 547
+Installed-Size: 575
 Pre-Depends: multiarch-support
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0)
 Multi-Arch: same
 Priority: optional
 Section: libs
-Filename: pool/main/p/pixman/libpixman-1-0_0.33.1+git20140627-c37ff5-rpi1rpi1_armhf.deb
-Size: 173440
-SHA256: 7688a6a42909ae9ab1a09e028acafd53bfb5418f4e1baae8d16a8c580c629f47
-SHA1: ab2443783eaabdee0b3ffdaabc1015c32d7f3f23
-MD5sum: ea452069cb45266201c85c4f42034d45
+Filename: pool/main/p/pixman/libpixman-1-0_0.33.1+git20140627-c37ff5-rpi2rpi1_armhf.deb
+Size: 177394
+SHA256: 02044d79fa9d1c3e59bdbd77aa82d0922a9f76a903ae01c5c82a526797f0ecb3
+SHA1: f99fbe1c052defd04dac9ff38aedfaa2e27295ab
+MD5sum: 05045473f45d56f9bff2d92484e9a111
 Description: pixel-manipulation library for X and cairo
  A library for manipulating pixel regions -- a set of Y-X banded
  rectangles, image compositing using the Porter/Duff model
@@ -6912,75 +7392,119 @@ Description: pixel-manipulation library for X and cairo
 
 Package: libpixman-1-0-dbg
 Source: pixman
-Version: 0.33.1+git20140627-c37ff5-rpi1rpi1
+Version: 0.33.1+git20140627-c37ff5-rpi2rpi1
 Architecture: armhf
 Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
-Installed-Size: 1441
-Depends: libpixman-1-0 (= 0.33.1+git20140627-c37ff5-rpi1rpi1)
+Installed-Size: 1457
+Depends: libpixman-1-0 (= 0.33.1+git20140627-c37ff5-rpi2rpi1)
 Multi-Arch: same
 Priority: extra
 Section: debug
-Filename: pool/main/p/pixman/libpixman-1-0-dbg_0.33.1+git20140627-c37ff5-rpi1rpi1_armhf.deb
-Size: 474144
-SHA256: 65b35ce0cdbeddc577e34dc1f44cbfc211ea5d2ba2f8e07ffce2595f45251b1c
-SHA1: d12b8d54a4c0756e284cdf86a19a4fb1ea4102bb
-MD5sum: 22d376e4f024db7c647ccdfa46fd1ecc
+Filename: pool/main/p/pixman/libpixman-1-0-dbg_0.33.1+git20140627-c37ff5-rpi2rpi1_armhf.deb
+Size: 478834
+SHA256: 351534089b80d632d8faabb7e8ca49f0884124d2b7abdb2285addcf4d36415b2
+SHA1: f43125583d4000620f839a850809c30c3bcf0255
+MD5sum: 5a2a41652d601fd8d226efe163939ccb
 Description: pixel-manipulation library for X and cairo (debugging symbols)
  Debugging symbols for the Cairo/X pixel manipulation library.  This is
  needed to debug programs linked against libpixman0.
 
 Package: libpixman-1-dev
 Source: pixman
-Version: 0.33.1+git20140627-c37ff5-rpi1rpi1
+Version: 0.33.1+git20140627-c37ff5-rpi2rpi1
 Architecture: armhf
 Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
-Installed-Size: 697
-Depends: libpixman-1-0 (= 0.33.1+git20140627-c37ff5-rpi1rpi1)
+Installed-Size: 735
+Depends: libpixman-1-0 (= 0.33.1+git20140627-c37ff5-rpi2rpi1)
 Priority: optional
 Section: libdevel
-Filename: pool/main/p/pixman/libpixman-1-dev_0.33.1+git20140627-c37ff5-rpi1rpi1_armhf.deb
-Size: 200700
-SHA256: 7ef71a49e8e93ece3db5f5d18e23b4cd417080eed87782b4195e088fb7af5383
-SHA1: f0800b310ede6a771f6cbc51a4611afb6bd4dfd8
-MD5sum: 4edb0dc2055a9b62a424da655fda0c90
+Filename: pool/main/p/pixman/libpixman-1-dev_0.33.1+git20140627-c37ff5-rpi2rpi1_armhf.deb
+Size: 206100
+SHA256: f9aa2bc860ee19bed818e035199adb8c462ad3a0c0539acb74348e696df1ae2e
+SHA1: 215f8aecb7df186bbf942f77d659b76410643e34
+MD5sum: 737a52f1a217fa6b9a41e39b077c7021
 Description: pixel-manipulation library for X and cairo (development files)
  Development libraries, header files and documentation needed by
  programs that want to compile with the Cairo/X pixman library.
 
+Package: libpostproc-dev
+Source: libpostproc
+Version: 6:0.git20120821-4rpi1
+Architecture: armhf
+Maintainer: Debian multimedia packages maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Installed-Size: 104
+Depends: libpostproc52 (= 6:0.git20120821-4rpi1)
+Homepage: http://git.videolan.org/?p=libpostproc.git;a=summary
+Priority: optional
+Section: libdevel
+Filename: pool/main/libp/libpostproc/libpostproc-dev_0.git20120821-4rpi1_armhf.deb
+Size: 29690
+SHA256: 9f9b041b4d825efa3722b2cc405b918f9cf427ee4a0e3f574a809e8cf21b7f6a
+SHA1: 4494f79fae0ab556108b2b05187de302621fc5c9
+MD5sum: 47d94ad49106d9dc48f49c8fe91ce431
+Description: FFmpeg derived postprocessing library - development headers
+ This package contains the postprocessing library for legacy
+ applications.
+ .
+ This package contains the development headers for the libpostproc
+ library.
+
+Package: libpostproc52
+Source: libpostproc
+Version: 6:0.git20120821-4rpi1
+Architecture: armhf
+Maintainer: Debian multimedia packages maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Installed-Size: 98
+Depends: libc6 (>= 2.13-28)
+Homepage: http://git.videolan.org/?p=libpostproc.git;a=summary
+Priority: optional
+Section: libs
+Filename: pool/main/libp/libpostproc/libpostproc52_0.git20120821-4rpi1_armhf.deb
+Size: 29528
+SHA256: 9c33d773836e61ef042a7021ef13401d5d508eb9e1628366cbbe852cfddf5e17
+SHA1: a3c9ab836d8867c67cf61f56a8f1aa0f1c392948
+MD5sum: c54ccd407206f1c7ad172b5e69ba8fc7
+Description: FFmpeg derived postprocessing library
+ This package contains the postprocessing library for legacy
+ applications.
+ .
+ The upsream development for this library has stalled. Please consider
+ porting existing applications to better alternatives.
+
 Package: libraspberrypi-bin
 Source: raspberrypi-firmware
-Version: 1.20140908-1
+Version: 1.20150214-1
 Architecture: armhf
 Maintainer: Alex Bradbury <asb@asbradbury.org>
-Installed-Size: 605
-Depends: libraspberrypi0 (= 1.20140908-1)
+Installed-Size: 938
+Depends: libraspberrypi0 (= 1.20150214-1)
 Homepage: https://github.com/raspberrypi/firmware
 Priority: extra
 Section: misc
-Filename: pool/main/r/raspberrypi-firmware/libraspberrypi-bin_1.20140908-1_armhf.deb
-Size: 245590
-SHA256: b5e3342b0b28556c1558381c51c3d91cd25380c3fcb9217a344ec095aba70e7f
-SHA1: caa6e78f165e8e9e0191d3be2dd97931654d4b33
-MD5sum: 33de0328402071a331c28b481e3b7e25
+Filename: pool/main/r/raspberrypi-firmware/libraspberrypi-bin_1.20150214-1_armhf.deb
+Size: 378908
+SHA256: 02f3288640ada824ba2c42d0376cad3039adfb7d6b0f5c6ade4ac4758c6c626b
+SHA1: bf57da0c088a1333e7c0d34f832e194f268010f5
+MD5sum: 7823cd0d90b72a12f4a100146213b8e4
 Description: Miscellaneous Raspberry Pi utilities
  This package contains various utilities for interacting with the Raspberry
  Pi's VideoCore IV.
 
 Package: libraspberrypi-dev
 Source: raspberrypi-firmware
-Version: 1.20140908-1
+Version: 1.20150214-1
 Architecture: armhf
 Maintainer: Alex Bradbury <asb@asbradbury.org>
-Installed-Size: 3233
-Depends: libraspberrypi0 (= 1.20140908-1)
+Installed-Size: 3217
+Depends: libraspberrypi0 (= 1.20150214-1)
 Homepage: https://github.com/raspberrypi/firmware
 Priority: extra
 Section: libdevel
-Filename: pool/main/r/raspberrypi-firmware/libraspberrypi-dev_1.20140908-1_armhf.deb
-Size: 765712
-SHA256: cee7403349c71d6343b595202d928f919e8f4ef46649daf7c4c8430e0e44cdaa
-SHA1: e8ef3f484a5b5230f1a29cfde468e2b042becfa9
-MD5sum: 95fc2ef7f025d8dae26b5a7c0c17508c
+Filename: pool/main/r/raspberrypi-firmware/libraspberrypi-dev_1.20150214-1_armhf.deb
+Size: 768688
+SHA256: dba2aa3c8d18b07809157b350ec6bd9ca0c8d4d0945bd369f41459ab143adb08
+SHA1: 6f0de471bd61cbafa6033759cd28cee206ad2564
+MD5sum: 5e096d59ffde6e28280337e4fa4485a8
 Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV (headers)
  This package contains headers and other development files for implementations
  of EGL, OpenGL ES, OpenVG, OpenWF Composition, and others for the Raspberry
@@ -6988,19 +7512,19 @@ Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV 
 
 Package: libraspberrypi-doc
 Source: raspberrypi-firmware
-Version: 1.20140908-1
+Version: 1.20150214-1
 Architecture: armhf
 Maintainer: Alex Bradbury <asb@asbradbury.org>
-Installed-Size: 32744
-Depends: libraspberrypi0 (= 1.20140908-1)
+Installed-Size: 32815
+Depends: libraspberrypi0 (= 1.20150214-1)
 Homepage: https://github.com/raspberrypi/firmware
 Priority: extra
 Section: libdevel
-Filename: pool/main/r/raspberrypi-firmware/libraspberrypi-doc_1.20140908-1_armhf.deb
-Size: 31522892
-SHA256: c954db053e42fbe418bd9b0e2f658516fc051431fa55879e0db112fb785baa0f
-SHA1: 9575db6d9e776fb6e3a99eedbba0b3c5c39503a5
-MD5sum: c86443ee05779f63d365fc76449f3112
+Filename: pool/main/r/raspberrypi-firmware/libraspberrypi-doc_1.20150214-1_armhf.deb
+Size: 31528490
+SHA256: 422009c3b11804aaf3c750227164e33e0b28ea59b73ed7d4c56e221e26355893
+SHA1: 8287b668566172a415e8dcf50a2fb61ed5e4d345
+MD5sum: cca7e3853ef998e9b81770e7ff04636e
 Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV (headers)
  This package contains headers, example code, and other development files for
  implementations of EGL, OpenGL ES, OpenVG, OpenWF Composition, and others for
@@ -7008,19 +7532,19 @@ Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV 
 
 Package: libraspberrypi0
 Source: raspberrypi-firmware
-Version: 1.20140908-1
+Version: 1.20150214-1
 Architecture: armhf
 Maintainer: Alex Bradbury <asb@asbradbury.org>
-Installed-Size: 1100
-Depends: raspberrypi-bootloader (= 1.20140908-1)
+Installed-Size: 2617
+Depends: raspberrypi-bootloader (= 1.20150214-1)
 Homepage: https://github.com/raspberrypi/firmware
 Priority: extra
 Section: libs
-Filename: pool/main/r/raspberrypi-firmware/libraspberrypi0_1.20140908-1_armhf.deb
-Size: 428618
-SHA256: 6281ee721cb374be316c6d612c02ae7476b4a394b6d89d034708cfaffe429092
-SHA1: 3ad6b4219cebccb99b81e318b3e7ac7445a8bcc3
-MD5sum: d0bdb6497b106895c36c5e2429475465
+Filename: pool/main/r/raspberrypi-firmware/libraspberrypi0_1.20150214-1_armhf.deb
+Size: 1078372
+SHA256: 7f309a7868a1b500cb735be30f0134af1fdd7ecc926576e258009225ffb09f44
+SHA1: 2efdcd1ae9a73bc2ab23df7434a5a38f236ea8f7
+MD5sum: d3cddfc52e003780d32c887fb26e44e3
 Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV
  This package contains implementations of EGL, OpenGL ES, OpenVG, OpenWF
  Composition, and others for the Raspberry Pi's VideoCore IV multimedia
@@ -7778,22 +8302,22 @@ Description: C# like language for the GObject system - development headers
 
 Package: libwebkitgtk-3.0-0
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
+Version: 2.4.1-1rpi35rpi1
 Architecture: armhf
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
-Installed-Size: 24734
+Installed-Size: 24757
 Pre-Depends: multiarch-support
-Depends: libjavascriptcoregtk-3.0-0 (= 2.4.1-1rpi24rpi1), libatk1.0-0 (>= 2.7.91), libc6 (>= 2.13-28), libcairo-gobject2 (>= 1.10.0), libcairo2 (>= 1.12.0), libdbus-1-3 (>= 1.0.2), libdbus-glib-1-2 (>= 0.78), libenchant1c2a (>= 1.6), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.4.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libgeoclue0 (>= 0.11.1+git20091217), libglib2.0-0 (>= 2.37.3), libgstreamer-plugins-base1.0-0 (>= 1.2.0), libgstreamer1.0-0 (>= 1.2.0), libgtk-3-0 (>= 3.10.0), libharfbuzz-icu0 (>= 0.9.18), libharfbuzz0a (>= 0.9.18), libicu48 (>= 4.8-1), libjpeg8 (>= 8c), libpango-1.0-0 (>= 1.30.0), libpangocairo-1.0-0 (>= 1.30.0), libpangoft2-1.0-0 (>= 1.30.0), libpng12-0 (>= 1.2.13-4), libsecret-1-0 (>= 0.7), libsoup2.4-1 (>= 2.42.0), libsqlite3-0 (>= 3.5.9), libstdc++6 (>= 4.8.1), libwebp2, libx11-6, libxml2 (>= 2.7.4), libxrender1, libxslt1.1 (>= 1.1.25), libxt6, zlib1g (>= 1:1.2.0), libwebkitgtk-3.0-common (>= 2.4.1)
+Depends: libjavascriptcoregtk-3.0-0 (= 2.4.1-1rpi35rpi1), libatk1.0-0 (>= 2.7.91), libc6 (>= 2.13-28), libcairo-gobject2 (>= 1.10.0), libcairo2 (>= 1.12.0), libdbus-1-3 (>= 1.0.2), libdbus-glib-1-2 (>= 0.78), libenchant1c2a (>= 1.6), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.4.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libgeoclue0 (>= 0.11.1+git20091217), libglib2.0-0 (>= 2.37.3), libgstreamer-plugins-base1.0-0 (>= 1.2.0), libgstreamer1.0-0 (>= 1.2.0), libgtk-3-0 (>= 3.10.0), libharfbuzz-icu0 (>= 0.9.18), libharfbuzz0a (>= 0.9.18), libicu48 (>= 4.8-1), libjpeg8 (>= 8c), libpango-1.0-0 (>= 1.30.0), libpangocairo-1.0-0 (>= 1.30.0), libpangoft2-1.0-0 (>= 1.30.0), libpng12-0 (>= 1.2.13-4), libsecret-1-0 (>= 0.7), libsoup2.4-1 (>= 2.42.0), libsqlite3-0 (>= 3.5.9), libstdc++6 (>= 4.8.1), libwebp2, libx11-6, libxml2 (>= 2.7.4), libxrender1, libxslt1.1 (>= 1.1.25), libxt6, zlib1g (>= 1:1.2.0), libwebkitgtk-3.0-common (>= 2.4.1)
 Recommends: gstreamer1.0-plugins-base, gstreamer1.0-plugins-good, libcairo2 (>= 1.12.14), libpixman-1-0 (>= 0.33.1+git20140423-00cf82-rpi1), libglib2.0-0 (>= 2.40.0-3rpi1), gstreamer1.0-plugins-bad, gstreamer1.0-libav, gstreamer1.0-omx, gstreamer1.0-alsa
 Multi-Arch: same
 Homepage: http://webkitgtk.org/
 Priority: optional
 Section: libs
-Filename: pool/main/w/webkitgtk/libwebkitgtk-3.0-0_2.4.1-1rpi24rpi1_armhf.deb
-Size: 4842100
-SHA256: a714f671800eaeae657ccb3514be091ff704cd571700dfa4beefba71376454c4
-SHA1: b70ba07c960f139372baf2cb2aeb00877cc8ea4c
-MD5sum: cfe330991a1c2619495a49ef18767072
+Filename: pool/main/w/webkitgtk/libwebkitgtk-3.0-0_2.4.1-1rpi35rpi1_armhf.deb
+Size: 4846810
+SHA256: f4311c1be68567b1373b9ad44c885a5ca3d55cc1ed2f71c1b5822b659d5d9fc4
+SHA1: 624440cd8d2d6ef682e450c558436b8731e76e0c
+MD5sum: 5eedeca925079ec5f21c163ad1956050
 Description: Web content engine library for GTK+
  WebKit is a web content engine, derived from KHTML and KJS from KDE, and
  used primarily in Apple's Safari browser.  It is made to be embedded in
@@ -7808,20 +8332,20 @@ Description: Web content engine library for GTK+
 
 Package: libwebkitgtk-3.0-0-dbg
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
+Version: 2.4.1-1rpi35rpi1
 Architecture: armhf
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
-Installed-Size: 1035689
-Depends: libwebkitgtk-3.0-0 (= 2.4.1-1rpi24rpi1), libjavascriptcoregtk-3.0-0-dbg (= 2.4.1-1rpi24rpi1)
+Installed-Size: 1035837
+Depends: libwebkitgtk-3.0-0 (= 2.4.1-1rpi35rpi1), libjavascriptcoregtk-3.0-0-dbg (= 2.4.1-1rpi35rpi1)
 Multi-Arch: same
 Homepage: http://webkitgtk.org/
 Priority: extra
 Section: debug
-Filename: pool/main/w/webkitgtk/libwebkitgtk-3.0-0-dbg_2.4.1-1rpi24rpi1_armhf.deb
-Size: 84618564
-SHA256: ed3b48e48e9a4b7b616819050ec79a60abf785acecf3706050cde059e24bcf9b
-SHA1: 40b75587e7c167e688e3ddad282c897294425aa1
-MD5sum: 05e4b8a3bbd6007cf55d0ceefa124384
+Filename: pool/main/w/webkitgtk/libwebkitgtk-3.0-0-dbg_2.4.1-1rpi35rpi1_armhf.deb
+Size: 84633638
+SHA256: c27b283f386d2989a80a5147094b50065b05770c2883e717966f2293d2239eff
+SHA1: d1378e24fc65f91490907b9204276c8cc221303f
+MD5sum: 97ee4ab14dd73ec2b213b9a5e0ea1f68
 Description: Web content engine library for GTK+ - debugging symbols
  WebKit is a web content engine, derived from KHTML and KJS from KDE, and
  used primarily in Apple's Safari browser.  It is made to be embedded in
@@ -7836,19 +8360,19 @@ Description: Web content engine library for GTK+ - debugging symbols
 
 Package: libwebkitgtk-3.0-common
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
+Version: 2.4.1-1rpi35rpi1
 Architecture: all
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
-Installed-Size: 2354
+Installed-Size: 2357
 Multi-Arch: foreign
 Homepage: http://webkitgtk.org/
 Priority: optional
 Section: libs
-Filename: pool/main/w/webkitgtk/libwebkitgtk-3.0-common_2.4.1-1rpi24rpi1_all.deb
-Size: 456910
-SHA256: a5f0bbbd3412489a40be0f305e581ef881bc05d1ee2e28abe41fb0a6d4c3b1b1
-SHA1: 68bfb3aa68d3d4ab20dc8fe66bb33bba3a1fb8c1
-MD5sum: 600e53d747a54174b7db100195bdb558
+Filename: pool/main/w/webkitgtk/libwebkitgtk-3.0-common_2.4.1-1rpi35rpi1_all.deb
+Size: 459374
+SHA256: 7fcc059cdae541684bec188215100da3f4430342efdfd0301991a53a348f949f
+SHA1: c00d2206f886e6faaab8a890a4bdc4f854c4cdb7
+MD5sum: 67d191d80cbbbe13189d2ae22cdb6784
 Description: Web content engine library for GTK+ - data files
  WebKit is a web content engine, derived from KHTML and KJS from KDE, and
  used primarily in Apple's Safari browser.  It is made to be embedded in
@@ -7863,19 +8387,19 @@ Description: Web content engine library for GTK+ - data files
 
 Package: libwebkitgtk-3.0-dev
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
+Version: 2.4.1-1rpi35rpi1
 Architecture: armhf
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
-Installed-Size: 3658
-Depends: libwebkitgtk-3.0-0 (= 2.4.1-1rpi24rpi1), gir1.2-webkit-3.0 (= 2.4.1-1rpi24rpi1), libwebkitgtk-common-dev (= 2.4.1-1rpi24rpi1), libgtk-3-dev, libsoup2.4-dev (>= 2.40), libjavascriptcoregtk-3.0-dev (= 2.4.1-1rpi24rpi1), libraspberrypi-dev
+Installed-Size: 3661
+Depends: libwebkitgtk-3.0-0 (= 2.4.1-1rpi35rpi1), gir1.2-webkit-3.0 (= 2.4.1-1rpi35rpi1), libwebkitgtk-common-dev (= 2.4.1-1rpi35rpi1), libgtk-3-dev, libsoup2.4-dev (>= 2.40), libjavascriptcoregtk-3.0-dev (= 2.4.1-1rpi35rpi1), libraspberrypi-dev
 Homepage: http://webkitgtk.org/
 Priority: extra
 Section: libdevel
-Filename: pool/main/w/webkitgtk/libwebkitgtk-3.0-dev_2.4.1-1rpi24rpi1_armhf.deb
-Size: 302646
-SHA256: 7d3b36f0dfa5097bcfc07d6058a617fae4ed585f59284db799f3b704cca7aa5b
-SHA1: 6f4820078c724914ed9b3915eb744b576ef8e60d
-MD5sum: 4a2794b87074d8fd43c91433e6de9465
+Filename: pool/main/w/webkitgtk/libwebkitgtk-3.0-dev_2.4.1-1rpi35rpi1_armhf.deb
+Size: 305906
+SHA256: bb4f3bc99e969684843d495c7663945e9987f07d14f8cd7d14210debe6670c55
+SHA1: dc6e670e7e7e2aecc5da87b684dd0b0169770439
+MD5sum: 53cfe363fd96b30a3c7ac11103228040
 Description: Web content engine library for GTK+ - development files
  WebKit is a web content engine, derived from KHTML and KJS from KDE, and
  used primarily in Apple's Safari browser.  It is made to be embedded in
@@ -7890,20 +8414,20 @@ Description: Web content engine library for GTK+ - development files
 
 Package: libwebkitgtk-common-dev
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
+Version: 2.4.1-1rpi35rpi1
 Architecture: armhf
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
-Installed-Size: 982
+Installed-Size: 985
 Breaks: libwebkitgtk-3.0-dev (<< 2.1.4-3)
 Replaces: libwebkitgtk-3.0-dev (<< 2.1.4-3)
 Homepage: http://webkitgtk.org/
 Priority: extra
 Section: libdevel
-Filename: pool/main/w/webkitgtk/libwebkitgtk-common-dev_2.4.1-1rpi24rpi1_armhf.deb
-Size: 172304
-SHA256: 4f443b29097617ceff0a3f697e2e5b1feab077d861c7395b729aa3ff5a09c8fc
-SHA1: 1fb78de204c45686236882ce3a4a5dda8f2d5438
-MD5sum: 42d2576dbc705cf1a81272171ec9e2bb
+Filename: pool/main/w/webkitgtk/libwebkitgtk-common-dev_2.4.1-1rpi35rpi1_armhf.deb
+Size: 175382
+SHA256: 9b39d7700bab7c1f2521d4df60acc0edc257d1644199057d6a2abc0e69099bdc
+SHA1: f3dd80f278ad949132feb44ff7c1a4461a68b45b
+MD5sum: d8c2264d8956a6a19d23f10be2105265
 Description: Web content engine library for GTK+ - common development files
  WebKit is a web content engine, derived from KHTML and KJS from KDE, and
  used primarily in Apple's Safari browser.  It is made to be embedded in
@@ -7987,6 +8511,87 @@ Description: Just in time compiler for Lua programming language version 5.1
  This package contains the standalone interpreter/jitter that can be used
  as a replacement for the standard lua5.1 interpreter.
 
+Package: lxpanel
+Version: 0.7.1-2+raspi
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 636
+Depends: libasound2 (>= 1.0.16), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libfm-gtk4 (>= 1.2.0), libfm4 (>= 1.2.0), libgcc1 (>= 1:4.4.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgtk2.0-0 (>= 2.24.0), libiw30 (>= 30~pre1), libmenu-cache1, libpango-1.0-0 (>= 1.14.0), libwnck22 (>= 2.30.0-3), libx11-6, libxml2 (>= 2.7.4), lxmenu-data, lxpanel-data (= 0.7.1-2+raspi), libfm-modules
+Recommends: xkb-data
+Suggests: lxsession | menu, iceweasel | www-browser
+Homepage: http://www.lxde.org/
+Priority: optional
+Section: x11
+Filename: pool/main/l/lxpanel/lxpanel_0.7.1-2+raspi_armhf.deb
+Size: 219656
+SHA256: e8ca2d0ab79e914db8a505e6558638d6475408f39f31c04f5c6cd2e4acea6350
+SHA1: e68d3f8123fc06f18fce981a7a15e0b65dfbc3b0
+MD5sum: 69acbfada4985e40cf081390542d2f34
+Description: LXDE panel
+ LXPanel is a GUI application for the Lightweight X11 Desktop Environment
+ (LXDE).
+ .
+ It is derived from fbpanel and includes the following features:
+ .
+  * User-friendly application menu automatically generated from .desktop
+    files on the system
+  * Launcher bar (small icons clicked to launch apps)
+  * Task bar supporting ICCCM/EWMH `urgency' hint (Pidgin IM windows
+    can flash on new incoming messages)
+  * Run dialog (type a command to run, without opening a terminal)
+  * Net status icon plug-in (optional).
+  * Volume control plug-in (optional).
+  * Notification area (system tray).
+  * Digital clock.
+  * Keyboard LEDs plug-in (display caps/num locks).
+  * lxpanelctl: control lxpanel from other programs.
+    For example, "lxpanelctl run" will show the Run dialog in lxpanel,
+    and "lxpanelctl menu" will show the application menu. This is
+    useful in combination with window manager key bindings.
+
+Package: lxpanel-data
+Source: lxpanel
+Version: 0.7.1-2+raspi
+Architecture: all
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 2914
+Breaks: lxpanel (<< 0.7.0)
+Replaces: lxpanel (<< 0.7.0)
+Homepage: http://www.lxde.org/
+Priority: optional
+Section: x11
+Filename: pool/main/l/lxpanel/lxpanel-data_0.7.1-2+raspi_all.deb
+Size: 1253008
+SHA256: e96800077a3f39719134b99ea62a9e23f48c9560bf0992880f682ef1f40a81ea
+SHA1: f375f74f712461a29e1e5a1138d9c9a261a52075
+MD5sum: 9cab94980c80ca04bdd5ce7a3cbc9424
+Description: LXDE panel (data files)
+ LXPanel is a GUI application for the Lightweight X11 Desktop Environment
+ (LXDE).
+ .
+ This package contains the data required for panel.
+
+Package: lxpanel-dbg
+Source: lxpanel
+Version: 0.7.1-2+raspi
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 848
+Depends: lxpanel (= 0.7.1-2+raspi)
+Homepage: http://www.lxde.org/
+Priority: extra
+Section: debug
+Filename: pool/main/l/lxpanel/lxpanel-dbg_0.7.1-2+raspi_armhf.deb
+Size: 639220
+SHA256: 4543d6522f295a0f460178e3f71a99d75c9eb245913feb1fec5f83a4556bd044
+SHA1: 5263462042ae6cee182b2d2c5066b03bda72f555
+MD5sum: 538acfe7f5785dbc5b023e9943345b63
+Description: LXDE panel (debug)
+ LXPanel is a GUI application for the Lightweight X11 Desktop Environment
+ (LXDE).
+ .
+ This package contains the debugging symbols.
+
 Package: make
 Source: make-dfsg
 Version: 4.0-7rpi2
@@ -8062,22 +8667,38 @@ SHA1: 3b01602053fa06384009c3aaae72230ea9096490
 MD5sum: 246ba374c66741a5be74b77745104a40
 Description: Minecraft for the Raspberry Pi
 
+Package: nuscratch
+Version: 20150114-1
+Architecture: armhf
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Installed-Size: 19841
+Depends: scratch
+Homepage: https://github.com/raspberrypi/scratch
+Priority: optional
+Section: education
+Filename: pool/main/n/nuscratch/nuscratch_20150114-1_armhf.deb
+Size: 9051108
+SHA256: 5089789ffbccd25d814151746708757555f1b6d12de43869726e968c475dd998
+SHA1: a54e6c768c76f368d2495890359591329804126e
+MD5sum: 5d0922427eccee42545e9bc9928e6cb0
+Description: Scratch running on the Stack (Cog) VM
+
 Package: omxplayer
-Version: 0.3.5~git20140322~39e6342
+Version: 0.3.6~git20150210~337004e
 Architecture: armhf
 Essential: no
-Depends: libpcre3, libfreetype6, fonts-freefont-ttf, dbus, libssl1.0.0
+Depends: libpcre3, libfreetype6, fonts-freefont-ttf, dbus, libssl1.0.0, libsmbclient, libssh-4
 Suggests: fbset, x11-xserver-utils
-Installed-Size: 7920
+Installed-Size: 10440
 Maintainer: Sergio Conde <sergio@sconde.net>
 Provides: omxplayer
 Priority: optional
 Section: video
-Filename: pool/main/o/omxplayer/omxplayer_0.3.5~git20140322~39e6342_armhf.deb
-Size: 2897306
-SHA256: d6a2db7f848513df7299ff3aa5d73c918b0317a4c7c5de9bcf47e4b8a99f06ed
-SHA1: d4156ab76daf57c9c1fa7be7c67083016fd3c38b
-MD5sum: 1c2624fb6b7753f3012f709bc7a16625
+Filename: pool/main/o/omxplayer/omxplayer_0.3.6~git20150210~337004e_armhf.deb
+Size: 3575808
+SHA256: f2b9e00b0220363ee0ce674dd509c2a75c5efd70b63f72c64aa0ad69dab9e031
+SHA1: 82c68a33024c2057deaa7e8d481957be7fea59ad
+MD5sum: 2497fdd5f1080e3070afb6a9dd4d12ec
 Description: Command line media player for Raspberry Pi
  .
  It plays all media files supported by the Raspberry Pi
@@ -8171,6 +8792,60 @@ Description: Java™ Platform, Standard Edition 8 Development Kit
  graphical user interface.
  .
  This package has been automatically created with java-package (0.53~bpo70+1).
+
+Package: pcmanfm
+Version: 1.2.3-1+raspi
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 1750
+Depends: libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libfm-gtk4 (>= 1.2.0), libfm4 (>= 1.2.0), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgtk2.0-0 (>= 2.24.0), libpango-1.0-0 (>= 1.20.0), libpangocairo-1.0-0 (>= 1.14.0), libpangoft2-1.0-0 (>= 1.14.0), libx11-6
+Recommends: gvfs-backends, gvfs-fuse, policykit-1-gnome | mate-polkit | lxpolkit (<< 0.4.9), lxde-icon-theme | gnome-icon-theme | oxygen-icon-theme | tango-icon-theme
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: optional
+Section: utils
+Filename: pool/main/p/pcmanfm/pcmanfm_1.2.3-1+raspi_armhf.deb
+Size: 392524
+SHA256: 926131f8dc2440501ff9871715c3bbeff84a3c6358320021af595ad65859f262
+SHA1: 28e9cdb68ccee7a7274e3ca88754d86d8232879b
+MD5sum: 19756c5de34b79d7f0db4a62197476eb
+Description: extremely fast and lightweight file manager
+ PCMan File Manager is a GTK+ based file manager, featuring:
+ .
+  * Extremly fast and lightweight
+  * Can be started in one second on normal machine
+  * Tabbed browsing (similar to Firefox)
+  * Drag & Drop support
+  * Files can be dragged among tabs
+  * Load large directories in reasonable time
+  * File association support (Default application)
+  * Basic thumbnail support
+  * Bookmarks support
+  * Handles non-UTF-8 encoded filenames correctly
+  * Provide icon view and detailed list view
+  * Standard compliant (Follows FreeDesktop.org)
+  * Clean and user-friendly interface (GTK+ 2)
+  * Support GVFS for auto-mount handling on removable devices
+
+Package: pcmanfm-dbg
+Source: pcmanfm
+Version: 1.2.3-1+raspi
+Architecture: armhf
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Installed-Size: 306
+Depends: pcmanfm (= 1.2.3-1+raspi)
+Homepage: http://pcmanfm.sourceforge.net/
+Priority: extra
+Section: debug
+Filename: pool/main/p/pcmanfm/pcmanfm-dbg_1.2.3-1+raspi_armhf.deb
+Size: 228214
+SHA256: 035a9af086a9cff9e6eea37cdb2c4bdd3a40ffb2aaee5098f469f96f42598c89
+SHA1: 300053fd89772769c8226012839e3c4186308313
+MD5sum: 67d37248c5311ec7a36a87c08900a90e
+Description: extremely fast and lightweight file manager (debug)
+ PCMan File Manager is a GTK+ based file manager. It is a primary file
+ manager for the LXDE but can be used in any other desktop environment.
+ .
+ This package contains the debugging symbols.
 
 Package: pcregrep
 Source: pcre3
@@ -8600,20 +9275,20 @@ Description: Python bindings for the computer vision library
 
 Package: python-picamera
 Source: picamera
-Version: 1.8-1
+Version: 1.9-1
 Architecture: armhf
 Maintainer: Dave Hughes <dave@waveform.org.uk>
-Installed-Size: 444
+Installed-Size: 454
 Depends: python (>= 2.7), python (<< 2.8), libraspberrypi0, python-numpy
 Suggests: python-picamera-docs, python-rpi.gpio
 Homepage: http://pypi.python.org/pypi/picamera
 Priority: extra
 Section: python
-Filename: pool/main/p/picamera/python-picamera_1.8-1_armhf.deb
-Size: 87628
-SHA256: fa9f5a01b999ee21e996191b846c12050c7b05bc2061ce2617c1946411afed30
-SHA1: d5ad0cffbdebaa6e9f0eaf955c4809b7af7cf758
-MD5sum: b94add7df5918bfe341fe8bd2cedafdd
+Filename: pool/main/p/picamera/python-picamera_1.9-1_armhf.deb
+Size: 90646
+SHA256: 6a2fea1f0fea2bd72296ed44ed320ea0477bc95ba06256816c9ab210b25b0644
+SHA1: 5928209fd8561e869385fd5bde23b2e3b53ca359
+MD5sum: 0ac7f75b1109bc4bf61f2bb82e5fc269
 Description: Pure Python interface to the Raspberry Pi's camera module.
  picamera is a library for working with the Raspberry Pi's camera module from
  within Python without having to resort to subprocesses. The majority of the
@@ -8623,19 +9298,19 @@ Description: Pure Python interface to the Raspberry Pi's camera module.
 
 Package: python-picamera-docs
 Source: picamera
-Version: 1.8-1
+Version: 1.9-1
 Architecture: all
 Maintainer: Dave Hughes <dave@waveform.org.uk>
-Installed-Size: 2472
+Installed-Size: 2493
 Depends: libjs-sphinxdoc (>= 1.0)
 Homepage: http://pypi.python.org/pypi/picamera
 Priority: extra
 Section: doc
-Filename: pool/main/p/picamera/python-picamera-docs_1.8-1_all.deb
-Size: 1200748
-SHA256: c0ce5e50d305a00466c63d5ec0c45ad9698122e4a2359ca5fc5a7519e8b32031
-SHA1: a6682956879f149642039d9e4d553da5c2e9d920
-MD5sum: fb6eabcdc8708a0cdf39baa6577b4d44
+Filename: pool/main/p/picamera/python-picamera-docs_1.9-1_all.deb
+Size: 1207588
+SHA256: 251858b6d9b0c48f53215f6873935252372f31fc0b65ce1f50fccfc910c23e70
+SHA1: b14d1293f3efc1f7a3dd5beb0905b4d3ece5d723
+MD5sum: 974a868cb606577d2b674e0e204e035b
 Description: Documentation for the Python interface to the RPi's camera module.
  picamera is a library for working with the Raspberry Pi's camera module from
  within Python without having to resort to subprocesses. The majority of the
@@ -8663,18 +9338,18 @@ Description: The PiFace Control and Display Python module.
 
 Package: python-pifacecommon
 Source: pifacecommon
-Version: 4.0.0-1
+Version: 4.1.2-1
 Architecture: all
 Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
-Installed-Size: 579
+Installed-Size: 582
 Depends: python (>= 2.6.6-7~), python (<< 2.8)
 Priority: optional
 Section: python
-Filename: pool/main/p/pifacecommon/python-pifacecommon_4.0.0-1_all.deb
-Size: 150502
-SHA256: 2fdc2a7d6c5b1e32f201c85cb308e915dab6764890801b40ba02c207aff03915
-SHA1: ba7aec7b054492eb70655cc173285833552b4bc2
-MD5sum: ec39bf721dac76c34b9100d890ab158f
+Filename: pool/main/p/pifacecommon/python-pifacecommon_4.1.2-1_all.deb
+Size: 148078
+SHA256: 07c443fc08e612973e6bda307b1d3c7c0d974d18b289c0139c1d9fae7f3e2053
+SHA1: 780e97dc12b51508d9b5bff137eeb69520eb018b
+MD5sum: b23cbd7c3a3f723e60d944098fba50d9
 Description: The PiFace common functions module.
  Python module for interacting with PiFace products.
  Documentation: http://piface.github.io/pifacecommon/
@@ -8697,21 +9372,39 @@ Description: The PiFace Digital I/O module.
  Python module for interacting with PiFace Digital.
  Documentation: http://piface.github.io/pifacedigitalio/
 
+Package: python-pifacerelayplus
+Source: pifacerelayplus
+Version: 0.2.1-1
+Architecture: all
+Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
+Installed-Size: 1099
+Depends: python (>= 2.6.6-7~), python (<< 2.8), python-pifacecommon (>= 4.0.0), python-pifacecommon (<< 5.0.0)
+Priority: optional
+Section: python
+Filename: pool/main/p/pifacerelayplus/python-pifacerelayplus_0.2.1-1_all.deb
+Size: 430770
+SHA256: 17a65e814c960f61232cc1717ebc96419208f58b4a02a71ab19bfdca19352200
+SHA1: dbbc7e891ee0e3ae6da0a47a5666fb04ef3da251
+MD5sum: a6402f0947bc03af95a6226396fcb223
+Description: The PiFace Relay Plus module.
+ Python module for interacting with PiFace Relay Plus.
+ Documentation: http://piface.github.io/pifacerelayplus/
+
 Package: python-rpi.gpio
 Source: rpi.gpio
-Version: 0.5.6-1
+Version: 0.5.11-1
 Architecture: armhf
 Maintainer: Ben Croston <ben@croston.org>
-Installed-Size: 160
+Installed-Size: 174
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), python (>= 2.6.6-7~), python (<< 2.8)
 Homepage: http://sourceforge.net/projects/raspberry-gpio-python/
 Priority: optional
 Section: python
-Filename: pool/main/r/rpi.gpio/python-rpi.gpio_0.5.6-1_armhf.deb
-Size: 39048
-SHA256: a42a2532b0733e1e80eb86210563029014a57d8d69c7a25941f59dc4eafb455d
-SHA1: 1d0928e2847ece1b337cb660d9e85b9c3131f0f4
-MD5sum: f765abd90335bb141a1cf76903e8d9e3
+Filename: pool/main/r/rpi.gpio/python-rpi.gpio_0.5.11-1_armhf.deb
+Size: 45508
+SHA256: b8e69b7eead05797378628b814f36e2af788a1abfaf32f1a175233766d3bea20
+SHA1: fea86e3a5aebde912066c9d42039ff11a4b42a62
+MD5sum: 074cbe6da329fec1f4a4993319987285
 Description: Python GPIO module for Raspberry Pi
  This is the RPi.GPIO Python module, for supporting GPIO on a
  Raspberry Pi
@@ -8917,20 +9610,20 @@ Description: The Microstack node functions module.
 
 Package: python3-picamera
 Source: picamera
-Version: 1.8-1
+Version: 1.9-1
 Architecture: armhf
 Maintainer: Dave Hughes <dave@waveform.org.uk>
-Installed-Size: 431
+Installed-Size: 440
 Depends: python3 (>= 3.2.3-3~), libraspberrypi0, python3-numpy
 Suggests: python-picamera-docs, python3-rpi.gpio
 Homepage: http://pypi.python.org/pypi/picamera
 Priority: extra
 Section: python
-Filename: pool/main/p/picamera/python3-picamera_1.8-1_armhf.deb
-Size: 87612
-SHA256: eccf239a772dc779017fa67360e48a84ea3151792e480a26c5f5483425385071
-SHA1: 393f5d3e22e30bb4b9502cd76be517f3c0c32860
-MD5sum: ba32847076e02caeaa7db346d6cebbe7
+Filename: pool/main/p/picamera/python3-picamera_1.9-1_armhf.deb
+Size: 90050
+SHA256: ad7ee2987d62d334288ebf7176d62c9fbf94551b3b09d1bc93409018524deacc
+SHA1: 443f2e354382012554e79006487aad8903b081b8
+MD5sum: 7a16ba965721af0e15908b70ffded7a7
 Description: Pure Python interface to the Raspberry Pi's camera module.
  picamera is a library for working with the Raspberry Pi's camera module from
  within Python without having to resort to subprocesses. The majority of the
@@ -8975,18 +9668,18 @@ Description: The PiFace Control and Display emulator.
 
 Package: python3-pifacecommon
 Source: pifacecommon
-Version: 4.0.0-1
+Version: 4.1.2-1
 Architecture: all
 Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
-Installed-Size: 558
+Installed-Size: 561
 Depends: python3 (>= 3.2.3-3~)
 Priority: optional
 Section: python
-Filename: pool/main/p/pifacecommon/python3-pifacecommon_4.0.0-1_all.deb
-Size: 149606
-SHA256: eb32745ebf94bc6cd8f0e6d76f5731314b80477bbb42cc61df464e2816fc5280
-SHA1: cb0716245c3cd83d18d9bc3326f02be3246a40ce
-MD5sum: 9f65df54dd8a214d10008b25c7f281af
+Filename: pool/main/p/pifacecommon/python3-pifacecommon_4.1.2-1_all.deb
+Size: 148074
+SHA256: f7e5a673e72d77776b1207696e1171ea271999082ee4cddf2f30fe73c41b84c2
+SHA1: fd5143d09696a47084f8353d647e670e5cc96998
+MD5sum: 34b9a5fe504bd19a27dea1659f308b95
 Description: The PiFace common functions module.
  Python 3 module for interacting with PiFace products.
  Documentation: http://piface.github.io/pifacecommon/
@@ -9044,21 +9737,66 @@ Description: The PiFace Digital I/O module.
  Python 3 module for interacting with PiFace Digital.
  Documentation: http://piface.github.io/pifacedigitalio/
 
+Package: python3-pifacerelayplus
+Source: pifacerelayplus
+Version: 0.2.1-1
+Architecture: all
+Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
+Installed-Size: 1078
+Depends: python3 (>= 3.2.3-3~), python3-pifacecommon (>= 4.0.0), python3-pifacecommon (<< 5.0.0)
+Priority: optional
+Section: python
+Filename: pool/main/p/pifacerelayplus/python3-pifacerelayplus_0.2.1-1_all.deb
+Size: 429138
+SHA256: 9708d018b504fec622c735b3e45eb4d8a5f939e7c93473d50a22dc48bad7ac97
+SHA1: 003acf9185f980fd0ecf3db5aa6a63278bcef45a
+MD5sum: 5227a6d4ebf5159f3d5bb241f1701030
+Description: The PiFace Relay Plus module.
+ Python 3 module for interacting with PiFace Relay Plus.
+ Documentation: http://piface.github.io/pifacerelayplus/
+
+Package: python3-pygame
+Source: pygame
+Version: 1.9.2~pre~r3348-2
+Architecture: armhf
+Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
+Installed-Size: 5777
+Depends: fonts-freefont-ttf, python3-numpy (>= 1:1.6.1), python3-numpy-abi9, python3 (>= 3.2.3-3~), python3 (<< 3.3), libc6 (>= 2.13-28), libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.4.0), libjpeg8 (>= 8c), libpng12-0 (>= 1.2.13-4), libportmidi0, libsdl-image1.2 (>= 1.2.10), libsdl-mixer1.2, libsdl-ttf2.0-0, libsdl1.2debian (>= 1.2.11), libx11-6, zlib1g (>= 1:1.1.4)
+Suggests: timidity
+Homepage: http://www.pygame.org/
+Priority: optional
+Section: python
+Filename: pool/main/p/pygame/python3-pygame_1.9.2~pre~r3348-2_armhf.deb
+Size: 2504838
+SHA256: 794a34bcbb8611072f2fcce4006abf109fe11fbd2afef857ee6f978ea9cb26b6
+SHA1: cf2b8a485480a8043912ac5c29a7cd48666cefaa
+MD5sum: 8d10504ab5ab9a0ba5b028f80cab9aa3
+Description: SDL bindings for games development in Python (Python 3)
+ A multimedia development kit for Python. Pygame provides modules for you
+ to access the video display, play sounds, track time, read the mouse and
+ joystick, control the CD player, render true type fonts and more. It does
+ this using mainly the cross-platform SDL library, a lightweight wrapper
+ to OS-specific APIs.
+ .
+ This package also includes Pygame's API documentation and examples.
+ .
+ This is the Python 3 version of the package.
+
 Package: python3-rpi.gpio
 Source: rpi.gpio
-Version: 0.5.6-1
+Version: 0.5.11-1
 Architecture: armhf
 Maintainer: Ben Croston <ben@croston.org>
-Installed-Size: 89
+Installed-Size: 95
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), python3 (>= 3.2.3-3~), python3 (<< 3.3)
 Homepage: http://sourceforge.net/projects/raspberry-gpio-python/
 Priority: optional
 Section: python
-Filename: pool/main/r/rpi.gpio/python3-rpi.gpio_0.5.6-1_armhf.deb
-Size: 23162
-SHA256: 8701ba9852f74df2d150304d84b27d25a65730ba95c6f74951b7d5822e4f021d
-SHA1: 024365df633d749008b658971cf87686f120afce
-MD5sum: 87054f20d357ca7193ff780db2287f13
+Filename: pool/main/r/rpi.gpio/python3-rpi.gpio_0.5.11-1_armhf.deb
+Size: 26714
+SHA256: 615fe7ce819e991e0f202b901b23c9839f2a19095374e8e289a804bc37e8ae0f
+SHA1: 8a336971a040408546d89028241eee6fcf83fc19
+MD5sum: 2d8dfaaa3b32ec3e0b1c6cec863e9562
 Description: Python 3 GPIO module for Raspberry Pi
  This is the RPi.GPIO Python 3 module, for supporting GPIO on a
  Raspberry Pi
@@ -9109,52 +9847,67 @@ Description: Graphical Qt v4l2 control panel
  interface exposed device controls.
 
 Package: raspberrypi-artwork
-Version: 20120715
+Version: 20141115
 Architecture: all
 Maintainer: Alex Bradbury <asb@asbradbury.org>
-Installed-Size: 92
+Installed-Size: 105
 Homepage: https://github.com/asb/raspberrypi-artwork
 Priority: extra
 Section: x11
-Filename: pool/main/r/raspberrypi-artwork/raspberrypi-artwork_20120715_all.deb
-Size: 53810
-SHA256: 92193ac86299907151bc766ee1769039c2ddd235d8bebfdb95f88daed41b0a07
-SHA1: e0dae21a2d3ec14105bf7533416ac26857885d71
-MD5sum: 4d56504253abe029dd322d44a78a4a0b
+Filename: pool/main/r/raspberrypi-artwork/raspberrypi-artwork_20141115_all.deb
+Size: 75042
+SHA256: 78160794a9fa79ec134ae16354d43b78baf9a524de50eab773486251bb36aaf4
+SHA1: 2d0b541955a085c3fdbb17fff315daa7fbf41c36
+MD5sum: 80089124dd0a50625a85d6c673ba635b
 Description: Copy of the Raspberry Pi logo
 
 Package: raspberrypi-bootloader
 Source: raspberrypi-firmware
-Version: 1.20140908-1
+Version: 1.20150214-1
 Architecture: armhf
 Maintainer: Alex Bradbury <asb@asbradbury.org>
-Installed-Size: 44297
+Installed-Size: 98117
 Homepage: https://github.com/raspberrypi/firmware
 Priority: extra
 Section: admin
-Filename: pool/main/r/raspberrypi-firmware/raspberrypi-bootloader_1.20140908-1_armhf.deb
-Size: 19411008
-SHA256: 23c77a7f05b2680a6527c55cf83b779720083607ed373cd75e94f1a0df3f4091
-SHA1: 5deaac583540f3c7f17abe7c1efafe53a56e10e6
-MD5sum: faadd4e92fba256ab2e68d29c754acfc
+Filename: pool/main/r/raspberrypi-firmware/raspberrypi-bootloader_1.20150214-1_armhf.deb
+Size: 40647078
+SHA256: f9ef98a8f470cf59bf29cdcd76f2f12432d74926852f2c5c9ce20d6901d3241f
+SHA1: 33d11250cdd2e5525ff92b43a993f52248a76b68
+MD5sum: 1f756fb7eb3e4836db946d7d5d99c9d7
 Description: Raspberry Pi bootloader
  This package contains the Raspberry Pi bootloader (plus, temporarily, a
  kernel).
 
+Package: raspberrypi-ui-mods
+Version: 1.0-7
+Architecture: armhf
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Installed-Size: 222
+Depends: lxpanel (>= 0.7.1), pcmanfm (>= 1.2.3), openbox, x11-xserver-utils, fonts-roboto, zenity
+Priority: extra
+Section: unknown
+Filename: pool/main/r/raspberrypi-ui-mods/raspberrypi-ui-mods_1.0-7_armhf.deb
+Size: 36584
+SHA256: 3afc8dae9cd2b66bde3dc7358ad7d767576d5c2adf00d55906feafbcb37c51ca
+SHA1: 050533285091fee6a81fc2fd3b0af7b0c96d0d10
+MD5sum: 0acfd287dec50a98d011dcf991fb7d85
+Description: Config to customise the LXDE UI for the Raspberry Pi
+
 Package: raspi-config
-Version: 20140902-1
+Version: 20150131-1
 Architecture: all
 Maintainer: Alex Bradbury <asb@asbradbury.org>
-Installed-Size: 58
+Installed-Size: 70
 Depends: whiptail, parted, lua5.1, triggerhappy
 Homepage: https://github.com/asb/raspi-config
 Priority: extra
 Section: unknown
-Filename: pool/main/r/raspi-config/raspi-config_20140902-1_all.deb
-Size: 11546
-SHA256: d5dfa19f79e7b5f5d5ff4fc4f24564ece6d304b5613fedb963c2961ba8296995
-SHA1: 5e28d44d8ac93a3223e27f7e1d0f4261a475bb69
-MD5sum: 1eb38ea54cecb674fab11da0be24eac2
+Filename: pool/main/r/raspi-config/raspi-config_20150131-1_all.deb
+Size: 12892
+SHA256: 137ff1d52a6ce261fec06ca165728931d12a05e600b62e0b3cc006339c20a1b8
+SHA1: b1dac6b920336d0f41c8fefbb5a9b578f34d68e6
+MD5sum: 9bb43b2d9ccf7d6516bf3329e925cda0
 Description: Simple configuration for Raspberry Pi
 
 Package: raspi-copies-and-fills
@@ -9189,6 +9942,23 @@ SHA256: 4bc29751f21331bd188cf15dbba992c384b03a11fbc565b7d04ea5bd4d13d3fa
 SHA1: 10696c650f0aa05e142ba688a5011f1f779ebdb7
 MD5sum: 066d5f0117735a7908a6b780e3edb4b7
 Description: Raspberry Pi firmware updating tool
+
+Package: rtb
+Version: 2.24-1
+Architecture: armhf
+Depends: libc6, libsdl1.2debian, libsdl-image1.2, libsdl-mixer1.2, libsdl-sound1.2, libusb-1.0-0, wiringpi
+Maintainer: Gordon Henderson <projects@drogon.net>
+Priority: optional
+Section: interpreters
+Filename: pool/main/r/rtb/rtb_2.24-1_armhf.deb
+Size: 153864
+SHA256: f99fad0ac804fcf69beae5da2192f0ad963f4c1a6f777ea1099aa541699af10f
+SHA1: 843d4ab14f91a40ad729097eb274b112a8b0ab6e
+MD5sum: e5437c456d8bb44c40b7587ee1e87a45
+Description: Return to Basics
+ Return to Basics is a new programming language based on the BASICs of
+ the 1970-1980s designed for fun and education to help teach the basics of
+ computer programming in a modern structured fashion.
 
 Package: sbc-dbg
 Source: sbc
@@ -9303,19 +10073,19 @@ Description: Digital logic circuit design and simulation package.
  also make use of RAM/ROM chips which can load and save to files.
 
 Package: sonic-pi
-Version: 2.0.0-2
+Version: 2.4.0-1
 Architecture: armhf
 Maintainer: Alex Bradbury <asb@asbradbury.org>
-Installed-Size: 37419
-Depends: supercollider, ruby1.9.1, libqscintilla2-8, jackd2
+Installed-Size: 52512
+Depends: supercollider, ruby1.9.1, libqscintilla2-8, libqt4-network, jackd2
 Homepage: http://www.cl.cam.ac.uk/projects/raspberrypi/sonicpi/
 Priority: extra
 Section: unknown
-Filename: pool/main/s/sonic-pi/sonic-pi_2.0.0-2_armhf.deb
-Size: 25774586
-SHA256: b59fd46d1a29a64e04682899cb5637c93d768ab095d4f7ba48b4e5ab61908ed0
-SHA1: 2a2f3618db6e0d6e078a9261aa9794c0c94013e6
-MD5sum: 74c4cef67983c3a6ae9b10caa62c1707
+Filename: pool/main/s/sonic-pi/sonic-pi_2.4.0-1_armhf.deb
+Size: 33041416
+SHA256: 5808c68450fd4ed40b234206603fc7a114ff905704fd767abe094da2d0c9ad0c
+SHA1: 21b013b6181d922fc75dd3fc638c42af91b4fc20
+MD5sum: a7a2912d667a2cf7e4f904ec4ba516ea
 Description: Sonic Pi is a music programming environment aimed at new programmers
 
 Package: squeak-vm
@@ -9512,21 +10282,21 @@ Description: C# like language for the GObject system - vapi files
  common libraries available for vala development.
 
 Package: wolfram-engine
-Version: 10.0.0+2014080602
+Version: 10.0.2+2015020304
 Architecture: armhf
-Installed-Size: 452409
+Installed-Size: 448821
 Maintainer: Wolfram Research, Inc. <raspberrypi@wolfram.com>
 Homepage: http://wolfram.com/raspi
 Pre-Depends: debconf (>=0.5) | debconf-2.0
-Depends: java7-runtime | java8-runtime, libatlas3-base (>= 3.8.4-9), libpango1.0-0 (>= 1.30.0-1), libcairo2 (>= 1.12.2-3), libglib2.0-0 (>= 2.33.12+really2.32.4-5), libffi5 (>= 3.0.10-3+b3), libpixman-1-0 (>= 0.26.0-4+deb7u1), zlib1g (>= 1:1.2.7.dfsg-13), libfontconfig1 (>= 2.9.0-7.1), libfreetype6 (>= 2.4.9-1.1), libpng12-0 (>= 1.2.49-1), libexpat1 (>= 2.1.0-1+deb7u1), libuuid1 (>= 2.20.1-5.3) 
+Depends: java7-runtime | java8-runtime, libatlas3-base (>= 3.8.4-9), libpango1.0-0 (>= 1.30.0-1), libcairo2 (>= 1.12.2-3), libglib2.0-0 (>= 2.33.12+really2.32.4-5), libffi5 (>= 3.0.10-3+b3), libpixman-1-0 (>= 0.26.0-4+deb7u1), zlib1g (>= 1:1.2.7.dfsg-13), libfontconfig1 (>= 2.9.0-7.1), libfreetype6 (>= 2.4.9-1.1), libpng12-0 (>= 1.2.49-1), libexpat1 (>= 2.1.0-1+deb7u1), libuuid1 (>= 2.20.1-5.3), libportaudio2, libharfbuzz0a (>= 0.9.19-1co2rpi2) 
 Recommends: oracle-java7-jdk | oracle-java8-jdk
 Priority: optional
 Section: non-free/devel
-Filename: pool/main/w/wolfram-engine/wolfram-engine_10.0.0+2014080602_armhf.deb
-Size: 232966280
-SHA256: 2c966888bf59158508f998e223266f491e158fe96bbd0e74ac7044e41f2079cf
-SHA1: 77d98f6f0644486191670b9f82d4a85a57aff0a2
-MD5sum: f0a9af2c6e73e5ee87ea41c1fb869132
+Filename: pool/main/w/wolfram-engine/wolfram-engine_10.0.2+2015020304_armhf.deb
+Size: 229152564
+SHA256: fc932e6a9aef71b6e77024e85db9a690561f441abca95b67e20e114dbbc00d23
+SHA1: 4fade1cc751d533dab99111c2b56cc7c93c55f3f
+MD5sum: 7b4b0c99e12ad8730b288b37116be85f
 Description: Mathematica® and the Wolfram Language
  Mathematica is the world's ultimate application for computations and the only development platform fully integrating computation into complete workflows, moving you seamlessly from initial ideas all the way to deployed individual or enterprise solutions.
  .

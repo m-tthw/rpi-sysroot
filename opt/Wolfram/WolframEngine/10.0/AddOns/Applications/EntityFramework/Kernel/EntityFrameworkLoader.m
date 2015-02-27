@@ -12,5 +12,6 @@ Quiet[
    PacletManager`Package`getPacletWithProgress["EntityFramework", "EntityFramework", "IsDataPaclet" -> True,
                           "AllowUpdate" -> TrueQ[PacletManager`$AllowDataUpdates], "UpdateSites" -> False]
 ]
-
+AbortProtect[
 Get["EntityFramework`"]
+]

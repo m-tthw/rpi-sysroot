@@ -6,7 +6,7 @@
 
 (* :Copyright: © 2006 by Wolfram Research, Inc. *)
 
-(* :Package Version: 1.0 ($Id: LocalKernels.m,v 1.46 2014/05/06 15:54:38 maeder Exp $) *)
+(* :Package Version: 1.0 ($Id: LocalKernels.m,v 1.49 2014/12/11 07:35:14 maeder Exp $) *)
 
 (* :Mathematica Version: 7 *)
 
@@ -69,7 +69,7 @@ localKernelObject[subContext] = Context[]
 Begin["`Private`"]
  
 `$PackageVersion = 0.9;
-`$CVSRevision = StringReplace["$Revision: 1.46 $", {"$"->"", " "->"", "Revision:"->""}]
+`$CVSRevision = StringReplace["$Revision: 1.49 $", {"$"->"", " "->"", "Revision:"->""}]
  
 
 Needs["ResourceLocator`"]
@@ -213,13 +213,14 @@ config[nameConfig] = localKernelObject[subName]
 
 (* new style *)
 
-{auto=True, uselic=True, nconf=$ProcessorCount, lowerprio=True, mk}
+{auto=True, uselic=True, nconf=$ProcessorCount, lowerprio=True, uselimit=True, limit=16}
 
-confDefaults = {"Automatic"->True, "UseLicense"->True, "Manual"->0, "LowerPriority"->True}
+confDefaults = {"Automatic"->True, "UseLicense"->True, "Manual"->0, "LowerPriority"->True, "UseLimit"->True, "Limit"->16}
 
 config[setConfig] := config[setConfig, {}]
 config[setConfig, r:{___Rule}] := (
-	{auto, uselic, nconf, lowerprio} = {"Automatic", "UseLicense", "Manual", "LowerPriority"} /. r /. confDefaults;
+	{auto, uselic, nconf, lowerprio, uselimit, limit} =
+		{"Automatic", "UseLicense", "Manual", "LowerPriority", "UseLimit", "Limit"} /. r /. confDefaults;
 )
 
 (* safety net *)
@@ -233,10 +234,16 @@ config[getConfig] := Module[{rules={}},
 	If[uselic=!=("UseLicense" /. confDefaults), AppendTo[rules, "UseLicense"->uselic]];
 	If[nconf=!=("Manual" /. confDefaults), AppendTo[rules, "Manual"->nconf]];
 	If[lowerprio=!=("LowerPriority" /. confDefaults), AppendTo[rules, "LowerPriority"->lowerprio]];
+	If[uselimit=!=("UseLimit" /. confDefaults), AppendTo[rules, "UseLimit"->uselimit]];
+	If[limit=!=("Limit" /. confDefaults), AppendTo[rules, "Limit"->limit]];
     rules
 ]
 
-calcAuto[] := If[uselic, Min[$ProcessorCount, $MaxLicenseSubprocesses], $ProcessorCount] /. 1->0
+calcAuto[] := Module[{n=$ProcessorCount},
+	If[uselic, n = Min[n, $MaxLicenseSubprocesses] ];
+	If[uselimit, n = Min[n, limit] ];
+	n /. 1->0
+]
 
 config[useConfig] := Which[
 	auto,		If[calcAuto[]>0, LocalMachine[calcAuto[], LowerPriority->lowerprio], {}],
@@ -249,7 +256,8 @@ config[tabConfig] := Module[{},
 		{Row[{textFunction["LocalKernelsNumber"], Invisible[Checkbox[]], Invisible[RadioButton[]]}], SpanFromLeft},
 		{RadioButton[Dynamic[auto], True], Dynamic[StringForm[textFunction["LocalKernelsAutomatic"], calcAuto[]]]},
 		{Null, Dynamic[StringForm[textFunction["LocalKernelsProcessorCores"], $ProcessorCount]]},
-		{Null, Row[{Checkbox[Dynamic[uselic]], Dynamic[StringForm[textFunction["LocalKernelsLicenseAvailability"], $MaxLicenseSubprocesses]]}]},
+		{Null, Row[{Checkbox[Dynamic[uselic]], " ", Dynamic[StringForm[textFunction["LocalKernelsLicenseAvailability"], $MaxLicenseSubprocesses]]}]},
+		{Null, Row[{Checkbox[Dynamic[uselimit]], " ", textFunction["LocalKernelsUseLimit"], Spinner[Dynamic[limit], Enabled->Dynamic[auto]]}]},
 		{Null, Dynamic[If[$ProcessorCount==1,Pane[textFunction["LocalKernelsLicenseSingle"]],""]]},
 		{RadioButton[Dynamic[auto], False], Row[{textFunction["LocalKernelsManual"], " ", Spinner[Dynamic[nconf], Enabled->Dynamic[!auto]]}], SpanFromLeft},
 		{Checkbox[Dynamic[lowerprio]], textFunction["LowerPriority"]}
@@ -266,9 +274,9 @@ dqs[s_String] := "\"" <> s <> "\"" (* double quote string *)
 sqs[s_String] := "'" <> s <> "'" (* single quote string *)
 
 If[ !ValueQ[$mathkernel], $mathkernel = Which[
-	$OperatingSystem==="Windows", dqs[ToFileName[{$InstallationDirectory}, "MathKernel"]] <> stdargs <> " -mathlink -noicon",
-	$OperatingSystem==="MacOSX", sqs[ToFileName[{$InstallationDirectory, "Contents", "MacOS"}, "MathKernel"]] <> stdargs <> " -mathlink",
-	True, sf[ToFileName[{$InstallationDirectory, "Executables"}, "math"]] <> stdargs <> " -mathlink"
+	$OperatingSystem==="Windows", dqs[ToFileName[{$InstallationDirectory}, "WolframKernel"]] <> stdargs <> " -wstp -noicon",
+	$OperatingSystem==="MacOSX", sqs[ToFileName[{$InstallationDirectory, "MacOS"}, "WolframKernel"]] <> stdargs <> " -wstp",
+	True, sf[ToFileName[{$InstallationDirectory, "Executables"}, "wolfram"]] <> stdargs <> " -wstp"
 ]]
 
 (* format of kernels *)

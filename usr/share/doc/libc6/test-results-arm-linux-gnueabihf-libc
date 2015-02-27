@@ -10,4 +10,3 @@ test-double.out, Error 1
 test-fenv.out, Error 1
 test-float.out, Error 1
 test-idouble.out, Error 1
-tst-cpuclock2.out, Error 1

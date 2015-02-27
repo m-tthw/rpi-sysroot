@@ -6,8 +6,8 @@ WebServices`Information`$Version = "Web Services Version 2.1.0"
 WebServices`Information`$VersionNumber = 2.1
 WebServices`Information`$ReleaseNumber = 0
 
-WebServices`Information`$CreationID = If[SyntaxQ["42"], ToExpression["42"], 0]
-WebServices`Information`$CreationDate = If[SyntaxQ["{2014, 08, 05, 19, 30, 08}"], ToExpression["{2014, 08, 05, 19, 30, 08}"], {0,0,0,0,0,0}]
+WebServices`Information`$CreationID = If[SyntaxQ["218"], ToExpression["218"], 0]
+WebServices`Information`$CreationDate = If[SyntaxQ["{2015, 02, 02, 18, 20, 17}"], ToExpression["{2015, 02, 02, 18, 20, 17}"], {0,0,0,0,0,0}]
 
 
 (*** Functions ***)

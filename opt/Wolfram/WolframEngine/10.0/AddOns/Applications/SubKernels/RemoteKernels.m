@@ -6,7 +6,7 @@
 
 (* :Copyright: © 2008 by Wolfram Research, Inc. *)
 
-(* :Package Version: 1.0 ($Id: RemoteKernels.m,v 1.44 2013/10/26 17:29:22 maeder Exp $) *)
+(* :Package Version: 1.0 ($Id: RemoteKernels.m,v 1.45 2014/12/11 07:35:14 maeder Exp $) *)
 
 (* :Mathematica Version: 6 *)
 
@@ -82,7 +82,7 @@ remoteKernelObject[subContext] = Context[]
 Begin["`Private`"]
  
 `$PackageVersion = 0.9;
-`$CVSRevision = StringReplace["$Revision: 1.44 $", {"$"->"", " "->"", "Revision:"->""}]
+`$CVSRevision = StringReplace["$Revision: 1.45 $", {"$"->"", " "->"", "Revision:"->""}]
  
 Needs["ResourceLocator`"]
 
@@ -419,8 +419,8 @@ for ConnectionType->LinkCreate only:
 *)
 
 `defaultRemoteCommand = Switch[$OperatingSystem,
-    "Windows", "rsh `1` -n -l `3` \"math -mathlink -linkmode Connect `4` -linkname `2`" <> stdargs <> " >& /dev/null &\"",
-    _,		   "ssh -x -f -l `3` `1` math -mathlink -linkmode Connect `4` -linkname '`2`'" <> stdargs
+    "Windows", "rsh `1` -n -l `3` \"wolfram -wstp -linkmode Connect `4` -linkname `2`" <> stdargs <> " >& /dev/null &\"",
+    _,		   "ssh -x -f -l `3` `1` wolfram -wstp -linkmode Connect `4` -linkname '`2`'" <> stdargs
 ]
 If[ !ValueQ[$RemoteCommand], $RemoteCommand = defaultRemoteCommand]
 

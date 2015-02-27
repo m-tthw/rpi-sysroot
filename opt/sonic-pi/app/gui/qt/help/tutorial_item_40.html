@@ -1,0 +1,71 @@
+<font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+
+
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Live Loops</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">Ok, so this section of the tutorial is the real gem. If you only read
+one section, it should be this one. If you read the previous section
+on Live Coding Fundamentals, <code style="font-size:15px; color:deeppink; background-color:white">live_loop</code> is a simple way of doing
+exactly that but without having to write so much.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">If you didn’t read the previous section, <code style="font-size:15px; color:deeppink; background-color:white">live_loop</code> is the best way to
+jam with Sonic Pi.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Let’s play. Write the following in a new workspace:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">live_loop :foo do
+  play 60
+  sleep 1
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now press the Run button. You hear a basic beep every second. Nothing
+fun there. However, don’t press Stop just yet. Change the <code style="font-size:15px; color:deeppink; background-color:white">60</code> to <code style="font-size:15px; color:deeppink; background-color:white">65</code>
+and press Run again.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Woah! It changed <em style="font-size:15px;color:darkorange;">automatically</em> without missing a beat. This is live coding.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Why not change it to be more bass like? Just update your code whilst it’s playing:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">live_loop :foo do
+  use_synth :prophet
+  play :e1, release: 8
+  sleep 8
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Then hit Run.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Let’s make the cutoff move around:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">live_loop :foo do
+  use_synth :prophet
+  play :e1, release: 8, cutoff: rrand(70, 130)
+  sleep 8
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Hit Run again.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Add some drums:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">live_loop :foo do
+  sample :loop_garzul
+  use_synth :prophet
+  play :e1, release: 8, cutoff: rrand(70, 130)
+  sleep 8
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Change the note from <code style="font-size:15px; color:deeppink; background-color:white">e1</code> to <code style="font-size:15px; color:deeppink; background-color:white">c1</code>:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">live_loop :foo do
+  sample :loop_garzul
+  use_synth :prophet
+  play :c1, release: 8, cutoff: rrand(70, 130)
+  sleep 8
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now stop listening to me and play around yourself! Have fun!</p>
+</font>

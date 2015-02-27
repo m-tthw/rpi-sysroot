@@ -154,26 +154,6 @@ loginDialog[username_String] := With[{messagePane = errorMessagePane[CurrentValu
        CellMargins -> {{-1, -5}, {0, -2}},
        CellFrameMargins -> 0
        ],
-      StyleDefinitions -> 
-		Notebook[{
-			Cell[StyleData[StyleDefinitions -> "Dialog.nb"]],
-			Cell[StyleData["CloudConnectionErrorLink"],
-				ButtonBoxOptions -> {
-					Evaluator -> "System",
-					ButtonFunction :> (FE`hyperlinkCoded[
-						"http://www.wolfram.com/support/contact/email/", 
-						"source=signinscreen"]),
-					Appearance -> None},
-				FontColor -> RGBColor[0, 0, 1]],
-			Cell[StyleData["DesktopAccessErrorLink"],
-				ButtonBoxOptions -> {
-					Evaluator -> "System",
-					ButtonFunction :> (FE`hyperlinkCoded[
-						"https://www.wolframcloud.com/app/account/", 
-						"source=signinscreen"]),
-					Appearance -> None},
-				FontColor -> RGBColor[0, 0, 1]]
-		}, Visible -> False],
       WindowTitle -> FEPrivate`FrontEndResource["CloudLoginDialog", "WindowTitle"](*"Enter Login Credentials"*),
       WindowSize -> {520, FitAll}, 
       Modal -> True,
@@ -250,14 +230,17 @@ CloudDialogImage["JoinNowButton","Pressed"] = imgr["JoinNowButton-Pressed.9.png"
 errorMessagePane[showMessage_, errorMessage_] := PaneSelector[
 	{
 		True -> Pane[
-				Style[errorMessage, LineIndent -> 0, RGBColor[0.9, 0.55, 0.32]], {Full, Full}, 
-				Alignment -> {Left, Center}
-			]
+				  Style[errorMessage, LineIndent -> 0, RGBColor[0.9, 0.55, 0.32], LineSpacing -> {1, 0}], {Full, Full}, 
+				  Alignment -> {Left, Center},
+                  Scrollbars -> {False, Automatic},
+                  AppearanceElements -> {}             
+			    ]
 	},
 	TrueQ[showMessage],
-	ImageSize -> {220, 50},
-	ImageMargins -> {{0, 0}, {5, 0}}
+	ImageSize -> {Full(*220*), 50},
+	ImageMargins -> {{0, 10}, {5, 0}}
 ]
+
 
 errorMessagePane[errorCode_] := With[{errorMessage = TextForm[tr["WolframCloudLoginErrors", errorCode]]}, 
 	errorMessagePane[CurrentValue["WolframCloudUILogin"] && errorCode != 0, errorMessage]

@@ -18,7 +18,8 @@ PacletManager`Package`loadWolframLanguageCode[
 		"System`FormFunction",
 		"System`FormLayoutFunction", 
 		"System`AppearanceRules", 
-		"System`APIFunction"
+		"System`APIFunction",
+		"System`AutoSubmitting"
 	},
-	"HiddenImports" -> {"GeneralUtilities`"}
+	"HiddenImports" -> {"GeneralUtilities`", "Interpreter`"}
 ]

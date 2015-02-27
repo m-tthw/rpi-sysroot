@@ -80,9 +80,9 @@ sub header_files {
 #
 ## Package name      : perl5
 ## Source directory  : .
-## Configuration time: Sat Mar 22 13:34:01 UTC 2014
+## Configuration time: Sun Jan 11 16:51:47 UTC 2015
 ## Configured by     : Debian Project
-## Target system     : linux plugwash.raspbian.lan 3.2.0-4-mx5 #1 debian 3.2.39-2 armv7l gnulinux 
+## Target system     : linux odroidu2 3.0.90 #1 smp mon sep 1 00:28:47 pdt 2014 armv7l gnulinux 
 #
 #: Configure command line arguments.
 #
@@ -206,7 +206,7 @@ ccsymbols=''
 ccversion=''
 cf_by='Debian Project'
 cf_email='perl@packages.debian.org'
-cf_time='Sat Mar 22 13:34:01 UTC 2014'
+cf_time='Sun Jan 11 16:51:47 UTC 2015'
 charbits='8'
 charsize='1'
 chgrp=''
@@ -1007,7 +1007,7 @@ mv=''
 myarchname='armv7l-linux'
 mydomain=''
 myhostname='localhost'
-myuname='linux plugwash.raspbian.lan 3.2.0-4-mx5 #1 debian 3.2.39-2 armv7l gnulinux '
+myuname='linux odroidu2 3.0.90 #1 smp mon sep 1 00:28:47 pdt 2014 armv7l gnulinux '
 n='-n'
 need_va_copy='undef'
 netdb_hlen_type='size_t'
@@ -1035,7 +1035,7 @@ old_pthread_create_joinable=''
 optimize='-O2 -g'
 orderlib='false'
 osname='linux'
-osvers='3.2.0-4-mx5'
+osvers='3.0.90'
 otherlibdirs=' '
 package='perl5'
 pager='/usr/bin/sensible-pager'

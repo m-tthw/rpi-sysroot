@@ -8,7 +8,8 @@ Paclet[
 	Extensions -> {
 		{
 			"Kernel", 
-			Context -> {"TemplatingLoader`", "Templating`"}, 
+			Context -> {"TemplatingLoader`", "Templating`"},
+			HiddenImport -> True,
 			Symbols -> {
 				"System`CombinerFunction", 
 				"System`InsertionFunction", 
@@ -25,6 +26,7 @@ Paclet[
 				"System`TemplateWith", 
 				"System`XMLTemplate",
 				"System`Pluralize",
+        		"System`Webpage",
 				"System`$HTMLExportRules",
 				"System`$TemplatePath",
 				"Templating`ExportHTML" (* In startup they are using Templating`ExportHTML *)

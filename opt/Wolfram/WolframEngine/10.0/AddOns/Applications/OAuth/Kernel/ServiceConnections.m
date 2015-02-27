@@ -1,7 +1,7 @@
 
 (* ::Package:: *)
 
-(* $Id: ServiceConnections.m,v 1.13 2014/05/19 20:08:03 bobs Exp $ *)
+(* $Id: ServiceConnections.m,v 1.13.2.1 2014/10/13 15:47:23 bobs Exp $ *)
 
 (* :Summary:
 	A framework for authenticating and exchanging data with API services
@@ -83,18 +83,20 @@ ServiceConnect[args___]:=With[{res=Catch[authenticate[args]]},
 	res/;res=!=$Failed
 ]
 
-authenticate[]:=Sort[$oauthservices]
+authenticate[]:=$Services
 authenticate["Services"]:=authenticate[]
 
 authenticate[name_,as_Association]:=authenticate[name, Normal[as]]
 
-authenticate[name_,rest___]:=OAuthClient`oauthauthenticate[name,rest]/;MemberQ[$oauthservices,name]
-authenticate[name_,rest___]:=KeyClient`keyauthenticate[name,rest]/;MemberQ[$keyservices,name]
-authenticate[name_,rest___]:=OtherClient`otherauthenticate[name,rest]/;MemberQ[$otherservices,name]
+authenticate[name_,rest___]:=authenticate0[name,rest]/;MemberQ[$Services,name]
+
+authenticate0[name_,rest___]:=OAuthClient`oauthauthenticate[name,rest]/;MemberQ[$oauthservices,name]
+authenticate0[name_,rest___]:=KeyClient`keyauthenticate[name,rest]/;MemberQ[$keyservices,name]
+authenticate0[name_,rest___]:=OtherClient`otherauthenticate[name,rest]/;MemberQ[$otherservices,name]
 
 authenticate[name_String, rest__]:=OAuthClient`oauthauthenticate[name, rest]/;!FreeQ[{rest},"OAuthVersion"]
 
-authenticate[x_, ___]:=(Message[ServiceConnect::unkn, x];$Failed)
+authenticate[name_,rest___]:=pacletService[name, rest]
 
 authenticate[___]:=$Failed
 
@@ -212,6 +214,65 @@ sendmessage[service_ServiceObject,rest__]:=OtherClient`othersendmessage[getServi
 
 sendmessage[___]:=$Failed
 
+
+
+(******************* pacletService **************************)
+
+pacletService[name_, rest___]:=Block[{paclet=findservicepaclet[name], loaded},
+	If[Head[paclet]=!=Paclet,
+		Return[$Failed]
+	];
+	loaded=loadServicePaclet[paclet];
+	If[TrueQ[loaded],
+		authenticate0[name, rest]
+		,
+		$Failed
+	]
+]
+
+findservicepaclet[name_]:=Block[{fullname=createPacletName[name], local},
+	local=PacletFind[fullname];
+	Switch[Length[local],
+		0,findservicepacletRemote[name,fullname],
+		1,
+		First[local],
+		_,
+		(* Should never be here *)
+		First[local]			
+	]
+]
+
+findservicepacletRemote[name_,fullname_]:=Block[{remote, paclet},
+	remote=PacletFindRemote[fullname];
+	paclet=Switch[Length[remote],
+		0,(Message[ServiceConnect::unkn, name];Return@$Failed),
+		1,
+		First[name],
+		_,
+		(* Should never be here *)
+		First[name]			
+	];
+	If[Head[paclet]===Paclet,
+		paclet,
+		$Failed
+	]
+]
+
+createPacletName[name_]:="ServiceConnection_"<>name
+
+loadServicePaclet[paclet_]:=Block[{location, file},
+	location="Location" /. PacletInformation[paclet];
+	If[location==="location"||!StringQ[location],
+		Return[$Failed]
+	];
+	file=FileNameJoin[{location,"Kernel","load.m"}];
+	If[FileExistsQ[file],
+		If[!ListQ[$Services],Get["OAuth`"]];
+		Get[file];
+		True,
+		$Failed		
+	]
+]
 (****************** Utilities *********************)
 servicesdata[name_,property_]:=OAuthClient`OAuthServicesData[name,property]/;MemberQ[$oauthservices,name]
 servicesdata[name_,property_]:=KeyClient`KeyServicesData[name,property]/;MemberQ[$keyservices,name]

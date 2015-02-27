@@ -1,122 +1,35 @@
 <font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
 
-<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Lists: Chords and Scales</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">In this section we’ll take a look at a datastructure which is very useful - the list. We met it very briefly before in the section on randomisation when we randomly chose from a list of notes to play:</p>
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Sample Parameters: Amp and Pan</span></p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play choose([50, 55, 62])
+<p style="font-size:15px;color:#5e5e5e;">As we saw with synths, we can easily control our sounds with
+parameters. Samples support exactly the same parameterisation
+mechanism. Let’s revisit our friends <code style="font-size:15px; color:deeppink; background-color:white">amp:</code> and <code style="font-size:15px; color:deeppink; background-color:white">pan:</code>.</p>
+
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Amping samples</span></p>
+
+<p style="font-size:15px;color:#5e5e5e;">You can change the amplitude of samples with exactly the same
+approach you used for synths:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :ambi_lunar_land, amp: 0.5
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">In this section we’ll explore using lists to also represent both chords and scales. First let’s recap how we might play a chord. Remember that if we don’t use <code style="font-size:15px; color:deeppink; background-color:white">sleep</code>, sounds all happen at the same time: </p>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Panning samples</span></p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play 52
-play 55
-play 59
+<p style="font-size:15px;color:#5e5e5e;">We’re also able to use the <code style="font-size:15px; color:deeppink; background-color:white">pan:</code> parameter on samples. For example,
+here’s how we’d play the amen break in the left ear and then half way
+through play it again through the right ear:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">sample :loop_amen, pan: -1
+sleep 0.877
+sample :loop_amen, pan: 1
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Let’s look at other ways to represent this code.</p>
+<p style="font-size:15px;color:#5e5e5e;">Note that 0.877 is half the duration of the <code style="font-size:15px; color:deeppink; background-color:white">:loop_amen</code> sample in
+seconds.</p>
 
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Chords</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">One option is to place all the notes in a list: <code style="font-size:15px; color:deeppink; background-color:white">[52, 55, 59]</code>. Our friendly <code style="font-size:15px; color:deeppink; background-color:white">play</code> function is smart enough to know how to play a list of notes. Try it:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play [52, 55, 59]
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Ooh, that’s already nicer to read. Playing a list of notes doesn’t stop you from using any of the parameters as normal:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play [52, 55, 59], amp: 0.3
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Of course, you can also use the traditional note names instead of the MIDI numbers:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play [:E3, :G3, :B3]
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Now those of you lucky enough to have studied some music might recognise that chord as <em style="font-size:15px;color:darkorange;">E Minor</em> played in the 3rd octave. Sonic Pi has built-in support for chord names like this. Try it for yourself:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play chord(:E3, :minor)
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Now, were really getting somewhere. That looks a lot more pretty. So what other chords does Sonic Pi support? Well, a <em style="font-size:15px;color:darkorange;">lot</em>. Try some of these:</p>
-
-<ul style="font-size:15px;color:#5e5e5e;">
-  <li><code style="font-size:15px; color:deeppink; background-color:white">chord(:E3, :m7)</code></li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">chord(:E3, :minor)</code></li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">chord(:E3, :dim7)</code></li>
-  <li><code style="font-size:15px; color:deeppink; background-color:white">chord(:E3, :dom7)</code></li>
-</ul>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Arpeggios</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">We can easily turn chords into arpeggios with the function <code style="font-size:15px; color:deeppink; background-color:white">play_pattern</code>:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play_pattern chord(:E3, :m7)
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Ok, that’s not so fun - it played it really slowly. <code style="font-size:15px; color:deeppink; background-color:white">play_pattern</code> will play each note in the list separated with a call to <code style="font-size:15px; color:deeppink; background-color:white">sleep 1</code> between each call to <code style="font-size:15px; color:deeppink; background-color:white">play</code>. We can use another function <code style="font-size:15px; color:deeppink; background-color:white">play_pattern_timed</code> to specify our own timings and speed things up:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play_pattern_timed chord(:E3, :m7), 0.25
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">We can even pass a list of times which it will treat as a circle of times:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play_pattern_timed chord(:E3, :m13), [0.25, 0.5]
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">This is the equivalent to:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play 52
-sleep 0.25
-play 55
-sleep 0.5
-play 59
-sleep 0.25
-play 62
-sleep 0.5
-play 66
-sleep 0.25
-play 69
-sleep 0.5
-play 73
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Which would you prefer to write?</p>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Scales</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">Finally Sonic Pi also has support for a wide range of scales. How about playing a C3 major scale?</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play_pattern_timed chord(:c3, :major), 0.125, release: 0.1
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">We can even ask for more octaves:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play_pattern_timed scale(:c3, :major, num_octaves: 3), 0.125, release: 0.1
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">How about all the notes in a pentatonic scale?</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">play_pattern_timed scale(:c3, :major_pentatonic, num_octaves: 3), 0.125, release: 0.1
-</code></pre>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Random notes</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">Chords and scales are great ways of constraining the a random choice to something meaningful. Have a play with this example which picks notes from random from the chord E3 minor:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">use_synth :tb303
-loop do
-  play choose(chord(:E3, :minor)), release: 0.3, cutoff: rrand(60, 120)
-  sleep 0.25
-end
-</code></pre>
-
-<p style="font-size:15px;color:#5e5e5e;">Try switching in different chord names and cutoff ranges.</p>
-
-<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Discovering Chords and Scales</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">To find out which scales and chords are supported by Sonic Pi simply click the Lang button on the far left of this tutorial and then choose either chord or scale in the API list. In the information in the main panel, scroll down until you see a long list of chords or scales (depending on which you’re looking at).</p>
-
-<p style="font-size:15px;color:#5e5e5e;">Have fun and remember, there are no mistakes, only opportunities.</p>
-
+<p style="font-size:15px;color:#5e5e5e;">Finally, note that if you set some synth defaults with
+<code style="font-size:15px; color:deeppink; background-color:white">use_synth_defaults</code> (which we will discuss later), these will be
+ignored by <code style="font-size:15px; color:deeppink; background-color:white">sample</code>.</p>
 </font>

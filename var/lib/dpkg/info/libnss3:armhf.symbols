@@ -868,7 +868,7 @@ libnssdbm3.so libnss3 (>= 2:3.13.4-2~) | libnss3-1d #MINVER#
  legacy_SetCryptFunctions@NSSDBM_3.12 3.12.0
  legacy_Shutdown@NSSDBM_3.12 3.12.0
 libnssutil3.so libnss3 (>= 2:3.13.4-2~) | libnss3-1d #MINVER#
-| libnss3 #MINVER#
+| libnss3 #MINVER#, libnss3 (< 2:3.14.6~) | libnss3 (>= 2:3.17.1~)
  ATOB_AsciiToData_Util@NSSUTIL_3.12 3.12.0~beta2
  ATOB_ConvertAsciiToItem_Util@NSSUTIL_3.12 3.12.0~beta2
  BTOA_ConvertItemToAscii_Util@NSSUTIL_3.12 3.12.0~beta2
@@ -914,6 +914,7 @@ libnssutil3.so libnss3 (>= 2:3.13.4-2~) | libnss3-1d #MINVER#
  NSSUTIL_3.12@NSSUTIL_3.12 3.12.0~beta2
  NSSUTIL_3.13@NSSUTIL_3.13 3.13
  NSSUTIL_3.14@NSSUTIL_3.14 2:3.14 1
+ NSSUTIL_3.17.1@NSSUTIL_3.17.1 2:3.14.5-1+deb7u2 2
  NSSUTIL_ArgDecodeNumber@NSSUTIL_3.14 2:3.14 1
  NSSUTIL_ArgFetchValue@NSSUTIL_3.14 2:3.14 1
  NSSUTIL_ArgGetLabel@NSSUTIL_3.14 2:3.14 1
@@ -1081,6 +1082,7 @@ libnssutil3.so libnss3 (>= 2:3.13.4-2~) | libnss3-1d #MINVER#
  UTIL_SetForkState@NSSUTIL_3.12.3 3.12.3
  _NSSUTIL_EvaluateConfigDir@NSSUTIL_3.14 2:3.14 1
  _NSSUTIL_GetSecmodName@NSSUTIL_3.14 2:3.14 1
+ _SGN_VerifyPKCS1DigestInfo@NSSUTIL_3.17.1 2:3.14.5-1+deb7u2 2
  sgn_DigestInfoTemplate_Util@NSSUTIL_3.12 3.12.0~beta2
 libsmime3.so libnss3 (>= 2:3.13.4-2~) | libnss3-1d #MINVER#
 | libnss3 #MINVER#

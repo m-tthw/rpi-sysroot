@@ -43,6 +43,7 @@ FontSubstitutions->{
 	"Helvetica Narrow" -> "Helvetica",
 	"N Helvetica Narrow" -> "Helvetica",
 	"Melior" -> "Times",
+	"Menlo" -> "DejaVu Sans Mono",
 	"Meridien" -> "Times",
 	"Mishawaka" -> "Helvetica",
 	"Monaco" -> "Helvetica",
@@ -87,7 +88,7 @@ FontSubstitutions->{
 	"Calibri" -> "Arial",
 	"Cambria" -> "Times New Roman",
 	"Candara" -> "Trebuchet MS",
-	"Consolas" -> "Bitstream Vera Sans Mono",
+	"Consolas" -> "DejaVu Sans Mono",
 	"Constantia" -> "Palatino Linotype",
 	"Corbel" -> "Lucida Grande",
 	

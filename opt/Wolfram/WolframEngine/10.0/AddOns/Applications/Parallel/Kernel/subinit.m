@@ -1,6 +1,6 @@
 (* Master Loader of Parallel Computing Toolkit *)
 
-(* :Package Version: 3.0 ($Id: subinit.m,v 1.9 2010/01/12 13:08:59 maeder Exp $) *)
+(* :Package Version: 3.0 ($Id: subinit.m,v 1.10 2014/11/25 14:41:07 maeder Exp $) *)
 
 (* :Summary:
    Get["Parallel`Kernel`subinit`"]
@@ -41,8 +41,13 @@ Get["Parallel`NullMaster`"]
 
 (* system-specific initializations *)
 
-SetSystemOptions["MKLThreads" -> 1]
+SetSystemOptions["ParallelOptions" -> "MKLThreadNumber" -> 1]
 SetSystemOptions["ParallelOptions" -> "ParallelThreadNumber" -> 0]
+
+(* change messages for subkernels *)
+
+General::subpar = "Parallel computations cannot be nested; proceeding with sequential evaluation."
+General::subnopar = "Parallel programming is not available in subkernels of another parallel computation."
 
 EndPackage[]
 $ContextPath=DeleteCases[$ContextPath, "Parallel`", 1, 1]; (* no longer on context path *)

@@ -43,7 +43,9 @@ formatToMimeType[format_] := format /. Join[
         "Form" -> "application/vnd.wolfram.expression.form",
         "Task" -> "application/vnd.wolfram.expression.task",
         "Grammar" -> "application/vnd.wolfram.expression.grammar",
-        "Expression" -> "application/vnd.wolfram.expression"
+        "Expression" -> "application/vnd.wolfram.expression",
+
+        "CloudEvaluation" -> "application/vnd.wolfram.expression.cloudevaluation"
     },
     formatToMime,
     {
@@ -132,10 +134,12 @@ interactiveBoxesQ[head_[args___]] := interactiveBoxesQ[head] || ReleaseHold[Map[
 interactiveBoxesQ[other_] = False;
 Attributes[interactiveBoxesQ] = {HoldAllComplete};
 
-applyExportForm[expr_, format_, rest___] := {
-    ToCharacterCode[ExportString[wrapExportExpr[expr, format], exportFormat[format], rest]],
-    formatToMimeType[format]
-}
+applyExportForm[expr_, format_, rest___] :=
+	Module[{str, type},
+		str = ExportString[wrapExportExpr[expr, format], exportFormat[format], rest];
+		type = formatToMimeType[format];
+		If[str === $Failed, {str, type}, {ToCharacterCode[str], type} ]
+	]
 applyExportForm[expr_, "HTMLCloudCDF", rest___] :=
     Module[{boxes},
         If[ReleaseHold[Hold[interactiveBoxesQ[boxes]] /. boxes -> ToBoxes[expr, StandardForm]],
@@ -147,11 +151,14 @@ applyExportForm[expr_, "HTML", rest___] :=
     applyExportForm[expr, "HTMLFragment", rest, "FullDocument" -> True]
 applyExportForm[expr_String, "HTML", rest___] :=
     applyExportForm[expr, "HTMLFragment", rest]
+applyExportForm[expr:Alternatives[Sound[_SoundNote], Sound[{__SoundNote}]], "MP3", rest___]:=
+	applyExportForm[Sound`ToSampledSound[expr], "MP3", rest]
 Attributes[applyExportForm] = {HoldFirst};
 
 CloudExport[expr_, format_, obj:CloudObject[uri_, objopts:OptionsPattern[CloudObject]], rest___Rule] :=
     Module[{content, mimetype, permissions, result},
         {content, mimetype} = applyExportForm[expr, format, rest];
+        If[content === $Failed,Return[$Failed]];
         permissions = Quiet[OptionValue[CloudExport, {rest, objopts}, Permissions], OptionValue::nodef];
         writeObject[obj, content, mimetype, permissions,
             Quiet[OptionValue[CloudExport, {rest, objopts}, IconRules], OptionValue::nodef],

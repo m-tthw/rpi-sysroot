@@ -4,7 +4,7 @@
 (*Package header*)
 
 
-(* $Id$ *)
+(* $Id: WolframAlphaClient.m,v 1.691.2.1 2014/07/07 17:45:48 nickl Exp $ *)
 
 (* :Summary: Support for using the Wolfram|Alpha webservice API from within Mathematica. *)
 
@@ -35,6 +35,7 @@ Unprotect[{
 	AlphaIntegration`CloudControlEqualPrint,
 	Internal`MWACompute,
 	Internal`ParallelMWACompute,
+	Internal`NoteAlphaSources,
 	System`Asynchronous,
 	System`ExcludePods,
 	System`IncludePods,
@@ -62,6 +63,7 @@ Block[{AlphaIntegration`list, AlphaIntegration`msgs},
 		"AlphaIntegration`CloudControlEqualPrint",
 		"Internal`MWACompute",
 		"Internal`ParallelMWACompute",
+		"Internal`NoteAlphaSources",
 		"WolframAlpha",
 		"WolframAlphaDate",
 		"WolframAlphaQuantity",
@@ -268,6 +270,8 @@ $AlphaQueryAppearanceElements = $AutomaticAlphaQueryAppearanceElements;
 $APITimeZone = None;
 
 $APILatLong = None;
+
+$APIUnitSystem = None;
 
 
 (* Disable these interfaces, now that W|A can return interfaces when given interactive=true *)
@@ -1922,7 +1926,7 @@ call a different jsp and have different import characteristics.
 
 
 WolframAlpha[str_String, "MathematicaParse" | "WolframParse", opts:OptionsPattern[]] := 
-	Block[{result},
+	Block[{result,$AlphaQueryMMode = "inline"},
 		result = WolframAlpha[str, "RawMathematicaParse", opts];
 		Switch[result,
 			{___Rule, "Parse" -> _String, ___Rule},
@@ -1942,7 +1946,10 @@ WolframAlpha[str_String, "RawMathematicaParse" | "RawWolframParse", opts:Options
 				result = qImport[WolframAlpha[str, "MathematicaParseURL", opts], "Text"];
 				If[StringQ[result], 
 					With[{res=ToExpression[StringTrim[result]]},
-						Quiet[ReleaseHold["SideEffects"/.res]];
+						Quiet[
+							Internal`CacheEntityNames[
+								ReleaseHold["SideEffects"/.res]
+							]];
 						res
 					]
 					, 
@@ -2116,6 +2123,60 @@ WolframAlpha[str_String, "ToQuantity", opts:OptionsPattern[]] :=
 
 WolframAlpha[str_String, "LinguisticAssistant" | "InlineInput", OptionsPattern[]] :=
 	AlphaIntegration`LinguisticAssistant[str, OptionValue[InputAssumptions], Automatic]
+
+
+(* ::Subsubsection::Closed:: *)
+(*"LinguisticAssistantReport"*)
+
+
+WolframAlpha[str_String, "LinguisticAssistantReport" | "ControlEqualReport", opts:OptionsPattern[]] :=
+Block[{
+		parseurl, parseimport, parseimporttiming, parseresult, parseassumptions, 
+		queryurl, queryimport, queryimporttiming, queryresult, queryassumptions },
+
+	parseurl = WolframAlpha[str, "MathematicaParseURL", opts];
+
+	parseimporttiming = AbsoluteTime[];
+	parseimport = Import[parseurl, "Text"];
+	parseimporttiming = AbsoluteTime[] - parseimporttiming;
+
+	queryurl = WolframAlpha[str, "URL", opts, Method -> {"Formats" -> {"minput", "moutput"}}];
+
+	queryimporttiming = AbsoluteTime[];
+	queryimport = Import[queryurl, "XML"];
+	queryimporttiming = AbsoluteTime[] - queryimporttiming;
+
+	parseresult = "Parse" /. Replace[parseimport, {a_String :> ToExpression[a], _ :> {}}] /. "Parse" -> $Failed;
+	queryresult = Cases[queryimport, XMLElement["minput" | "moutput", _, _], Infinity];
+
+	parseassumptions = "Assumptions" /. Replace[parseimport, {a_String :> ToExpression[a], _ :> {}}] /. "Parse" -> $Failed;
+	queryassumptions = Cases[queryimport, XMLElement["assumptions", _, _], Infinity];
+
+	Grid[{
+		{Tooltip["  ", Grid[{
+			{"", DateString[]},
+			{"Version", $Version},
+			{"ReleaseID", SystemInformation["Kernel", "ReleaseID"]},
+			{"Paclet info", PacletManager`PacletInformation /@ PacletManager`PacletFind["WolframAlphaClient"]}},
+			Alignment -> Left]],"mparse.jsp", "query.jsp"},
+		{"Import timing", parseimporttiming, queryimporttiming},
+		{"results", parseresult, queryresult},
+		{"assumptions", parseassumptions, queryassumptions},
+		{"url", parseurl, queryurl},
+		{"raw results",
+			OpenerView[{HoldForm[Import["mparse.jsp", "Text"]], parseimport}],
+			OpenerView[{HoldForm[Import["query.jsp", "XML"]], queryimport}]}
+		},
+		Alignment -> Left,
+		Frame -> All,
+		FrameStyle -> LightGray,
+		Background -> {Automatic, {{GrayLevel[1], GrayLevel[0.97]}}},
+		BaseStyle -> {ShowStringCharacters -> True},
+		ItemStyle -> {
+			{Directive["Text", Bold, ShowStringCharacters -> False]},
+			{Directive["Text", Bold, ShowStringCharacters -> False]}}
+	]
+]
 
 
 (* ::Subsubsection::Closed:: *)
@@ -2755,13 +2816,15 @@ joindup[opt_, vals_] := opt -> Flatten[vals]
 (* ::Subsubsection::Closed:: *)
 (*Utility: qImport*)
 
+
 sendWAEvent[type_] := Module[{eventtype},
 	eventtype = Switch[type,
 			"MWACalculateData"|"MWAEarthquakeData"|"MWAThermodynamicData","entity",
 			"MWAInterpreter"|"MWASemanticInterpretation", "linguistics",
 			"WAEqual"|"AstronomyConvenienceFunction"|"MWAFormulaNameLookup"
-			|"CurrencyConversionMean"|"Quantity"|"MWAUnitSystem","free",
-			"MWANames"|"MWAEntityNames"|"MWAEntityClassNames","name",
+			|"CurrencyConversionMean"|"Quantity"|"MWAUnitSystem"
+			|"PLIParseAgain" | "PLIGrammarDeployAgain","free",
+			"MWANames"|"MWAEntityNames"|"MWAEntityClassNames","entity"(*"name"*),
 			_,"alpha"
 		];
 	If[TrueQ[$CloudEvaluation],
@@ -3112,7 +3175,7 @@ DynamicModule[{ Typeset`q = query, Typeset`opts = {opts}, Typeset`elements, podv
 				Typeset`newq},
 	
 	Typeset`queryinfo = values;
-	Typeset`sessioninfo = {"TimeZone" -> $TimeZone, "Date" -> DateList[], "Line" -> $Line, "SessionID" -> $SessionID};
+	Typeset`sessioninfo = Refresh[{"TimeZone" -> $TimeZone, "Date" -> DateList[], "Line" -> $Line, "SessionID" -> $SessionID}, None];
 
 	Typeset`showpods = Cases[data, XMLElement["pod", _, _]];
 	
@@ -3257,11 +3320,7 @@ AlphaIntegration`FormatAlphaResults[Dynamic[{unknown_, ___}]] :=
 	Framed[
 		Grid[{{
 			Item[TextCell[Row[{
-				"Displaying this content requires a more recent version of ",
-				Style["Mathematica", "IT"],
-				" or ",
-				Style["Mathematica Player", "IT"],
-				". ",
+				"Displaying this content requires a more recent version of the Wolfram System. ",
 				Hyperlink["\[RightSkeleton]", "http://www.wolfram.com/"]}]],
 				Background -> GrayLevel[1],
 				Frame -> 1,
@@ -3952,9 +4011,13 @@ Options[Internal`MWACompute] = {
 	"MessageHead" -> Automatic,
 	"ConvertMWASymbols" -> True,
 	"CacheEntityNames" -> True,
-	"Compress" -> True, (* Could be False during Parse since it's mostly encrypted *)
+	"Compress" -> True, (* Could be False during Parse since it's mostly encrypted.
+	                       However, because Parse should take into account EvalEnv, etc.,
+	                       that will require rejiggering below. *)
 	"TimeZone" -> None,
-	"GeoLocation" -> None
+	"GeoLocation" -> None,
+	"Sources" -> True,
+	"UnitSystem" -> None
 };
 
 
@@ -3968,7 +4031,7 @@ With[{msghead=Replace[OptionValue["MessageHead"], Automatic->EntityValue],
  					 MessageName[Utilities`URLTools`FetchURL, "nolib"],
  					 MessageName[URLFetch, "invhttp"], 
 					 MessageName[General, "offline"],MessageName[General,"nffil"]},
-	argsIn = {input, "EvalEnv"->$EvaluationEnvironment}},
+	argsIn = {input, "EvalEnv"->$EvaluationEnvironment,If[TrueQ[OptionValue["Sources"]],"Sources"->True,Unevaluated[Sequence[]]]}},
 	Module[{res, argscompressed, tmpcontext
 , timeout, args=argsIn},
 		tmpcontext = OptionValue["Context"];
@@ -3977,16 +4040,17 @@ With[{msghead=Replace[OptionValue["MessageHead"], Automatic->EntityValue],
 		If[StringQ[tmpcontext] && !StringFreeQ[tmpcontext,"Temporary"], Quiet[Remove@@{tmpcontext<>"*"}]];
 		If[TrueQ[OptionValue["ConvertMWASymbols"]], args = args/.$ToMWARules];
 		argscompressed = 
-		    If[ False === OptionValue["Compress"],
-		        args,
+		    If[ False === OptionValue["Compress"] && StringQ[input],
+		        args = input, (* or have to Uncompress args[[1]], with the right $ContextPath, before recompressing.  Ugh. *)
 		        Block[{$ContextPath = OptionValue["ContextPath"], $Context = OptionValue["Context"]},
 		            If[ MatchQ[{type, args}, {"PLIParse"|"PLIGrammarDeploy", _HoldComplete}],
-		                With[{a=Unevaluated@@args}, Compress[a]],
+		                With[{a=Replace[args, {HoldComplete[actual_], argOpts___} :> Unevaluated[{actual, argOpts}]]}, Compress[a]],
 		                Compress[args]
 		            ]
 		        ]
 		    ];
-		Block[{$APITimeZone=iTimeZoneToGMTString[OptionValue["TimeZone"]],$APILatLong=iGeoLocationtoLatLong[OptionValue["GeoLocation"]]},
+		Block[{$APITimeZone=iTimeZoneToGMTString[OptionValue["TimeZone"]],$APILatLong=iGeoLocationtoLatLong[OptionValue["GeoLocation"]],
+			$APIUnitSystem = iVerifyUnitSystem[OptionValue["UnitSystem"]]},
 		res = TimeConstrained[
 			Quiet[
 				Check[FetchMWACompute[type, argscompressed],
@@ -4001,9 +4065,15 @@ With[{msghead=Replace[OptionValue["MessageHead"], Automatic->EntityValue],
 			];
 			If[(*FreeQ[res, $Failed] &&*)TrueQ[OptionValue["ConvertMWASymbols"]], res = res/.$FromMWARules]
 		];
+		If[TrueQ[OptionValue["Sources"]], res = noteSourceAndExtractData[res]];
 		If[TrueQ[OptionValue["CacheEntityNames"]], Internal`CacheEntityNames[res]];
 		res
 	]
+]
+
+noteSourceAndExtractData[res_] := Replace[
+	res, 
+	HoldPattern[HoldComplete[{r_, "Sources" -> s_}]] :> (Internal`NoteAlphaSources[s]; HoldComplete[r])
 ]
 
 $TimeStampDateFormat = {"DayNameShort", ", ", "Day", " ", "MonthNameShort", " ", "Year", " ", "Time", " GMT"};
@@ -4030,9 +4100,11 @@ apiQueryMode[type_,mmode_] := If[MemberQ[{"entity","paclet","utility"}, mmode],
 		_,mmode
 	]]
 
+$DontPUT = SameQ[$LicenseType, "Player"];
+
 getMWAComputeURLAndArgs[type_, args_, opts___] := Catch[
   If[TrueQ[$DontPUT], makeMWAComputeURL[type, args, opts],
-   Block[{baseurl, params, timezone, latlong, 
+   Block[{baseurl, params, timezone, latlong, usys,
      tstamp, $RequestType = type},
     baseurl = "Server" /. allMethodOptions[opts];
     baseurl = If[MatchQ[type, "MWAGeoEntityLookup" | "MWAWolframMapper"] && productionServerQ[baseurl], 
@@ -4042,6 +4114,7 @@ getMWAComputeURLAndArgs[type_, args_, opts___] := Catch[
     latlong = $APILatLong;
     latlong = Switch[latlong, _String, "latlong" -> urlencode[latlong], _, {}];
     tstamp = "ts" -> getTimeStamp[];
+    usys = UnitSystemToParam[$APIUnitSystem];
     params = Flatten[{
        "type" -> urlencode[type], 
        "releaseid" -> urlencode[Internal`CachedSystemInformation["Kernel", "ReleaseID"]], 
@@ -4049,11 +4122,16 @@ getMWAComputeURLAndArgs[type_, args_, opts___] := Catch[
        "systemid" -> urlencode[$SystemID], 
        "mclient" -> $AlphaQueryMClient, 
        "mmode" -> apiQueryMode[type, $AlphaQueryMMode], 
-       "argshash" -> IntegerString[Hash[args, "MD5"], 16, 32], 
        timezone, 
        latlong, 
-       tstamp}];
+       tstamp,
+       usys}];
     {extendedParams[baseurl, params], args}]], "WAE"]
+    
+
+UnitSystemToParam["Imperial"] := "units"->"nonmetric"
+UnitSystemToParam["Metric"] := "units"->"metric"
+UnitSystemToParam[__] := {}
 
 FetchMWACompute[type_,args_,opts___] := Block[{url,body},Catch[
 	url = getMWAComputeURLAndArgs[type,args,opts];
@@ -4120,6 +4198,9 @@ iGeoLocationtoLatLong[location_] :=
     lat <> "," <> long],
    None]
   ]
+  
+iVerifyUnitSystem[system_String] := If[MatchQ[system,"Imperial"|"Metric"],system, (*TODO: add Message[head::unit, system];*)None]
+iVerifyUnitSystem[___] := None
 
 (* Use delayed assignment to avoid immediate evaluation of Entity/Quantity triggering respective package loads *)
 $FromMWARules:= $FromMWARules = {
@@ -4139,6 +4220,8 @@ $ToMWARules:= $ToMWARules= Reverse/@Drop[$FromMWARules, -1];  (* don't include t
 
 (* ::Subsection::Closed:: *)
 (*ParallelMWACompute[]*)
+
+
 divideIntoBatches[list_List,maxsize_Integer] := With[{n=Length[list]},
 	Block[{steps = Range[1, n, maxsize], pairs},
 	pairs = {#, # + maxsize - 1} & /@ steps;
@@ -4175,7 +4258,8 @@ Internal`ParallelMWACompute[type_String, argsIn_List, opts : OptionsPattern[]] :
     If[TrueQ[OptionValue["ConvertMWASymbols"]], args = args /. $ToMWARules];
     argscompressed = Block[{$ContextPath = OptionValue["ContextPath"], $Context = OptionValue["Context"]}, 
     	Compress /@ args];
-    Block[{$APITimeZone=iTimeZoneToGMTString[OptionValue["TimeZone"]],$APILatLong=iGeoLocationtoLatLong[OptionValue["GeoLocation"]]},
+    Block[{$APITimeZone=iTimeZoneToGMTString[OptionValue["TimeZone"]],$APILatLong=iGeoLocationtoLatLong[OptionValue["GeoLocation"]],
+    	$APIUnitSystem = iVerifyUnitSystem[OptionValue["UnitSystem"]]},
     urls = getMWAComputeURLAndArgs[type, #, opts] & /@ argscompressed;
     ];
     (df[#] := Function[{asyncObj, eventType, document}, 
@@ -5520,7 +5604,7 @@ FormatIndependentPod[pod:XMLElement["pod", _, _], query_, opts___] :=
 		Typeset`pod = pod;
 		Typeset`aux = {True, False, {False}, True};
 
-		Typeset`sessioninfo = {"TimeZone" -> $TimeZone, "Date" -> DateList[], "Line" -> $Line, "SessionID" -> $SessionID};
+		Typeset`sessioninfo = Refresh[{"TimeZone" -> $TimeZone, "Date" -> DateList[], "Line" -> $Line, "SessionID" -> $SessionID}, None];
 
 		{Typeset`open, Typeset`chosen, Typeset`newq} = {"ExtrusionOpen", "ExtrusionChosen", "NewQuery"} /. allMethodOptions[opts];
 		If[ !ListQ[Typeset`chosen], Typeset`chosen = {}];
@@ -8454,11 +8538,7 @@ AlphaIntegration`LinguisticAssistantBoxes[str_String, otherVersion_, ___] :=
 	Framed[
 		Grid[{{
 			Item[TextCell[Row[{
-				"Displaying this content requires a more recent version of ",
-				Style["Mathematica", "IT"],
-				" or ",
-				Style["Mathematica Player", "IT"],
-				". ",
+				"Displaying this content requires a more recent version of the Wolfram System. ",
 				Hyperlink["\[RightSkeleton]", "http://www.wolfram.com/"]}]],
 				Background -> GrayLevel[1],
 				Frame -> 1,
@@ -9275,6 +9355,7 @@ SetAttributes[{
 	AlphaIntegration`CloudControlEqualPrint,
 	Internal`MWACompute,
 	Internal`ParallelMWACompute,
+	Internal`NoteAlphaSources,
 	Asynchronous,
 	ExcludePods,
 	IncludePods,

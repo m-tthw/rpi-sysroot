@@ -526,6 +526,7 @@ open_xfce()
 
 open_generic_xdg_mime()
 {
+    target="$1"
     filetype="$2"
     default=`xdg-mime query default "$filetype"`
     if [ -n "$default" ] ; then
@@ -546,17 +547,34 @@ DEBUG 3 "$xdg_user_dir:$xdg_system_dirs"
             fi
 
             if [ -r "$file" ] ; then
-                command="`grep -E "^Exec(\[[^]=]*])?=" "$file" | cut -d= -f 2- | first_word`"
-                command_exec=`which $command 2>/dev/null`
-                arguments="`grep -E "^Exec(\[[^]=]*])?=" "$file" | cut -d= -f 2- | last_word`"
-                local sed_escaped_url="$(echo "$1" | sed -e 's/[&\\]/\\&/g')"
-                arguments_exec="`echo $arguments | sed -e 's*%[fFuU]*"'"$sed_escaped_url"'"*g'`"
+                set -- $(sed -n 's/^Exec\(\[[^]]*\]\)\{0,1\}=//p' "$file")
+                command_exec="$(which "$1" 2> /dev/null)"
                 if [ -x "$command_exec" ] ; then
-                    if echo $arguments | grep -iq '%[fFuU]' ; then
-                        eval $command_exec $arguments_exec
-                    else
-                        eval $command_exec $arguments_exec '"$1"'
-                    fi
+                    shift
+                    # We need to replace any occurrence of "%f", "%F" and
+                    # the like by the target file. We examine each
+                    # argument and append the modified argument to the
+                    # end then shift.
+                    args=$#
+                    replaced=0
+                    while [ $args -gt 0 ]; do
+                        case $1 in
+                            %[fFuU])
+                                replaced=1
+                                arg="$target"
+                                shift
+                                set -- "$@" "$arg"
+                                ;;
+                            *)
+                                arg="$1"
+                                shift
+                                set -- "$@" "$arg"
+                                ;;
+                        esac
+                        args=$(( $args - 1 ))
+                    done
+                    [ $replaced -eq 1 ] || set -- "$@" "$target"
+                    "$command_exec" "$@"
 
                     if [ $? -eq 0 ]; then
                         exit_success

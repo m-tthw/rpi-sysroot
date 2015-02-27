@@ -129,13 +129,13 @@ Homepage: https://pypi.python.org/pypi/setuptools
 Package: python-pifacecommon
 Priority: optional
 Section: python
-Installed-Size: 579
+Installed-Size: 582
 Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
 Architecture: all
 Source: pifacecommon
-Version: 4.0.0-1
+Version: 4.1.2-1
 Depends: python (>= 2.6.6-7~), python (<< 2.8)
-Size: 150502
+Size: 148078
 Description: The PiFace common functions module.
  Python module for interacting with PiFace products.
  Documentation: http://piface.github.io/pifacecommon/
@@ -147,11 +147,11 @@ Installed-Size: 1516
 Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
 Architecture: all
 Source: xorg-server
-Version: 2:1.12.4-6+deb7u2
+Version: 2:1.12.4-6+deb7u6
 Replaces: xserver-xorg-core (<< 2:1.5.2)
 Depends: x11-common, xkb-data, x11-xkb-utils
 Recommends: xfonts-base, xauth
-Size: 1396194
+Size: 1396532
 Description: common files used by various X servers
  This package provides files necessary for all X.Org based X servers.
 
@@ -480,15 +480,15 @@ Description: Provide limited super user privileges to specific users
 Package: libfreetype6
 Priority: optional
 Section: libs
-Installed-Size: 686
+Installed-Size: 761
 Maintainer: Steve Langasek <vorlon@debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: freetype
-Version: 2.4.9-1.1
-Depends: libc6 (>= 2.13-28), zlib1g (>= 1:1.1.4)
+Version: 2.5.2-2rpi1rpi1
+Depends: libc6 (>= 2.13-28), libpng12-0 (>= 1.2.13-4), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
-Size: 401454
+Size: 468720
 Description: FreeType 2 font engine, shared library files
  The FreeType project is a team of volunteers who develop free,
  portable and high-quality software solutions for digital typography.
@@ -690,11 +690,11 @@ Installed-Size: 1538
 Maintainer: Debian XML/SGML Group <debian-xml-sgml-pkgs@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
-Version: 2.8.0+dfsg1-7+wheezy1
+Version: 2.8.0+dfsg1-7+wheezy3
 Depends: libc6 (>= 2.13-28), liblzma5 (>= 5.1.1alpha+20120614), zlib1g (>= 1:1.2.3.3)
 Pre-Depends: multiarch-support
 Recommends: xml-core
-Size: 821916
+Size: 822328
 Description: GNOME XML library
  XML is a metalanguage to let you design your own markup language.
  A regular markup language defines a way to describe information in
@@ -760,15 +760,15 @@ Homepage: http://pypy.org/
 Package: gpgv
 Priority: important
 Section: utils
-Installed-Size: 380
+Installed-Size: 384
 Maintainer: Debian GnuPG-Maintainers <pkg-gnupg-maint@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: foreign
 Source: gnupg
-Version: 1.4.12-7+deb7u4
+Version: 1.4.12-7+deb7u6
 Depends: libbz2-1.0, libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), zlib1g (>= 1:1.1.4)
 Suggests: gnupg
-Size: 206544
+Size: 207538
 Description: GNU privacy guard - signature verification tool
  GnuPG is GNU's tool for secure communication and data storage.
  .
@@ -796,15 +796,15 @@ Description: Utilities for .desktop files
 Package: libssl1.0.0
 Priority: important
 Section: libs
-Installed-Size: 2256
+Installed-Size: 2260
 Maintainer: Debian OpenSSL Team <pkg-openssl-devel@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: openssl
-Version: 1.0.1e-2+rvt+deb7u11
+Version: 1.0.1e-2+rvt+deb7u14
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), zlib1g (>= 1:1.1.4), debconf (>= 0.5) | debconf-2.0
 Pre-Depends: multiarch-support
-Size: 1051258
+Size: 1052830
 Description: SSL shared libraries
  libssl and libcrypto shared libraries needed by programs like
  apache-ssl, telnet-ssl and openssh.
@@ -812,15 +812,17 @@ Description: SSL shared libraries
  It is part of the OpenSSL implementation of SSL.
 
 Package: libfm-data
-Priority: extra
+Priority: optional
 Section: misc
-Installed-Size: 1075
+Installed-Size: 1715
 Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
 Architecture: all
+Multi-Arch: foreign
 Source: libfm
-Version: 0.1.17-2.1
-Replaces: libfm0
-Size: 99820
+Version: 1.2.3-1
+Replaces: libfm0, libfm1
+Breaks: libfm0, libfm1
+Size: 407842
 Description: file management support (common data)
  LibFM provides file management functions built on top of Glib/GIO,
  giving a convenient higher-level API.
@@ -916,10 +918,10 @@ Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alio
 Architecture: armhf
 Multi-Arch: same
 Source: flac
-Version: 1.2.1-6
+Version: 1.2.1-6+deb7u1
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libogg0 (>= 1.0rc3)
 Pre-Depends: multiarch-support
-Size: 143840
+Size: 144310
 Description: Free Lossless Audio Codec - runtime C library
  FLAC stands for Free Lossless Audio Codec. Grossly oversimplified, FLAC is
  similar to MP3, but lossless.  The FLAC project consists of:
@@ -1104,16 +1106,16 @@ Homepage: http://libav.org/
 Package: libavcodec53
 Priority: optional
 Section: libs
-Installed-Size: 5959
+Installed-Size: 5965
 Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: libav
-Version: 6:0.8.13-1+rpi1
+Version: 6:0.8.16-1+rpi1
 Depends: libavutil51 (>= 6:0.8.3-1~), libc6 (>= 2.13-28), libdirac-encoder0, libgcc1 (>= 1:4.4.0), libgsm1 (>= 1.0.13), libmp3lame0, libopenjpeg2, libschroedinger-1.0-0 (>= 1.0.0), libspeex1 (>= 1.2~beta3-1), libtheora0 (>= 1.0), libva1 (>> 1.0.15~), libvorbis0a (>= 1.1.2), libvorbisenc2 (>= 1.1.2), libvpx1 (>= 1.0.0), libx264-123, libxvidcore4 (>= 1.2.2), zlib1g (>= 1:1.2.0)
 Pre-Depends: multiarch-support
 Breaks: libavcodec-extra-53, mplayer (<< 2:1.0~rc4.dfsg1+svn34540-1~)
-Size: 2303752
+Size: 2305282
 Description: Libav codec library
  Libav is a complete, cross-platform solution to decode, encode, record,
  convert and stream audio and video.
@@ -1126,16 +1128,16 @@ Homepage: http://libav.org/
 Package: libgcrypt11
 Priority: standard
 Section: libs
-Installed-Size: 561
+Installed-Size: 562
 Maintainer: Debian GnuTLS Maintainers <pkg-gnutls-maint@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
-Version: 1.5.0-5+deb7u1
+Version: 1.5.0-5+deb7u2
 Depends: libc6 (>= 2.13-28), libgpg-error0 (>= 1.10)
 Pre-Depends: multiarch-support
 Suggests: rng-tools
 Breaks: gnupg2 (<< 2.0.17-2ubuntu2), gpgsm (<< 2.0.17-2ubuntu2), libgnutls26 (<< 2.12.7-3)
-Size: 299572
+Size: 300164
 Description: LGPL Crypto library - runtime library
  libgcrypt contains cryptographic functions.  Many important free
  ciphers, hash algorithms and public key signing algorithms have been
@@ -1439,10 +1441,10 @@ Installed-Size: 122
 Maintainer: Debian GnuTLS Maintainers <pkg-gnutls-maint@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
-Version: 2.13-2
+Version: 2.13-2+deb7u1
 Depends: libc6 (>= 2.13-28)
 Pre-Depends: multiarch-support
-Size: 63328
+Size: 64030
 Description: Manage ASN.1 structures (runtime)
  Manage ASN1 (Abstract Syntax Notation One) structures.
  The main features of this library are:
@@ -1493,18 +1495,18 @@ Description: HTTP library implementation in C -- Shared library
 Package: libcurl3-gnutls
 Priority: optional
 Section: libs
-Installed-Size: 515
+Installed-Size: 519
 Maintainer: Alessandro Ghedini <ghedo@debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: curl
-Version: 7.26.0-1+wheezy9
+Version: 7.26.0-1+wheezy12
 Replaces: libcurl4-gnutls
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libgcrypt11 (>= 1.4.5), libgnutls26 (>= 2.12.17-0), libgssapi-krb5-2 (>= 1.10+dfsg~), libidn11 (>= 1.13), libldap-2.4-2 (>= 2.4.7), librtmp0 (>= 2.3), libssh2-1 (>= 1.2.6), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
 Recommends: ca-certificates
 Conflicts: libcurl4-gnutls
-Size: 306436
+Size: 306904
 Description: easy-to-use client-side URL transfer library (GnuTLS flavour)
  libcurl is an easy-to-use client-side URL transfer library, supporting DICT,
  FILE, FTP, FTPS, GOPHER, HTTP, HTTPS, IMAP, IMAPS, LDAP, POP3, POP3S, RTMP,
@@ -1617,15 +1619,15 @@ Homepage: http://www.gnu.org/software/parted
 Package: libjavascriptcoregtk-3.0-0
 Priority: optional
 Section: libs
-Installed-Size: 6220
+Installed-Size: 6223
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
+Version: 2.4.1-1rpi35rpi1
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libglib2.0-0 (>= 2.36.0), libicu48 (>= 4.8-1), libstdc++6 (>= 4.8.1), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
-Size: 1684030
+Size: 1685780
 Description: JavaScript engine library from WebKitGTK+
  JavaScriptCore is the JavaScript engine used in WebKit. It consists
  of the following building blocks: lexer, parser, start-up interpreter
@@ -1699,10 +1701,10 @@ Maintainer: Debian/Ubuntu wpasupplicant Maintainers <pkg-wpa-devel@lists.alioth.
 Architecture: armhf
 Multi-Arch: foreign
 Source: wpa
-Version: 1.0-3
+Version: 1.0-3+deb7u1
 Depends: libc6 (>= 2.13-28), libdbus-1-3 (>= 1.1.4), libncurses5 (>= 5.5-5~), libnl-3-200 (>= 3.2.7), libnl-genl-3-200 (>= 3.2.7), libpcsclite1, libreadline5 (>= 5.2), libssl1.0.0 (>= 1.0.0), libtinfo5, lsb-base (>= 3.0-6), adduser, initscripts (>= 2.88dsf-13.3)
 Suggests: wpagui, libengine-pkcs11-openssl
-Size: 541282
+Size: 540500
 Description: client support for WPA and WPA2 (IEEE 802.11i)
  WPA and WPA2 are methods for securing wireless networks, the former
  using IEEE 802.1X, and the latter using IEEE 802.11i. This software
@@ -1814,12 +1816,12 @@ Maintainer: Sam Hartman <hartmans@debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: krb5
-Version: 1.10.1+dfsg-5+deb7u2
-Depends: libc6 (>= 2.13-28), libcomerr2 (>= 1.34), libk5crypto3 (>= 1.8+dfsg), libkeyutils1, libkrb5-3 (= 1.10.1+dfsg-5+deb7u2), libkrb5support0 (>= 1.7dfsg~beta2)
+Version: 1.10.1+dfsg-5+deb7u3
+Depends: libc6 (>= 2.13-28), libcomerr2 (>= 1.34), libk5crypto3 (>= 1.8+dfsg), libkeyutils1, libkrb5-3 (= 1.10.1+dfsg-5+deb7u3), libkrb5support0 (>= 1.7dfsg~beta2)
 Pre-Depends: multiarch-support
 Suggests: krb5-doc, krb5-user
 Breaks: libgssglue1 (<< 0.2-2)
-Size: 131408
+Size: 131980
 Description: MIT Kerberos runtime libraries - krb5 GSS-API Mechanism
  Kerberos is a system for authenticating users and services on a network.
  Kerberos is a trusted third-party service.  That means that there is a
@@ -2184,6 +2186,22 @@ Description: Shared Python runtime library (version 2.7)
  This package contains the shared runtime library, normally not needed
  for programs using the statically linked interpreter.
 
+Package: gnome-themes-standard
+Priority: optional
+Section: gnome
+Installed-Size: 298
+Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
+Architecture: armhf
+Multi-Arch: same
+Version: 3.9.91+557c2ba-rpi5rpi1
+Depends: gnome-themes-standard-data (= 3.9.91+557c2ba-rpi5rpi1), libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo-gobject2 (>= 1.10.0), libcairo2 (>= 1.12.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgtk-3-0 (>= 3.6.2), libpango-1.0-0 (>= 1.14.0), libpangocairo-1.0-0 (>= 1.14.0), librsvg2-2 (>= 2.14.4)
+Pre-Depends: multiarch-support
+Recommends: gtk2-engines-pixbuf, gnome-accessibility-themes
+Breaks: libmutter0 (<< 3.2)
+Size: 251090
+Description: Standard GNOME themes
+ This package contains a set of standard GNOME themes.
+
 Package: libgpg-error0
 Priority: standard
 Section: libs
@@ -2266,14 +2284,14 @@ Installed-Size: 14083
 Maintainer: Niko Tyni <ntyni@debian.org>
 Architecture: all
 Source: perl
-Version: 5.14.2-21+rpi2+deb7u1
+Version: 5.14.2-21+rpi2+deb7u2
 Replaces: libansicolor-perl, libarchive-tar-perl, libattribute-handlers-perl, libautodie-perl, libcgi-pm-perl, libcpan-meta-perl, libcpan-meta-yaml-perl, libcpanplus-perl, libdigest-perl, libextutils-cbuilder-perl, libextutils-command-perl, libextutils-install-perl, libextutils-parsexs-perl, libfile-path-perl, libfile-spec-perl, libfile-temp-perl, libhttp-tiny-perl, libi18n-langtags-perl, libio-zlib-perl, libjson-pp-perl, liblocale-codes-perl, liblocale-maketext-perl, liblocale-maketext-simple-perl, libmath-bigint-perl, libmath-complex-perl, libmodule-build-perl, libmodule-corelist-perl, libmodule-load-conditional-perl, libmodule-load-perl, libmodule-metadata-perl, libmodule-pluggable-perl, libnet-perl, libnet-ping-perl, libparams-check-perl, libparent-perl, libparse-cpan-meta-perl, libperl-ostype-perl, libperl4-corelibs-perl, libpod-escapes-perl, libpod-parser-perl, libpod-simple-perl, libshell-perl, libtest-harness-perl, libtest-simple-perl, libthread-queue-perl, libtime-local-perl, libunicode-collate-perl, libversion-perl, libversion-requirements-perl, podlators-perl
 Provides: libansicolor-perl, libarchive-tar-perl, libattribute-handlers-perl, libautodie-perl, libcgi-pm-perl, libcpan-meta-perl, libcpan-meta-yaml-perl, libcpanplus-perl, libdigest-perl, libextutils-cbuilder-perl, libextutils-command-perl, libextutils-install-perl, libextutils-parsexs-perl, libfile-path-perl, libfile-spec-perl, libfile-temp-perl, libhttp-tiny-perl, libi18n-langtags-perl, libio-zlib-perl, libjson-pp-perl, liblocale-codes-perl, liblocale-maketext-perl, liblocale-maketext-simple-perl, libmath-bigint-perl, libmath-complex-perl, libmodule-build-perl, libmodule-corelist-perl, libmodule-load-conditional-perl, libmodule-load-perl, libmodule-metadata-perl, libmodule-pluggable-perl, libnet-perl, libnet-ping-perl, libparams-check-perl, libparent-perl, libparse-cpan-meta-perl, libperl-ostype-perl, libperl4-corelibs-perl, libpod-escapes-perl, libpod-parser-perl, libpod-simple-perl, libshell-perl, libtest-harness-perl, libtest-simple-perl, libthread-queue-perl, libtime-local-perl, libunicode-collate-perl, libversion-perl, libversion-requirements-perl, podlators-perl
 Depends: perl (>= 5.14.2-1), libswitch-perl, libclass-isa-perl
 Suggests: libpod-plainer-perl
 Breaks: libansicolor-perl (<< 3.00), libarchive-tar-perl (<< 1.76), libattribute-handlers-perl (<< 0.89), libautodie-perl (<< 2.10.01), libcgi-pm-perl (<< 3.52), libcpan-meta-perl (<< 2.110440), libcpan-meta-yaml-perl (<< 0.003), libcpanplus-perl (<< 0.9103), libdigest-perl (<< 1.16), libextutils-cbuilder-perl (<< 0.280203), libextutils-command-perl (<< 1.17), libextutils-install-perl (<< 1.56), libextutils-parsexs-perl (<< 2.221000), libfile-path-perl (<< 2.08.01), libfile-spec-perl (<< 3.3300), libfile-temp-perl (<< 0.22), libhttp-tiny-perl (<< 0.012), libi18n-langtags-perl (<< 0.35.01), libio-zlib-perl (<< 1.10), libjson-pp-perl (<< 2.27105), liblocale-codes-perl (<< 3.16), liblocale-maketext-perl (<< 1.19), liblocale-maketext-simple-perl (<< 0.21), libmath-bigint-perl (<< 1.994), libmath-complex-perl (<< 1.56), libmodule-build-perl (<< 0.380000), libmodule-corelist-perl (<< 2.49.02), libmodule-load-conditional-perl (<< 0.44), libmodule-load-perl (<< 0.18), libmodule-metadata-perl (<< 1.000004), libmodule-pluggable-perl (<< 3.9), libnet-perl (<= 1:1.22), libnet-ping-perl (<< 2.38), libparams-check-perl (<< 0.28), libparent-perl (<< 0.225), libparse-cpan-meta-perl (<< 1.4401), libperl-ostype-perl (<< 1.002), libpod-escapes-perl (<< 1.04), libpod-parser-perl (<< 1.37), libpod-simple-perl (<< 3.16), libshell-perl (<< 0.72.01), libtest-harness-perl (<< 3.23), libtest-simple-perl (<< 0.98), libthread-queue-perl (<< 2.12), libtime-local-perl (<< 1.2000), libunicode-collate-perl (<< 0.73), libversion-perl (<< 1:0.8800), libversion-requirements-perl (<< 0.101020), podlators-perl (<< 2.3.1)
 Conflicts: defoma (<< 0.11.12), mono-gac (<< 2.10.8.1-3)
-Size: 3442074
+Size: 3435382
 Description: Core Perl modules
  Architecture independent Perl modules.  These modules are part of Perl and
  required if the `perl' package is installed.
@@ -2327,13 +2345,13 @@ Homepage: http://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git
 Package: libwebkitgtk-3.0-common
 Priority: optional
 Section: libs
-Installed-Size: 2354
+Installed-Size: 2357
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
 Architecture: all
 Multi-Arch: foreign
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
-Size: 456910
+Version: 2.4.1-1rpi35rpi1
+Size: 459374
 Description: Web content engine library for GTK+ - data files
  WebKit is a web content engine, derived from KHTML and KJS from KDE, and
  used primarily in Apple's Safari browser.  It is made to be embedded in
@@ -2734,6 +2752,27 @@ Description: Small and fast web browser
  very fast, and extensible.
 Homepage: http://www.dillo.org/
 
+Package: init-system-helpers
+Priority: extra
+Section: admin
+Installed-Size: 96
+Maintainer: pkg-systemd-maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+Architecture: all
+Multi-Arch: foreign
+Version: 1.18~bpo70+1
+Depends: perl
+Breaks: systemd (<< 44-12)
+Size: 14164
+Description: helper tools for all init systems
+ This package contains helper tools that are necessary for switching between
+ the various init systems that Debian contains (e.g. sysvinit, upstart,
+ systemd). An example is deb-systemd-helper, a script that enables systemd unit
+ files without depending on a running systemd.
+ .
+ While this package is maintained by pkg-systemd-maintainers, it is NOT
+ specific to systemd at all. Maintainers of other init systems are welcome to
+ include their helpers in this package.
+
 Package: libsamplerate0
 Priority: optional
 Section: libs
@@ -2768,19 +2807,19 @@ Homepage: http://www.mega-nerd.com/SRC/
 Package: libc6-dev
 Priority: optional
 Section: libdevel
-Installed-Size: 8090
+Installed-Size: 8093
 Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: eglibc
-Version: 2.13-38+rpi2+deb7u3
+Version: 2.13-38+rpi2+deb7u7
 Provides: libc-dev
-Depends: libc6 (= 2.13-38+rpi2+deb7u3), libc-dev-bin (= 2.13-38+rpi2+deb7u3), linux-libc-dev
+Depends: libc6 (= 2.13-38+rpi2+deb7u7), libc-dev-bin (= 2.13-38+rpi2+deb7u7), linux-libc-dev
 Recommends: gcc | c-compiler
 Suggests: glibc-doc, manpages-dev
 Breaks: binutils (<< 2.20.1-1), binutils-gold (<< 2.20.1-11), cmake (<< 2.8.4+dfsg.1-5), gcc-4.4 (<< 4.4.6-4), gcc-4.5 (<< 4.5.3-2), gcc-4.6 (<< 4.6.0-12), libhwloc-dev (<< 1.2-3), libjna-java (<< 3.2.7-4), liblouis-dev (<< 2.3.0-2), liblouisxml-dev (<< 2.4.0-2), make (<< 3.81-8.1), pkg-config (<< 0.26-1)
 Conflicts: libc0.1-dev, libc0.3-dev, libc6.1-dev
-Size: 2428012
+Size: 2427948
 Description: Embedded GNU C Library: Development Libraries and Header Files
  Contains the symlinks, headers, and object files needed to compile
  and link programs which use the standard C library.
@@ -2944,10 +2983,10 @@ Section: utils
 Installed-Size: 1035
 Maintainer: Debian OpenSSL Team <pkg-openssl-devel@lists.alioth.debian.org>
 Architecture: armhf
-Version: 1.0.1e-2+rvt+deb7u11
+Version: 1.0.1e-2+rvt+deb7u14
 Depends: libc6 (>= 2.13-28), libssl1.0.0 (>= 1.0.1e-2+deb7u5), zlib1g (>= 1:1.1.4)
 Suggests: ca-certificates
-Size: 700152
+Size: 700318
 Description: Secure Socket Layer (SSL) binary and related cryptographic tools
  This package contains the openssl binary and related tools.
  .
@@ -3086,12 +3125,12 @@ Section: admin
 Installed-Size: 3180
 Maintainer: APT Development Team <deity@lists.debian.org>
 Architecture: armhf
-Version: 0.9.7.9+rpi1+deb7u2
+Version: 0.9.7.9+rpi1+deb7u7
 Replaces: manpages-pl (<< 20060617-3~)
-Depends: libapt-pkg4.12 (>= 0.9.7.9+rpi1+deb7u2), libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libstdc++6 (>= 4.6), raspbian-archive-keyring, gnupg
+Depends: libapt-pkg4.12 (>= 0.9.7.9+rpi1+deb7u7), libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libstdc++6 (>= 4.6), raspbian-archive-keyring, gnupg
 Suggests: aptitude | synaptic | wajig, dpkg-dev, apt-doc, xz-utils, python-apt
 Conflicts: python-apt (<< 0.7.93.2~)
-Size: 1242164
+Size: 1243992
 Description: commandline package manager
  This package provides commandline tools for searching and
  managing as well as querying information about packages
@@ -3110,12 +3149,12 @@ Description: commandline package manager
 Package: raspberrypi-bootloader
 Priority: extra
 Section: admin
-Installed-Size: 44297
+Installed-Size: 98117
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: armhf
 Source: raspberrypi-firmware
-Version: 1.20140908-1
-Size: 19411008
+Version: 1.20150214-1
+Size: 40647078
 Description: Raspberry Pi bootloader
  This package contains the Raspberry Pi bootloader (plus, temporarily, a
  kernel).
@@ -3377,14 +3416,14 @@ Homepage: http://www.freedesktop.org/wiki/Software/DBusBindings
 Package: python-picamera
 Priority: extra
 Section: python
-Installed-Size: 444
+Installed-Size: 454
 Maintainer: Dave Hughes <dave@waveform.org.uk>
 Architecture: armhf
 Source: picamera
-Version: 1.8-1
+Version: 1.9-1
 Depends: python (>= 2.7), python (<< 2.8), libraspberrypi0, python-numpy
 Suggests: python-picamera-docs, python-rpi.gpio
-Size: 87628
+Size: 90646
 Description: Pure Python interface to the Raspberry Pi's camera module.
  picamera is a library for working with the Raspberry Pi's camera module from
  within Python without having to resort to subprocesses. The majority of the
@@ -3433,14 +3472,14 @@ Homepage: http://www.kernel.org/doc/man-pages/
 Package: epiphany-browser-data
 Priority: optional
 Section: gnome
-Installed-Size: 7282
+Installed-Size: 7293
 Maintainer: Josselin Mouette <joss@debian.org>
 Architecture: all
 Source: epiphany-browser
-Version: 3.8.2.0-0rpi14rpi2
+Version: 3.8.2.0-0rpi18rpi1
 Depends: dconf-gsettings-backend | gsettings-backend
 Recommends: epiphany-browser
-Size: 2120142
+Size: 2122692
 Description: Data files for the GNOME web browser
  Epiphany is a simple yet powerful GNOME web browser targeted at
  non-technical users. Its principles are simplicity and standards
@@ -3474,25 +3513,6 @@ Description: X11 Resource extension library
  .
  This module can be found at
  git://anongit.freedesktop.org/git/xorg/lib/libXRes
-
-Package: libfm-gtk-bin
-Priority: extra
-Section: misc
-Installed-Size: 124
-Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
-Architecture: armhf
-Source: libfm
-Version: 0.1.17-2.1
-Replaces: libfm-gtk0
-Depends: libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo2 (>= 1.2.4), libfm-gtk1 (>= 0.1.12), libfm1 (>= 0.1.12), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.24.0), libgtk2.0-0 (>= 2.12.0), libmenu-cache1, libpango1.0-0 (>= 1.14.0)
-Size: 14958
-Description: file management support (utilities)
- LibFM provides file management functions built on top of Glib/GIO
- giving a convenient higher-level API.
- .
- This package contains the utilities which are used by the libraries
- and other packages.
-Homepage: http://pcmanfm.sourceforge.net/
 
 Package: libgif4
 Priority: optional
@@ -3536,18 +3556,18 @@ Homepage: http://www.citi.umich.edu/projects/nfsv4/linux/
 Package: xserver-xorg-core
 Priority: optional
 Section: x11
-Installed-Size: 3511
+Installed-Size: 3629
 Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
 Architecture: armhf
 Source: xorg-server
-Version: 2:1.12.4-6+deb7u2
+Version: 2:1.12.4-6+deb7u6
 Provides: xorg-input-abi-16, xorg-video-abi-12
-Depends: xserver-common (>= 2:1.12.4-6+deb7u2), keyboard-configuration, udev (>= 149), libaudit0 (>= 1.7.13), libc6 (>= 2.13-28), libdrm2 (>= 2.3.1), libgcc1 (>= 1:4.4.0), libgcrypt11 (>= 1.4.5), libpciaccess0 (>= 0.12.902), libpixman-1-0 (>= 0.21.6), libselinux1 (>= 2.0.82), libudev0 (>= 154), libxau6, libxdmcp6, libxfont1 (>= 1:1.4.2)
+Depends: xserver-common (>= 2:1.12.4-6+deb7u6), keyboard-configuration, udev (>= 149), libaudit0 (>= 1.7.13), libc6 (>= 2.13-28), libdrm2 (>= 2.3.1), libgcc1 (>= 1:4.4.0), libgcrypt11 (>= 1.4.5), libpciaccess0 (>= 0.12.902), libpixman-1-0 (>= 0.21.6), libselinux1 (>= 2.0.82), libudev0 (>= 154), libxau6, libxdmcp6, libxfont1 (>= 1:1.4.2)
 Recommends: libgl1-mesa-dri (>= 7.10.2-4)
 Suggests: xfonts-100dpi | xfonts-75dpi, xfonts-scalable
 Breaks: libgl1-mesa-dri (<< 7.10.2-4), libgl1-mesa-dri-experimental (<< 7.10.2-4), xserver-xorg-input, xserver-xorg-input-2, xserver-xorg-input-2.1, xserver-xorg-input-4, xserver-xorg-input-7, xserver-xorg-input-joystick (<= 1:1.5.0-3), xserver-xorg-input-synaptics (<= 1.2.2-1), xserver-xorg-input-tslib (<= 0.0.6-3), xserver-xorg-input-vmmouse (<= 1:12.6.5-4), xserver-xorg-input-wacom (<= 0.10.5+20100415-1), xserver-xorg-video, xserver-xorg-video-1.0, xserver-xorg-video-1.9, xserver-xorg-video-2, xserver-xorg-video-4, xserver-xorg-video-5, xserver-xorg-video-6, xserver-xorg-video-cyrix (<= 1:1.1.0-8), xserver-xorg-video-i810 (<< 2:2.4), xserver-xorg-video-imstt (<= 1:1.1.0-7), xserver-xorg-video-nsc (<= 1:2.8.3-4), xserver-xorg-video-sunbw2 (<= 1:1.1.0-5), xserver-xorg-video-v4l (<< 1:0.2.0), xserver-xorg-video-vga (<= 1:4.1.0-8)
 Conflicts: xserver-xorg-input-evtouch
-Size: 1588800
+Size: 1606762
 Description: Xorg X server - core server
  The Xorg X server is an X server for several architectures and operating
  systems, which is derived from the XFree86 4.x series of X servers.
@@ -3568,13 +3588,13 @@ Maintainer: Sam Hartman <hartmans@debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: krb5
-Version: 1.10.1+dfsg-5+deb7u2
+Version: 1.10.1+dfsg-5+deb7u3
 Depends: libc6 (>= 2.13-28), libkeyutils1, libkrb5support0 (>= 1.7dfsg~beta2)
 Pre-Depends: multiarch-support
 Suggests: krb5-doc, krb5-user
 Breaks: libgssapi-krb5-2 (<= 1.10+dfsg~alpha1), libkrb5-3 (<= 1.8~aa)
 Conflicts: libkrb53
-Size: 112576
+Size: 112644
 Description: MIT Kerberos runtime libraries - Crypto Library
  Kerberos is a system for authenticating users and services on a network.
  Kerberos is a trusted third-party service.  That means that there is a
@@ -3602,6 +3622,24 @@ Description: network-related giomodules for GLib
  This package contains various network related extensions for the GIO
  library.
 
+Package: fonts-roboto
+Priority: optional
+Section: fonts
+Installed-Size: 2547
+Maintainer: Debian Fonts Task Force <pkg-fonts-devel@lists.alioth.debian.org>
+Architecture: all
+Multi-Arch: foreign
+Source: fonts-android
+Version: 1:4.3-3~bpo70+1
+Pre-Depends: dpkg (>= 1.15.6~)
+Size: 724862
+Description: sans-serif font family released with Android Ice Cream Sandwich
+ This package contains fonts released with Android Ice Cream Sandwich OS.
+ Google describes the font as "modern yet approachable and emotional". This
+ family includes regular and oblique styles of Thin, Light, Regular, Medium,
+ Bold, Black, and Condensed widths.
+Homepage: https://android.googlesource.com/platform/frameworks/base/
+
 Package: libdirac-encoder0
 Priority: optional
 Section: libs
@@ -3623,6 +3661,29 @@ Description: open and royalty free high quality video codec - encoder library
  .
  This package contains the dirac encoder library.
 Homepage: http://diracvideo.org/
+
+Package: python3-pygame
+Priority: optional
+Section: python
+Installed-Size: 5777
+Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
+Architecture: armhf
+Source: pygame
+Version: 1.9.2~pre~r3348-2
+Depends: fonts-freefont-ttf, python3-numpy (>= 1:1.6.1), python3-numpy-abi9, python3 (>= 3.2.3-3~), python3 (<< 3.3), libc6 (>= 2.13-28), libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.4.0), libjpeg8 (>= 8c), libpng12-0 (>= 1.2.13-4), libportmidi0, libsdl-image1.2 (>= 1.2.10), libsdl-mixer1.2, libsdl-ttf2.0-0, libsdl1.2debian (>= 1.2.11), libx11-6, zlib1g (>= 1:1.1.4)
+Suggests: timidity
+Size: 2504838
+Description: SDL bindings for games development in Python (Python 3)
+ A multimedia development kit for Python. Pygame provides modules for you
+ to access the video display, play sounds, track time, read the mouse and
+ joystick, control the CD player, render true type fonts and more. It does
+ this using mainly the cross-platform SDL library, a lightweight wrapper
+ to OS-specific APIs.
+ .
+ This package also includes Pygame's API documentation and examples.
+ .
+ This is the Python 3 version of the package.
+Homepage: http://www.pygame.org/
 
 Package: libboost-iostreams1.46.1
 Priority: important
@@ -3666,11 +3727,11 @@ Maintainer: Daniel Baumann <daniel.baumann@progress-technologies.net>
 Architecture: armhf
 Multi-Arch: same
 Source: file
-Version: 5.11-2+deb7u3
+Version: 5.11-2+deb7u7
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
 Suggests: file
-Size: 198734
+Size: 200858
 Description: File type determination library using "magic" numbers
  This library can be used to classify files according to magic number tests. It
  implements the core functionality of the file command.
@@ -3837,16 +3898,16 @@ Homepage: http://abstrakraft.org/cwiid/
 Package: libwebkitgtk-3.0-0
 Priority: optional
 Section: libs
-Installed-Size: 24734
+Installed-Size: 24757
 Maintainer: Debian WebKit Maintainers <pkg-webkit-maintainers@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: webkitgtk
-Version: 2.4.1-1rpi24rpi1
-Depends: libjavascriptcoregtk-3.0-0 (= 2.4.1-1rpi24rpi1), libatk1.0-0 (>= 2.7.91), libc6 (>= 2.13-28), libcairo-gobject2 (>= 1.10.0), libcairo2 (>= 1.12.0), libdbus-1-3 (>= 1.0.2), libdbus-glib-1-2 (>= 0.78), libenchant1c2a (>= 1.6), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.4.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libgeoclue0 (>= 0.11.1+git20091217), libglib2.0-0 (>= 2.37.3), libgstreamer-plugins-base1.0-0 (>= 1.2.0), libgstreamer1.0-0 (>= 1.2.0), libgtk-3-0 (>= 3.10.0), libharfbuzz-icu0 (>= 0.9.18), libharfbuzz0a (>= 0.9.18), libicu48 (>= 4.8-1), libjpeg8 (>= 8c), libpango-1.0-0 (>= 1.30.0), libpangocairo-1.0-0 (>= 1.30.0), libpangoft2-1.0-0 (>= 1.30.0), libpng12-0 (>= 1.2.13-4), libsecret-1-0 (>= 0.7), libsoup2.4-1 (>= 2.42.0), libsqlite3-0 (>= 3.5.9), libstdc++6 (>= 4.8.1), libwebp2, libx11-6, libxml2 (>= 2.7.4), libxrender1, libxslt1.1 (>= 1.1.25), libxt6, zlib1g (>= 1:1.2.0), libwebkitgtk-3.0-common (>= 2.4.1)
+Version: 2.4.1-1rpi35rpi1
+Depends: libjavascriptcoregtk-3.0-0 (= 2.4.1-1rpi35rpi1), libatk1.0-0 (>= 2.7.91), libc6 (>= 2.13-28), libcairo-gobject2 (>= 1.10.0), libcairo2 (>= 1.12.0), libdbus-1-3 (>= 1.0.2), libdbus-glib-1-2 (>= 0.78), libenchant1c2a (>= 1.6), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.4.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libgeoclue0 (>= 0.11.1+git20091217), libglib2.0-0 (>= 2.37.3), libgstreamer-plugins-base1.0-0 (>= 1.2.0), libgstreamer1.0-0 (>= 1.2.0), libgtk-3-0 (>= 3.10.0), libharfbuzz-icu0 (>= 0.9.18), libharfbuzz0a (>= 0.9.18), libicu48 (>= 4.8-1), libjpeg8 (>= 8c), libpango-1.0-0 (>= 1.30.0), libpangocairo-1.0-0 (>= 1.30.0), libpangoft2-1.0-0 (>= 1.30.0), libpng12-0 (>= 1.2.13-4), libsecret-1-0 (>= 0.7), libsoup2.4-1 (>= 2.42.0), libsqlite3-0 (>= 3.5.9), libstdc++6 (>= 4.8.1), libwebp2, libx11-6, libxml2 (>= 2.7.4), libxrender1, libxslt1.1 (>= 1.1.25), libxt6, zlib1g (>= 1:1.2.0), libwebkitgtk-3.0-common (>= 2.4.1)
 Pre-Depends: multiarch-support
 Recommends: gstreamer1.0-plugins-base, gstreamer1.0-plugins-good, libcairo2 (>= 1.12.14), libpixman-1-0 (>= 0.33.1+git20140423-00cf82-rpi1), libglib2.0-0 (>= 2.40.0-3rpi1), gstreamer1.0-plugins-bad, gstreamer1.0-libav, gstreamer1.0-omx, gstreamer1.0-alsa
-Size: 4842100
+Size: 4846810
 Description: Web content engine library for GTK+
  WebKit is a web content engine, derived from KHTML and KJS from KDE, and
  used primarily in Apple's Safari browser.  It is made to be embedded in
@@ -4121,11 +4182,11 @@ Description: X11 miscellaneous extension library
 Package: raspberrypi-artwork
 Priority: extra
 Section: x11
-Installed-Size: 92
+Installed-Size: 105
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: all
-Version: 20120715
-Size: 53810
+Version: 20141115
+Size: 75042
 Description: Copy of the Raspberry Pi logo
 Homepage: https://github.com/asb/raspberrypi-artwork
 
@@ -4184,22 +4245,24 @@ Description: touch screen library
  filters include jitter smoothing and the calibration transform.
 Homepage: http://tslib.berlios.de/
 
-Package: libfm-gtk1
-Priority: extra
+Package: libfm-gtk4
+Priority: optional
 Section: libs
-Installed-Size: 258
+Installed-Size: 450
 Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
 Architecture: armhf
+Multi-Arch: same
 Source: libfm
-Version: 0.1.17-2.1
-Depends: libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo2 (>= 1.2.4), libfm1 (= 0.1.17-2.1), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.31.8), libgtk2.0-0 (>= 2.16.0), libmenu-cache1, libpango1.0-0 (>= 1.18.0)
+Version: 1.2.3-1
+Depends: libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libfm4 (= 1.2.3-1), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgtk2.0-0 (>= 2.24.0), libmenu-cache1, libpango-1.0-0 (>= 1.20.0), libpangocairo-1.0-0 (>= 1.14.0), libpangoft2-1.0-0 (>= 1.14.0), libfm-gtk-data (>= 1.2.0~)
 Pre-Depends: multiarch-support
-Size: 79300
-Description: file management support (GTK+ GUI library)
+Suggests: libfm-tools, nautilus-actions
+Size: 187136
+Description: file management support (GTK+ 2.0 GUI library)
  LibFM provides file management functions built on top of Glib/GIO
  giving a convenient higher-level API.
  .
- This package contains the GTK+ GUI.
+ This package contains the GTK+ version 2.0 GUI.
 Homepage: http://pcmanfm.sourceforge.net/
 
 Package: libdpkg-perl
@@ -4361,11 +4424,11 @@ Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 Architecture: armhf
 Multi-Arch: foreign
 Source: eglibc
-Version: 2.13-38+rpi2+deb7u3
+Version: 2.13-38+rpi2+deb7u7
 Replaces: libc0.1-dev, libc0.3-dev, libc6-dev, libc6.1-dev
 Depends: libc6 (>= 2.13-28), libc6 (<< 2.14)
 Recommends: manpages-dev
-Size: 222562
+Size: 223100
 Description: Embedded GNU C Library: Development binaries
  This package contains utility programs related to the GNU C Library
  development package.
@@ -4414,14 +4477,14 @@ Description: gtop system monitoring library (shared)
 Package: dbus
 Priority: optional
 Section: admin
-Installed-Size: 804
+Installed-Size: 811
 Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: foreign
-Version: 1.6.8-1+deb7u3
+Version: 1.6.8-1+deb7u6
 Depends: libc6 (>= 2.13-28), libdbus-1-3 (>= 1.0.2), libexpat1 (>= 2.0.1), libselinux1 (>= 1.32), libsystemd-login0 (>= 31), adduser, lsb-base (>= 3.2-14)
 Suggests: dbus-x11
-Size: 350850
+Size: 353372
 Description: simple interprocess messaging system (daemon and utilities)
  D-Bus is a message bus, used for sending messages between applications.
  Conceptually, it fits somewhere in between raw sockets and CORBA in
@@ -4479,11 +4542,11 @@ Maintainer: APT Development Team <deity@lists.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: apt
-Version: 0.9.7.9+rpi1+deb7u2
+Version: 0.9.7.9+rpi1+deb7u7
 Depends: libbz2-1.0, libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libstdc++6 (>= 4.6), zlib1g (>= 1:1.2.3.3)
 Pre-Depends: multiarch-support
 Breaks: apt (<< 0.9.4~)
-Size: 857636
+Size: 858950
 Description: package managment runtime library
  This library provides the common functionality for searching and
  managing packages as well as information about packages.
@@ -4595,14 +4658,14 @@ Homepage: http://www.abisource.com/projects/enchant/
 Package: omxplayer
 Priority: optional
 Section: video
-Installed-Size: 7920
+Installed-Size: 10440
 Maintainer: Sergio Conde <sergio@sconde.net>
 Architecture: armhf
-Version: 0.3.5~git20140322~39e6342
+Version: 0.3.6~git20150210~337004e
 Provides: omxplayer
-Depends: libpcre3, libfreetype6, fonts-freefont-ttf, dbus, libssl1.0.0
+Depends: libpcre3, libfreetype6, fonts-freefont-ttf, dbus, libssl1.0.0, libsmbclient, libssh-4
 Suggests: fbset, x11-xserver-utils
-Size: 2897306
+Size: 3575808
 Description: Command line media player for Raspberry Pi
  .
  It plays all media files supported by the Raspberry Pi
@@ -5157,13 +5220,13 @@ Homepage: http://libimobiledevice.org/
 Package: file
 Priority: standard
 Section: utils
-Installed-Size: 104
+Installed-Size: 109
 Maintainer: Daniel Baumann <daniel.baumann@progress-technologies.net>
 Architecture: armhf
 Multi-Arch: foreign
-Version: 5.11-2+deb7u3
-Depends: libc6 (>= 2.13-28), libmagic1 (= 5.11-2+deb7u3), zlib1g (>= 1:1.1.4)
-Size: 51720
+Version: 5.11-2+deb7u7
+Depends: libc6 (>= 2.13-28), libmagic1 (= 5.11-2+deb7u7), zlib1g (>= 1:1.1.4)
+Size: 52998
 Description: Determines file type using "magic" numbers
  File tests each argument in an attempt to classify it. There are three sets of
  tests, performed in this order: filesystem tests, magic number tests, and
@@ -5298,13 +5361,13 @@ Homepage: http://www.fluidsynth.org/
 Package: python3-rpi.gpio
 Priority: optional
 Section: python
-Installed-Size: 89
+Installed-Size: 95
 Maintainer: Ben Croston <ben@croston.org>
 Architecture: armhf
 Source: rpi.gpio
-Version: 0.5.6-1
+Version: 0.5.11-1
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), python3 (>= 3.2.3-3~), python3 (<< 3.3)
-Size: 23162
+Size: 26714
 Description: Python 3 GPIO module for Raspberry Pi
  This is the RPi.GPIO Python 3 module, for supporting GPIO on a
  Raspberry Pi
@@ -5503,15 +5566,15 @@ Homepage: http://mesa3d.sourceforge.net/
 Package: libapt-inst1.5
 Priority: important
 Section: libs
-Installed-Size: 690
+Installed-Size: 691
 Maintainer: APT Development Team <deity@lists.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: apt
-Version: 0.9.7.9+rpi1+deb7u2
+Version: 0.9.7.9+rpi1+deb7u7
 Depends: libapt-pkg4.12 (>= 0.8.16~exp9), libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libstdc++6 (>= 4.4.0)
 Pre-Depends: multiarch-support
-Size: 163994
+Size: 164346
 Description: deb package format runtime library
  This library provides methods to query and extract information
  from deb packages. This includes the control data and the package
@@ -5680,11 +5743,11 @@ Installed-Size: 15120
 Maintainer: GNU Libc Maintainers <debian-glibc@lists.debian.org>
 Architecture: all
 Source: eglibc
-Version: 2.13-38+rpi2+deb7u3
+Version: 2.13-38+rpi2+deb7u7
 Replaces: base-config, lliurex-belocs-locales-data
 Depends: glibc-2.13-1, debconf (>= 0.5) | debconf-2.0
 Conflicts: base-config, belocs-locales-bin, belocs-locales-data
-Size: 5711486
+Size: 5711528
 Description: Embedded GNU C Library: National Language (locale) data [support]
  Machine-readable data files, shared objects and programs used by the
  C library for localization (l10n) and internationalization (i18n) support.
@@ -5918,6 +5981,25 @@ Description: freedesktop.org menu compliant window manager scripts
   * Menu Specification Version 0.8
   * Desktop Entry Specification Version 0.9.4
 
+Package: libfm-gtk-data
+Priority: optional
+Section: misc
+Installed-Size: 178
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Architecture: all
+Multi-Arch: foreign
+Source: libfm
+Version: 1.2.3-1
+Replaces: libfm-gtk0
+Breaks: libfm-gtk-bin (<< 1.0), libfm-gtk0
+Size: 33772
+Description: file management support (GTK+ library common data)
+ LibFM provides file management functions built on top of Glib/GIO,
+ giving a convenient higher-level API.
+ .
+ This package contains the common data of the GTK+ library.
+Homepage: http://pcmanfm.sourceforge.net/
+
 Package: libzbar0
 Priority: optional
 Section: libs
@@ -6036,14 +6118,14 @@ Homepage: http://libdv.sourceforge.net/
 Package: curl
 Priority: optional
 Section: web
-Installed-Size: 351
+Installed-Size: 352
 Maintainer: Alessandro Ghedini <ghedo@debian.org>
 Architecture: armhf
-Version: 7.26.0-1+wheezy9
+Version: 7.26.0-1+wheezy12
 Replaces: curl-ssl
 Provides: curl-ssl
-Depends: libc6 (>= 2.13-28), libcurl3 (= 7.26.0-1+wheezy9), zlib1g (>= 1:1.1.4)
-Size: 267584
+Depends: libc6 (>= 2.13-28), libcurl3 (= 7.26.0-1+wheezy12), zlib1g (>= 1:1.1.4)
+Size: 267768
 Description: command line tool for transferring data with URL syntax
  curl is a command line tool for transferring data with URL syntax, supporting
  DICT, FILE, FTP, FTPS, GOPHER, HTTP, HTTPS, IMAP, IMAPS, LDAP, POP3, POP3S,
@@ -6096,13 +6178,14 @@ Homepage: http://pi.minecraft.net/
 Package: lxpanel
 Priority: optional
 Section: x11
-Installed-Size: 2404
+Installed-Size: 636
 Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
 Architecture: armhf
-Version: 0.5.10-1
-Depends: libasound2 (>= 1.0.16), libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo2 (>= 1.2.4), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.4.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.31.8), libgtk2.0-0 (>= 2.24.0), libiw30 (>= 30~pre1), libmenu-cache1, libpango1.0-0 (>= 1.14.0), libwnck22 (>= 2.30.0-3), libx11-6, lxmenu-data
+Version: 0.7.1-2+raspi
+Depends: libasound2 (>= 1.0.16), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libfm-gtk4 (>= 1.2.0), libfm4 (>= 1.2.0), libgcc1 (>= 1:4.4.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgtk2.0-0 (>= 2.24.0), libiw30 (>= 30~pre1), libmenu-cache1, libpango-1.0-0 (>= 1.14.0), libwnck22 (>= 2.30.0-3), libx11-6, libxml2 (>= 2.7.4), lxmenu-data, lxpanel-data (= 0.7.1-2+raspi), libfm-modules
+Recommends: xkb-data
 Suggests: lxsession | menu, iceweasel | www-browser
-Size: 411558
+Size: 219656
 Description: LXDE panel
  LXPanel is a GUI application for the Lightweight X11 Desktop Environment
  (LXDE).
@@ -6621,13 +6704,13 @@ Description: GNU readline and history libraries, run-time libraries
 Package: libraspberrypi0
 Priority: extra
 Section: libs
-Installed-Size: 1100
+Installed-Size: 2617
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: armhf
 Source: raspberrypi-firmware
-Version: 1.20140908-1
-Depends: raspberrypi-bootloader (= 1.20140908-1)
-Size: 428618
+Version: 1.20150214-1
+Depends: raspberrypi-bootloader (= 1.20150214-1)
+Size: 1078372
 Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV
  This package contains implementations of EGL, OpenGL ES, OpenVG, OpenWF
  Composition, and others for the Raspberry Pi's VideoCore IV multimedia
@@ -6665,14 +6748,14 @@ Section: gnome
 Installed-Size: 2053
 Maintainer: Josselin Mouette <joss@debian.org>
 Architecture: armhf
-Version: 3.8.2.0-0rpi14rpi2
+Version: 3.8.2.0-0rpi18rpi1
 Replaces: epiphany-gecko (<< 2.28), epiphany-webkit (<< 2.28)
 Provides: gnome-www-browser, www-browser
-Depends: epiphany-browser-data (>= 3.8), epiphany-browser-data (<< 3.9), libavahi-client3 (>= 0.6.16), libavahi-common3 (>= 0.6.16), libavahi-gobject0 (>= 0.6.22), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgnome-desktop-3-2 (>= 3.2.0), libgtk-3-0 (>= 3.5.12), libnotify4 (>= 0.7.0), libnspr4 (>= 2:4.9-2~) | libnspr4-0d (>= 1.8.0.10), libnss3 (>= 2:3.13.4-2~) | libnss3-1d (>= 3.12.0~1.9b1), libpango-1.0-0 (>= 1.20.0), libpangocairo-1.0-0 (>= 1.14.0), libsecret-1-0 (>= 0.14), libsoup2.4-1 (>= 2.41.90), libsqlite3-0 (>= 3.5.9), libwebkitgtk-3.0-0 (>= 1.10.1), libwnck-3-0 (>= 2.91.6), libx11-6, libxml2 (>= 2.7.4), libxslt1.1 (>= 1.1.25), gnome-icon-theme (>= 2.9.90), gnome-icon-theme-symbolic, dbus-x11, iso-codes, gsettings-desktop-schemas
-Recommends: yelp, evince, cgroup-bin, ca-certificates, gnome-themes-standard
+Depends: epiphany-browser-data (>= 3.8), epiphany-browser-data (<< 3.9), libavahi-client3 (>= 0.6.16), libavahi-common3 (>= 0.6.16), libavahi-gobject0 (>= 0.6.22), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgnome-desktop-3-2 (>= 3.2.0), libgtk-3-0 (>= 3.5.12), libnotify4 (>= 0.7.0), libnspr4 (>= 2:4.9-2~) | libnspr4-0d (>= 1.8.0.10), libnss3 (>= 2:3.13.4-2~) | libnss3-1d (>= 3.12.0~1.9b1), libpango-1.0-0 (>= 1.20.0), libpangocairo-1.0-0 (>= 1.14.0), libsecret-1-0 (>= 0.14), libsoup2.4-1 (>= 2.41.90), libsqlite3-0 (>= 3.5.9), libwebkitgtk-3.0-0 (>= 1.10.1), libwnck-3-0 (>= 2.91.6), libx11-6, libxml2 (>= 2.7.4), libxslt1.1 (>= 1.1.25), gnome-icon-theme (>= 2.9.90), gnome-icon-theme-symbolic, dbus-x11, iso-codes, gsettings-desktop-schemas, gnome-themes-standard
+Recommends: yelp, evince, cgroup-bin, ca-certificates
 Breaks: gnome-session (<< 3.4.2.1-3), gnome-shell (<< 3.4.2-1)
 Conflicts: epiphany-extensions (<< 3.7.91), epiphany-gecko (<< 2.28), epiphany-webkit (<< 2.28), swfdec-mozilla
-Size: 1490482
+Size: 1492302
 Description: Intuitive GNOME web browser
  Epiphany is a simple yet powerful GNOME web browser targeted at
  non-technical users. Its principles are simplicity and standards
@@ -6773,14 +6856,14 @@ Package: libkeyutils1
 Priority: standard
 Section: libs
 Installed-Size: 47
-Maintainer: Daniel Baumann <daniel.baumann@progress-technologies.net>
+Maintainer: Christian Kastner <debian@kvr.at>
 Architecture: armhf
 Multi-Arch: same
 Source: keyutils
-Version: 1.5.5-3
+Version: 1.5.5-3+deb7u1
 Depends: libc6 (>= 2.13-28)
 Pre-Depends: multiarch-support
-Size: 7754
+Size: 7880
 Description: Linux Key Management Utilities (library)
  Keyutils is a set of utilities for managing the key retention facility in the
  kernel, which can be used by filesystems, block devices and more to gain and
@@ -6794,13 +6877,13 @@ Homepage: http://people.redhat.com/~dhowells/keyutils/
 Package: libraspberrypi-doc
 Priority: extra
 Section: libdevel
-Installed-Size: 32744
+Installed-Size: 32815
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: armhf
 Source: raspberrypi-firmware
-Version: 1.20140908-1
-Depends: libraspberrypi0 (= 1.20140908-1)
-Size: 31522892
+Version: 1.20150214-1
+Depends: libraspberrypi0 (= 1.20150214-1)
+Size: 31528490
 Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV (headers)
  This package contains headers, example code, and other development files for
  implementations of EGL, OpenGL ES, OpenVG, OpenWF Composition, and others for
@@ -7092,6 +7175,28 @@ Description: Debian system administration guide, English original
  .
  The English original version.
 Homepage: http://www.debian.org/doc/user-manuals#quick-reference
+
+Package: libportaudio2
+Priority: optional
+Section: libs
+Installed-Size: 199
+Maintainer: Debian VoIP Team <pkg-voip-maintainers@lists.alioth.debian.org>
+Architecture: armhf
+Multi-Arch: same
+Source: portaudio19
+Version: 19+svn20111121-1
+Depends: libasound2 (>= 1.0.16), libc6 (>= 2.13-28), libjack-jackd2-0 (>= 1.9.5~dfsg-14) | libjack-0.116
+Pre-Depends: multiarch-support
+Size: 69048
+Description: Portable audio I/O - shared library
+ PortAudio is a portable audio I/O library designed for cross-platform
+ support of audio. It uses a callback mechanism to request audio
+ processing.  Audio can be generated in various formats, including 32
+ bit floating point, and will be converted to the native format
+ internally.
+ .
+ This package contains the shared library.
+Homepage: http://www.portaudio.com/
 
 Package: libopenjpeg2
 Priority: extra
@@ -7471,8 +7576,8 @@ Maintainer: Sam Hartman <hartmans@debian.org>
 Architecture: all
 Multi-Arch: foreign
 Source: krb5
-Version: 1.10.1+dfsg-5+deb7u2
-Size: 1503172
+Version: 1.10.1+dfsg-5+deb7u3
+Size: 1503288
 Description: Internationalization support for MIT Kerberos
  Kerberos is a system for authenticating users and services on a network.
  Kerberos is a trusted third-party service.  That means that there is a
@@ -7637,6 +7742,18 @@ Description: The Theora Video Compression Codec
  and has improved on it significantly with the merging of code from the
  Thusnelda branch.
 Homepage: http://www.theora.org/
+
+Package: nuscratch
+Priority: optional
+Section: education
+Installed-Size: 19841
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Architecture: armhf
+Version: 20150114-1
+Depends: scratch
+Size: 9051108
+Description: Scratch running on the Stack (Cog) VM
+Homepage: https://github.com/raspberrypi/scratch
 
 Package: python2.7-minimal
 Priority: optional
@@ -8140,13 +8257,13 @@ Homepage: http://dict-common.alioth.debian.org
 Package: python-rpi.gpio
 Priority: optional
 Section: python
-Installed-Size: 160
+Installed-Size: 174
 Maintainer: Ben Croston <ben@croston.org>
 Architecture: armhf
 Source: rpi.gpio
-Version: 0.5.6-1
+Version: 0.5.11-1
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), python (>= 2.6.6-7~), python (<< 2.8)
-Size: 39048
+Size: 45508
 Description: Python GPIO module for Raspberry Pi
  This is the RPi.GPIO Python module, for supporting GPIO on a
  Raspberry Pi
@@ -8160,11 +8277,11 @@ Maintainer: Sam Hartman <hartmans@debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: krb5
-Version: 1.10.1+dfsg-5+deb7u2
+Version: 1.10.1+dfsg-5+deb7u3
 Depends: libc6 (>= 2.13-28), libkeyutils1
 Pre-Depends: multiarch-support
 Conflicts: libkrb53
-Size: 46312
+Size: 46614
 Description: MIT Kerberos runtime libraries - Support library
  Kerberos is a system for authenticating users and services on a network.
  Kerberos is a trusted third-party service.  That means that there is a
@@ -8314,10 +8431,10 @@ Installed-Size: 2131
 Maintainer: Noël Köthe <noel@debian.org>
 Architecture: armhf
 Multi-Arch: foreign
-Version: 1.13.4-3+deb7u1
+Version: 1.13.4-3+deb7u2
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libgcrypt11 (>= 1.4.5), libgnutls26 (>= 2.12.17-0), libgpg-error0 (>= 1.10), libidn11 (>= 1.13), zlib1g (>= 1:1.1.4), dpkg (>= 1.15.4) | install-info
 Conflicts: wget-ssl
-Size: 748940
+Size: 753546
 Description: retrieves files from the web
  Wget is a network utility to retrieve files from the web
  using HTTP(S) and FTP, the two most widely used internet
@@ -8712,12 +8829,13 @@ Homepage: http://groff.ffii.org/
 Package: fake-hwclock
 Priority: extra
 Section: admin
-Installed-Size: 58
+Installed-Size: 73
 Maintainer: Steve McIntyre <93sam@debian.org>
 Architecture: all
-Version: 0.5
-Suggests: cron, ntp
-Size: 5326
+Version: 0.8
+Depends: init-system-helpers (>= 1.18~)
+Suggests: cron | cron-daemon, ntp
+Size: 6358
 Description: Save/restore system clock on machines without working RTC hardware
  Some machines don't have a working realtime clock (RTC) unit, or no
  driver for the hardware that does exist. fake-hwclock is a simple set
@@ -8733,16 +8851,16 @@ Description: Save/restore system clock on machines without working RTC hardware
 Package: ntp
 Priority: optional
 Section: net
-Installed-Size: 1055
+Installed-Size: 1060
 Maintainer: Debian NTP Team <pkg-ntp-maintainers@lists.alioth.debian.org>
 Architecture: armhf
-Version: 1:4.2.6.p5+dfsg-2
+Version: 1:4.2.6.p5+dfsg-2+deb7u3
 Depends: adduser, lsb-base (>= 3.2-13), netbase, libc6 (>= 2.13-28), libcap2 (>= 2.10), libedit2 (>= 2.11-20080614-1), libgcc1 (>= 1:4.4.0), libopts25 (>= 1:5.12), libssl1.0.0 (>= 1.0.0)
 Pre-Depends: dpkg (>= 1.15.7.2)
 Recommends: perl
 Suggests: ntp-doc
 Breaks: dhcp3-client (<< 4.1.0-1)
-Size: 522910
+Size: 524788
 Description: Network Time Protocol daemon and utility programs
  NTP, the Network Time Protocol, is used to keep computer clocks
  accurate by synchronizing them over the Internet or a local network,
@@ -8761,15 +8879,15 @@ Homepage: http://support.ntp.org/
 Package: gnupg
 Priority: important
 Section: utils
-Installed-Size: 4810
+Installed-Size: 4811
 Maintainer: Debian GnuPG-Maintainers <pkg-gnupg-maint@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: foreign
-Version: 1.4.12-7+deb7u4
+Version: 1.4.12-7+deb7u6
 Depends: libbz2-1.0, libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libreadline6 (>= 6.0), libusb-0.1-4 (>= 2:0.1.12), zlib1g (>= 1:1.1.4), dpkg (>= 1.15.4) | install-info, gpgv
 Recommends: libldap-2.4-2 (>= 2.4.7), gnupg-curl
 Suggests: gnupg-doc, xloadimage | imagemagick | eog, libpcsclite1
-Size: 1899256
+Size: 1902470
 Description: GNU privacy guard - a free PGP replacement
  GnuPG is GNU's tool for secure communication and data storage.
  It can be used to encrypt data and to create digital signatures.
@@ -9004,13 +9122,13 @@ Homepage: http://www.mega-nerd.com/libsndfile/
 Package: xdg-utils
 Priority: optional
 Section: utils
-Installed-Size: 300
+Installed-Size: 301
 Maintainer: Per Olofsson <pelle@debian.org>
 Architecture: all
-Version: 1.1.0~rc1+git20111210-6
+Version: 1.1.0~rc1+git20111210-6+deb7u2
 Recommends: libfile-mimeinfo-perl, libnet-dbus-perl, libx11-protocol-perl, x11-utils, x11-xserver-utils
 Suggests: gvfs-bin
-Size: 83664
+Size: 82480
 Description: desktop integration utilities from freedesktop.org
  xdg-utils contains utilities for integrating applications with the
  desktop environment, regardless of which desktop environment is used.
@@ -9118,15 +9236,15 @@ Homepage: http://fuse.sourceforge.net/
 Package: gnome-themes-standard-data
 Priority: optional
 Section: gnome
-Installed-Size: 6090
+Installed-Size: 6115
 Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
 Architecture: all
 Multi-Arch: foreign
 Source: gnome-themes-standard
-Version: 3.9.91+557c2ba-rpi4rpi2
+Version: 3.9.91+557c2ba-rpi5rpi1
 Replaces: gnome-themes-standard (<< 3.6.2-1)
 Breaks: gnome-themes-standard (<< 3.6.2-1)
-Size: 2457822
+Size: 2457768
 Description: Data files for GNOME standard themes
  This package contains data files for standard themes for the GNOME
  desktop environment.
@@ -9207,6 +9325,24 @@ Description: network-related giomodules for GLib - D-Bus services
  This package contains D-Bus services that are used by the GIO network
  extensions in glib-networking, for actions that need to be done in a
  separate process.
+
+Package: lxpanel-data
+Priority: optional
+Section: x11
+Installed-Size: 2914
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Architecture: all
+Source: lxpanel
+Version: 0.7.1-2+raspi
+Replaces: lxpanel (<< 0.7.0)
+Breaks: lxpanel (<< 0.7.0)
+Size: 1253008
+Description: LXDE panel (data files)
+ LXPanel is a GUI application for the Lightweight X11 Desktop Environment
+ (LXDE).
+ .
+ This package contains the data required for panel.
+Homepage: http://www.lxde.org/
 
 Package: smbclient
 Priority: optional
@@ -9538,13 +9674,13 @@ Maintainer: Alessandro Ghedini <ghedo@debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: curl
-Version: 7.26.0-1+wheezy9
+Version: 7.26.0-1+wheezy12
 Replaces: libcurl2 (<< 1:7.11.2-2), libcurl4
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libgssapi-krb5-2 (>= 1.10+dfsg~), libidn11 (>= 1.13), libldap-2.4-2 (>= 2.4.7), librtmp0 (>= 2.3), libssh2-1 (>= 1.2.6), libssl1.0.0 (>= 1.0.1), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
 Recommends: ca-certificates
 Conflicts: libcurl4
-Size: 315542
+Size: 315896
 Description: easy-to-use client-side URL transfer library (OpenSSL flavour)
  libcurl is an easy-to-use client-side URL transfer library, supporting DICT,
  FILE, FTP, FTPS, GOPHER, HTTP, HTTPS, IMAP, IMAPS, LDAP, POP3, POP3S, RTMP,
@@ -9617,6 +9753,42 @@ Description: X11 damaged region extension library
  .
  This module can be found at
  git://anongit.freedesktop.org/git/xorg/lib/libXdamage
+
+Package: x11-xserver-utils
+Priority: optional
+Section: x11
+Installed-Size: 427
+Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+Architecture: armhf
+Version: 7.7~3
+Replaces: iceauth, sessreg, xbase-clients (<< 1:7.3), xgamma, xhost, xmodmap, xrandr, xrdb, xrefresh, xrgb, xset, xsetmode, xsetpointer, xsetroot, xstdcmap, xutils (<< 1:7.2), xvidtune
+Depends: libc6 (>= 2.13-28), libice6 (>= 1:1.0.0), libx11-6, libxaw7, libxcursor1 (>> 1.1.2), libxext6, libxi6, libxmu6, libxmuu1, libxrandr2 (>= 2:1.2.99.3), libxrender1, libxt6, libxxf86vm1, cpp
+Suggests: nickle, cairo-5c, xorg-docs-core
+Conflicts: iceauth, sessreg, xgamma, xhost, xmodmap, xrandr, xrdb, xrefresh, xrgb, xset, xsetmode, xsetpointer, xsetroot, xstdcmap, xvidtune
+Size: 180620
+Description: X server utilities
+ An X client is a program that interfaces with an X server (almost always via
+ the X libraries), and thus with some input and output hardware like a
+ graphics card, monitor, keyboard, and pointing device (such as a mouse).
+ .
+ This package provides a miscellaneous assortment of X Server utilities
+ that ship with the X Window System, including:
+  - iceauth, a tool for manipulating ICE protocol authorization records;
+  - rgb;
+  - sessreg, a simple program for managing utmp/wtmp entries;
+  - xcmsdb, a device color characteristic utility for the X Color Management
+    System;
+  - xgamma, a tool for querying and setting a monitor's gamma correction;
+  - xhost, a very dangerous program that you should never use;
+  - xmodmap, a utility for modifying keymaps and pointer button mappings in X;
+  - xrandr, a command-line interface to the RandR extension;
+  - xrdb, a tool to manage the X server resource database;
+  - xrefresh, a tool that forces a redraw of the X screen;
+  - xset, a tool for setting miscellaneous X server parameters;
+  - xsetmode and xsetpointer, tools for handling X Input devices;
+  - xsetroot, a tool for tailoring the appearance of the root window;
+  - xstdcmap, a utility to selectively define standard colormap properties;
+  - xvidtune, a tool for customizing X server modelines for your monitor.
 
 Package: libxaw7
 Priority: optional
@@ -10205,13 +10377,13 @@ Homepage: http://gstreamer.freedesktop.org
 Package: python3-pifacecommon
 Priority: optional
 Section: python
-Installed-Size: 558
+Installed-Size: 561
 Maintainer: Thomas Preston <thomas.preston@openlx.org.uk>
 Architecture: all
 Source: pifacecommon
-Version: 4.0.0-1
+Version: 4.1.2-1
 Depends: python3 (>= 3.2.3-3~)
-Size: 149606
+Size: 148074
 Description: The PiFace common functions module.
  Python 3 module for interacting with PiFace products.
  Documentation: http://piface.github.io/pifacecommon/
@@ -10233,13 +10405,13 @@ Description: X authentication utility
 Package: libraspberrypi-dev
 Priority: extra
 Section: libdevel
-Installed-Size: 3233
+Installed-Size: 3217
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: armhf
 Source: raspberrypi-firmware
-Version: 1.20140908-1
-Depends: libraspberrypi0 (= 1.20140908-1)
-Size: 765712
+Version: 1.20150214-1
+Depends: libraspberrypi0 (= 1.20150214-1)
+Size: 768688
 Description: EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV (headers)
  This package contains headers and other development files for implementations
  of EGL, OpenGL ES, OpenVG, OpenWF Composition, and others for the Raspberry
@@ -10494,9 +10666,9 @@ Section: otherosfs
 Installed-Size: 199
 Maintainer: Daniel Baumann <daniel.baumann@progress-technologies.net>
 Architecture: armhf
-Version: 3.0.13-1
+Version: 3.0.13-1+rpi1
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0)
-Size: 66860
+Size: 67402
 Description: utilities for making and checking MS-DOS FAT filesystems
  The dosfstools package includes the mkdosfs (aka mkfs.dos and mkfs.vfat) and
  dosfsck (aka fsck.msdos and fsck.vfat) utilities, which respectively make and
@@ -10571,13 +10743,13 @@ Maintainer: Roland Stigge <stigge@antcom.de>
 Architecture: armhf
 Multi-Arch: same
 Source: jasper
-Version: 1.900.1-13
+Version: 1.900.1-13+deb7u3
 Replaces: libjasper-1.700-2
-Depends: libc6 (>= 2.7), libgcc1 (>= 1:4.4.0), libjpeg8 (>= 8c)
+Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libjpeg8 (>= 8c)
 Pre-Depends: multiarch-support
 Suggests: libjasper-runtime
 Conflicts: libjasper-1.700-2
-Size: 141322
+Size: 141582
 Description: JasPer JPEG-2000 runtime library
  JasPer is a collection of software (i.e., a library and application programs)
  for the coding and manipulation of images.  This software can handle image
@@ -10946,6 +11118,26 @@ Description: Just in time compiler for Lua - common files
  by its embeddable (i.e. library) version.
 Homepage: http://luajit.org
 
+Package: libssh-4
+Priority: optional
+Section: libs
+Installed-Size: 281
+Maintainer: Laurent Bigonville <bigon@debian.org>
+Architecture: armhf
+Multi-Arch: same
+Source: libssh
+Version: 0.5.4-1+deb7u1
+Depends: libc6 (>= 2.13-28), libssl1.0.0 (>= 1.0.0), zlib1g (>= 1:1.1.4)
+Pre-Depends: multiarch-support
+Size: 115048
+Description: tiny C SSH library
+ The ssh library was designed to be used by programmers needing a working SSH
+ implementation by the mean of a library. The complete control of the client
+ is made by the programmer. With libssh, you can remotely execute programs,
+ transfer files, use a secure and transparent tunnel for your remote programs.
+ With its SFTP implementation, you can play with remote files easily.
+Homepage: http://www.libssh.org/
+
 Package: cgroup-bin
 Priority: extra
 Section: admin
@@ -10964,6 +11156,27 @@ Description: Tools to control and monitor control groups
  These tools help manipulate, control, administrate and monitor control groups
  and the associated controllers.
 Homepage: http://sourceforge.net/projects/libcg/
+
+Package: libpng12-dev
+Priority: optional
+Section: libdevel
+Installed-Size: 585
+Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
+Architecture: armhf
+Source: libpng
+Version: 1.2.49-1
+Replaces: libpng12-0-dev, libpng3-dev (<= 1.2.5)
+Provides: libpng-dev, libpng12-0-dev, libpng3-dev
+Depends: libpng12-0 (= 1.2.49-1), zlib1g-dev
+Conflicts: libpng-dev, libpng12-0-dev, libpng2 (<< 1.0.12-3), libpng2-dev
+Size: 259304
+Description: PNG library - development
+ libpng is a library implementing an interface for reading and writing
+ PNG (Portable Network Graphics) format files.
+ .
+ This package contains the header and development files needed to build
+ programs and packages using libpng.
+Homepage: http://libpng.org/pub/png/libpng.html
 
 Package: lesstif2
 Priority: optional
@@ -11225,15 +11438,15 @@ Homepage: http://www.droidfonts.com/
 Package: dbus-x11
 Priority: optional
 Section: x11
-Installed-Size: 128
+Installed-Size: 129
 Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: foreign
 Source: dbus
-Version: 1.6.8-1+deb7u3
+Version: 1.6.8-1+deb7u6
 Depends: libc6 (>= 2.13-28), libx11-6, dbus
 Breaks: x11-common (<< 1:7.5+4)
-Size: 58196
+Size: 58812
 Description: simple interprocess messaging system (X11 deps)
  D-Bus is a message bus, used for sending messages between applications.
  Conceptually, it fits somewhere in between raw sockets and CORBA in
@@ -11388,12 +11601,12 @@ Homepage: http://math-atlas.sourceforge.net/
 Package: raspi-config
 Priority: extra
 Section: unknown
-Installed-Size: 58
+Installed-Size: 70
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: all
-Version: 20140902-1
+Version: 20150131-1
 Depends: whiptail, parted, lua5.1, triggerhappy
-Size: 11546
+Size: 12892
 Description: Simple configuration for Raspberry Pi
 Homepage: https://github.com/asb/raspi-config
 
@@ -11582,14 +11795,14 @@ Homepage: http://www.python.org/
 Package: wolfram-engine
 Priority: optional
 Section: non-free/devel
-Installed-Size: 452409
+Installed-Size: 448821
 Maintainer: Wolfram Research, Inc. <raspberrypi@wolfram.com>
 Architecture: armhf
-Version: 10.0.0+2014080602
-Depends: java7-runtime | java8-runtime, libatlas3-base (>= 3.8.4-9), libpango1.0-0 (>= 1.30.0-1), libcairo2 (>= 1.12.2-3), libglib2.0-0 (>= 2.33.12+really2.32.4-5), libffi5 (>= 3.0.10-3+b3), libpixman-1-0 (>= 0.26.0-4+deb7u1), zlib1g (>= 1:1.2.7.dfsg-13), libfontconfig1 (>= 2.9.0-7.1), libfreetype6 (>= 2.4.9-1.1), libpng12-0 (>= 1.2.49-1), libexpat1 (>= 2.1.0-1+deb7u1), libuuid1 (>= 2.20.1-5.3)
+Version: 10.0.2+2015020304
+Depends: java7-runtime | java8-runtime, libatlas3-base (>= 3.8.4-9), libpango1.0-0 (>= 1.30.0-1), libcairo2 (>= 1.12.2-3), libglib2.0-0 (>= 2.33.12+really2.32.4-5), libffi5 (>= 3.0.10-3+b3), libpixman-1-0 (>= 0.26.0-4+deb7u1), zlib1g (>= 1:1.2.7.dfsg-13), libfontconfig1 (>= 2.9.0-7.1), libfreetype6 (>= 2.4.9-1.1), libpng12-0 (>= 1.2.49-1), libexpat1 (>= 2.1.0-1+deb7u1), libuuid1 (>= 2.20.1-5.3), libportaudio2, libharfbuzz0a (>= 0.9.19-1co2rpi2)
 Pre-Depends: debconf (>= 0.5) | debconf-2.0
 Recommends: oracle-java7-jdk | oracle-java8-jdk
-Size: 232966280
+Size: 229152564
 Description: Mathematica® and the Wolfram Language
  Mathematica is the world's ultimate application for computations and the only development platform fully integrating computation into complete workflows, moving you seamlessly from initial ideas all the way to deployed individual or enterprise solutions.
  .
@@ -11601,18 +11814,18 @@ Homepage: http://wolfram.com/raspi
 Package: libavutil51
 Priority: optional
 Section: libs
-Installed-Size: 203
+Installed-Size: 205
 Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: libav
-Version: 6:0.8.13-1+rpi1
+Version: 6:0.8.16-1+rpi1
 Replaces: libavutil-extra-51
 Provides: libavutil-extra-51
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0)
 Pre-Depends: multiarch-support
 Breaks: libavutil-extra-51 (<< 5:0.8.1-2)
-Size: 99692
+Size: 101464
 Description: Libav utility library
  Libav is a complete, cross-platform solution to decode, encode, record,
  convert and stream audio and video.
@@ -11718,14 +11931,14 @@ Homepage: http://web.mornfall.net/libwibble.html
 Package: python3-picamera
 Priority: extra
 Section: python
-Installed-Size: 431
+Installed-Size: 440
 Maintainer: Dave Hughes <dave@waveform.org.uk>
 Architecture: armhf
 Source: picamera
-Version: 1.8-1
+Version: 1.9-1
 Depends: python3 (>= 3.2.3-3~), libraspberrypi0, python3-numpy
 Suggests: python-picamera-docs, python3-rpi.gpio
-Size: 87612
+Size: 90050
 Description: Pure Python interface to the Raspberry Pi's camera module.
  picamera is a library for working with the Raspberry Pi's camera module from
  within Python without having to resort to subprocesses. The majority of the
@@ -12140,10 +12353,10 @@ Maintainer: Anders Kaseorg <andersk@mit.edu>
 Architecture: armhf
 Multi-Arch: same
 Source: libyaml
-Version: 0.1.4-2+deb7u4
+Version: 0.1.4-2+deb7u5
 Depends: libc6 (>= 2.13-28)
 Pre-Depends: multiarch-support
-Size: 49400
+Size: 49448
 Description: Fast YAML 1.1 parser and emitter library
  LibYAML is a C library for parsing and emitting data in YAML 1.1, a
  human-readable data serialization format.
@@ -12432,14 +12645,14 @@ Description: High-level library for managing Debian package information
 Package: libapt-pkg-dev
 Priority: optional
 Section: libdevel
-Installed-Size: 476
+Installed-Size: 477
 Maintainer: APT Development Team <deity@lists.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: apt
-Version: 0.9.7.9+rpi1+deb7u2
-Depends: libapt-pkg4.12 (= 0.9.7.9+rpi1+deb7u2), libapt-inst1.5 (= 0.9.7.9+rpi1+deb7u2), zlib1g-dev
-Size: 186360
+Version: 0.9.7.9+rpi1+deb7u7
+Depends: libapt-pkg4.12 (= 0.9.7.9+rpi1+deb7u7), libapt-inst1.5 (= 0.9.7.9+rpi1+deb7u7), zlib1g-dev
+Size: 186780
 Description: development files for APT's libapt-pkg and libapt-inst
  This package contains the header files and libraries for
  developing with APT's libapt-pkg Debian package manipulation
@@ -12495,17 +12708,19 @@ Description: X Printing Extension (Xprint) client library
  This module can be found at
  git://anongit.freedesktop.org/git/xorg/lib/libXp
 
-Package: libfm1
-Priority: extra
+Package: libfm4
+Priority: optional
 Section: libs
-Installed-Size: 178
+Installed-Size: 304
 Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
 Architecture: armhf
+Multi-Arch: same
 Source: libfm
-Version: 0.1.17-2.1
-Depends: libc6 (>= 2.13-28), libdbus-1-3 (>= 1.0.2), libdbus-glib-1-2 (>= 0.78), libglib2.0-0 (>= 2.31.8), libmenu-cache1, libfm-data, lxmenu-data
+Version: 1.2.3-1
+Depends: libc6 (>= 2.13-28), libdbus-1-3 (>= 1.0.2), libdbus-glib-1-2 (>= 0.78), libexif12, libglib2.0-0 (>= 2.37.3), libmenu-cache1, libfm-data (>= 1.2.0~), lxmenu-data
 Pre-Depends: multiarch-support
-Size: 51880
+Recommends: libfm-modules
+Size: 129378
 Description: file management support (core library)
  LibFM provides file management functions built on top of Glib/GIO,
  giving a convenient higher-level API.
@@ -12737,18 +12952,18 @@ Homepage: http://www.xkbcommon.org/
 Package: perl
 Priority: standard
 Section: perl
-Installed-Size: 11030
+Installed-Size: 11031
 Maintainer: Niko Tyni <ntyni@debian.org>
 Architecture: armhf
-Version: 5.14.2-21+rpi2+deb7u1
+Version: 5.14.2-21+rpi2+deb7u2
 Replaces: libarchive-tar-perl (<= 1.38-2), libcompress-raw-bzip2-perl, libcompress-raw-zlib-perl, libcompress-zlib-perl, libdevel-dprof-perl, libdigest-md5-perl, libdigest-sha-perl, libencode-perl, libio-compress-base-perl, libio-compress-bzip2-perl, libio-compress-perl, libio-compress-zlib-perl, libmime-base64-perl, libmodule-corelist-perl (<< 2.14-2), libstorable-perl, libsys-syslog-perl, libthreads-perl, libthreads-shared-perl, libtime-hires-perl, libtime-piece-perl, perl-base (<< 5.10.1-12), perl-doc (<< 5.8.0-1), perl-modules (<< 5.8.1-1)
 Provides: data-dumper, libcompress-raw-bzip2-perl, libcompress-raw-zlib-perl, libcompress-zlib-perl, libdevel-dprof-perl, libdigest-md5-perl, libdigest-sha-perl, libencode-perl, libio-compress-base-perl, libio-compress-bzip2-perl, libio-compress-perl, libio-compress-zlib-perl, libmime-base64-perl, libstorable-perl, libsys-syslog-perl, libthreads-perl, libthreads-shared-perl, libtime-hires-perl, libtime-piece-perl, perl5
-Depends: perl-base (= 5.14.2-21+rpi2+deb7u1), perl-modules (>= 5.14.2-21+rpi2+deb7u1), libbz2-1.0, libc6 (>= 2.13-28), libdb5.1, libgcc1 (>= 1:4.4.0), libgdbm3 (>= 1.8.3), zlib1g (>= 1:1.2.3.3)
+Depends: perl-base (= 5.14.2-21+rpi2+deb7u2), perl-modules (>= 5.14.2-21+rpi2+deb7u2), libbz2-1.0, libc6 (>= 2.13-28), libdb5.1, libgcc1 (>= 1:4.4.0), libgdbm3 (>= 1.8.3), zlib1g (>= 1:1.2.3.3)
 Recommends: netbase
 Suggests: perl-doc, libterm-readline-gnu-perl | libterm-readline-perl-perl, make
 Breaks: dh-make-perl (<< 0.73-1), ftpmirror (<< 1.96+dfsg-13), libcompress-raw-bzip2-perl (<< 2.033), libcompress-raw-zlib-perl (<< 2.033), libcompress-zlib-perl (<< 2.033), libdevel-dprof-perl (<< 20110228.00), libdigest-md5-perl (<< 2.51), libdigest-sha-perl (<< 5.71-2+deb7u1), libencode-perl (<< 2.44-1+deb7u1), libhtml-template-compiled-perl (<< 0.95-1), libio-compress-base-perl (<< 2.033), libio-compress-bzip2-perl (<< 2.033), libio-compress-perl (<< 2.033), libio-compress-zlib-perl (<< 2.033), libload-perl (<< 0.20-1), libmime-base64-perl (<< 3.13), libnet-jifty-perl (<< 0.14-1), libperl-apireference-perl (<< 0.09-1), libregexp-optimizer-perl (<< 0.15-3), libsoap-lite-perl (<< 0.712-4), libstorable-perl (<< 2.27), libsys-syslog-perl (<< 0.27), libthreads-perl (<< 1.83), libthreads-shared-perl (<< 1.37), libtime-hires-perl (<< 1.9721.01), libtime-piece-perl (<< 1.20.01), libxml-parser-lite-tree-perl (<< 0.14-1), libyaml-perl (<< 0.73-1), mrtg (<< 2.16.3-3.1), perl-doc (<< 5.14.2-1)
 Conflicts: libjson-pp-perl (<< 2.27200-2)
-Size: 3661042
+Size: 3661172
 Description: Larry Wall's Practical Extraction and Report Language
  An interpreted scripting language, known among some as "Unix's Swiss
  Army Chainsaw".
@@ -13190,16 +13405,16 @@ Homepage: http://gstreamer.freedesktop.org/modules/gst-plugins-bad.html
 Package: unzip
 Priority: optional
 Section: utils
-Installed-Size: 350
+Installed-Size: 351
 Maintainer: Santiago Vila <sanvila@debian.org>
 Architecture: armhf
 Multi-Arch: foreign
-Version: 6.0-8
+Version: 6.0-8+deb7u2
 Replaces: unzip-crypt (<< 5.41)
 Depends: libbz2-1.0, libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0)
 Suggests: zip
 Conflicts: unzip-crypt (<< 5.41)
-Size: 193168
+Size: 194082
 Description: De-archiver for .zip files
  InfoZIP's unzip program. With the exception of multi-volume archives
  (ie, .ZIP files that are split across several disks using PKZIP's /& option),
@@ -13389,13 +13604,13 @@ Homepage: http://www.alsa-project.org/
 Package: mime-support
 Priority: standard
 Section: net
-Installed-Size: 192
+Installed-Size: 132
 Maintainer: Brian White <bcwhite@pobox.com>
 Architecture: all
-Version: 3.52-1
+Version: 3.52-1+deb7u1
 Recommends: file (>= 3.27-3)
 Conflicts: a2ps (<< 4.10.4), metamail (<< 2.7-44)
-Size: 35490
+Size: 35466
 Description: MIME files 'mime.types' & 'mailcap', and support programs
  As these files can be used by all MIME compliant programs, they
  have been moved into their own package that others can depend upon.
@@ -13563,16 +13778,16 @@ Homepage: http://gstreamer.freedesktop.org
 Package: libnss3
 Priority: optional
 Section: libs
-Installed-Size: 2614
+Installed-Size: 2619
 Maintainer: Maintainers of Mozilla-related packages <pkg-mozilla-maintainers@lists.alioth.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: nss
-Version: 2:3.14.5-1+deb7u1
+Version: 2:3.14.5-1+deb7u3
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libnspr4 (>= 2:4.9-2~) | libnspr4-0d (>= 4.8.6), libsqlite3-0 (>= 3.5.9), zlib1g (>= 1:1.1.4)
 Pre-Depends: multiarch-support
 Conflicts: libnss3-1d (<< 2:3.13.4-2)
-Size: 847022
+Size: 848416
 Description: Network Security Service libraries
  This is a set of libraries designed to support cross-platform development
  of security-enabled client and server applications. It can support SSLv2
@@ -13618,10 +13833,10 @@ Maintainer: Debian/Ubuntu wpasupplicant Maintainers <pkg-wpa-devel@lists.alioth.
 Architecture: armhf
 Multi-Arch: foreign
 Source: wpa
-Version: 1.0-3
+Version: 1.0-3+deb7u1
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), libqtcore4 (>= 4:4.7.0~beta1), libqtgui4 (>= 4:4.5.3), libstdc++6 (>= 4.4.0), wpasupplicant (>= 0.7.3~), libqt4-svg
 Recommends: menu
-Size: 358836
+Size: 359414
 Description: graphical user interface for wpa_supplicant
  wpagui provides a Qt interface for choosing which configured network
  to connect to. It also provides a method for browsing 802.11 SSID scan
@@ -14345,15 +14560,15 @@ Homepage: http://www.openssh.org/
 Package: libevent-2.0-5
 Priority: standard
 Section: libs
-Installed-Size: 314
+Installed-Size: 318
 Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: libevent
-Version: 2.0.19-stable-3
+Version: 2.0.19-stable-3+deb7u1
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0)
 Pre-Depends: multiarch-support
-Size: 155584
+Size: 156142
 Description: Asynchronous event notification library
  Libevent is an asynchronous event notification library that provides a
  mechanism to execute a callback function when a specific event occurs
@@ -14466,6 +14681,24 @@ Description: Free patch set for MIDI audio synthesis
  New patches (including those in better formats, such as SF2 SoundFont banks)
  are welcome.
 
+Package: libfm-modules
+Priority: optional
+Section: libs
+Installed-Size: 166
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Architecture: armhf
+Multi-Arch: same
+Source: libfm
+Version: 1.2.3-1
+Depends: libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libfm-extra4 (>= 1.2.0), libfm-gtk4 (>= 0.1.12), libfm4 (>= 1.0.2), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgtk2.0-0 (>= 2.18.0), libmenu-cache1, libpango-1.0-0 (>= 1.14.0), libpangocairo-1.0-0 (>= 1.14.0), libpangoft2-1.0-0 (>= 1.14.0)
+Size: 54680
+Description: file management support (loadable modules for library)
+ LibFM provides file management functions built on top of Glib/GIO
+ giving a convenient higher-level API.
+ .
+ This package contains loadable modules used by libfm* libraries.
+Homepage: http://pcmanfm.sourceforge.net/
+
 Package: firmware-brcm80211
 Priority: optional
 Section: non-free/kernel
@@ -14474,9 +14707,9 @@ Maintainer: Debian Kernel Team <debian-kernel@lists.debian.org>
 Architecture: all
 Multi-Arch: foreign
 Source: firmware-nonfree
-Version: 0.43
+Version: 0.43-1raspi
 Suggests: initramfs-tools
-Size: 1502174
+Size: 2633254
 Description: Binary firmware for Broadcom 802.11 wireless cards
  This package contains the binary firmware for wireless network cards with
  the Broadcom BCM4313, BCM43224, BCM43225, BCM43241, BCM4329, BCM4330,
@@ -14514,13 +14747,13 @@ Description: The PiFace Digital I/O module.
 Package: pcmanfm
 Priority: optional
 Section: utils
-Installed-Size: 1191
+Installed-Size: 1750
 Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
 Architecture: armhf
-Version: 0.9.10-3
-Depends: libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo2 (>= 1.2.4), libfm-gtk1 (>= 0.1.17), libfm1 (>= 0.1.17), libfontconfig1 (>= 2.8.0), libfreetype6 (>= 2.2.1), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.24.0), libgtk2.0-0 (>= 2.24.0), libmenu-cache1, libpango1.0-0 (>= 1.20.0), libx11-6, libfm-gtk-bin
-Recommends: gvfs-backends, gvfs-fuse, lxde-icon-theme | gnome-icon-theme
-Size: 152176
+Version: 1.2.3-1+raspi
+Depends: libatk1.0-0 (>= 1.12.4), libc6 (>= 2.13-28), libcairo2 (>= 1.12.0), libfm-gtk4 (>= 1.2.0), libfm4 (>= 1.2.0), libfontconfig1 (>= 2.9.0), libfreetype6 (>= 2.2.1), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.37.3), libgtk2.0-0 (>= 2.24.0), libpango-1.0-0 (>= 1.20.0), libpangocairo-1.0-0 (>= 1.14.0), libpangoft2-1.0-0 (>= 1.14.0), libx11-6
+Recommends: gvfs-backends, gvfs-fuse, policykit-1-gnome | mate-polkit | lxpolkit (<< 0.4.9), lxde-icon-theme | gnome-icon-theme | oxygen-icon-theme | tango-icon-theme
+Size: 392524
 Description: extremely fast and lightweight file manager
  PCMan File Manager is a GTK+ based file manager, featuring:
  .
@@ -14632,10 +14865,10 @@ Installed-Size: 1264
 Maintainer: APT Development Team <deity@lists.debian.org>
 Architecture: armhf
 Source: apt
-Version: 0.9.7.9+rpi1+deb7u2
+Version: 0.9.7.9+rpi1+deb7u7
 Depends: libapt-inst1.5 (>= 0.8.0), libapt-pkg4.12 (>= 0.8.16~exp9), libc6 (>= 2.13-28), libdb5.1, libgcc1 (>= 1:4.4.0), libstdc++6 (>= 4.4.0)
 Suggests: xz-utils
-Size: 371338
+Size: 371696
 Description: package managment related utility programs
  This package contains some less used commandline utilities related
  to package managment with APT.
@@ -14703,15 +14936,15 @@ Homepage: http://wayland.freedesktop.org/
 Package: libpixman-1-0
 Priority: optional
 Section: libs
-Installed-Size: 547
+Installed-Size: 575
 Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: pixman
-Version: 0.33.1+git20140627-c37ff5-rpi1rpi1
+Version: 0.33.1+git20140627-c37ff5-rpi2rpi1
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0)
 Pre-Depends: multiarch-support
-Size: 173440
+Size: 177394
 Description: pixel-manipulation library for X and cairo
  A library for manipulating pixel regions -- a set of Y-X banded
  rectangles, image compositing using the Porter/Duff model
@@ -14877,6 +15110,25 @@ Description: reference implementation of a Wayland compositor
  KMS and ships with a few demo clients. The Weston compositor is a minimal
  and fast compositor and is suitable for many embedded and mobile use
  cases.
+
+Package: libfm-extra4
+Priority: optional
+Section: libs
+Installed-Size: 88
+Maintainer: Debian LXDE Maintainers <lxde-debian@lists.lxde.org>
+Architecture: armhf
+Multi-Arch: same
+Source: libfm
+Version: 1.2.3-1
+Depends: libc6 (>= 2.13-28), libglib2.0-0 (>= 2.37.3)
+Pre-Depends: multiarch-support
+Size: 30908
+Description: file management support (extra library)
+ LibFM provides file management functions built on top of Glib/GIO
+ giving a convenient higher-level API.
+ .
+ This package contains standalone library which extends libfm.
+Homepage: http://pcmanfm.sourceforge.net/
 
 Package: libpoppler19
 Priority: optional
@@ -15082,13 +15334,13 @@ Section: admin
 Installed-Size: 1153
 Maintainer: Michael Biebl <biebl@debian.org>
 Architecture: armhf
-Version: 5.8.11-3
+Version: 5.8.11-3+deb7u2
 Provides: linux-kernel-log-daemon, system-log-daemon
 Depends: libc6 (>= 2.13-28), libgcc1 (>= 1:4.4.0), zlib1g (>= 1:1.1.4), lsb-base (>= 3.2-14), initscripts (>= 2.88dsf-13.3)
 Recommends: logrotate
 Suggests: rsyslog-mysql | rsyslog-pgsql, rsyslog-doc, rsyslog-gnutls, rsyslog-gssapi, rsyslog-relp
 Conflicts: linux-kernel-log-daemon, system-log-daemon
-Size: 510586
+Size: 508900
 Description: reliable system and kernel logging daemon
  Rsyslog is a multi-threaded implementation of syslogd (a system utility
  providing support for message logging), with features that include:
@@ -15259,15 +15511,15 @@ Description: ISC DHCP client
 Package: ca-certificates
 Priority: optional
 Section: misc
-Installed-Size: 329
+Installed-Size: 432
 Maintainer: Michael Shuler <michael@pbandjelly.org>
 Architecture: all
 Multi-Arch: foreign
-Version: 20130119
+Version: 20130119+deb7u1
 Depends: openssl (>= 1.0.0), debconf (>= 0.5) | debconf-2.0
 Breaks: ca-certificates-java (<< 20121112+nmu1)
 Enhances: openssl
-Size: 185428
+Size: 209900
 Description: Common CA certificates
  This package includes PEM files of CA certificates to allow SSL-based
  applications to check for the authenticity of SSL connections.
@@ -15380,16 +15632,27 @@ Description: The PiFace Digital I/O module.
  Python 3 module for interacting with PiFace Digital.
  Documentation: http://piface.github.io/pifacedigitalio/
 
+Package: raspberrypi-ui-mods
+Priority: extra
+Section: unknown
+Installed-Size: 222
+Maintainer: Alex Bradbury <asb@asbradbury.org>
+Architecture: armhf
+Version: 1.0-7
+Depends: lxpanel (>= 0.7.1), pcmanfm (>= 1.2.3), openbox, x11-xserver-utils, fonts-roboto, zenity
+Size: 36584
+Description: Config to customise the LXDE UI for the Raspberry Pi
+
 Package: libraspberrypi-bin
 Priority: extra
 Section: misc
-Installed-Size: 605
+Installed-Size: 938
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: armhf
 Source: raspberrypi-firmware
-Version: 1.20140908-1
-Depends: libraspberrypi0 (= 1.20140908-1)
-Size: 245590
+Version: 1.20150214-1
+Depends: libraspberrypi0 (= 1.20150214-1)
+Size: 378908
 Description: Miscellaneous Raspberry Pi utilities
  This package contains various utilities for interacting with the Raspberry
  Pi's VideoCore IV.
@@ -15464,12 +15727,12 @@ Homepage: http://www.netlib.org/blas/
 Package: sonic-pi
 Priority: extra
 Section: unknown
-Installed-Size: 37419
+Installed-Size: 52512
 Maintainer: Alex Bradbury <asb@asbradbury.org>
 Architecture: armhf
-Version: 2.0.0-2
-Depends: supercollider, ruby1.9.1, libqscintilla2-8, jackd2
-Size: 25774586
+Version: 2.4.0-1
+Depends: supercollider, ruby1.9.1, libqscintilla2-8, libqt4-network, jackd2
+Size: 33041416
 Description: Sonic Pi is a music programming environment aimed at new programmers
 Homepage: http://www.cl.cam.ac.uk/projects/raspberrypi/sonicpi/
 
@@ -15541,13 +15804,13 @@ Homepage: http://www.greenwoodsoftware.com/less/
 Package: libfreetype6-dev
 Priority: optional
 Section: libdevel
-Installed-Size: 3113
+Installed-Size: 3279
 Maintainer: Steve Langasek <vorlon@debian.org>
 Architecture: armhf
 Source: freetype
-Version: 2.4.9-1.1
-Depends: libfreetype6 (= 2.4.9-1.1), libc6-dev | libc-dev, zlib1g-dev | libz-dev
-Size: 748392
+Version: 2.5.2-2rpi1rpi1
+Depends: libfreetype6 (= 2.5.2-2rpi1rpi1), libc6-dev | libc-dev, zlib1g-dev | libz-dev, libpng-dev
+Size: 795244
 Description: FreeType 2 font engine, development files
  The FreeType project is a team of volunteers who develop free,
  portable and high-quality software solutions for digital typography.
@@ -15921,14 +16184,14 @@ Maintainer: Sam Hartman <hartmans@debian.org>
 Architecture: armhf
 Multi-Arch: same
 Source: krb5
-Version: 1.10.1+dfsg-5+deb7u2
-Depends: libc6 (>= 2.13-28), libcomerr2 (>= 1.34), libgcc1 (>= 1:4.4.0), libk5crypto3 (>= 1.9+dfsg~beta1), libkeyutils1, libkrb5support0 (= 1.10.1+dfsg-5+deb7u2)
+Version: 1.10.1+dfsg-5+deb7u3
+Depends: libc6 (>= 2.13-28), libcomerr2 (>= 1.34), libgcc1 (>= 1:4.4.0), libk5crypto3 (>= 1.9+dfsg~beta1), libkeyutils1, libkrb5support0 (= 1.10.1+dfsg-5+deb7u3)
 Pre-Depends: multiarch-support
 Recommends: krb5-locales
 Suggests: krb5-doc, krb5-user
 Breaks: libsmbclient (<= 2:3.6.1-2), sssd (<= 1.2.1-4.3)
 Conflicts: libkrb53
-Size: 340930
+Size: 342288
 Description: MIT Kerberos runtime libraries
  Kerberos is a system for authenticating users and services on a network.
  Kerberos is a trusted third-party service.  That means that there is a

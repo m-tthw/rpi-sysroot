@@ -1,6 +1,6 @@
 (* Autoloader of Parallel Computing Toolkit *)
 
-(* :Package Version: 1.0 ($Id: sysload.m,v 1.50 2012/11/19 16:40:15 maeder Exp $) *)
+(* :Package Version: 1.0 ($Id: sysload.m,v 1.54 2015/01/31 15:39:17 maeder Exp $) *)
 
 (* :Summary:
    this is invoked from sysinit.m to integrate PCT into Mathematica
@@ -23,7 +23,7 @@ Begin["Parallel`Private`"]
 	mainCtx<>#&/@{"ParallelEvaluate","ParallelNeeds","DistributeDefinitions","DistributedContexts"},
 	mainCtx<>#&/@{"Parallelize", "ParallelTry"},
 	mainCtx<>#&/@{"SetSharedVariable", "SetSharedFunction", "$SharedVariables", "$SharedFunctions", "UnsetShared"},
-	mainCtx<>#&/@{"EvaluationObject", "KernelObject"},
+	mainCtx<>#&/@{"EvaluationObject"},
 	mainCtx<>"Parallel"<>#&/@{"Combine","Map","Table","Sum","Product","Do","Array"},
 	{}
 }];
@@ -32,7 +32,10 @@ Begin["Parallel`Private`"]
 
 (* symbols that should exist, but do not cause autoloading *)
 
-`nonLoadNames = mainCtx<>#&/@ {"$ConfiguredKernels", "$DistributedContexts"};
+`nonLoadNames = Flatten[{
+	mainCtx<>#&/@ {"$ConfiguredKernels", "$DistributedContexts"},
+	{"Parallel`Protected`KernelObject"}
+}];
 
 (* developer context main functions *)
 
@@ -54,46 +57,67 @@ Begin["Parallel`Private`"]
 	"menuStatus", "tabPreferences", "buttonConfigure"
 };
 
+`symbolHeld[name_] := ToExpression[name, InputForm, Hold] (* create a symbol without evaluation *)
+
 (* language version number, to detect master/subkernel version mismatch *)
 `$ParallelLanguageVersion = 8.0;
 
 (* remember path for later autoloading *)
 Parallel`Private`tooldir = ParentDirectory[ParentDirectory[DirectoryName[$InputFileName]]]
 
-Which[ (* what is our role? *)
-	$LicenseType === "Player" || TrueQ[Parallel`Static`$player], (* Player product *)
-		Parallel`Static`$player = True; SetAttributes[Parallel`Static`$player,{Protected,Locked}];
-		Parallel`Static`$silent = True;
-		Parallel`Static`$persistentPrefs = False;
-		Get["Parallel`Kernel`noparinit`"];
-		,
-	!TrueQ[System`Parallel`$SubKernel], (* master kernel, Mathematica or PlayerPro *)
-		If[System`Parallel`$SubKernel=!=False, System`Parallel`$SubKernel=False]; (* we are NOT a subkernel *)
-		If[$LicenseType === "PlayerPro" || TrueQ[Parallel`Static`$playerPro], (* PlayerPro product *)
-			Parallel`Static`$playerPro = True; SetAttributes[Parallel`Static`$playerPro,{Protected,Locked}];
-			Parallel`Static`$persistentPrefs = False;
-			Parallel`Static`$Profile = "PlayerPro";
-		  , (* else full Mathematica *)
-		  	If[!ValueQ[Parallel`Static`$persistentPrefs], Parallel`Static`$persistentPrefs = True ];
-		];
+setupMaster[]:= (
 		Package`DeclareLoad[ Join[Symbol/@mainNames, Symbol/@devNames, Symbol/@uiNames],
 			"Parallel`Kernel`autoload`", Package`ExportedContexts -> {}
 		];
-		(* create nonload symbols *)
-		Symbol/@nonLoadNames;
+		(* create nonload symbols, but do not evaluate *)
+		symbolHeld /@ nonLoadNames;
 		(* to trigger conditional code inside Parallel/Kernel/init.m, whenever this is read later *)
 		Parallel`Static`$sysload = True;
-		Parallel`Static`$silent = True;
 		Parallel`Static`$loaded = False;
-		(* Set up SystemInformation[] *)
-		Get["Parallel`SysInfo`"];
+)
+
+(* defaults *)
+Parallel`Static`$silent = True;
+Parallel`Static`$persistentPrefs = False;
+Parallel`Static`$enableLaunchFeedback = False;
+
+Which[ (* what is our role? *)
+	MemberQ[$CommandLine, "-noparallel"] || TrueQ[Parallel`Static`$noparallel],
+		Parallel`Static`$noparallel=True; SetAttributes[Parallel`Static`$noparallel,{Protected,Locked}];
+		Get["Parallel`Kernel`noparinit`"];
 		,
-	True, (* subkernel, by default *)
+	TrueQ[System`Parallel`$SubKernel] || TrueQ[Parallel`Static`$SubKernel],
+		Parallel`Static`$SubKernel = True; SetAttributes[Parallel`Static`$SubKernel,{Protected,Locked}];
 		Get["Parallel`Kernel`subinit`"];
+		,
+	$LicenseType === "PlayerPro" || TrueQ[Parallel`Static`$playerPro], (* PlayerPro product *)
+		Parallel`Static`$playerPro = True; SetAttributes[Parallel`Static`$playerPro,{Protected,Locked}];
+		Parallel`Static`$Profile = "PlayerPro";
+		setupMaster[];
+		,
+	$LicenseType === "Player" && Developer`$ProtectedMode || TrueQ[Parallel`Static`$player], (* Player product *)
+		Parallel`Static`$player = True; SetAttributes[Parallel`Static`$player,{Protected,Locked}];
+		Parallel`Static`$Profile = "Player";
+		setupMaster[];
+		,
+	$LicenseType === "Player" && !Developer`$ProtectedMode || TrueQ[Parallel`Static`$playerEnterprise], (* Player product *)
+		Parallel`Static`$playerEnterprise = True; SetAttributes[Parallel`Static`$playerEnterprise,{Protected,Locked}];
+		Parallel`Static`$Profile = "PlayerEnterprise";
+		setupMaster[];
+		,
+	True, (* master kernel, Mathematica *)
+		If[System`Parallel`$SubKernel=!=False, System`Parallel`$SubKernel=False]; (* we are NOT a subkernel *)
+		Parallel`Static`$master = True; SetAttributes[Parallel`Static`$master,{Protected,Locked}];
+		Parallel`Static`$persistentPrefs = True;
+		Parallel`Static`$enableLaunchFeedback = True;
+		setupMaster[];
+		Get["Parallel`SysInfo`"]; (* Set up SystemInformation[] *)
 ]
 
+Protect[Parallel`Static`$persistentPrefs]
+
 (* $ConfiguredKernels hack; must be outside the previous Which[] *)
-If[!System`Parallel`$SubKernel && !ValueQ[$ConfiguredKernels] && !TrueQ[Parallel`Static`$player] && !TrueQ[Parallel`Static`$playerPro],
+If[Parallel`Static`$master && !ValueQ[$ConfiguredKernels],
 	$ConfiguredKernels:=(Clear[$ConfiguredKernels];$KernelID;$ConfiguredKernels)
 ];
 

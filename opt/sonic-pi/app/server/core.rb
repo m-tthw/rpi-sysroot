@@ -16,33 +16,119 @@ raise "Sonic Pi requires Ruby 1.9.3+ to be installed. You are using version #{RU
 
 ## This core file sets up the load path and applies any necessary monkeypatches.
 
+## Ensure native lib dir is available
+os = case RUBY_PLATFORM
+     when /.*arm.*-linux.*/
+       :raspberry
+     when /.*linux.*/
+       :linux
+     when /.*darwin.*/
+       :osx
+     when /.*mingw.*/
+       :windows
+     else
+       RUBY_PLATFORM
+     end
+$:.unshift "#{File.expand_path("../rb-native", __FILE__)}/#{os}/#{RUBY_VERSION}p#{RUBY_PATCHLEVEL}/"
+
 ## Ensure all libs in vendor directory are available
 Dir["#{File.expand_path("../vendor", __FILE__)}/*/lib/"].each do |vendor_lib|
   $:.unshift vendor_lib
 end
 
-#Monkeypatch osc-ruby to add sending skills to Servers
-#https://github.com/samaaron/osc-ruby/commit/bfc31a709cbe2e196011e5e1420827bd0fc0e1a8
-#and other improvements
+require 'did_you_mean' unless RUBY_VERSION < "2.0.0"
+
 require 'osc-ruby'
 
-class Float
-  def times(&block)
-    self.to_i.times(&block)
+
+module SonicPi
+  module Core
+    class RingArray < Array
+      def [](idx, len=nil)
+        return self.to_a[idx, len] if len
+
+        idx = idx.to_i % size if idx.is_a? Numeric
+        self.to_a[idx]
+      end
+
+      # TODO - ensure this returns a ring array
+      def slice(idx, len=nil)
+        return self.to_a.slice(idx, len) if len
+
+        idx = idx.to_i % size if idx.is_a? Numeric
+        self.to_a.slice(idx)
+      end
+
+      def ring
+        self
+      end
+
+      def to_a
+        Array.new(self)
+      end
+
+      #TODO:    def each_with_ring
+    end
   end
 end
 
+
+class String
+  def shuffle
+    self.chars.to_a.shuffle.join
+  end
+end
+
+class Symbol
+  def shuffle
+    self.to_s.shuffle.to_sym
+  end
+end
+
+class Float
+  def times(&block)
+    self.to_i.times do |idx|
+      yield idx.to_f
+    end
+  end
+end
+
+
+#Monkeypatch osc-ruby to add sending skills to Servers
+#https://github.com/samaaron/osc-ruby/commit/bfc31a709cbe2e196011e5e1420827bd0fc0e1a8
+#and other improvements
 module OSC
+
+  class Client
+    def send_raw(mesg)
+      @so.send(mesg, 0)
+    end
+  end
 
   class Server
     def send(msg, address, port)
       @socket.send msg.encode, 0, address, port
     end
 
+    def send_raw(msg, address, port)
+      @socket.send msg, 0, address, port
+    end
+
+    def initialize(port, open=false)
+      @socket = UDPSocket.new
+      if open
+        @socket.bind('', port )
+      else
+        @socket.bind('localhost', port )
+      end
+      @matchers = []
+      @queue = Queue.new
+    end
+
     def safe_detector
       loop do
-        osc_data, network = @socket.recvfrom( 16384 )
         begin
+          osc_data, network = @socket.recvfrom( 16384 )
           ip_info = Array.new
           ip_info << network[1]
           ip_info.concat(network[2].split('.'))
@@ -51,7 +137,6 @@ module OSC
           end
         rescue Exception => e
           Kernel.puts e.message
-          Kernel.puts e.backtrace.inspect
         end
       end
     end
@@ -171,6 +256,7 @@ require 'rubame'
 ## Teach Rubame::Server#run to block on IO.select
 ## and therefore not thrash round in a loop
 module Rubame
+
   class Server
     def run(time = 0, &blk)
       readable, writable = IO.select(@reading, @writing)
@@ -221,9 +307,34 @@ if RUBY_VERSION < "2"
 end
 
 class Array
+
+  def ring
+    SonicPi::Core::RingArray.new(self)
+  end
+
   def choose
     rgen = Thread.current.thread_variable_get :sonic_pi_spider_random_generator
     self[rgen.rand(self.size)]
+  end
+
+  alias_method :__orig_sample__, :sample
+  def sample(*args, &blk)
+    rgen = Thread.current.thread_variable_get :sonic_pi_spider_random_generator
+    if rgen
+      self[rgen.rand(self.size)]
+    else
+      __orig_sample__ *args, &blk
+    end
+  end
+
+  alias_method :__orig_shuffle__, :shuffle
+  def shuffle(*args, &blk)
+    rgen = Thread.current.thread_variable_get :sonic_pi_spider_random_generator
+    if rgen
+      __orig_shuffle__(random: rgen)
+    else
+      __orig_shuffle__ *args, &blk
+    end
   end
 end
 

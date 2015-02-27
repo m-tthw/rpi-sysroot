@@ -6,5 +6,5 @@ datadir=${prefix}/share
 
 Name: lxpanel
 Description: A lightweight X11 desktop panel
-Requires: glib-2.0 libmenu-cache
-Version: 0.5.10
+Requires: glib-2.0 libfm
+Version: 0.7.1

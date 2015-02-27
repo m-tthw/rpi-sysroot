@@ -88,9 +88,9 @@ If[SyntaxQ["10.0"] && ToExpression["10.0"] == $VersionNumber && !ValueQ[`Private
 *)
 JLink`Information`$VersionNumber = If[SyntaxQ["4.8"], ToExpression["4.8"], 0.0]
 JLink`Information`$ReleaseNumber = If[SyntaxQ["0"], ToExpression["0"], 0]
-JLink`Information`$BuildNumber = If[SyntaxQ["44"], ToExpression["44"], 0]
-JLink`Information`$CreationID = If[SyntaxQ["20140804181436"], ToExpression["20140804181436"], 0]
-JLink`Information`$CreationDate = If[SyntaxQ["{2014,08,04,18,14,36}"], ToExpression["{2014,08,04,18,14,36}"], {0,0,0,0,0,0}]
+JLink`Information`$BuildNumber = If[SyntaxQ["166"], ToExpression["166"], 0]
+JLink`Information`$CreationID = If[SyntaxQ["20141229140248"], ToExpression["20141229140248"], 0]
+JLink`Information`$CreationDate = If[SyntaxQ["{2014,12,29,14,02,48}"], ToExpression["{2014,12,29,14,02,48}"], {0,0,0,0,0,0}]
 JLink`Information`$Version = "J/Link Version 4.8.0"
 
 

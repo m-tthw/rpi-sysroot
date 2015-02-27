@@ -7,9 +7,9 @@
 /usr/share/doc/python-rpi.gpio/changelog.gz
 /usr/share/doc/python-rpi.gpio/changelog.Debian.gz
 /usr/share/pyshared
-/usr/share/pyshared/RPi.GPIO-0.5.6.egg-info
 /usr/share/pyshared/RPi
 /usr/share/pyshared/RPi/__init__.py
+/usr/share/pyshared/RPi.GPIO-0.5.11.egg-info
 /usr/lib
 /usr/lib/python2.7
 /usr/lib/python2.7/dist-packages
@@ -24,9 +24,9 @@
 /usr/lib/python2.6/dist-packages
 /usr/lib/python2.6/dist-packages/RPi
 /usr/lib/python2.6/dist-packages/RPi/GPIO.so
-/usr/lib/python2.7/dist-packages/RPi.GPIO-0.5.6.egg-info
 /usr/lib/python2.7/dist-packages/RPi/__init__.py
+/usr/lib/python2.7/dist-packages/RPi.GPIO-0.5.11.egg-info
 /usr/lib/pyshared/python2.7/RPi/GPIO.so
 /usr/lib/pyshared/python2.6/RPi/GPIO.so
-/usr/lib/python2.6/dist-packages/RPi.GPIO-0.5.6.egg-info
 /usr/lib/python2.6/dist-packages/RPi/__init__.py
+/usr/lib/python2.6/dist-packages/RPi.GPIO-0.5.11.egg-info

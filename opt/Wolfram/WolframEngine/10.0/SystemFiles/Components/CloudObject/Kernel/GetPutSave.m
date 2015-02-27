@@ -26,7 +26,7 @@ writeObject[obj_CloudObject, content_, mimetype_,
         result = responseToString @ execute[obj, Automatic,
             UseUUID -> False, Body -> content, Type -> mimetype,
             Parameters -> {
-                "permissions" -> escapeAndNormalizePermissions[permissions, mimetype],
+                "permissions" -> escapeAndNormalizePermissions[permissions, mimetype, head],
                 If[Length[metaInformation] > 0, "properties" -> encodeMetaInformation[metaInformation], Unevaluated[Sequence[]]]
             }];
         If[result === $Failed, Return[$Failed]];
@@ -40,6 +40,8 @@ writeObject[obj_CloudObject, content_, mimetype_,
 (*Put*)
 
 Unprotect[CloudPut];
+
+CloudPut::invalidobj = "`1` is not a valid cloud object."
 
 definitionsToString[defs_] := StringJoin @ Riffle[Flatten[List @@ Replace[Unevaluated @ defs,
     (HoldForm[symbol_] -> def_) :> (Replace[Unevaluated@def, {
@@ -89,12 +91,19 @@ iCloudPut[expr_, obj:CloudObject[uri_, objopts:OptionsPattern[CloudObject]], mim
 
 exprToStringBytesWithSaveDefinitions[expr_] :=
     Module[{defs, content, exprLine},
-        defs = Language`ExtendedFullDefinition[expr];
+    	(* This fn is used by the package itself, so make sure the package context
+    	 * is not excluded. *)
+        defs = With[{excl = OptionValue[Language`ExtendedFullDefinition, ExcludedContexts]},
+        	Language`ExtendedFullDefinition[expr, ExcludedContexts -> Complement[excl, {"CloudObject"}]]
+        ];
         content = definitionsToString[defs];
         exprLine = ToString[Unevaluated[expr], InputForm];
         content = content <> "\n\n" <> exprLine <> "\n";
         ToCharacterCode[content, "UTF-8"]
     ]
+
+CloudPut[expr_, options : OptionsPattern[]] :=
+    CloudPut[Unevaluated[expr], CloudObject[], options]
 
 CloudPut[expr_, obj_CloudObject, opts:OptionsPattern[]] :=
     iCloudPut[Unevaluated[expr], obj, formatToMimeType["Expression"], opts]
@@ -102,8 +111,8 @@ CloudPut[expr_, obj_CloudObject, opts:OptionsPattern[]] :=
 CloudPut[expr_, uri_String, opts:OptionsPattern[]] :=
     CloudPut[Unevaluated[expr], CloudObject[uri], opts]
 
-CloudPut[expr_, options : OptionsPattern[]] :=
-    CloudPut[Unevaluated[expr], CloudObject[], options]
+CloudPut[expr_, obj_, opts:OptionsPattern[]]:=
+	(Message[CloudPut::invalidobj, obj];$Failed)
 
 CloudPut[args___] := (ArgumentCountQ[CloudPut,Length[DeleteCases[{args},_Rule,Infinity]],1,2];Null/;False)
 

@@ -1,49 +1,117 @@
 <font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
 
-<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Sliding Parameters</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">Whilst exploring the synth and FX args, you might have noticed that there are a number of parameters ending with <code style="font-size:15px; color:deeppink; background-color:white">_slide</code>. You might have even tried calling them and seeing no effect. This is because they’re not normal parameters, they’re special parameters that only work when you control synths as introduced in the previous section.</p>
+<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Live Coding</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">Consider the following example:</p>
+<p style="font-size:15px;color:#5e5e5e;">One of the most exciting aspects of Sonic Pi is that it enables you to
+write and <em style="font-size:15px;color:darkorange;">modify code live</em> to make music, just like you might perform
+live with a guitar. This means that given some practice you can take
+Sonic Pi on stage and gig with it.</p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">s = play 60, release: 5
-sleep 0.5
-control s, note: 65
-sleep 0.5
-control s, note: 67
-sleep 3
-control s, note: 72
-</code></pre>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">Free your mind</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">Here, hear the synth pitch changing immediately on each control. However, we might want the pitch to slide between changes. As we’re controlling the <code style="font-size:15px; color:deeppink; background-color:white">note:</code> parameter, to add slide, we need to set the <code style="font-size:15px; color:deeppink; background-color:white">note_slide</code> parameter:</p>
+<p style="font-size:15px;color:#5e5e5e;">Before we get into the real details of how Sonic Pi works in the rest of
+this tutorial, I’d like to give you an experience of what it’s like to
+live code. Don’t worry if you don’t understand much (or any) of
+this. Just try to hold onto your seats and enjoy…</p>
 
-<pre><code style="font-size:15px; color:deeppink; background-color:white">s = play 60, release: 5, note_slide: 1
-sleep 0.5
-control s, note: 65
-sleep 0.5
-control s, note: 67
-sleep 3
-control s, note: 72
-</code></pre>
+<br><p style="font-size:15px;color:#5e5e5e;"><span style="font-size:20px; color:white; background-color:dodgerblue;">A live loop</span></p>
 
-<p style="font-size:15px;color:#5e5e5e;">Now we hear the notes being bent between controls. It sounds nice doesn’t it. You can speed up the sliding by using a shorter time such as <code style="font-size:15px; color:deeppink; background-color:white">note_slide: 0.2</code> or slow it down by using a longer slide time. </p>
+<p style="font-size:15px;color:#5e5e5e;">Let’s get started, copy the folling code into an empty workspace above:</p>
 
-<p style="font-size:15px;color:#5e5e5e;">Every parameter that can be controlled has a corresponding <code style="font-size:15px; color:deeppink; background-color:white">_slide</code> parameter for you to play with.</p>
-
-<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Sliding is sticky</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">Once you’ve set a <code style="font-size:15px; color:deeppink; background-color:white">_slide</code> parameter on a running synth, it will be remembered and used every time you slide the corresponding parameter. To stop sliding you must set the <code style="font-size:15px; color:deeppink; background-color:white">_slide</code> value to 0 before the next control.</p>
-
-<p style="font-size:15px;color:#5e5e5e;"> <span style="font-size:25px; color:white;background-color:deeppink;">Sliding FX Parameters</span></p>
-
-<p style="font-size:15px;color:#5e5e5e;">It is also possible to slide FX parameters:</p>
-
-<pre><code style="font-size:15px; color:deeppink; background-color:white">with_fx :wobble, phase: 1, phase_slide: 5 do |e|
-  use_synth :dsaw
-  play 50, release: 5
-  control e, phase: 0.025
+<pre><code style="font-size:15px; color:deeppink; background-color:white">live_loop :flibble do
+  sample :bd_haus, rate: 1
+  sleep 0.5
 end
 </code></pre>
 
-<p style="font-size:15px;color:#5e5e5e;">Now have fun sliding things around for smooth transitions and flowing control…</p>
+<p style="font-size:15px;color:#5e5e5e;">Now, press the <code style="font-size:15px; color:deeppink; background-color:white">Run</code> button and you’ll hear a nice fast bass drum
+beating away. If at any time you wish to stop the sound just hit the
+<code style="font-size:15px; color:deeppink; background-color:white">Stop</code> button. Although don’t hit it just yet… Instead, follow these steps:</p>
+
+<ol style="font-size:15px;color:#5e5e5e;">
+  <li>Make sure the bass drum sound is still running</li>
+  <li>Change the <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> value from <code style="font-size:15px; color:deeppink; background-color:white">0.5</code> to something higher like <code style="font-size:15px; color:deeppink; background-color:white">1</code>. </li>
+  <li>Press the <code style="font-size:15px; color:deeppink; background-color:white">Run</code> button again</li>
+  <li>Notice how the drum speed has changed. </li>
+  <li>Finally, <em style="font-size:15px;color:darkorange;">remember this moment</em>, this is the first time you’ve live
+coded with Sonic Pi and it’s unlikely to be your last…</li>
+</ol>
+
+<p style="font-size:15px;color:#5e5e5e;">Ok, that was simple enough. Let’s add something else into the mix. Above
+<code style="font-size:15px; color:deeppink; background-color:white">sample :bd_haus</code> add the line <code style="font-size:15px; color:deeppink; background-color:white">sample :ambi_choir, rate: 0.3</code>. Your
+code should look like this:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">live_loop :flibble do
+  sample :ambi_choir, rate: 0.3
+  sample :bd_haus, rate: 1
+  sleep 1
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now, play around. Change the rates - what happens when you use high
+values, or small values or negative values? See what happens when you
+change the <code style="font-size:15px; color:deeppink; background-color:white">rate:</code> value for the <code style="font-size:15px; color:deeppink; background-color:white">:ambi_choir</code> sample just slightly (say
+to 0.29). What happens if you choose a really small <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> value? See
+if you can make it go so fast your computer will stop with an error
+because it can’t keep up (if that happens, just choose a bigger <code style="font-size:15px; color:deeppink; background-color:white">sleep</code>
+time and hit <code style="font-size:15px; color:deeppink; background-color:white">Run</code> again).</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Try commenting one of the <code style="font-size:15px; color:deeppink; background-color:white">sample</code> lines out by adding a <code style="font-size:15px; color:deeppink; background-color:white">#</code> to the
+beginning:</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">live_loop :flibble do
+  sample :ambi_choir, rate: 0.3
+#  sample :bd_haus, rate: 1
+  sleep 1
+end
+
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Notice how it tells the computer to ignore it, so we don’t hear it. This
+is called a comment. In Sonic Pi we can use comments to remove and add
+things into the mix.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">Finally, let me leave you something to fun play with. Take the code below,
+and copy it into a spare workspace. Now, don’t try to understand it too
+much other than see that there are two loops - so two things going round
+at the same time. Now, do what you do best - experiment and play
+around. Here are some suggestions</p>
+
+<ul style="font-size:15px;color:#5e5e5e;">
+  <li>Try changing the blue <code style="font-size:15px; color:deeppink; background-color:white">rate:</code> values to hear the sample sound change</li>
+  <li>Try changing the <code style="font-size:15px; color:deeppink; background-color:white">sleep</code> times and hear that both loops can spin round
+at different rates.</li>
+  <li>Try uncommenting the sample line (remove the <code style="font-size:15px; color:deeppink; background-color:white">#</code>) and enjoy the sound
+of the guitar played backwards.</li>
+  <li>Try changing any of the blue <code style="font-size:15px; color:deeppink; background-color:white">mix:</code> values to numbers between <code style="font-size:15px; color:deeppink; background-color:white">0</code> (not
+in the mix) and <code style="font-size:15px; color:deeppink; background-color:white">1</code> (fully in the mix).</li>
+</ul>
+
+<p style="font-size:15px;color:#5e5e5e;">Remember to press <code style="font-size:15px; color:deeppink; background-color:white">Run</code> and you’ll hear the change next time the loop
+goes round. If you end up in a pickle, don’t worry - hit <code style="font-size:15px; color:deeppink; background-color:white">Stop</code>, delete
+the code in the workspace and paste a fresh copy in and you’re ready to
+jam again. Making mistakes is how you’ll learn the quickest…</p>
+
+<pre><code style="font-size:15px; color:deeppink; background-color:white">live_loop :guit do
+  with_fx :echo, mix: 0.3, phase: 0.25 do
+    sample :guit_em9, rate: 0.5
+  end
+#  sample :guit_em9, rate: -0.5
+  sleep 8
+end
+
+live_loop :boom do
+  with_fx :reverb, room: 1 do
+    sample :bd_boom, amp: 10, rate: 1
+  end
+  sleep 8
+end
+</code></pre>
+
+<p style="font-size:15px;color:#5e5e5e;">Now, keep playing and experimenting until your curiosity about how this
+all actually works kicks in and you start wondering what else you can do
+with this. You’re now ready to read the rest of the tutorial.</p>
+
+<p style="font-size:15px;color:#5e5e5e;">So what are you waiting for…</p>
 </font>

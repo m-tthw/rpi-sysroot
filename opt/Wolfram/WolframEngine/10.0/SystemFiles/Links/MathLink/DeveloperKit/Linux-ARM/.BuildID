@@ -1,5 +1,5 @@
 CMake Binary: /usr/local/bin/cmake
-CMake Version: WRI cmake version 2.8.10.3
+CMake Version: WRI\ cmake\ version\ 2.8.10.3
 CMake project name: MathLink
 CMake Build Generator: Unix Makefiles
 CMake Install Prefix: /Developer/jenkins/workspace/MathLink.Linux-ARM/Files

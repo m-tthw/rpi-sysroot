@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     75429,       1856]
-NotebookOptionsPosition[     73775,       1806]
-NotebookOutlinePosition[     75470,       1856]
-CellTagsIndexPosition[     75427,       1853]
+NotebookDataLength[     75558,       1859]
+NotebookOptionsPosition[     73805,       1807]
+NotebookOutlinePosition[     75599,       1859]
+CellTagsIndexPosition[     75556,       1856]
 WindowFrame->ModalDialog*)
 
 (* Beginning of Notebook Content *)
@@ -23,7 +23,7 @@ Cell[BoxData[
   DynamicBox[FEPrivate`ImportImage[
     FrontEnd`ToFileName[{"Dialogs", "DeployCDF"}, 
      "ButtonBackgroundStripe.png"]],
-   ImageSizeCache->{35., {1., 8.}}], 
+   ImageSizeCache->{575., {18., 22.}}], 
   PaneBox[
    DynamicModuleBox[{$CellContext`step$$ = 
     1, $CellContext`embed$$, $CellContext`source$$, $CellContext`target$$ = 
@@ -228,7 +228,7 @@ $CellContext`htmlTempFile$$},
               
               FrontEnd`ToFileName[{"Dialogs", "DeployCDF"}, 
                "StandaloneProgress-Step1.png"]],
-             ImageSizeCache->{35., {1., 8.}}], 
+             ImageSizeCache->{541., {18., 23.}}], 
             PaneBox[
              StyleBox[
               StyleBox[
@@ -366,10 +366,11 @@ $CellContext`htmlTempFile$$},
             
             FrontEnd`ToFileName[{"Dialogs", "DeployCDF"}, 
              "StandaloneIcon.png"]],
-           ImageSizeCache->{35., {1., 8.}}], True->
+           ImageSizeCache->{82., {93., 98.}}], True->
           DynamicBox[FEPrivate`ImportImage[
             FrontEnd`ToFileName[{"Dialogs", "DeployCDF"}, "EmbedIcon.png"]],
-           ImageSizeCache->{35., {1., 8.}}]}, Dynamic[$CellContext`embed$$],
+           ImageSizeCache->{99., {92., 97.}}]}, Dynamic[$CellContext`embed$$],
+          
           Alignment->Center,
           ImageMargins->0,
           ImageSize->All],
@@ -1113,7 +1114,7 @@ $CellContext`htmlTempFile$$},
                     Scaled[1], Automatic}, 
                     BaseStyle -> {FontFamily -> "Courier"}], FrameStyle -> 
                     GrayLevel[0.5], FrameMargins -> None]}, False]],
-                DynamicModuleValues:>{}],
+                DynamicModuleValues:>Automatic],
                Setting[#, {0}]& ],
               AppearanceElements->{},
               ImageSize->{Full, 60},
@@ -1145,7 +1146,7 @@ $CellContext`htmlTempFile$$},
                   
                   DynamicBox[FEPrivate`FrontEndResource[
                    "DeployCDFDialog", "OpenFile"],
-                   ImageSizeCache->{59., {3., 10.}}],
+                   ImageSizeCache->{58., {3., 10.}}],
                   StripOnInput->False,
                   LineSpacing->{1, 2}],
                  ImageMargins->{{10, 10}, {0, 0}}],
@@ -1168,7 +1169,7 @@ $CellContext`htmlTempFile$$},
                   
                   DynamicBox[FEPrivate`FrontEndResource[
                    "DeployCDFDialog", "OpenDirectory"],
-                   ImageSizeCache->{148., {3., 10.}}],
+                   ImageSizeCache->{146., {3., 10.}}],
                   StripOnInput->False,
                   LineSpacing->{1, 2}],
                  ImageMargins->{{10, 10}, {0, 0}}],
@@ -1277,7 +1278,7 @@ $CellContext`codeWithFullFilePaths$, "Text"] === $Failed,
                  
                  DynamicBox[FEPrivate`FrontEndResource[
                   "DeployCDFDialog", "OpenDirectory"],
-                  ImageSizeCache->{148., {3., 10.}}],
+                  ImageSizeCache->{146., {3., 10.}}],
                  StripOnInput->False,
                  LineSpacing->{1, 2}],
                 ImageMargins->{{10, 10}, {0, 0}}],
@@ -1316,7 +1317,7 @@ $CellContext`embedFiles$$},
                     
                     DynamicBox[FEPrivate`FrontEndResource[
                     "DeployCDFDialog", "OpenFile"],
-                    ImageSizeCache->{59., {3., 10.}}],
+                    ImageSizeCache->{58., {3., 10.}}],
                     StripOnInput->False,
                     LineSpacing->{1, 2}],
                    ImageMargins->{{10, 10}, {0, 0}}],
@@ -1339,7 +1340,7 @@ $CellContext`embedFiles$$},
                     
                     DynamicBox[FEPrivate`FrontEndResource[
                     "DeployCDFDialog", "OpenDirectory"],
-                    ImageSizeCache->{148., {3., 10.}}],
+                    ImageSizeCache->{146., {3., 10.}}],
                     StripOnInput->False,
                     LineSpacing->{1, 2}],
                    ImageMargins->{{10, 10}, {0, 0}}],
@@ -1582,7 +1583,7 @@ $CellContext`embedFiles$$ = CDFDeploy[$CellContext`target$$,
                     "Standalone"], "Target" -> If[
                     
                     And[$CellContext`enterprise$$, \
-$CellContext`enhancedSigning$$], "PlayerPro", Automatic]]; 
+$CellContext`enhancedSigning$$], "PlayerPro", "CDFPlayer"]]; 
                 If[$CellContext`embedFiles$$ === $Failed, 
                   ((SetOptions[#, WindowFrame -> "ModalDialog"]; 
                   SetSelectedNotebook[#])& )[
@@ -1664,24 +1665,24 @@ $CellContext`enhancedSigning$$], "PlayerPro", Automatic]];
                     If[
                     StringMatchQ[
                     StringTake[$CellContext`directory$$, -1], "/"], "", "/"]],
-                    ""]; $CellContext`pngfile$558 = Select[
+                    ""]; $CellContext`pngfile$561 = Select[
                    Flatten[{$CellContext`embedFiles$$}], 
                    StringMatchQ[#, "*.png"]& ]; $CellContext`code$$ = 
                  If[CDFInformation[
                     $CellContext`source$$[$CellContext`nb$$]] === 
                    Null, $CellContext`cdfdimensions$$ = ""; 
-                   "", $CellContext`cdfinfo$558 = 
-                    If[Length[$CellContext`pngfile$558] > 0, 
+                   "", $CellContext`cdfinfo$561 = 
+                    If[Length[$CellContext`pngfile$561] > 0, 
                     FrontEndExecute[
                     FrontEnd`CDFInformation[
                     $CellContext`source$$[$CellContext`nb$$], 
-                    "AlternateImage" -> First[$CellContext`pngfile$558]]], 
+                    "AlternateImage" -> First[$CellContext`pngfile$561]]], 
                     FrontEndExecute[
                     FrontEnd`CDFInformation[
                     $CellContext`source$$[$CellContext`nb$$]]]]; \
 $CellContext`cdfdimensions$$ = 
                     Replace[
-                    "Size", $CellContext`cdfinfo$558]; \
+                    "Size", $CellContext`cdfinfo$561]; \
 $CellContext`cdfdimensions$$ = StringExpression["width=\"", 
                     ToString[
                     Part[$CellContext`cdfdimensions$$, 1]], "px\" height=\"", 
@@ -1689,7 +1690,7 @@ $CellContext`cdfdimensions$$ = StringExpression["width=\"",
                     ToString[
                     Part[$CellContext`cdfdimensions$$, 2]], "px\""]; 
                    StringReplace[
-                    Replace["EmbeddingScript", $CellContext`cdfinfo$558], 
+                    Replace["EmbeddingScript", $CellContext`cdfinfo$561], 
                     "`1`" -> StringJoin[$CellContext`code$$, 
                     FileNameTake[$CellContext`target$$]]]]; CopyToClipboard[
                   Cell[$CellContext`code$$]]; $CellContext`step$$ = If[
@@ -1820,10 +1821,12 @@ WindowSize->All,
 WindowMargins->Automatic,
 WindowFrame->"ModalDialog",
 TaggingRules->{
- "SlideShowToolbar" -> {"Expand" -> False}, 
+ "NotebookID" -> "WelcomeScreen", "NewPopupMouseover" -> False, 
+  "NewPopupMousedown" -> False, 
   "DAHPreferences" -> {
    "DefaultUSERCVSDIR" -> 
-    "/Users/larrya/cvs_checkouts_DAHDefault/Pubs/Internal/larrya"}},
+    "/Users/larrya/cvs_checkouts_DAHDefault/Pubs/Internal/larrya"}, 
+  "SlideshowSettings" -> {"Toolbar" -> False}},
 CellContext->"Global`",
 Background->GrayLevel[1],
 PaneSelectorBoxOptions->{ContentPadding->False,
@@ -1832,7 +1835,7 @@ ImageMargins->0,
 ImageSize->Automatic},
 RadioButtonBoxOptions->{Appearance->Small,
 ImageMargins->{{0, 5}, {0, 0}}},
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 3, \
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (August 10, \
 2014)",
 StyleDefinitions->Notebook[{
    Cell[
@@ -1840,7 +1843,7 @@ StyleDefinitions->Notebook[{
    Cell[
     StyleData["Hyperlink"], FontColor -> RGBColor[1, 0, 0]]}, Visible -> 
   False, FrontEndVersion -> 
-  "10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 3, 2014)", 
+  "10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (August 10, 2014)", 
   StyleDefinitions -> "Default.nb"],
 Modal -> True
 ]
@@ -1855,7 +1858,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[563, 20, 73208, 1784, 403, InheritFromParent,
+Cell[563, 20, 73238, 1785, 403, InheritFromParent,
  PageBreakAbove->True,
  PageBreakWithin->False]
 }

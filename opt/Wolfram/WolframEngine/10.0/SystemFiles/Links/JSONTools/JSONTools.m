@@ -2,7 +2,7 @@
 	A Mathematica Package that handles 
 	JSON encoding and decoding.
 	
-	@author Marlon Chatman <mcchatman8009@gmail.com>
+	@author Marlon Chatman <marlonc@wolfram.com>
 *)
 BeginPackage["JSONTools`"]
 
@@ -260,9 +260,11 @@ encodeJSON[i_Real]:=(
 	cEncodeReal[i]
 );
 
+(*
 encodeJSON[str_String]:=(
 	cEncodeString[str]
 );
+*)
 
 encodeJSON[bool_(True|False)] :=(
 	cEncodeString[If[bool, 1, 0]]
@@ -278,6 +280,10 @@ encodeJSON[realList:{__Real}]:=(
 
 encodeJSON[boolList:{__(True|False)}]:=(
 	cEncodeBoolList[Map[(If[#, 1,0] )&,boolList]]
+);
+
+encodeJSON[Association[]]:= (
+	"{}"
 );
 
 encodeJSON[expr_]:=(
@@ -302,9 +308,6 @@ decodeJSON[str_String] :=(
 	representation
 
 *)
-ToJSON[expr_Association, opts:OptionsPattern[]] :=(
-	ToJSON[Normal[expr], opts]
-);
 ToJSON[expr_, opts:OptionsPattern[]] :=
 	Module[{res},
 		

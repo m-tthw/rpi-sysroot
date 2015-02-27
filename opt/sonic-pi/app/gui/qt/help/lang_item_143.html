@@ -1,32 +1,26 @@
-<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Get current synth defaults</font></span></p>
-<h1><font color="#3c3c3c"><pre>current_synth_defaults<pre></font></h1>
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Get current arg checking status</font></span></p>
+<h1><font color="#3c3c3c"><pre>current_arg_checks<pre></font></h1>
 <h2><pre>[]</pre></h2>
 <p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
-Returns the current synth defaults. This is a map of synth arg names to either values or functions.
+Returns the current arg checking setting (true or false).
 </p>
 <p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
-Introduced in v2.0.0
-</p>
-<table cellpadding="2">
+<span style="color:white;background-color:darkorange;">Introduced in v2.0
+</span></p>
+<table cellpadding="8">
  <tr>
    <th></th><th></th><th></th>
  </tr>
  <tr bgcolor="#F8F8F8">
-  <td bgcolor="#FFF0F5"><h3><pre>Example 0 </pre></h3></td>
+  <td bgcolor="#74ACFF"><h3><pre>Example 0 </pre></h3></td>
    <td><pre>
-
-use_synth_defaults amp: 0.5, cutoff: 80
-play 50
-puts current_synth_defaults
+puts current_arg_checks
 
 
 
 </pre></td>
    <td><pre>
- 
- 
- # Plays note 50 with amp 0.5 and cutoff 80
- #=&gt; Prints {amp: 0.5, cutoff: 80}
+# Print out the current arg check setting
 
 
 

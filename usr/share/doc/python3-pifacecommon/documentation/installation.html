@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installation &mdash; PiFace Common 4.0.0 documentation</title>
+    <title>Installation &mdash; PiFace Common 4.1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '4.0.0',
+        VERSION:     '4.1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PiFace Common 4.0.0 documentation" href="index.html" />
+    <link rel="top" title="PiFace Common 4.1.2 documentation" href="index.html" />
     <link rel="next" title="Example" href="example.html" />
     <link rel="prev" title="Welcome to PiFace Common’s documentation!" href="index.html" /> 
   </head>
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to PiFace Common’s documentation!"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PiFace Common 4.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PiFace Common 4.1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -122,11 +122,11 @@ you can add them to the <tt class="docutils literal"><span class="pre">spi</span
 <p>Interrupts work by monitoring the GPIO pins. You&#8217;ll need to give the user <em>pi</em>
 access to these by adding the following udev rule (all on one line) to
 <tt class="docutils literal"><span class="pre">/etc/udev/rules.d/51-gpio.rules</span></tt>:</p>
-<div class="highlight-python"><pre>SUBSYSTEM==&quot;gpio*&quot;, PROGRAM=&quot;
-/bin/sh -c &#x27;chown -R root:gpio /sys/class/gpio &amp;&amp;
+<div class="highlight-python"><pre>SUBSYSTEM=="gpio*", PROGRAM="
+/bin/sh -c 'chown -R root:gpio /sys/class/gpio &amp;&amp;
 chmod -R 770 /sys/class/gpio;
 chown -R root:gpio /sys/devices/virtual/gpio &amp;&amp;
-chmod -R 770 /sys/devices/virtual/gpio&#x27;&quot;</pre>
+chmod -R 770 /sys/devices/virtual/gpio'"</pre>
 </div>
 <p>Then create the gpio group and add the user pi:</p>
 <div class="highlight-python"><pre>$ groupadd gpio
@@ -209,7 +209,7 @@ $ gpasswd -a pi gpio</pre>
         <li class="right" >
           <a href="index.html" title="Welcome to PiFace Common’s documentation!"
              >previous</a> |</li>
-        <li><a href="index.html">PiFace Common 4.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PiFace Common 4.1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

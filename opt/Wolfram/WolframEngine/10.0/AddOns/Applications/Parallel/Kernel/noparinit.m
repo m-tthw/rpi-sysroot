@@ -1,6 +1,6 @@
 (* Master Loader of Parallel Computing Toolkit *)
 
-(* :Package Version: 3.0 ($Id: noparinit.m,v 1.2 2012/11/27 14:29:03 maeder Exp $) *)
+(* :Package Version: 3.0 ($Id: noparinit.m,v 1.4 2014/11/25 14:41:07 maeder Exp $) *)
 
 (* :Summary:
    Get["Parallel`Kernel`noparinit`"]
@@ -13,9 +13,9 @@
 
 (* create all the symbols *)
 
-Symbol/@Parallel`Private`mainNames;
-Symbol/@Parallel`Private`nonLoadNames;
-(* Symbol/@Parallel`Private`devNames; *)
+symbolHeld /@ Parallel`Private`mainNames;
+symbolHeld /@ nonLoadNames;
+(* symbolHeld/@Parallel`Private`devNames; *)
 
 
 BeginPackage["Parallel`"] (* empty context *)

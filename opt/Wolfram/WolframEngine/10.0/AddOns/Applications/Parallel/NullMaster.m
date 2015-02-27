@@ -9,20 +9,20 @@
    a subkernel of another parallel computation or in a Player kernel.
  *)
 
-(* :Package Version: 1.0 ($Id: NullMaster.m,v 1.4 2012/10/25 16:21:31 maeder Exp $) *)
+(* :Package Version: 1.0 ($Id: NullMaster.m,v 1.5 2014/11/25 14:41:08 maeder Exp $) *)
 
 (* :Mathematica Version: 7 *)
 
 
 BeginPackage["Parallel`NullMaster`" ]
 
-General::subpar = "Parallel computations cannot be nested; proceeding with sequential evaluation."
-General::subnopar = "Parallel programming is not available in subkernels of another parallel computation."
+General::subpar = "Parallel computation is not supported in this kernel. Proceeding with sequential evaluation."
+General::subnopar = "Parallel programming is not available in this kernel."
 
 Begin["`Private`"]
 
 `$PackageVersion = 1.0;
-`$CVSRevision = StringReplace["$Revision: 1.4 $", {"$"->"", " "->"", "Revision:"->""}]
+`$CVSRevision = StringReplace["$Revision: 1.5 $", {"$"->"", " "->"", "Revision:"->""}]
 
 failover[par_, seq_] := (
 	SetAttributes[par,HoldAll];

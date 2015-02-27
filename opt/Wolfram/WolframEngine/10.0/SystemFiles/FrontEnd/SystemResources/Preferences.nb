@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    388726,       7683]
-NotebookOptionsPosition[    388055,       7660]
-NotebookOutlinePosition[    388814,       7685]
-CellTagsIndexPosition[    388771,       7682]
+NotebookDataLength[    390630,       7733]
+NotebookOptionsPosition[    389958,       7710]
+NotebookOutlinePosition[    390718,       7735]
+CellTagsIndexPosition[    390675,       7732]
 WindowTitle->Preferences
 WindowFrame->ModelessDialog*)
 
@@ -333,6 +333,57 @@ Cell[BoxData[
               StandardForm]]}], StripOnInput -> False]},
         "RowDefault"], "\[SpanFromLeft]"},
       {
+       TemplateBox[{RowBox[{
+           CheckboxBox[
+            Dynamic[
+             
+             CurrentValue[$FrontEnd, {
+              "CodeAssistOptions", "FloatingElementEnable"}]]], 
+           "\[InvisibleSpace]", 
+           TogglerBox[
+            Dynamic[
+             
+             CurrentValue[$FrontEnd, {
+              "CodeAssistOptions", "FloatingElementEnable"}]], {
+            True -> DynamicBox[
+               ToBoxes[
+                FEPrivate`Part[
+                 FEPrivate`FrontEndResource[
+                 "PreferencesDialog", "FloatingElementText"], 1], 
+                StandardForm]], False -> DynamicBox[
+               ToBoxes[
+                FEPrivate`Part[
+                 FEPrivate`FrontEndResource[
+                 "PreferencesDialog", "FloatingElementText"], 1], 
+                StandardForm]]}, 
+            DynamicBox[
+             ToBoxes[
+              FEPrivate`Part[
+               FEPrivate`FrontEndResource[
+               "PreferencesDialog", "FloatingElementText"], 1], 
+              StandardForm]]]}],StyleBox[
+          RowBox[{
+            StyleBox[
+             InputFieldBox[
+              Dynamic[
+               
+               CurrentValue[$FrontEnd, {
+                "CodeAssistOptions", "FloatingElementDelay"}]], Number, 
+              FieldSize -> {{2, 
+                 DirectedInfinity[1]}, 1}, ContinuousAction -> False], 
+             Enabled -> Dynamic[
+               
+               CurrentValue[$FrontEnd, {
+                "CodeAssistOptions", "FloatingElementEnable"}]], StripOnInput -> 
+             False], "\[InvisibleSpace]", 
+            DynamicBox[
+             ToBoxes[
+              FEPrivate`Part[
+               FEPrivate`FrontEndResource[
+               "PreferencesDialog", "FloatingElementText"], 2], 
+              StandardForm]]}], StripOnInput -> False]},
+        "RowDefault"], "\[SpanFromLeft]"},
+      {
        RowBox[{
         CheckboxBox[Dynamic[
           
@@ -359,6 +410,7 @@ Cell[BoxData[
        DynamicModuleBox[{$CellContext`notVersionedQ$$ = True}, 
         DynamicWrapperBox[
          RowBox[{
+          
           CheckboxBox[
            Dynamic[$CellContext`notVersionedQ$$, \
 ($CellContext`notVersionedQ$$ = #; 
@@ -552,7 +604,8 @@ Cell[BoxData[
           "CaseSensitiveCommandCompletion", 
           "CodeAssistOptions" -> {
            "DynamicHighlighting", "AutoPopupEnable", "AutoPopupDelay", 
-            "AutoConvertEnable"}, 
+            "AutoConvertEnable", "FloatingElementEnable", 
+            "FloatingElementDelay"}, 
           PrivateFrontEndOptions -> {"FunctionTemplates", "CodeAssistant"}, 
           DragAndDrop, "ShowPredictiveInterface", 
           PrivateNotebookOptions -> {
@@ -567,8 +620,8 @@ Cell[BoxData[
      GridBoxSpacings->{
       "Columns" -> {{0.8}}, "Rows" -> {{0.5}}, 
        "RowsIndexed" -> {
-        1 -> 0, 2 -> 0, 3 -> 1, 4 -> 0.5, 5 -> 1, 6 -> 1, 7 -> 1.5, -2 -> 
-         3, -1 -> 0}}],
+        1 -> 0, 2 -> 0, 3 -> 1, 5 -> 1, 6 -> 1, 7 -> 1.5, -2 -> 3, -1 -> 0}}],
+    
     "Grid"]}, {"Evaluation",
    DynamicBox[ToBoxes[
      FEPrivate`FrontEndResource["PreferencesDialog", "EvaluationLabel"], 
@@ -1088,7 +1141,6 @@ Cell[BoxData[
                  "PreferencesDialog", "DefaultText"], StandardForm],
                 ImageSizeCache->{46., {1., 11.}}],
                Appearance->"DialogBox",
-               
                ButtonFunction:>
                 FrontEnd`RemoveOptions[$FrontEnd, 
                  AutoStyleOptions -> {
@@ -1344,7 +1396,6 @@ Cell[BoxData[
                     "AutoStyleOptions", "EmphasizedSyntaxErrorStyle", 
                     FontSize}]], {Inherited, 24}, Enabled :> FEPrivate`And[
                     CurrentValue[$FrontEnd, ShowSyntaxStyles], 
-                    
                     CurrentValue[$FrontEnd, {
                     "AutoStyleOptions", "HighlightEmphasizedSyntaxErrors"}]], 
                     ImageSize -> 16],DynamicBox[
@@ -1444,7 +1495,6 @@ Cell[BoxData[
                 AutoDelete->False,
                 BaselinePosition->{Baseline, {1, 1}},
                 GridBoxAlignment->{"Columns" -> {{Left}}},
-                
                 GridBoxItemSize->{
                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
                "Grid"], 
@@ -1749,7 +1799,6 @@ Cell[BoxData[
                  "PreferencesDialog", "DefaultText"], StandardForm],
                 ImageSizeCache->{46., {1., 11.}}],
                Appearance->"DialogBox",
-               
                ButtonFunction:>
                 FrontEnd`RemoveOptions[$FrontEnd, 
                  AutoStyleOptions -> {
@@ -1853,7 +1902,6 @@ Cell[BoxData[
             
             GridBoxItemSize->{
              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
-            
             GridBoxSpacings->{
              "Columns" -> {0, 1, 3, 0.5}, "Rows" -> {{0}}, 
               "RowsIndexed" -> {-2 -> 1.85}}],
@@ -1948,6 +1996,7 @@ Cell[BoxData[
                 
                 CurrentValue[$FrontEnd, {
                  "AutoStyleOptions", "StringStyle", FontColor}]], Dynamic[
+                
                 FEPrivate`If[$CellContext`showSpectra$$, "SwatchSpectrum", 
                  "Swatch"]],
                Enabled:>CurrentValue[$FrontEnd, ShowSyntaxStyles]], 
@@ -2053,7 +2102,6 @@ Cell[BoxData[
                 AutoDelete->False,
                 BaselinePosition->{Baseline, {1, 1}},
                 GridBoxAlignment->{"Columns" -> {{Left}}},
-                
                 GridBoxItemSize->{
                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
                "Grid"], 
@@ -2313,6 +2361,7 @@ Cell[BoxData[
             StandardForm],
            ImageSizeCache->{46., {1., 11.}}],
           Appearance->"DialogBox",
+          
           ButtonFunction:>
            FrontEnd`RemoveOptions[$FrontEnd, 
             "DebuggerSettings" -> {
@@ -7016,6 +7065,7 @@ $CellContext`ftp, $CellContext`socks}}], EvaluationOrder -> After,
           MapThread[
            PacletManager`SetInternetProxy, {{
              "HTTP", "HTTPS", "FTP", 
+              
               "SOCKS"}, {$CellContext`http, $CellContext`https, \
 $CellContext`ftp, $CellContext`socks}}], EvaluationOrder -> After, 
           PassEventsDown -> False], 
@@ -7380,15 +7430,15 @@ $CellContext`fullname, $CellContext`replyto}]]),
           DynamicBox[ToBoxes[
             FEPrivate`FrontEndResource[
             "PreferencesDialog", "CheckInternetText"], StandardForm],
-           ImageSizeCache->{317., {3., 11.}}], False->
+           ImageSizeCache->{300., {3., 11.}}], False->
           DynamicBox[ToBoxes[
             FEPrivate`FrontEndResource[
             "PreferencesDialog", "CheckInternetText"], StandardForm],
-           ImageSizeCache->{317., {3., 11.}}]}, 
+           ImageSizeCache->{300., {3., 11.}}]}, 
           DynamicBox[ToBoxes[
             FEPrivate`FrontEndResource[
             "PreferencesDialog", "CheckInternetText"], StandardForm],
-           ImageSizeCache->{317., {3., 11.}}]]}], "\[SpanFromLeft]"},
+           ImageSizeCache->{300., {3., 11.}}]]}], "\[SpanFromLeft]"},
        {
         TabViewBox[{{1,
          DynamicBox[ToBoxes[
@@ -7669,7 +7719,7 @@ TaggingRules->{
      FEPrivate`SameQ[FEPrivate`$OperatingSystem, "Windows"], 580, 660]]},
 CheckboxBoxOptions->{ImageMargins->{{0, 5}, {0, 0}}},
 InputFieldBoxOptions->{ContinuousAction->False},
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (April 28, \
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (August 13, \
 2014)",
 StyleDefinitions->"SystemDialog.nb"
 ]
@@ -7684,7 +7734,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[591, 21, 387460, 7637, 682, InheritFromParent]
+Cell[591, 21, 389363, 7687, 682, InheritFromParent]
 }
 ]
 *)

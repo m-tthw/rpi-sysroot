@@ -30,19 +30,19 @@ If[TrueQ[$CloudEvaluation],
 	CloudFunction[expr_][args___] :=
 	    Module[{co},
 	        Block[{formalargs},
-	            co = CloudPut[APIFunction[{"args" -> "String"},
+	            co = iCloudPut[APIFunction[{"args" -> "String"},
 	                ResponseForm[ExportForm[expr @@ ToExpression[#args], "WL"], "WL"] &
-	            ], SaveDefinitions -> True, IconRules -> {}];
+	            ], CloudObject[], formatToMimeType["CloudEvaluation"], SaveDefinitions -> True, IconRules -> {}];
 	            If[co === $Failed, Return[$Failed]];
 	            (* TODO: This cleanup could happen asynchronously. *)
-	            cleanup[co, getAPIResult[co, {"args" -> URLEncode[ToString[{args}, InputForm]]}]]
+	            cleanup[co, getAPIResult[co, {"args" -> URLEncode[Block[{$ContextPath={"System`"}, $Context="System`"}, ToString[{args}, InputForm]]]}]]
 	        ]
 	    ];
-	
+
 ]
 
 CloudFunction[obj_CloudObject][args___] := CloudFunction[Get[obj]][args]
-	
+
 CloudFunction[args___] := (ArgumentCountQ[CloudFunction,Length[DeleteCases[{args},_Rule,Infinity]],1,1];Null/;False)
 
 SetAttributes[CloudFunction, {ReadProtected}];
@@ -56,7 +56,7 @@ CloudEvaluate[expr_] := CloudFunction[expr &][]
 
 CloudEvaluate[args___] := (ArgumentCountQ[CloudEvaluate,Length[DeleteCases[{args},_Rule,Infinity]],1,1];Null/;False)
 Attributes[CloudEvaluate] = {HoldAll};
-	
+
 SetAttributes[CloudEvaluate, {ReadProtected}];
 Protect[CloudEvaluate];
 

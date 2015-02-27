@@ -13,6 +13,7 @@
 require 'tmpdir'
 require 'fileutils'
 require 'thread'
+require 'net/http'
 require "hamster/set"
 require "hamster/hash"
 require_relative "../blanknode"
@@ -34,13 +35,13 @@ module SonicPi
        include SonicPi::Util
        include SonicPi::DocSystem
 
-       DEFAULT_PLAY_OPTS = {amp:      {default: 1, doc: "The amplitude of the note"},
-                           amp_slide: {default: 0, doc: "The duration in seconds for amplitude changes to take place"},
-                           pan:       {default: 0, doc: "The stereo position of the sound. -1 is left, 0 is in the middle and 1 is on the right. You may use value in between -1 and 1 such as 0.25"},
-                           pan_slide: {default: 0, doc: "The duration in seconds for the pan value to change"},
-                           attack:    {default: :synth_specific, doc: "The duration in seconds for the sound to reach maximum amplitude. Choose short values for percusive sounds and long values for a fade-in effect."},
-                           sustain:   {default: 0, doc: "The duration in seconds for the sound to stay at full amplitude. Used to give the sound duration"},
-                           release:   {default: :synth_specific, doc: "The duration in seconds for the sound to fade out."}}
+       DEFAULT_PLAY_OPTS = {amp:       {default: 1, doc: "The amplitude of the note"},
+                            amp_slide: {default: 0, doc: "The duration in seconds for amplitude changes to take place"},
+                            pan:       {default: 0, doc: "The stereo position of the sound. -1 is left, 0 is in the middle and 1 is on the right. You may use value in between -1 and 1 such as 0.25"},
+                            pan_slide: {default: 0, doc: "The duration in seconds for the pan value to change"},
+                            attack:    {default: :synth_specific, doc: "The duration in seconds for the sound to reach maximum amplitude. Choose short values for percussive sounds and long values for a fade-in effect."},
+                            sustain:   {default: 0, doc: "The duration in seconds for the sound to stay at full amplitude. Used to give the sound duration"},
+                            release:   {default: :synth_specific, doc: "The duration in seconds for the sound to fade out."}}
 
        def self.included(base)
          base.instance_exec {alias_method :sonic_pi_mods_sound_initialize_old, :initialize}
@@ -57,6 +58,8 @@ module SonicPi
 
              @job_proms_joiners = {}
 
+             @sample_paths_cache = {}
+
              @JOB_GROUPS_A = Atom.new(Hamster.hash)
              @JOB_GROUP_MUTEX = Mutex.new
              @JOB_FX_GROUP_MUTEX = Mutex.new
@@ -68,7 +71,6 @@ module SonicPi
              @mod_sound_studio = Studio.new(hostname, port, msg_queue, max_concurrent_synths)
 
              @life_hooks.on_init do |job_id, payload|
-
                @job_proms_queues_mut.synchronize do
                  @job_proms_queues[job_id] = Queue.new
                  joiner = job_proms_joiner(job_id)
@@ -100,7 +102,7 @@ module SonicPi
 
              @life_hooks.on_exit do |job_id, payload|
                Thread.new do
-
+                 Thread.current.thread_variable_set(:sonic_pi_spider_start_time, payload[:start_t])
                  Thread.current.thread_variable_set(:sonic_pi_thread_group, "job_remover-#{job_id}")
                  Thread.current.priority = -10
                  shutdown_job_mixer(job_id)
@@ -120,6 +122,75 @@ module SonicPi
 
 
 
+
+
+       def rest?(n)
+         case n
+         when Numeric
+           return false
+         when Symbol
+           return n == :r || n == :rest
+         when NilClass
+           return true
+         when Hash
+           if n.has_key?(:note)
+             note = n[:note]
+             return (note.nil? || note == :r || note == :rest)
+           else
+             return false
+           end
+         else
+           return false
+         end
+       end
+       doc name:          :rest?,
+           introduced:    Version.new(2,1,0),
+           summary:       "Determine if note or args is a rest",
+           doc:           "Given a note or an args map, returns true if it represents a rest and false if otherwise",
+           args:          [[:note_or_args, :number_symbol_or_map]],
+           accepts_block: false,
+           examples:      ["puts rest? nil # true",
+"puts rest? :r # true",
+"puts rest? :rest # true",
+"puts rest? 60 # false",
+"puts rest? {} # false",
+"puts rest? {note: :rest} # true",
+"puts rest? {note: nil} # true",
+"puts rest? {note: 50} # false"]
+
+       def use_timing_warnings(v, &block)
+         raise "use_timing_warnings does not work with a do/end block. Perhaps you meant with_timing_warnings" if block
+         Thread.current.thread_variable_set(:sonic_pi_mod_sound_disable_timing_warnings, !v)
+       end
+
+       def with_timing_warnings(v, &block)
+         raise "with_debug requires a do/end block. Perhaps you meant use_debug" unless block
+         current = Thread.current.thread_variable_get(:sonic_pi_mod_sound_disable_timing_warnings)
+         Thread.current.thread_variable_set(:sonic_pi_mod_sound_disable_timing_warnings, !v)
+         block.call
+         Thread.current.thread_variable_set(:sonic_pi_mod_sound_disable_timing_warnings, current)
+       end
+
+
+       def use_sample_bpm(sample_name)
+         case sample_name
+           when Numeric
+           use_bpm(60.0 / sample_name)
+         else
+           sd = sample_duration(sample_name)
+           use_bpm(60.0 / sd)
+         end
+       end
+
+       def with_sample_bpm(sample_name, &block)
+         case sample_name
+         when Numeric
+           with_bpm(60.0 / sample_name, &block)
+         else
+           sd = sample_duration(sample_name)
+           with_bpm(60.0 / sd, &block)
+         end
+       end
 
     def use_arg_bpm_scaling(bool, &block)
       raise "use_arg_bpm_scaling does not work with a block. Perhaps you meant with_arg_bpm_scaling" if block
@@ -147,6 +218,7 @@ sleep rt(2)             # sleeps for 2 seconds
 use_arg_bpm_scaling false
 play 50, release: rt(2) # ** Warning: release is NOT 2 seconds! **
 sleep rt(2)             # still sleeps for 2 seconds"]
+
 
 
 
@@ -211,6 +283,32 @@ end"]
            opts:          nil,
            accepts_block: false,
            examples:      ["hz_to_midi(261.63) #=> 60.0003"]
+
+
+       def set_control_delta!(t)
+         @mod_sound_studio.control_delta = t
+         __info "Control delta set to #{t}"
+       end
+       doc name:          :set_control_delta!,
+           introduced:    Version.new(2,1,0),
+           summary:       "Set control delta globally",
+           doc:           "Specify how many seconds between successive modifications (i.e. trigger then controls) of a specific node on a specific thread. Set larger if you are missing control messages sent extremely close together in time.",
+           args:          [[:time, :number]],
+           opts:          nil,
+           accepts_block: false,
+           examples:      [
+"
+set_control_delta! 0.1                 # Set control delta to 0.1
+
+s = play 70, release: 8, note_slide: 8 # Play a note and set the slide time
+control s, note: 82                    # immediately start sliding note.
+                                       # This control message might not be
+                                       # correctly handled as it is sent at the
+                                       # same virtual time as the trigger.
+                                       # If you don't hear a slide, try increasing the
+                                       # control delta until you."]
+
+
 
 
        def set_sched_ahead_time!(t)
@@ -288,7 +386,7 @@ play 90 # Debug message is sent
        doc name:          :use_arg_checks,
            introduced:    Version.new(2,0,0),
            summary:       "Enable and disable arg checks",
-           doc:           "When triggering synths, each argument is checked to see if it is sensible. When argument checking is enabled and an argument isn't sensible, you'll see an error in the debug pane. This setting allows you to explicitly enable and disable the checking mechanism. See with_arg_checks for enabling/sisabling argument checking only for a specific do/end block.",
+           doc:           "When triggering synths, each argument is checked to see if it is sensible. When argument checking is enabled and an argument isn't sensible, you'll see an error in the debug pane. This setting allows you to explicitly enable and disable the checking mechanism. See with_arg_checks for enabling/disabling argument checking only for a specific do/end block.",
            args:          [[:true_or_false, :boolean]],
            opts:          nil,
            accepts_block: false,
@@ -399,7 +497,7 @@ play 80 # Plays note 83
 
        def use_synth(synth_name, &block)
          raise "use_synth does not work with a do/end block. Perhaps you meant with_synth" if block
-         @mod_sound_studio.current_synth_name = synth_name
+         set_current_synth synth_name
        end
        doc name:          :use_synth,
            introduced:    Version.new(2,0,0),
@@ -418,10 +516,10 @@ play 50 # Plays with mod_sine synth"]
 
        def with_synth(synth_name, &block)
          raise "with_synth must be called with a do/end block. Perhaps you meant use_synth" unless block
-         orig_synth = @mod_sound_studio.current_synth_name
-         @mod_sound_studio.current_synth_name = synth_name
+         orig_synth = current_synth_name
+         set_current_synth synth_name
          block.call
-         @mod_sound_studio.current_synth_name = orig_synth
+         set_current_synth orig_synth
        end
        doc name:          :with_synth,
            introduced:    Version.new(2,0,0),
@@ -450,7 +548,7 @@ play 50 # Plays with supersaw synth
        def recording_start
          __info "Start recording"
          tmp_dir = Dir.mktmpdir("sonic-pi")
-         @tmp_path = File.expand_path("#{tmp_dir}/#{rand(100000000)}.wav")
+         @tmp_path = File.expand_path("#{tmp_dir}/#{Random.rand(100000000)}.wav")
          @mod_sound_studio.recording_start @tmp_path
        end
        doc name:          :recording_start,
@@ -514,11 +612,46 @@ play 50 # Plays with supersaw synth
            hide:          true
 
 
+       def set_mixer_invert_stereo!
+         @mod_sound_studio.mixer_invert_stereo(true)
+       end
 
+       def set_mixer_standard_stereo!
+         @mod_sound_studio.mixer_invert_stereo(false)
+       end
+
+       def set_mixer_stereo_mode!
+         @mod_sound_studio.mixer_stereo_mode
+       end
+
+       def set_mixer_mono_mode!
+         @mod_sound_studio.mixer_mono_mode
+       end
+
+       def set_mixer_hpf!(f)
+         @mod_sound_studio.mixer_hpf_enable f
+       end
+
+       def set_mixer_hpf_disable!(f)
+         @mod_sound_studio.mixer_hpf_disable
+       end
+
+       def set_mixer_lpf!(f)
+         @mod_sound_studio.mixer_lpf_enable f
+       end
+
+       def set_mixer_lpf_disable!(f)
+         @mod_sound_studio.mixer_lpf_disable
+       end
 
        def synth(synth_name, *args)
          ensure_good_timing!
          args_h = resolve_synth_opts_hash_or_array(args)
+
+         if rest? args_h
+           __delayed_message "synth #{synth_name.to_sym.inspect}, {note: :rest}"
+           return nil
+         end
 
          if args_h.has_key? :note
            n = args_h[:note]
@@ -550,26 +683,45 @@ synth :dsaw, note: 50 # Play note 50 of the :dsaw synth with a release of 5"]
 
 
        def play(n, *args)
-         return play_chord(n, *args) if n.is_a?(Array)
          ensure_good_timing!
-
-         if n
-           n = n.call if n.is_a? Proc
-           n = note(n) unless n.is_a? Numeric
-           args_h = resolve_synth_opts_hash_or_array(args)
-           if shift = Thread.current.thread_variable_get(:sonic_pi_mod_sound_transpose)
-             n += shift
-           end
-           args_h[:note] = n
-           trigger_inst @mod_sound_studio.current_synth_name, args_h
+         case n
+         when Array
+           return play_chord(n, *args)
+         when Hash
+           # Allow a single hash argument to function unsurprisingly
+           args = n if args.empty?
          end
+
+         n = note(n)
+
+         synth_name = current_synth_name
+
+         if n.nil?
+           unless Thread.current.thread_variable_get(:sonic_pi_mod_sound_synth_silent)
+             __delayed_message "synth #{synth_name.to_sym.inspect}, {note: :rest}"
+           end
+
+           return nil
+         end
+
+         init_args_h = {}
+         args_h = resolve_synth_opts_hash_or_array(args)
+
+         if shift = Thread.current.thread_variable_get(:sonic_pi_mod_sound_transpose)
+           n += shift
+         end
+         args_h[:note] = n
+         trigger_inst synth_name, init_args_h.merge(args_h)
        end
        doc name:          :play,
            introduced:    Version.new(2,0,0),
            summary:       "Play current synth",
-           doc:           "Play note with current synth. Accepts a set of standard options which include control of an amplitude envelope with attack, sustain and release phases. These phases are triggered in order, so the duration of the sound is attack + sustain + release times. The duration of the sound does not affect any other notes. Code continues executing whilst the sound is playing through its envelope phases.
+           doc:           "Play note with current synth. Accepts a set of standard options which include control of an amplitude envelope with attack, decay, sustain and release phases. These phases are triggered in order, so the duration of the sound is attack + decay + sustain + release times. The duration of the sound does not affect any other notes. Code continues executing whilst the sound is playing through its envelope phases.
 
-Accepts optional args for modification of the synth being played. See each synth's documentation for synth-specific opts. See use_synth and with_synth for changing the current synth.",
+Accepts optional args for modification of the synth being played. See each synth's documentation for synth-specific opts. See use_synth and with_synth for changing the current synth.
+
+If note is nil, :r or :rest, play is ignored and treated as a rest.
+",
            args:          [[:note, :symbol_or_number]],
            opts:          DEFAULT_PLAY_OPTS,
            accepts_block: false,
@@ -620,7 +772,7 @@ play_pattern [40, 41, 42] # Same as:
        doc name:          :play_pattern_timed,
            introduced:    Version.new(2,0,0),
            summary:       "Play pattern of notes with specific times",
-           doc:           "Play each note in a list of notes one after another with specified times between them. The notes should be a list of MIDI numbers or symbols such as :E4 - identical to the first parameter of the play function. The times should be a list of times between the notes in seconds.
+           doc:           "Play each note in a list of notes one after another with specified times between them. The notes should be a list of MIDI numbers, symbols such as :E4 or chords such as chord(:A3, :major) - identical to the first parameter of the play function. The times should be a list of times between the notes in seconds.
 
 If the list of times is smaller than the number of gaps between notes, the list is repeated again. If the list of times is longer than the number of gaps between notes, then some of the times are ignored. See examples for more detail.
 
@@ -687,7 +839,7 @@ play 44"]
            n = note(n) unless n.is_a? Numeric
            n + shift
          end
-         synth_name = @mod_sound_studio.current_synth_name
+         synth_name = current_synth_name
          trigger_chord(synth_name, shifted_notes, args)
        end
        doc name:          :play_chord,
@@ -884,20 +1036,20 @@ play 60 # plays note 60 with an amp of 0.5, pan of -1 and defaults for rest of a
          new_bus = nil
          current_bus = current_out_bus
          tracker = nil
+         fx_group = nil
+         job_id = Thread.current.thread_variable_get :sonic_pi_spider_job_id
+         block_res = nil
 
          __no_kill_block do
-           ## Munge args
-           args_h = resolve_synth_opts_hash_or_array(args)
-           kill_delay = args_h[:kill_delay] || info.kill_delay(args_h)
 
-           current_trackers = Thread.current.thread_variable_get(:sonic_pi_mod_sound_trackers) || Set.new
+           ## We're in a no_kill block, so the user can't randomly kill
+           ## the current thread. That means it's safe to set up the
+           ## synth trackers, create the fx synth and busses and modify
+           ## the thread local to make sure new synth triggers in this
+           ## thread output to this fx synth. We can also create a gc
+           ## thread to wait for the current thread to either exit
+           ## correctly or to die and to handle things appropriately.
 
-           ## We're still in a no_kill sync block, so the user can't
-           ## kill us yet. Now that the gc thread is waiting for the fx
-           ## block to either complete (or be killed) we can now set up
-           ## the synth trackers, create the fx synth and busses and
-           ## modify the thread local to make sure new synth triggers in
-           ## this thread output to this fx synth:
 
            ## Create a new bus for this fx chain
            begin
@@ -911,6 +1063,22 @@ play 60 # plays note 60 with an amp of 0.5, pan of -1 and defaults for rest of a
              end
            end
 
+           ## Munge args
+           args_h = resolve_synth_opts_hash_or_array(args)
+           args_h["in_bus"] = new_bus
+           args_h = normalise_and_resolve_synth_args(args_h, info)
+
+           # Setup trackers
+           current_trackers = Thread.current.thread_variable_get(:sonic_pi_mod_sound_trackers) || Set.new
+
+           # Create new group for this FX - this is to enable the FX to be triggered at logical time
+           # whilst ensuring it is in the correct position in the scsynth node tree.
+           fx_group = @mod_sound_studio.new_group(:head, current_fx_main_group, "Run-#{job_id}-#{fx_name}")
+
+           ## Create a 'GC' thread to safely handle completion of the FX
+           ## block (or the case that the thread dies) and to clean up
+           ## everything appropriately (i.e. ensure the FX synth has
+           ## been killed).
            gc = Thread.new do
 
              Thread.current.thread_variable_set(:sonic_pi_thread_group, :gc)
@@ -958,6 +1126,7 @@ play 60 # plays note 60 with an amp of 0.5, pan of -1 and defaults for rest of a
              Thread.new do
                Thread.current.thread_variable_set(:sonic_pi_thread_group, :gc_kill_fx_synth)
                Thread.current.priority = -10
+               kill_delay = args_h[:kill_delay] || info.kill_delay(args_h)
                new_subthreads.each do |st|
                  join_thread_and_subthreads(st)
                end
@@ -968,7 +1137,7 @@ play 60 # plays note 60 with an amp of 0.5, pan of -1 and defaults for rest of a
                Kernel.sleep 0.5 + @mod_sound_studio.sched_ahead_time
                tracker.block_until_finished
                Kernel.sleep(kill_delay)
-               fx_synth.kill(true)
+               fx_group.kill(true)
              end
 
              gc_completed.deliver! true
@@ -976,7 +1145,7 @@ play 60 # plays note 60 with an amp of 0.5, pan of -1 and defaults for rest of a
 
            ## Trigger new fx synth (placing it in the fx group) and
            ## piping the in and out busses correctly
-           fx_synth = trigger_fx(fx_synth_name, args_h.merge({"in_bus" => new_bus}), current_fx_group)
+           fx_synth = trigger_fx(fx_synth_name, args_h, info, new_bus, fx_group)
 
            ## Create a synth tracker and stick it in a thread local
            tracker = SynthTracker.new
@@ -1001,18 +1170,20 @@ play 60 # plays note 60 with an amp of 0.5, pan of -1 and defaults for rest of a
          fx_execute_t = in_thread do
            Thread.current.thread_variable_set(:sonic_pi_spider_delayed_blocks, fxt.thread_variable_get(:sonic_pi_spider_delayed_blocks))
            Thread.current.thread_variable_set(:sonic_pi_spider_delayed_messages, fxt.thread_variable_get(:sonic_pi_spider_delayed_messages))
+           Thread.current.thread_variable_set(:sonic_pi_spider_random_generator, fxt.thread_variable_get(:sonic_pi_spider_random_generator))
 
            new_trackers = [tracker]
            (Thread.current.thread_variable_get(:sonic_pi_mod_sound_trackers) || []).each do |tr|
              new_trackers << tr
            end
            Thread.current.thread_variable_set(:sonic_pi_mod_sound_trackers, new_trackers)
-
+           cur_fx_group = Thread.current.thread_variable_get(:sonic_pi_mod_sound_fx_group)
+           Thread.current.thread_variable_set(:sonic_pi_mod_sound_fx_group, fx_group)
            begin
              if block.arity == 0
-               block.call
+               block_res = block.call
              else
-               block.call(fx_synth)
+               block_res = block.call(fx_synth)
              end
            rescue
              ## Oopsey - there was an error in the user's block. Re-raise
@@ -1024,6 +1195,7 @@ play 60 # plays note 60 with an amp of 0.5, pan of -1 and defaults for rest of a
              p.deliver! true
              ## Reset out bus to value prior to this with_fx block
              fxt.thread_variable_set(:sonic_pi_mod_sound_synth_out_bus, current_bus)
+             Thread.current.thread_variable_set(:sonic_pi_mod_sound_fx_group, cur_fx_group)
            end
          end
 
@@ -1034,6 +1206,13 @@ play 60 # plays note 60 with an amp of 0.5, pan of -1 and defaults for rest of a
          Thread.current.thread_variable_set(:sonic_pi_spider_delayed_messages, fx_execute_t.thread_variable_get(:sonic_pi_spider_delayed_messages))
          Thread.current.thread_variable_set(:sonic_pi_spider_time, fx_execute_t.thread_variable_get(:sonic_pi_spider_time))
 
+         Thread.current.thread_variable_set(:sonic_pi_spider_random_generator, fx_execute_t.thread_variable_get(:sonic_pi_spider_random_generator))
+
+         ## Ensure the synced detection mechanism comes back out of
+         ## with_fx blocks so syncs can be within with_fx blocks within
+         ## live_loops without tripping the live_loop no sleep detector
+         Thread.current.thread_variable_set(:sonic_pi_spider_synced, fx_execute_t.thread_variable_get(:sonic_pi_spider_synced))
+
          # Wait for gc thread to complete. Once the gc thread has
          # completed, the tracker has been successfully removed, and all
          # the block threads have been determined. The gc thread has
@@ -1041,6 +1220,9 @@ play 60 # plays note 60 with an amp of 0.5, pan of -1 and defaults for rest of a
          # remaining synths to complete and can be left to work in the
          # background...
          gc_completed.get
+
+         # return result of block
+         block_res
        end
        doc name:          :with_fx,
            introduced:    Version.new(2,0,0),
@@ -1090,7 +1272,12 @@ end"]
 
        def use_sample_pack(pack, &block)
          raise "use_sample_pack does not work with a block. Perhaps you meant with_sample_pack" if block
-         pack = samples_path if pack == :default
+         if pack == :default
+           pack = samples_path
+         else
+           pack = "#{pack}/" if File.directory?(pack)
+         end
+
          Thread.current.thread_variable_set(:sonic_pi_mod_sound_sample_path, pack)
        end
        doc name:          :use_sample_pack,
@@ -1109,6 +1296,7 @@ sample :foo  #=> plays /home/yourname/path/to/sample/dir/foo.{wav|wave|aif|aiff}
 
        def use_sample_pack_as(pack, name, &block)
          raise "use_sample_pack_as does not work with a block. Perhaps you meant with_sample_pack" if block
+         pack = "#{pack}/" if File.directory?(pack)
          aliases = Thread.current.thread_variable_get(:sonic_pi_mod_sound_sample_aliases) || Hamster.hash
          new_aliases = aliases.put name.to_s, pack
          Thread.current.thread_variable_set(:sonic_pi_mod_sound_sample_aliases, new_aliases)
@@ -1127,15 +1315,21 @@ use_sample_pack_as '/home/yourname/my/cool/samples/guitar', :my_guitars
 use_sample_pack_as '/home/yourname/my/cool/samples/drums', :my_drums
 
 # You can now play both the 'bass.wav' samples, as they've had the symbol stuck on the front
-sample :my_guitars_bass    #=> plays '/home/yourname/my/cool/samples/guitar/bass.wav'
-sample :my_drums_bass  #=> plays '/home/yourname/my/cool/samples/drums/bass.wav'"]
+sample :my_guitars__bass    #=> plays '/home/yourname/my/cool/samples/guitar/bass.wav'
+sample :my_drums__bass  #=> plays '/home/yourname/my/cool/samples/drums/bass.wav'"]
 
 
 
 
        def with_sample_pack(pack, &block)
          raise "with_sample_pack requires a block. Perhaps you meant use_sample_pack" unless block
-         pack = samples_path if pack == :default
+         if pack == :default
+           # allow user to reset sample pack with the :default keyword
+           pack = samples_path
+         else
+           # ensure directories have trailing /
+           pack = "#{pack}/" if File.directory?(pack)
+         end
          current = Thread.current.thread_variable_get(:sonic_pi_mod_sound_sample_path)
          Thread.current.thread_variable_set(:sonic_pi_mod_sound_sample_path, pack)
          block.call
@@ -1158,6 +1352,7 @@ end"]
 
        def with_sample_pack_as(pack, name, &block)
          raise "with_sample_pack_as requires a do/end block. Perhaps you meant use_sample_pack" if block
+         pack = "#{pack}/" if File.directory?(pack)
          current = Thread.current.thread_variable_get(:sonic_pi_mod_sound_sample_aliases)
          aliases = current || Hamster.hash
          new_aliases = aliases.put name.to_s, pack
@@ -1175,14 +1370,14 @@ end"]
            examples:      ["
 with_sample_pack_as '/home/yourname/path/to/sample/dir', :my_samples do
   # The foo sample is now available, with a prefix of 'my_samples'
-  sample :my_samples_foo  #=> plays /home/yourname/path/to/sample/dir/foo.{wav|wave|aif|aiff}
+  sample :my_samples__foo  #=> plays /home/yourname/path/to/sample/dir/foo.{wav|wave|aif|aiff}
 end"]
 
 
 
 
        def current_synth
-         @mod_sound_studio.current_synth_name
+         current_synth_name
        end
        doc name:          :current_synth,
            introduced:    Version.new(2,0,0),
@@ -1357,20 +1552,44 @@ set_volume! 2 # Set the main system volume to 2",
 ]
 
 
+       def sample_loaded?(path)
+         case path
+         when Symbol
+           full_path = resolve_sample_symbol_path(path)
+           return @mod_sound_studio.sample_loaded?(full_path)
+         when String
+           path = File.expand_path(path)
+           return @mod_sound_studio.sample_loaded?(path)
+         else
+           raise "Unknown sample description: #{path}"
+         end
+       end
+       doc name:          :sample_loaded?,
+           introduced:    Version.new(2,2,0),
+           summary:       "Test if sample was pre-loaded",
+           doc:           "Given a path to a wav|wave|aif|aiff file, return true if the sample has already been loaded.",
+           args:          [[:path, :string]],
+           opts:          nil,
+           accepts_block: false,
+           examples:      ["
+load_sample :elec_blip # :elec_blip is now loaded and ready to play as a sample
+puts sample_loaded? :elec_blip # prints true because it has been pre-loaded
+puts sample_loaded? :misc_burp # prints false because it has not been loaded"]
+
 
 
        def load_sample(path)
          case path
          when Symbol
            full_path = resolve_sample_symbol_path(path)
-           raise "No sample exists called #{path.inspect}" unless File.exists?(full_path)
            info, cached = @mod_sound_studio.load_sample(full_path)
-           __delayed_message "Loaded sample :#{path}" unless cached
+           __info "Loaded sample :#{path}" unless cached
            return info
          when String
+           path = File.expand_path(path)
            if File.exists?(path)
              info, cached = @mod_sound_studio.load_sample(path)
-             __delayed_message "Loaded sample #{path.inspect}" unless cached
+             __info "Loaded sample #{path.inspect}" unless cached
              return info
            else
              raise "No sample exists with path #{path}"
@@ -1491,6 +1710,7 @@ end "]
 
 
        def sample(path, *args_a_or_h)
+         return if path == nil
          ensure_good_timing!
          buf_info = load_sample(path)
          args_h = resolve_synth_opts_hash_or_array(args_a_or_h)
@@ -1593,9 +1813,24 @@ puts status # Returns something similar to:
 
 
 
-
        def note(n, *args)
+         # Short circuit out if possible.
+         # Also recurse if necessary.
+         case n
+         when Numeric
+           return n
+         when Symbol
+           return nil if(n == :r || n == :rest)
+         when NilClass
+           return nil
+         when Proc
+           return note(n.call, *args)
+         when Hash
+           return note(n[:note], *args)
+         end
+
          return Note.resolve_midi_note_without_octave(n) if args.empty?
+
          args_h = resolve_synth_opts_hash_or_array(args)
          octave = args_h[:octave]
          if octave
@@ -1607,7 +1842,7 @@ puts status # Returns something similar to:
        doc name:          :note,
            introduced:    Version.new(2,0,0),
            summary:       "Describe note",
-           doc:           "Takes a midi note, a symbol (e.g. :C ) or a string (e.g. 'C' ) and resolves it to a midi note. You can also pass an optional :octave parameter to get the midi note for a given octave. Please note - :octave param is overridden if octave is specified in a symbol i.e. :c3",
+           doc:           "Takes a midi note, a symbol (e.g. :C ) or a string (e.g. 'C' ) and resolves it to a midi note. You can also pass an optional :octave parameter to get the midi note for a given octave. Please note - :octave param is overridden if octave is specified in a symbol i.e. :c3. If the note is nil, :r or :rest, then nil is returned (nil represents a rest)",
            args:          [[:note, :symbol_or_number]],
            opts:          {:octave => 4},
            accepts_block: false,
@@ -1649,10 +1884,28 @@ puts note_info(:C, octave: 2)
 
 
 
+
+       def degree(degree, tonic, scale)
+         Scale.resolve_degree(degree, tonic, scale)
+       end
+       doc name:           :degree,
+       introduced:         Version.new(2,1,0),
+       summary:            "Convert a degree into a note",
+       doc:                "For a given scale and tonic it takes a symbol :i,:ii,:iii,:iv,:v :vi, :vii or a number 1-7 and resolves it to a midi note.",
+       args:               [[:degree, :symbol_or_number], [:tonic, :symbol], [:scale, :symbol]],
+       accepts_block:      false,
+       examples:           [%Q{
+play degree(:ii, :D3, :major)
+play degree(2, :C3, :minor)
+}]
+
+
+
+
        def scale(tonic, name, *opts)
          opts = resolve_synth_opts_hash_or_array(opts)
          opts = {:num_octaves => 1}.merge(opts)
-         Scale.new(tonic, name,  opts[:num_octaves]).to_a
+         Scale.new(tonic, name,  opts[:num_octaves])
        end
        doc name:          :scale,
            introduced:    Version.new(2,0,0),
@@ -1745,12 +1998,32 @@ play_pattern scale(:C, :lydian_minor)
 
 
 
+       def chord_degree(degree, tonic, scale=:major, number_of_notes=4)
+         Chord.resolve_degree(degree, tonic, scale, number_of_notes)
+       end
+       doc name:          :chord_degree,
+           introduced:    Version.new(2,1,0),
+           summary:       "Construct chords based on scale degrees",
+           doc:           "A helper method that returns a list of midi note numbers when given a degree (a symbol :i,:ii,:iii,:iv,:v :vi, :vii or a number 1-7), tonic, scale and number of notes",
+           args:          [[:degree, :symbol_or_number], [:tonic, :symbol], [:scale, :symbol], [:number_of_notes, :number]],
+           opts:          nil,
+           accepts_block: false,
+           examples:      ["
+puts chord_degree(:i, :A3, :major) # returns a list of midi notes - [69 73 76 80]
+",
+"play chord_degree(:i, :A3, :major)"
+]
+
+
+
+
        def chord(tonic, name=:major, *opts)
+         return [] unless tonic
          if tonic.is_a? Array
            raise "List passed as parameter to chord needs two elements i.e. chord([:e3, :minor]), you passed: #{tonic.inspect}" unless tonic.size == 2
            Chord.new(tonic[0], tonic[1]).to_a
          else
-           Chord.new(tonic, name).to_a
+           Chord.new(tonic, name)
          end
        end
        doc name:          :chord,
@@ -1887,9 +2160,12 @@ sleep 1
 
        def control(node, *args)
          ensure_good_timing!
+         return nil if node.nil?
+
          args_h = resolve_synth_opts_hash_or_array(args)
          n = args_h[:note]
          args_h[:note] = note(n) if n
+         normalise_args! args_h
          node.control args_h
          unless Thread.current.thread_variable_get(:sonic_pi_mod_sound_synth_silent)
            __delayed_message "control node #{node.id}, #{arg_h_pp(args_h)}"
@@ -1915,6 +2191,8 @@ control my_node, cutoff: 90 # Now modify cutoff from 79 to 90, sound is still pl
 
        def stop(node)
          ensure_good_timing!
+         return nil if node.nil?
+
          alive = node.live?
          node.kill
          if alive
@@ -1989,7 +2267,8 @@ stop bar"]
 
 
 
-       def load_synthdefs(path)
+       def load_synthdefs(path=synthdef_path)
+         path = File.expand_path(path)
          raise "No directory exists called #{path.inspect} " unless File.exists? path
          @mod_sound_studio.load_synthdefs(path)
          __info "Loaded synthdefs in path #{path}"
@@ -1997,7 +2276,7 @@ stop bar"]
        doc name:          :load_synthdefs,
            introduced:    Version.new(2,0,0),
            summary:       "Load external synthdefs",
-           doc:           "Load all synth designs in the specified directory. This is useful if you wish to use your own SuperCollider synthesiser designs within Sonic Pi. if you wish your synth to seemlessly integrate with the Sonic ",
+           doc:           "Load all synth designs in the specified directory. This is useful if you wish to use your own SuperCollider synthesiser designs within Sonic Pi. If you wish your synth to seemlessly integrate with Sonic Pi's FX system you need to ensure your synth outputs a stereo signal to an audio bus with an index specified by a synth arg named out_bus.",
            args:          [[:path, :string]],
            opts:          nil,
            accepts_block: false,
@@ -2008,7 +2287,32 @@ stop bar"]
 
        private
 
-       def scale_time_args_to_bpm(args_h, info)
+       def normalise_args!(args_h)
+         args_h.keys.each do |k|
+           v = args_h[k]
+           case v
+           when Numeric
+             # do nothing
+           when Proc
+             args_h[k] = v.call.to_f
+           when Symbol
+             # Allow vals to be keys to other vals
+             # But only one level deep...
+             args_h[k] = args_h[v].to_f
+           when TrueClass
+             args_h[k] = 1.0
+           when FalseClass
+             args_h[k] = 0.0
+           when NilClass
+             args_h[k] = 0.0
+           else
+             args_h[k] = v.to_f
+           end
+         end
+         args_h
+       end
+
+       def scale_time_args_to_bpm!(args_h, info)
          # some of the args in args_h need to be scaled to match the
          # current bpm. Check in info to see if that's necessary and if
          # so, scale them.
@@ -2021,45 +2325,84 @@ stop bar"]
          args_h
        end
 
-       def resolve_sample_symbol_path(sym)
-         if ((aliases = Thread.current.thread_variable_get(:sonic_pi_mod_sound_sample_aliases)) &&
+       def find_sample_with_path(path)
+         ["wav", "aiff", "aif", "wave"].each do |ext|
+           full = "#{path}.#{ext}"
+           return full if File.exists?(full)
+         end
+         return nil
+       end
 
-             (m       = sym.to_s.match /(.+?)_(.+)/) &&
+       def fetch_or_cache_sample_path(sym)
+         cached = @sample_paths_cache[sym]
+         return cached if cached
+
+         res = find_sample_with_path("#{samples_path}/#{sym.to_s}")
+
+         raise "No sample exists called :#{sym} in default sample pack" unless res
+         @sample_paths_cache[sym] = res
+         res
+       end
+
+       def resolve_sample_symbol_path(sym)
+         aliases = Thread.current.thread_variable_get(:sonic_pi_mod_sound_sample_aliases)
+         path = Thread.current.thread_variable_get(:sonic_pi_mod_sound_sample_path)
+
+         return fetch_or_cache_sample_path(sym) unless (aliases || path)
+
+         if (aliases &&
+             (m       = sym.to_s.match /\A(.+?)__(.+)/) &&
              (p       = aliases[m[1]]))
            path = p
            sym = m[2]
-           partial = "#{p}/#{sym}"
+           partial = "#{p}#{sym}"
+         elsif path
+           partial = path + sym.to_s
          else
-           path = Thread.current.thread_variable_get(:sonic_pi_mod_sound_sample_path) || samples_path
+           path = samples_path
            partial = path + "/" + sym.to_s
          end
 
-         ["wav", "aiff", "aif", "wave"].each do |ext|
-           full = "#{partial}.#{ext}"
-           return full if File.exists?(full)
-         end
+         res = find_sample_with_path(partial)
 
-         raise "No sample exists called :#{sym} in sample pack #{path}"
+         raise "No sample exists called #{sym.inspect} in sample pack #{path.inspect} (#{File.expand_path(path)})" unless res
+
+         res
        end
 
-       def arg_h_pp(arg_h)
-         s = "{"
-         arg_h.each do |k, v|
-           rounded = v.is_a?(Float) ? v.round(4) : v
-           s << "#{k}: #{rounded}, "
+       def complex_sampler_args?(args_h)
+         # break out early if any of the 'complex' keys exist in the
+         # args map:
+         return false if args_h.empty?
+         @complex_sampler_args.each do |a|
+           return true if args_h[a]
          end
-         s.chomp(", ") << "}"
+
+         # Ensure rate isn't negative:
+         r = args_h[:rate]
+         if (r && r < 0)
+           return true
+         else
+           return false
+         end
        end
+
 
        def trigger_sampler(path, buf_id, num_chans, args_h, group=current_job_synth_group)
-         args_h_with_buf = {:buf => buf_id}.merge(args_h)
-
-         if (args_h[:rate] && args_h[:rate] < 0) || ((@complex_sampler_args - args_h.keys).size != @complex_sampler_args.size)
-           synth_name = (num_chans == 1) ? "mono_player" : "stereo_player"
+         if complex_sampler_args?(args_h)
+           #complex
+           synth_name = (num_chans == 1) ? :mono_player : :stereo_player
          else
-           synth_name = (num_chans == 1) ? "basic_mono_player" : "basic_stereo_player"
+           #basic
+           synth_name = (num_chans == 1) ? :basic_mono_player : :basic_stereo_player
          end
-         sn = synth_name.to_sym
+
+         trigger_specific_sampler(synth_name, path, buf_id, num_chans, args_h, group)
+       end
+
+       def trigger_specific_sampler(sampler_type, path, buf_id, num_chans, args_h, group=current_job_synth_group)
+         args_h_with_buf = {:buf => buf_id}.merge(args_h)
+         sn = sampler_type.to_sym
          info = SynthInfo.get_info(sn)
 
          unless Thread.current.thread_variable_get(:sonic_pi_mod_sound_synth_silent)
@@ -2070,7 +2413,7 @@ stop bar"]
            end
          end
 
-         trigger_synth(synth_name, args_h_with_buf, group, info)
+         trigger_synth(sn, args_h_with_buf, group, info)
        end
 
        def trigger_inst(synth_name, args_h, group=current_job_synth_group)
@@ -2081,61 +2424,58 @@ stop bar"]
            __delayed_message "synth #{sn.inspect}, #{arg_h_pp(args_h)}"
          end
 
-         trigger_synth(synth_name, args_h, group, info)
+         trigger_synth(synth_name, args_h, group, info, false, nil, true)
        end
 
        def trigger_chord(synth_name, notes, args_a_or_h, group=current_job_synth_group)
+         sn = synth_name.to_sym
+         info = SynthInfo.get_info(sn)
          args_h = resolve_synth_opts_hash_or_array(args_a_or_h)
+         args_h = normalise_and_resolve_synth_args(args_h, info, nil, true)
 
-         chord_group = @mod_sound_studio.new_group(:tail, group)
+         chord_group = @mod_sound_studio.new_group(:tail, group, "CHORD")
          cg = ChordGroup.new(chord_group)
+
+         unless Thread.current.thread_variable_get(:sonic_pi_mod_sound_synth_silent)
+           __delayed_message "synth #{sn.inspect}, #{arg_h_pp(args_h.merge({note: notes}))}"
+         end
+
+         # Scale down amplitude based on number of notes in chord
+         amp = args_h[:amp] || 1.0
+         args_h[:amp] = amp.to_f / notes.size
 
          nodes = []
          notes.each do |note|
            if note
              args_h[:note] = note
-             nodes << trigger_inst(synth_name, args_h, cg)
+             nodes << trigger_synth_with_resolved_args(synth_name, args_h, cg, info)
            end
          end
          cg.sub_nodes = nodes
          cg
        end
 
-       def trigger_fx(synth_name, args_a_or_h, group=current_fx_group)
-         args_h = resolve_synth_opts_hash_or_array(args_a_or_h)
-         sn = synth_name.to_sym
-         info = SynthInfo.get_info(sn)
-
-         n = trigger_synth(synth_name, args_h, group, info, true)
-         FXNode.new(n, args_h["in_bus"], current_out_bus)
+       def trigger_fx(synth_name, args_h, info, in_bus, group=current_fx_group)
+         n = trigger_synth_with_resolved_args(synth_name, args_h, group, info)
+         FXNode.new(n, in_bus, current_out_bus)
        end
 
-       def trigger_synth(synth_name, args_h, group, info, now=false, out_bus=nil)
+       def trigger_synth(synth_name, args_h, group, info, now=false, out_bus=nil, combine_tls=false)
+         processed_args = normalise_and_resolve_synth_args(args_h, info, out_bus, combine_tls)
+         trigger_synth_with_resolved_args(synth_name, processed_args, group, info, now, out_bus)
+       end
 
-         defaults = info ? info.arg_defaults : {}
+       # Function that actually triggers synths now that all args are resolved
+       def trigger_synth_with_resolved_args(synth_name, args_h, group, info, now=false, out_bus=nil)
          synth_name = info ? info.scsynth_name : synth_name
-
-         unless out_bus
-           out_bus = current_out_bus
-         end
-
-         t_l_args = Thread.current.thread_variable_get(:sonic_pi_mod_sound_synth_defaults) || {}
-
-         combined_args = defaults.merge(t_l_args.merge(args_h))
-         combined_args = call_synth_default_fns(combined_args)
-         combined_args["out_bus"] = out_bus
-
-         validate_if_necessary! info, combined_args
-
-         combined_args = scale_time_args_to_bpm(combined_args, info) if info && Thread.current.thread_variable_get(:sonic_pi_spider_arg_bpm_scaling)
-
+         validate_if_necessary! info, args_h
          job_id = current_job_id
          __no_kill_block do
 
            p = Promise.new
            job_synth_proms_add(job_id, p)
 
-           s = @mod_sound_studio.trigger_synth synth_name, group, combined_args, info, now
+           s = @mod_sound_studio.trigger_synth synth_name, group, args_h, info, now
 
            trackers = Thread.current.thread_variable_get(:sonic_pi_mod_sound_trackers)
 
@@ -2153,21 +2493,47 @@ stop bar"]
 
            s
          end
+       end
 
+       def normalise_and_resolve_synth_args(args_h, info, out_bus=nil, combine_tls=false)
+         defaults = info ? info.arg_defaults : {}
+         unless out_bus
+           out_bus = current_out_bus
+         end
+
+         if combine_tls
+           t_l_args = Thread.current.thread_variable_get(:sonic_pi_mod_sound_synth_defaults) || {}
+           combined_args = defaults.merge(t_l_args.merge(args_h))
+         else
+           combined_args = defaults.merge(args_h)
+         end
+
+         combined_args["out_bus"] = out_bus
+         normalise_args!(combined_args)
+         scale_time_args_to_bpm!(combined_args, info) if info && Thread.current.thread_variable_get(:sonic_pi_spider_arg_bpm_scaling)
+         combined_args
        end
 
        def current_job_id
          Thread.current.thread_variable_get :sonic_pi_spider_job_id
        end
 
-       def current_fx_group
-         if g = Thread.current.thread_variable_get(:sonic_pi_mod_sound_fx_group)
+       def current_job_mixer
+         job_mixer(current_job_id)
+       end
+
+       def current_fx_main_group
+         if g = Thread.current.thread_variable_get(:sonic_pi_mod_sound_fx_main_group)
            return g
          else
            g = job_fx_group(current_job_id)
-           Thread.current.thread_variable_set :sonic_pi_mod_sound_fx_group, g
+           Thread.current.thread_variable_set :sonic_pi_mod_sound_fx_main_group, g
            return g
          end
+       end
+
+       def current_fx_group
+         Thread.current.thread_variable_get(:sonic_pi_mod_sound_fx_group) || current_fx_main_group
        end
 
        def current_job_synth_group
@@ -2182,7 +2548,11 @@ stop bar"]
 
        def current_out_bus
          current_bus = Thread.current.thread_variable_get(:sonic_pi_mod_sound_synth_out_bus)
-         current_bus || @mod_sound_studio.mixer_bus
+         current_bus || current_job_bus
+       end
+
+       def current_job_bus
+         job_bus(current_job_id)
        end
 
        def job_bus(job_id)
@@ -2218,20 +2588,24 @@ stop bar"]
            m = @JOB_MIXERS_A.deref[job_id]
            return m if m
 
-
            args_h = {
-             "in_bus" => job_bus(job_id),
-             "out_bus" => @mod_sound_studio.mixer_bus,
+             "in_bus" => job_bus(job_id).to_i,
+             "amp" => 0.3
            }
 
-           synth_name = "sonic-pi-basic_mixer"
+           sn = "basic_mixer"
+           info = SynthInfo.get_info(sn)
+           defaults = info.arg_defaults
+           synth_name = info ? info.scsynth_name : synth_name
 
-           validation_fn = mk_synth_args_validator(synth_name)
-           validation_fn.call(args_h)
+           combined_args = defaults.merge(args_h)
+           combined_args["out_bus"] = @mod_sound_studio.mixer_bus.to_i
 
-           default_args = SynthInfo.get_info(synth_name).arg_defaults
-           combined_args = default_args.merge(args_h)
-           n = @mod_sound_studio.trigger_synth synth_name, job_fx_group(job_id), combined_args, true, &validation_fn
+           validate_if_necessary! info, combined_args
+
+           group = @mod_sound_studio.mixer_group
+
+           n = @mod_sound_studio.trigger_synth synth_name, group, combined_args, info, true
 
            mix_n = ChainNode.new(n)
 
@@ -2251,7 +2625,7 @@ stop bar"]
          @JOB_GROUP_MUTEX.synchronize do
            g = @JOB_GROUPS_A.deref[job_id]
            return g if g
-           g = @mod_sound_studio.new_synth_group
+           g = @mod_sound_studio.new_synth_group(job_id)
 
            @JOB_GROUPS_A.swap! do |gs|
              gs.put job_id, g
@@ -2269,7 +2643,7 @@ stop bar"]
          @JOB_FX_GROUP_MUTEX.synchronize do
            g = @JOB_FX_GROUPS_A.deref[job_id]
            return g if g
-           g = @mod_sound_studio.new_fx_group
+           g = @mod_sound_studio.new_fx_group(job_id)
 
            @JOB_FX_GROUPS_A.swap! do |gs|
              gs.put job_id, g
@@ -2302,11 +2676,11 @@ stop bar"]
          end
          mixer = old_job_mixers[job_id]
          if mixer
-           mixer.ctl amp_slide: 0.2
            mixer.ctl amp: 0
-           Kernel.sleep 0.2
+           Kernel.sleep 0.5
            mixer.kill
          end
+
        end
 
        def kill_job_group(job_id)
@@ -2332,12 +2706,6 @@ stop bar"]
          subthreads = t.thread_variable_get :sonic_pi_spider_subthreads
          subthreads.each do |st|
            join_thread_and_subthreads(st)
-         end
-       end
-
-       def call_synth_default_fns(args_h)
-         args_h.each do |k, v|
-           args_h[k] = v.call if v.is_a? Proc
          end
        end
 
@@ -2384,10 +2752,96 @@ stop bar"]
        end
 
        def ensure_good_timing!
+         return true if Thread.current.thread_variable_get(:sonic_pi_mod_sound_disable_timing_warnings)
+
          vt  = Thread.current.thread_variable_get :sonic_pi_spider_time
          sat = @mod_sound_studio.sched_ahead_time + 1.1
          raise "Timing Exception: thread got too far behind time." if (Time.now - sat) > vt
        end
+
+       def current_synth_name
+         Thread.current.thread_variable_get(:sonic_pi_mod_sound_current_synth_name) ||
+         Thread.current.thread_variable_set(:sonic_pi_mod_sound_current_synth_name, "beep")
+       end
+
+       def set_current_synth(name)
+         Thread.current.thread_variable_set(:sonic_pi_mod_sound_current_synth_name, name)
+       end
+
+       def __freesound_path(id)
+         cache_dir = home_dir + '/freesound/'
+         ensure_dir(cache_dir)
+
+         cache_file = cache_dir + "freesound-" + id.to_s + ".wav"
+
+         return cache_file if File.exists?(cache_file)
+
+         __info "Caching freesound #{id}..."
+
+         in_thread(name: "download_freesound_#{id}".to_sym) do
+           # API key borrowed from Overtone
+           apiURL = 'http://www.freesound.org/api/sounds/' + id.to_s + '/serve/?api_key=47efd585321048819a2328721507ee23'
+
+           resp = Net::HTTP.get_response(URI(apiURL))
+           case resp
+           when Net::HTTPSuccess then
+             if not resp['Content-Disposition'] =~ /\.wav\"$/ then
+               raise 'Only WAV freesounds are supported, sorry!'
+             end
+
+             open(cache_file, 'wb') do |file|
+               file.write(resp.body)
+             end
+             __info "Freesound #{id} loaded and ready to fire!"
+           else
+             __info "Failed to download freesound #{id}: " + resp.value
+           end
+         end
+         return nil
+       end
+#        doc name:          :freesound_path,
+#            introduced:    Version.new(2,1,0),
+#            summary:       "Return local path for sound from freesound.org",
+#            doc:           "Download and cache a sample by ID from freesound.org. Returns path as string if cached. If not cached, returns nil and starts a background thread to download the sample.",
+#            args:          [[:id, :number]],
+#            opts:          nil,
+#            accepts_block: false,
+#            examples:      ["
+# puts freesound(250129)    # preloads a freesound and prints its local path, such as '/home/user/.sonic_pi/freesound/250129.wav'"]
+
+       def __freesound(id, *opts)
+         path = __freesound_path(id)
+         arg_h = resolve_synth_opts_hash_or_array(opts)
+         fallback = arg_h[:fallback]
+
+         if path
+           sample path
+         elsif fallback
+           raise "Freesound fallback must be a symbol" unless fallback.is_a? Symbol
+           __info "Freesound #{id} not yet loaded, playing #{fallback}"
+           sample fallback
+         else
+           __info "Freesound #{id} not yet loaded, skipping"
+         end
+
+       end
+#        doc name:          :freesound,
+#            introduced:    Version.new(2,1,0),
+#            summary:       "Play sample from freesound.org",
+#            doc:           "Fetch from cache (or download then cache) a sample by ID from freesound.org, and then play it.",
+#            args:          [[:id, :number]],
+#            opts:          {:fallback => "Symbol representing built-in sample to play if the freesound id isn't yet downloaded"},
+#            accepts_block: false,
+#            examples:      ["
+# freesound(250129)  # takes time to download the first time, but then the sample is cached locally
+# ",
+# "
+# loop do
+#   sample freesound(27130)
+#   sleep sample_duration(27130)
+# end
+# "
+# ]
      end
    end
  end

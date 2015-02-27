@@ -99,6 +99,13 @@
 </Include>
 </Menu>
 <Menu>
+<Name>Hardware</Name>
+<Directory>debian-applications-system-hardware.directory</Directory>
+<Include>
+<Category>X-Debian-Applications-System-Hardware</Category>
+</Include>
+</Menu>
+<Menu>
 <Name>Monitoring</Name>
 <Directory>debian-applications-system-monitoring.directory</Directory>
 <Include>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Reference &mdash; PiFace Common 4.0.0 documentation</title>
+    <title>Reference &mdash; PiFace Common 4.1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '4.0.0',
+        VERSION:     '4.1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PiFace Common 4.0.0 documentation" href="index.html" />
+    <link rel="top" title="PiFace Common 4.1.2 documentation" href="index.html" />
     <link rel="prev" title="Example" href="example.html" /> 
   </head>
   <body>
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="example.html" title="Example"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PiFace Common 4.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PiFace Common 4.1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -231,6 +231,26 @@ anything.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pifacecommon.interrupts.PortEventListener.deregister">
+<tt class="descname">deregister</tt><big>(</big><em>pin_num=None</em>, <em>direction=None</em><big>)</big><a class="headerlink" href="#pifacecommon.interrupts.PortEventListener.deregister" title="Permalink to this definition">¶</a></dt>
+<dd><p>De-registers callback functions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pin_num</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The pin number. If None then all functions are de-registered</li>
+<li><strong>direction</strong> &#8211; The event direction. If None then all functions for the
+given pin are de-registered</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>:type direction:int</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pifacecommon.interrupts.PortEventListener.register">
 <tt class="descname">register</tt><big>(</big><em>pin_num</em>, <em>direction</em>, <em>callback</em>, <em>settle_time=0.02</em><big>)</big><a class="headerlink" href="#pifacecommon.interrupts.PortEventListener.register" title="Permalink to this definition">¶</a></dt>
 <dd><p>Registers a pin number and direction to a callback function.</p>
@@ -296,7 +316,7 @@ causes this function to exit.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>edge</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The interrupt edge (&#8216;none&#8217;, &#8216;falling&#8217;, &#8216;rising&#8217;).</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>edge</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The interrupt edge (&#8216;none&#8217;, &#8216;falling&#8217;, &#8216;rising&#8217;).</td>
 </tr>
 </tbody>
 </table>
@@ -310,7 +330,7 @@ causes this function to exit.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The name of the file to wait for.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; The name of the file to wait for.</td>
 </tr>
 </tbody>
 </table>
@@ -569,7 +589,7 @@ output latches.</td>
         <li class="right" >
           <a href="example.html" title="Example"
              >previous</a> |</li>
-        <li><a href="index.html">PiFace Common 4.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PiFace Common 4.1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

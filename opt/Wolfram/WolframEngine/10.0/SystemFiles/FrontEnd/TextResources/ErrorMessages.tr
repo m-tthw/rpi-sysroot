@@ -2903,8 +2903,8 @@ The Wolfram System encountered an error processing the current reference databas
 @@resource WolframCloudLoginErrors
 {
 	401->"The password or Wolfram ID you entered was not correct.",
-	1500->"Your current plan does not include access to the Wolfram Desktop. \!\(\*ButtonBox[\"Upgrade\",BaseStyle->\"DesktopAccessErrorLink\"]\) to get access.",
-	1600->"Cannot connect to the Wolfram Cloud. Please try again later. If this problem persists, \!\(\*ButtonBox[\"contact us\", BaseStyle->\"CloudConnectionErrorLink\"]\).",
+	1500->"Your current plan does not include access to the Wolfram Desktop. \!\(\*ButtonBox[\"Upgrade\", ButtonFunction :> (FE`hyperlinkCoded[\"https://www.wolframcloud.com/app/account/\", \"source=signinscreen\"]), Evaluator -> Automatic, Method -> \"Preemptive\", Appearance -> None, BaseStyle -> {FontColor -> RGBColor[0, 0, 1]}]\) to get access.",
+	1600->"Cannot connect to the Wolfram Cloud. Please try again later. If this problem persists, \!\(\*ButtonBox[\"contact us\", ButtonFunction :> (FE`hyperlinkCoded[\"http://www.wolfram.com/support/contact/email/\", \"source=signinscreen\"]), Evaluator -> Automatic, Method -> \"Preemptive\", Appearance -> None, BaseStyle -> {FontColor -> RGBColor[0, 0, 1]}]\).",
 	1601->"Unable to connect to the internet. Please check your internet connection.",
 	1602->"Unable to connect to the internet. Please check your internet connection."
 }

@@ -1,0 +1,105 @@
+<p> <span style="font-size:25px; color:white;background-color:deeppink;"><font face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">Use studio fx</font></span></p>
+<h1><font color="#3c3c3c"><pre>with_fx<pre></font></h1>
+<h2><pre>[fx_name <font color="deeppink">(symbol)</font>]</pre></h2>
+<p><font size="4", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+This applies the named effect (FX) to everything within a given do/end block. Effects may take extra parameters to modify their behaviour. See FX help for parameter details.
+
+For advanced control, it is also possible to modify the parameters of an effect within the body of the block. If you define the block with a single argument, the argument becomes a reference to the current effect and can be used to control its parameters (see examples).
+</p>
+<p><font size="3", face="HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue">
+<span style="color:white;background-color:darkorange;">Introduced in v2.0
+</span></p>
+<table cellpadding="8">
+ <tr>
+   <th></th><th></th><th></th>
+ </tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#74ACFF"><h3><pre>Example 0 </pre></h3></td>
+   <td><pre>
+
+with_fx :distortion do
+  play 50
+  sleep 1
+  sample :loop_amen
+end
+
+
+</pre></td>
+   <td><pre>
+# Basic usage
+# Use the distortion effect with default parameters
+# =&gt; plays note 50 with distortion
+ 
+# =&gt; plays the loop_amen sample with distortion too
+ 
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#E8E8E8">
+  <td bgcolor="#B2D1FF"><h3><pre>Example 1 </pre></h3></td>
+   <td><pre>
+
+with_fx :level, amp: 0.3 do
+  play 50
+  sleep 1
+  sample :loop_amen
+end
+
+
+</pre></td>
+   <td><pre>
+# Specify effect parameters
+# Use the level effect with the amp parameter set to 0.3
+ 
+ 
+ 
+ 
+
+
+
+</pre></td></tr>
+ <tr bgcolor="#F8F8F8">
+  <td bgcolor="#74ACFF"><h3><pre>Example 2 </pre></h3></td>
+   <td><pre>
+
+with_fx :reverb, mix: 0.1 do |fx|
+ 
+ 
+
+  play 60
+  sleep 2
+
+  control fx, mix: 0.5
+  play 60
+  sleep 2
+
+  control fx, mix: 1
+  play 60
+  sleep 2
+end
+
+
+</pre></td>
+   <td><pre>
+# Controlling the effect parameters within the block
+ 
+# here we set the reverb level quite low to start with (0.1)
+# and we can change it later by using the 'fx' reference we've set up
+ 
+# plays note 50 with a little bit of reverb
+ 
+ 
+# change the parameters of the effect to add more reverb
+# again note 60 but with more reverb
+ 
+ 
+# change the parameters of the effect to add more reverb
+# plays note 60 with loads of reverb
+ 
+ 
+
+
+
+</pre></td></tr>
+</table>

@@ -3,6 +3,7 @@
 (* ::Section::Closed:: *)
 (*FE <-> Kernel Initialization*)
 
+Internal`$FEInitializationQ = True;
 
 MathLink`LinkSetPrintFullSymbols[$ParentLink, True];
 
@@ -79,13 +80,6 @@ If[(FE`Private`parallelLinks =!= $Failed) && (Head[FE`Private`parallelLinks] =!=
 						MathLink`LinkSwitchPre->FrontEnd`Private`PreContextSwitchIn,
 						MathLink`LinkSwitchPost->FrontEnd`Private`PreContextSwitchOut];
 	MathLink`SetTerminating[$ParentLink, True]
-];
-
-
-(* Initialize display for graphics, sound, and animation *)
-If[("LegacyFrontEnd" /. FE`systemOptions[]) === False,
-	Get["FrontEndGraphics`"],
-	Get["PSDirect`"]
 ];
 
 
@@ -1545,12 +1539,19 @@ FrontEnd`AutomaticLocatorPaneClickFunction[Dynamic[var_, ___], pt_, index_, loca
 (*Demonstrations page support*)
 
 
-PutDemonstrationsTemplate[]:=Module[{nb},
+PutDemonstrationsTemplate[]:=Module[{nbStr, nb, strm},
 	Quiet[
-		nb=Import["http://demonstrations.wolfram.com/DemonstrationsTemplate.nb?mathid=" <> $MachineID <> "&?license=" <> $LicenseID];
-		If[nb===$Failed, nb=Import[
-			ToFileName[{$InstallationDirectory, "AddOns", "Applications", "DemonstrationsTools", "FrontEnd", "TextResources"},
-				"DemonstrationsTemplate.nb"]]
+		nbStr=URLFetch["http://demonstrations.wolfram.com/DemonstrationsTemplate.nb?mathid=" <> $MachineID <> "&?license=" <> $LicenseID];
+		If[nbStr=!=$Failed,
+			strm = StringToStream[nbStr];			
+			nb = Select[ReadList[strm, Expression], Head[#] === Notebook &];			
+			Close[strm]
+		];
+		nb = If[nbStr === $Failed || nb==={}, 
+				Get[
+					ToFileName[{$InstallationDirectory, "AddOns", "Applications", "DemonstrationsTools", "FrontEnd", "TextResources"},
+						"DemonstrationsTemplate.nb"]],
+				First[nb]
 		];
 		NotebookPut[nb]
 	]
@@ -1625,9 +1626,10 @@ FE`hyperlinkCoded[url_String /; StringMatchQ[url, "http*"], cat___] :=
      "&product_name=", ToLowerCase[FE`Evaluate[FEPrivate`$ProductIDName]],
      "&version=", FE`Evaluate[FEPrivate`$ProductVersion], 
 	 "&os=", FE`Evaluate[FEPrivate`$SystemID],
-     "&buildid=", StringCases[
-      ReadList[ToFileName[{$InstallationDirectory}, ".CreationID"], 
-       Character], DigitCharacter], Riffle[{"", cat}, "&"]]], None}]
+     "&buildid=", With[{buildid = FE`Evaluate[FEPrivate`$LayoutCreationID]},
+       If[IntegerQ[buildid], ToString[buildid, InputForm], StringCases[
+          ReadList[ToFileName[{$InstallationDirectory}, ".CreationID"], Character],
+          DigitCharacter]]], Riffle[{"", cat}, "&"]]], None}]
 
 
 (* ::Subsubsection::Closed:: *)
@@ -1912,7 +1914,7 @@ If[FrontEnd`Private`$KernelName === "System",
 	CloudCopyFile[nbobj_, filename_, cloudobject_] :=
 	Block[{$MessageList = {}, result},
 		result = CopyFile[filename, cloudobject];
-		If[$MessageList =!= {},
+		If[result === $Failed,
 			MathLink`CallFrontEnd @ FrontEnd`WolframCloud`UploadFailed[nbobj,
 				Switch[$MessageList,
 					{___, HoldForm[MessageName[_, "invhttp"]], ___}, 1600,
@@ -1922,7 +1924,10 @@ If[FrontEnd`Private`$KernelName === "System",
 					_, 1000 ]]];
 		result
 	];
-
+	
+	SetAttributes[CloudCopyFileQuiet, HoldAll];
+	CloudCopyFileQuiet[expr_] := If[$CloudCopyFileQuiet === False, expr, Quiet[expr]];
+	
 	CloudNotebookSave[nb_, info_List]:=
 	Module[{filename, cloudobject, filebytecount, lastmodified, overrideverification, cloudObjInfo, errorCode=-1},
 		{filename, cloudobject, filebytecount, lastmodified, overrideverification} = 
@@ -1938,7 +1943,7 @@ If[FrontEnd`Private`$KernelName === "System",
 				Return[$Failed]
 			]
 		];
-		If[Quiet[CloudCopyFile[nb, filename, cloudobject]] === $Failed, Return[$Failed]];
+		If[CloudCopyFileQuiet[CloudCopyFile[nb, filename, cloudobject]] === $Failed, Return[$Failed]];
 		(* otherwise, success *)
 		cloudObjInfo = First @ CloudObjectInformation[cloudobject];
 		MathLink`CallFrontEnd @ FrontEnd`WolframCloud`UploadComplete[nb,
@@ -2615,3 +2620,5 @@ $ContextPath = FrontEnd`Private`wasContextPath;
 
 
 (* ------------------------------------------------------------------------------------------------------------------ *)
+
+Internal`$FEInitializationQ = False;

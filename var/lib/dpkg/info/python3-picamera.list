@@ -3,12 +3,6 @@
 /usr/lib
 /usr/lib/python3
 /usr/lib/python3/dist-packages
-/usr/lib/python3/dist-packages/picamera-1.8.egg-info
-/usr/lib/python3/dist-packages/picamera-1.8.egg-info/dependency_links.txt
-/usr/lib/python3/dist-packages/picamera-1.8.egg-info/SOURCES.txt
-/usr/lib/python3/dist-packages/picamera-1.8.egg-info/top_level.txt
-/usr/lib/python3/dist-packages/picamera-1.8.egg-info/requires.txt
-/usr/lib/python3/dist-packages/picamera-1.8.egg-info/PKG-INFO
 /usr/lib/python3/dist-packages/picamera
 /usr/lib/python3/dist-packages/picamera/camera.py
 /usr/lib/python3/dist-packages/picamera/array.py
@@ -19,6 +13,12 @@
 /usr/lib/python3/dist-packages/picamera/exc.py
 /usr/lib/python3/dist-packages/picamera/mmal.py
 /usr/lib/python3/dist-packages/picamera/encoders.py
+/usr/lib/python3/dist-packages/picamera-1.9.egg-info
+/usr/lib/python3/dist-packages/picamera-1.9.egg-info/dependency_links.txt
+/usr/lib/python3/dist-packages/picamera-1.9.egg-info/SOURCES.txt
+/usr/lib/python3/dist-packages/picamera-1.9.egg-info/top_level.txt
+/usr/lib/python3/dist-packages/picamera-1.9.egg-info/requires.txt
+/usr/lib/python3/dist-packages/picamera-1.9.egg-info/PKG-INFO
 /usr/share
 /usr/share/doc
 /usr/share/doc/python3-picamera

@@ -1,6 +1,6 @@
 Paclet[
 	Name->"PLI",
-	Version->"0.0.2",
+	Version->"0.1.0",
 	MathematicaVersion->"10+",
 	Internal->True,
 	Root->".",

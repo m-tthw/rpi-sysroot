@@ -220,6 +220,7 @@ CloudObject[args___] := (ArgumentCountQ[CloudObject, Length[DeleteCases[{args}, 
 (* Only use hyperlinks inside CloudObject in desktop Mathematica. Otherwise, a "This feature is not supported" dialog is shown. *)
 If[$CloudEvaluation === True,
     (* In the Cloud, use RawBoxFormat to produce interactive output. *)
+    BoxForm`MakeConditionalTextFormattingRule[CloudObject];
     Format[CloudObject[uri_String], StandardForm] :=
         CloudSystem`RawBoxFormat[Interpretation[CloudObject[Hyperlink[uri]], CloudObject[uri]]],
 (* In desktop Mathematica, use MakeBoxes rather than Format *)

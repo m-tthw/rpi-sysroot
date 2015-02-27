@@ -8,7 +8,7 @@
    partition lists and work on the pieces in parallel
  *)
 
-(* :Package Version: 1.0 ($Id: Combine.m,v 1.56 2014/05/05 14:16:44 maeder Exp $) *)
+(* :Package Version: 1.0 ($Id: Combine.m,v 1.57 2014/08/28 15:13:51 maeder Exp $) *)
 
 (* :Mathematica Version: 7 *)
 
@@ -55,7 +55,7 @@ General::meth = "`1` is not a valid Method option specification for `2`; using `
 Begin["`Private`"] (*****************************************************)
 
 `$PackageVersion = 2.0;
-`$CVSRevision = StringReplace["$Revision: 1.56 $", {"$"->"", " "->"", "Revision:"->""}]
+`$CVSRevision = StringReplace["$Revision: 1.57 $", {"$"->"", " "->"", "Revision:"->""}]
 
 Needs["Parallel`Parallel`"]
 Needs["Parallel`Kernels`"]
@@ -419,10 +419,12 @@ ParallelArray[f_, n_Integer?NonNegative, o_, h_, opts:OptionsPattern[]] := Paral
 
 (* we have to distinguish between List and any other head of the origin argument *)
 ParallelArray[f_, nr_List, opts:OptionsPattern[]] := ParallelArray[f, nr, 1, opts]
-ParallelArray[f_, nr_List, or_List, opts:OptionsPattern[]] := ParallelArray[f, nr, or, List, opts]
-ParallelArray[f_, nr_List, o_, rest___] := ParallelArray[f, nr, Table[o, {Length[nr]}], rest]
+ParallelArray[f_, nr_List, o_/;!ListQ[o], rest___] := ParallelArray[f, nr, Table[o, {Length[nr]}], rest]
+ParallelArray[f_, nr_List, o_List, opts:OptionsPattern[]] := ParallelArray[f, nr, o, List, opts]
 
-ParallelArray[f_, {items_Integer?NonNegative, nr___}, {o_, or___}, h_, OptionsPattern[]]/;Length[{nr}]==Length[{or}] :=
+(* new syntax: origins may be lists themselves. do not handle for now *)
+
+ParallelArray[f_, {items_Integer?NonNegative, nr___}, {o_, or___}, h_, OptionsPattern[]]/;(Length[{nr}]==Length[{or}]&&!ListQ[o]) :=
 With[{nk=$KernelCount},
   Module[{batches, batchsize, sizes, origins, res},
     (* handle Method option *)
