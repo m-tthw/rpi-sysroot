@@ -1,9 +1,0 @@
-TARGETS = ssh triggerhappy fake-hwclock ifplugd cgroup-bin lightdm plymouth urandom alsa-utils sendsigs rsyslog umountnfs.sh rpcbind nfs-common hwclock.sh networking umountfs umountroot halt reboot
-sendsigs: lightdm triggerhappy alsa-utils plymouth ifplugd
-rsyslog: sendsigs
-umountnfs.sh: rsyslog lightdm sendsigs triggerhappy alsa-utils plymouth ifplugd
-networking: umountnfs.sh rpcbind ifplugd
-umountfs: lightdm networking hwclock.sh triggerhappy urandom umountnfs.sh alsa-utils plymouth rpcbind ifplugd
-umountroot: fake-hwclock umountfs
-halt: umountroot
-reboot: umountroot

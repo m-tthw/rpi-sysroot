@@ -1,1 +1,0 @@
-Get["Iconize`Iconize`"]

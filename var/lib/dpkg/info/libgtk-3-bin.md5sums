@@ -1,9 +1,0 @@
-fec97b203886876bcfae7ca13bb75993  usr/bin/gtk-launch
-6a2ca9da3d9e2cbb106f36a54a782ac6  usr/sbin/update-icon-caches
-462252ce98d71b71c9ab7717e9fc4d40  usr/share/doc/libgtk-3-bin/AUTHORS
-6e104c43fd42755c9e008601c7e4c402  usr/share/doc/libgtk-3-bin/changelog.Debian.gz
-e3924a72455b305ebdb983aed41b2be8  usr/share/doc/libgtk-3-bin/copyright
-773e4db99e07c5bd59b4c6701cae8d6b  usr/share/man/man1/gtk-launch.1.gz
-ff7d35a3878a42e9e5e227ae4cf47bcb  usr/share/man/man1/gtk-query-immodules-3.0.1.gz
-fc349169a95b7ad5a8d52e3083348d72  usr/share/man/man1/gtk-update-icon-cache-3.0.1.gz
-7a8d5cc34c66f4b3cc0fe1a08067946c  usr/share/man/man8/update-icon-caches.8.gz

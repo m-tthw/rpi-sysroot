@@ -1,4 +1,0 @@
-#!/bin/sh
-
-COLUMNS=140 dpkg -l libsdl\* >&3
-

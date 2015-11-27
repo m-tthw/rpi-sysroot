@@ -1,7 +1,7 @@
 # vim: set et sw=4 sts=4 fileencoding=utf-8:
 #
 # Python camera library for the Rasperry-Pi camera module
-# Copyright (c) 2013,2014 Dave Hughes <dave@waveform.org.uk>
+# Copyright (c) 2013-2015 Dave Jones <dave@waveform.org.uk>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -26,6 +26,34 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
+
+"""
+The streams module defines stream classes suited to generating certain types of
+camera output (beyond those provided by Python by default). Currently, this
+consists primarily of :class:`~PiCameraCircularIO`.
+
+.. note::
+
+    All classes in this module are available from the :mod:`picamera` namespace
+    without having to import :mod:`picamera.streams` directly.
+
+The following classes are defined in the module:
+
+
+PiCameraCircularIO
+==================
+
+.. autoclass:: PiCameraCircularIO
+    :members:
+
+
+CircularIO
+==========
+
+.. autoclass:: CircularIO
+    :members:
+
+"""
 
 from __future__ import (
     unicode_literals,
@@ -367,27 +395,51 @@ class PiCameraDequeHack(deque):
         for item, frame in super(PiCameraDequeHack, self).__iter__():
             yield item
 
-    @property
-    def frames(self):
-        pos = 0
-        for item, frame in super(PiCameraDequeHack, self).__iter__():
-            pos += len(item)
-            if frame:
-                # Rewrite the video_size and split_size attributes according
-                # to the current position of the chunk
-                frame = PiVideoFrame(
-                    index=frame.index,
-                    frame_type=frame.frame_type,
-                    frame_size=frame.frame_size,
-                    video_size=pos,
-                    split_size=pos,
-                    timestamp=frame.timestamp,
-                    complete=frame.complete,
-                    )
-                # Only yield the frame meta-data if the start of the frame
-                # still exists in the stream
-                if pos - frame.frame_size >= 0:
-                    yield frame
+
+class PiCameraDequeFrames(object):
+    def __init__(self, stream):
+        super(PiCameraDequeFrames, self).__init__()
+        self.stream = stream
+
+    def __iter__(self):
+        with self.stream.lock:
+            pos = 0
+            for item, frame in super(PiCameraDequeHack, self.stream._data).__iter__():
+                pos += len(item)
+                if frame:
+                    # Rewrite the video_size and split_size attributes according
+                    # to the current position of the chunk
+                    frame = PiVideoFrame(
+                        index=frame.index,
+                        frame_type=frame.frame_type,
+                        frame_size=frame.frame_size,
+                        video_size=pos,
+                        split_size=pos,
+                        timestamp=frame.timestamp,
+                        complete=frame.complete,
+                        )
+                    # Only yield the frame meta-data if the start of the frame
+                    # still exists in the stream
+                    if pos - frame.frame_size >= 0:
+                        yield frame
+
+    def __reversed__(self):
+        with self.stream.lock:
+            pos = self.stream._length
+            for item, frame in super(PiCameraDequeHack, self.stream._data).__reversed__():
+                if frame:
+                    frame = PiVideoFrame(
+                        index=frame.index,
+                        frame_type=frame.frame_type,
+                        frame_size=frame.frame_size,
+                        video_size=pos,
+                        split_size=pos,
+                        timestamp=frame.timestamp,
+                        complete=frame.complete,
+                        )
+                    if pos - frame.frame_size >= 0:
+                        yield frame
+                pos -= len(item)
 
 
 class PiCameraCircularIO(CircularIO):
@@ -410,21 +462,22 @@ class PiCameraCircularIO(CircularIO):
         * the stream is never truncated (from the right; being ring buffer
           based, left truncation will occur automatically)
 
-    The *camera* parameter specifies the :class:`PiCamera` instance that will
-    be recording video to the stream. If specified, the *size* parameter
-    determines the maximum size of the stream in bytes. If *size* is not
-    specified (or ``None``), then *seconds* must be specified instead. This
-    provides the maximum length of the stream in seconds, assuming a data rate
-    in bits-per-second given by the *bitrate* parameter (which defaults to
-    ``17000000``, or 17Mbps, which is also the default bitrate used for video
-    recording by :class:`PiCamera`). You cannot specify both *size* and
-    *seconds*.
+    The *camera* parameter specifies the :class:`~picamera.camera.PiCamera`
+    instance that will be recording video to the stream. If specified, the
+    *size* parameter determines the maximum size of the stream in bytes. If
+    *size* is not specified (or ``None``), then *seconds* must be specified
+    instead. This provides the maximum length of the stream in seconds,
+    assuming a data rate in bits-per-second given by the *bitrate* parameter
+    (which defaults to ``17000000``, or 17Mbps, which is also the default
+    bitrate used for video recording by :class:`~picamera.camera.PiCamera`).
+    You cannot specify both *size* and *seconds*.
 
     The *splitter_port* parameter specifies the port of the built-in splitter
     that the video encoder will be attached to. This defaults to ``1`` and most
     users will have no need to specify anything different. If you do specify
     something else, ensure it is equal to the *splitter_port* parameter of the
-    corresponding call to :meth:`PiCamera.start_recording`. For example::
+    corresponding call to :meth:`~picamera.camera.PiCamera.start_recording`.
+    For example::
 
         import picamera
 
@@ -433,6 +486,18 @@ class PiCameraCircularIO(CircularIO):
                 camera.start_recording(stream, format='h264', splitter_port=2)
                 camera.wait_recording(10, splitter_port=2)
                 camera.stop_recording(splitter_port=2)
+
+    .. attribute:: frames
+
+        Returns an iterator over the frame meta-data.
+
+        As the camera records video to the stream, the class captures the
+        meta-data associated with each frame (in the form of a
+        :class:`~picamera.encoders.PiVideoFrame` tuple), discarding meta-data
+        for frames which are no longer fully stored within the underlying ring
+        buffer.  You can use the frame meta-data to locate, for example, the
+        first keyframe present in the stream in order to determine an
+        appropriate range to extract.
     """
     def __init__(
             self, camera, size=None, seconds=None, bitrate=17000000,
@@ -444,22 +509,6 @@ class PiCameraCircularIO(CircularIO):
         if seconds is not None:
             size = bitrate * seconds // 8
         super(PiCameraCircularIO, self).__init__(size)
-        self.camera = camera
         self._data = PiCameraDequeHack(camera, splitter_port)
-
-    @property
-    def frames(self):
-        """
-        Returns an iterator over the frame meta-data.
-
-        As the camera records video to the stream, the class captures the
-        meta-data associated with each frame (in the form of a
-        :class:`PiVideoFrame` tuple), discarding meta-data for frames which are
-        no longer fully stored within the underlying ring buffer.  You can use
-        the frame meta-data to locate, for example, the first keyframe present
-        in the stream in order to determine an appropriate range to extract.
-        """
-        with self.lock:
-            for frame in self._data.frames:
-                yield frame
+        self.frames = PiCameraDequeFrames(self)
 

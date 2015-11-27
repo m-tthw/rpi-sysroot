@@ -1,2 +1,0 @@
-libtag1-vanilla: symbols-declares-dependency-on-other-package
-libtag1-vanilla: package-name-doesnt-match-sonames libtag1

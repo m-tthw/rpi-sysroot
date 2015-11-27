@@ -1,7 +1,7 @@
 # vim: set et sw=4 sts=4 fileencoding=utf-8:
 #
 # Python camera library for the Rasperry-Pi camera module
-# Copyright (c) 2013,2014 Dave Hughes <dave@waveform.org.uk>
+# Copyright (c) 2013-2015 Dave Jones <dave@waveform.org.uk>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -26,6 +26,138 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
+
+"""
+The encoders module defines encoder classes for use by the camera. Most users
+will have no direct need to use these classes directly, but advanced users may
+find them useful as base classes for :ref:`custom_encoders`.
+
+.. note::
+
+    All classes in this module are available from the :mod:`picamera` namespace
+    without having to import :mod:`picamera.encoders` directly.
+
+The following classes are defined in the module:
+
+
+PiVideoFrameType
+================
+
+.. autoclass:: PiVideoFrameType
+    :members:
+
+
+PiVideoFrame
+============
+
+.. autoclass:: PiVideoFrame(index, frame_type, frame_size, video_size, split_size, timestamp)
+    :members:
+
+
+PiEncoder
+=========
+
+.. autoclass:: PiEncoder
+    :members:
+    :private-members:
+
+
+PiVideoEncoder
+==============
+
+.. autoclass:: PiVideoEncoder
+    :members:
+    :private-members:
+
+
+PiImageEncoder
+==============
+
+.. autoclass:: PiImageEncoder
+    :members:
+    :private-members:
+
+
+PiRawMixin
+==========
+
+.. autoclass:: PiRawMixin
+    :members:
+    :private-members:
+
+
+PiCookedVideoEncoder
+====================
+
+.. autoclass:: PiCookedVideoEncoder
+    :members:
+    :private-members:
+
+
+PiRawVideoEncoder
+=================
+
+.. autoclass:: PiRawVideoEncoder
+    :members:
+    :private-members:
+
+
+PiOneImageEncoder
+=================
+
+.. autoclass:: PiOneImageEncoder
+    :members:
+    :private-members:
+
+
+PiMultiImageEncoder
+===================
+
+.. autoclass:: PiMultiImageEncoder
+    :members:
+    :private-members:
+
+
+PiRawImageMixin
+===============
+
+.. autoclass:: PiRawImageMixin
+    :members:
+    :private-members:
+
+
+PiCookedOneImageEncoder
+=======================
+
+.. autoclass:: PiCookedOneImageEncoder
+    :members:
+    :private-members:
+
+
+PiRawOneImageEncoder
+====================
+
+.. autoclass:: PiRawOneImageEncoder
+    :members:
+    :private-members:
+
+
+PiCookedMultiImageEncoder
+=========================
+
+.. autoclass:: PiCookedMultiImageEncoder
+    :members:
+    :private-members:
+
+
+PiRawMultiImageEncoder
+======================
+
+.. autoclass:: PiRawMultiImageEncoder
+    :members:
+    :private-members:
+
+"""
 
 from __future__ import (
     unicode_literals,
@@ -139,9 +271,10 @@ class PiVideoFrame(namedtuple('PiVideoFrame', (
     .. attribute:: split_size
 
         Returns the size in bytes of the video recorded since the last call to
-        either :meth:`~PiCamera.start_recording` or
-        :meth:`~PiCamera.split_recording`. For the reasons explained above,
-        this may differ from the size of the actual file/stream written so far.
+        either :meth:`~picamera.camera.PiCamera.start_recording` or
+        :meth:`~picamera.camera.PiCamera.split_recording`. For the reasons
+        explained above, this may differ from the size of the actual
+        file/stream written so far.
 
     .. attribute:: timestamp
 
@@ -150,7 +283,7 @@ class PiVideoFrame(namedtuple('PiVideoFrame', (
         microseconds (millionths of a second) since video recording started. As
         the frame attribute is only updated when the encoder outputs the end of
         a frame, this value may lag behind the actual time since
-        :meth:`~PiCamera.start_recording` was called.
+        :meth:`~picamera.camera.PiCamera.start_recording` was called.
 
         .. warning::
 
@@ -242,13 +375,14 @@ class PiEncoder(object):
     """
     Base implementation of an MMAL encoder for use by PiCamera.
 
-    The *parent* parameter specifies the :class:`PiCamera` instance that has
-    constructed the encoder. The *camera_port* parameter provides the MMAL
-    camera port that the encoder should enable for capture (this will be the
-    still or video port of the camera component). The *input_port* parameter
-    specifies the MMAL port that the encoder should connect to its input.
-    Sometimes this will be the same as the camera port, but if other components
-    are present in the pipeline (e.g. a splitter), it may be different.
+    The *parent* parameter specifies the :class:`~picamera.camera.PiCamera`
+    instance that has constructed the encoder. The *camera_port* parameter
+    provides the MMAL camera port that the encoder should enable for capture
+    (this will be the still or video port of the camera component). The
+    *input_port* parameter specifies the MMAL port that the encoder should
+    connect to its input.  Sometimes this will be the same as the camera port,
+    but if other components are present in the pipeline (e.g. a splitter), it
+    may be different.
 
     The *format* parameter specifies the format that the encoder should
     produce in its output. This is specified as a string and will be one of
@@ -337,12 +471,13 @@ class PiEncoder(object):
 
     .. attribute:: outputs_lock
 
-        A :class:`threading.Lock` instance used to protect access to
+        A :func:`threading.Lock` instance used to protect access to
         :attr:`outputs`.
 
     .. attribute:: parent
 
-        The :class:`PiCamera` instance that created this PiEncoder instance.
+        The :class:`~picamera.camera.PiCamera` instance that created this
+        PiEncoder instance.
 
     .. attribute:: pool
 
@@ -892,11 +1027,12 @@ class PiVideoEncoder(PiEncoder):
 
     This derivative of :class:`PiEncoder` configures itself for H.264 or MJPEG
     encoding.  It also introduces a :meth:`split` method which is used by
-    :meth:`~PiCamera.split_recording` and :meth:`~PiCamera.record_sequence` to
-    redirect future output to a new filename or object. Finally, it also
-    extends :meth:`PiEncoder.start` and :meth:`PiEncoder._callback_write` to
-    track video frame meta-data, and to permit recording motion data to a
-    separate output object.
+    :meth:`~picamera.camera.PiCamera.split_recording` and
+    :meth:`~picamera.camera.PiCamera.record_sequence` to redirect future output
+    to a new filename or object. Finally, it also extends
+    :meth:`PiEncoder.start` and :meth:`PiEncoder._callback_write` to track
+    video frame meta-data, and to permit recording motion data to a separate
+    output object.
     """
 
     encoder_type = mmal.MMAL_COMPONENT_DEFAULT_VIDEO_ENCODER
@@ -911,7 +1047,7 @@ class PiVideoEncoder(PiEncoder):
     def _create_encoder(
             self, bitrate=17000000, intra_period=None, profile='high',
             quantization=0, quality=0, inline_headers=True, sei=False,
-            motion_output=None):
+            motion_output=None, intra_refresh=None):
         """
         Extends the base :meth:`~PiEncoder._create_encoder` implementation to
         configure the video encoder for H.264 or MJPEG output.
@@ -1009,6 +1145,30 @@ class PiVideoEncoder(PiEncoder):
                     prefix="Unable to get encoder intra_period")
                 self._intra_period = mp.value
 
+            if intra_refresh is not None:
+                # Get the intra-refresh structure first as there are several
+                # other fields in it which we don't wish to overwrite
+                mp = mmal.MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T(
+                        mmal.MMAL_PARAMETER_HEADER_T(
+                            mmal.MMAL_PARAMETER_VIDEO_INTRA_REFRESH,
+                            ct.sizeof(mmal.MMAL_PARAMETER_VIDEO_INTRA_REFRESH_T),
+                            ))
+                # Deliberately avoid checking whether this call succeeds
+                mmal.mmal_port_parameter_get(self.output_port, mp.hdr)
+                try:
+                    mp.refresh_mode = {
+                        'cyclic':     mmal.MMAL_VIDEO_INTRA_REFRESH_CYCLIC,
+                        'adaptive':   mmal.MMAL_VIDEO_INTRA_REFRESH_ADAPTIVE,
+                        'both':       mmal.MMAL_VIDEO_INTRA_REFRESH_BOTH,
+                        'cyclicrows': mmal.MMAL_VIDEO_INTRA_REFRESH_CYCLIC_MROWS,
+                        }[intra_refresh]
+                except KeyError:
+                    raise PiCameraValueError(
+                        "Invalid intra_refresh %s" % intra_refresh)
+                mmal_check(
+                    mmal.mmal_port_parameter_set(self.output_port, mp.hdr),
+                    prefix="Unable to set encoder intra_refresh")
+
         elif self.format == 'mjpeg':
             # MJPEG doesn't have an intra_period setting as such, but as every
             # frame is a full-frame, the intra_period is effectively 1
@@ -1082,10 +1242,11 @@ class PiVideoEncoder(PiEncoder):
         """
         Called to switch the encoder's output.
 
-        This method is called by :meth:`~PiCamera.split_recording` and
-        :meth:`~PiCamera.record_sequence` to switch the encoder's
-        :attr:`output` object to the *output* parameter (which can be a
-        filename or a file-like object, as with :meth:`start`).
+        This method is called by
+        :meth:`~picamera.camera.PiCamera.split_recording` and
+        :meth:`~picamera.camera.PiCamera.record_sequence` to switch the
+        encoder's :attr:`output` object to the *output* parameter (which can be
+        a filename or a file-like object, as with :meth:`start`).
         """
         with self.outputs_lock:
             outputs = {}
@@ -1184,8 +1345,8 @@ class PiRawVideoEncoder(PiRawMixin, PiVideoEncoder):
 
     This class is a derivative of :class:`PiVideoEncoder` and the
     :class:`PiRawMixin` class intended for use with
-    :meth:`~PiCamera.start_recording` when it is called with an unencoded
-    format.
+    :meth:`~picamera.camera.PiCamera.start_recording` when it is called with an
+    unencoded format.
 
     .. warning::
 
@@ -1428,8 +1589,8 @@ class PiRawOneImageEncoder(PiOneImageEncoder, PiRawImageMixin):
 
     This class is a derivative of :class:`PiOneImageEncoder` and the
     :class:`PiRawImageMixin` class intended for use with
-    :meth:`~PiCamera.capture` (et al) when it is called with an unencoded image
-    format.
+    :meth:`~picamera.camera.PiCamera.capture` (et al) when it is called with an
+    unencoded image format.
 
     .. warning::
 
@@ -1445,8 +1606,8 @@ class PiRawMultiImageEncoder(PiMultiImageEncoder, PiRawImageMixin):
 
     This class is a derivative of :class:`PiMultiImageEncoder` and the
     :class:`PiRawImageMixin` class intended for use with
-    :meth:`~PiCamera.capture_sequence` when it is called with an unencoded
-    image format.
+    :meth:`~picamera.camera.PiCamera.capture_sequence` when it is called with
+    an unencoded image format.
 
     .. warning::
 

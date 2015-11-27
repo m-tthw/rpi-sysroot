@@ -1,6 +1,0 @@
-libatlas 3 libatlas3-base
-liblapack_atlas 3 libatlas3-base
-liblapack 3 libatlas3-base
-libblas 3 libatlas3-base
-libcblas 3 libatlas3-base
-libf77blas 3 libatlas3-base

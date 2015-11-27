@@ -1,1 +1,0 @@
-../../../numarray/include/numpy/cfunc.h

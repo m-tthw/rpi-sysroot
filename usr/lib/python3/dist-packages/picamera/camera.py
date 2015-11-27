@@ -1,7 +1,7 @@
 # vim: set et sw=4 sts=4 fileencoding=utf-8:
 #
 # Python camera library for the Rasperry-Pi camera module
-# Copyright (c) 2013,2014 Dave Hughes <dave@waveform.org.uk>
+# Copyright (c) 2013-2015 Dave Jones <dave@waveform.org.uk>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -26,6 +26,41 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
+
+"""
+The camera module defines the :class:`~picamera.PiCamera` class, which is the
+primary interface to the Raspberry Pi's camera module.
+
+.. note::
+
+    All classes in this module are available from the :mod:`picamera` namespace
+    without having to import :mod:`picamera.camera` directly.
+
+The following classes are defined in the module:
+
+PiCamera
+========
+
+.. note::
+
+    In the documentation below several apparently "private" methods are
+    documented (i.e. methods which have names beginning with an underscore).
+    Most users can ignore these methods; they are intended for those developers
+    that wish to override or extend the encoder implementations used by
+    picamera.
+
+    Some may question, given that these methods are intended to be overridden,
+    why they are declared with a leading underscore (which in the Python idiom
+    suggests that these methods are "private" to the class). In the cases where
+    such methods are documented, the author intends these methods to have
+    "protected" status (in the idiom of C++ and Object Pascal). That is to say,
+    they are not intended to be used outside of the declaring class, but are
+    intended to be accessible to, and overridden by, descendent classes.
+
+.. autoclass:: PiCamera
+    :members:
+    :private-members:
+"""
 
 from __future__ import (
     unicode_literals,
@@ -60,6 +95,7 @@ from picamera.exc import (
     PiCameraAlreadyRecording,
     PiCameraMMALError,
     PiCameraDeprecated,
+    PiCameraFallback,
     mmal_check,
     )
 from picamera.encoders import (
@@ -78,15 +114,10 @@ from picamera.renderers import (
     PiOverlayRenderer,
     PiNullSink,
     )
+from picamera.color import Color
 
 try:
     import RPi.GPIO as GPIO
-    GPIO_LED_PIN = {
-        0: 5,  # compute module (XXX is this correct?)
-        1: 5,  # model B rev 1
-        2: 5,  # model B rev 2
-        3: 32, # model B+
-        }[GPIO.RPI_REVISION]
 except ImportError:
     # Can't find RPi.GPIO so just null-out the reference
     GPIO = None
@@ -158,7 +189,7 @@ def to_rational(value):
                         "int, float, Decimal, or Fraction instead"))
             except (TypeError, ValueError):
                 # try and convert anything else (e.g. Decimal) to a Fraction
-                value = Fraction(value)
+                value = fractions.Fraction(value)
                 n, d = value.numerator, value.denominator
     # Ensure denominator is reasonable
     if d == 0:
@@ -227,6 +258,12 @@ class PiCamera(object):
         necessary hardware, the author would be most interested to hear of your
         experiences!
 
+    The *led_pin* parameter can be used to specify the GPIO pin which should be
+    used to control the camera's LED via the :attr:`led` attribute. If this is
+    not specified, it should default to the correct value for your Pi platform.
+    You should only need to specify this parameter if you are using a custom
+    DeviceTree blob (this is only typical on the `Compute Module`_ platform).
+
     No preview or recording is started automatically upon construction.  Use
     the :meth:`capture` method to capture images, the :meth:`start_recording`
     method to begin recording video, or the :meth:`start_preview` method to
@@ -260,6 +297,11 @@ class PiCamera(object):
 
     .. versionchanged:: 1.9
         Added *resolution*, *framerate*, and *sensor_mode* parameters
+
+    .. versionchanged:: 1.10
+        Added *led_pin* parameter
+
+    .. _Compute Module: http://www.raspberrypi.org/documentation/hardware/computemodule/cmio-camera.md
     """
 
     CAMERA_PREVIEW_PORT = 0
@@ -275,6 +317,7 @@ class PiCamera(object):
     MAX_VIDEO_RESOLUTION = (1920, 1080) # Deprecated - use MAX_RESOLUTION instead
     DEFAULT_FRAME_RATE_NUM = 30  # Deprecated, read framerate property instead
     DEFAULT_FRAME_RATE_DEN = 1   # Deprecated, read framerate property instead
+    DEFAULT_ANNOTATE_SIZE = 32
     VIDEO_OUTPUT_BUFFERS_NUM = 3 # Deprecated, no replacement
     CAPTURE_TIMEOUT = 30
 
@@ -299,6 +342,15 @@ class PiCamera(object):
         'fixedfps':      mmal.MMAL_PARAM_EXPOSUREMODE_FIXEDFPS,
         'antishake':     mmal.MMAL_PARAM_EXPOSUREMODE_ANTISHAKE,
         'fireworks':     mmal.MMAL_PARAM_EXPOSUREMODE_FIREWORKS,
+        }
+
+    FLASH_MODES = {
+        'off':           mmal.MMAL_PARAM_FLASH_OFF,
+        'auto':          mmal.MMAL_PARAM_FLASH_AUTO,
+        'on':            mmal.MMAL_PARAM_FLASH_ON,
+        'redeye':        mmal.MMAL_PARAM_FLASH_REDEYE,
+        'fillin':        mmal.MMAL_PARAM_FLASH_FILLIN,
+        'torch':         mmal.MMAL_PARAM_FLASH_TORCH,
         }
 
     AWB_MODES = {
@@ -367,6 +419,7 @@ class PiCamera(object):
 
     _METER_MODES_R    = {v: k for (k, v) in METER_MODES.items()}
     _EXPOSURE_MODES_R = {v: k for (k, v) in EXPOSURE_MODES.items()}
+    _FLASH_MODES_R    = {v: k for (k, v) in FLASH_MODES.items()}
     _AWB_MODES_R      = {v: k for (k, v) in AWB_MODES.items()}
     _IMAGE_EFFECTS_R  = {v: k for (k, v) in IMAGE_EFFECTS.items()}
     _RAW_FORMATS_R    = {v: k for (k, v) in RAW_FORMATS.items()}
@@ -375,12 +428,27 @@ class PiCamera(object):
 
     def __init__(
             self, camera_num=0, stereo_mode='none', stereo_decimate=False,
-            resolution=None, framerate=None, sensor_mode=0):
+            resolution=None, framerate=None, sensor_mode=0, led_pin=None):
         bcm_host.bcm_host_init()
         mimetypes.add_type('application/h264',  '.h264',  False)
         mimetypes.add_type('application/mjpeg', '.mjpg',  False)
         mimetypes.add_type('application/mjpeg', '.mjpeg', False)
         self._used_led = False
+        if GPIO and led_pin is None:
+            try:
+                led_pin = {
+                    (0, 0): 2,  # compute module (default for cam 0)
+                    (0, 1): 30, # compute module (default for cam 1)
+                    (1, 0): 5,  # Pi 1 model B rev 1
+                    (2, 0): 5,  # Pi 1 model B rev 2 or model A
+                    (3, 0): 32, # Pi 1 model B+ or Pi 2 model B
+                    }[(GPIO.RPI_REVISION, camera_num)]
+            except KeyError:
+                raise PiCameraError(
+                        'Unable to determine default GPIO LED pin for RPi '
+                        'revision %d and camera num %d' % (
+                            GPIO.RPI_REVISION, camera_num))
+        self._led_pin = led_pin
         self._camera = None
         self._camera_config = None
         self._preview = None
@@ -395,6 +463,7 @@ class PiCamera(object):
         self._overlays = []
         self._raw_format = 'yuv'
         self._image_effect_params = None
+        self._annotate_v3 = None
         self._exif_tags = {
             'IFD0.Model': 'RP_OV5647',
             'IFD0.Make': 'RaspberryPi',
@@ -430,7 +499,7 @@ class PiCamera(object):
             try:
                 GPIO.setmode(GPIO.BCM)
                 GPIO.setwarnings(False)
-                GPIO.setup(GPIO_LED_PIN, GPIO.OUT, initial=GPIO.LOW)
+                GPIO.setup(self._led_pin, GPIO.OUT, initial=GPIO.LOW)
                 self._used_led = True
             except RuntimeError:
                 # We're probably not running as root. In this case, forget the
@@ -566,6 +635,19 @@ class PiCamera(object):
         self.rotation = 0
         self.hflip = self.vflip = False
         self.zoom = (0.0, 0.0, 1.0, 1.0)
+        # Determine whether the camera's firmware supports the ANNOTATE_V3
+        # structure
+        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
+            mmal.MMAL_PARAMETER_HEADER_T(
+                mmal.MMAL_PARAMETER_ANNOTATE,
+                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T)
+            ))
+        mmal_check(
+            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
+            prefix="Failed to get annotation test")
+        self._annotate_v3 = (
+            mp.hdr.size == ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T)
+            )
 
     def _init_splitter(self):
         # Create a splitter component for the video port. This is to permit
@@ -693,7 +775,7 @@ class PiCamera(object):
         """
         Determine the camera and output ports for given capture options.
 
-        See :ref:`under_the_hood` for more information on picamera's usage of
+        See :ref:`camera_hardware` for more information on picamera's usage of
         camera, splitter, and encoder ports. The general idea here is that the
         capture (still) port operates on its own, while the video port is
         always connected to a splitter component, so requests for a video port
@@ -898,8 +980,9 @@ class PiCamera(object):
         Displays the preview overlay.
 
         This method starts a camera preview as an overlay on the Pi's primary
-        display (HDMI or composite). A :class:`PiRenderer` instance (more
-        specifically, a :class:`PiPreviewRenderer`) is constructed with the
+        display (HDMI or composite). A :class:`~picamera.renderers.PiRenderer`
+        instance (more specifically, a
+        :class:`~picamera.renderers.PiPreviewRenderer`) is constructed with the
         keyword arguments captured in *options*, and is returned from the
         method (this instance is also accessible from the :attr:`preview`
         attribute for as long as the renderer remains active).  By default, the
@@ -959,7 +1042,8 @@ class PiCamera(object):
         mechanism as the preview. Overlays will appear on the Pi's video
         output, but will not appear in captures or video recordings. Multiple
         overlays can exist; each call to :meth:`add_overlay` returns a new
-        :class:`PiOverlayRenderer` instance representing the overlay.
+        :class:`~picamera.renderers.PiOverlayRenderer` instance representing
+        the overlay.
 
         The optional *size* parameter specifies the size of the source image as
         a ``(width, height)`` tuple. If this is omitted or ``None`` then the
@@ -983,18 +1067,37 @@ class PiCamera(object):
         2. Higher numbered layers obscure lower numbered layers, hence new
         overlays will be invisible (if the preview is running) by default. You
         can make the new overlay visible either by making any existing preview
-        transparent (with the :attr:`~PiRenderer.alpha` property) or by moving
-        the overlay into a layer higher than the preview (with the
-        :attr:`~PiRenderer.layer` property).
+        transparent (with the :attr:`~picamera.renderers.PiRenderer.alpha`
+        property) or by moving the overlay into a layer higher than the preview
+        (with the :attr:`~picamera.renderers.PiRenderer.layer` property).
 
         All keyword arguments captured in *options* are passed onto the
-        :class:`PiRenderer` constructor. All camera properties except
-        :attr:`resolution` and :attr:`framerate` can be modified while overlays
-        exist. The reason for these exceptions is that the overlay has a static
-        resolution and changing the camera's mode would require resizing of the
-        source.
+        :class:`~picamera.renderers.PiRenderer` constructor. All camera
+        properties except :attr:`resolution` and :attr:`framerate` can be
+        modified while overlays exist. The reason for these exceptions is that
+        the overlay has a static resolution and changing the camera's mode
+        would require resizing of the source.
+
+        .. warning::
+
+            If too many overlays are added, the display output will be disabled
+            and a reboot will generally be required to restore the display.
+            Overlays are composited "on the fly". Hence, a real-time constraint
+            exists wherein for each horizontal line of HDMI output, the content
+            of all source layers must be fetched, resized, converted, and
+            blended to produce the output pixels.
+
+            If enough overlays exist (where "enough" is a number dependent on
+            overlay size, display resolution, bus frequency, and several other
+            factors making it unrealistic to calculate in advance), this
+            process breaks down and video output fails. One solution is to add
+            ``dispmanx_offline=1`` to ``/boot/config.txt`` to force the use of
+            an off-screen buffer. Be aware that this requires more GPU memory
+            and may reduce the update rate.
 
         .. _RGB: http://en.wikipedia.org/wiki/RGB
+
+        .. versionadded:: 1.8
         """
         renderer = PiOverlayRenderer(self, source, size, **options)
         self._overlays.append(renderer)
@@ -1006,7 +1109,10 @@ class PiCamera(object):
 
         This method removes an overlay which was previously created by
         :meth:`add_overlay`. The *overlay* parameter specifies the
-        :class:`PiRenderer` instance that was returned by :meth:`add_overlay`.
+        :class:`~picamera.renderers.PiRenderer` instance that was returned by
+        :meth:`add_overlay`.
+
+        .. versionadded:: 1.8
         """
         if not overlay in self._overlays:
             raise PiCameraRuntimeError(
@@ -1030,10 +1136,10 @@ class PiCamera(object):
         the required video format from the extension of *output* (if it's a
         string), or from the *name* attribute of *output* (if it has one). In
         the case that the format cannot be determined, a
-        :exc:`PiCameraValueError` will be raised.
+        :exc:`~picamera.exc.PiCameraValueError` will be raised.
 
         If *format* is not ``None``, it must be a string specifying the format
-        that you want the image written to. The format can be a MIME-type or
+        that you want the video output in. The format can be a MIME-type or
         one of the following strings:
 
         * ``'h264'`` - Write an H.264 video stream
@@ -1047,8 +1153,8 @@ class PiCamera(object):
         If *resize* is not ``None`` (the default), it must be a two-element
         tuple specifying the width and height that the video recording should
         be resized to. This is particularly useful for recording video using
-        the full area of the camera sensor (which is not possible without
-        down-sizing the output).
+        the full resolution of the camera sensor (which is not possible in
+        H.264 without down-sizing the output).
 
         The *splitter_port* parameter specifies the port of the built-in
         splitter that the video encoder will be attached to. This defaults to
@@ -1067,11 +1173,15 @@ class PiCamera(object):
           'constrained'.
 
         * *intra_period* - The key frame rate (the rate at which I-frames are
-          inserted in the output). Defaults to None, but can be any 32-bit
+          inserted in the output). Defaults to ``None``, but can be any 32-bit
           integer value representing the number of frames between successive
           I-frames. The special value 0 causes the encoder to produce a single
           initial I-frame, and then only P-frames subsequently. Note that
           :meth:`split_recording` will fail in this mode.
+
+        * *intra_refresh* - The key frame format (the way in which I-frames
+          will be inserted into the output stream). Defaults to ``None``, but
+          can be one of 'cyclic', 'adaptive', 'both', or 'cyclicrows'.
 
         * *inline_headers* - When ``True``, specifies that the encoder should
           output SPS/PPS headers within the stream to ensure GOPs (groups of
@@ -1091,7 +1201,7 @@ class PiCamera(object):
           assumed to be a file-like object which motion vector is to be written
           to (the object must have a ``write`` method).
 
-        All formats accept the following additional options:
+        All encoded formats accept the following additional options:
 
         * *bitrate* - The bitrate at which video will be encoded. Defaults to
           17000000 (17Mbps) if not specified.  The maximum value is 25000000
@@ -1196,8 +1306,9 @@ class PiCamera(object):
 
         It is recommended that this method is called while recording to check
         for exceptions. If an error occurs during recording (for example out of
-        disk space), an exception will only be raised when the
-        :meth:`wait_recording` or :meth:`stop_recording` methods are called.
+        disk space) the recording will stop, but an exception will only be
+        raised when the :meth:`wait_recording` or :meth:`stop_recording`
+        methods are called.
 
         If ``timeout`` is 0 (the default) the function will immediately return
         (or raise an exception if an error has occurred).
@@ -1361,10 +1472,10 @@ class PiCamera(object):
         the required image format from the extension of *output* (if it's a
         string), or from the *name* attribute of *output* (if it has one). In
         the case that the format cannot be determined, a
-        :exc:`PiCameraValueError` will be raised.
+        :exc:`~picamera.exc.PiCameraValueError` will be raised.
 
         If *format* is not ``None``, it must be a string specifying the format
-        that you want the image written to. The format can be a MIME-type or
+        that you want the image output in. The format can be a MIME-type or
         one of the following strings:
 
         * ``'jpeg'`` - Write a JPEG file
@@ -1888,7 +1999,7 @@ class PiCamera(object):
             raise PiCameraRuntimeError(
                 "GPIO library not found, or not accessible; please install "
                 "RPi.GPIO and run the script as root")
-        GPIO.output(GPIO_LED_PIN, bool(value))
+        GPIO.output(self._led_pin, bool(value))
     led = property(None, _set_led, doc="""
         Sets the state of the camera's LED via GPIO.
 
@@ -1903,6 +2014,18 @@ class PiCamera(object):
             This is a write-only property. While it can be used to control the
             camera's LED, you cannot query the state of the camera's LED using
             this property.
+
+        .. warning::
+
+            There are circumstances in which the camera firmware may override
+            an existing LED setting. For example, in the case that the firmware
+            resets the camera (as can happen with a CSI-2 timeout), the LED may
+            also be reset. If you wish to guarantee that the LED remain off at
+            all times, you may prefer to use the ``disable_camera_led`` option
+            in `config.txt`_ (this has the added advantage that sudo privileges
+            and GPIO access are not required, at least for LED control).
+
+        .. _config.txt: http://www.raspberrypi.org/documentation/configuration/config-txt.md
         """)
 
     def _get_raw_format(self):
@@ -1942,8 +2065,8 @@ class PiCamera(object):
 
         When video recording is active (after a call to
         :meth:`start_recording`), this attribute will return a
-        :class:`PiVideoFrame` tuple containing information about the current
-        frame that the camera is recording.
+        :class:`~picamera.encoders.PiVideoFrame` tuple containing information
+        about the current frame that the camera is recording.
 
         If multiple video recordings are currently in progress (after multiple
         calls to :meth:`start_recording` with different values for the
@@ -2067,10 +2190,10 @@ class PiCamera(object):
 
         When set, the property reconfigures the camera so that the next call to
         recording and previewing methods will use the new framerate.  The
-        framerate can be specified as an :class:`int`, :class:`float`,
-        :class:`~fractions.Fraction`, or a ``(numerator, denominator)`` tuple.
-        The camera must not be closed, and no recording must be active when the
-        property is set.
+        framerate can be specified as an :ref:`int <typesnumeric>`, :ref:`float
+        <typesnumeric>`, :class:`~fractions.Fraction`, or a ``(numerator,
+        denominator)`` tuple.  The camera must not be closed, and no recording
+        must be active when the property is set.
 
         .. note::
 
@@ -2465,7 +2588,7 @@ class PiCamera(object):
             30fps, the shutter speed cannot be slower than 33,333µs (1/fps).
         """)
 
-    def _get_settings(self):
+    def _get_camera_settings(self):
         """
         Returns the current camera settings as an MMAL structure.
 
@@ -2483,9 +2606,34 @@ class PiCamera(object):
             prefix="Failed to get camera settings")
         return mp
 
+    def _get_annotate_settings(self):
+        """
+        Returns the current annotation settings as an MMAL structure.
+
+        This is a utility method for :meth:`_get_annotate_text`,
+        :meth:`_get_annotate_background`, etc. all of which rely on the
+        MMAL_PARAMETER_CAMERA_ANNOTATE_Vn structure to determine their values.
+        """
+        if self._annotate_v3:
+            mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T(
+                mmal.MMAL_PARAMETER_HEADER_T(
+                    mmal.MMAL_PARAMETER_ANNOTATE,
+                    ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V3_T)
+                ))
+        else:
+            mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
+                mmal.MMAL_PARAMETER_HEADER_T(
+                    mmal.MMAL_PARAMETER_ANNOTATE,
+                    ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
+                ))
+        mmal_check(
+            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
+            prefix="Failed to get annotation settings")
+        return mp
+
     def _get_exposure_speed(self):
         self._check_camera_open()
-        return self._get_settings().exposure
+        return self._get_camera_settings().exposure
     exposure_speed = property(
         _get_exposure_speed, doc="""
         Retrieves the current shutter speed of the camera.
@@ -2503,7 +2651,7 @@ class PiCamera(object):
 
     def _get_analog_gain(self):
         self._check_camera_open()
-        return to_fraction(self._get_settings().analog_gain)
+        return to_fraction(self._get_camera_settings().analog_gain)
     analog_gain = property(
         _get_analog_gain, doc="""
         Retrieves the current analog gain of the camera.
@@ -2518,7 +2666,7 @@ class PiCamera(object):
 
     def _get_digital_gain(self):
         self._check_camera_open()
-        return to_fraction(self._get_settings().digital_gain)
+        return to_fraction(self._get_camera_settings().digital_gain)
     digital_gain = property(
         _get_digital_gain, doc="""
         Retrieves the current digital gain of the camera.
@@ -2919,6 +3067,59 @@ class PiCamera(object):
             all frames captured will appear black.
         """.format(values=docstring_values(EXPOSURE_MODES)))
 
+    def _get_flash_mode(self):
+        self._check_camera_open()
+        mp = mmal.MMAL_PARAMETER_FLASH_T(
+            mmal.MMAL_PARAMETER_HEADER_T(
+                mmal.MMAL_PARAMETER_FLASH,
+                ct.sizeof(mmal.MMAL_PARAMETER_FLASH_T)
+                ))
+        mmal_check(
+            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
+            prefix="Failed to get flash mode")
+        return self._FLASH_MODES_R[mp.value]
+    def _set_flash_mode(self, value):
+        self._check_camera_open()
+        try:
+            mp = mmal.MMAL_PARAMETER_FLASH_T(
+                mmal.MMAL_PARAMETER_HEADER_T(
+                    mmal.MMAL_PARAMETER_FLASH,
+                    ct.sizeof(mmal.MMAL_PARAMETER_FLASH_T)
+                    ),
+                self.FLASH_MODES[value]
+                )
+            mmal_check(
+                mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
+                prefix="Failed to set flash mode")
+        except KeyError:
+            raise PiCameraValueError("Invalid flash mode: %s" % value)
+    flash_mode = property(_get_flash_mode, _set_flash_mode, doc="""
+        Retrieves or sets the flash mode of the camera.
+
+        When queried, the :attr:`flash_mode` property returns a string
+        representing the flash setting of the camera. The possible values can
+        be obtained from the ``PiCamera.FLASH_MODES`` attribute, and are as
+        follows:
+
+        {values}
+
+        When set, the property adjusts the camera's flash mode.  The property
+        can be set while recordings or previews are in progress.  The default
+        value is ``'off'``.
+
+        .. note::
+
+            You must define which GPIO pins the camera is to use for flash and
+            privacy indicators. This is done within the `Device Tree
+            configuration`_ which is considered an advanced topic.
+            Specifically, you need to define pins ``FLASH_0_ENABLE`` and
+            optionally ``FLASH_0_INDICATOR`` (for the privacy indicator). More
+            information can be found in this :ref:`recipe
+            <flash_configuration>`.
+
+        .. _Device Tree configuration: http://www.raspberrypi.org/documentation/configuration/pin-configuration.md
+        """.format(values=docstring_values(FLASH_MODES)))
+
     def _get_awb_mode(self):
         self._check_camera_open()
         mp = mmal.MMAL_PARAMETER_AWBMODE_T(
@@ -2968,7 +3169,7 @@ class PiCamera(object):
 
     def _get_awb_gains(self):
         self._check_camera_open()
-        mp = self._get_settings()
+        mp = self._get_camera_settings()
         return (
             to_fraction(mp.awb_red_gain),
             to_fraction(mp.awb_blue_gain),
@@ -3005,10 +3206,11 @@ class PiCamera(object):
         When set, this attribute adjusts the camera's auto-white-balance gains.
         The property can be specified as a single value in which case both red
         and blue gains will be adjusted equally, or as a `(red, blue)` tuple.
-        Values can be specified as an :class:`int`, :class:`float` or
-        :class:`~fractions.Fraction` and each gain must be between 0.0 and 8.0.
-        Typical values for the gains are between 0.9 and 1.9.  The property can
-        be set while recordings or previews are in progress.
+        Values can be specified as an :ref:`int <typesnumeric>`, :ref:`float
+        <typesnumeric>` or :class:`~fractions.Fraction` and each gain must be
+        between 0.0 and 8.0.  Typical values for the gains are between 0.9 and
+        1.9.  The property can be set while recordings or previews are in
+        progress.
 
         .. note::
 
@@ -3016,7 +3218,6 @@ class PiCamera(object):
             ``'off'``.
 
         .. versionchanged:: 1.6
-
             Prior to version 1.6, this attribute was write-only.
         """)
 
@@ -3149,7 +3350,8 @@ class PiCamera(object):
         :attr:`effect <image_effect>` as a sequence of numbers, or a single
         number. Attempting to set parameters on an effect which does not
         support parameters, or providing an incompatible set of parameters for
-        an effect will raise a :exc:`PiCameraValueError` exception.
+        an effect will raise a :exc:`~picamera.exc.PiCameraValueError`
+        exception.
 
         The effects which have parameters, and what combinations those
         parameters can take is as follows:
@@ -3455,9 +3657,12 @@ class PiCamera(object):
 
         If no overlays are current active, :attr:`overlays` will return an
         empty iterable. Otherwise, it will return an iterable of
-        :class:`PiRenderer` instances which are currently acting as overlays.
-        Note that the preview renderer is an exception to this: it is *not*
-        included as an overlay despite being derived from :class:`PiRenderer`.
+        :class:`~picamera.renderers.PiRenderer` instances which are currently
+        acting as overlays.  Note that the preview renderer is an exception to
+        this: it is *not* included as an overlay despite being derived from
+        :class:`~picamera.renderers.PiRenderer`.
+
+        .. versionadded:: 1.8
         """)
 
     def _get_preview(self):
@@ -3465,14 +3670,16 @@ class PiCamera(object):
         if isinstance(self._preview, PiPreviewRenderer):
             return self._preview
     preview = property(_get_preview, doc="""
-        Retrieves the :class:`PiRenderer` displaying the camera preview.
+        Retrieves the :class:`~picamera.renderers.PiRenderer` displaying the
+        camera preview.
 
         If no preview is currently active, :attr:`preview` will return
         ``None``.  Otherwise, it will return the instance of
-        :class:`PiRenderer` which is currently connected to the camera's
-        preview port for rendering what the camera sees. You can use the
-        attributes of the :class:`PiRenderer` class to configure the appearance
-        of the preview. For example, to make the preview semi-transparent::
+        :class:`~picamera.renderers.PiRenderer` which is currently connected to
+        the camera's preview port for rendering what the camera sees. You can
+        use the attributes of the :class:`~picamera.renderers.PiRenderer` class
+        to configure the appearance of the preview. For example, to make the
+        preview semi-transparent::
 
             import picamera
 
@@ -3507,8 +3714,8 @@ class PiCamera(object):
         Retrieves or sets the opacity of the preview window.
 
         .. deprecated:: 1.8
-            Please use the :attr:`~PiRenderer.alpha` attribute of the
-            :attr:`preview` object instead.
+            Please use the :attr:`~picamera.renderers.PiRenderer.alpha`
+            attribute of the :attr:`preview` object instead.
         """)
 
     def _get_preview_layer(self):
@@ -3536,8 +3743,8 @@ class PiCamera(object):
         Retrieves of sets the layer of the preview window.
 
         .. deprecated:: 1.8
-            Please use the :attr:`~PiRenderer.layer` attribute of the
-            :attr:`preview` object instead.
+            Please use the :attr:`~picamera.renderers.PiRenderer.layer`
+            attribute of the :attr:`preview` object instead.
         """)
 
     def _get_preview_fullscreen(self):
@@ -3565,8 +3772,8 @@ class PiCamera(object):
         Retrieves or sets full-screen for the preview window.
 
         .. deprecated:: 1.8
-            Please use the :attr:`~PiRenderer.fullscreen` attribute of the
-            :attr:`preview` object instead.
+            Please use the :attr:`~picamera.renderers.PiRenderer.fullscreen`
+            attribute of the :attr:`preview` object instead.
         """)
 
     def _get_preview_window(self):
@@ -3594,42 +3801,26 @@ class PiCamera(object):
         Retrieves or sets the size of the preview window.
 
         .. deprecated:: 1.8
-            Please use the :attr:`~PiRenderer.window` attribute of the
-            :attr:`preview` object instead.
+            Please use the :attr:`~picamera.renderers.PiRenderer.window`
+            attribute of the :attr:`preview` object instead.
         """)
 
     def _get_annotate_text(self):
         self._check_camera_open()
-        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_ANNOTATE,
-                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
-            ))
-        mmal_check(
-            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
-            prefix="Failed to get annotation text")
+        mp = self._get_annotate_settings()
         if mp.enable:
             return mp.text.decode('ascii')
         else:
             return ''
     def _set_annotate_text(self, value):
         self._check_camera_open()
-        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_ANNOTATE,
-                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
-            ))
-        mmal_check(
-            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
-            prefix="Failed to get annotation status")
-        if value or bool(mp.show_frame_num):
-            mp.enable = True
+        mp = self._get_annotate_settings()
+        mp.enable = bool(value or mp.show_frame_num)
+        if mp.enable:
             try:
                 mp.text = value.encode('ascii')
             except ValueError as e:
                 raise PiCameraValueError(str(e))
-        else:
-            mp.enable = False
         mmal_check(
             mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
             prefix="Failed to set annotation text")
@@ -3643,32 +3834,22 @@ class PiCamera(object):
         When set, the property immediately applies the annotation to the
         preview (if it is running) and to any future captures or video
         recording. Strings longer than 255 characters, or strings containing
-        non-ASCII characters will raise a :exc:`PiCameraValueError`. The
-        default value is ``''``.
+        non-ASCII characters will raise a
+        :exc:`~picamera.exc.PiCameraValueError`. The default value is ``''``.
+
+        .. versionchanged:: 1.8
+            Text annotations can now be 255 characters long. The prior limit
+            was 32 characters.
         """)
 
     def _get_annotate_frame_num(self):
         self._check_camera_open()
-        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_ANNOTATE,
-                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
-            ))
-        mmal_check(
-            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
-            prefix="Failed to get annotation frame number")
+        mp = self._get_annotate_settings()
         return mp.show_frame_num != mmal.MMAL_FALSE
     def _set_annotate_frame_num(self, value):
         self._check_camera_open()
-        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_ANNOTATE,
-                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
-            ))
-        mmal_check(
-            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
-            prefix="Failed to get annotation status")
-        mp.enable = bool(value) or bool(mp.text)
+        mp = self._get_annotate_settings()
+        mp.enable = bool(value or mp.text)
         mp.show_frame_num = bool(value)
         mmal_check(
             mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
@@ -3680,40 +3861,188 @@ class PiCamera(object):
         The :attr:`annotate_frame_num` attribute is a bool indicating whether
         or not the current frame number is rendered as an annotation, similar
         to :attr:`annotate_text`. The default is ``False``.
+
+        .. versionadded:: 1.8
+        """)
+
+    def _get_annotate_text_size(self):
+        self._check_camera_open()
+        mp = self._get_annotate_settings()
+        if self._annotate_v3:
+            return mp.text_size or self.DEFAULT_ANNOTATE_SIZE
+        else:
+            return self.DEFAULT_ANNOTATE_SIZE
+    def _set_annotate_text_size(self, value):
+        self._check_camera_open()
+        if not (6 <= value <= 160):
+            raise PiCameraValueError(
+                "Invalid annotation text size: %d (valid range 6-160)" % value)
+        if not self._annotate_v3:
+            if value != self.DEFAULT_ANNOTATE_SIZE:
+                warnings.warn(
+                    PiCameraFallback(
+                        "Firmware does not support setting annotation text "
+                        "size; using default (%d) instead" % self.DEFAULT_ANNOTATE_SIZE))
+            return
+        mp = self._get_annotate_settings()
+        mp.text_size = value
+        mmal_check(
+            mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
+            prefix="Failed to set annotation text size")
+    annotate_text_size = property(
+            _get_annotate_text_size, _set_annotate_text_size, doc="""
+        Controls the size of the annotation text.
+
+        The :attr:`annotate_text_size` attribute is an int which determines how
+        large the annotation text will appear on the display. Valid values are
+        in the range 6 to 160, inclusive. The default is {size}.
+
+        .. versionadded:: 1.10
+        """.format(size=DEFAULT_ANNOTATE_SIZE))
+
+    def _get_annotate_foreground(self):
+        self._check_camera_open()
+        mp = self._get_annotate_settings()
+        if self._annotate_v3 and mp.custom_text_color:
+            return Color.from_yuv_bytes(
+                    mp.custom_text_Y,
+                    mp.custom_text_U,
+                    mp.custom_text_V)
+        else:
+            return Color('white')
+    def _set_annotate_foreground(self, value):
+        self._check_camera_open()
+        if not isinstance(value, Color):
+            raise PiCameraValueError(
+                'annotate_foreground must be a Color')
+        elif not self._annotate_v3:
+            if value.rgb_bytes != (255, 255, 255):
+                warnings.warn(
+                    PiCameraFallback(
+                        "Firmware does not support setting a custom foreground "
+                        "annotation color; using white instead"))
+            return
+        mp = self._get_annotate_settings()
+        mp.custom_text_color = True
+        (
+            mp.custom_text_Y,
+            mp.custom_text_U,
+            mp.custom_text_V,
+            ) = value.yuv_bytes
+        mmal_check(
+            mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
+            prefix="Failed to set annotation foreground")
+    annotate_foreground = property(
+            _get_annotate_foreground, _set_annotate_foreground, doc="""
+        Controls the color of the annotation text.
+
+        The :attr:`annotate_foreground` attribute specifies, partially, the
+        color of the annotation text. The value is specified as a
+        :class:`~picamera.color.Color`. The default is white.
+
+        .. note::
+
+            The underlying firmware does not directly support setting all
+            components of the text color, only the Y' component of a `Y'UV`_
+            tuple. This is roughly (but not precisely) analogous to the
+            "brightness" of a color, so you may choose to think of this as
+            setting how bright the annotation text will be relative to its
+            background. In order to specify just the Y' component when setting
+            this attribute, you may choose to construct the
+            :class:`~picamera.color.Color` instance as follows::
+
+                camera.annotate_foreground = picamera.Color(y=0.2, u=0, v=0)
+
+        .. _Y'UV: https://en.wikipedia.org/wiki/YUV
+
+        .. versionadded:: 1.10
         """)
 
     def _get_annotate_background(self):
         self._check_camera_open()
-        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_ANNOTATE,
-                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
-            ))
-        mmal_check(
-            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
-            prefix="Failed to get annotation background")
-        return mp.black_text_background != mmal.MMAL_FALSE
+        mp = self._get_annotate_settings()
+        if self._annotate_v3:
+            if mp.enable_text_background:
+                if mp.custom_background_color:
+                    return Color.from_yuv_bytes(
+                        mp.custom_background_Y,
+                        mp.custom_background_U,
+                        mp.custom_background_V)
+                else:
+                    return Color('black')
+            else:
+                return None
+        else:
+            if mp.black_text_background:
+                return Color('black')
+            else:
+                return None
     def _set_annotate_background(self, value):
         self._check_camera_open()
-        mp = mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T(
-            mmal.MMAL_PARAMETER_HEADER_T(
-                mmal.MMAL_PARAMETER_ANNOTATE,
-                ct.sizeof(mmal.MMAL_PARAMETER_CAMERA_ANNOTATE_V2_T)
-            ))
-        mmal_check(
-            mmal.mmal_port_parameter_get(self._camera[0].control, mp.hdr),
-            prefix="Failed to get annotation status")
-        mp.black_text_background = bool(value)
+        if value is True:
+            warnings.warn(
+                PiCameraDeprecated(
+                    'Setting PiCamera.annotate_background to True is '
+                    'deprecated; use PiCamera.color.Color("black") instead'))
+            value = Color('black')
+        elif value is False:
+            warnings.warn(
+                PiCameraDeprecated(
+                    'Setting PiCamera.annotate_background to False is '
+                    'deprecated; use None instead'))
+            value = None
+        elif value is None:
+            pass
+        elif not isinstance(value, Color):
+            raise PiCameraValueError(
+                'annotate_background must be a Color or None')
+        elif not self._annotate_v3 and value.rgb_bytes != (0, 0, 0):
+            warnings.warn(
+                PiCameraFallback(
+                    "Firmware does not support setting a custom background "
+                    "annotation color; using black instead"))
+        mp = self._get_annotate_settings()
+        if self._annotate_v3:
+            if value is None:
+                mp.enable_text_background = False
+            else:
+                mp.enable_text_background = True
+                mp.custom_background_color = True
+                (
+                    mp.custom_background_Y,
+                    mp.custom_background_U,
+                    mp.custom_background_V,
+                    ) = value.yuv_bytes
+        else:
+            if value is None:
+                mp.black_text_background = False
+            else:
+                mp.black_text_background = True
         mmal_check(
             mmal.mmal_port_parameter_set(self._camera[0].control, mp.hdr),
             prefix="Failed to set annotation background")
     annotate_background = property(
             _get_annotate_background, _set_annotate_background, doc="""
-        Controls whether a black background is drawn behind the annotation.
+        Controls what background is drawn behind the annotation.
 
-        The :attr:`annotate_background` attribute is a bool indicating whether
-        or not a black background will be drawn behind the :attr:`annotation
-        text <annotate_text>`. The background will appear in all output
-        including image captures and video recording. The default is ``False``.
+        The :attr:`annotate_background` attribute specifies if a background
+        will be drawn behind the :attr:`annotation text <annotate_text>` and,
+        if so, what color it will be. The value is specified as a
+        :class:`~picamera.color.Color` or ``None`` if no background should be
+        drawn. The default is ``None``.
+
+        .. note::
+
+            For backward compatibility purposes, the value ``False`` will be
+            treated as ``None``, and the value ``True`` will be treated as the
+            color black. The "truthiness" of the values returned by the
+            attribute are backward compatible although the values themselves
+            are not.
+
+        .. versionadded:: 1.8
+
+        .. versionchanged:: 1.10
+            In prior versions this was a bool value with ``True`` representing
+            a black background.
         """)
 

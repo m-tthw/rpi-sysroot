@@ -1,4 +1,0 @@
-#----- begin Cyrillic support package (2003-jun-28; updated to use poppler-data 2010-06-14)
-nameToUnicode                   /usr/share/poppler/nameToUnicode/Bulgarian
-unicodeMap	KOI8-R		/usr/share/poppler/unicodeMap/KOI8-R
-#----- end Cyrillic support package
