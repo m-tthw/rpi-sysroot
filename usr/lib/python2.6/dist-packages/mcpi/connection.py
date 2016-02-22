@@ -1,1 +1,0 @@
-../../../../share/pyshared/mcpi/connection.py

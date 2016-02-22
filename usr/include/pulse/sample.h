@@ -112,11 +112,18 @@
 PA_C_DECL_BEGIN
 
 #if !defined(WORDS_BIGENDIAN)
+
 #if defined(__BYTE_ORDER)
 #if __BYTE_ORDER == __BIG_ENDIAN
 #define WORDS_BIGENDIAN
 #endif
 #endif
+
+/* On Sparc, WORDS_BIGENDIAN needs to be set if _BIG_ENDIAN is defined. */
+#if defined(__sparc__) && defined(_BIG_ENDIAN)
+#define WORDS_BIGENDIAN
+#endif
+
 #endif
 
 /** Maximum number of allowed channels */
@@ -282,6 +289,16 @@ size_t pa_usec_to_bytes(pa_usec_t t, const pa_sample_spec *spec) PA_GCC_PURE;
  * pa_sample_spec_valid() will fail for it. \since 0.9.13 */
 pa_sample_spec* pa_sample_spec_init(pa_sample_spec *spec);
 
+/** Return non-zero if the given integer is a valid sample format. \since 5.0 */
+int pa_sample_format_valid(unsigned format) PA_GCC_PURE;
+
+/** Return non-zero if the rate is within the supported range. \since 5.0 */
+int pa_sample_rate_valid(uint32_t rate) PA_GCC_PURE;
+
+/** Return non-zero if the channel count is within the supported range.
+ * \since 5.0 */
+int pa_channels_valid(uint8_t channels) PA_GCC_PURE;
+
 /** Return non-zero when the sample type specification is valid */
 int pa_sample_spec_valid(const pa_sample_spec *spec) PA_GCC_PURE;
 
@@ -311,7 +328,7 @@ char* pa_sample_spec_snprint(char *s, size_t l, const pa_sample_spec *spec);
  * ABI. \since 0.9.16 */
 #define PA_BYTES_SNPRINT_MAX 11
 
-/** Pretty print a byte size value. (i.e. "2.5 MiB") */
+/** Pretty print a byte size value (i.e.\ "2.5 MiB") */
 char* pa_bytes_snprint(char *s, size_t l, unsigned v);
 
 /** Return 1 when the specified format is little endian, return -1

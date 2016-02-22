@@ -31,19 +31,13 @@
 
 DBUS_BEGIN_DECLS
 
-#if 1
+/* D-Bus no longer supports platforms with no 64-bit integer type. */
 #define DBUS_HAVE_INT64 1
 _DBUS_GNUC_EXTENSION typedef long long dbus_int64_t;
 _DBUS_GNUC_EXTENSION typedef unsigned long long dbus_uint64_t;
 
 #define DBUS_INT64_CONSTANT(val)  (_DBUS_GNUC_EXTENSION (val##LL))
 #define DBUS_UINT64_CONSTANT(val) (_DBUS_GNUC_EXTENSION (val##ULL))
-
-#else
-#undef DBUS_HAVE_INT64
-#undef DBUS_INT64_CONSTANT
-#undef DBUS_UINT64_CONSTANT
-#endif
 
 typedef int dbus_int32_t;
 typedef unsigned int dbus_uint32_t;
@@ -55,12 +49,12 @@ typedef unsigned short dbus_uint16_t;
  * creating an additional generated header just for this
  */
 #define DBUS_MAJOR_VERSION 1
-#define DBUS_MINOR_VERSION 6
-#define DBUS_MICRO_VERSION 8
+#define DBUS_MINOR_VERSION 8
+#define DBUS_MICRO_VERSION 20
 
-#define DBUS_VERSION_STRING "1.6.8"
+#define DBUS_VERSION_STRING "1.8.20"
 
-#define DBUS_VERSION ((1 << 16) | (6 << 8) | (8)) 
+#define DBUS_VERSION ((1 << 16) | (8 << 8) | (20)) 
 
 DBUS_END_DECLS
 

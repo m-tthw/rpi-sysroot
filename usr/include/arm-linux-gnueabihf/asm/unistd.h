@@ -404,6 +404,12 @@
 #define __NR_setns			(__NR_SYSCALL_BASE+375)
 #define __NR_process_vm_readv		(__NR_SYSCALL_BASE+376)
 #define __NR_process_vm_writev		(__NR_SYSCALL_BASE+377)
+#define __NR_kcmp			(__NR_SYSCALL_BASE+378)
+#define __NR_finit_module		(__NR_SYSCALL_BASE+379)
+#define __NR_sched_setattr		(__NR_SYSCALL_BASE+380)
+#define __NR_sched_getattr		(__NR_SYSCALL_BASE+381)
+#define __NR_renameat2			(__NR_SYSCALL_BASE+382)
+#define __NR_memfd_create		(__NR_SYSCALL_BASE+385)
 
 /*
  * The following SWIs are ARM private.
@@ -416,15 +422,9 @@
 #define __ARM_NR_set_tls		(__ARM_NR_BASE+5)
 
 /*
- * *NOTE*: This is a ghost syscall private to the kernel.  Only the
- * __kuser_cmpxchg code in entry-armv.S should be aware of its
- * existence.  Don't ever use this from user code.
- */
-
-/*
  * The following syscalls are obsolete and no longer available for EABI.
  */
-#if defined(__ARM_EABI__) && !defined(__KERNEL__)
+#if defined(__ARM_EABI__)
 #undef __NR_time
 #undef __NR_umount
 #undef __NR_stime

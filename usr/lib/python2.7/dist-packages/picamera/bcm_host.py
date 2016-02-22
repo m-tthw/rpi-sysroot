@@ -1,1 +1,0 @@
-../../../../share/pyshared/picamera/bcm_host.py

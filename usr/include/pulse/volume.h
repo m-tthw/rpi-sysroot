@@ -47,6 +47,21 @@
  * Volumes commonly span between muted (0%), and normal (100%). It is possible
  * to set volumes to higher than 100%, but clipping might occur.
  *
+ * There is no single well-defined meaning attached to the 100% volume for a
+ * sink input. In fact, it depends on the server configuration. With flat
+ * volumes enabled (the default in most Linux distributions), it means the
+ * maximum volume that the sound hardware is capable of, which is usually so
+ * high that you absolutely must not set sink input volume to 100% unless the
+ * the user explicitly requests that (note that usually you shouldn't set the
+ * volume anyway if the user doesn't explicitly request it, instead, let
+ * PulseAudio decide the volume for the sink input). With flat volumes disabled
+ * (the default in Ubuntu), the sink input volume is relative to the sink
+ * volume, so 100% sink input volume means that the sink input is played at the
+ * current sink volume level. In this case 100% is often a good default volume
+ * for a sink input, although you still should let PulseAudio decide the
+ * default volume. It is possible to figure out whether flat volume mode is in
+ * effect for a given sink by calling pa_context_get_sink_info_by_name().
+ *
  * \section calc_sec Calculations
  *
  * The volumes in PulseAudio are logarithmic in nature and applications
@@ -174,6 +189,18 @@ char *pa_cvolume_snprint(char *s, size_t l, const pa_cvolume *c);
 /** Pretty print a volume structure but show dB values. \since 0.9.13 */
 char *pa_sw_cvolume_snprint_dB(char *s, size_t l, const pa_cvolume *c);
 
+/** Maximum length of the strings returned by pa_cvolume_snprint_verbose().
+ * Please note that this value can change with any release without warning and
+ * without being considered API or ABI breakage. You should not use this
+ * definition anywhere where it might become part of an ABI. \since 5.0 */
+#define PA_CVOLUME_SNPRINT_VERBOSE_MAX 1984
+
+/** Pretty print a volume structure in a verbose way. The volume for each
+ * channel is printed in several formats: the raw pa_volume_t value,
+ * percentage, and if print_dB is non-zero, also the dB value. If map is not
+ * NULL, the channel names will be printed. \since 5.0 */
+char *pa_cvolume_snprint_verbose(char *s, size_t l, const pa_cvolume *c, const pa_channel_map *map, int print_dB);
+
 /** Maximum length of the strings returned by
  * pa_volume_snprint(). Please note that this value can change with
  * any release without warning and without being considered API or ABI
@@ -193,6 +220,17 @@ char *pa_volume_snprint(char *s, size_t l, pa_volume_t v);
 
 /** Pretty print a volume but show dB values. \since 0.9.15 */
 char *pa_sw_volume_snprint_dB(char *s, size_t l, pa_volume_t v);
+
+/** Maximum length of the strings returned by pa_volume_snprint_verbose().
+ * Please note that this value can change with any release without warning and
+ * withou being considered API or ABI breakage. You should not use this
+ * definition anywhere where it might become part of an ABI. \since 5.0 */
+#define PA_VOLUME_SNPRINT_VERBOSE_MAX 35
+
+/** Pretty print a volume in a verbose way. The volume is printed in several
+ * formats: the raw pa_volume_t value, percentage, and if print_dB is non-zero,
+ * also the dB value. \since 5.0 */
+char *pa_volume_snprint_verbose(char *s, size_t l, pa_volume_t v, int print_dB);
 
 /** Return the average volume of all channels */
 pa_volume_t pa_cvolume_avg(const pa_cvolume *a) PA_GCC_PURE;
@@ -224,7 +262,7 @@ pa_volume_t pa_cvolume_min(const pa_cvolume *a) PA_GCC_PURE;
  * \since 0.9.16 */
 pa_volume_t pa_cvolume_min_mask(const pa_cvolume *a, const pa_channel_map *cm, pa_channel_position_mask_t mask) PA_GCC_PURE;
 
-/** Return TRUE when the passed cvolume structure is valid, FALSE otherwise */
+/** Return non-zero when the passed cvolume structure is valid */
 int pa_cvolume_valid(const pa_cvolume *v) PA_GCC_PURE;
 
 /** Return non-zero if the volume of all channels is equal to the specified value */
@@ -318,14 +356,14 @@ float pa_cvolume_get_balance(const pa_cvolume *v, const pa_channel_map *map) PA_
  * pa_channel_map_can_balance(). \since 0.9.15 */
 pa_cvolume* pa_cvolume_set_balance(pa_cvolume *v, const pa_channel_map *map, float new_balance);
 
-/** Calculate a 'fade' value (i.e. 'balance' between front and rear)
+/** Calculate a 'fade' value (i.e.\ 'balance' between front and rear)
  * for the specified volume with the specified channel map. The return
  * value will range from -1.0f (rear) to +1.0f (left). If no fade
  * value is applicable to this channel map the return value will
  * always be 0.0f. See pa_channel_map_can_fade(). \since 0.9.15 */
 float pa_cvolume_get_fade(const pa_cvolume *v, const pa_channel_map *map) PA_GCC_PURE;
 
-/** Adjust the 'fade' value (i.e. 'balance' between front and rear)
+/** Adjust the 'fade' value (i.e.\ 'balance' between front and rear)
  * for the specified volume with the specified channel map. v will be
  * modified in place and returned. The balance is a value between
  * -1.0f and +1.0f. This operation might not be reversible! Also,
@@ -373,7 +411,7 @@ pa_cvolume* pa_cvolume_inc_clamp(pa_cvolume *v, pa_volume_t inc, pa_volume_t lim
  * the channels are kept. \since 0.9.16 */
 pa_cvolume* pa_cvolume_inc(pa_cvolume *v, pa_volume_t inc);
 
-/** Increase the volume passed in by 'inc'. The proportions between
+/** Decrease the volume passed in by 'dec'. The proportions between
  * the channels are kept. \since 0.9.16 */
 pa_cvolume* pa_cvolume_dec(pa_cvolume *v, pa_volume_t dec);
 

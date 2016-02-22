@@ -93,9 +93,14 @@ static inline int PA_STREAM_IS_GOOD(pa_stream_state_t x) {
 
 /** The state of an operation */
 typedef enum pa_operation_state {
-    PA_OPERATION_RUNNING,      /**< The operation is still running */
-    PA_OPERATION_DONE,         /**< The operation has been completed */
-    PA_OPERATION_CANCELLED     /**< The operation has been cancelled. Before 0.9.18 this was called PA_OPERATION_CANCELED. That name is still available for compatibility. */
+    PA_OPERATION_RUNNING,
+    /**< The operation is still running */
+    PA_OPERATION_DONE,
+    /**< The operation has completed */
+    PA_OPERATION_CANCELLED
+    /**< The operation has been cancelled. Operations may get cancelled by the
+     * application, or as a result of the context getting disconneted while the
+     * operation is pending. */
 } pa_operation_state_t;
 
 /** \cond fulldocs */
@@ -125,7 +130,7 @@ typedef enum pa_context_flags {
 /** \endcond */
 
 /** Direction bitfield - while we currently do not expose anything bidirectional,
-  one should test against the bit instead of the value (e g if (d & PA_DIRECTION_OUTPUT)),
+  one should test against the bit instead of the value (e.g.\ if (d & PA_DIRECTION_OUTPUT)),
   because we might add bidirectional stuff in the future. \since 2.0
 */
 typedef enum pa_direction {
@@ -227,20 +232,50 @@ typedef enum pa_stream_flags {
      * specified manual buffer metrics it is recommended to update
      * them with pa_stream_set_buffer_attr() to compensate for the
      * changed frame sizes. Only supported when the server is at least
-     * PA 0.9.8. It is ignored on older servers. \since 0.9.8 */
+     * PA 0.9.8. It is ignored on older servers.
+     *
+     * When creating streams with pa_stream_new_extended(), this flag has no
+     * effect. If you specify a format with PCM encoding, and you want the
+     * server to choose the sample format, then you should leave the sample
+     * format unspecified in the pa_format_info object. This also means that
+     * you can't use pa_format_info_from_sample_spec(), because that function
+     * always sets the sample format.
+     *
+     * \since 0.9.8 */
 
     PA_STREAM_FIX_RATE = 0x0080U,
     /**< Use the sample rate of the sink, and possibly ignore the rate
      * the sample spec contains. Usage similar to
-     * PA_STREAM_FIX_FORMAT.Only supported when the server is at least
-     * PA 0.9.8. It is ignored on older servers. \since 0.9.8 */
+     * PA_STREAM_FIX_FORMAT. Only supported when the server is at least
+     * PA 0.9.8. It is ignored on older servers.
+     *
+     * When creating streams with pa_stream_new_extended(), this flag has no
+     * effect. If you specify a format with PCM encoding, and you want the
+     * server to choose the sample rate, then you should leave the rate
+     * unspecified in the pa_format_info object. This also means that you can't
+     * use pa_format_info_from_sample_spec(), because that function always sets
+     * the sample rate.
+     *
+     * \since 0.9.8 */
 
     PA_STREAM_FIX_CHANNELS = 0x0100,
     /**< Use the number of channels and the channel map of the sink,
      * and possibly ignore the number of channels and the map the
      * sample spec and the passed channel map contains. Usage similar
      * to PA_STREAM_FIX_FORMAT. Only supported when the server is at
-     * least PA 0.9.8. It is ignored on older servers. \since 0.9.8 */
+     * least PA 0.9.8. It is ignored on older servers.
+     *
+     * When creating streams with pa_stream_new_extended(), this flag has no
+     * effect. If you specify a format with PCM encoding, and you want the
+     * server to choose the channel count and/or channel map, then you should
+     * leave the channels and/or the channel map unspecified in the
+     * pa_format_info object. This also means that you can't use
+     * pa_format_info_from_sample_spec(), because that function always sets
+     * the channel count (but if you only want to leave the channel map
+     * unspecified, then pa_format_info_from_sample_spec() works, because it
+     * accepts a NULL channel map).
+     *
+     * \since 0.9.8 */
 
     PA_STREAM_DONT_MOVE = 0x0200U,
     /**< Don't allow moving of this stream to another
@@ -291,7 +326,7 @@ typedef enum pa_stream_flags {
      * PA_STREAM_ADJUST_LATENCY. \since 0.9.12 */
 
     PA_STREAM_DONT_INHIBIT_AUTO_SUSPEND = 0x8000U,
-    /**< If set this stream won't be taken into account when we it is
+    /**< If set this stream won't be taken into account when it is
      * checked whether the device this stream is connected to should
      * auto-suspend. \since 0.9.15 */
 
@@ -355,7 +390,13 @@ typedef struct pa_buffer_attr {
     uint32_t maxlength;
     /**< Maximum length of the buffer in bytes. Setting this to (uint32_t) -1
      * will initialize this to the maximum value supported by server,
-     * which is recommended. */
+     * which is recommended.
+     *
+     * In strict low-latency playback scenarios you might want to set this to
+     * a lower value, likely together with the PA_STREAM_ADJUST_LATENCY flag.
+     * If you do so, you ensure that the latency doesn't grow beyond what is
+     * acceptable for the use case, at the cost of getting more underruns if
+     * the latency is lower than what the server can reliably handle. */
 
     uint32_t tlength;
     /**< Playback only: target length of the buffer. The server tries
@@ -760,7 +801,7 @@ typedef enum pa_sink_flags {
      * \since 0.9.11 */
 
     PA_SINK_FLAT_VOLUME = 0x0040U,
-    /**< This sink is in flat volume mode, i.e. always the maximum of
+    /**< This sink is in flat volume mode, i.e.\ always the maximum of
      * the volume of all connected inputs. \since 0.9.15 */
 
     PA_SINK_DYNAMIC_LATENCY = 0x0080U,
@@ -888,7 +929,7 @@ typedef enum pa_source_flags {
      * needs of the connected streams. \since 0.9.15 */
 
     PA_SOURCE_FLAT_VOLUME = 0x0080U,
-    /**< This source is in flat volume mode, i.e. always the maximum of
+    /**< This source is in flat volume mode, i.e.\ always the maximum of
      * the volume of all connected outputs. \since 1.0 */
 
 #ifdef __INCLUDED_FROM_PULSE_AUDIO
@@ -976,7 +1017,7 @@ typedef void (*pa_free_cb_t)(void *p);
 
 /** A stream policy/meta event requesting that an application should
  * cork a specific stream. See pa_stream_event_cb_t for more
- * information, \since 0.9.15 */
+ * information. \since 0.9.15 */
 #define PA_STREAM_EVENT_REQUEST_CORK "request-cork"
 
 /** A stream policy/meta event requesting that an application should
@@ -988,9 +1029,10 @@ typedef void (*pa_free_cb_t)(void *p);
  * disconnected because the underlying sink changed and no longer
  * supports the format that was originally negotiated. Clients need
  * to connect a new stream to renegotiate a format and continue
- * playback, \since 1.0 */
+ * playback. \since 1.0 */
 #define PA_STREAM_EVENT_FORMAT_LOST "format-lost"
 
+#ifndef __INCLUDED_FROM_PULSE_AUDIO
 /** Port availability / jack detection status
  * \since 2.0 */
 typedef enum pa_port_available {
@@ -1005,6 +1047,7 @@ typedef enum pa_port_available {
 #define PA_PORT_AVAILABLE_YES PA_PORT_AVAILABLE_YES
 
 /** \endcond */
+#endif
 
 PA_C_DECL_END
 

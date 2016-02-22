@@ -11,7 +11,7 @@ daemondir=/usr/bin
 
 Name: dbus
 Description: Free desktop message bus
-Version: 1.6.8
+Version: 1.8.20
 Libs: -L${libdir} -ldbus-1
-Libs.private: -lpthread -lrt 
+Libs.private: -lpthread   
 Cflags: -I${includedir}/dbus-1.0 -I${libdir}/dbus-1.0/include 

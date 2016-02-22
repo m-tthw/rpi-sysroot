@@ -1,1 +1,0 @@
-../../../../share/pyshared/serial/serialwin32.py

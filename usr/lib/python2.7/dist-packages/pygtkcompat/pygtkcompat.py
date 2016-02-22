@@ -1,1 +1,0 @@
-../../../../share/pyshared/pygtkcompat/pygtkcompat.py

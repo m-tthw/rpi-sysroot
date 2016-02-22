@@ -94,10 +94,10 @@ struct mtd_write_req {
 #define MTD_RAM			1
 #define MTD_ROM			2
 #define MTD_NORFLASH		3
-#define MTD_NANDFLASH		4
+#define MTD_NANDFLASH		4	/* SLC NAND */
 #define MTD_DATAFLASH		6
 #define MTD_UBIVOLUME		7
-#define MTD_MLCNANDFLASH	8
+#define MTD_MLCNANDFLASH	8	/* MLC NAND (including TLC) */
 
 #define MTD_WRITEABLE		0x400	/* Device is writeable */
 #define MTD_BIT_WRITEABLE	0x800	/* Single bits can be flipped */
@@ -109,6 +109,7 @@ struct mtd_write_req {
 #define MTD_CAP_RAM		(MTD_WRITEABLE | MTD_BIT_WRITEABLE | MTD_NO_ERASE)
 #define MTD_CAP_NORFLASH	(MTD_WRITEABLE | MTD_BIT_WRITEABLE)
 #define MTD_CAP_NANDFLASH	(MTD_WRITEABLE)
+#define MTD_CAP_NVRAM		(MTD_WRITEABLE | MTD_BIT_WRITEABLE | MTD_NO_ERASE)
 
 /* Obsolete ECC byte placement modes (used with obsolete MEMGETOOBSEL) */
 #define MTD_NANDECC_OFF		0	// Switch off ECC (Not recommended)
@@ -198,7 +199,8 @@ struct otp_info {
 #define MEMISLOCKED		_IOR('M', 23, struct erase_info_user)
 /*
  * Most generic write interface; can write in-band and/or out-of-band in various
- * modes (see "struct mtd_write_req")
+ * modes (see "struct mtd_write_req"). This ioctl is not supported for flashes
+ * without OOB, e.g., NOR flash.
  */
 #define MEMWRITE		_IOWR('M', 24, struct mtd_write_req)
 
@@ -273,5 +275,10 @@ enum mtd_file_modes {
 	MTD_FILE_MODE_OTP_USER = MTD_OTP_USER,
 	MTD_FILE_MODE_RAW,
 };
+
+static __inline__ int mtd_type_is_nand_user(const struct mtd_info_user *mtd)
+{
+	return mtd->type == MTD_NANDFLASH || mtd->type == MTD_MLCNANDFLASH;
+}
 
 #endif /* __MTD_ABI_H__ */

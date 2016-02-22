@@ -1,1 +1,0 @@
-../../../../share/pyshared/pygtkcompat/__init__.py

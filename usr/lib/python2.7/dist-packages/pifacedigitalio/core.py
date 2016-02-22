@@ -1,1 +1,0 @@
-../../../../share/pyshared/pifacedigitalio/core.py

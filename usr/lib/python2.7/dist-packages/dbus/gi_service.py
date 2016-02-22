@@ -1,1 +1,0 @@
-../../../../share/pyshared/dbus/gi_service.py

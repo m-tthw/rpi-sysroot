@@ -31,12 +31,17 @@ dns_reachable() {
   # If there is no local nameserver and no we have no global ip addresses
   # then we can't reach any nameservers
   if ! $(egrep -q "nameserver 127.0.0.1|::1" /etc/resolv.conf); then 
-    # Get addresses of all running interfaces
-    ADDRS=$(LC_ALL=C ifconfig | grep ' addr:')
-    # Filter out all local addresses
-    ADDRS=$(echo "${ADDRS}" | egrep -v ':127|Scope:Host|Scope:Link')
-    # Check we have a default route
-    ROUTES=$(route -n | grep '^0.0.0.0 ')
+    if [ -x "$(which ip)" ]; then
+      ADDRS=$(ip addr show scope global | grep inet)
+      ROUTES=$(ip route show 0.0.0.0/0)
+    elif [ -x "$(which ifconfig)" -a -x "$(which route)" ]; then
+      # Get addresses of all running interfaces
+      ADDRS=$(LC_ALL=C ifconfig | grep ' addr:')
+      # Filter out all local addresses
+      ADDRS=$(echo "${ADDRS}" | egrep -v ':127|Scope:Host|Scope:Link')
+      # Check we have a default route
+      ROUTES=$(route -n | grep '^0.0.0.0 ')
+    fi
     if [ -z "${ADDRS}" -o -z "${ROUTES}" ] ; then
       return 1;
     fi
@@ -96,10 +101,10 @@ enable_avahi () {
   # no unicast .local conflict, so remove the tag and start avahi again
   if [ -e ${DISABLE_TAG} ]; then
     rm -f ${DISABLE_TAG}
-    if [ -x "`which invoke-rc.d 2>/dev/null`" ]; then
-      invoke-rc.d avahi-daemon start || true
-    else
-      if [ -x "/etc/init.d/avahi-daemon" ]; then
+    if [ -x "/etc/init.d/avahi-daemon" ]; then
+      if [ -x "$(which invoke-rc.d 2>/dev/null)" ]; then
+        invoke-rc.d avahi-daemon start || true
+      else
         /etc/init.d/avahi-daemon start || true
       fi
     fi
@@ -110,12 +115,10 @@ disable_avahi () {
   [ -e ${DISABLE_TAG} ] && return
 
   if [ -x /etc/init.d/avahi-daemon ]; then
-    if [ -x "`which invoke-rc.d 2>/dev/null`" ]; then
+    if [ -x "$(which invoke-rc.d 2>/dev/null)" ]; then
       invoke-rc.d --force avahi-daemon stop || true
     else
-      if [ -x "/etc/init.d/avahi-daemon" ]; then
-        /etc/init.d/avahi-daemon stop || true
-      fi
+      /etc/init.d/avahi-daemon stop || true
     fi
     if [ -x /usr/bin/logger ]; then
       logger -p daemon.warning -t avahi <<EOF
