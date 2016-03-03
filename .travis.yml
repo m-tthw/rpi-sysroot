@@ -20,7 +20,7 @@
 # THE SOFTWARE.
 #
 
-env.global.secure: DE9IUM+pIV757GU0ccfDJhA752442pKu3DyBthrzHW9+GbsqbfuJOx045CYNN5vOWutFPC0A51B9WxhLNpXXqD3mfU8MhP1gkF7SskrHvcAPrCyfdqZf1Q8XDP5phm2KbHhhwxQMYmmicd6yj8DPNy2wRoSgPSDp/ZUDk51XZDU=
+env.global.secure: QvzVLDjhnlLlf4RxLwhV3vD5BAiF0DehoTNbiOmNsX731ymfQl6hQpqsdGq53xodPu1gzy41GkDb9bi2TyMGY6XLe4Rutv1tl0vBsQodbIxvP5OQgBCFff5LVBEf0O1/9tqzPtzBkcYQrKFg2ad35qeD9nqhSP3U80VJxENkLQE=
 language: ruby
 
 # vi: set ts=2 sw=2 expandtab:
