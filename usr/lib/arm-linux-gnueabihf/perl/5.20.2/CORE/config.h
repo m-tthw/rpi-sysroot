@@ -9,9 +9,9 @@
 
 /* Package name      : perl5
  * Source directory  : .
- * Configuration time: Sun Jan 24 01:57:52 UTC 2016
+ * Configuration time: Sun Jun  5 08:08:15 UTC 2016
  * Configured by     : Debian Project
- * Target system     : linux bm-wb-02 3.19.0-trunk-armmp #1 smp debian 3.19.1-1~exp1+plugwash1 (2015-03-28) armv7l gnulinux 
+ * Target system     : linux bm-wb-04 3.19.0-trunk-armmp #1 smp debian 3.19.1-1~exp1+plugwash1 (2015-03-28) armv7l gnulinux 
  */
 
 #ifndef _config_h_

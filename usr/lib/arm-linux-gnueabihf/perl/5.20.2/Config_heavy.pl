@@ -78,9 +78,9 @@ sub header_files {
 #
 ## Package name      : perl5
 ## Source directory  : .
-## Configuration time: Sun Jan 24 01:57:52 UTC 2016
+## Configuration time: Sun Jun  5 08:08:15 UTC 2016
 ## Configured by     : Debian Project
-## Target system     : linux bm-wb-02 3.19.0-trunk-armmp #1 smp debian 3.19.1-1~exp1+plugwash1 (2015-03-28) armv7l gnulinux 
+## Target system     : linux bm-wb-04 3.19.0-trunk-armmp #1 smp debian 3.19.1-1~exp1+plugwash1 (2015-03-28) armv7l gnulinux 
 #
 #: Configure command line arguments.
 #
@@ -204,7 +204,7 @@ ccsymbols=''
 ccversion=''
 cf_by='Debian Project'
 cf_email='perl@packages.debian.org'
-cf_time='Sun Jan 24 01:57:52 UTC 2016'
+cf_time='Sun Jun  5 08:08:15 UTC 2016'
 charbits='8'
 charsize='1'
 chgrp=''
@@ -1014,7 +1014,7 @@ mv=''
 myarchname='armv7l-linux'
 mydomain=''
 myhostname='localhost'
-myuname='linux bm-wb-02 3.19.0-trunk-armmp #1 smp debian 3.19.1-1~exp1+plugwash1 (2015-03-28) armv7l gnulinux '
+myuname='linux bm-wb-04 3.19.0-trunk-armmp #1 smp debian 3.19.1-1~exp1+plugwash1 (2015-03-28) armv7l gnulinux '
 n='-n'
 need_va_copy='undef'
 netdb_hlen_type='size_t'
