@@ -20,7 +20,10 @@
 # THE SOFTWARE.
 #
 
-env.global.secure: QvzVLDjhnlLlf4RxLwhV3vD5BAiF0DehoTNbiOmNsX731ymfQl6hQpqsdGq53xodPu1gzy41GkDb9bi2TyMGY6XLe4Rutv1tl0vBsQodbIxvP5OQgBCFff5LVBEf0O1/9tqzPtzBkcYQrKFg2ad35qeD9nqhSP3U80VJxENkLQE=
+env:
+  global:
+    - secure: src+x5cr6+Y1s8WwQEuHbPIX5NnAcIqVRe0Elh2Ontok8QkV8Kfs7hlj3WsrkVOUkskiQ1I/mUMvBYgWXyfy0sQeVZy2jbej0vuTsrj9JUQZeQipzgd4lHIxUPlqvTUevztSzyX/MceJm2oGeiEQmRA+wbWscQbwPDQjT7+LiwM=
 language: ruby
+sudo: true
 
 # vi: set ts=2 sw=2 expandtab:
