@@ -9,7 +9,7 @@
 
 /* Package name      : perl5
  * Source directory  : .
- * Configuration time: Sun Jun  5 08:08:15 UTC 2016
+ * Configuration time: Mon Jul 25 18:28:15 UTC 2016
  * Configured by     : Debian Project
  * Target system     : linux bm-wb-04 3.19.0-trunk-armmp #1 smp debian 3.19.1-1~exp1+plugwash1 (2015-03-28) armv7l gnulinux 
  */
@@ -3908,7 +3908,7 @@
  *	be used.
  */
 #ifndef USE_SITECUSTOMIZE
-/*#define	USE_SITECUSTOMIZE		/ **/
+#define	USE_SITECUSTOMIZE		/**/
 #endif
 
 /* HAS_SNPRINTF:
