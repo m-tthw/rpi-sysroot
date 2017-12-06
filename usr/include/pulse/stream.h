@@ -18,9 +18,7 @@
   General Public License for more details.
 
   You should have received a copy of the GNU Lesser General Public License
-  along with PulseAudio; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-  USA.
+  along with PulseAudio; if not, see <http://www.gnu.org/licenses/>.
 ***/
 
 #include <sys/types.h>
@@ -549,9 +547,20 @@ int pa_stream_cancel_write(
 int pa_stream_write(
         pa_stream *p             /**< The stream to use */,
         const void *data         /**< The data to write */,
+        size_t nbytes            /**< The length of the data to write in bytes, must be in multiples of the stream's sample spec frame size */,
+        pa_free_cb_t free_cb     /**< A cleanup routine for the data or NULL to request an internal copy */,
+        int64_t offset           /**< Offset for seeking, must be 0 for upload streams, must be in multiples of the stream's sample spec frame size */,
+        pa_seek_mode_t seek      /**< Seek mode, must be PA_SEEK_RELATIVE for upload streams */);
+
+/** Function does exactly the same as pa_stream_write() with the difference
+ *  that free_cb_data is passed to free_cb instead of data. \since 6.0 */
+int pa_stream_write_ext_free(
+        pa_stream *p             /**< The stream to use */,
+        const void *data         /**< The data to write */,
         size_t nbytes            /**< The length of the data to write in bytes */,
         pa_free_cb_t free_cb     /**< A cleanup routine for the data or NULL to request an internal copy */,
-        int64_t offset,          /**< Offset for seeking, must be 0 for upload streams */
+        void *free_cb_data       /**< Argument passed to free_cb function */,
+        int64_t offset           /**< Offset for seeking, must be 0 for upload streams */,
         pa_seek_mode_t seek      /**< Seek mode, must be PA_SEEK_RELATIVE for upload streams */);
 
 /** Read the next fragment from the buffer (for recording streams).
@@ -579,7 +588,14 @@ int pa_stream_peek(
  * calling pa_stream_peek(). */
 int pa_stream_drop(pa_stream *p);
 
-/** Return the number of bytes that may be written using pa_stream_write(). */
+/** Return the number of bytes requested by the server that have not yet
+ * been written.
+ *
+ * It is possible to write more than this amount, up to the stream's
+ * buffer_attr.maxlength bytes. This is usually not desirable, though, as
+ * it would increase stream latency to be higher than requested
+ * (buffer_attr.tlength).
+ */
 size_t pa_stream_writable_size(pa_stream *p);
 
 /** Return the number of bytes that may be read using pa_stream_peek(). */
@@ -628,7 +644,7 @@ void pa_stream_set_started_callback(pa_stream *p, pa_stream_notify_cb_t cb, void
 
 /** Set the callback function that is called whenever a latency
  * information update happens. Useful on PA_STREAM_AUTO_TIMING_UPDATE
- * streams only. (Only for playback streams) */
+ * streams only. */
 void pa_stream_set_latency_update_callback(pa_stream *p, pa_stream_notify_cb_t cb, void *userdata);
 
 /** Set the callback function that is called whenever the stream is

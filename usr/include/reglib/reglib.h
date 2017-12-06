@@ -28,6 +28,7 @@ struct ieee80211_reg_rule {
 	struct ieee80211_freq_range freq_range;
 	struct ieee80211_power_rule power_rule;
 	uint32_t flags;
+	uint32_t dfs_cac_ms;
 };
 
 struct ieee80211_regdomain {
@@ -36,9 +37,6 @@ struct ieee80211_regdomain {
 	uint8_t dfs_region;
 	struct ieee80211_reg_rule reg_rules[];
 };
-
-/* Remove this once upstream nl80211.h gets this */
-#define NL80211_RRF_NO_IR (1<<7)
 
 #define REGLIB_MHZ_TO_KHZ(freq) ((freq) * 1000)
 #define REGLIB_KHZ_TO_MHZ(freq) ((freq) / 1000)

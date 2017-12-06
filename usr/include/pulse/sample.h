@@ -18,9 +18,7 @@
   General Public License for more details.
 
   You should have received a copy of the GNU Lesser General Public License
-  along with PulseAudio; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-  USA.
+  along with PulseAudio; if not, see <http://www.gnu.org/licenses/>.
 ***/
 
 #include <inttypes.h>
@@ -130,7 +128,7 @@ PA_C_DECL_BEGIN
 #define PA_CHANNELS_MAX 32U
 
 /** Maximum allowed sample rate */
-#define PA_RATE_MAX (48000U*4U)
+#define PA_RATE_MAX (48000U*8U)
 
 /** Sample format */
 typedef enum pa_sample_format {

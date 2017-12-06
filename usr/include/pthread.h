@@ -1,4 +1,4 @@
-/* Copyright (C) 2002-2014 Free Software Foundation, Inc.
+/* Copyright (C) 2002-2016 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -82,15 +82,6 @@ enum
 #endif
 
 
-/* Mutex initializers.  */
-#if __PTHREAD_MUTEX_HAVE_ELISION == 1 /* 64bit layout.  */
-#define __PTHREAD_SPINS 0, 0
-#elif __PTHREAD_MUTEX_HAVE_ELISION == 2 /* 32bit layout.  */
-#define __PTHREAD_SPINS { 0, 0 }
-#else
-#define __PTHREAD_SPINS 0
-#endif
-
 #ifdef __PTHREAD_MUTEX_HAVE_PREV
 # define PTHREAD_MUTEX_INITIALIZER \
   { { 0, 0, 0, 0, 0, __PTHREAD_SPINS, { 0, 0 } } }
@@ -99,8 +90,6 @@ enum
   { { 0, 0, 0, 0, PTHREAD_MUTEX_RECURSIVE_NP, __PTHREAD_SPINS, { 0, 0 } } }
 #  define PTHREAD_ERRORCHECK_MUTEX_INITIALIZER_NP \
   { { 0, 0, 0, 0, PTHREAD_MUTEX_ERRORCHECK_NP, __PTHREAD_SPINS, { 0, 0 } } }
-#  define PTHREAD_ADAPTIVE_MUTEX_INITIALIZER_NP \
-  { { 0, 0, 0, 0, PTHREAD_MUTEX_ADAPTIVE_NP, __PTHREAD_SPINS, { 0, 0 } } }
 #  define PTHREAD_ADAPTIVE_MUTEX_INITIALIZER_NP \
   { { 0, 0, 0, 0, PTHREAD_MUTEX_ADAPTIVE_NP, __PTHREAD_SPINS, { 0, 0 } } }
 
@@ -141,17 +130,17 @@ enum
 
 /* Read-write lock initializers.  */
 # define PTHREAD_RWLOCK_INITIALIZER \
-  { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } }
+  { { 0, 0, 0, 0, 0, 0, 0, 0, __PTHREAD_RWLOCK_ELISION_EXTRA, 0, 0 } }
 # ifdef __USE_GNU
 #  ifdef __PTHREAD_RWLOCK_INT_FLAGS_SHARED
 #   define PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP \
-  { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,					      \
+  { { 0, 0, 0, 0, 0, 0, 0, 0, __PTHREAD_RWLOCK_ELISION_EXTRA, 0,					      \
 	PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP } }
 #  else
 #   if __BYTE_ORDER == __LITTLE_ENDIAN
 #    define PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP \
   { { 0, 0, 0, 0, 0, 0, PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP, \
-      0, 0, 0, 0 } }
+      0, __PTHREAD_RWLOCK_ELISION_EXTRA, 0, 0 } }
 #   else
 #    define PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP \
   { { 0, 0, 0, 0, 0, 0, 0, 0, 0, PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP,\

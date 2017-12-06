@@ -18,9 +18,7 @@
   General Public License for more details.
 
   You should have received a copy of the GNU Lesser General Public License
-  along with PulseAudio; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-  USA.
+  along with PulseAudio; if not, see <http://www.gnu.org/licenses/>.
 ***/
 
 #include <pulse/mainloop-api.h>
@@ -116,8 +114,8 @@ int pa_mainloop_run(pa_mainloop *m, int *retval);
     and is destroyed when the loop is freed. */
 pa_mainloop_api* pa_mainloop_get_api(pa_mainloop*m);
 
-/** Shutdown the main loop */
-void pa_mainloop_quit(pa_mainloop *m, int r);
+/** Shutdown the main loop with the specified return value */
+void pa_mainloop_quit(pa_mainloop *m, int retval);
 
 /** Interrupt a running poll (for threaded systems) */
 void pa_mainloop_wakeup(pa_mainloop *m);

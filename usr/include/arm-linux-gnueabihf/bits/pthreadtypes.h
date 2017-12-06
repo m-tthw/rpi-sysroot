@@ -1,4 +1,4 @@
-/* Copyright (C) 2002-2014 Free Software Foundation, Inc.
+/* Copyright (C) 2002-2016 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -77,6 +77,9 @@ typedef union
   long int __align;
 } pthread_mutex_t;
 
+/* Mutex __spins initializer used by PTHREAD_MUTEX_INITIALIZER.  */
+#define __PTHREAD_SPINS 0
+
 typedef union
 {
   char __size[__SIZEOF_PTHREAD_MUTEXATTR_T];
@@ -151,6 +154,8 @@ typedef union
   char __size[__SIZEOF_PTHREAD_RWLOCK_T];
   long int __align;
 } pthread_rwlock_t;
+
+#define __PTHREAD_RWLOCK_ELISION_EXTRA 0
 
 typedef union
 {

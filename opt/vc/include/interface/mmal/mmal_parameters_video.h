@@ -101,6 +101,7 @@ enum {
    MMAL_PARAMETER_VIDEO_INTERPOLATE_TIMESTAMPS,         /**< Takes a @ref MMAL_PARAMETER_BOOLEAN_T */
    MMAL_PARAMETER_VIDEO_ENCODE_SPS_TIMING,         /**< Take a @ref MMAL_PARAMETER_BOOLEAN_T */
    MMAL_PARAMETER_VIDEO_MAX_NUM_CALLBACKS,         /**< Take a @ref MMAL_PARAMETER_UINT32_T */
+   MMAL_PARAMETER_VIDEO_SOURCE_PATTERN,         /**< Take a @ref MMAL_PARAMETER_SOURCE_PATTERN_T */
 };
 
 /** Display transformations.
@@ -485,5 +486,27 @@ typedef struct MMAL_PARAMETER_VIDEO_INTERLACE_TYPE_T {
    MMAL_INTERLACETYPE_T eMode;       /**< The interlace type of the content */
    MMAL_BOOL_T bRepeatFirstField;    /**< Whether to repeat the first field */
 } MMAL_PARAMETER_VIDEO_INTERLACE_TYPE_T;
+
+typedef enum MMAL_SOURCE_PATTERN_T {
+   MMAL_VIDEO_SOURCE_PATTERN_WHITE,
+   MMAL_VIDEO_SOURCE_PATTERN_BLACK,
+   MMAL_VIDEO_SOURCE_PATTERN_DIAGONAL,
+   MMAL_VIDEO_SOURCE_PATTERN_NOISE,
+   MMAL_VIDEO_SOURCE_PATTERN_RANDOM,
+   MMAL_VIDEO_SOURCE_PATTERN_COLOUR,
+   MMAL_VIDEO_SOURCE_PATTERN_BLOCKS,
+   MMAL_VIDEO_SOURCE_PATTERN_SWIRLY,
+   MMAL_VIDEO_SOURCE_PATTERN_DUMMY = 0x7fffffff
+} MMAL_SOURCE_PATTERN_T;
+
+typedef struct MMAL_PARAMETER_VIDEO_SOURCE_PATTERN_T {
+   MMAL_PARAMETER_HEADER_T hdr;
+
+   MMAL_SOURCE_PATTERN_T pattern;
+   uint32_t param;                              /**< Colour for PATTERN_COLOUR mode */
+   uint32_t framecount;                         /**< Number of frames to produce. 0 for continuous. */
+   MMAL_RATIONAL_T framerate;                   /**< Framerate used when determining buffer timestamps */
+} MMAL_PARAMETER_VIDEO_SOURCE_PATTERN_T;
+
 
 #endif

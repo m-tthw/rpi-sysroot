@@ -18,9 +18,7 @@
   General Public License for more details.
 
   You should have received a copy of the GNU Lesser General Public License
-  along with PulseAudio; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-  USA.
+  along with PulseAudio; if not, see <http://www.gnu.org/licenses/>.
 ***/
 
 #include <pulse/sample.h>
@@ -339,6 +337,11 @@ int pa_channel_map_can_balance(const pa_channel_map *map) PA_GCC_PURE;
  * (i.e.\ 'balance' between front and rear) with this mapping, i.e.\ if
  * there are front/rear channels available. \since 0.9.15 */
 int pa_channel_map_can_fade(const pa_channel_map *map) PA_GCC_PURE;
+
+/** Returns non-zero if it makes sense to apply a volume 'lfe balance'
+ * (i.e.\ 'balance' between LFE and non-LFE channels) with this mapping,
+ *  i.e.\ if there are LFE and non-LFE channels available. \since 8.0 */
+int pa_channel_map_can_lfe_balance(const pa_channel_map *map) PA_GCC_PURE;
 
 /** Tries to find a well-known channel mapping name for this channel
  * mapping, i.e.\ "stereo", "surround-71" and so on. If the channel

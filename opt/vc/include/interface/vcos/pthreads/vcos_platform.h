@@ -769,17 +769,6 @@ void vcos_atomic_flags_delete(VCOS_ATOMIC_FLAGS_T *atomic_flags)
 
 #endif
 
-#if defined(linux) || defined(_HAVE_SBRK)
-
-/* not exactly the free memory, but a measure of it */
-
-VCOS_INLINE_IMPL
-unsigned long vcos_get_free_mem(void) {
-   return (unsigned long)sbrk(0);
-}
-
-#endif
-
 #ifdef VCOS_PTHREADS_WANT_HISR_EMULATION
 VCOS_STATUS_T vcos_legacy_hisr_create(VCOS_HISR_T *hisr, const char *name,
                                       void (*entry)(void),

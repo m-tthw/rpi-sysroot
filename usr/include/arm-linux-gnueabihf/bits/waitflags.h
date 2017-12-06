@@ -1,5 +1,5 @@
 /* Definitions of flag bits for `waitpid' et al.
-   Copyright (C) 1992-2014 Free Software Foundation, Inc.
+   Copyright (C) 1992-2016 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -37,7 +37,7 @@
 #define __WCLONE	0x80000000 /* Wait for cloned process.  */
 
 /* The following values are used by the `waitid' function.  */
-#if defined __USE_SVID || defined __USE_XOPEN || defined __USE_XOPEN2K8
+#if defined __USE_XOPEN || defined __USE_XOPEN2K8
 # ifndef __ENUM_IDTYPE_T
 # define __ENUM_IDTYPE_T 1
 

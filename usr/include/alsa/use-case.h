@@ -43,15 +43,13 @@ extern "C" {
 #endif
 
 /**
- *  \defgroup Use Case Interface
+ *  \defgroup ucm Use Case Interface
  *  The ALSA Use Case manager interface.
  *  See \ref Usecase page for more details.
  *  \{
  */
 
 /*! \page Usecase ALSA Use Case Interface
- * 
- * ALSA Use Case Interface
  *
  * The use case manager works by configuring the sound card ALSA kcontrols to
  * change the hardware digital and analog audio routing to match the requested
@@ -69,9 +67,9 @@ extern "C" {
  *
  * However there are times when a use case has to be modified at runtime. e.g.
  *
- *  o Incoming phone call when the device is playing music
- *  o Recording sections of a phone call
- *  o Playing tones during a call.
+ *  + Incoming phone call when the device is playing music
+ *  + Recording sections of a phone call
+ *  + Playing tones during a call.
  *
  * In order to allow asynchronous runtime use case adaptations, we have a third
  * optional modifier parameter that can be used to further configure
@@ -79,13 +77,13 @@ extern "C" {
  *
  * This interface allows clients to :-
  *
- *  o Query the supported use case verbs, devices and modifiers for the machine.
- *  o Set and Get use case verbs, devices and modifiers for the machine.
- *  o Get the ALSA PCM playback and capture device PCMs for use case verb,
+ *  + Query the supported use case verbs, devices and modifiers for the machine.
+ *  + Set and Get use case verbs, devices and modifiers for the machine.
+ *  + Get the ALSA PCM playback and capture device PCMs for use case verb,
  *     use case device and modifier.
- *  o Get the TQ parameter for each use case verb, use case device and
+ *  + Get the TQ parameter for each use case verb, use case device and
  *     modifier.
- *  o Get the ALSA master playback and capture volume/switch kcontrols
+ *  + Get the ALSA master playback and capture volume/switch kcontrols
  *     for each use case.
  */
 
@@ -194,20 +192,21 @@ int snd_use_case_free_list(const char *list[], int items);
  * \return Number of list entries if success, otherwise a negative error code
  *
  * Defined identifiers:
- *   NULL 		- get card list
- *			  (in pair cardname+comment)
- *   _verbs		- get verb list
- *			  (in pair verb+comment)
- *   _devices[/{verb}]	- get list of supported devices
- *			  (in pair device+comment)
- *   _modifiers[/{verb}]- get list of supported modifiers
- *			  (in pair modifier+comment)
- *   TQ[/{verb}]	- get list of TQ identifiers
- *   _enadevs		- get list of enabled devices
- *   _enamods		- get list of enabled modifiers
+ *   - NULL			- get card list
+ *				 (in pair cardname+comment)
+ *   - _verbs			- get verb list
+ *				  (in pair verb+comment)
+ *   - _devices[/{verb}]	- get list of supported devices
+ *				  (in pair device+comment)
+ *   - _modifiers[/{verb}]	- get list of supported modifiers
+ *				  (in pair modifier+comment)
+ *   - TQ[/{verb}]		- get list of TQ identifiers
+ *   - _enadevs			- get list of enabled devices
+ *   - _enamods			- get list of enabled modifiers
  *
- *   _supporteddevs/{modifier}|{device}[/{verb}]   - list of supported devices
- *   _conflictingdevs/{modifier}|{device}[/{verb}] - list of conflicting devices
+ *   - _supporteddevs/{modifier}|{device}[/{verb}]   - list of supported devices
+ *   - _conflictingdevs/{modifier}|{device}[/{verb}] - list of conflicting devices
+ *
  *   Note that at most one of the supported/conflicting devs lists has
  *   any entries, and when neither is present, all devices are supported.
  *
@@ -224,14 +223,15 @@ int snd_use_case_get_list(snd_use_case_mgr_t *uc_mgr,
  * \param value Value pointer
  * \return Zero if success, otherwise a negative error code
  *
- * Note: String is dynamically allocated, use free() to
- * deallocate this string.
+ * Note: The returned string is dynamically allocated, use free() to
+ * deallocate this string. (Yes, the value parameter shouldn't be marked as
+ * "const", but it's too late to fix it, sorry about that.)
  *
  * Known identifiers:
- *   NULL 		- return current card
- *   _verb		- return current verb
+ *   - NULL 		- return current card
+ *   - _verb		- return current verb
  *
- *   [=]{NAME}[/[{modifier}|{/device}][/{verb}]]
+ *   - [=]{NAME}[/[{modifier}|{/device}][/{verb}]]
  *                      - value identifier {NAME}
  *                      - Search starts at given modifier or device if any,
  *                          else at a verb
@@ -242,37 +242,83 @@ int snd_use_case_get_list(snd_use_case_mgr_t *uc_mgr,
  *                        device/modifier/verb specified, and not search
  *                        through each object in turn.
  *                      - Examples:
- *                          "PlaybackPCM/Play Music"
- *                          "CapturePCM/SPDIF"
- *                        From ValueDefaults only:
- *                          "=Variable"
- *                        From current active verb:
- *                          "=Variable//"
- *                        From verb "Verb":
- *                          "=Variable//Verb"
- *                        From "Modifier" in current active verb:
- *                          "=Variable/Modifier/"
- *                        From "Modifier" in "Verb":
- *                          "=Variable/Modifier/Verb"
+ *                          - "PlaybackPCM/Play Music"
+ *                          - "CapturePCM/SPDIF"
+ *                          - From ValueDefaults only:
+ *                              "=Variable"
+ *                          - From current active verb:
+ *                              "=Variable//"
+ *                          - From verb "Verb":
+ *                              "=Variable//Verb"
+ *                          - From "Modifier" in current active verb:
+ *                              "=Variable/Modifier/"
+ *                          - From "Modifier" in "Verb":
+ *                              "=Variable/Modifier/Verb"
  *
  * Recommended names for values:
- *   TQ			- Tone Quality
- *   PlaybackPCM	- full PCM playback device name
- *   CapturePCM		- full PCM capture device name
- *   PlaybackRate	- playback device sample rate
- *   PlaybackChannels	- playback device channel count
- *   PlaybackCTL	- playback control device name
- *   PlaybackVolume	- playback control volume ID string
- *   PlaybackSwitch	- playback control switch ID string
- *   CaptureRate	- capture device sample rate
- *   CaptureChannels	- capture device channel count
- *   CaptureCTL		- capture control device name
- *   CaptureVolume	- capture control volume ID string
- *   CaptureSwitch	- capture control switch ID string
- *   PlaybackMixer	- name of playback mixer
- *   PlaybackMixerID	- mixer playback ID
- *   CaptureMixer	- name of capture mixer
- *   CaptureMixerID	- mixer capture ID
+ *   - TQ
+ *      - Tone Quality
+ *   - PlaybackPCM
+ *      - full PCM playback device name
+ *   - PlaybackPCMIsDummy
+ *      - Valid values: "yes" and "no". If set to "yes", the PCM named by the
+ *        PlaybackPCM value is a dummy device, meaning that opening it enables
+ *        an audio path in the hardware, but writing to the PCM device has no
+ *        effect.
+ *   - CapturePCM
+ *      - full PCM capture device name
+ *   - CapturePCMIsDummy
+ *      - Valid values: "yes" and "no". If set to "yes", the PCM named by the
+ *        CapturePCM value is a dummy device, meaning that opening it enables
+ *        an audio path in the hardware, but reading from the PCM device has no
+ *        effect.
+ *   - PlaybackRate
+ *      - playback device sample rate
+ *   - PlaybackChannels
+ *      - playback device channel count
+ *   - PlaybackCTL
+ *      - playback control device name
+ *   - PlaybackVolume
+ *      - playback control volume ID string
+ *   - PlaybackSwitch
+ *      - playback control switch ID string
+ *   - CaptureRate
+ *      - capture device sample rate
+ *   - CaptureChannels
+ *      - capture device channel count
+ *   - CaptureCTL
+ *      - capture control device name
+ *   - CaptureVolume
+ *      - capture control volume ID string
+ *   - CaptureSwitch
+ *      - capture control switch ID string
+ *   - PlaybackMixer
+ *      - name of playback mixer
+ *   - PlaybackMixerID
+ *      - mixer playback ID
+ *   - CaptureMixer
+ *      - name of capture mixer
+ *   - CaptureMixerID
+ *      - mixer capture ID
+ *   - JackControl, JackDev, JackHWMute
+ *      - Jack information for a device. The jack status can be reported via
+ *        a kcontrol and/or via an input device. **JackControl** is the
+ *        kcontrol name of the jack, and **JackDev** is the input device id of
+ *        the jack (if the full input device path is /dev/input/by-id/foo, the
+ *        JackDev value should be "foo"). UCM configuration files should
+ *        contain both JackControl and JackDev when possible, because
+ *        applications are likely to support only one or the other.
+ *
+ *        If **JackHWMute** is set, it indicates that when the jack is plugged
+ *        in, the hardware automatically mutes some other device(s). The
+ *        JackHWMute value is a space-separated list of device names (this
+ *        isn't compatible with device names with spaces in them, so don't use
+ *        such device names!). Note that JackHWMute should be used only when
+ *        the hardware enforces the automatic muting. If the hardware doesn't
+ *        enforce any muting, it may still be tempting to set JackHWMute to
+ *        trick upper software layers to e.g. automatically mute speakers when
+ *        headphones are plugged in, but that's application policy
+ *        configuration that doesn't belong to UCM configuration files.
  */
 int snd_use_case_get(snd_use_case_mgr_t *uc_mgr,
                      const char *identifier,
@@ -286,8 +332,8 @@ int snd_use_case_get(snd_use_case_mgr_t *uc_mgr,
  * \return Zero if success, otherwise a negative error code
  *
  * Known identifiers:
- *   _devstatus/{device}	- return status for given device
- *   _modstatus/{modifier}	- return status for given modifier
+ *   - _devstatus/{device}	- return status for given device
+ *   - _modstatus/{modifier}	- return status for given modifier
  */
 int snd_use_case_geti(snd_use_case_mgr_t *uc_mgr,
 		      const char *identifier,
@@ -301,19 +347,19 @@ int snd_use_case_geti(snd_use_case_mgr_t *uc_mgr,
  * \return Zero if success, otherwise a negative error code
  *
  * Known identifiers:
- *   _verb 		- set current verb = value
- *   _enadev		- enable given device = value
- *   _disdev		- disable given device = value
- *   _swdev/{old_device} - new_device = value
- *			- disable old_device and then enable new_device
- *			- if old_device is not enabled just return
- *			- check transmit sequence firstly
- *   _enamod		- enable given modifier = value
- *   _dismod		- disable given modifier = value
- *   _swmod/{old_modifier} - new_modifier = value
- *			- disable old_modifier and then enable new_modifier
- *			- if old_modifier is not enabled just return
- *			- check transmit sequence firstly
+ *   - _verb			- set current verb = value
+ *   - _enadev			- enable given device = value
+ *   - _disdev			- disable given device = value
+ *   - _swdev/{old_device}	- new_device = value
+ *				  - disable old_device and then enable new_device
+ *				  - if old_device is not enabled just return
+ *				  - check transmit sequence firstly
+ *   - _enamod			- enable given modifier = value
+ *   - _dismod			- disable given modifier = value
+ *   - _swmod/{old_modifier}	- new_modifier = value
+ *				  - disable old_modifier and then enable new_modifier
+ *				  - if old_modifier is not enabled just return
+ *				  - check transmit sequence firstly
  */
 int snd_use_case_set(snd_use_case_mgr_t *uc_mgr,
                      const char *identifier,

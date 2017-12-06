@@ -21,6 +21,7 @@
 #define SYS_arm_sync_file_range __NR_arm_sync_file_range
 #define SYS_bdflush __NR_bdflush
 #define SYS_bind __NR_bind
+#define SYS_bpf __NR_bpf
 #define SYS_brk __NR_brk
 #define SYS_capget __NR_capget
 #define SYS_capset __NR_capset
@@ -103,6 +104,7 @@
 #define SYS_getpid __NR_getpid
 #define SYS_getppid __NR_getppid
 #define SYS_getpriority __NR_getpriority
+#define SYS_getrandom __NR_getrandom
 #define SYS_getresgid __NR_getresgid
 #define SYS_getresgid32 __NR_getresgid32
 #define SYS_getresuid __NR_getresuid
@@ -243,6 +245,7 @@
 #define SYS_sched_setparam __NR_sched_setparam
 #define SYS_sched_setscheduler __NR_sched_setscheduler
 #define SYS_sched_yield __NR_sched_yield
+#define SYS_seccomp __NR_seccomp
 #define SYS_semctl __NR_semctl
 #define SYS_semget __NR_semget
 #define SYS_semop __NR_semop
@@ -365,6 +368,7 @@
 #define SYS_arm_sync_file_range __NR_arm_sync_file_range
 #define SYS_bdflush __NR_bdflush
 #define SYS_bind __NR_bind
+#define SYS_bpf __NR_bpf
 #define SYS_brk __NR_brk
 #define SYS_capget __NR_capget
 #define SYS_capset __NR_capset
@@ -447,6 +451,7 @@
 #define SYS_getpid __NR_getpid
 #define SYS_getppid __NR_getppid
 #define SYS_getpriority __NR_getpriority
+#define SYS_getrandom __NR_getrandom
 #define SYS_getresgid __NR_getresgid
 #define SYS_getresgid32 __NR_getresgid32
 #define SYS_getresuid __NR_getresuid
@@ -587,6 +592,7 @@
 #define SYS_sched_setparam __NR_sched_setparam
 #define SYS_sched_setscheduler __NR_sched_setscheduler
 #define SYS_sched_yield __NR_sched_yield
+#define SYS_seccomp __NR_seccomp
 #define SYS_semctl __NR_semctl
 #define SYS_semget __NR_semget
 #define SYS_semop __NR_semop

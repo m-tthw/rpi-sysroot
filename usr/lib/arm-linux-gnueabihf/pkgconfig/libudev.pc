@@ -7,11 +7,11 @@
 
 prefix=/usr
 exec_prefix=/usr
-libdir=/usr/lib/arm-linux-gnueabihf
+libdir=/lib/arm-linux-gnueabihf
 includedir=/usr/include
 
 Name: libudev
 Description: Library to access udev device information
-Version: 215
+Version: 232
 Libs: -L${libdir} -ludev
 Cflags: -I${includedir}

@@ -18,11 +18,10 @@
   Lesser General Public License for more details.
 
   You should have received a copy of the GNU Lesser General Public
-  License along with PulseAudio; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-  USA.
+  License along with PulseAudio; if not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <pulse/direction.h>
 #include <pulse/mainloop-api.h>
 #include <pulse/sample.h>
 #include <pulse/format.h>
@@ -49,8 +48,8 @@
 
 /** \file
  * Include all libpulse header files at once. The following files are
- * included: \ref mainloop-api.h, \ref sample.h, \ref def.h, \ref
- * context.h, \ref stream.h, \ref introspect.h, \ref subscribe.h, \ref
+ * included: \ref direction.h, \ref mainloop-api.h, \ref sample.h, \ref def.h,
+ * \ref context.h, \ref stream.h, \ref introspect.h, \ref subscribe.h, \ref
  * scache.h, \ref version.h, \ref error.h, \ref channelmap.h, \ref
  * operation.h,\ref volume.h, \ref xmalloc.h, \ref utf8.h, \ref
  * thread-mainloop.h, \ref mainloop.h, \ref util.h, \ref proplist.h,
@@ -125,6 +124,48 @@
  *
  * An error code can be turned into a human readable message using
  * pa_strerror().
+ *
+ * \section logging_sec Logging
+ *
+ * You can configure different logging parameters for the PulseAudio client
+ * libraries. The following environment variables are recognized:
+ *
+ *  - `PULSE_LOG`: Maximum log level required. Bigger values result in a
+ *     more verbose logging output. The following values are recognized:
+ *     + `0`: Error messages
+ *     + `1`: Warning messages
+ *     + `2`: Notice messages
+ *     + `3`: Info messages
+ *     + `4`: Debug messages
+ *  - `PULSE_LOG_SYSLOG`: If defined, force all client libraries to log
+ *     their output using the syslog(3) mechanism. Default behavior is to
+ *     log all output to stderr.
+ *  - `PULSE_LOG_JOURNAL`: If defined, force all client libraries to log
+ *     their output using the systemd journal. If both `PULSE_LOG_JOURNAL`
+ *     and `PULSE_LOG_SYSLOG` are defined, logging to the systemd journal
+ *     takes a higher precedence. Each message originating library file name
+ *     and function are included by default through the journal fields
+ *     `CODE_FILE`, `CODE_FUNC`, and `CODE_LINE`. Any backtrace attached to
+ *     the logging message is sent through the PulseAudio-specific journal
+ *     field `PULSE_BACKTRACE`. This environment variable has no effect if
+ *     PulseAudio was compiled without systemd journal support.
+ *  - `PULSE_LOG_COLORS`: If defined, enables colored logging output.
+ *  - `PULSE_LOG_TIME`: If defined, include timestamps with each message.
+ *  - `PULSE_LOG_FILE`: If defined, include each message originating file
+ *     name.
+ *  - `PULSE_LOG_META`: If defined, include each message originating file
+ *     name and path relative to the PulseAudio source tree root.
+ *  - `PULSE_LOG_LEVEL`: If defined, include a log level prefix with each
+ *     message. Respectively, the prefixes "E", "W", "N", "I", "D" stands
+ *     for Error, Warning, Notice, Info, and Debugging.
+ *  - `PULSE_LOG_BACKTRACE`: Number of functions to display in the backtrace.
+ *     If this variable is not defined, or has a value of zero, no backtrace
+ *     is shown.
+ *  - `PULSE_LOG_BACKTRACE_SKIP`: Number of backtrace levels to skip, from
+ *     the function printing the log message downwards.
+ *  - `PULSE_LOG_NO_RATE_LIMIT`: If defined, do not rate limit the logging
+ *     output. Rate limiting skips certain log messages when their frequency
+ *     is considered too high.
  *
  * \section pkgconfig pkg-config
  *

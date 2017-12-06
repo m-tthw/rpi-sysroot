@@ -1,5 +1,5 @@
 /* FPU control word definitions.  ARM VFP version.
-   Copyright (C) 2004-2014 Free Software Foundation, Inc.
+   Copyright (C) 2004-2016 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -37,11 +37,16 @@ extern fpu_control_t __fpu_control;
 #define _FPU_MASK_UM	0x00000800	/* underflow */
 #define _FPU_MASK_PM	0x00001000	/* inexact */
 
+#define _FPU_MASK_NZCV	0xf0000000	/* NZCV flags */
+#define _FPU_MASK_RM	0x00c00000	/* rounding mode */
+#define _FPU_MASK_EXCEPT 0x00001f1f	/* all exception flags */
+
 /* Some bits in the FPSCR are not yet defined.  They must be preserved when
    modifying the contents.  */
 #define _FPU_RESERVED	0x00086060
 #define _FPU_DEFAULT    0x00000000
-/* Default + exceptions enabled. */
+
+/* Default + exceptions enabled.  */
 #define _FPU_IEEE	(_FPU_DEFAULT | 0x00001f00)
 
 /* Type of the control word.  */

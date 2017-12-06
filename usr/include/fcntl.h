@@ -1,4 +1,4 @@
-/* Copyright (C) 1991-2014 Free Software Foundation, Inc.
+/* Copyright (C) 1991-2016 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software; you can redistribute it and/or
@@ -71,9 +71,11 @@ typedef __pid_t pid_t;
 #endif
 
 /* For XPG all symbols from <sys/stat.h> should also be available.  */
-#if defined __USE_XOPEN || defined __USE_XOPEN2K8
+#ifdef __USE_XOPEN2K8
 # define __need_timespec
 # include <time.h>
+#endif
+#if defined __USE_XOPEN || defined __USE_XOPEN2K8
 # include <bits/stat.h>
 
 # define S_IFMT		__S_IFMT
@@ -96,7 +98,7 @@ typedef __pid_t pid_t;
 # define S_ISUID	__S_ISUID       /* Set user ID on execution.  */
 # define S_ISGID	__S_ISGID       /* Set group ID on execution.  */
 
-# if defined __USE_BSD || defined __USE_MISC || defined __USE_XOPEN
+# if defined __USE_MISC || defined __USE_XOPEN
 /* Save swapped text after use (sticky bit).  This is pretty well obsolete.  */
 #  define S_ISVTX	__S_ISVTX
 # endif
