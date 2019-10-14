@@ -4,13 +4,6 @@ reboot_pi () {
   umount /boot
   mount / -o remount,ro
   sync
-  if [ "$NOOBS" = "1" ]; then
-    if [ "$NEW_KERNEL" = "1" ]; then
-      reboot -f "$BOOT_PART_NUM"
-    else
-      echo "$BOOT_PART_NUM" > "/sys/module/${BCM_MODULE}/parameters/reboot_part"
-    fi
-  fi
   echo b > /proc/sysrq-trigger
   sleep 5
   exit 0
@@ -31,14 +24,6 @@ check_commands () {
   return 0
 }
 
-check_noobs () {
-  if [ "$BOOT_PART_NUM" = "1" ]; then
-    NOOBS=0
-  else
-    NOOBS=1
-  fi
-}
-
 get_variables () {
   ROOT_PART_DEV=$(findmnt / -o source -n)
   ROOT_PART_NAME=$(echo "$ROOT_PART_DEV" | cut -d "/" -f 3)
@@ -51,12 +36,25 @@ get_variables () {
   BOOT_DEV_NAME=$(echo /sys/block/*/"${BOOT_PART_NAME}" | cut -d "/" -f 4)
   BOOT_PART_NUM=$(cat "/sys/block/${BOOT_DEV_NAME}/${BOOT_PART_NAME}/partition")
 
-  OLD_DISKID=$(fdisk -l "$ROOT_DEV" | sed -n 's/Disk identifier: 0x\([^ ]*\)/\1/p')
+  BAK_ROOT_PART_NUM=$((ROOT_PART_NUM + 1))
+  BAK_BOOT_PART_DEV="${ROOT_DEV}p${BAK_ROOT_PART_NUM}"
+  DATA_PART_NUM=$((BAK_ROOT_PART_NUM + 1))
+  DATA_PART_DEV="${ROOT_DEV}p${DATA_PART_NUM}"
 
-  check_noobs
+  OLD_DISKID=$(fdisk -l "$ROOT_DEV" | sed -n 's/Disk identifier: 0x\([^ ]*\)/\1/p')
 
   ROOT_DEV_SIZE=$(cat "/sys/block/${ROOT_DEV_NAME}/size")
   TARGET_END=$((ROOT_DEV_SIZE - 1))
+
+  BOOT_DEV_SIZE=$(cat "/sys/block/${BOOT_DEV_NAME}/${BOOT_PART_NAME}/size")
+  BOOT_START=$(cat "/sys/block/${BOOT_DEV_NAME}/${BOOT_PART_NAME}/start")
+  BOOT_END=$((BOOT_DEV_SIZE + BOOT_START - 1))
+  ROOT_START=$((BOOT_END + 1))
+  ROOT_END=$((ROOT_START + 16777216))
+  BAK_ROOT_START=$((ROOT_END + 1))
+  BAK_ROOT_END=$((BAK_ROOT_START + 16777216))
+  DATA_START=$((BAK_ROOT_END + 1))
+  DATA_END=$TARGET_END
 
   PARTITION_TABLE=$(parted -m "$ROOT_DEV" unit s print | tr -d 's')
 
@@ -65,13 +63,6 @@ get_variables () {
   ROOT_PART_LINE=$(echo "$PARTITION_TABLE" | grep -e "^${ROOT_PART_NUM}:")
   ROOT_PART_START=$(echo "$ROOT_PART_LINE" | cut -d ":" -f 2)
   ROOT_PART_END=$(echo "$ROOT_PART_LINE" | cut -d ":" -f 3)
-
-  if [ "$NOOBS" = "1" ]; then
-    EXT_PART_LINE=$(echo "$PARTITION_TABLE" | grep ":::;" | head -n 1)
-    EXT_PART_NUM=$(echo "$EXT_PART_LINE" | cut -d ":" -f 1)
-    EXT_PART_START=$(echo "$EXT_PART_LINE" | cut -d ":" -f 2)
-    EXT_PART_END=$(echo "$EXT_PART_LINE" | cut -d ":" -f 3)
-  fi
 }
 
 fix_partuuid() {
@@ -79,18 +70,14 @@ fix_partuuid() {
 
   sed -i "s/${OLD_DISKID}/${DISKID}/g" /etc/fstab
   sed -i "s/${OLD_DISKID}/${DISKID}/" /boot/cmdline.txt
+
+  echo "#PARTUUID=${DISKID}-0${BAK_ROOT_PART_NUM}        /bak_root       ext4    defaults,noatime  0       1" >> "/etc/fstab"
+  echo "PARTUUID=${DISKID}-0${DATA_PART_NUM}        /data           ext4    defaults,noatime  0       1" >> "/etc/fstab"
+
+  #sed -i '/\/boot/s/^/#/g' "/etc/fstab"
 }
 
 check_variables () {
-  if [ "$NOOBS" = "1" ]; then
-    if [ "$EXT_PART_NUM" -gt 4 ] || \
-       [ "$EXT_PART_START" -gt "$ROOT_PART_START" ] || \
-       [ "$EXT_PART_END" -lt "$ROOT_PART_END" ]; then
-      FAIL_REASON="Unsupported extended partition"
-      return 1
-    fi
-  fi
-
   if [ "$BOOT_DEV_NAME" != "$ROOT_DEV_NAME" ]; then
       FAIL_REASON="Boot and root partitions are on different devices"
       return 1
@@ -112,16 +99,40 @@ check_variables () {
   fi
 }
 
-check_kernel () {
-  local MAJOR=$(uname -r | cut -f1 -d.)
-  local MINOR=$(uname -r | cut -f2 -d.)
-  if [ "$MAJOR" -eq "4" ] && [ "$MINOR" -lt "9" ]; then
-    return 0
-  fi
-  if [ "$MAJOR" -lt "4" ]; then
-    return 0
-  fi
-  NEW_KERNEL=1
+create_partions () {
+  echo "d # delete partition
+    ${ROOT_PART_NUM} # partion number 2
+    n # new partition
+    p # primary partition
+    ${ROOT_PART_NUM} # partion number 2
+    ${ROOT_START} # start immediately after preceding partition
+    ${ROOT_END} # 8G system/root partition
+    n # new partition
+    p # primary partition
+    ${BAK_ROOT_PART_NUM} # partion number 3
+    ${BAK_ROOT_START} # start immediately after preceding partition
+    ${BAK_ROOT_END} # 8G system/root partition
+    n # new partition
+    p # primary partition
+    ${DATA_PART_NUM} # partion number 4
+    ${DATA_START} # start immediately after preceding partition
+    ${DATA_END}  # extend partition to end of disk
+    p # print the in-memory partition table
+    w # write the partition table" | sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' | fdisk "$ROOT_DEV"
+}
+
+create_extend_fs () {
+  resize2fs "/dev/${ROOT_PART_NAME}"
+  mkfs.ext4  -F "${BAK_BOOT_PART_DEV}"
+  mkfs.ext4  -F "${DATA_PART_DEV}"
+}
+
+create_mounting_points () {
+  mkdir "/bak_root"
+  mkdir "/data"
+
+  chmod 770 "/bak_root"
+  chmod 770 "/data"
 }
 
 main () {
@@ -131,34 +142,12 @@ main () {
     return 1
   fi
 
-  check_kernel
-
-  if [ "$NOOBS" = "1" ] && [ "$NEW_KERNEL" != "1" ]; then
-    BCM_MODULE=$(grep -e "^Hardware" /proc/cpuinfo | cut -d ":" -f 2 | tr -d " " | tr '[:upper:]' '[:lower:]')
-    if ! modprobe "$BCM_MODULE"; then
-      FAIL_REASON="Couldn't load BCM module $BCM_MODULE"
-      return 1
-    fi
-  fi
-
-  if [ "$ROOT_PART_END" -eq "$TARGET_END" ]; then
-    reboot_pi
-  fi
-
-  if [ "$NOOBS" = "1" ]; then
-    if ! parted -m "$ROOT_DEV" u s resizepart "$EXT_PART_NUM" yes "$TARGET_END"; then
-      FAIL_REASON="Extended partition resize failed"
-      return 1
-    fi
-  fi
-
-  if ! parted -m "$ROOT_DEV" u s resizepart "$ROOT_PART_NUM" "$TARGET_END"; then
-    FAIL_REASON="Root partition resize failed"
-    return 1
-  fi
+  create_partions
+  create_extend_fs
+  fix_partuuid
+  create_mounting_points
 
   partprobe "$ROOT_DEV"
-  fix_partuuid
 
   return 0
 }
@@ -170,11 +159,6 @@ mkdir -p /run/systemd
 
 mount /boot
 mount / -o remount,rw
-
-sed -i 's| init=/usr/lib/raspi-config/init_resize.sh||' /boot/cmdline.txt
-if ! grep -q splash /boot/cmdline.txt; then
-  sed -i "s/ quiet//g" /boot/cmdline.txt
-fi
 sync
 
 echo 1 > /proc/sys/kernel/sysrq
@@ -184,11 +168,9 @@ if ! check_commands; then
 fi
 
 if main; then
-  whiptail --infobox "Resized root filesystem. Rebooting in 5 seconds..." 20 60
-  sleep 5
+  whiptail --msgbox "Resized root filesystem. Please reboot system." 20 60
 else
-  sleep 5
-  whiptail --msgbox "Could not expand filesystem, please try raspi-config or rc_gui.\n${FAIL_REASON}" 20 60
+  whiptail --msgbox "Could not modify partition map.\n${FAIL_REASON}" 20 60
 fi
 
 reboot_pi
