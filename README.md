@@ -1,4 +1,4 @@
-## init_resize.sh mod
+## init_resize.sh mod (fork of rpi-sysroot)
 This repository only contains a modified version of init_resize.sh.
 
 The script will:
@@ -9,8 +9,3 @@ The script will:
 - unoumnt boot partition by defautl
 
 To be used with a read-only overlay on the root partitions.
-
-===========
-fork of rpi-sysroot
-===========
-
